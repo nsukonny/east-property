@@ -1,0 +1,3 @@
+[submodule "east-property"]
+	path = east-property
+	url = git@github.com:andrsweb/east-property.git
