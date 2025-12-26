@@ -13,18 +13,13 @@ if ( 404 === get_query_var( 'pagename' ) || is_404() ) {
 ?>
     <main>
         <?php
-        get_template_part( 'template-parts/sections/index/columns' );
-        get_template_part( 'template-parts/sections/index/banner' );
-        get_template_part( 'template-parts/sections/index/links' );
-        get_template_part( 'template-parts/sections/index/slider' );
-        get_template_part( 'template-parts/sections/index/news' );
-        get_template_part( 'template-parts/components/catalog', null, array( 'slug' => 'seed-mixes' ) );
-        get_template_part( 'template-parts/components/catalog', null, array( 'slug' => 'large' ) );
-        get_template_part( 'template-parts/components/catalog', null, array( 'slug' => 'popular' ) );
-        get_template_part( 'template-parts/sections/index/cta' );
-        get_template_part( 'template-parts/sections/index/slider-2' );
-        get_template_part( 'template-parts/sections/index/steps' );
-        get_template_part( 'template-parts/sections/index/news-2' );
+        get_template_part( 'template-parts/sections/index/hero' );
+        get_template_part( 'template-parts/sections/index/categories' );
+        get_template_part( 'template-parts/sections/index/properties', null, array(
+                'properties' => array(), // $this->get_featured_properties( 3 ),
+        ) );
+        get_template_part( 'template-parts/sections/index/about' );
+        get_template_part( 'template-parts/sections/index/map' );
         ?>
     </main>
 <?php

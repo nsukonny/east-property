@@ -3,11 +3,13 @@
  * Include all headers parts
  */
 
-get_template_part('template-parts/header/head');
+get_template_part( 'template-parts/components/common/head' );
 ?>
 <body <?php body_class(); ?>>
 <div class="wrapper">
 
-    <?php get_template_part('template-parts/header/header'); ?>
+    <?php
+    get_template_part( 'template-parts/components/common/header', null, array( 'color' => 'white' ) );
+    ?>
 
     <main>

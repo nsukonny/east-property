@@ -6,8 +6,8 @@
 define( 'THEME_PATH', get_template_directory() );
 define( 'THEME_URL', get_template_directory_uri() );
 define( 'THEME_VERSION', time() ); //TODO change to version like 1.0.1
-const THEME_NAME   = 'dutch-seeds';
-const PROJECT_NAME = 'Dutch Seeds';
+const THEME_NAME   = 'east-property';
+const PROJECT_NAME = 'East Property';
 
 /**
  * Add theme menus
@@ -77,4 +77,8 @@ add_image_size( PROJECT_NAME . '-product-thumb', 143, 171, true );
 
 add_filter( 'woocommerce_enqueue_styles', '__return_false' );
 
+include_once 'includes/entities/load.php';
+require_once 'includes/registers/acf/loader.php';
+require_once 'includes/registers/post-types/loader.php';
+require_once 'includes/registers/user-roles/loader.php';
 require_once 'template-parts/template-parts.php';

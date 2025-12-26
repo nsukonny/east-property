@@ -1,0 +1,59 @@
+<section class="profile-tabs" data-tabs>
+    <div class="container">
+        <div class="profile-tabs-wrapper">
+            <div class="profile-tabs-buttons" role="tablist">
+                <button class="result-tab-button active" type="button" id="profile-tabs-saved-tab" data-tab-button data-tab="saved" role="tab" aria-selected="true" aria-controls="profile-tabs-saved-panel">Saved properties</button>
+                <button class="result-tab-button" type="button" id="profile-tabs-acc-tab" data-tab-button data-tab="acc" role="tab" aria-selected="false" tabindex="-1" aria-controls="profile-tabs-acc-panel">Account details</button>
+                <button class="result-tab-button" type="button" id="profile-tabs-email-tab" data-tab-button data-tab="email" role="tab" aria-selected="false" tabindex="-1" aria-controls="profile-tabs-email-panel">Email notifications</button>
+            </div>
+            <div class="profile-tabs-content active" id="profile-tabs-list-panel" data-tab-panel data-tab="saved" role="tabpanel" aria-labelledby="profile-tabs-list-tab">
+                <div class="content-title">
+                    <div class="title-top">
+                        <h2>Saved properties</h2>
+                        <button class="sort">
+                            Show expensive first
+                            <img src="/img/arrow-down.svg" width="16" height="16" alt="Arrow down">
+                        </button>
+                    </div>
+                </div>
+                <div class="content-list">
+                    @@include('components/cards/large-card/large-card.html')
+                    @@include('components/cards/large-card/large-card.html')
+                    @@include('components/cards/large-card/large-card.html')
+                </div>
+            </div>
+            <div class="profile-tabs-content" id="profile-tabs-acc-panel" data-tab-panel data-tab="acc" role="tabpanel" aria-labelledby="profile-tabs-map-tab">
+                <div class="content-title">
+                    <div class="title-top">
+                        <h2>Account details</h2>
+                    </div>
+                </div>
+                <div class="content-list">
+                    <form>
+                        <fieldset>
+                            <label for="email2">
+                                Email
+                                <input type="email" id="email2" required>
+                            </label>
+                            <label for="password2">
+                                Password
+                                <input type="password" id="password2" required>
+                            </label>
+                        </fieldset>
+                        <div class="submit-group between">
+                            <button class="button orange sm" type="submit">
+                                Update details
+                            </button>
+                            <button class="button gray sm" type="button">
+                                I want to remove my account
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="profile-tabs-content" id="profile-tabs-email-panel" data-tab-panel data-tab="email" role="tabpanel" aria-labelledby="profile-tabs-map-tab">
+                <h2>In development</h2>
+            </div>
+        </div>
+    </div>
+</section>
