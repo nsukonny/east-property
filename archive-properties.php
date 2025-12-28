@@ -3,26 +3,14 @@
  * Archive template for Properties (CPT: properties)
  */
 
-get_header();
+get_header( null, array( 'color' => 'sand' ) );
 ?>
-<main>
-	<?php if ( have_posts() ) : ?>
-		<header class="page-header">
-			<h1 class="page-title"><?php post_type_archive_title(); ?></h1>
-		</header>
-
-		<?php
-		while ( have_posts() ) :
-			the_post();
-			get_template_part( 'template-parts/content', get_post_type() );
-		endwhile;
-
-		the_posts_pagination();
-		?>
-	<?php else : ?>
-		<?php get_template_part( 'template-parts/content', 'none' ); ?>
-	<?php endif; ?>
-</main>
+    <main>
+        <?php
+        get_template_part( 'template-parts/components/properties/filter' );
+        get_template_part( 'template-parts/sections/index/about' );
+        ?>
+    </main>
 <?php
 get_footer();
 

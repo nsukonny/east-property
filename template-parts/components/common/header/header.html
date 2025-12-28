@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@@title</title>
+    <link rel="stylesheet" href="css/main.min.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-title" content="East Property">
+    <link rel="manifest" href="/site.webmanifest">
+    <!--  -->
+</head>
+
+<body>
+<div class="wrapper">
+    <header class="header @@color">
+        <div class="container">
+            <div class="header-wrapper">
+                <a href="/" class="header-logo">
+                    <img src="/img/logo.svg" width="132" height="50" alt="Vector logotype">
+                </a>
+                @@include('components/common/header/nav.html')
+                <div class="header-actions">
+                    <button class="header-signin" type="button" data-modal-open="signin-modal">
+                        Sign in
+                    </button>
+                    @@include('components/ui/button/button.html', {"class": "black sm header-login", "text": "Create Account", "src": "/img/user.svg", "dataModal": "create-modal"})
+                    <button class="burger-button" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="header-nav">
+                        <span class="line"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="header-overlay" data-header-overlay></div>
+        </div>
+    </header>

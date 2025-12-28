@@ -94,6 +94,26 @@ trait EntityTrait {
 		return wp_strip_all_tags( $description );
 	}
 
+	/**
+	 * Get gallery images
+	 *
+	 * @return array
+	 */
+	public function get_gallery(): array {
+		if ( ! empty( $this->gallery ) ) {
+			return $this->gallery;
+		}
+
+		$gallery = $this->get_field( 'gallery' );
+		if ( empty( $gallery ) ) {
+			return array();
+		}
+
+		$this->gallery = $gallery;
+
+		return $this->gallery;
+	}
+
 	public function get_url(): string {
 		return get_permalink( $this->id ) ?: '';
 	}

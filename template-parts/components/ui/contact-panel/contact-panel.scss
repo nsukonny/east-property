@@ -1,0 +1,63 @@
+@use '../../../../scss/vars/vars' as v;
+@use '../../../../scss/mixins/typography/text' as t;
+
+.contact-panel {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	background-color: v.$c-grey-97;
+	box-shadow: v.$shadow-1;
+	padding: 16px;
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(100%);
+	transition: visibility ease-in-out v.$tr, opacity ease-in-out v.$tr, transform ease-in-out v.$tr;
+	z-index: 100;
+
+	&.showed {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
+
+	&-inner {
+		width: 100%;
+		max-width: 1200px;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		margin: 0 auto;
+
+		@media(min-width: v.$md) {
+			gap: 32px;
+		}
+	}
+
+	&-left {
+		p {
+			color: v.$c-black;
+
+			@include t.t-text;
+		}
+	}
+
+	&-right {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+
+		@media(min-width: v.$md) {
+			gap: 16px;
+		}
+
+		.button.sm {
+			img {
+				width: 24px;
+				height: 24px;
+			}
+		}
+	}
+}

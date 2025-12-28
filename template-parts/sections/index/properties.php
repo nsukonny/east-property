@@ -28,7 +28,7 @@ $link_text   = $args['link_text'] ?? __( 'See all new properties' );
                 <div class="properties-cards">
                     <?php
                     foreach ( $properties as $property ) {
-                        get_template_part( 'template-parts/components/cards/property-card', null,
+                        get_template_part( 'template-parts/cards/property-card', null,
                                 array(
                                         'property' => $property,
                                 )

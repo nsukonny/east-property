@@ -1,0 +1,225 @@
+@use '../../../../scss/vars/vars' as v;
+@use '../../../../scss/mixins/typography/labels' as l;
+@use '../../../../scss/mixins/typography/text' as t;
+@use '../../../../scss/mixins/global' as g;
+
+.search-tabs {
+	width: 100%;
+	max-width: 475px;
+	display: flex;
+	flex-direction: column;
+
+	.tabs-buttons {
+		width: fit-content;
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		border-top-left-radius: v.$br8;
+		border-top-right-radius: v.$br8;
+		background-color: v.$c-sand;
+		overflow: hidden;
+
+		.button {
+			padding: 10px 6px;
+			color: v.$c-grey;
+			border-radius: 0;
+
+			@include l.t-label;
+
+			&.is-active {
+				background-color: v.$c-white;
+				color: v.$c-black;
+			}
+
+			&:focus-visible {
+				background-color: v.$c-grey-97;
+			}
+
+			@media(min-width: v.$xs) {
+				padding: 10px;
+			}
+
+			@media(min-width: v.$md) {
+				padding: 16px 14px;
+			}
+		}
+	}
+
+	.tabs-panel {
+		background-color: v.$c-white;
+		padding: 14px 4px;
+		border-radius: 0 8px 8px;
+
+		@media(min-width: v.$xs) {
+			padding: 20px 8px;
+		}
+	}
+
+	.tabs-fields {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 16px;
+
+		@media(min-width: v.$sm) {
+			flex-wrap: nowrap;
+			gap: 8px;
+		}
+	}
+
+	.tab-field {
+		width: 100%;
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+
+		@media(min-width: v.$sm) {
+			max-width: 160px;
+		}
+	}
+
+	.tab-field-label {
+		color: v.$c-black;
+
+		@include t.t-text(true);
+	}
+
+	.tab-selector {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 8px;
+		border: none;
+		background: transparent;
+		border-radius: v.$br8;
+		cursor: pointer;
+		padding: 8px;
+		color: v.$c-black;
+		transition: background-color v.$tr;
+
+		@include l.t-label;
+
+		.tab-selector-value {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 16px;
+			color: v.$c-black;
+
+			@include t.t-text;
+
+			img {
+				width: 16px;
+				height: 16px;
+				transition: transform v.$tr;
+			}
+		}
+
+		&.is-open {
+			background-color: v.$c-grey-97;
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+
+			.tab-selector-value {
+				img {
+					transform: rotate(180deg);
+				}
+			}
+		}
+
+		&:focus-visible {
+			background-color: v.$c-grey-95;
+		}
+	}
+
+	.tab-selector:focus .tab-selector-value {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+	}
+
+	.tab-divider {
+		display: none;
+		width: 1px;
+		height: 59px;
+		background-color: v.$c-grey-95;
+
+		@media(min-width: v.$sm) {
+			display: block;
+		}
+	}
+
+	.submit {
+		width: 70%;
+		margin: 0 auto;
+
+		@media(min-width: v.$sm) {
+			width: auto;
+			margin: auto;
+		}
+	}
+
+	.tab-dropdown {
+		width: 100%;
+		position: absolute;
+		top: 100%;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 5;
+		display: flex;
+		flex-direction: column;
+		border-bottom-left-radius: v.$br8;
+		border-bottom-right-radius: v.$br8;
+		background-color: v.$c-grey-97;
+		overflow: hidden;
+
+		&[hidden] {
+			display: none;
+		}
+	}
+
+	.tab-option {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+		padding: 12px 8px;
+		border: none;
+		background: transparent;
+		cursor: pointer;
+		color: v.$c-grey;
+		text-align: left;
+
+		@include t.t-text;
+
+		@include g.hover {
+			background-color: v.$c-grey-95;
+		}
+
+		&:focus-visible {
+			background-color: v.$c-grey-95;
+		}
+	}
+
+	.tab-option-check {
+		width: 16px;
+		height: 16px;
+		opacity: 0;
+		transition: opacity v.$tr;
+	}
+
+	.tab-option.is-selected {
+		color: v.$c-black;
+
+		.tab-option-check {
+			opacity: 1;
+		}
+	}
+}

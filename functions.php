@@ -81,4 +81,5 @@ include_once 'includes/entities/load.php';
 require_once 'includes/registers/acf/loader.php';
 require_once 'includes/registers/post-types/loader.php';
 require_once 'includes/registers/user-roles/loader.php';
+require_once 'template-parts/components/load-components.php';
 require_once 'template-parts/template-parts.php';

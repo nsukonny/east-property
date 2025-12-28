@@ -11,10 +11,13 @@ if ( $property === null || ! $property->exists() ) {
 }
 
 $amenities = $property->get_amenities( 3 );
+$labels    = $property->get_labels();
 ?>
 <a href="<?php echo esc_url( $property->get_url() ); ?>" class="property-card">
     <div class="property-card-img">
-        <span class="label orange"><?php echo esc_html( $property->get_delivery_date() ); ?></span>
+        <?php if ( ! empty( $labels[0] ) ) { ?>
+            <span class="label <?php echo esc_attr( strtolower( $labels[0]['color'] ) ); ?>"><?php echo esc_html( $labels[0]['name'] ); ?></span>
+        <?php } ?>
         <img src="<?php echo esc_url( $property->get_thumb() ); ?>" width="370" height="240" alt="Property image">
     </div>
     <div class="property-card-info">

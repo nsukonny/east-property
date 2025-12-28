@@ -22,7 +22,8 @@
                 aria-selected="false" tabindex="-1" data-search-tab data-type="offices">Offices
         </button>
     </div>
-    <form class="tabs-panel" data-search-panel>
+    <form action="<?php echo esc_url( home_url( 'properties' ) ); ?>" class="tabs-panel" method="post"
+          data-search-panel>
         <div class="tabs-fields" role="tabpanel" id="search-tabs-panel" aria-labelledby="search-tabs-tab-all">
             <div class="tab-field">
                 <button type="button" class="tab-selector" data-search-selector="available" aria-haspopup="listbox"
@@ -30,7 +31,8 @@
                     <span class="tab-field-label">Available</span>
                     <span class="tab-selector-value">
                         <span data-search-available-text>2026</span>
-                        <img src="<?php echo THEME_URL; ?>/assets/img/arrow-down.svg" width="16" height="16" alt="Dropdown arrow">
+                        <img src="<?php echo THEME_URL; ?>/assets/img/arrow-down.svg" width="16" height="16"
+                             alt="Dropdown arrow">
                     </span>
                 </button>
                 <div class="tab-dropdown" role="listbox" tabindex="-1" data-search-dropdown="available"

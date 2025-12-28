@@ -1,0 +1,6 @@
+<button class="button @@class" @@if (typeof dataModal !== 'undefined' && dataModal) {data-modal-open="@@dataModal"}>
+    @@if (typeof src !== 'undefined' && src) {
+    <img src="@@src" width="16" height="16" alt="@@alt || ''">
+    }
+    <span>@@text</span>
+</button>

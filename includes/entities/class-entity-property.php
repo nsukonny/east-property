@@ -22,9 +22,9 @@ final class Property {
 	 */
 	public function get_amenities( int $limit = 100 ): array { //TODO get real amenities
 		return array(
-			array( 'icon' => THEME_URL . '/assets/img/bed.svg', 'value' => '3 Beds' ),
-			array( 'icon' => THEME_URL . '/assets/img/bath.svg', 'value' => '2 Bath' ),
-			array( 'icon' => THEME_URL . '/assets/img/meters.svg', 'value' => '120 sqft' ),
+			array( 'icon' => THEME_URL . '/assets/img/bed.svg', 'value' => '2-5 Beds' ),
+			array( 'icon' => THEME_URL . '/assets/img/bath.svg', 'value' => '1-3 Baths' ),
+			array( 'icon' => THEME_URL . '/assets/img/meters.svg', 'value' => '90-210 sqft' ),
 		);
 	}
 
@@ -58,26 +58,6 @@ final class Property {
 		}
 
 		return $developer;
-	}
-
-	/**
-	 * Get gallery images
-	 *
-	 * @return array
-	 */
-	public function get_gallery(): array {
-		if ( ! empty( $this->gallery ) ) {
-			return $this->gallery;
-		}
-
-		$gallery = $this->get_field( 'gallery' );
-		if ( empty( $gallery ) ) {
-			return array();
-		}
-
-		$this->gallery = $gallery;
-
-		return $this->gallery;
 	}
 
 	/**
@@ -128,9 +108,27 @@ final class Property {
 			return $this->units;
 		}
 
-		$units = array();
+		$units = get_posts(
+			array(
+				'post_type'      => 'unit',
+				'posts_per_page' => - 1,
+				'meta_query'     => array(
+					array(
+						'key'   => 'property',
+						'value' => $this->get_id(),
+					),
+				),
+			)
+		);
 
-		//$units[] = new Unit();
+		if ( empty( $units ) ) {
+			return array();
+		}
+
+		$this->units = array();
+		foreach ( $units as $unit ) {
+			$this->units[] = new Unit( $unit );
+		}
 
 		return $this->units;
 	}
@@ -164,20 +162,15 @@ final class Property {
 	/**
 	 * Get location
 	 *
-	 * @return array
+	 * @return string
 	 */
-	public function get_location(): array {
+	public function get_location(): string {
 		$location = $this->get_field( 'location' );
 		if ( empty( $location ) ) {
-			return array();
+			return '';
 		}
 
-		$search_link = get_term_link( $this->get_segment_id() );
-
-		return array(
-			'location' => $location,
-			'url'      => $search_link,
-		);
+		return $location;
 	}
 
 	/**
