@@ -3,13 +3,15 @@
  * Entity for "development" Segments (Проект / Building / Community Development)
  */
 
-namespace MessiaTheme\Entities;
+namespace Entities;
 
 final class Property {
 
 	use EntityTrait;
 
 	private array $units = array();
+	private int $middle_price;
+	private array $gallery;
 
 	/**
 	 * Get amenities list for this building
@@ -64,34 +66,45 @@ final class Property {
 	 * @return array
 	 */
 	public function get_gallery(): array {
-		$gallery = array();
-
-		$gallery_json = $this->get_field( 'gallery' );
-		if ( ! is_string( $gallery_json ) ) {
-			return $gallery;
+		if ( ! empty( $this->gallery ) ) {
+			return $this->gallery;
 		}
 
-		$gallery_ids = json_decode( $gallery_json, true );
-		if ( ! is_array( $gallery_ids ) ) {
-			return $gallery;
+		$gallery = $this->get_field( 'gallery' );
+		if ( empty( $gallery ) ) {
+			return array();
 		}
 
-		foreach ( $gallery_ids as $gallery_id ) {
-			$gallery[] = wp_get_attachment_url( (int) $gallery_id['id'] );
-		}
+		$this->gallery = $gallery;
 
-		return $gallery;
+		return $this->gallery;
 	}
 
 	/**
 	 * Get property price
 	 *
-	 * @return float
+	 * @return int
 	 */
-	public function get_price(): float { //TODO get price by all units
-		$price = carbon_get_the_post_meta( 'crb6_price' );
+	public function get_price(): int {
+		if ( ! empty( $this->middle_price ) ) {
+			return $this->middle_price;
+		}
 
-		return $price ? (float) $price : 1600800;
+		$units = $this->get_units();
+		if ( empty( $units ) ) {
+			$this->middle_price = 0;
+
+			return $this->middle_price;
+		}
+
+		$price = 0;
+		foreach ( $units as $unit ) {
+			$price += $unit->get_price();
+		}
+
+		$this->middle_price = round( $price / count( $units ) );
+
+		return $this->middle_price;
 	}
 
 	/**

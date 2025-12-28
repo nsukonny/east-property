@@ -5,7 +5,7 @@
 
 declare( strict_types=1 );
 
-namespace MessiaTheme\Entities;
+namespace Entities;
 
 use WP_Post;
 
@@ -13,9 +13,11 @@ trait EntityTrait {
 
 	protected int $id;
 	protected int $segment_id = 0; //term_id of segment for this object
-	protected array $constructed_data;
+	protected array $fields_cache = array();
 	protected array $post_meta;
 	protected ?WP_Post $post = null;
+	protected string $thumb;
+	protected string $no_image_url = THEME_URL . '/assets/img/no-image.png';
 
 	public function __construct( int|WP_Post $post ) {
 		if ( $post instanceof WP_Post ) {
@@ -104,12 +106,31 @@ trait EntityTrait {
 	 * @return string
 	 */
 	public function get_thumb( string $size = 'medium_large' ): string {
-		$thumb = get_the_post_thumbnail_url( $this->id, $size );
-		if ( ! $thumb ) {
-			$thumb = THEME_URL . '/assets/img/no-image.png';
+		if ( ! empty( $this->thumb ) ) {
+			return $this->thumb;
 		}
 
-		return $thumb;
+		$gallery = $this->get_gallery();
+
+		if ( empty( $gallery ) ) {
+			return $this->no_image_url;
+		}
+
+		if ( ! empty( $gallery[0]['sizes'][ $size ] ) ) {
+			$this->thumb = $gallery[0]['sizes'][ $size ];
+
+			return $this->thumb;
+		}
+
+		if ( ! empty( $gallery[0]['ID'] ) ) {
+			$this->thumb = wp_get_attachment_image_url( (int) $gallery[0]['ID'], $size );
+		}
+
+		if ( empty( $this->thumb ) ) {
+			return $this->no_image_url;
+		}
+
+		return $this->thumb;
 	}
 
 	/**
@@ -166,21 +187,6 @@ trait EntityTrait {
 	}
 
 	/**
-	 * Get constructed data from postmeta
-	 *
-	 * @return mixed
-	 */
-	private function get_constructed_data(): mixed {
-		if ( ! empty( $this->constructed_data ) ) {
-			return $this->constructed_data;
-		}
-
-		$this->constructed_data = get_post_meta( $this->get_id(), MESSIA_POSTMETA_CONSTRUCTED_PREFIX . $this->get_segment_id(), true );
-
-		return $this->constructed_data;
-	}
-
-	/**
 	 * Get Carbon Field value
 	 *
 	 * @param string $field_name
@@ -189,10 +195,17 @@ trait EntityTrait {
 	 */
 	public function get_field( string $field_name ): mixed {
 
-		$constructed_data               = $this->get_constructed_data();
-		$constructed_data['is_popular'] = $this->get_post_meta( 'stuff_meta_is_popular_segment_term_id_' . $this->get_segment_id() )[0] ?? 0;
+		if ( ! empty( $this->fields_cache[ $field_name ] ) ) {
+			return $this->fields_cache[ $field_name ];
+		}
 
-		return $constructed_data[ $field_name ] ?? null;
+		if ( ! function_exists( 'get_field' ) ) {
+			return null;
+		}
+
+		$this->fields_cache[ $field_name ] = get_field( $field_name, $this->get_id() );
+
+		return $this->fields_cache[ $field_name ];
 	}
 
 }

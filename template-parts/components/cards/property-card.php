@@ -2,7 +2,7 @@
 /**
  * Property card component
  *
- * @var \MessiaTheme\Entities\Property $property
+ * @var Entities\Property $property
  */
 
 $property = $args['property'] ?? null;
@@ -14,7 +14,7 @@ $amenities = $property->get_amenities( 3 );
 ?>
 <a href="<?php echo esc_url( $property->get_url() ); ?>" class="property-card">
     <div class="property-card-img">
-        <span class="label"><?php echo esc_html( $property->get_delivery_date() ); ?></span>
+        <span class="label orange"><?php echo esc_html( $property->get_delivery_date() ); ?></span>
         <img src="<?php echo esc_url( $property->get_thumb() ); ?>" width="370" height="240" alt="Property image">
     </div>
     <div class="property-card-info">

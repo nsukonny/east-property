@@ -3,9 +3,9 @@
  * Entity for "Unit" Segments (Ads from Broker we call Unit)
  */
 
-namespace MessiaTheme\Entities;
+namespace Entities;
 
 final class Unit {
 
-	use \MessiaTheme\Entities\EntityTrait;
+	use \Entities\EntityTrait;
 }

@@ -5,12 +5,10 @@
 
 $properties = $args['properties'] ?? null;
 
-if ( empty( $properties ) ) {
-    return;
-}
-
-$first_property = reset( $properties );
-$segment        = $first_property->get_segment();
+$h2          = $args['h2'] ?? '';
+$description = $args['description'] ?? '';
+$href        = $args['href'] ?? '#';
+$link_text   = $args['link_text'] ?? __( 'See all new properties' );
 ?>
 <section class="properties">
     <div class="container">
@@ -18,24 +16,27 @@ $segment        = $first_property->get_segment();
             <?php
             get_template_part( 'template-parts/components/titles/top-title', null,
                     array(
-                            'h2'   => __( 'Featured new projects in the UAE' ),
-                            'desc' => __( 'Aliquam lacinia diam quis lacus euismod' ),
-                            'href' => ! empty( $segment['id'] ) ? get_term_link( (int) $segment['id'] ) : '#',
-                            'link' => __( 'See all new properties' ),
+                            'h2'   => $h2,
+                            'desc' => $description,
+                            'href' => $href,
+                            'link' => $link_text,
                     )
             );
             ?>
-            <div class="properties-cards">
-                <?php
-                foreach ( $properties as $property ) {
-                    get_template_part( 'template-parts/components/cards/property-card', null,
-                            array(
-                                    'property' => $property,
-                            )
-                    );
-                }
-                ?>
-            </div>
+
+            <?php if ( ! empty( $properties ) ) { ?>
+                <div class="properties-cards">
+                    <?php
+                    foreach ( $properties as $property ) {
+                        get_template_part( 'template-parts/components/cards/property-card', null,
+                                array(
+                                        'property' => $property,
+                                )
+                        );
+                    }
+                    ?>
+                </div>
+            <?php } ?>
         </div>
     </div>
 </section>
