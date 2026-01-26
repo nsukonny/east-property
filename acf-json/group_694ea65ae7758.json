@@ -80,8 +80,8 @@
         },
         {
             "key": "field_694ea6b3114e2",
-            "label": "Longtitude",
-            "name": "longtitude",
+            "label": "Longitude",
+            "name": "longitude",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -110,15 +110,15 @@
                 "class": "",
                 "id": ""
             },
-            "display_format": "F j, Y",
-            "return_format": "F j, Y",
+            "display_format": "F Y",
+            "return_format": "F Y",
             "first_day": 1
         },
         {
             "key": "field_694ea826a1147",
             "label": "Property Type",
             "name": "property_type",
-            "type": "text",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -127,11 +127,21 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "choices": {
+                "apartment": "Apartments",
+                "villa": "Villas",
+                "townhouse": "Townhouses",
+                "penthouse": "Penthouses",
+                "house": "Houses",
+                "office": "Offices"
+            },
+            "default_value": false,
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "array",
+            "ajax": 0,
+            "placeholder": ""
         },
         {
             "key": "field_695121424fcb6",
@@ -432,5 +442,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1766934045
+    "modified": 1768917495
 }

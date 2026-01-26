@@ -1,0 +1,53 @@
+<div class="modal-wrapper create-modal" data-modal-id="create-modal">
+    <div class="modal">
+        <div class="modal-info">
+            <div class="modal-title">
+                <h3>
+                    Create account
+                </h3>
+                <button class="modal-close" data-modal-close aria-label="Close">
+                    <img src="<?php echo THEME_URL; ?>/assets/img/close.svg" width="24" height="24" alt="Close icon">
+                </button>
+            </div>
+            <div class="create-modal-inner">
+                <p>
+                    What account at East property gives you:
+                </p>
+                <ul>
+                    <li>
+                        <img src="<?php echo THEME_URL; ?>/assets/img/bookmark.svg" width="24" height="24"
+                             alt="vector icon">
+                        Bookmark your favorites
+                    </li>
+                    <li>
+                        <img src="<?php echo THEME_URL; ?>/assets/img/bell.svg" width="24" height="24"
+                             alt="vector icon">
+                        Get updates about new listings
+                    </li>
+                    <li>
+                        <img src="<?php echo THEME_URL; ?>/assets/img/phone.svg" width="24" height="24"
+                             alt="vector icon">
+                        Sync your data across devices
+                    </li>
+                </ul>
+            </div>
+            <form>
+                <fieldset>
+                    <label for="email2">
+                        Email
+                        <input type="email" id="email2" required>
+                    </label>
+                    <label for="password2">
+                        Password
+                        <input type="password" id="password2" required>
+                    </label>
+                </fieldset>
+                <div class="submit-group end">
+                    <button class="button orange sm" type="submit">
+                        Create account
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

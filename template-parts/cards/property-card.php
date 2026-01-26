@@ -10,8 +10,8 @@ if ( $property === null || ! $property->exists() ) {
     return;
 }
 
-$amenities = $property->get_amenities( 3 );
-$labels    = $property->get_labels();
+$apartments_params = $property->get_apartments_params( 3 );
+$labels            = $property->get_labels();
 ?>
 <a href="<?php echo esc_url( $property->get_url() ); ?>" class="property-card">
     <div class="property-card-img">
@@ -24,12 +24,12 @@ $labels    = $property->get_labels();
         <h3><?php echo esc_html( $property->get_price_html() ); ?></h3>
         <p><?php echo esc_html( $property->get_title() ); ?></p>
 
-        <?php if ( ! empty( $amenities ) ) { ?>
+        <?php if ( ! empty( $apartments_params ) ) { ?>
             <div class="property-card-items">
-                <?php foreach ( $amenities as $amenity ) { ?>
+                <?php foreach ( $apartments_params as $params ) { ?>
                     <div class="property-card-item">
-                        <img src="<?php echo esc_url( $amenity['icon'] ); ?>" width="16" height="16" alt="Vector icon">
-                        <span><?php echo esc_html( $amenity['value'] ); ?></span>
+                        <img src="<?php echo esc_url( $params['icon'] ); ?>" width="16" height="16" alt="Vector icon">
+                        <span><?php echo esc_html( $params['value'] ); ?></span>
                     </div>
                 <?php } ?>
             </div>

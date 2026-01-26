@@ -15,7 +15,7 @@ if ( 404 === get_query_var( 'pagename' ) || is_404() ) {
         <?php
         get_template_part( 'template-parts/sections/index/hero' );
         get_template_part( 'template-parts/sections/index/categories' );
-        get_template_part( 'template-parts/components/lists/featured' );
+        get_template_part( 'components/lists/featured' );
         get_template_part( 'template-parts/sections/index/about' );
         get_template_part( 'template-parts/sections/index/map' );
         ?>

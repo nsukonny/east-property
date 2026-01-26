@@ -54,7 +54,12 @@ function add_theme_styles(): void {
 
 	wp_enqueue_script( THEME_NAME . '-app' );
 
-	wp_localize_script( THEME_NAME . '-app', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+	wp_localize_script( THEME_NAME . '-app', 'ajax_object',
+		array(
+			'ajax_url'    => admin_url( 'admin-ajax.php' ),
+			'_ajax_nonce' => wp_create_nonce( 'get_filtered_properties' ),
+		)
+	);
 }
 
 add_action( 'wp_enqueue_scripts', 'add_theme_styles' );
@@ -71,6 +76,10 @@ if ( function_exists( 'acf_add_options_page' ) ) {
 	);
 }
 
+add_action( 'after_setup_theme', function (): void {
+	add_theme_support( 'post-thumbnails' );
+} );
+
 add_filter( 'show_admin_bar', '__return_false' );
 
 add_image_size( PROJECT_NAME . '-product-thumb', 143, 171, true );
@@ -81,5 +90,5 @@ include_once 'includes/entities/load.php';
 require_once 'includes/registers/acf/loader.php';
 require_once 'includes/registers/post-types/loader.php';
 require_once 'includes/registers/user-roles/loader.php';
-require_once 'template-parts/components/load-components.php';
+require_once 'components/load-components.php';
 require_once 'template-parts/template-parts.php';

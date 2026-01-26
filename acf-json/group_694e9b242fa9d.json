@@ -102,12 +102,12 @@
                 "id": ""
             },
             "choices": {
-                "apartment": "Apartment",
-                "villa": "Villa",
-                "townhouse": "Townhouse",
-                "penthouse": "Penthouse",
-                "house": "House",
-                "office": "Office"
+                "apartment": "Apartments",
+                "villa": "Villas",
+                "townhouse": "Townhouses",
+                "penthouse": "Penthouses",
+                "house": "Houses",
+                "office": "Offices"
             },
             "default_value": "apartment",
             "allow_null": 0,
@@ -246,5 +246,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1766925468
+    "modified": 1768891265
 }

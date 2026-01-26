@@ -3,21 +3,20 @@
  * Single template for Properties (CPT: properties)
  */
 
-get_header();
-?>
-<main>
-	<?php
-	while ( have_posts() ) :
-		the_post();
-		get_template_part( 'template-parts/content', get_post_type() );
+use Entities\Property;
 
-		// Optional: uncomment if you want comments on properties.
-		// if ( comments_open() || get_comments_number() ) {
-		// 	comments_template();
-		// }
-	endwhile;
-	?>
-</main>
+get_header( null, array( 'color' => 'white' ) );
+?>
+    <main>
+        <?php
+        while ( have_posts() ) {
+            the_post();
+
+            $property = new Property( get_the_ID() );
+            get_template_part( 'template-parts/sections/single/items', null, array( 'property' => $property ) );
+        }
+        ?>
+    </main>
 <?php
 get_footer();
 

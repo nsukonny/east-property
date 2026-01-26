@@ -3,23 +3,21 @@
  * Hero section template
  */
 
-$hero = get_field( 'hero_section', 'option' );
-$h1   = ! empty( $hero['title'] ) ? $hero['title'] : get_bloginfo( 'name' );
+$hero             = get_field( 'hero_section', 'option' );
+$h1               = ! empty( $hero['title'] ) ? $hero['title'] : get_bloginfo( 'name' );
+$properties_count = wp_count_posts( 'properties' )->publish;
+$daily_sales      = round( $properties_count / 5 );
 ?>
 <section class="hero">
     <div class="container">
         <div class="hero-wrapper">
             <div class="hero-left">
                 <h1><?php echo $h1; ?></h1>
-                <?php get_template_part( 'template-parts/components/ui/search-tabs', null,
-                        array(
-                                'class' => 'hero-tabs',
-                        )
-                ); ?>
+                <?php get_template_part( 'components/filters/search-tabs' ); ?>
                 <div class="hero-items">
                     <div class="hero-item">
                         <span>
-                            230+
+                            <?php echo esc_attr( $properties_count ); ?>+
                         </span>
                         <p>
                             <?php _e( 'Properties for sale' ); ?>
@@ -27,7 +25,7 @@ $h1   = ! empty( $hero['title'] ) ? $hero['title'] : get_bloginfo( 'name' );
                     </div>
                     <div class="hero-item">
                         <span>
-                           10
+                           <?php echo esc_attr( $daily_sales ); ?>
                         </span>
                         <p>
                             <?php _e( 'Average sales daily' ); ?>

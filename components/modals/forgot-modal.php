@@ -1,0 +1,27 @@
+<div class="modal-wrapper forgot-modal" data-modal-id="forgot-modal">
+    <div class="modal">
+        <div class="modal-info">
+            <div class="modal-title">
+                <h3>
+                    Forgot password
+                </h3>
+                <button class="modal-close" data-modal-close aria-label="Close">
+                    <img src="<?php echo THEME_URL; ?>/assets/img/close.svg" width="24" height="24" alt="Close icon">
+                </button>
+            </div>
+            <form>
+                <fieldset>
+                    <label for="email3">
+                        Email
+                        <input type="email" id="email3" required>
+                    </label>
+                </fieldset>
+                <div class="submit-group end">
+                    <button class="button orange sm" type="submit">
+                        Sent reset password link
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

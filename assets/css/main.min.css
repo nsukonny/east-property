@@ -387,6 +387,25 @@ address {
   background-color: #FFF;
 }
 
+.preloader {
+  position: relative;
+}
+.preloader::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 60px;
+  z-index: 2;
+  background: url("../img/preloader.svg") no-repeat center;
+  opacity: 0.3;
+  background-color: blanchedalmond;
+}
+.preloader a.large-card {
+  opacity: 0.3;
+}
+
 .cookie {
   border: 1px solid #848484;
   background: #F7E7C9;

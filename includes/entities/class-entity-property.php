@@ -1,6 +1,8 @@
 <?php
 /**
  * Entity for "development" Segments (Проект / Building / Community Development)
+ *
+ * @var \Entities\Unit $unit
  */
 
 namespace Entities;
@@ -12,6 +14,7 @@ final class Property {
 	private array $units = array();
 	private int $middle_price;
 	private array $gallery;
+	private array $developer;
 
 	/**
 	 * Get amenities list for this building
@@ -20,12 +23,21 @@ final class Property {
 	 *
 	 * @return array
 	 */
-	public function get_amenities( int $limit = 100 ): array { //TODO get real amenities
+	public function get_apartments_params( int $limit = 100 ): array { //TODO get real amenities
 		return array(
 			array( 'icon' => THEME_URL . '/assets/img/bed.svg', 'value' => '2-5 Beds' ),
 			array( 'icon' => THEME_URL . '/assets/img/bath.svg', 'value' => '1-3 Baths' ),
 			array( 'icon' => THEME_URL . '/assets/img/meters.svg', 'value' => '90-210 sqft' ),
 		);
+	}
+
+	/**
+	 * Get amenities list for this building
+	 *
+	 * @return string
+	 */
+	public function get_amenities(): string {
+		return $this->get_field( 'amenities' );
 	}
 
 	/**
@@ -48,16 +60,35 @@ final class Property {
 	 * @return array
 	 */
 	public function get_developer(): array {
-		$developer          = array();
-		$developer['title'] = $this->get_field( 'developer' );
-		$developer['url']   = $this->get_field( 'developer_url' );
-		$logo               = $this->get_field( 'developer_logo' );
-		if ( ! empty( $logo ) ) {
-			$logo              = json_decode( $logo, true );
-			$developer['logo'] = isset( $logo[0]['id'] ) ? wp_get_attachment_url( (int) $logo[0]['id'] ) : null;
+		if ( ! empty( $this->developer ) ) {
+			return $this->developer;
 		}
 
-		return $developer;
+		$this->developer = array();
+		$developer_post  = $this->get_field( 'developer_rel' );
+		if ( ! empty( $developer_post ) ) {
+			$this->developer['id']    = $developer_post->ID;
+			$this->developer['title'] = get_the_title( $developer_post );
+			$this->developer['url']   = get_field( 'developer_url', $developer_post->ID );
+			$logo_id                  = get_post_thumbnail_id( $developer_post );
+			if ( ! empty( $logo_id ) ) {
+				$this->developer['logo'] = wp_get_attachment_url( (int) $logo_id );
+			} else {
+				$this->developer['logo'] = null;
+			}
+
+			return $this->developer;
+		}
+
+		$this->developer['title'] = $this->get_field( 'developer' );
+		$this->developer['url']   = $this->get_field( 'developer_url' );
+		$logo                     = $this->get_field( 'developer_logo' );
+		if ( ! empty( $logo ) ) {
+			$logo                    = json_decode( $logo, true );
+			$this->developer['logo'] = isset( $logo[0]['id'] ) ? wp_get_attachment_url( (int) $logo[0]['id'] ) : null;
+		}
+
+		return $this->developer;
 	}
 
 	/**
@@ -134,6 +165,74 @@ final class Property {
 	}
 
 	/**
+	 * Get latitude
+	 *
+	 * @return string
+	 */
+	public function get_latitude(): string {
+		return $this->get_field( 'latitude' ) ?: '';
+	}
+
+	/**
+	 * Get longitude
+	 *
+	 * @return string
+	 */
+	public function get_longitude(): string {
+		return $this->get_field( 'longitude' ) ?: '';
+	}
+
+	/**
+	 * Get property units grouped by beds count
+	 *
+	 * @return array
+	 */
+	public function get_units_by_beds(): array {
+		$units         = $this->get_units();
+		$grouped_units = array();
+
+		foreach ( $units as $unit ) {
+			$beds = $unit->get_beds();
+			if ( ! isset( $grouped_units[ $beds ] ) ) {
+				$grouped_units[ $beds ] = array(
+					'beds'      => $beds,
+					'min_baths' => $unit->get_baths(),
+					'max_baths' => $unit->get_baths(),
+					'min_area'  => $unit->get_area(),
+					'max_area'  => $unit->get_area(),
+					'price'     => $unit->get_price(),
+					'units'     => array(),
+				);
+			}
+			$grouped_units[ $beds ]['units'][] = $unit;
+
+			if ( $grouped_units[ $beds ]['min_baths'] > $unit->get_baths() ) {
+				$grouped_units[ $beds ]['min_baths'] = $unit->get_baths();
+			}
+
+			if ( $grouped_units[ $beds ]['max_baths'] < $unit->get_baths() ) {
+				$grouped_units[ $beds ]['max_baths'] = $unit->get_baths();
+			}
+
+			if ( $grouped_units[ $beds ]['min_area'] > $unit->get_area() ) {
+				$grouped_units[ $beds ]['min_area'] = $unit->get_area();
+			}
+
+			if ( $grouped_units[ $beds ]['max_area'] < $unit->get_area() ) {
+				$grouped_units[ $beds ]['max_area'] = $unit->get_area();
+			}
+
+			if ( $grouped_units[ $beds ]['price'] > $unit->get_price() ) {
+				$grouped_units[ $beds ]['price'] = $unit->get_price();
+			}
+		}
+
+		ksort( $grouped_units );
+
+		return $grouped_units;
+	}
+
+	/**
 	 * Get property labels
 	 *
 	 * @return array
@@ -201,7 +300,7 @@ final class Property {
 
 		$property_type = $this->get_field( 'property_type' );
 		if ( ! empty( $property_type ) ) {
-			$information[] = array( 'label' => __( 'Property Type' ), 'value' => (string) $property_type );
+			$information[] = array( 'label' => __( 'Property Type' ), 'value' => (string) $property_type['value'] );
 		}
 
 		$government_fee = $this->get_field( 'government_fee' );

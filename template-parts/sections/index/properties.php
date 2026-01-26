@@ -14,7 +14,7 @@ $link_text   = $args['link_text'] ?? __( 'See all new properties' );
     <div class="container">
         <div class="properties-wrapper">
             <?php
-            get_template_part( 'template-parts/components/titles/top-title', null,
+            get_template_part( 'components/titles/top-title', null,
                     array(
                             'h2'   => $h2,
                             'desc' => $description,
