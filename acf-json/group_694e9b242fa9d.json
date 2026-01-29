@@ -227,6 +227,25 @@
             "max_height": "",
             "max_size": "",
             "mime_types": ""
+        },
+        {
+            "key": "field_69789d75e1ef8",
+            "label": "Popular",
+            "name": "is_popular",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
         }
     ],
     "location": [
@@ -246,5 +265,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1768891265
+    "modified": 1769512333
 }

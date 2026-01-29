@@ -5,34 +5,42 @@
  * @var Entities\Property $property
  */
 
-$property = $args['property'] ?? null;
-if ( $property === null || ! $property->exists() ) {
+$labels        = $args['labels'] ?? '';
+$image         = $args['image'] ?? '';
+$price         = $args['price'] ?? '';
+$title         = $args['title'] ?? '';
+$property_name = $args['property_name'] ?? '';
+$property_url  = $args['property_url'] ?? '#';
+$amenities     = $args['amenities'] ?? '';
+
+if ( empty( $title ) || empty( $price ) || empty( $image ) ) {
     return;
 }
-
-$apartments_params = $property->get_apartments_params( 3 );
-$labels            = $property->get_labels();
 ?>
-<a href="<?php echo esc_url( $property->get_url() ); ?>" class="property-card">
-    <div class="property-card-img">
+<div class="property-card">
+    <a href="#" class="property-card-img">
         <?php if ( ! empty( $labels[0] ) ) { ?>
             <span class="label <?php echo esc_attr( strtolower( $labels[0]['color'] ) ); ?>"><?php echo esc_html( $labels[0]['name'] ); ?></span>
         <?php } ?>
-        <img src="<?php echo esc_url( $property->get_thumb() ); ?>" width="370" height="240" alt="Property image">
-    </div>
+        <img src="<?php echo esc_url( $image ); ?>" alt="Property image">
+    </a>
     <div class="property-card-info">
-        <h3><?php echo esc_html( $property->get_price_html() ); ?></h3>
-        <p><?php echo esc_html( $property->get_title() ); ?></p>
+        <h3><?php echo esc_html( $price ); ?></h3>
+        <p><?php echo esc_html( $title ); ?></p>
 
-        <?php if ( ! empty( $apartments_params ) ) { ?>
+        <?php if ( ! empty( $property_name ) ) { ?>
+            <a href="<?php echo esc_url( $property_url ); ?>"><?php echo esc_html( $property_name ); ?></a>
+        <?php } ?>
+
+        <?php if ( ! empty( $amenities ) ) { ?>
             <div class="property-card-items">
-                <?php foreach ( $apartments_params as $params ) { ?>
+                <?php foreach ( $amenities as $amenity ) { ?>
                     <div class="property-card-item">
-                        <img src="<?php echo esc_url( $params['icon'] ); ?>" width="16" height="16" alt="Vector icon">
-                        <span><?php echo esc_html( $params['value'] ); ?></span>
+                        <img src="<?php echo esc_url( $amenity['icon'] ); ?>" width="16" height="16" alt="Vector icon">
+                        <span><?php echo esc_html( $amenity['value'] ); ?></span>
                     </div>
                 <?php } ?>
             </div>
         <?php } ?>
     </div>
-</a>
+</div>

@@ -7,6 +7,8 @@
 
 namespace Entities;
 
+use Developer;
+
 final class Property {
 
 	use EntityTrait;
@@ -14,7 +16,7 @@ final class Property {
 	private array $units = array();
 	private int $middle_price;
 	private array $gallery;
-	private array $developer;
+	private $developer;
 
 	/**
 	 * Get amenities list for this building
@@ -43,49 +45,41 @@ final class Property {
 	/**
 	 * Get delivery date
 	 *
+	 * @param bool $in_date_format
+	 *
 	 * @return string
 	 */
-	public function get_delivery_date(): string {
+	public function get_delivery_date( bool $in_date_format = true ): string {
 		$date = $this->get_field( 'delivery_date' );
 		if ( empty( $date ) ) {
 			return '';
 		}
 
-		return date_i18n( get_option( 'date_format' ), strtotime( $date ) );
+		if ( $in_date_format ) {
+			return date_i18n( get_option( 'date_format' ), strtotime( $date ) );
+		}
+
+		return $date;
 	}
 
 	/**
 	 * Get developer info
 	 *
-	 * @return array
+	 * @return Developer|null
 	 */
-	public function get_developer(): array {
+	public function get_developer(): ?Developer {
 		if ( ! empty( $this->developer ) ) {
 			return $this->developer;
 		}
 
-		$this->developer = array();
-		$developer_post  = $this->get_field( 'developer_rel' );
-		if ( ! empty( $developer_post ) ) {
-			$this->developer['id']    = $developer_post->ID;
-			$this->developer['title'] = get_the_title( $developer_post );
-			$this->developer['url']   = get_field( 'developer_url', $developer_post->ID );
-			$logo_id                  = get_post_thumbnail_id( $developer_post );
-			if ( ! empty( $logo_id ) ) {
-				$this->developer['logo'] = wp_get_attachment_url( (int) $logo_id );
-			} else {
-				$this->developer['logo'] = null;
-			}
-
-			return $this->developer;
+		$developer = $this->get_field( 'developer_rel' );
+		if ( empty( $developer ) ) {
+			return null;
 		}
 
-		$this->developer['title'] = $this->get_field( 'developer' );
-		$this->developer['url']   = $this->get_field( 'developer_url' );
-		$logo                     = $this->get_field( 'developer_logo' );
-		if ( ! empty( $logo ) ) {
-			$logo                    = json_decode( $logo, true );
-			$this->developer['logo'] = isset( $logo[0]['id'] ) ? wp_get_attachment_url( (int) $logo[0]['id'] ) : null;
+		$this->developer = new Developer( $developer->ID );
+		if ( empty( $this->developer ) ) {
+			return null;
 		}
 
 		return $this->developer;
@@ -127,6 +121,15 @@ final class Property {
 		$price = $this->get_price();
 
 		return sprintf( '%s %s', __( 'AED' ), number_format( (float) $price, 0, '.', ',' ) );
+	}
+
+	/**
+	 * Get property type
+	 *
+	 * @return array
+	 */
+	public function get_property_type(): array {
+		return $this->get_field( 'property_type' );
 	}
 
 	/**

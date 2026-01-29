@@ -1,8 +1,7 @@
 <?php
 /**
- * Home template
+ * Template Name: Homepage
  */
-
 get_header( null, array( 'color' => 'sand' ) );
 
 if ( 404 === get_query_var( 'pagename' ) || is_404() ) {
@@ -22,3 +21,4 @@ if ( 404 === get_query_var( 'pagename' ) || is_404() ) {
     </main>
 <?php
 get_footer();
+

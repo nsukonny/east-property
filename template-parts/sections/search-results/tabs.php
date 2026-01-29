@@ -3,8 +3,9 @@
  * Search results tabs section
  */
 
-$h2    = $args['h2'] ?? '';
-$cards = $args['cards'] ?? '';
+$h2            = $args['h2'] ?? '';
+$cards         = $args['cards'] ?? '';
+$card_template = $args['card_template'] ?? 'large-card';
 ?>
 <section class="result-tabs" data-tabs>
     <div class="container">
@@ -22,6 +23,7 @@ $cards = $args['cards'] ?? '';
             <div class="result-tabs-content active" id="result-tabs-list-panel" data-tab-panel data-tab="list"
                  role="tabpanel" aria-labelledby="result-tabs-list-tab">
                 <div class="content-title">
+                    <?php get_template_part( 'components/common/breadcrumbs' ); ?>
                     <div class="title-top">
                         <h2><?php echo esc_html( $h2 ); ?></h2>
                         <?php
@@ -40,15 +42,18 @@ $cards = $args['cards'] ?? '';
                     <?php
                     if ( ! empty( $cards ) ) {
                         foreach ( $cards as $card ) {
-                            get_template_part( 'template-parts/cards/large-card', null,
+                            get_template_part( 'template-parts/cards/' . $card_template, null,
                                     array(
-                                            'title'     => $card['title'],
-                                            'price'     => $card['price'],
-                                            'location'  => $card['location'],
-                                            'gallery'   => $card['gallery'],
-                                            'labels'    => $card['labels'] ?? array(),
-                                            'amenities' => $card['amenities'] ?? array(),
-                                            'url'       => $card['url'],
+                                            'title'          => $card['title'],
+                                            'price'          => $card['price'],
+                                            'location'       => $card['location'],
+                                            'gallery'        => $card['gallery'],
+                                            'labels'         => $card['labels'] ?? array(),
+                                            'amenities'      => $card['amenities'] ?? array(),
+                                            'property_name'  => $card['property_name'] ?? '',
+                                            'property_url'   => $card['property_url'] ?? '',
+                                            'developer_name' => $card['developer_name'] ?? '',
+                                            'url'            => $card['url'],
                                     )
                             );
                         }
@@ -68,9 +73,9 @@ $cards = $args['cards'] ?? '';
                                 data-src="https://www.google.com/maps?q=Dubai&z=12&output=embed"
                         ></iframe>
                     </div>
-                    <?php if ( ! empty( $cards ) ) { ?>
-                        <div class="content-scroll">
-                            <?php
+                    <div class="content-scroll">
+                        <?php
+                        if ( ! empty( $cards ) ) {
                             foreach ( $cards as $card ) {
                                 get_template_part( 'template-parts/cards/small-card', null,
                                         array(
@@ -84,9 +89,10 @@ $cards = $args['cards'] ?? '';
                                         )
                                 );
                             }
-                            ?>
-                        </div>
-                    <?php } ?>
+                        }
+                        ?>
+                    </div>
+
                 </div>
             </div>
         </div>

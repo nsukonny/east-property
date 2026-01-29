@@ -1,0 +1,211 @@
+@use '../../../../scss/vars/vars' as v;
+@use '../../../../scss/mixins/typography/titles' as h;
+@use '../../../../scss/mixins/typography/labels' as l;
+@use '../../../../scss/mixins/typography/text' as t;
+
+.large-card {
+	width: 100%;
+
+	&-inner {
+		display: flex;
+		flex-direction: column-reverse;
+		align-items: stretch;
+
+		@media(min-width: v.$md) {
+			flex-direction: row;
+		}
+	}
+
+	&-left {
+		display: flex;
+		width: 100%;
+
+		@media(min-width: v.$md) {
+			max-width: 525px;
+		}
+	}
+
+	&-images {
+		width: 100%;
+		height: 200px;
+		display: flex;
+		align-items: center;
+		gap: 2px;
+
+		@media(min-width: v.$md) {
+			height: 240px;
+		}
+
+		&-left {
+			width: 60%;
+			height: 100%;
+
+			@media(min-width: v.$md) {
+				width: 71%;
+			}
+
+			img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				border-bottom-left-radius: v.$br8;
+
+				@media(min-width: v.$md) {
+					border-top-left-radius: v.$br8;
+					border-bottom-left-radius: v.$br8;
+				}
+			}
+		}
+
+		&-right {
+			width: 40%;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 2px;
+
+			@media(min-width: v.$md) {
+				width: 29%;
+			}
+
+			img {
+				width: 100%;
+				height: 50%;
+				object-fit: cover;
+			}
+		}
+	}
+
+	&-right {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		flex-grow: 1;
+		padding: 16px;
+		gap: 16px;
+		border: 1px solid v.$c-grey-95;
+		border-top-left-radius: v.$br8;
+		border-top-right-radius: v.$br8;
+
+		@media(min-width: v.$md) {
+			border-left: 0;
+			border-radius: v.$br8;
+			padding: 16px 16px 16px 32px;
+		}
+	}
+
+	&-top {
+		width: 100%;
+		display: flex;
+		align-items: flex-start;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 24px;
+		margin-bottom: auto;
+
+		&-left {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 4px;
+
+			.large-card-dev {
+				color: v.$c-black;
+
+				@include l.t-label;
+			}
+		}
+
+		&-title {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+
+			.subtext {
+				color: v.$c-black;
+
+				@include t.t-smallest(true);
+			}
+
+			.large-card-price {
+				color: v.$c-black;
+
+				@include h.t-title-bold;
+			}
+		}
+
+		&-right {
+			display: flex;
+		}
+
+		.large-card-labels {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 8px;
+		}
+	}
+
+	&-bottom {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+	}
+
+	&-info {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+
+		&-top {
+			width: 100%;
+		}
+
+		&-bottom {
+			width: 100%;
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: space-between;
+			gap: 16px;
+
+			p {
+				color: v.$c-black;
+
+				@include t.t-text;
+			}
+
+			.view-details {
+				color: v.$c-black;
+				text-decoration: underline;
+
+				@include l.t-label;
+			}
+		}
+
+		&-items {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 12px;
+
+			@media(min-width: v.$md) {
+				gap: 24px;
+			}
+
+			span {
+				display: flex;
+				align-items: center;
+				gap: 4px;
+				color: v.$c-black;
+
+				@include t.t-text;
+			}
+		}
+	}
+}

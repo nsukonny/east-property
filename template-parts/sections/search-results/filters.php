@@ -3,7 +3,8 @@
  * Search results filters section
  */
 $h2         = $args['h2'] ?? '';
-$properties = $args['properties'] ?? '';
+$properties = $args['properties'] ?? array();
+$units      = $args['units'] ?? array();
 ?>
 <section class="results-filters">
     <h2 class="sr-only"><?php echo esc_html( $h2 ); ?></h2>
@@ -11,8 +12,8 @@ $properties = $args['properties'] ?? '';
         <?php
         get_template_part( 'components/filters/result-filters', null,
                 array(
-                        'properties'  => $properties,
-                        'total_found' => count( $properties ),
+                        'post_type'   => ! empty( $properties ) ? 'property' : 'unit',
+                        'total_found' => ! empty( $properties ) ? count( $properties ) : count( $units ),
                 )
         );
         ?>

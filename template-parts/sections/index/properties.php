@@ -3,12 +3,13 @@
  * Featured properties section
  */
 
-$properties = $args['properties'] ?? null;
+$units = $args['units'] ?? null;
 
-$h2          = $args['h2'] ?? '';
-$description = $args['description'] ?? '';
-$href        = $args['href'] ?? '#';
-$link_text   = $args['link_text'] ?? __( 'See all new properties' );
+$h2            = $args['h2'] ?? '';
+$description   = $args['description'] ?? '';
+$href          = $args['href'] ?? '#';
+$link_text     = $args['link_text'] ?? __( 'See all new properties' );
+$card_template = $args['card_template'] ?? 'unit-card';
 ?>
 <section class="properties">
     <div class="container">
@@ -24,13 +25,14 @@ $link_text   = $args['link_text'] ?? __( 'See all new properties' );
             );
             ?>
 
-            <?php if ( ! empty( $properties ) ) { ?>
+            <?php if ( ! empty( $units ) ) { ?>
                 <div class="properties-cards">
                     <?php
-                    foreach ( $properties as $property ) {
-                        get_template_part( 'template-parts/cards/property-card', null,
+                    foreach ( $units as $unit ) {
+                        get_template_part( 'components/cards/unit-card', null,
                                 array(
-                                        'property' => $property,
+                                        'unit'     => $unit,
+                                        'template' => $card_template,
                                 )
                         );
                     }

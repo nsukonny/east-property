@@ -35,19 +35,6 @@ function get_properties(): array {
 		);
 	}
 
-	/**
-	 * filters:
-	 * price
-	 * 2983334
-	 * property_type
-	 * villa
-	 * developer
-	 * 5319
-	 * area
-	 * 1540
-	 */
-
-
 	$properties_posts = get_posts( $args );
 	if ( empty( $properties_posts ) ) {
 		return array();

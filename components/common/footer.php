@@ -126,5 +126,6 @@ get_template_part( 'components/modals/create-modal' );
 get_template_part( 'components/modals/signin-modal' );
 get_template_part( 'components/modals/forgot-modal' );
 get_template_part( 'components/modals/desc-modal' );
+get_template_part( 'components/modals/broker-modal' );
 
 wp_footer();

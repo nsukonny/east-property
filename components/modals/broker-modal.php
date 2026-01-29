@@ -1,9 +1,4 @@
 <?php
-/**
- * Quote request modal
- *
- * @var WP_User $broker
- */
 
 use Entities\Developer;
 
@@ -22,18 +17,16 @@ if ( empty( $brokers ) ) {
 
 global $post;
 
-$broker         = array_shift( $brokers );
+$broker         = array_shift( $brokers ); //TODO temporary using just one broker
 $whats_app_link = get_user_meta( $broker->ID, 'whats_app', true );
-$property       = new \Entities\Property( $post );
-$developer      = $property->get_developer();
-$developer_url  = null !== $developer ? $developer->get_developer_url() : '';
+$phone          = get_user_meta( $broker->ID, 'phone', true );
 ?>
-<div class="modal-wrapper quote-modal" data-modal-id="quote-modal">
+<div class="modal-wrapper broker-modal" data-modal-id="broker-modal">
     <div class="modal">
         <div class="modal-info">
             <div class="modal-title">
                 <h3>
-                    <?php _e( 'Request a quote' ); ?>
+                    <?php _e( 'Contact broker' ); ?>
                 </h3>
                 <button class="modal-close" data-modal-close aria-label="Close">
                     <img src="<?php echo THEME_URL; ?>/assets/img/close.svg" width="24" height="24" alt="Close icon">
@@ -46,7 +39,7 @@ $developer_url  = null !== $developer ? $developer->get_developer_url() : '';
                 <ul>
                     <li>
                         <img src="<?php echo THEME_URL; ?>/assets/img/key.svg" width="16" height="16" alt="vector icon">
-                        <?php _e( 'We work directly with builders' ); ?>
+                        <?php _e( 'We work directly with brokers' ); ?>
                     </li>
                     <li>
                         <img src="<?php echo THEME_URL; ?>/assets/img/secure.svg" width="16" height="16"
@@ -61,12 +54,11 @@ $developer_url  = null !== $developer ? $developer->get_developer_url() : '';
                 </ul>
             </div>
             <div class="modal-links">
-                <?php if ( ! empty( $developer_url ) ) { ?>
-                    <a href="<?php echo esc_url( $developer_url ); ?>" target="_blank" rel="noopener noreferrer"
-                       class="button sm gray">
-                        <img src="<?php echo THEME_URL; ?>/assets/img/link.svg" width="16" height="16"
+                <?php if ( ! empty( $phone ) ) { ?>
+                    <a href="tel:<?php echo esc_attr( $phone ); ?>" target="_blank" rel="noopener noreferrer" class="button sm orange">
+                        <img src="<?php echo THEME_URL; ?>/assets/img/phone.svg" width="16" height="16"
                              alt="vector link">
-                        <?php _e( 'Developer website' ); ?>
+                        <?php _e( 'Phone' ); ?>
                     </a>
                 <?php } ?>
 
@@ -75,7 +67,7 @@ $developer_url  = null !== $developer ? $developer->get_developer_url() : '';
                        class="button sm orange">
                         <img src="<?php echo THEME_URL; ?>/assets/img/call.svg" width="16" height="16"
                              alt="vector link">
-                        <?php _e( 'Contact us' ); ?>
+                        <?php _e( 'Whatsapp' ); ?>
                     </a>
                 <?php } ?>
             </div>

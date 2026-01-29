@@ -1,0 +1,103 @@
+@use '../../../../scss/vars/vars' as v;
+@use '../../../../scss/mixins/typography/titles' as h;
+@use '../../../../scss/mixins/typography/labels' as l;
+@use '../../../../scss/mixins/typography/text' as t;
+
+.small-card {
+	display: flex;
+	flex-shrink: 0;
+	flex-grow: 0;
+	width: 100%;
+	background-color: v.$c-white;
+	border-radius: v.$br12;
+	box-shadow: v.$shadow-1;
+	overflow: hidden;
+
+	&-inner {
+		width: 100%;
+		display: flex;
+		align-items: flex-start;
+		gap: 16px;
+	}
+
+	&-left {
+		width: 100px;
+		height: 100%;
+		aspect-ratio: 1;
+		position: relative;
+		padding: 8px;
+
+		@media(min-width: v.$xs) {
+			width: 128px;
+		}
+
+		img {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+
+	&-date {
+		background-color: v.$c-grey-97;
+		color: v.$c-black;
+		padding: 4px 5px;
+		border-top-right-radius: v.$br8;
+		border-bottom-left-radius: v.$br8;
+		position: relative;
+		z-index: 1;
+
+		@include t.t-smallest(true);
+	}
+
+	&-right {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+		padding: 14px 36px 14px 0;
+	}
+
+	&-title {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+
+		span {
+			color: v.$c-black;
+
+			@include h.t-title-bold;
+		}
+
+		a {
+			text-decoration: underline;
+			color: v.$c-black;
+
+			@include t.t-text;
+		}
+	}
+
+	&-items {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 12px;
+
+		@media(min-width: v.$md) {
+			gap: 24px;
+		}
+
+		span {
+			display: flex;
+			align-items: center;
+			gap: 4px;
+			color: v.$c-black;
+
+			@include t.t-text;
+		}
+	}
+}

@@ -82,7 +82,9 @@ add_action( 'after_setup_theme', function (): void {
 
 add_filter( 'show_admin_bar', '__return_false' );
 
-add_image_size( PROJECT_NAME . '-product-thumb', 143, 171, true );
+add_image_size( 'product-thumb', 143, 171, true );
+add_image_size( 'featured-card', 740, 480, true );
+add_image_size( 'unit-card', 500, 394, true );
 
 add_filter( 'woocommerce_enqueue_styles', '__return_false' );
 

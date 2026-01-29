@@ -114,6 +114,11 @@ trait EntityTrait {
 		return $this->gallery;
 	}
 
+	/**
+	 * Get post URL
+	 *
+	 * @return string
+	 */
 	public function get_url(): string {
 		return get_permalink( $this->id ) ?: '';
 	}
@@ -131,7 +136,6 @@ trait EntityTrait {
 		}
 
 		$gallery = $this->get_gallery();
-
 		if ( empty( $gallery ) ) {
 			return $this->no_image_url;
 		}

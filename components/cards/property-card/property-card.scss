@@ -1,0 +1,113 @@
+@use '../../../../scss/vars/vars' as v;
+@use '../../../../scss/mixins/typography/text' as t;
+@use '../../../../scss/mixins/typography/labels' as l;
+@use '../../../../scss/mixins/typography/titles' as h;
+@use '../../../../scss/mixins/global' as g;
+
+.property-card {
+	width: 100%;
+	box-shadow: v.$shadow-1;
+	background-color: v.$c-white;
+	border-radius: v.$br8;
+
+	@media(min-width: v.$sm) {
+		width: calc(100% / 2 - 16px);
+	}
+
+	@media(min-width: v.$xl) {
+		width: calc(100% / 3 - 30px);
+	}
+
+	@include g.hover {
+		.property-card-img img {
+			transform: scale(1.05);
+		}
+	}
+
+	&-img {
+		position: relative;
+		height: 200px;
+		border-radius: v.$br8;
+		overflow: hidden;
+
+		@media(min-width: v.$xl) {
+			height: 240px;
+		}
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			border-radius: v.$br8;
+			transition: transform ease-in-out v.$tr;
+		}
+
+		.label {
+			position: absolute;
+			top: 24px;
+			left: 24px;
+			display: inline-flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 10;
+
+			@include t.t-smallest;
+		}
+	}
+
+	&-info {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+		padding: 16px 20px;
+		background-color: v.$c-white;
+		border-bottom-left-radius: v.$br8;
+		border-bottom-right-radius: v.$br8;
+
+		h3 {
+			color: v.$c-black;
+
+			@include h.t-title-bold;
+		}
+
+		p, a {
+			color: v.$c-black;
+
+			@include l.t-label;
+		}
+
+		a {
+			text-decoration: underline;
+		}
+	}
+
+	&-items {
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 8px;
+
+		@media(min-width: v.$xl) {
+			gap: 24px;
+		}
+	}
+
+	&-item {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+
+		img {
+			width: 16px;
+			height: 16px;
+		}
+
+		span {
+			color: v.$c-black;
+
+			@include t.t-text;
+		}
+	}
+}
