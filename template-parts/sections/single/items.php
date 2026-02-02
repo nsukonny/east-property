@@ -18,10 +18,18 @@ $property_amenities   = $property->get_amenities();
 $latitude             = $property->get_latitude();
 $longitude            = $property->get_longitude();
 $property_information = $property->get_key_information();
+$whatsapp_share_text  = 'https://wa.me/?text=' . rawurlencode( sprintf(
+                '%s | %s | %s View %s',
+                $property->get_title(),
+                $property->get_location(),
+                $property->get_price_html(),
+                get_permalink( $property->get_id() )
+        ) );
 ?>
 <section class="single-items">
     <div class="container">
         <div class="single-items-wrapper">
+            <?php get_template_part( 'components/common/breadcrumbs' ); ?>
             <div class="single-items-top">
                 <div class="single-items-top-left">
                     <h1><?php echo esc_html( $property->get_title() ); ?></h1>
@@ -39,9 +47,12 @@ $property_information = $property->get_key_information();
                     <?php
                     get_template_part( 'components/ui/button', null,
                             array(
-                                    'class' => 'gray sm',
-                                    'text'  => __( 'Share' ),
-                                    'src'   => THEME_URL . '/assets/img/share.svg',
+                                    'class'  => 'gray sm',
+                                    'text'   => __( 'Share' ),
+                                    'src'    => THEME_URL . '/assets/img/share.svg',
+                                    'link'   => $whatsapp_share_text,
+                                    'target' => '_blank',
+                                    'rel'    => 'noopener noreferrer',
                             )
                     );
 

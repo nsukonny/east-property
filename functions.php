@@ -17,11 +17,10 @@ const PROJECT_NAME = 'East Property';
 function add_menus(): void {
 	register_nav_menus(
 		array(
-			'header_menu'           => __( 'Меню в шапке.' ),
-			'header_menu_mobile'    => __( 'Мобильное меню в шапке.' ),
-			'footer_menu'           => __( 'Меню в подвале. Навигация' ),
-			'footer_menu_politics'  => __( 'Меню в подвале. Правовая информация' ),
-			'footer_menu_copyright' => __( 'Меню в подвале. Копирайт' ),
+			'header_menu'             => __( 'Header' ),
+			'footer_menu_popular'     => __( 'Footer | Popular Search' ),
+			'footer_menu_discovery'   => __( 'Footer | Discovery' ),
+			'footer_menu_quick_links' => __( 'Footer | Quick Links' ),
 		)
 	);
 }

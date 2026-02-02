@@ -12,7 +12,7 @@ $units      = $args['units'] ?? array();
         <?php
         get_template_part( 'components/filters/result-filters', null,
                 array(
-                        'post_type'   => ! empty( $properties ) ? 'property' : 'unit',
+                        'post_type'   => ! empty( $properties ) ? 'properties' : 'unit',
                         'total_found' => ! empty( $properties ) ? count( $properties ) : count( $units ),
                 )
         );

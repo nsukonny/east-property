@@ -9,7 +9,11 @@ if ( is_front_page() ) {
     return;
 }
 
-$current_page_title = get_the_title();
+if ( is_archive() ) {
+    $current_page_title = post_type_archive_title( '', false );
+} else {
+    $current_page_title = get_the_title();
+}
 
 ?>
 <nav class="woocommerce-breadcrumb" aria-label="Breadcrumb">

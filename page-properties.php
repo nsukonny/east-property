@@ -1,6 +1,6 @@
 <?php
 /**
- * Template for Displaying Property Single Page
+ * * Template Name: Properties Listing Page
  */
 get_header();
 ?>

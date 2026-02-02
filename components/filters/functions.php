@@ -79,6 +79,10 @@ function get_search_tabs_data( string $post_type = 'properties' ): array { //TOD
 
 	$search_tabs_data            = array();
 	$search_tabs_data['filters'] = array(
+		'location'      => array(
+			'label'   => __( 'Location', 'east' ),
+			'options' => get_locations(),
+		),
 		'available'     => array(
 			'label'   => __( 'Available', 'east' ),
 			'options' => get_range_steps( $delivery_date_min, $delivery_date_max ),
@@ -189,13 +193,13 @@ function get_search_tabs_data( string $post_type = 'properties' ): array { //TOD
  */
 function get_properties_search_tabs_data(): array {
 
-	$units = get_posts( array(
+	$properties = get_posts( array(
 		'post_type'      => 'properties',
 		'posts_per_page' => - 1,
 		'post_status'    => 'publish',
 	) );
 
-	if ( empty( $units ) ) {
+	if ( empty( $properties ) ) {
 		return array();
 	}
 
@@ -207,21 +211,17 @@ function get_properties_search_tabs_data(): array {
 	$delivery_date_min = null;
 	$delivery_date_max = null;
 
-	foreach ( $units as $unit ) {
-		$property = get_field( 'property', $unit->ID );
-		if ( empty( $property ) ) {
-			continue;
-		}
-
-		$developer = get_field( 'developer_rel', $property->ID );
-		if ( ! empty( $developer ) && ! in_array( $developer, $developers, true ) ) {
-			$developers[] = array(
-				'value' => (string) $developer->ID,
-				'label' => (string) $developer->post_title,
+	foreach ( $properties as $property_post ) {
+		$property  = new \Entities\Property( $property_post );
+		$developer = $property->get_developer();
+		if ( null !== $developer && ! isset( $developers[ $developer->get_id() ] ) ) {
+			$developers[ $developer->get_id() ] = array(
+				'value' => $developer->get_id(),
+				'label' => $developer->get_title(),
 			);
 		}
 
-		$price = get_field( 'price', $unit->ID );
+		$price = $property->get_price();
 		if ( ! empty( $price ) && ( null === $price_min || $price < $price_min ) ) {
 			$price_min = $price;
 		}
@@ -229,7 +229,7 @@ function get_properties_search_tabs_data(): array {
 			$price_max = $price;
 		}
 
-		$delivery_date = get_field( 'delivery_date', $property->ID );
+		$delivery_date = $property->get_delivery_date();
 		$delivery_date = ! empty( $delivery_date ) ? date( 'Y', strtotime( $delivery_date ) ) : null;
 		if ( ! empty( $delivery_date ) && ( null === $delivery_date_min || $delivery_date_min > $delivery_date ) ) {
 			$delivery_date_min = $delivery_date;
@@ -237,18 +237,14 @@ function get_properties_search_tabs_data(): array {
 		if ( ! empty( $delivery_date ) && ( null === $delivery_date_max || $delivery_date_max < $delivery_date ) ) {
 			$delivery_date_max = $delivery_date;
 		}
-
-		$area = (int) get_field( 'area_size', $unit->ID );
-		if ( ! empty( $area ) && ( null === $area_min || $area < $area_min ) ) {
-			$area_min = $area;
-		}
-		if ( ! empty( $area ) && ( null === $area_max || $area > $area_max ) ) {
-			$area_max = $area;
-		}
 	}
 
 	$search_tabs_data            = array();
 	$search_tabs_data['filters'] = array(
+		'location'      => array(
+			'label'   => __( 'Location', 'east' ),
+			'options' => get_locations(),
+		),
 		'available'     => array(
 			'label'   => __( 'Available', 'east' ),
 			'options' => get_range_steps( $delivery_date_min, $delivery_date_max ),
@@ -264,33 +260,6 @@ function get_properties_search_tabs_data(): array {
 		'developer'     => array(
 			'label'   => __( 'Developer', 'east' ),
 			'options' => get_developers_list(),
-		),
-		'area'          => array(
-			'label'   => __( 'Area', 'east' ),
-			'options' => get_range_steps( $area_min, $area_max ),
-		),
-		'beds'          => array(
-			'label'   => __( 'Beds', 'east' ),
-			'options' => array(
-				array( 'value' => '0', 'label' => 'Studio' ),
-				array( 'value' => '1', 'label' => '1', 'active' => true ),
-				array( 'value' => '2', 'label' => '2', 'active' => true ),
-				array( 'value' => '3', 'label' => '3' ),
-				array( 'value' => '4', 'label' => '4' ),
-				array( 'value' => '5', 'label' => '5' ),
-				array( 'value' => '6', 'label' => '6' ),
-				array( 'value' => '7', 'label' => '7+' ),
-			),
-		),
-		'baths'         => array(
-			'label'   => __( 'Baths', 'east' ),
-			'options' => array(
-				array( 'value' => '1', 'label' => '1' ),
-				array( 'value' => '2', 'label' => '2', 'active' => true ),
-				array( 'value' => '3', 'label' => '3' ),
-				array( 'value' => '4', 'label' => '4' ),
-				array( 'value' => '5', 'label' => '5+' ),
-			),
 		),
 	);
 
@@ -415,6 +384,28 @@ function get_developers_list(): array {
 		$results[] = array(
 			'value' => (string) $developer->ID,
 			'label' => (string) $developer->post_title,
+		);
+	}
+
+	return $results;
+}
+
+/**
+ * Get list of all parent 0 categories instead of uncategorized
+ *
+ */
+function get_locations(): array {
+	$locations = get_terms( array(
+		'taxonomy'   => 'category',
+		'hide_empty' => true,
+		//'parent'     => 0,
+	) );
+
+	$results = array( array( 'value' => 'all', 'label' => __( 'All Locations' ) ) );
+	foreach ( $locations as $location ) {
+		$results[] = array(
+			'value' => $location->slug,
+			'label' => $location->name,
 		);
 	}
 

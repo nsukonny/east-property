@@ -41,7 +41,3 @@ get_template_part( 'template-parts/sections/search-results/tabs', null,
 		'card_template' => 'unit-card',
 	)
 );
-
-//        @@include( 'sections/properties/filters/filters.html' )
-//    @@include( 'sections/properties/tabs/tabs.html' )
-//

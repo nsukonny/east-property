@@ -53,6 +53,14 @@ function get_units(): array {
 
 		$property = $unit->get_property();
 
+		$location = ! empty( $_REQUEST['location'] ) && 'all' !== $_REQUEST['location'] ? sanitize_text_field( $_REQUEST['location'] ) : null;
+		if ( null !== $location ) {
+			$term = get_term_by( 'slug', $location, 'category' );
+			if ( null === $term || ! has_term( $term->term_id, 'category', $property->get_id() ) ) {
+				continue;
+			}
+		}
+
 		if ( ! empty( $_REQUEST['available'] ) && 'all' !== $_REQUEST['available'] && null !== $property ) {
 			$year = sanitize_text_field( $_REQUEST['available'] );
 

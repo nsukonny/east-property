@@ -35,6 +35,20 @@ function get_properties(): array {
 		);
 	}
 
+	$location = ! empty( $_REQUEST['location'] ) && 'all' !== $_REQUEST['location'] ? sanitize_text_field( $_REQUEST['location'] ) : null;
+	if ( null !== $location ) {
+		$term = get_term_by( 'slug', $location, 'category' );
+		if ( null !== $term ) {
+			$args['tax_query'] = array(
+				array(
+					'taxonomy' => 'category',
+					'field'    => 'term_id',
+					'terms'    => $term->term_id,
+				),
+			);
+		}
+	}
+
 	$properties_posts = get_posts( $args );
 	if ( empty( $properties_posts ) ) {
 		return array();

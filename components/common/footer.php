@@ -10,8 +10,8 @@
                     <div class="footer-info">
                         <div class="subscribe">
                             <label for="subs">
-                                <span>Keep Yourself Up to Date</span>
-                                <input type="email" id="subs" placeholder="Your email address">
+                                <span><?php _e( 'Keep Yourself Up to Date' ); ?></span>
+                                <input type="email" id="subs" placeholder="<?php _e( 'Your email address' ); ?>">
                             </label>
                             <?php
                             get_template_part( 'components/ui/button', null,
@@ -45,71 +45,63 @@
                     </div>
                     <div class="footer-menu">
                         <nav>
-                            <ul class="menu">
-                                <li class="menu-item">
-                                    <span>Popular Search</span>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="#">Apartment for Sale</a>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="#">Houses for Sale</a>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="#">Villas for Sale</a>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="#">Offices for Sale</a>
-                                </li>
-                            </ul>
-                            <ul class="menu">
-                                <li class="menu-item">
-                                    <span>Discovery</span>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="#">Dubai</a>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="#">Abu Dhabi</a>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="#">Palm Jumeirah</a>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="#">Dubai Hills</a>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="#">Business bay</a>
-                                </li>
-                            </ul>
+                            <?php
+                            if ( has_nav_menu( 'footer_menu_popular' ) ) {
+                                ?>
+                                <ul class="menu">
+                                    <li class="menu-item">
+                                        <span><?php _e( 'Popular Search' ); ?></span>
+                                    </li>
+                                    <?php
+                                    wp_nav_menu( array(
+                                            'theme_location' => 'footer_menu_popular',
+                                            'container'      => false,
+                                            'items_wrap'     => '%3$s',
+                                            'depth'          => 1,
+                                            'fallback_cb'    => false,
+                                    ) );
+                                    ?>
+                                </ul>
+                            <?php } ?>
+
+                            <?php
+                            if ( has_nav_menu( 'footer_menu_discovery' ) ) {
+                                ?>
+                                <ul class="menu">
+                                    <li class="menu-item">
+                                        <span><?php _e( 'Discovery' ); ?></span>
+                                    </li>
+                                    <?php
+                                    wp_nav_menu( array(
+                                            'theme_location' => 'footer_menu_discovery',
+                                            'container'      => false,
+                                            'items_wrap'     => '%3$s',
+                                            'depth'          => 1,
+                                            'fallback_cb'    => false,
+                                    ) );
+                                    ?>
+                                </ul>
+                            <?php } ?>
                         </nav>
                         <nav>
-                            <ul class="menu">
-                                <li class="menu-item">
-                                    <span>Quick Links</span>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="#">Terms of Use</a>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="#">Privacy Policy</a>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="#">Pricing Plans</a>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="#">Our Services</a>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="#">Contact</a>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="#">Careers</a>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="#">FAQs</a>
-                                </li>
-                            </ul>
+                            <?php
+                            if ( has_nav_menu( 'footer_menu_quick_links' ) ) {
+                                ?>
+                                <ul class="menu">
+                                    <li class="menu-item">
+                                        <span><?php _e( 'Quick Links' ); ?></span>
+                                    </li>
+                                    <?php
+                                    wp_nav_menu( array(
+                                            'theme_location' => 'footer_menu_quick_links',
+                                            'container'      => false,
+                                            'items_wrap'     => '%3$s',
+                                            'depth'          => 1,
+                                            'fallback_cb'    => false,
+                                    ) );
+                                    ?>
+                                </ul>
+                            <?php } ?>
                         </nav>
                     </div>
                 </div>
