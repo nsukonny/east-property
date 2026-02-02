@@ -13,10 +13,11 @@ if ( empty( $property ) ) {
     return;
 }
 
-$labels    = $property->get_labels();
-$amenities = $property->get_amenities();
-$latitude  = $property->get_latitude();
-$longitude = $property->get_longitude();
+$labels               = $property->get_labels();
+$property_amenities   = $property->get_amenities();
+$latitude             = $property->get_latitude();
+$longitude            = $property->get_longitude();
+$property_information = $property->get_key_information();
 ?>
 <section class="single-items">
     <div class="container">
@@ -69,73 +70,78 @@ $longitude = $property->get_longitude();
                 );
                 ?>
                 <div class="single-info">
-                    <div class="single-info-block">
-                        <h3><?php _e( 'Key information' ); ?></h3>
-                        <div class="single-info-rows">
-                            <?php
-                            $col = 0;
-                            foreach ( $property->get_key_information() as $info ) {
-                                $col ++; ?>
-
-                                <?php if ( 1 === $col ) { ?>
-                                    <div class="single-info-row">
-                                <?php } ?>
-
-                                <div class="single-info-col">
-                                    <span><?php echo esc_html( $info['label'] ); ?></span>
-                                    <p><?php echo esc_html( $info['value'] ); ?></p>
-                                </div>
-
-                                <?php if ( 3 <= $col ) {
-                                    $col = 0; ?>
-                                    </div>
-                                <?php } ?>
-
-                            <?php } ?>
-
-                            <?php
-                            $location  = $property->get_location();
-                            $developer = $property->get_developer();
-
-                            if ( ! empty( $location ) ) {
-                                ?>
-                                <div class="single-info-row">
-                                    <div class="single-info-col">
-                                        <span><?php _e( 'Location' ); ?></span>
-                                        <a href="<?php echo esc_url( $developer['url'] ); ?>" target="_blank"
-                                           rel="noopener noreferrer">
-                                            <?php echo esc_html( $location ); ?>
-                                            <img src="<?php echo THEME_URL; ?>/assets/img/link.svg" width="16"
-                                                 height="16" alt="<?php echo esc_html( $location ); ?>">
-                                        </a>
-                                    </div>
-                                </div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                    <?php
-                    $developer = $property->get_developer();
-                    if ( ! empty( $developer ) ) {
-                        ?>
+                    <?php if ( ! empty( $property_information ) ) { ?>
                         <div class="single-info-block">
-                            <div class="developer">
-                                <?php if ( ! empty( $developer['logo'] ) ) { ?>
-                                    <div class="developer-image">
-                                        <img src="<?php echo esc_url( $developer['logo'] ); ?>" width="80"
-                                             height="50"
-                                             alt="<?php echo esc_attr( $developer['title'] ); ?>">
-                                    </div>
-                                <?php } ?>
-                                <div class="developer-info">
-                                    <span><?php echo esc_html( $developer['title'] ); ?></span>
-                                    <?php if ( ! empty( $developer['url'] ) ) { ?>
-                                        <a href="<?php echo esc_url( $developer['url'] ); ?>">
-                                            <?php _e( 'View developer' ); ?>
-                                        </a>
+                            <h3><?php _e( 'Property information' ); ?></h3>
+                            <div class="single-info-rows">
+                                <div class="single-info-row">
+                                    <?php
+                                    $col = 0;
+                                    foreach ( $property_information as $info ) {
+                                        $col ++; ?>
+
+                                        <?php
+                                        if ( 3 === $col ) {
+                                            $i = 0;
+                                            echo '</div><div class="single-info-row">';
+                                        }
+                                        ?>
+
+                                        <div class="single-info-col">
+                                            <span><?php echo esc_html( $info['label'] ); ?></span>
+                                            <p><?php echo esc_html( $info['value'] ); ?></p>
+                                        </div>
+
                                     <?php } ?>
                                 </div>
+                                <?php
+                                $location  = $property->get_location();
+                                $developer = $property->get_developer();
+
+                                if ( ! empty( $location ) ) {
+                                    ?>
+                                    <div class="single-info-row">
+                                        <div class="single-info-col">
+                                            <span><?php _e( 'Location' ); ?></span>
+                                            <a href="<?php echo esc_url( $developer->get_developer_url() ); ?>"
+                                               target="_blank"
+                                               rel="noopener noreferrer">
+                                                <?php echo esc_html( $location ); ?>
+                                                <img src="<?php echo THEME_URL; ?>/assets/img/link.svg" width="16"
+                                                     height="16" alt="<?php echo esc_html( $location ); ?>">
+                                            </a>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                             </div>
                         </div>
+                        <?php
+                        $developer = $property->get_developer();
+                        if ( ! empty( $developer ) ) {
+                            $developer_thumb = $developer->get_thumb() ?: '';
+                            $developer_title = $developer->get_title() ?: '';
+                            $developer_url   = $developer->get_url() ?: '';
+                            ?>
+                            <div class="single-info-block">
+                                <div class="developer">
+                                    <?php if ( ! empty( $developer_thumb ) ) { ?>
+                                        <div class="developer-image">
+                                            <img src="<?php echo esc_url( $developer_thumb ); ?>" width="80"
+                                                 height="50"
+                                                 alt="<?php echo esc_attr( $developer_title ); ?>">
+                                        </div>
+                                    <?php } ?>
+                                    <div class="developer-info">
+                                        <span><?php echo esc_html( $developer_title ); ?></span>
+                                        <?php if ( ! empty( $developer_url ) ) { ?>
+                                            <a href="<?php echo esc_url( $developer_url ); ?>">
+                                                <?php _e( 'View developer' ); ?>
+                                            </a>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
                     <?php } ?>
 
                     <?php
@@ -191,11 +197,13 @@ $longitude = $property->get_longitude();
                             </div>
                         </div>
                     </div>
-                    <?php if ( ! empty( $amenities ) ) { ?>
+                    <?php if ( 0 < count( $property_amenities ) ) { ?>
                         <div class="single-info-block">
                             <h3><?php _e( 'Amenities' ); ?></h3>
                             <ul class="single-list">
-                                <?php echo apply_filters( 'the_content', $amenities ); ?>
+                                <?php foreach ( $property_amenities as $amenity ) { ?>
+                                    <li><?php echo esc_html( $amenity ); ?></li>
+                                <?php } ?>
                             </ul>
                         </div>
                     <?php } ?>

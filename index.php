@@ -6,7 +6,8 @@
 get_header( null, array( 'color' => 'sand' ) );
 
 if ( 404 === get_query_var( 'pagename' ) || is_404() ) {
-    get_template_part( '404' );
+    echo '404 on index';
+    //get_template_part( '404' );
 
     return;
 }

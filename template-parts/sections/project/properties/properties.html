@@ -1,0 +1,21 @@
+<div class="properties white div"> <!-- ATTENTION!!!!!!!!!!!! HERE DIV !! NOT SECTION! BECAUSE NEED INSERT THIS BLOCK INSIDE SECTION! -->
+    <div class="properties-wrapper">
+        <div class="top-title center">
+            <div class="top-title-info">
+                <h3>More properties in this project</h3> <!-- NOT h2!!!!!!!! -->
+                <p></p>
+            </div>
+            <a href="#">
+                Properties
+                <img src="/img/link.svg" width="16" height="16" alt="Vector arrow link">
+            </a>
+        </div>
+        <div class="properties-cards">
+            @@loop('components/cards/property-card/property-card.html', [
+                {"date": "SEP 2028", "src": "/img/p1.png", "h3": "AED 1,600,000", "desc": "Farm Gardens Phase 3 by Emaar", "beds": "6 Beds", "baths": "2 Baths", "meters": "120 sqft"},
+                {"date": "SEP 2028", "src": "/img/p2.png", "h3": "AED 1,980,000", "desc": "Lyvia by Palace", "beds": "3 Beds", "baths": "2 Baths", "meters": "120 sqft"},
+                {"date": "SEP 2028", "src": "/img/p3.png", "h3": "AED 44,600,000", "desc": "The Alba Residences Dorchester Collection", "beds": "4 Beds", "baths": "2 Baths", "meters": "220 sqft"}
+            ])
+        </div>
+    </div>
+</div>

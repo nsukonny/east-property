@@ -42,12 +42,52 @@ final class Unit {
 	}
 
 	/**
+	 * Get broker info
+	 *
+	 * @return array
+	 */
+	public function get_broker(): array { //TODO temporary using just first broker
+
+		$brokers = get_users(
+			array(
+				'role'    => 'broker',
+				'orderby' => 'user_nicename',
+				'order'   => 'ASC',
+				'number'  => 1,
+			)
+		);
+
+		if ( empty( $brokers ) ) {
+			return array();
+		}
+
+		$broker = array_shift( $brokers ); //TODO temporary using just one broker
+
+		return array(
+			'name'      => $broker->display_name,
+			'avatar'    => get_field( 'avatar', 'user_' . $broker->ID ),
+			'logo'      => get_field( 'logo', 'user_' . $broker->ID ),
+			'whats_app' => get_field( 'whats_app', 'user_' . $broker->ID ),
+			'phone'     => get_field( 'phone', 'user_' . $broker->ID ),
+		);
+	}
+
+	/**
 	 * Get price
 	 *
 	 * @return int
 	 */
 	public function get_price(): int {
 		return (int) $this->get_field( 'price' );
+	}
+
+	/**
+	 * Get url to image of floor plan
+	 *
+	 * @return string|null
+	 */
+	public function get_floor_plan(): ?string {
+		return $this->get_field( 'floor_plan' );
 	}
 
 	/**
@@ -67,8 +107,15 @@ final class Unit {
 	 * @return array
 	 */
 	public function get_amenities(): array {
+		$beds = $this->get_beds();
+		if ( 0 === $beds ) {
+			$beds = __( 'Studio' );
+		} else {
+			$beds .= ' ' . __( 'Beds' );
+		}
+
 		return array(
-			array( 'icon' => THEME_URL . '/assets/img/bed.svg', 'value' => $this->get_beds() . ' ' . __( 'Beds' ) ),
+			array( 'icon' => THEME_URL . '/assets/img/bed.svg', 'value' => $beds ),
 			array( 'icon' => THEME_URL . '/assets/img/bath.svg', 'value' => $this->get_baths() . ' ' . __( 'Baths' ) ),
 			array( 'icon' => THEME_URL . '/assets/img/meters.svg', 'value' => $this->get_area() . ' ' . __( 'sqft' ) ),
 		);

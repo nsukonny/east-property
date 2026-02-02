@@ -12,13 +12,14 @@ $title         = $args['title'] ?? '';
 $property_name = $args['property_name'] ?? '';
 $property_url  = $args['property_url'] ?? '#';
 $amenities     = $args['amenities'] ?? '';
+$url           = $args['url'] ?? '#';
 
 if ( empty( $title ) || empty( $price ) || empty( $image ) ) {
     return;
 }
 ?>
 <div class="property-card">
-    <a href="#" class="property-card-img">
+    <a href="<?php echo esc_html( $url ); ?>" class="property-card-img">
         <?php if ( ! empty( $labels[0] ) ) { ?>
             <span class="label <?php echo esc_attr( strtolower( $labels[0]['color'] ) ); ?>"><?php echo esc_html( $labels[0]['name'] ); ?></span>
         <?php } ?>

@@ -14,6 +14,17 @@ function get_units(): array {
 		'posts_per_page' => - 1,
 	);
 
+	if ( ! empty( $_REQUEST['area'] ) && 'all' !== $_REQUEST['area'] ) {
+		$args['meta_query'] = array( //TODO Recheck
+			array(
+				'key'     => 'area_size',
+				'value'   => (int) sanitize_text_field( $_REQUEST['area'] ),
+				'compare' => '<=',
+				'type'    => 'NUMERIC',
+			),
+		);
+	}
+
 	$units_posts = get_posts( $args );
 	if ( empty( $units_posts ) ) {
 		return array();
@@ -21,6 +32,8 @@ function get_units(): array {
 
 	$units = array();
 	foreach ( $units_posts as $unit_post ) {
+
+		$meta = get_post_meta( $unit_post->ID );
 		$unit = new \Entities\Unit( $unit_post );
 
 		$price_filter            = ! empty( $_REQUEST['price'] ) && 'all' !== $_REQUEST['price'] ? (int) sanitize_text_field( $_REQUEST['price'] ) : null;
@@ -29,10 +42,13 @@ function get_units(): array {
 			continue;
 		}
 
-		$developer_filter            = ! empty( $_REQUEST['developer'] ) && 'all' !== $_REQUEST['developer'] ? (int) sanitize_text_field( $_REQUEST['developer'] ) : null;
-		$is_skip_by_developer_filter = $developer_filter && $unit->get_developer()['id'] !== $developer_filter;
-		if ( $is_skip_by_developer_filter ) {
-			continue;
+		$developer_filter = ! empty( $_REQUEST['developer'] ) && 'all' !== $_REQUEST['developer'] ? (int) sanitize_text_field( $_REQUEST['developer'] ) : null;
+		if ( null !== $developer_filter ) {
+			$developer = $unit->get_developer();
+
+			if ( null !== $developer && $developer->get_id() !== $developer_filter ) {
+				continue;
+			}
 		}
 
 		$property = $unit->get_property();
@@ -68,6 +84,11 @@ function get_units(): array {
 		}
 
 		$filter_by_baths = ! empty( $_REQUEST['baths'] ) ? explode( ',', sanitize_text_field( $_REQUEST['baths'] ) ) : null;
+		if ( ! empty( $filter_by_baths ) && ! in_array( (string) $unit->get_baths(), $filter_by_baths, true ) ) {
+			continue;
+		}
+
+		$filter_by_areas = ! empty( $_REQUEST['area'] ) ? (int) sanitize_text_field( $_REQUEST['baths'] ) : null;
 		if ( ! empty( $filter_by_baths ) && ! in_array( (string) $unit->get_baths(), $filter_by_baths, true ) ) {
 			continue;
 		}

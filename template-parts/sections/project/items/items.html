@@ -1,0 +1,173 @@
+<section class="single-items">
+    <div class="container">
+        <div class="single-items-wrapper">
+            @@include('sections/project/breadcrumbs/breadcrumbs.html')
+            <div class="single-items-top">
+                <div class="single-items-top-left">
+                    <h1>
+                        Modon Properties
+                    </h1>
+                    <div class="single-items-top-labels">
+                        <div class="label orange">
+                            <span>SEP 2028</span>
+                        </div>
+                        <div class="label black">
+                            <span>PREMIUM DEVELOPER</span>
+                        </div>
+                        <div class="label red">
+                            <span>POPULAR</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="single-items-top-right">
+                    @@include('components/ui/button/button.html', {"class": "gray sm", "text": "Share", "src": "/img/share.svg"})
+                    @@include('components/ui/button/button.html', {"class": "gray sm", "text": "Save", "src": "/img/bookmark.svg"})
+                    @@include('components/ui/button/button.html', {"class": "orange sm request-quote", "text": "Request quote", "dataModal": "quote-modal"})
+                </div>
+            </div>
+            @@include('sections/project/items/thumbs-slider.html')
+            <div class="single-info">
+                <div class="single-info-block">
+                    <h2 class="h3">
+                        Key information
+                    </h2>
+                    <div class="single-info-rows">
+                        <div class="single-info-row">
+                            <div class="single-info-col">
+                                <span>Delivery date</span>
+                                <p>January 2030</p>
+                            </div>
+                            <div class="single-info-col">
+                                <span>Construction started</span>
+                                <p>July 2025</p>
+                            </div>
+                            <div class="single-info-col">
+                                <span>Number of buildings</span>
+                                <p>1</p>
+                            </div>
+                        </div>
+                        <div class="single-info-row">
+                            <div class="single-info-col">
+                                <span>Property types</span>
+                                <p>Apartment</p>
+                            </div>
+                            <div class="single-info-col">
+                                <span>Government fee</span>
+                                <p>2%</p>
+                            </div>
+                            <div class="single-info-col">
+                                <span>Ownership type</span>
+                                <p>Freehold</p>
+                            </div>
+                        </div>
+                        <div class="single-info-row">
+                            <div class="single-info-col">
+                                <span>Location</span>
+                                <a href="#" target="_blank" rel="noopener noreferrer">
+                                    Abu Dhabi, Saadiyat Island
+                                    <img class="col-img" src="/img/link.svg" width="16" height="16" alt="vector link">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="single-info-block">
+                    <div class="developer">
+                        <div class="developer-image">
+                            <img src="/img/modon.png" width="80" height="50" alt="Developer image">
+                        </div>
+                        <div class="developer-info">
+                            <span>
+                                Modon Properties
+                            </span>
+                            <a href="#">
+                                View developer
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="single-info-block">
+                    @@include('sections/project/properties/properties.html')
+                </div>
+                <div class="single-info-block">
+                    <h3>Pricing</h3>
+                    <div class="single-dropdowns">
+                        @@include('sections/project/dropdowns/dropdowns.html')
+                        @@include('sections/project/dropdowns/dropdowns.html')
+                        @@include('sections/project/dropdowns/dropdowns.html')
+                    </div>
+                </div>
+                <div class="single-info-block">
+                    <div class="single-steps">
+                        <div class="single-step">
+                            <h3>Down payment</h3>
+                            <span>10%</span>
+                            <p>Sales launch</p>
+                        </div>
+                        <div class="single-step-arrow">
+                            <img src="/img/arrow-right.svg" width="24" height="24" alt="Vector arrow">
+                        </div>
+                        <div class="single-step">
+                            <h3>During construction</h3>
+                            <span>70%</span>
+                            <p>7 installments</p>
+                        </div>
+                        <div class="single-step-arrow">
+                            <img src="/img/arrow-right.svg" width="24" height="24" alt="Vector arrow">
+                        </div>
+                        <div class="single-step">
+                            <h3>On handover</h3>
+                            <span>30%</span>
+                            <p>Sep 2029</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="single-info-block">
+                    <h3>Amenities</h3>
+                    <ul class="single-list">
+                        <li>Kids’ Clubs</li>
+                        <li>Restorative Wellness Pod</li>
+                        <li>Fitness, Spa, and Pool</li>
+                        <li>Serene Co-working Lounge</li>
+                        <li>Dedicated Pet Spa and Grooming Studio</li>
+                        <li>A Signature Communal Hub</li>
+                    </ul>
+                </div>
+                <div class="single-info-block">
+                    <h3>Description</h3>
+                    <div class="texts">
+                        <p>
+                            The Row Saadiyat by Aldar Properties combines modern premium living with the rich cultural
+                            heritage of Abu Dhabi's prestigious Cultural District. This boutique development offers an
+                            exclusive selection of 1 to 3-bedroom apartments, perfectly positioned to provide residents
+                            with front-row access to Saadiyat Island’s lively waterfront lifestyle. With iconic
+                            landmarks like the Zayed National Museum nearby and proximity to top-tier cultural
+                            institutions, The Row Saadiyat delivers a lifestyle that blends sophistication, convenience,
+                            and cultural richness.
+                        </p>
+                        <p>
+                            Comprising seven mid-rise complexes rising 8 to 10 levels above landscaped green podiums,
+                            the first phase introduces 315 meticulously designed units across three buildings. With
+                            prices starting from AED 3.7 million, these residences offer exceptional value in one of
+                            Abu Dhabi's most distinguished locations.
+                        </p>
+                    </div>
+                    <button class="button learn-more" data-modal-open="desc-modal">
+                        Learn more
+                        <img src="/img/link.svg" width="16" height="16" alt="Vector link">
+                    </button>
+                </div>
+                <div class="single-info-block">
+                    <h3>Location</h3>
+                    <div class="map">
+                        <iframe
+                            class="map-iframe" title="Dubai map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                            data-src="https://www.google.com/maps?q=Dubai&z=12&output=embed"
+                        ></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @@include('components/ui/contact-panel/contact-panel.html')
+</section>

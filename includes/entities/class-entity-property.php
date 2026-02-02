@@ -36,10 +36,25 @@ final class Property {
 	/**
 	 * Get amenities list for this building
 	 *
-	 * @return string
+	 * @return array
 	 */
-	public function get_amenities(): string {
-		return $this->get_field( 'amenities' );
+	public function get_amenities(): array {
+		$amenities = array();
+
+		$amenities_data = $this->get_field( 'amenities' );
+		if ( empty( $amenities_data ) ) {
+			return $amenities;
+		}
+
+		$amenities_list = explode( "\n", $amenities_data );
+		foreach ( $amenities_list as $amenity ) {
+			$amenity = trim( $amenity );
+			if ( ! empty( $amenity ) ) {
+				$amenities[] = $amenity;
+			}
+		}
+
+		return $amenities;
 	}
 
 	/**
@@ -168,6 +183,32 @@ final class Property {
 	}
 
 	/**
+	 * Get random units from the same property instead of the given unit ID
+	 *
+	 * @param int $count
+	 * @param int $exclude_unit_id
+	 *
+	 * @return array
+	 */
+	public function get_random_units( int $count = 3, int $exclude_unit_id = 0 ): array {
+		$units = $this->get_units();
+		if ( empty( $units ) ) {
+			return array();
+		}
+
+		$filtered_units = array();
+		foreach ( $units as $unit ) {
+			if ( $unit->get_id() !== $exclude_unit_id ) {
+				$filtered_units[] = $unit;
+			}
+		}
+
+		shuffle( $filtered_units );
+
+		return array_slice( $filtered_units, 0, $count );
+	}
+
+	/**
 	 * Get latitude
 	 *
 	 * @return string
@@ -183,6 +224,15 @@ final class Property {
 	 */
 	public function get_longitude(): string {
 		return $this->get_field( 'longitude' ) ?: '';
+	}
+
+	/**
+	 * Get property floors
+	 *
+	 * @return string
+	 */
+	public function get_floors(): string {
+		return $this->get_field( 'floors' ) ?: '';
 	}
 
 	/**
@@ -273,6 +323,15 @@ final class Property {
 		}
 
 		return $location;
+	}
+
+	/**
+	 * Get down payment info
+	 *
+	 * @return array
+	 */
+	public function get_down_payment_group(): array {
+		return $this->get_field( 'down_payment_group' );
 	}
 
 	/**

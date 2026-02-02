@@ -1,104 +1,27 @@
+<?php
+/**
+ * Modal: Description Modal
+ */
+
+$title = get_the_title();
+$desc  = get_the_content();
+
+if ( empty( $title ) || empty( $desc ) ) {
+    return;
+}
+?>
 <div class="modal-wrapper desc-modal" data-modal-id="desc-modal">
     <div class="modal">
         <div class="modal-info">
             <div class="modal-title">
-                <h3>
-                    Modon Properties
-                </h3>
+                <h3><?php echo esc_html( $title ); ?></h3>
                 <button class="modal-close" data-modal-close aria-label="Close">
                     <img src="<?php echo THEME_URL; ?>/assets/img/close.svg" width="24" height="24" alt="Close icon">
                 </button>
             </div>
             <div class="modal-desc">
                 <div class="modal-desc-content">
-                    <p>
-                        The Row Saadiyat by Aldar Properties combines modern premium living with the rich cultural
-                        heritage of Abu Dhabi's prestigious Cultural District. This boutique development offers an
-                        exclusive selection of 1 to 3-bedroom apartments, perfectly positioned to provide residents with
-                        front-row access to Saadiyat Island’s lively waterfront lifestyle. With iconic landmarks like
-                        the Zayed National Museum nearby and proximity to top-tier cultural institutions, The Row
-                        Saadiyat delivers a lifestyle that blends sophistication, convenience, and cultural richness.
-                    </p>
-                    <p>
-                        Comprising seven mid-rise complexes rising 8 to 10 levels above landscaped green podiums, the
-                        first phase introduces 315 meticulously designed units across three buildings. With prices
-                        starting from AED 3.7 million, these residences offer exceptional value in one of Abu Dhabi's
-                        most distinguished locations.
-                    </p>
-                    <h3>Prime Location</h3>
-                    <p>
-                        Strategic Placement in Expo City Dubai <br>
-                        Located within the master-planned Expo City Dubai, Terra Gardens provides residents with
-                        unmatched
-                        access to a growing hub of lifestyle, culture, and business opportunities. The neighborhood
-                        combines
-                        urban convenience with serene surroundings, making it ideal for families, professionals, and
-                        investors seeking long-term value.
-                    </p>
-                    <h3>
-                        Neighborhood Benefits:
-                    </h3>
-                    <p>
-                        The Row Saadiyat by Aldar Properties combines modern premium living with the rich cultural
-                        heritage of Abu Dhabi's prestigious Cultural District. This boutique development offers an
-                        exclusive selection of 1 to 3-bedroom apartments, perfectly positioned to provide residents with
-                        front-row access to Saadiyat Island’s lively waterfront lifestyle. With iconic landmarks like
-                        the Zayed National Museum nearby and proximity to top-tier cultural institutions, The Row
-                        Saadiyat delivers a lifestyle that blends sophistication, convenience, and cultural richness.
-                    </p>
-
-                    <p>
-                        Comprising seven mid-rise complexes rising 8 to 10 levels above landscaped green podiums, the
-                        first phase introduces 315 meticulously designed units across three buildings. With prices
-                        starting from AED 3.7 million, these residences offer exceptional value in one of Abu Dhabi's
-                        most distinguished locations.
-                    </p>
-
-                    <h2>Prime Location</h2>
-
-                    <p>
-                        Strategic Placement in Expo City Dubai. Located within the master-planned Expo City Dubai, Terra
-                        Gardens provides residents with
-                        unmatched access to a growing hub of lifestyle, culture, and business opportunities. The
-                        neighborhood combines urban convenience with serene surroundings, making it ideal for families,
-                        professionals, and investors seeking long-term value.
-                    </p>
-
-                    <h3>Neighborhood Benefits:</h3>
-                    <ul>
-                        <li>Legacy Connectivity: Easy access to Expo 2020 Dubai’s infrastructure. Entertainment &
-                            Dining:
-                            Close to top-tier cultural attractions, restaurants, and leisure facilities
-                        </li>
-                        <li>Green Spaces: Expansive parks and recreational areas for outdoor enjoyment</li>
-                        <li>Public Transport Access: Seamless integration with Dubai’s metro, bus, and ride-sharing
-                            networks
-                        </li>
-                        <li>Airport Proximity: Convenient reach to Al Maktoum International Airport</li>
-                    </ul>
-
-                    <h2>Architectural Excellence and Design Features</h2>
-
-                    <p>
-                        Terra Gardens embraces modern architecture that prioritizes natural light, functional layouts,
-                        and sustainable living. Each unit is designed to create a comfortable, contemporary lifestyle
-                        while maintaining aesthetic elegance.
-                    </p>
-
-                    <h3>Key Design Highlights:</h3>
-                    <ul>
-                        <li>Modern Façades: Sleek exteriors using premium materials</li>
-                        <li>Panoramic Windows: Floor-to-ceiling glazing offering views of landscaped gardens</li>
-                        <li>Open-Plan Interiors: Spacious living areas designed for modern lifestyles</li>
-                        <li>Private Outdoor Spaces: Balconies and terraces in select units</li>
-                        <li>Sustainable Materials: Energy-efficient systems and eco-conscious construction</li>
-                        <li>Optimized Layouts: Smartly planned interiors maximizing comfort and usability</li>
-                    </ul>
-
-                    <p>
-                        Townhouses include private gardens and dedicated parking, while apartments feature sophisticated
-                        finishes and smart home integration options.
-                    </p>
+                    <p><?php echo apply_filters( 'the_content', $desc ); ?></p>
                 </div>
             </div>
         </div>

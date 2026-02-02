@@ -135,9 +135,17 @@ trait EntityTrait {
 			return $this->thumb;
 		}
 
+		//get post thumbnail
+		$thumb_id = get_post_thumbnail_id( $this->id );
+		if ( ! empty( $thumb_id ) ) {
+			$this->thumb = wp_get_attachment_image_url( (int) $thumb_id, $size );
+
+			return $this->thumb;
+		}
+
 		$gallery = $this->get_gallery();
 		if ( empty( $gallery ) ) {
-			return $this->no_image_url;
+			return ''; //TODO Add no image here
 		}
 
 		if ( ! empty( $gallery[0]['sizes'][ $size ] ) ) {
@@ -151,7 +159,7 @@ trait EntityTrait {
 		}
 
 		if ( empty( $this->thumb ) ) {
-			return $this->no_image_url;
+			return '';
 		}
 
 		return $this->thumb;
