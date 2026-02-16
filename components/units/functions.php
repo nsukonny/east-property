@@ -8,10 +8,10 @@
  *
  * @return array
  */
-function get_units(): array {
+function get_units( $limit = 25 ): array {
 	$args = array(
 		'post_type'      => 'unit',
-		'posts_per_page' => - 1,
+		'posts_per_page' => $limit,
 	);
 
 	if ( ! empty( $_REQUEST['area'] ) && 'all' !== $_REQUEST['area'] ) {

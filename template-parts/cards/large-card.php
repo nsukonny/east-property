@@ -30,7 +30,14 @@ unset( $gallery[0] );
                 </div>
                 <?php if ( ! empty( $gallery ) ) { ?>
                     <div class="large-card-images-right">
-                        <?php foreach ( $gallery as $image ) { ?>
+                        <?php
+                        $limit = 3;
+                        foreach ( $gallery as $image ) {
+                            $limit --;
+                            if ( 0 >= $limit ) {
+                                break;
+                            }
+                            ?>
                             <img src="<?php echo esc_url( $image['sizes']['medium'] ); ?>" alt="Image">
                         <?php } ?>
                     </div>

@@ -8,10 +8,10 @@
  *
  * @return array
  */
-function get_properties(): array {
+function get_properties( $limit = 25 ): array {
 	$args = array(
 		'post_type'      => 'properties',
-		'posts_per_page' => - 1,
+		'posts_per_page' => $limit,
 	);
 
 	if ( ! empty( $_REQUEST['available'] ) && 'all' !== $_REQUEST['available'] ) {

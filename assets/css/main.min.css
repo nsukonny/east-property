@@ -2539,6 +2539,7 @@ header.header {
 }
 .results-filters-items .result-dropdown {
   width: 100%;
+  max-height: 300px;
   position: absolute;
   top: 100%;
   left: 50%;
@@ -2549,7 +2550,7 @@ header.header {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   background-color: #F7F7F7;
-  overflow: hidden;
+  overflow-x: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 .results-filters-items .result-dropdown[hidden] {

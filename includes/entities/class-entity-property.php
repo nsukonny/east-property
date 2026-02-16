@@ -152,7 +152,7 @@ final class Property {
 	 *
 	 * @return array
 	 */
-	public function get_units(): array {
+	public function get_units( $limit = 25 ): array {
 		if ( ! empty( $this->units ) ) {
 			return $this->units;
 		}
@@ -160,7 +160,7 @@ final class Property {
 		$units = get_posts(
 			array(
 				'post_type'      => 'unit',
-				'posts_per_page' => - 1,
+				'posts_per_page' => $limit,
 				'meta_query'     => array(
 					array(
 						'key'   => 'property',
@@ -331,7 +331,7 @@ final class Property {
 	 * @return array
 	 */
 	public function get_down_payment_group(): array {
-		return $this->get_field( 'down_payment_group' );
+		return $this->get_field( 'down_payment_group' ) ?: array();
 	}
 
 	/**

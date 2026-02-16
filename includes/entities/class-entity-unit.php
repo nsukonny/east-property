@@ -177,17 +177,17 @@ final class Unit {
 		$property  = $this->get_property();
 		$developer = $this->get_developer();
 
-		$delivery_date = ! empty( $property ) ? $property->get_delivery_date() : '';
+		$delivery_date = $property !== null ? $property->get_delivery_date() : '';
 		if ( ! empty( $delivery_date ) ) {
 			$labels[] = array( 'name' => $delivery_date, 'color' => 'grey' );
 		}
 
-		$is_popular = $property->get_field( 'is_popular' );
+		$is_popular = $property && $property->get_field( 'is_popular' );
 		if ( ! empty( $is_popular ) ) {
 			$labels[] = array( 'name' => __( 'Popular' ), 'color' => 'red' );
 		}
 
-		$is_premium_developer = $developer->get_field( 'is_premium' );
+		$is_premium_developer = $developer && $developer->get_field( 'is_premium' );
 		if ( ! empty( $is_premium_developer ) ) {
 			$labels[] = array( 'name' => __( 'Premium Developer' ), 'color' => 'black' );
 		}
