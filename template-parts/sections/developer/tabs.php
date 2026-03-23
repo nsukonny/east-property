@@ -37,9 +37,9 @@ if ( ! $developer ) {
                     </p>
                 </div>
                 <div class="content-list">
-                    @@include('components/cards/large-card/large-card.html')
-                    @@include('components/cards/large-card/large-card.html')
-                    @@include('components/cards/large-card/large-card.html')
+                    @@include('core/components/cards/large-card/large-card.html')
+                    @@include('core/components/cards/large-card/large-card.html')
+                    @@include('core/components/cards/large-card/large-card.html')
                 </div>
             </div>
             <div class="result-tabs-content" id="result-tabs-map-panel" data-tab-panel data-tab="map" role="tabpanel"
@@ -53,12 +53,12 @@ if ( ! $developer ) {
                         ></iframe>
                     </div>
                     <div class="content-scroll">
-                        @@include('components/cards/small-card/small-card.html')
-                        @@include('components/cards/small-card/small-card.html')
-                        @@include('components/cards/small-card/small-card.html')
-                        @@include('components/cards/small-card/small-card.html')
-                        @@include('components/cards/small-card/small-card.html')
-                        @@include('components/cards/small-card/small-card.html')
+                        @@include('core/components/cards/small-card/small-card.html')
+                        @@include('core/components/cards/small-card/small-card.html')
+                        @@include('core/components/cards/small-card/small-card.html')
+                        @@include('core/components/cards/small-card/small-card.html')
+                        @@include('core/components/cards/small-card/small-card.html')
+                        @@include('core/components/cards/small-card/small-card.html')
                     </div>
                 </div>
             </div>

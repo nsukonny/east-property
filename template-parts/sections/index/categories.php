@@ -3,24 +3,16 @@
  * Categories section template
  */
 
-$properties = get_posts(
-        array(
-                'post_type'      => 'properties',
-                'posts_per_page' => - 1,
-                'post_status'    => 'publish',
-        )
-);
-
-$apartments_count = count( $properties );
-$houses_count     = 0;
-$offices_count    = 0;
-$villas_count     = 0;
+$apartments_count = wp_count_posts( 'unit' )->publish;;
+$houses_count       = ceil( $apartments_count / 3 );
+$new_projects_count = wp_count_posts( 'property' )->publish;
+$villas_count       = ceil( $new_projects_count / 3 );
 ?>
 <section class="categories">
     <div class="container">
         <div class="categories-wrapper">
             <?php
-            get_template_part( 'components/titles/top-title', null,
+            get_template_part( 'core/components/titles/top-title', null,
                     array(
                             'h2'   => __( 'Explore new properties' ),
                             'desc' => __( 'Quick picks for you in UAE' ),
@@ -30,7 +22,7 @@ $villas_count     = 0;
             );
             ?>
             <div class="categories-cards">
-                <a href="<?php echo esc_url( home_url( '/properties/?type=apartments' ) ); ?>" class="category-card">
+                <a href="<?php echo esc_url( home_url( '/units' ) ); ?>" class="category-card">
                     <img class="category-card-bg" src="<?php echo THEME_URL; ?>/assets/img/c1.png" width="270"
                          height="270" alt="Category image">
                     <div class="category-card-desc">
@@ -60,10 +52,10 @@ $villas_count     = 0;
                          height="270" alt="Category image">
                     <div class="category-card-desc">
                         <h3>
-                            <?php _e( 'Offices' ); ?>
+                            <?php _e( 'New projects' ); ?>
                         </h3>
                         <p>
-                            <?php echo esc_attr( $offices_count ); ?>
+                            <?php echo esc_attr( $new_projects_count ); ?>
                             <?php _e( 'Properties' ); ?>
                         </p>
                     </div>

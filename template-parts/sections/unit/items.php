@@ -19,7 +19,7 @@ $developer           = $unit->get_developer();
 $whatsapp_share_text = 'https://wa.me/?text=' . rawurlencode( sprintf(
                 '%s | %s | %s View %s',
                 $unit->get_title(),
-                $property ? $property->get_location() : '',
+                $property ? $property->get_location()->name : '',
                 $unit->get_price_html(),
                 get_permalink( $unit->get_id() )
         ) );
@@ -28,7 +28,7 @@ $amenities  = $unit->get_amenities();
 $floor_plan = $unit->get_floor_plan();
 $broker     = $unit->get_broker();
 
-$location             = $property->get_location();
+$location             = $property->get_location()->name;
 $down_payment_group   = $property->get_down_payment_group();
 $delivery_date        = $property->get_delivery_date();
 $property_information = $property->get_key_information();
@@ -42,7 +42,7 @@ $longitude            = $property->get_longitude();
     <div class="container">
         <div class="single-items-wrapper">
             <?php
-            get_template_part( 'components/common/breadcrumbs' );
+            get_template_part( 'core/components/common/breadcrumbs' );
             get_template_part( 'template-parts/sections/single/thumbs-slider', null,
                     array(
                             'gallery' => $unit->get_gallery(),
@@ -56,7 +56,7 @@ $longitude            = $property->get_longitude();
                         <?php echo esc_attr( $property->get_title() ); ?></h2>
                     <div class="single-items-top-buttons">
                         <?php
-                        get_template_part( 'components/ui/button', null,
+                        get_template_part( 'core/components/ui/button', null,
                                 array(
                                         'class'  => 'gray sm',
                                         'text'   => __( 'Share' ),
@@ -68,7 +68,7 @@ $longitude            = $property->get_longitude();
                                 )
                         );
 
-                        get_template_part( 'components/ui/button', null,
+                        get_template_part( 'core/components/ui/button', null,
                                 array(
                                         'class' => 'gray sm',
                                         'text'  => __( 'Save' ),
@@ -95,7 +95,7 @@ $longitude            = $property->get_longitude();
                     <?php } ?>
                 </div>
 
-                <?php if ( ! empty( $broker ) ) { ?>
+                <?php if ( ! empty( $broker ) ) { echo '<pre>---pr-' . print_r( $broker, true ) . '</pre>'; ?>
                     <div class="single-items-top-right">
                         <div class="broker">
                             <div class="broker-top">
@@ -116,7 +116,7 @@ $longitude            = $property->get_longitude();
                             </div>
                             <div class="broker-bottom">
                                 <?php
-                                get_template_part( 'components/ui/button', null,
+                                get_template_part( 'core/components/ui/button', null,
                                         array(
                                                 'class' => 'orange sm',
                                                 'text'  => __( 'Contact broker' ),
@@ -179,11 +179,11 @@ $longitude            = $property->get_longitude();
                     </div>
                 <?php } ?>
 
-                <?php if ( ! empty( $floor_plan ) ) { ?>
+                <?php if ( ! empty( $floor_plan[0]['layout']['sizes']['large'] ) ) { ?>
                     <div class="single-info-block">
                         <h3><?php _e( 'Floor plan' ); ?></h3>
                         <div class="single-info-block-img" data-modal-open="plan-modal">
-                            <img src="<?php echo esc_url( $floor_plan ); ?>"
+                            <img src="<?php echo esc_url( $floor_plan[0]['layout']['sizes']['large'] ); ?>"
                                  alt="<?php _e( 'Floor plan' ); ?>">
                         </div>
                     </div>
@@ -213,12 +213,7 @@ $longitude            = $property->get_longitude();
 
                                 <?php } ?>
                             </div>
-                            <?php
-                            $location  = $property->get_location();
-                            $developer = $property->get_developer();
-
-                            if ( ! empty( $location ) ) {
-                                ?>
+                            <?php if ( ! empty( $location ) && ! empty( $developer ) ) { ?>
                                 <div class="single-info-row">
                                     <div class="single-info-col">
                                         <span><?php _e( 'Location' ); ?></span>
@@ -300,17 +295,19 @@ $longitude            = $property->get_longitude();
                 <?php if ( ! empty( $latitude ) && ! empty( $longitude ) ) { ?>
                     <div class="single-info-block">
                         <h3><?php _e( 'Location' ); ?></h3>
-                        <div class="map">
-                            <iframe
-                                    class="map-iframe" title="Dubai map" loading="lazy"
-                                    referrerpolicy="no-referrer-when-downgrade"
-                                    data-src="https://www.google.com/maps?q=<?php echo esc_attr( $latitude ); ?>,<?php echo esc_attr( $longitude ); ?>&z=15&output=embed"
-                            ></iframe>
-                        </div>
+                        <?php
+                        get_template_part( 'core/components/properties/map', null,
+                                array(
+                                        'property'     => $property,
+                                        'show_sidebar' => false,
+                                        'mode'         => 'single',
+                                )
+                        );
+                        ?>
                     </div>
                 <?php } ?>
             </div>
         </div>
     </div>
-    <?php get_template_part( 'components/ui/broker-panel' ); ?>
+    <?php get_template_part( 'core/components/ui/broker-panel' ); ?>
 </section>

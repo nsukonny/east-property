@@ -6,8 +6,12 @@
 define( 'THEME_PATH', get_template_directory() );
 define( 'THEME_URL', get_template_directory_uri() );
 define( 'THEME_VERSION', time() ); //TODO change to version like 1.0.1
-const THEME_NAME   = 'east-property';
-const PROJECT_NAME = 'East Property';
+define( "IS_DEV", ( isset( $_SERVER['HTTP_HOST'] ) && 'distress.local' === $_SERVER['HTTP_HOST'] ) || isset( $_GET['reset'] ) );
+
+const THEME_NAME          = 'east-property';
+const PROJECT_NAME        = 'East Property';
+const WHATS_APP_LINK      = 'https://api.whatsapp.com/send/?phone=971585235351';
+const PROPERTIES_PER_PAGE = 20;
 
 /**
  * Add theme menus
@@ -15,14 +19,14 @@ const PROJECT_NAME = 'East Property';
  * @return void
  */
 function add_menus(): void {
-	register_nav_menus(
-		array(
-			'header_menu'             => __( 'Header' ),
-			'footer_menu_popular'     => __( 'Footer | Popular Search' ),
-			'footer_menu_discovery'   => __( 'Footer | Discovery' ),
-			'footer_menu_quick_links' => __( 'Footer | Quick Links' ),
-		)
-	);
+    register_nav_menus(
+            array(
+                    'header_menu'             => __( 'Header' ),
+                    'footer_menu_popular'     => __( 'Footer | Popular Search' ),
+                    'footer_menu_discovery'   => __( 'Footer | Discovery' ),
+                    'footer_menu_quick_links' => __( 'Footer | Quick Links' ),
+            )
+    );
 }
 
 add_action( 'after_setup_theme', 'add_menus' );
@@ -33,50 +37,50 @@ add_action( 'after_setup_theme', 'add_menus' );
  * @return void
  */
 function add_theme_styles(): void {
-	wp_register_style(
-		THEME_NAME . '-style',
-		THEME_URL . '/assets/css/main.min.css',
-		null,
-		THEME_VERSION,
-		false
-	);
+    wp_register_style(
+            THEME_NAME . '-style',
+            THEME_URL . '/assets/css/main.min.css',
+            null,
+            THEME_VERSION,
+            false
+    );
 
-	wp_enqueue_style( THEME_NAME . '-style' );
+    wp_enqueue_style( THEME_NAME . '-style' );
 
-	wp_register_script(
-		THEME_NAME . '-app',
-		THEME_URL . '/assets/js/main.min.js',
-		null,
-		THEME_VERSION,
-		true
-	);
+    wp_register_script(
+            THEME_NAME . '-app',
+            THEME_URL . '/assets/js/main.min.js',
+            null,
+            THEME_VERSION,
+            true
+    );
 
-	wp_enqueue_script( THEME_NAME . '-app' );
+    wp_enqueue_script( THEME_NAME . '-app' );
 
-	wp_localize_script( THEME_NAME . '-app', 'ajax_object',
-		array(
-			'ajax_url'    => admin_url( 'admin-ajax.php' ),
-			'_ajax_nonce' => wp_create_nonce( 'get_filtered_properties' ),
-		)
-	);
+    wp_localize_script( THEME_NAME . '-app', 'ajax_object',
+            array(
+                    'ajax_url'    => admin_url( 'admin-ajax.php' ),
+                    '_ajax_nonce' => wp_create_nonce( 'get_filtered_properties' ),
+            )
+    );
 }
 
 add_action( 'wp_enqueue_scripts', 'add_theme_styles' );
 
 if ( function_exists( 'acf_add_options_page' ) ) {
-	$option_page = acf_add_options_page(
-		array(
-			'page_title' => __( 'Настройки' ) . ' ' . PROJECT_NAME,
-			'menu_title' => __( 'Настройки' ) . ' ' . PROJECT_NAME,
-			'menu_slug'  => 'theme-options',
-			'capability' => 'edit_posts',
-			'redirect'   => false,
-		)
-	);
+    $option_page = acf_add_options_page(
+            array(
+                    'page_title' => __( 'Настройки' ) . ' ' . PROJECT_NAME,
+                    'menu_title' => __( 'Настройки' ) . ' ' . PROJECT_NAME,
+                    'menu_slug'  => 'theme-options',
+                    'capability' => 'edit_posts',
+                    'redirect'   => false,
+            )
+    );
 }
 
 add_action( 'after_setup_theme', function (): void {
-	add_theme_support( 'post-thumbnails' );
+    add_theme_support( 'post-thumbnails' );
 } );
 
 add_filter( 'show_admin_bar', '__return_false' );
@@ -87,9 +91,28 @@ add_image_size( 'unit-card', 500, 394, true );
 
 add_filter( 'woocommerce_enqueue_styles', '__return_false' );
 
-include_once 'includes/entities/load.php';
-require_once 'includes/registers/acf/loader.php';
-require_once 'includes/registers/post-types/loader.php';
-require_once 'includes/registers/user-roles/loader.php';
-require_once 'components/load-components.php';
+add_action( 'wp_head', 'add_google_analytics' );
+function add_google_analytics() {
+    ?>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-02BCJXDNFN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-02BCJXDNFN');
+    </script>
+    <?php
+}
+
+include_once 'core/includes/entities/load.php';
+require_once 'core/includes/registers/acf/loader.php';
+require_once 'core/includes/registers/post-types/loader.php';
+require_once 'core/includes/registers/user-roles/loader.php';
+require_once 'core/components/load-components.php';
 require_once 'template-parts/template-parts.php';

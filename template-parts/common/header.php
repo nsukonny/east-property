@@ -1,8 +1,4 @@
 <?php
-/**
- * Header template
- */
-
 $color = $args['color'] ?? '';
 ?>
 <header class="header <?php echo esc_attr( $color ); ?>">
@@ -11,18 +7,18 @@ $color = $args['color'] ?? '';
             <a href="/" class="header-logo">
                 <img src="<?php echo THEME_URL; ?>/assets/img/logo.svg" width="132" height="50" alt="Vector logotype">
             </a>
-            <?php get_template_part( 'components/common/nav' ); ?>
+            <?php get_template_part( 'core/components/common/nav' ); ?>
             <div class="header-actions">
                 <?php if ( ! is_user_logged_in() ) { ?>
                     <button class="header-signin" type="button" data-modal-open="signin-modal">
                         Sign in
                     </button>
                     <?php
-                    get_template_part( 'components/ui/button', null,
+                    get_template_part( 'core/components/ui/button', null,
                             array(
-                                    'class'      => 'black sm header-login',
-                                    'text'       => __( 'Create Account' ),
-                                    'src'        => THEME_URL . '/assets/img/user.svg',
+                                    'class' => 'black sm header-login',
+                                    'text'  => __( 'Create Account' ),
+                                    'src'   => THEME_URL . '/assets/img/user.svg',
                                     'modal' => 'create-modal',
                             )
                     );
@@ -30,7 +26,7 @@ $color = $args['color'] ?? '';
                 <?php } else { ?>
                     <?php
                     $current_user = wp_get_current_user();
-                    get_template_part( 'components/ui/button', null,
+                    get_template_part( 'core/components/ui/button', null,
                             array(
                                     'class' => 'black sm header-login',
                                     'text'  => $current_user->display_name,

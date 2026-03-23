@@ -102,7 +102,7 @@ if ( ! empty( $amenities ) ) {
                             <a href="<?php echo esc_url( $url ); ?>" class="button gray sm"
                                target="_blank"><?php _e( 'View details' ); ?></a>
                             <?php
-                            get_template_part( 'components/ui/button', null,
+                            get_template_part( 'core/components/ui/button', null,
                                     array(
                                             'class' => 'orange sm',
                                             'text'  => __( 'Contact broker' ),

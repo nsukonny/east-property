@@ -10,11 +10,7 @@ if ( ! $units ) {
     return;
 }
 
-$beds  = $args['beds'] ?? 1;
-$baths = $args['min_baths'] . ' - ' . $args['max_baths'];
-if ( $args['min_baths'] === $args['max_baths'] || ( empty( $args['min_baths'] ) || empty( $args['max_baths'] ) ) ) {
-    $baths = $args['min_baths'];
-}
+$beds = $args['beds'] ?? 1;
 
 $area = $args['min_area'] . ' - ' . $args['max_area'];
 if ( $args['min_area'] === $args['max_area'] || ( empty( $args['min_area'] ) || empty( $args['max_area'] ) ) ) {
@@ -37,14 +33,6 @@ $price = sprintf( '%s %s', __( 'AED' ), number_format( (float) $args['price'], 0
             </span>
             <?php } ?>
 
-            <?php if ( ! empty( $baths ) ) { ?>
-                <span class="button-row-item">
-                <img class="button-row-ico" src="<?php echo THEME_URL; ?>/assets/img/bath.svg" width="16" height="16"
-                     alt="">
-                <span class="button-row-text"><?php echo esc_html( $baths ); ?><?php echo ' ' . __( 'Baths' ); ?></span>
-            </span>
-            <?php } ?>
-
             <?php if ( ! empty( $area ) ) { ?>
                 <span class="button-row-item">
                 <img class="button-row-ico" src="<?php echo THEME_URL; ?>/assets/img/meters.svg" width="16" height="16"
@@ -60,26 +48,44 @@ $price = sprintf( '%s %s', __( 'AED' ), number_format( (float) $args['price'], 0
     </button>
     <div class="dropdown-content">
         <div class="dropdown-inner">
-            <?php foreach ( $units as $unit ) { ?>
+            <?php foreach ( $units as $unit ) {
+                $unit_baths       = $unit->get_baths();
+                $unit_beds        = $unit->get_beds();
+                $unit_area        = $unit->get_area();
+                $unit_floor_plans = $unit->get_floor_plan();
+                ?>
                 <div class="dropdown-content-row">
-                    <div class="dropdown-content-col">
-                        <img src="<?php echo THEME_URL; ?>/assets/img/bed.svg" width="16" height="16" alt="">
-                        <span class="button-row-text"><?php echo esc_html( $unit->get_beds() ); ?><?php echo ' ' . __( 'Bed' ); ?></span>
-                    </div>
-                    <div class="dropdown-content-col">
-                        <img src="<?php echo THEME_URL; ?>/assets/img/bath.svg" width="16" height="16" alt="">
-                        <span class="button-row-text"><?php echo esc_html( $unit->get_baths() ); ?><?php echo ' ' . __( 'Baths' ); ?></span>
-                    </div>
-                    <div class="dropdown-content-col">
-                        <img src="<?php echo THEME_URL; ?>/assets/img/meters.svg" width="16" height="16" alt="">
-                        <span class="button-row-text"><?php echo esc_html( $unit->get_area() ); ?><?php echo ' ' . __( 'sqft' ); ?></span>
-                    </div>
-                    <div class="dropdown-content-col image-col">
-                        <div data-modal-open="plan-modal">
-                            <img src="<?php echo esc_url( $unit->get_thumb() ); ?>" width="851" height="575"
-                                 alt="image">
+                    <?php if ( ! empty( $unit_beds ) ) { ?>
+                        <div class="dropdown-content-col">
+                            <img src="<?php echo THEME_URL; ?>/assets/img/bed.svg" width="16" height="16" alt="">
+                            <span class="button-row-text"><?php echo esc_html( $unit->get_beds() ); ?><?php echo ' ' . __( 'Bed' ); ?></span>
                         </div>
-                    </div>
+                    <?php } ?>
+
+                    <?php if ( ! empty( $unit_baths ) ) { ?>
+                        <div class="dropdown-content-col">
+                            <img src="<?php echo THEME_URL; ?>/assets/img/bath.svg" width="16" height="16" alt="">
+                            <span class="button-row-text"><?php echo esc_html( $unit_baths ); ?><?php echo ' ' . __( 'Baths' ); ?></span>
+                        </div>
+                    <?php } ?>
+
+                    <?php if ( ! empty( $unit_area ) ) { ?>
+                        <div class="dropdown-content-col">
+                            <img src="<?php echo THEME_URL; ?>/assets/img/meters.svg" width="16" height="16" alt="">
+                            <span class="button-row-text"><?php echo esc_html( $unit->get_area() ); ?><?php echo ' ' . __( 'sqft' ); ?></span>
+                        </div>
+                    <?php } ?>
+
+                    <?php if ( ! empty( $unit_floor_plans ) ) { ?>
+                        <div class="dropdown-content-col image-col">
+                            <?php foreach ( $unit_floor_plans as $unit_floor_plan ) { ?>
+                                <div data-modal-open="plan-modal">
+                                    <img src="<?php echo esc_url( $unit_floor_plan['layout']['sizes']['large'] ); ?>"
+                                         alt="<?php echo esc_attr( $unit_floor_plan['layout']['name'] ); ?>">
+                                </div>
+                            <?php } ?>
+                        </div>
+                    <?php } ?>
                 </div>
             <?php } ?>
         </div>

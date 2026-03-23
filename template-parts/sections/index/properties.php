@@ -15,7 +15,7 @@ $card_template = $args['card_template'] ?? 'unit-card';
     <div class="container">
         <div class="properties-wrapper">
             <?php
-            get_template_part( 'components/titles/top-title', null,
+            get_template_part( 'core/components/titles/top-title', null,
                     array(
                             'h2'   => $h2,
                             'desc' => $description,
@@ -29,7 +29,7 @@ $card_template = $args['card_template'] ?? 'unit-card';
                 <div class="properties-cards">
                     <?php
                     foreach ( $units as $unit ) {
-                        get_template_part( 'components/cards/unit-card', null,
+                        get_template_part( 'core/components/cards/unit-card', null,
                                 array(
                                         'unit'     => $unit,
                                         'template' => $card_template,

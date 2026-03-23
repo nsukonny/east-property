@@ -5,7 +5,7 @@
 
 $hero             = get_field( 'hero_section', 'option' );
 $h1               = ! empty( $hero['title'] ) ? $hero['title'] : get_bloginfo( 'name' );
-$properties_count = wp_count_posts( 'properties' )->publish;
+$properties_count = wp_count_posts( 'unit' )->publish;
 $daily_sales      = round( $properties_count / 5 );
 ?>
 <section class="hero">
@@ -13,7 +13,7 @@ $daily_sales      = round( $properties_count / 5 );
         <div class="hero-wrapper">
             <div class="hero-left">
                 <h1><?php echo $h1; ?></h1>
-                <?php get_template_part( 'components/filters/search-tabs' ); ?>
+                <?php get_template_part( 'core/components/filters/search-tabs' ); ?>
                 <div class="hero-items">
                     <div class="hero-item">
                         <span>

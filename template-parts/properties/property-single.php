@@ -1,38 +1,36 @@
 <?php
 /**
- * Single Items Section Template
- *
- * @var Entities\Property $property
+ * Template for single property
  */
-if ( ! defined( 'ABSPATH' ) ) {
-    exit;
-}
 
-$property = $args['property'] ?? '';
-if ( empty( $property ) ) {
+$title = $args['title'] ?? null;
+
+if ( empty( $title ) ) {
     return;
 }
 
-$labels               = $property->get_labels();
-$property_amenities   = $property->get_amenities();
-$latitude             = $property->get_latitude();
-$longitude            = $property->get_longitude();
-$property_information = $property->get_key_information();
-$whatsapp_share_text  = 'https://wa.me/?text=' . rawurlencode( sprintf(
-                '%s | %s | %s View %s',
-                $property->get_title(),
-                $property->get_location(),
-                $property->get_price_html(),
-                get_permalink( $property->get_id() )
-        ) );
+$labels               = $args['labels'] ?? array();
+$whatsapp_share_text  = $args['whatsapp_share_text'] ?? '';
+$property_information = $args['property_information'] ?? array();
+$units                = $args['units'] ?? array();
+$all_units_link       = $args['all_units_link'] ?? '';
+$location             = $args['location'] ?? '';
+$developer            = $args['developer'] ?? '';
+$gallery              = $args['gallery'] ?? array();
+$quote_button_args    = $args['quote_button_args'] ?? array();
+$units_by_beds        = $args['units_by_beds'] ?? array();
+$amenities            = $args['amenities'] ?? array();
+$latitude             = $args['latitude'] ?? '';
+$longitude            = $args['longitude'] ?? '';
+$payment_plans        = $args['payment_plans'] ?? array();
 ?>
 <section class="single-items">
     <div class="container">
         <div class="single-items-wrapper">
-            <?php get_template_part( 'components/common/breadcrumbs' ); ?>
+            <?php get_template_part( 'core/components/common/breadcrumbs' ); ?>
             <div class="single-items-top">
                 <div class="single-items-top-left">
-                    <h1><?php echo esc_html( $property->get_title() ); ?></h1>
+                    <h1><?php echo esc_html( $title ); ?></h1>
                     <?php if ( ! empty( $labels ) ) { ?>
                         <div class="single-items-top-labels">
                             <?php foreach ( $labels as $label ) { ?>
@@ -45,7 +43,7 @@ $whatsapp_share_text  = 'https://wa.me/?text=' . rawurlencode( sprintf(
                 </div>
                 <div class="single-items-top-right">
                     <?php
-                    get_template_part( 'components/ui/button', null,
+                    get_template_part( 'core/components/ui/button', null,
                             array(
                                     'class'  => 'gray sm',
                                     'text'   => __( 'Share' ),
@@ -56,27 +54,23 @@ $whatsapp_share_text  = 'https://wa.me/?text=' . rawurlencode( sprintf(
                             )
                     );
 
-                    get_template_part( 'components/ui/button', null,
-                            array(
-                                    'class' => 'gray sm',
-                                    'text'  => __( 'Save' ),
-                                    'src'   => THEME_URL . '/assets/img/bookmark.svg',
-                            )
-                    );
+                    //                    get_template_part( 'core/components/ui/button', null,
+                    //                            array(
+                    //                                    'class' => 'gray sm',
+                    //                                    'text'  => __( 'Save' ),
+                    //                                    'src'   => THEME_URL . '/assets/img/bookmark.svg',
+                    //                            )
+                    //                    );
 
-                    get_template_part( 'components/ui/button', null,
-                            array(
-                                    'class' => 'orange sm request-quote',
-                                    'text'  => __( 'Request quote' ),
-                                    'modal' => 'quote-modal',
-                            )
+                    get_template_part( 'core/components/ui/button', null,
+                            $quote_button_args
                     );
                     ?>
                 </div>
                 <?php
                 get_template_part( 'template-parts/sections/single/thumbs-slider', null,
                         array(
-                                'gallery' => $property->get_gallery(),
+                                'gallery' => $gallery,
                         )
                 );
                 ?>
@@ -105,12 +99,7 @@ $whatsapp_share_text  = 'https://wa.me/?text=' . rawurlencode( sprintf(
 
                                     <?php } ?>
                                 </div>
-                                <?php
-                                $location  = $property->get_location();
-                                $developer = $property->get_developer();
-
-                                if ( ! empty( $location ) ) {
-                                    ?>
+                                <?php if ( ! empty( $location ) && ! empty( $developer ) ) { ?>
                                     <div class="single-info-row">
                                         <div class="single-info-col">
                                             <span><?php _e( 'Location' ); ?></span>
@@ -127,7 +116,6 @@ $whatsapp_share_text  = 'https://wa.me/?text=' . rawurlencode( sprintf(
                             </div>
                         </div>
                         <?php
-                        $developer = $property->get_developer();
                         if ( ! empty( $developer ) ) {
                             $developer_thumb = $developer->get_thumb() ?: '';
                             $developer_title = $developer->get_title() ?: '';
@@ -155,15 +143,12 @@ $whatsapp_share_text  = 'https://wa.me/?text=' . rawurlencode( sprintf(
                         <?php } ?>
                     <?php } ?>
 
-                    <?php
-                    $grouped_units = $property->get_units_by_beds();
-                    if ( ! empty( $grouped_units ) ) {
-                        ?>
+                    <?php if ( ! empty( $units_by_beds ) ) { ?>
                         <div class="single-info-block">
                             <h3><?php _e( 'Pricing' ); ?></h3>
                             <div class="single-dropdowns">
                                 <?php
-                                foreach ( $grouped_units as $units ) {
+                                foreach ( $units_by_beds as $units ) {
                                     get_template_part( 'template-parts/sections/single/dropdowns', null,
                                             array(
                                                     'beds'      => $units['beds'],
@@ -181,43 +166,37 @@ $whatsapp_share_text  = 'https://wa.me/?text=' . rawurlencode( sprintf(
                         </div>
                     <?php } ?>
 
-                    <div class="single-info-block">
-                        <div class="single-steps">
-                            <div class="single-step">
-                                <h3>Down payment</h3>
-                                <span>10%</span>
-                                <p>Sales launch</p>
-                            </div>
-                            <div class="single-step-arrow">
-                                <img src="<?php echo THEME_URL; ?>/assets/img/arrow-right.svg" width="24" height="24"
-                                     alt="Vector arrow">
-                            </div>
-                            <div class="single-step">
-                                <h3>During construction</h3>
-                                <span>70%</span>
-                                <p>7 installments</p>
-                            </div>
-                            <div class="single-step-arrow">
-                                <img src="<?php echo THEME_URL; ?>/assets/img/arrow-right.svg" width="24" height="24"
-                                     alt="Vector arrow">
-                            </div>
-                            <div class="single-step">
-                                <h3>On handover</h3>
-                                <span>30%</span>
-                                <p>Sep 2029</p>
+                    <?php if ( ! empty( $payment_plans ) ) { ?>
+                        <div class="single-info-block">
+                            <div class="single-steps">
+                                <?php foreach ( $payment_plans as $key => $plan ) { ?>
+                                    <?php if ( 0 !== $key ) { ?>
+                                        <div class="single-step-arrow">
+                                            <img src="<?php echo THEME_URL; ?>/assets/img/arrow-right.svg" width="24"
+                                                 height="24"
+                                                 alt="Vector arrow">
+                                        </div>
+                                    <?php } ?>
+                                    <div class="single-step">
+                                        <h3><?php echo esc_html( $plan['description'] ); ?></h3>
+                                        <span><?php echo esc_html( $plan['name'] ); ?></span>
+                                    </div>
+                                <?php } ?>
                             </div>
                         </div>
-                    </div>
-                    <?php if ( 0 < count( $property_amenities ) ) { ?>
+                    <?php } ?>
+
+                    <?php if ( 0 < count( $amenities ) ) { ?>
                         <div class="single-info-block">
                             <h3><?php _e( 'Amenities' ); ?></h3>
                             <ul class="single-list">
-                                <?php foreach ( $property_amenities as $amenity ) { ?>
+                                <?php foreach ( $amenities as $amenity ) { ?>
                                     <li><?php echo esc_html( $amenity ); ?></li>
                                 <?php } ?>
                             </ul>
                         </div>
                     <?php } ?>
+
                     <div class="single-info-block">
                         <h3><?php _e( 'Description' ); ?></h3>
                         <div class="texts">
@@ -229,20 +208,23 @@ $whatsapp_share_text  = 'https://wa.me/?text=' . rawurlencode( sprintf(
                                  alt="Vector link">
                         </button>
                     </div>
+
                     <?php if ( ! empty( $latitude ) && ! empty( $longitude ) ) { ?>
                         <div class="single-info-block">
                             <h3><?php _e( 'Location' ); ?></h3>
-                            <div class="map">
-                                <iframe
-                                        class="map-iframe" title="Dubai map" loading="lazy"
-                                        referrerpolicy="no-referrer-when-downgrade"
-                                        data-src="https://www.google.com/maps?q=<?php echo esc_attr( $latitude ); ?>,<?php echo esc_attr( $longitude ); ?>&z=15&output=embed"
-                                ></iframe>
-                            </div>
+                            <?php
+                            get_template_part( 'core/components/properties/map', null,
+                                    array(
+                                            'property'     => new \Entities\Property( get_the_ID() ),
+                                            'show_sidebar' => false,
+                                            'mode'         => 'single',
+                                    )
+                            );
+                            ?>
                         </div>
                     <?php } ?>
                 </div>
             </div>
         </div>
-        <?php get_template_part( 'components/ui/contact-panel' ); ?>
+        <?php get_template_part( 'core/components/ui/contact-panel' ); ?>
 </section>

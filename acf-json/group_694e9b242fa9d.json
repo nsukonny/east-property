@@ -37,7 +37,7 @@
                 "id": ""
             },
             "post_type": [
-                "properties"
+                "property"
             ],
             "taxonomy": "",
             "allow_null": 0,
@@ -462,6 +462,25 @@
                     "maxlength": ""
                 }
             ]
+        },
+        {
+            "key": "field_69a6ca4c78161",
+            "label": "Reasons",
+            "name": "reasons",
+            "type": "textarea",
+            "instructions": "Reasons why this is distress",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": ""
         }
     ],
     "location": [
@@ -481,5 +500,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1771167972
+    "modified": 1773297488
 }

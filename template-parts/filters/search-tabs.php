@@ -123,7 +123,7 @@ $beds  = $search_tabs_data['filters']['beds'];
                      data-check-icon="<?php echo THEME_URL; ?>/assets/img/check.svg" hidden></div>
             </div>
             <?php
-            get_template_part( 'components/ui/button', null,
+            get_template_part( 'core/components/ui/button', null,
                     array(
                             'class' => 'orange xl submit',
                             'text'  => __( 'Search' ),
