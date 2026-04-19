@@ -6,7 +6,7 @@
 define( 'THEME_PATH', get_template_directory() );
 define( 'THEME_URL', get_template_directory_uri() );
 define( 'THEME_VERSION', time() ); //TODO change to version like 1.0.1
-define( "IS_DEV", ( isset( $_SERVER['HTTP_HOST'] ) && 'distress.local' === $_SERVER['HTTP_HOST'] ) || isset( $_GET['reset'] ) );
+define( "IS_DEV", ( isset( $_SERVER['HTTP_HOST'] ) && 'estate-agregator.local' === $_SERVER['HTTP_HOST'] ) || isset( $_GET['reset'] ) );
 
 const THEME_NAME          = 'east-property';
 const PROJECT_NAME        = 'East Property';
@@ -39,7 +39,7 @@ add_action( 'after_setup_theme', 'add_menus' );
 function add_theme_styles(): void {
     wp_register_style(
             THEME_NAME . '-style',
-            THEME_URL . '/assets/css/main.min.css',
+            THEME_URL . '/assets/css/styles.min.css',
             null,
             THEME_VERSION,
             false

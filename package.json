@@ -1,0 +1,44 @@
+{
+  "name": "aw-gulp-builder",
+  "author": "andrsweb",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node gulp_scripts/start.js --no-lint",
+    "build": "gulp --gulpfile gulp_scripts/gulpfile.js --cwd . build --prod"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.0",
+    "browser-sync": "^3.0.4",
+    "cssnano": "^7.0.0",
+    "del": "^8.0.1",
+    "esbuild": "^0.27.0",
+    "fast-glob": "^3.3.0",
+    "gulp": "^5.0.1",
+    "gulp-cli": "^3.1.0",
+    "gulp-esbuild": "^0.14.1",
+    "gulp-file-include": "^2.3.0",
+    "gulp-newer": "^1.4.0",
+    "gulp-notify": "^5.0.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-postcss": "^10.0.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^6.0.1",
+    "gulp-stylelint-esm": "^3.0.0",
+    "javascript-obfuscator": "^4.1.0",
+    "minimist": "^1.2.0",
+    "sass": "^1.60.0",
+    "stylelint": "^16.0.0",
+    "stylelint-config-standard-scss": "^13.0.0",
+    "ttf2woff2": "^8.0.0",
+    "w3c-html-validator": "^2.0.2"
+  },
+  "dependencies": {
+    "body-scroll-lock": "^3.1.5",
+    "filepond": "^4.32.12",
+    "filepond-plugin-image-preview": "^4.6.12",
+    "sortablejs": "^1.15.7",
+    "swiper": "^12.0.3"
+  }
+}

@@ -69,8 +69,8 @@
             "key": "field_694ea5354ae1e",
             "label": "Listing Type",
             "name": "type_of_sale",
-            "type": "text",
-            "instructions": "",
+            "type": "select",
+            "instructions": "new : New Property\r\nresale : Resale",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -78,11 +78,16 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "choices": {
+                "new": "new"
+            },
+            "default_value": false,
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
         },
         {
             "key": "field_694ea57c4ae1f",
@@ -98,12 +103,12 @@
                 "id": ""
             },
             "choices": {
-                "apartment": "Apartments",
-                "villa": "Villas",
-                "townhouse": "Townhouses",
-                "penthouse": "Penthouses",
-                "house": "Houses",
-                "office": "Offices"
+                "apartment": "Apartment",
+                "villa": "Villa",
+                "townhouse": "Townhouse",
+                "penthouse": "Penthouse",
+                "house": "House",
+                "office": "Office"
             },
             "default_value": "apartment",
             "allow_null": 0,
@@ -500,5 +505,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1773297488
+    "modified": 1776497895
 }

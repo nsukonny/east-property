@@ -447,7 +447,7 @@
         },
         {
             "key": "field_6990c0b94aab8",
-            "label": "Payment Plans",
+            "label": "Payment Plans (copy)",
             "name": "payment_plans",
             "type": "repeater",
             "instructions": "",
@@ -920,5 +920,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1773304537
+    "modified": 1776497895
 }
