@@ -3,10 +3,12 @@
  * Hero section template
  */
 
-$hero             = get_field( 'hero_section', 'option' );
-$h1               = ! empty( $hero['title'] ) ? $hero['title'] : get_bloginfo( 'name' );
-$properties_count = wp_count_posts( 'unit' )->publish;
-$daily_sales      = round( $properties_count / 5 );
+$hero = get_field( 'hero_section', 'option' );
+$h1   = ! empty( $hero['title'] ) ? $hero['title'] : get_bloginfo( 'name' );
+
+//TODO display by delivery_date
+$available_properties_count       = 100;
+$in_construction_properties_count = 240;
 ?>
 <section class="hero">
     <div class="container">
@@ -17,18 +19,18 @@ $daily_sales      = round( $properties_count / 5 );
                 <div class="hero-items">
                     <div class="hero-item">
                         <span>
-                            <?php echo esc_attr( $properties_count ); ?>+
+                            <?php echo esc_attr( $available_properties_count ); ?>+
                         </span>
                         <p>
-                            <?php _e( 'Properties for sale' ); ?>
+                            <?php _e( 'Available immediately' ); ?>
                         </p>
                     </div>
                     <div class="hero-item">
                         <span>
-                           <?php echo esc_attr( $daily_sales ); ?>
+                           <?php echo esc_attr( $in_construction_properties_count ); ?>+
                         </span>
                         <p>
-                            <?php _e( 'Average sales daily' ); ?>
+                            <?php _e( 'In construction' ); ?>
                         </p>
                     </div>
                 </div>

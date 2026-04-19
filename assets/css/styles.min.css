@@ -5253,6 +5253,7 @@ header.header {
   .search-tabs .tab-field {
     width: auto;
     max-width: 160px;
+    min-width: 100px;
   }
 }
 .search-tabs .tab-field-label {
@@ -5311,6 +5312,9 @@ header.header {
     line-height: 18px;
   }
 }
+.search-tabs .tab-selector .tab-selector-value {
+  text-align: left;
+}
 .search-tabs .tab-selector .tab-selector-value img {
   width: 16px;
   height: 16px;
@@ -5357,10 +5361,11 @@ header.header {
 }
 .search-tabs .tab-dropdown {
   width: 100%;
+  min-width: -moz-max-content;
+  min-width: max-content;
   position: absolute;
   top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
   z-index: 5;
   display: flex;
   flex-direction: column;
