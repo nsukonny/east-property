@@ -3,22 +3,26 @@
         <div class="footer-wrapper">
             <div class="footer-inner">
                 <div class="footer-info">
-                    <div class="subscribe">
-                        <label for="subs">
-                            <span><?php _e( 'Keep Yourself Up to Date' ); ?></span>
-                            <input type="email" id="subs" placeholder="<?php _e( 'Your email address' ); ?>">
-                        </label>
-                        <?php
-                        get_template_part( 'core/components/ui/button', null,
-                                array(
-                                        'class' => 'orange xl',
-                                        'text'  => __( 'Subscribe' ),
-                                        'src'   => THEME_URL . '/assets/img/bell.svg',
-                                        'alt'   => __( 'Subscribe icon' ),
-                                )
-                        );
-                        ?>
-                    </div>
+                    <form action="" method="post">
+                        <div class="subscribe">
+                            <label for="subs">
+                                <span><?php _e( 'Keep Yourself Up to Date' ); ?></span>
+                                <input type="email" id="subs" name="email"
+                                       placeholder="<?php _e( 'Your email address' ); ?>">
+                            </label>
+							<?php
+							get_template_part( 'core/components/ui/button', null,
+								array(
+									'class' => 'orange xl',
+									'text'  => __( 'Subscribe' ),
+									'src'   => THEME_URL . '/assets/img/bell.svg',
+									'alt'   => __( 'Subscribe icon' ),
+									'type'  => 'submit',
+								)
+							);
+							?>
+                        </div>
+                    </form>
                     <a class="footer-logo" href="/">
                         <img class="footer-logo" src="<?php echo THEME_URL; ?>/assets/img/logo.svg" width="132"
                              height="50" alt="Vector logotype">
@@ -40,68 +44,68 @@
                 </div>
                 <div class="footer-menu">
                     <nav>
-                        <?php
-                        if ( has_nav_menu( 'footer_menu_popular' ) ) {
-                            ?>
+						<?php
+						if ( has_nav_menu( 'footer_menu_popular' ) ) {
+							?>
                             <ul class="menu">
                                 <li class="menu-item">
                                     <span><?php _e( 'Popular Search' ); ?></span>
                                 </li>
-                                <?php
-                                wp_nav_menu( array(
-                                        'theme_location' => 'footer_menu_popular',
-                                        'container'      => false,
-                                        'items_wrap'     => '%3$s',
-                                        'depth'          => 1,
-                                        'fallback_cb'    => false,
-                                ) );
-                                ?>
+								<?php
+								wp_nav_menu( array(
+									'theme_location' => 'footer_menu_popular',
+									'container'      => false,
+									'items_wrap'     => '%3$s',
+									'depth'          => 1,
+									'fallback_cb'    => false,
+								) );
+								?>
                             </ul>
-                        <?php } ?>
+						<?php } ?>
 
-                        <?php
-                        if ( has_nav_menu( 'footer_menu_discovery' ) ) {
-                            ?>
+						<?php
+						if ( has_nav_menu( 'footer_menu_discovery' ) ) {
+							?>
                             <ul class="menu">
                                 <li class="menu-item">
                                     <span><?php _e( 'Discovery' ); ?></span>
                                 </li>
-                                <?php
-                                wp_nav_menu( array(
-                                        'theme_location' => 'footer_menu_discovery',
-                                        'container'      => false,
-                                        'items_wrap'     => '%3$s',
-                                        'depth'          => 1,
-                                        'fallback_cb'    => false,
-                                ) );
-                                ?>
+								<?php
+								wp_nav_menu( array(
+									'theme_location' => 'footer_menu_discovery',
+									'container'      => false,
+									'items_wrap'     => '%3$s',
+									'depth'          => 1,
+									'fallback_cb'    => false,
+								) );
+								?>
                             </ul>
-                        <?php } ?>
+						<?php } ?>
                     </nav>
                     <nav>
-                        <?php
-                        if ( has_nav_menu( 'footer_menu_quick_links' ) ) {
-                            ?>
+						<?php
+						if ( has_nav_menu( 'footer_menu_quick_links' ) ) {
+							?>
                             <ul class="menu">
                                 <li class="menu-item">
                                     <span><?php _e( 'Quick Links' ); ?></span>
                                 </li>
-                                <?php
-                                wp_nav_menu( array(
-                                        'theme_location' => 'footer_menu_quick_links',
-                                        'container'      => false,
-                                        'items_wrap'     => '%3$s',
-                                        'depth'          => 1,
-                                        'fallback_cb'    => false,
-                                ) );
-                                ?>
+								<?php
+								wp_nav_menu( array(
+									'theme_location' => 'footer_menu_quick_links',
+									'container'      => false,
+									'items_wrap'     => '%3$s',
+									'depth'          => 1,
+									'fallback_cb'    => false,
+								) );
+								?>
                             </ul>
-                        <?php } ?>
+						<?php } ?>
                     </nav>
                 </div>
             </div>
             <div class="copyright">
-                <span>© East Property – All rights reserved</span>
+                <span><?php esc_html_e( '© East Property – All rights reserved' ); ?></span>
             </div>
         </div>
     </div>

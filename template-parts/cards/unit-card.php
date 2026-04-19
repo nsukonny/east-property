@@ -21,11 +21,11 @@ if ( empty( $title ) || empty( $price ) || empty( $gallery ) ) {
 }
 
 if ( ! empty( $amenities ) ) {
-    foreach ( $amenities as &$amenity ) {
-        if ( '0 ' . __( 'Beds' ) === $amenity['value'] ) {
-            $amenity['value'] = __( 'Studio' );
-        }
-    }
+	foreach ( $amenities as $key => $amenity ) {
+		if ( '0 ' . __( 'Beds' ) === $amenity['value'] ) {
+			$amenities[ $key ]['value'] = __( 'Studio' );
+		}
+	}
 }
 ?>
 <div class="unit-card">

@@ -309,5 +309,5 @@ $longitude            = $property->get_longitude();
             </div>
         </div>
     </div>
-    <?php get_template_part( 'core/components/ui/broker-panel' ); ?>
+    <?php get_template_part( 'core/components/ui/contact-panel' ); ?>
 </section>
