@@ -43,7 +43,7 @@ if ( 404 === get_query_var( 'pagename' ) || is_404() ) {
 			'core/components/properties/map',
 			null,
 			array(
-				'properties'   => $properties,
+				'properties'   => array( 'items' => $properties ),
 				'show_sidebar' => true,
 			)
 		);

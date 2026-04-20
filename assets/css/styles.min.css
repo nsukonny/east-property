@@ -2467,19 +2467,23 @@ footer.is-hidden {
 
 .render-map {
   width: 100%;
-  height: 600px;
+  min-height: 600px;
+  height: 100%;
 }
 @media (min-width: 992px) {
   .render-map {
-    height: 675px;
+    min-height: 675px;
+    height: 100%;
   }
 }
 .render-map.sm {
-  height: 420px;
+  min-height: 420px;
+  height: 100%;
 }
 @media (min-width: 992px) {
   .render-map.sm {
-    height: 475px;
+    min-height: 475px;
+    height: 100%;
   }
 }
 .render-map.full-width {
@@ -5007,16 +5011,25 @@ header.header {
     transform: rotate(360deg);
   }
 }
+#result-tabs-map-panel {
+  height: calc(100vh - 230px);
+}
+#result-tabs-map-panel .result-tabs-content-inner {
+  height: 100%;
+}
+
 .map {
   position: relative;
   width: 100%;
   height: 100%;
+  min-height: 675px;
   overflow: hidden;
 }
 .map .map-container {
   display: block;
   width: 100%;
   height: 100%;
+  min-height: 675px;
   border: 0;
 }
 .map.full-width {

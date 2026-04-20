@@ -119,7 +119,7 @@ $payment_plans        = $args['payment_plans'] ?? array();
 						if ( ! empty( $developer ) ) {
 							$developer_thumb = $developer->get_thumb() ?: '';
 							$developer_title = $developer->get_title() ?: '';
-							$developer_url   = $developer->get_developer_url() ?: '';
+							$developer_url   = $developer->get_url() ?: '';
 							?>
                             <div class="single-info-block">
                                 <div class="developer">
