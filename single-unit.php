@@ -14,7 +14,7 @@ get_header( null, array( 'color' => 'white' ) );
 
             $unit = new Unit( get_the_ID() );
             get_template_part( 'template-parts/sections/unit/items', null, array( 'unit' => $unit ) );
-            get_template_part( 'template-parts/sections/unit/properties', null, array( 'unit' => $unit ) );
+            //get_template_part( 'template-parts/sections/unit/properties', null, array( 'unit' => $unit ) );
         }
         ?>
     </main>

@@ -15,14 +15,14 @@ $in_construction_properties_count = 240;
         <div class="hero-wrapper">
             <div class="hero-left">
                 <h1><?php echo $h1; ?></h1>
-                <?php get_template_part( 'core/components/filters/search-tabs' ); ?>
+				<?php get_template_part( 'core/components/filters/search-tabs', null, array( 'form_action' => home_url( '/units/' ) ) ); ?>
                 <div class="hero-items">
                     <div class="hero-item">
                         <span>
                             <?php echo esc_attr( $available_properties_count ); ?>+
                         </span>
                         <p>
-                            <?php _e( 'Available immediately' ); ?>
+							<?php _e( 'Available immediately' ); ?>
                         </p>
                     </div>
                     <div class="hero-item">
@@ -30,7 +30,7 @@ $in_construction_properties_count = 240;
                            <?php echo esc_attr( $in_construction_properties_count ); ?>+
                         </span>
                         <p>
-                            <?php _e( 'In construction' ); ?>
+							<?php _e( 'In construction' ); ?>
                         </p>
                     </div>
                 </div>

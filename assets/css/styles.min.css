@@ -6238,6 +6238,7 @@ main ul:not([class]), .content ul:not([class]) {
 }
 .single-items .developer-image img {
   max-height: 50px;
+  width: auto;
 }
 .single-items .single-items img {
   width: 16px;
@@ -6469,28 +6470,29 @@ main ul:not([class]), .content ul:not([class]) {
 }
 .single-items .single-steps {
   width: 100%;
+  max-width: 700px;
   display: flex;
   flex-flow: column nowrap;
   align-items: stretch;
   background-color: #F7F7F7;
-}
-@media (min-width: 480px) {
-  .single-items .single-steps {
-    flex-flow: row wrap;
-    justify-content: space-between;
-  }
+  gap: 10px;
+  padding: 10px 0;
 }
 .single-items .single-step {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
   padding: 8px;
-  gap: 4px;
+  gap: 10px;
+  justify-content: flex-start;
 }
-@media (min-width: 480px) {
-  .single-items .single-step {
-    max-width: 239px;
-  }
+.single-items .single-step-title {
+  min-width: 160px;
+  font-size: 14px;
+  font-weight: 400;
+}
+.single-items .single-step-descr {
+  font-weight: 700;
 }
 .single-items .single-step h3 {
   color: #111;

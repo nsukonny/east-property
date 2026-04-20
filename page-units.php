@@ -14,7 +14,7 @@ get_template_part(
 	'core/components/units/filter',
 	null,
 	array(
-		'search_by' => array(
+		'search_by'     => array(
 			'title'         => true,
 			'location'      => true,
 			'available'     => true,
@@ -25,6 +25,7 @@ get_template_part(
 			'developer'     => true,
 			'max_area'      => false,
 		),
+		'card_template' => 'unit-card',
 	)
 );
 
