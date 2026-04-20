@@ -2026,6 +2026,10 @@ address {
   margin-top: auto;
 }
 
+footer.is-hidden {
+  display: none;
+}
+
 .label {
   display: flex;
   justify-content: center;
@@ -5537,6 +5541,10 @@ header.header {
     opacity: 1;
     max-height: 332px;
   }
+}
+
+section.is-hidden {
+  display: none;
 }
 
 main ul:not([class]), .content ul:not([class]) {

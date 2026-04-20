@@ -19,14 +19,14 @@ const PROPERTIES_PER_PAGE = 20;
  * @return void
  */
 function add_menus(): void {
-    register_nav_menus(
-            array(
-                    'header_menu'             => __( 'Header' ),
-                    'footer_menu_popular'     => __( 'Footer | Popular Search' ),
-                    'footer_menu_discovery'   => __( 'Footer | Discovery' ),
-                    'footer_menu_quick_links' => __( 'Footer | Quick Links' ),
-            )
-    );
+	register_nav_menus(
+		array(
+			'header_menu'             => __( 'Header' ),
+			'footer_menu_popular'     => __( 'Footer | Popular Search' ),
+			'footer_menu_discovery'   => __( 'Footer | Discovery' ),
+			'footer_menu_quick_links' => __( 'Footer | Quick Links' ),
+		)
+	);
 }
 
 add_action( 'after_setup_theme', 'add_menus' );
@@ -37,50 +37,50 @@ add_action( 'after_setup_theme', 'add_menus' );
  * @return void
  */
 function add_theme_styles(): void {
-    wp_register_style(
-            THEME_NAME . '-style',
-            THEME_URL . '/assets/css/styles.min.css',
-            null,
-            THEME_VERSION,
-            false
-    );
+	wp_register_style(
+		THEME_NAME . '-style',
+		THEME_URL . '/assets/css/styles.min.css',
+		null,
+		THEME_VERSION,
+		false
+	);
 
-    wp_enqueue_style( THEME_NAME . '-style' );
+	wp_enqueue_style( THEME_NAME . '-style' );
 
-    wp_register_script(
-            THEME_NAME . '-app',
-            THEME_URL . '/assets/js/main.min.js',
-            null,
-            THEME_VERSION,
-            true
-    );
+	wp_register_script(
+		THEME_NAME . '-app',
+		THEME_URL . '/assets/js/main.min.js',
+		null,
+		THEME_VERSION,
+		true
+	);
 
-    wp_enqueue_script( THEME_NAME . '-app' );
+	wp_enqueue_script( THEME_NAME . '-app' );
 
-    wp_localize_script( THEME_NAME . '-app', 'ajax_object',
-            array(
-                    'ajax_url'    => admin_url( 'admin-ajax.php' ),
-                    '_ajax_nonce' => wp_create_nonce( 'get_filtered_properties' ),
-            )
-    );
+	wp_localize_script( THEME_NAME . '-app', 'ajax_object',
+		array(
+			'ajax_url'    => admin_url( 'admin-ajax.php' ),
+			'_ajax_nonce' => wp_create_nonce( 'get_filtered_properties' ),
+		)
+	);
 }
 
 add_action( 'wp_enqueue_scripts', 'add_theme_styles' );
 
 if ( function_exists( 'acf_add_options_page' ) ) {
-    $option_page = acf_add_options_page(
-            array(
-                    'page_title' => __( 'Настройки' ) . ' ' . PROJECT_NAME,
-                    'menu_title' => __( 'Настройки' ) . ' ' . PROJECT_NAME,
-                    'menu_slug'  => 'theme-options',
-                    'capability' => 'edit_posts',
-                    'redirect'   => false,
-            )
-    );
+	$option_page = acf_add_options_page(
+		array(
+			'page_title' => __( 'Настройки' ) . ' ' . PROJECT_NAME,
+			'menu_title' => __( 'Настройки' ) . ' ' . PROJECT_NAME,
+			'menu_slug'  => 'theme-options',
+			'capability' => 'edit_posts',
+			'redirect'   => false,
+		)
+	);
 }
 
 add_action( 'after_setup_theme', function (): void {
-    add_theme_support( 'post-thumbnails' );
+	add_theme_support( 'post-thumbnails' );
 } );
 
 add_filter( 'show_admin_bar', '__return_false' );
@@ -93,7 +93,7 @@ add_filter( 'woocommerce_enqueue_styles', '__return_false' );
 
 add_action( 'wp_head', 'add_google_analytics' );
 function add_google_analytics() {
-    ?>
+	?>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-02BCJXDNFN"></script>
     <script>
@@ -107,7 +107,7 @@ function add_google_analytics() {
 
         gtag('config', 'G-02BCJXDNFN');
     </script>
-    <?php
+	<?php
 }
 
 include_once 'core/includes/entities/load.php';

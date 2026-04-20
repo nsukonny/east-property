@@ -10,18 +10,20 @@ if ( 404 === get_query_var( 'pagename' ) || is_404() ) {
 	return;
 }
 
-get_template_part( 'core/components/units/filter', null,
+get_template_part(
+	'core/components/units/filter',
+	null,
 	array(
 		'search_by' => array(
-			'title'         => false,
+			'title'         => true,
 			'location'      => true,
 			'available'     => true,
 			'price'         => true,
 			'beds'          => true,
 			'baths'         => false,
 			'property_type' => false,
-			'developer'     => false,
-			'max_area'      => true,
+			'developer'     => true,
+			'max_area'      => false,
 		),
 	)
 );
@@ -29,4 +31,3 @@ get_template_part( 'core/components/units/filter', null,
 get_template_part( 'template-parts/sections/index/about' );
 
 get_footer();
-

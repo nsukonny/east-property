@@ -31,7 +31,7 @@ $color = $args['color'] ?? '';
                                     'class' => 'black sm header-login',
                                     'text'  => $current_user->display_name,
                                     'src'   => THEME_URL . '/assets/img/user.svg',
-                                    'link'  => home_url( 'my-account' ),
+                                    'link'  => home_url( 'account' ),
                             )
                     );
                     ?>
