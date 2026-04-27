@@ -23,6 +23,8 @@ $amenities            = $args['amenities'] ?? array();
 $latitude             = $args['latitude'] ?? '';
 $longitude            = $args['longitude'] ?? '';
 $payment_plans        = $args['payment_plans'] ?? array();
+$button_text          = $args['button_text'] ?? '';
+$button_url           = $args['button_url'] ?? '';
 ?>
 <section class="single-items">
     <div class="container">
@@ -43,7 +45,9 @@ $payment_plans        = $args['payment_plans'] ?? array();
                 </div>
                 <div class="single-items-top-right">
 					<?php
-					get_template_part( 'core/components/ui/button', null,
+					get_template_part(
+						'core/components/ui/button',
+						null,
 						array(
 							'class'  => 'gray sm',
 							'text'   => __( 'Share' ),
@@ -54,23 +58,20 @@ $payment_plans        = $args['payment_plans'] ?? array();
 						)
 					);
 
-					//                    get_template_part( 'core/components/ui/button', null,
-					//                            array(
-					//                                    'class' => 'gray sm',
-					//                                    'text'  => __( 'Save' ),
-					//                                    'src'   => THEME_URL . '/assets/img/bookmark.svg',
-					//                            )
-					//                    );
-
-					get_template_part( 'core/components/ui/button', null,
+					get_template_part(
+						'core/components/ui/button',
+						null,
 						$quote_button_args
 					);
 					?>
                 </div>
 				<?php
-				get_template_part( 'template-parts/sections/single/thumbs-slider', null,
+				get_template_part(
+					'core/components/sliders/thumbs-slider',
+					null,
 					array(
-						'gallery' => $gallery,
+						'gallery'  => $gallery,
+						'template' => 'unit-thumbs-slider',
 					)
 				);
 				?>
@@ -143,6 +144,25 @@ $payment_plans        = $args['payment_plans'] ?? array();
 						<?php } ?>
 					<?php } ?>
 
+					<?php
+					$tree_latest_units = 3 < count( $units ) ? array_slice( $units, 0, 3 ) : $units;
+					get_component_template(
+						'units/featured',
+						array(
+							'h2'            => count( $units ) . ' ' . __( 'properties available in this project' ),
+							'href'          => $all_units_link,
+							'show_all_link' => $all_units_link,
+							'link_text'     => __( 'All properties' ),
+							'units'         => $tree_latest_units,
+							'card_template' => 'unit-square-card',
+							'before'        => '',
+							'after'         => '',
+							'button_text'   => $button_text,
+							'button_url'    => $button_url,
+						)
+					);
+					?>
+
 					<?php if ( ! empty( $units_by_beds ) ) { ?>
                         <div class="single-info-block">
                             <h3><?php _e( 'Pricing' ); ?></h3>
@@ -168,6 +188,7 @@ $payment_plans        = $args['payment_plans'] ?? array();
 
 					<?php if ( ! empty( $payment_plans ) ) { ?>
                         <div class="single-info-block">
+                            <h3><?php _e( 'Payment plan' ); ?></h3>
                             <div class="single-steps">
 								<?php foreach ( $payment_plans as $key => $plan ) { ?>
                                     <div class="single-step">

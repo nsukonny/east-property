@@ -12,16 +12,28 @@ while ( have_posts() ) {
 
 	$property = new Property( get_the_ID() );
 
-	get_template_part( 'core/components/properties/property-single', null,
-		array(
-			'property'          => $property,
-			'quote_button_args' => array(
-				'class' => 'orange sm request-quote',
-				'text'  => __( 'Request quote' ),
-				'modal' => 'quote-modal',
-			),
-		)
-	);
+	if ( $_GET['units'] && 'all' === $_GET['units'] ) {
+		get_template_part(
+			'core/components/properties/property-units-list',
+			null,
+			array(
+				'property' => $property,
+			)
+		);
+	} else {
+		get_template_part(
+			'core/components/properties/property-single',
+			null,
+			array(
+				'property'          => $property,
+				'quote_button_args' => array(
+					'class' => 'orange sm request-quote',
+					'text'  => __( 'Request quote' ),
+					'modal' => 'quote-modal',
+				),
+			)
+		);
+	}
 }
 
 get_footer();
