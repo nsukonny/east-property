@@ -15,8 +15,7 @@ export const paths = {
             'east-property/dev/src/scss/**/*.scss',
             '!east-property/dev/src/scss/generated/**/*.scss',
             'east-property/dev/src/html/**/*.scss',
-            'core/template-parts/**/*.scss',
-            'core/template-parts/*.scss'
+            'core/**/*.scss',
         ],
         dest: 'assets/css'
     },
@@ -26,8 +25,7 @@ export const paths = {
             'east-property/dev/src/js/**/*.js',
             'east-property/dev/src/html/**/*.js',
             'assets/src/**/*.js',
-            'core/components/*.js',
-            'core/components/**/*.js'
+            'core/**/*.js'
         ],
         dest: 'assets/js'
     },

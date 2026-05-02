@@ -65,10 +65,10 @@
             "mime_types": ""
         },
         {
-            "key": "field_698063ead3290",
-            "label": "Agency Logo",
-            "name": "logo",
-            "type": "image",
+            "key": "field_69f5b1c81c68d",
+            "label": "Agency",
+            "name": "agency",
+            "type": "post_object",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -77,16 +77,14 @@
                 "class": "",
                 "id": ""
             },
-            "return_format": "url",
-            "preview_size": "medium",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": ""
+            "post_type": [
+                "agency"
+            ],
+            "taxonomy": "",
+            "allow_null": 0,
+            "multiple": 0,
+            "return_format": "object",
+            "ui": 1
         }
     ],
     "location": [
@@ -106,5 +104,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1776497895
+    "modified": 1777710697
 }

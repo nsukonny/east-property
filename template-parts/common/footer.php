@@ -1,15 +1,15 @@
 <footer class="footer">
-    <div class="container">
-        <div class="footer-wrapper">
-            <div class="footer-inner">
-                <div class="footer-info">
-                    <form action="" method="post">
-                        <div class="subscribe">
-                            <label for="subs">
-                                <span><?php _e( 'Keep Yourself Up to Date' ); ?></span>
-                                <input type="email" id="subs" name="email"
-                                       placeholder="<?php _e( 'Your email address' ); ?>">
-                            </label>
+	<div class="container">
+		<div class="footer-wrapper">
+			<div class="footer-inner">
+				<div class="footer-info">
+					<form action="" method="post">
+						<div class="subscribe">
+							<label for="subs">
+								<span><?php _e( 'Keep Yourself Up to Date' ); ?></span>
+								<input type="email" id="subs" name="email"
+								       placeholder="<?php _e( 'Your email address' ); ?>">
+							</label>
 							<?php
 							get_template_part( 'core/components/ui/button', null,
 								array(
@@ -21,36 +21,36 @@
 								)
 							);
 							?>
-                        </div>
-                    </form>
-                    <a class="footer-logo" href="/">
-                        <img class="footer-logo" src="<?php echo THEME_URL; ?>/assets/img/logo.svg" width="132"
-                             height="50" alt="Vector logotype">
-                    </a>
-                    <div class="footer-block">
-                        <span>Address</span>
-                        <address>
-                            Sheikh Zayed Road, Building 25 <br>
-                            Al Quoz 3 <br>
-                            Dubai
-                        </address>
-                    </div>
-                    <div class="footer-block">
-                        <span>Live Support?</span>
-                        <a href="mailto:info@eastpropoerty.com">
-                            info@eastpropoerty.com
-                        </a>
-                    </div>
-                </div>
-                <div class="footer-menu">
-                    <nav>
+						</div>
+					</form>
+					<a class="footer-logo" href="/">
+						<img class="footer-logo" src="<?php echo THEME_URL; ?>/assets/img/logo.svg" width="132"
+						     height="50" alt="Vector logotype">
+					</a>
+					<div class="footer-block">
+						<span>Address</span>
+						<address>
+							Sheikh Zayed Road, Building 25 <br>
+							Al Quoz 3 <br>
+							Dubai
+						</address>
+					</div>
+					<div class="footer-block">
+						<span>Live Support?</span>
+						<a href="mailto:info@eastpropoerty.com">
+							info@eastpropoerty.com
+						</a>
+					</div>
+				</div>
+				<div class="footer-menu">
+					<nav>
 						<?php
 						if ( has_nav_menu( 'footer_menu_popular' ) ) {
 							?>
-                            <ul class="menu">
-                                <li class="menu-item">
-                                    <span><?php _e( 'Popular Search' ); ?></span>
-                                </li>
+							<ul class="menu">
+								<li class="menu-item">
+									<span><?php _e( 'Popular Search' ); ?></span>
+								</li>
 								<?php
 								wp_nav_menu( array(
 									'theme_location' => 'footer_menu_popular',
@@ -60,16 +60,16 @@
 									'fallback_cb'    => false,
 								) );
 								?>
-                            </ul>
+							</ul>
 						<?php } ?>
 
 						<?php
 						if ( has_nav_menu( 'footer_menu_discovery' ) ) {
 							?>
-                            <ul class="menu">
-                                <li class="menu-item">
-                                    <span><?php _e( 'Discovery' ); ?></span>
-                                </li>
+							<ul class="menu">
+								<li class="menu-item">
+									<span><?php _e( 'Discovery' ); ?></span>
+								</li>
 								<?php
 								wp_nav_menu( array(
 									'theme_location' => 'footer_menu_discovery',
@@ -79,17 +79,17 @@
 									'fallback_cb'    => false,
 								) );
 								?>
-                            </ul>
+							</ul>
 						<?php } ?>
-                    </nav>
-                    <nav>
+					</nav>
+					<nav>
 						<?php
 						if ( has_nav_menu( 'footer_menu_quick_links' ) ) {
 							?>
-                            <ul class="menu">
-                                <li class="menu-item">
-                                    <span><?php _e( 'Quick Links' ); ?></span>
-                                </li>
+							<ul class="menu">
+								<li class="menu-item">
+									<span><?php _e( 'Quick Links' ); ?></span>
+								</li>
 								<?php
 								wp_nav_menu( array(
 									'theme_location' => 'footer_menu_quick_links',
@@ -99,14 +99,15 @@
 									'fallback_cb'    => false,
 								) );
 								?>
-                            </ul>
+							</ul>
 						<?php } ?>
-                    </nav>
-                </div>
-            </div>
-            <div class="copyright">
-                <span><?php esc_html_e( '© East Property – All rights reserved' ); ?></span>
-            </div>
-        </div>
-    </div>
+					</nav>
+				</div>
+			</div>
+			<div class="copyright">
+				<span><?php esc_html_e( '© East Property – All rights reserved' ); ?></span>
+			</div>
+		</div>
+	</div>
 </footer>
+<?php get_template_part( 'core/components/common/notifications/notifications' ); ?>

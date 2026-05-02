@@ -2310,7 +2310,7 @@ footer.is-hidden {
 .result-tab-button:first-child {
   border-top-left-radius: 8px;
 }
-.result-tab-button:last-child {
+.result-tab-button:last-of-type {
   border-top-right-radius: 8px;
 }
 .result-tab-button.active {
@@ -5060,6 +5060,10 @@ header.header {
   color: #111;
   text-decoration: underline;
 }
+.link.logout {
+  padding: 0 30px;
+  font-size: 14px;
+}
 
 .edit-property-link {
   margin-bottom: 10px;
@@ -5834,7 +5838,7 @@ header.header {
   display: flex;
   flex-direction: column;
   gap: 0 !important;
-  height: 300px;
+  height: auto;
   overflow-x: scroll;
 }
 .submit-unit .dropdown-inner button {
@@ -6521,6 +6525,9 @@ main ul:not([class]), .content ul:not([class]) {
 }
 .profile-tabs .content-list form fieldset {
   max-width: 300px;
+}
+.profile-tabs .content-list.submit-unit {
+  padding: 0 0 32px 0;
 }
 
 .dropdown.info-dropdown {
@@ -7537,6 +7544,68 @@ main ul:not([class]), .content ul:not([class]) {
 .single-404 .container .text p {
   font-size: 32px;
 }
+.notifications {
+  position: fixed;
+  top: 16px;
+  right: 26px;
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.notifications .notification {
+  color: #FFF;
+  padding: 14px 36px 14px 14px;
+  border-radius: 8px;
+  max-width: 320px;
+  transition: opacity 0.3s ease;
+  position: relative;
+}
+.notifications .notification.success {
+  background: #00bc8c;
+}
+.notifications .notification.error {
+  background: #e84c3c;
+}
+.notifications .notification.notice {
+  background: #3698da;
+}
+.notifications .notification.hidden {
+  opacity: 0;
+}
+.notifications .notification-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  border-radius: 8px;
+  border: none;
+  background: none;
+}
+.notifications .notification-close:focus-visible {
+  outline: 2px solid #FFF;
+  outline-offset: 2px;
+}
+.notifications .notification-close::before, .notifications .notification-close::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 14px;
+  height: 2px;
+  background-color: #FFF;
+  transform-origin: center;
+  border-radius: 2px;
+}
+.notifications .notification-close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.notifications .notification-close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
 .contact-manager-modal {
   --ccm-bg: #f5f5f5;
   --ccm-bg-elevated: #ffffff;
