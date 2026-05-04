@@ -1,48 +1,63 @@
 <?php
+
+use Entities\Broker;
+
 $color = $args['color'] ?? '';
 ?>
 <header class="header <?php echo esc_attr( $color ); ?>">
-    <div class="container">
-        <div class="header-wrapper">
-            <a href="/" class="header-logo">
-                <img src="<?php echo THEME_URL; ?>/assets/img/logo.svg" width="132" height="50" alt="Vector logotype">
-            </a>
-            <?php get_template_part( 'core/components/common/nav' ); ?>
-            <div class="header-actions">
-                <?php if ( ! is_user_logged_in() ) { ?>
-                    <button class="header-signin" type="button" data-modal-open="signin-modal">
-                        Sign in
-                    </button>
-                    <?php
-                    get_template_part( 'core/components/ui/button', null,
-                            array(
-                                    'class' => 'black sm header-login',
-                                    'text'  => __( 'Create Account' ),
-                                    'src'   => THEME_URL . '/assets/img/user.svg',
-                                    'modal' => 'create-modal',
-                            )
-                    );
-                    ?>
-                <?php } else { ?>
-                    <?php
-                    $current_user = wp_get_current_user();
-                    get_template_part( 'core/components/ui/button', null,
-                            array(
-                                    'class' => 'black sm header-login',
-                                    'text'  => $current_user->display_name,
-                                    'src'   => THEME_URL . '/assets/img/user.svg',
-                                    'link'  => home_url( 'account' ),
-                            )
-                    );
-                    ?>
-                <?php } ?>
-                <button class="burger-button" type="button" aria-label="<?php _e( 'Open menu' ); ?>"
-                        aria-expanded="false"
-                        aria-controls="header-nav">
-                    <span class="line"></span>
-                </button>
-            </div>
-        </div>
-        <div class="header-overlay" data-header-overlay></div>
-    </div>
+	<div class="container">
+		<div class="header-wrapper">
+			<a href="/" class="header-logo">
+				<img src="<?php echo THEME_URL; ?>/assets/img/logo.svg" width="132" height="50" alt="Vector logotype">
+			</a>
+			<?php get_template_part( 'core/components/common/nav' ); ?>
+			<div class="header-actions">
+				<?php if ( ! is_user_logged_in() ) { ?>
+					<button class="header-signin" type="button" data-modal-open="signin-modal">
+						Sign in
+					</button>
+					<?php
+					get_template_part(
+						'core/components/ui/button',
+						null,
+						array(
+							'class' => 'black sm header-login',
+							'text'  => __( 'Create Account' ),
+							'src'   => THEME_URL . '/assets/img/user.svg',
+							'modal' => 'create-modal',
+						)
+					);
+				} else {
+					$current_user   = wp_get_current_user();
+					$current_broker = new Broker( $current_user );
+					$boost_points   = $current_broker->get_boost_points();
+					?>
+					<a href="<?php echo home_url( 'account' ); ?>" class="boost-points">
+						<img src="<?php echo THEME_URL; ?>/assets/img/boost_points.png"
+						     alt="<?php esc_html_e( 'Boost Points' ); ?>">
+						<?php echo esc_attr( $boost_points ); ?>
+					</a>
+					<?php
+
+					get_template_part(
+						'core/components/ui/button',
+						null,
+						array(
+							'class' => 'black sm header-login',
+							'text'  => $current_user->display_name,
+							'src'   => THEME_URL . '/assets/img/user.svg',
+							'link'  => home_url( 'account' ),
+						)
+					);
+					?>
+				<?php } ?>
+				<button class="burger-button" type="button" aria-label="<?php _e( 'Open menu' ); ?>"
+				        aria-expanded="false"
+				        aria-controls="header-nav">
+					<span class="line"></span>
+				</button>
+			</div>
+		</div>
+		<div class="header-overlay" data-header-overlay></div>
+	</div>
 </header>
