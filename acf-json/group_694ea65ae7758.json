@@ -110,8 +110,8 @@
                 "class": "",
                 "id": ""
             },
-            "display_format": "F Y",
-            "return_format": "F Y",
+            "display_format": "F j, Y",
+            "return_format": "Ymd",
             "first_day": 1
         },
         {
@@ -930,5 +930,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1777545953
+    "modified": 1778004363
 }

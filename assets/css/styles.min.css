@@ -2504,6 +2504,29 @@ footer.is-hidden {
 .dropdown.opened .dropdown-arrow {
   transform: rotate(180deg);
 }
+.dropdown.opened .dropdown-search {
+  display: flex;
+}
+.dropdown-search {
+  position: absolute;
+  top: 0;
+  width: 90%;
+  display: none;
+}
+.dropdown-search-input {
+  width: 98%;
+  margin: auto;
+  padding: 10px 16px;
+}
+.dropdown-search-input::-moz-placeholder {
+  color: #464646;
+}
+.dropdown-search-input::placeholder {
+  color: #464646;
+}
+.dropdown-option.hidden {
+  display: none;
+}
 
 .beds-baths-dropdown {
   width: 252px;
@@ -6651,7 +6674,8 @@ main ul:not([class]), .content ul:not([class]) {
 .dropdown .dropdown-content {
   width: 100%;
   height: 0;
-  overflow: hidden;
+  max-height: 300px;
+  overflow: scroll;
   transition: height ease 200ms;
 }
 .dropdown .dropdown-content-row {
