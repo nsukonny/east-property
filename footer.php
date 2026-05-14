@@ -1,6 +1,7 @@
 </main>
 <?php
-get_template_part( 'core/components/common/footer',
+get_template_part(
+	'core/components/common/footer',
 	null,
 	array(
 		'modals' => array(
@@ -11,6 +12,8 @@ get_template_part( 'core/components/common/footer',
 			'signin-modal',
 			'forgot-modal',
 			'broker-modal',
+			'boost-modal',
+			'boost-info-modal',
 		),
 	)
 );

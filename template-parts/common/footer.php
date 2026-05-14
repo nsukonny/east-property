@@ -3,26 +3,7 @@
 		<div class="footer-wrapper">
 			<div class="footer-inner">
 				<div class="footer-info">
-					<form action="" method="post">
-						<div class="subscribe">
-							<label for="subs">
-								<span><?php _e( 'Keep Yourself Up to Date' ); ?></span>
-								<input type="email" id="subs" name="email"
-								       placeholder="<?php _e( 'Your email address' ); ?>">
-							</label>
-							<?php
-							get_template_part( 'core/components/ui/button', null,
-								array(
-									'class' => 'orange xl',
-									'text'  => __( 'Subscribe' ),
-									'src'   => THEME_URL . '/assets/img/bell.svg',
-									'alt'   => __( 'Subscribe icon' ),
-									'type'  => 'submit',
-								)
-							);
-							?>
-						</div>
-					</form>
+					<?php get_template_part( 'core/components/common/subscribe-form/subscribe-form' ); ?>
 					<a class="footer-logo" href="/">
 						<img class="footer-logo" src="<?php echo THEME_URL; ?>/assets/img/logo.svg" width="132"
 						     height="50" alt="Vector logotype">

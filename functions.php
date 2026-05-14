@@ -6,7 +6,8 @@
 define( 'THEME_PATH', get_template_directory() );
 define( 'THEME_URL', get_template_directory_uri() );
 define( 'THEME_VERSION', time() ); //TODO change to version like 1.0.1
-define( "IS_DEV", ( isset( $_SERVER['HTTP_HOST'] ) && 'estate-agregator.local' === $_SERVER['HTTP_HOST'] ) || isset( $_GET['reset'] ) );
+define( "IS_DEV",
+	( isset( $_SERVER['HTTP_HOST'] ) && 'estate-agregator.local' === $_SERVER['HTTP_HOST'] ) || isset( $_GET['reset'] ) );
 
 const THEME_NAME          = 'east-property';
 const PROJECT_NAME        = 'East Property';
@@ -57,7 +58,8 @@ function add_theme_styles(): void {
 
 	wp_enqueue_script( THEME_NAME . '-app' );
 
-	wp_localize_script( THEME_NAME . '-app', 'ajax_object',
+	wp_localize_script( THEME_NAME . '-app',
+		'ajax_object',
 		array(
 			'ajax_url'    => admin_url( 'admin-ajax.php' ),
 			'_ajax_nonce' => wp_create_nonce( 'get_filtered_properties' ),
@@ -83,7 +85,10 @@ add_action( 'after_setup_theme', function (): void {
 	add_theme_support( 'post-thumbnails' );
 } );
 
-add_filter( 'show_admin_bar', '__return_false' );
+$current_user = wp_get_current_user();
+if ( ! $current_user || ! in_array( 'administrator', (array) $current_user->roles, true ) ) {
+	add_filter( 'show_admin_bar', '__return_false' );
+}
 
 add_image_size( 'product-thumb', 143, 171, true );
 add_image_size( 'featured-card', 740, 480, true );
@@ -91,22 +96,22 @@ add_image_size( 'unit-card', 500, 394, true );
 
 add_filter( 'woocommerce_enqueue_styles', '__return_false' );
 
-add_action( 'wp_head', 'add_google_analytics' );
+//add_action( 'wp_head', 'add_google_analytics' );
 function add_google_analytics() {
 	?>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-02BCJXDNFN"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-02BCJXDNFN"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
+		function gtag() {
+			dataLayer.push(arguments);
+		}
 
-        gtag('js', new Date());
+		gtag('js', new Date());
 
-        gtag('config', 'G-02BCJXDNFN');
-    </script>
+		gtag('config', 'G-02BCJXDNFN');
+	</script>
 	<?php
 }
 

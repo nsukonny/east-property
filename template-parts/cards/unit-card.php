@@ -5,6 +5,7 @@
  * @var array $args
  */
 
+$unit_id        = $args['unit_id'] ?? null;
 $title          = $args['title'] ?: '';
 $price          = $args['price'] ?: '';
 $location       = $args['location'] ?: '';
@@ -16,6 +17,7 @@ $property_name  = $args['property_name'] ?? '';
 $property_url   = $args['property_url'] ?? '#';
 $developer_name = $args['developer_name'] ?? '';
 $edit_link      = $args['edit_link'] ?? '';
+$is_can_boost   = $args['is_can_boost'] ?? false;
 
 if ( empty( $title ) || empty( $price ) || empty( $gallery ) ) {
 	return;
@@ -28,13 +30,7 @@ if ( ! empty( $amenities ) ) {
 		}
 	}
 }
-
-if ( ! empty( $edit_link ) ) { ?>
-	<a href="<?php echo esc_url( $edit_link ); ?>" class="link edit-property-link">
-		<?php _e( 'Edit property' ); ?>
-	</a>
-<?php } ?>
-
+?>
 <div class="unit-card">
 	<div class="unit-card-inner">
 		<div class="unit-card-left">
@@ -80,7 +76,16 @@ if ( ! empty( $edit_link ) ) { ?>
 					<div class="unit-card-top-right">
 						<div class="unit-card-labels">
 							<?php foreach ( $labels as $label ) { ?>
-								<div class="label <?php echo esc_html( $label['color'] ); ?>"><?php echo esc_html( $label['name'] ); ?></div>
+								<div class="label <?php echo esc_html( $label['color'] ); ?>">
+									<?php if ( ! empty( $label['icon'] ) ) { ?>
+										<img src="<?php echo esc_url( $label['icon'] ); ?>"
+										     alt="<?php esc_html_e( 'Star' ); ?>">
+										<?php
+									}
+
+									echo esc_html( $label['name'] );
+									?>
+								</div>
 							<?php } ?>
 						</div>
 					</div>
@@ -107,16 +112,38 @@ if ( ! empty( $edit_link ) ) { ?>
 						<p><?php echo esc_html( $title ); ?></p>
 						<div class="unit-card-info-buttons">
 							<a href="<?php echo esc_url( $url ); ?>" class="button gray sm"
-							   target="_blank"><?php _e( 'View details' ); ?></a>
+							   target="_blank">
+								<?php esc_html_e( 'View details' ); ?>
+							</a>
 							<?php
-							get_template_part( 'core/components/ui/button', null,
-								array(
-									'class' => 'orange sm',
-									'text'  => __( 'Contact broker' ),
-									'modal' => 'broker-modal',
-								)
-							);
-							?>
+							if ( ! empty( $edit_link ) || true === $is_can_boost ) {
+								if ( ! empty( $edit_link ) ) {
+									?>
+									<a href="<?php echo esc_url( $edit_link ); ?>"
+									   class="button gray sm edit-property-link">
+										<img src="<?php echo esc_url( THEME_URL . '/assets/img/edit.svg' ); ?>"
+										     alt="<?php esc_html_e( 'Edit' ); ?>">
+										<?php _e( 'Edit property' ); ?>
+									</a>
+									<?php
+								}
+
+								if ( ! empty( $is_can_boost ) ) {
+									?>
+									<button class="button orange sm" data-modal-open="boost-modal"
+									        data-unit_id="<?php echo esc_attr( $unit_id ); ?>">
+										<img src="<?php echo esc_url( THEME_URL . '/assets/img/star.svg' ); ?>"
+										     alt="<?php esc_html_e( 'Star' ); ?>">
+										<?php esc_html_e( 'Boost property' ); ?>
+									</button>
+									<?php
+								}
+							} else {
+								?>
+								<button class="button orange sm" data-modal-open="broker-modal">
+									<?php esc_html_e( 'Contact broker' ); ?>
+								</button>
+							<?php } ?>
 						</div>
 					</div>
 				</div>
