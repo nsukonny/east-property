@@ -115,6 +115,33 @@ function add_google_analytics() {
 	<?php
 }
 
+add_action(
+	'template_redirect',
+	static function () {
+		if ( is_page( 'register' ) ) {
+			wp_redirect( home_url( '/account/?tab=register' ) );
+			exit;
+		}
+	}
+);
+
+//test email sending from server
+//add_action( 'init', function () {
+//	if ( isset( $_GET['test_email'] ) ) {
+//		get_template_part( 'core/components/email/send', null, array(
+//				'email'   => 'KajeNick@gmail.com',
+//				'subject' => 'Your East Property account has been created',
+//				'content' => 'Hello,
+//
+//Thank you for contacting East Property.
+//
+//We received your request and our team is preparing suitable property options for you. You can reply to this email if you want to add more details about your preferred location, budget, or property type.',
+//			)
+//		);
+//		wp_die();
+//	}
+//} );
+
 include_once 'core/includes/entities/load.php';
 require_once 'core/includes/registers/acf/loader.php';
 require_once 'core/includes/registers/post-types/loader.php';

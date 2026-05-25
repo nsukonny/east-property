@@ -27,23 +27,23 @@ $button_text          = $args['button_text'] ?? '';
 $button_url           = $args['button_url'] ?? '';
 ?>
 <section class="single-items">
-    <div class="container">
-        <div class="single-items-wrapper">
+	<div class="container">
+		<div class="single-items-wrapper">
 			<?php get_template_part( 'core/components/common/breadcrumbs' ); ?>
-            <div class="single-items-top">
-                <div class="single-items-top-left">
-                    <h1><?php echo esc_html( $title ); ?></h1>
+			<div class="single-items-top">
+				<div class="single-items-top-left">
+					<h1><?php echo esc_html( $title ); ?></h1>
 					<?php if ( ! empty( $labels ) ) { ?>
-                        <div class="single-items-top-labels">
+						<div class="single-items-top-labels">
 							<?php foreach ( $labels as $label ) { ?>
-                                <div class="label <?php echo esc_attr( strtolower( $label['color'] ) ); ?>">
-                                    <span><?php echo esc_html( mb_strtoupper( $label['name'] ) ); ?></span>
-                                </div>
+								<div class="label <?php echo esc_attr( strtolower( $label['color'] ) ); ?>">
+									<span><?php echo esc_html( mb_strtoupper( $label['name'] ) ); ?></span>
+								</div>
 							<?php } ?>
-                        </div>
+						</div>
 					<?php } ?>
-                </div>
-                <div class="single-items-top-right">
+				</div>
+				<div class="single-items-top-right">
 					<?php
 					get_template_part(
 						'core/components/ui/button',
@@ -64,7 +64,7 @@ $button_url           = $args['button_url'] ?? '';
 						$quote_button_args
 					);
 					?>
-                </div>
+				</div>
 				<?php
 				get_template_part(
 					'core/components/sliders/thumbs-slider',
@@ -75,12 +75,12 @@ $button_url           = $args['button_url'] ?? '';
 					)
 				);
 				?>
-                <div class="single-info">
+				<div class="single-info">
 					<?php if ( ! empty( $property_information ) ) { ?>
-                        <div class="single-info-block">
-                            <h3><?php _e( 'Property information' ); ?></h3>
-                            <div class="single-info-rows">
-                                <div class="single-info-row">
+						<div class="single-info-block">
+							<h3><?php _e( 'Property information' ); ?></h3>
+							<div class="single-info-rows">
+								<div class="single-info-row">
 									<?php
 									$col = 0;
 									foreach ( $property_information as $info ) {
@@ -93,54 +93,54 @@ $button_url           = $args['button_url'] ?? '';
 										}
 										?>
 
-                                        <div class="single-info-col">
-                                            <span><?php echo esc_html( $info['label'] ); ?></span>
-                                            <p><?php echo esc_html( $info['value'] ); ?></p>
-                                        </div>
+										<div class="single-info-col">
+											<span><?php echo esc_html( $info['label'] ); ?></span>
+											<p><?php echo esc_html( $info['value'] ); ?></p>
+										</div>
 
 									<?php } ?>
-                                </div>
+								</div>
 								<?php if ( ! empty( $location ) && ! empty( $developer ) ) { ?>
-                                    <div class="single-info-row">
-                                        <div class="single-info-col">
-                                            <span><?php _e( 'Location' ); ?></span>
-                                            <a href="<?php echo esc_url( $developer->get_developer_url() ); ?>"
-                                               target="_blank"
-                                               rel="noopener noreferrer">
+									<div class="single-info-row">
+										<div class="single-info-col">
+											<span><?php _e( 'Location' ); ?></span>
+											<a href="<?php echo esc_url( $developer->get_developer_url() ); ?>"
+											   target="_blank"
+											   rel="noopener noreferrer">
 												<?php echo esc_html( $location ); ?>
-                                                <img src="<?php echo THEME_URL; ?>/assets/img/link.svg" width="16"
-                                                     height="16" alt="<?php echo esc_html( $location ); ?>">
-                                            </a>
-                                        </div>
-                                    </div>
+												<img src="<?php echo THEME_URL; ?>/assets/img/link.svg" width="16"
+												     height="16" alt="<?php echo esc_html( $location ); ?>">
+											</a>
+										</div>
+									</div>
 								<?php } ?>
-                            </div>
-                        </div>
+							</div>
+						</div>
 						<?php
 						if ( ! empty( $developer ) ) {
 							$developer_thumb = $developer->get_thumb() ?: '';
 							$developer_title = $developer->get_title() ?: '';
 							$developer_url   = $developer->get_url() ?: '';
 							?>
-                            <div class="single-info-block">
-                                <div class="developer">
+							<div class="single-info-block">
+								<div class="developer">
 									<?php if ( ! empty( $developer_thumb ) ) { ?>
-                                        <div class="developer-image">
-                                            <img src="<?php echo esc_url( $developer_thumb ); ?>" width="80"
-                                                 height="50"
-                                                 alt="<?php echo esc_attr( $developer_title ); ?>">
-                                        </div>
+										<div class="developer-image">
+											<img src="<?php echo esc_url( $developer_thumb ); ?>" width="80"
+											     height="50"
+											     alt="<?php echo esc_attr( $developer_title ); ?>">
+										</div>
 									<?php } ?>
-                                    <div class="developer-info">
-                                        <span><?php echo esc_html( $developer_title ); ?></span>
+									<div class="developer-info">
+										<span><?php echo esc_html( $developer_title ); ?></span>
 										<?php if ( ! empty( $developer_url ) ) { ?>
-                                            <a href="<?php echo esc_url( $developer_url ); ?>">
+											<a href="<?php echo esc_url( $developer_url ); ?>">
 												<?php _e( 'View developer' ); ?>
-                                            </a>
+											</a>
 										<?php } ?>
-                                    </div>
-                                </div>
-                            </div>
+									</div>
+								</div>
+							</div>
 						<?php } ?>
 					<?php } ?>
 
@@ -163,71 +163,62 @@ $button_url           = $args['button_url'] ?? '';
 					);
 					?>
 
-					<?php if ( ! empty( $units_by_beds ) ) { ?>
-                        <div class="single-info-block">
-                            <h3><?php _e( 'Pricing' ); ?></h3>
-                            <div class="single-dropdowns">
-								<?php
-								foreach ( $units_by_beds as $units ) {
-									get_template_part( 'template-parts/sections/single/dropdowns', null,
-										array(
-											'beds'      => $units['beds'],
-											'min_baths' => $units['min_baths'],
-											'max_baths' => $units['max_baths'],
-											'min_area'  => $units['min_area'],
-											'max_area'  => $units['max_area'],
-											'price'     => $units['price'],
-											'units'     => $units['units'] ?? array(),
-										)
-									);
-								}
-								?>
-                            </div>
-                        </div>
-					<?php } ?>
+					<?php
+					if ( ! empty( $units_by_beds ) ) {
+						get_template_part(
+							'core/components/units/units-by-beds',
+							null,
+							array(
+								'units_by_beds' => $units_by_beds,
+							)
+						);
+					}
+					?>
 
 					<?php if ( ! empty( $payment_plans ) ) { ?>
-                        <div class="single-info-block">
-                            <h3><?php _e( 'Payment plan' ); ?></h3>
-                            <div class="single-steps">
+						<div class="single-info-block">
+							<h3><?php _e( 'Payment plan' ); ?></h3>
+							<div class="single-steps">
 								<?php foreach ( $payment_plans as $key => $plan ) { ?>
-                                    <div class="single-step">
-                                        <div class="single-step-title"><?php echo esc_html( $plan['description'] ); ?></div>
-                                        <div class="single-step-descr"><?php echo esc_html( $plan['name'] ); ?></div>
-                                    </div>
+									<div class="single-step">
+										<div class="single-step-title"><?php echo esc_html( $plan['description'] ); ?></div>
+										<div class="single-step-descr"><?php echo esc_html( $plan['name'] ); ?></div>
+									</div>
 								<?php } ?>
-                            </div>
-                        </div>
+							</div>
+						</div>
 					<?php } ?>
 
 					<?php if ( 0 < count( $amenities ) ) { ?>
-                        <div class="single-info-block">
-                            <h3><?php _e( 'Amenities' ); ?></h3>
-                            <ul class="single-list">
+						<div class="single-info-block">
+							<h3><?php _e( 'Amenities' ); ?></h3>
+							<ul class="single-list">
 								<?php foreach ( $amenities as $amenity ) { ?>
-                                    <li><?php echo esc_html( $amenity ); ?></li>
+									<li><?php echo esc_html( $amenity ); ?></li>
 								<?php } ?>
-                            </ul>
-                        </div>
+							</ul>
+						</div>
 					<?php } ?>
 
-                    <div class="single-info-block">
-                        <h3><?php _e( 'Description' ); ?></h3>
-                        <div class="texts">
+					<div class="single-info-block">
+						<h3><?php _e( 'Description' ); ?></h3>
+						<div class="texts">
 							<?php the_content(); ?>
-                        </div>
-                        <button class="button learn-more" data-modal-open="desc-modal">
+						</div>
+						<button class="button learn-more" data-modal-open="desc-modal">
 							<?php _e( 'Learn more' ); ?>
-                            <img src="<?php echo THEME_URL; ?>/assets/img/link.svg" width="16" height="16"
-                                 alt="Vector link">
-                        </button>
-                    </div>
+							<img src="<?php echo THEME_URL; ?>/assets/img/link.svg" width="16" height="16"
+							     alt="Vector link">
+						</button>
+					</div>
 
 					<?php if ( ! empty( $latitude ) && ! empty( $longitude ) ) { ?>
-                        <div class="single-info-block">
-                            <h3><?php _e( 'Location' ); ?></h3>
+						<div class="single-info-block">
+							<h3><?php _e( 'Location' ); ?></h3>
 							<?php
-							get_template_part( 'core/components/properties/map', null,
+							get_template_part(
+								'core/components/properties/map',
+								null,
 								array(
 									'property'     => new \Entities\Property( get_the_ID() ),
 									'show_sidebar' => false,
@@ -235,10 +226,10 @@ $button_url           = $args['button_url'] ?? '';
 								)
 							);
 							?>
-                        </div>
+						</div>
 					<?php } ?>
-                </div>
-            </div>
-        </div>
+				</div>
+			</div>
+		</div>
 		<?php get_template_part( 'core/components/ui/contact-panel' ); ?>
 </section>

@@ -18,8 +18,8 @@
 					</div>
 					<div class="footer-block">
 						<span>Live Support?</span>
-						<a href="mailto:info@eastpropoerty.com">
-							info@eastpropoerty.com
+						<a href="mailto:support@eastproperty.com">
+							support@eastproperty.com
 						</a>
 					</div>
 				</div>

@@ -1,14 +1,18 @@
 <?php
 
-use Entities\Broker;
+use Entities\Estate_User;
 
-$color = $args['color'] ?? '';
+global $current_user;
+
+$color       = $args['color'] ?? '';
+$estate_user = new Estate_User( $current_user );
 ?>
 <header class="header <?php echo esc_attr( $color ); ?>">
 	<div class="container">
 		<div class="header-wrapper">
 			<a href="/" class="header-logo">
-				<img src="<?php echo THEME_URL; ?>/assets/img/logo.svg" width="132" height="50" alt="Vector logotype">
+				<img src="<?php echo THEME_URL; ?>/assets/img/logo.svg" width="132" height="50"
+				     alt="<?php esc_html_e( 'Vector logotype' ); ?>">
 			</a>
 			<?php get_template_part( 'core/components/common/nav' ); ?>
 			<div class="header-actions">
@@ -22,18 +26,18 @@ $color = $args['color'] ?? '';
 						<?php esc_html_e( 'Create Account' ); ?>
 					</button>
 				<?php } else {
-					$current_user   = wp_get_current_user();
-					$current_broker = new Broker( $current_user );
-					$boost_points   = $current_broker->get_boost_points();
-					if ( 250 > $boost_points ) {
-						$boost_points .= ' / ' . __( 'Top up' );
-					}
-					?>
-					<a href="<?php echo home_url( 'account' ); ?>" class="button sm orange green boost-points">
-						<img src="<?php echo esc_url( THEME_URL ); ?>/assets/img/star.svg"
-						     alt="<?php esc_html_e( 'Boost Points' ); ?>">
-						<span class="count"><?php echo esc_attr( $boost_points ); ?></span>
-					</a>
+					if ( $estate_user->is_broker() ) {
+						$boost_points = $estate_user->get_boost_points();
+						if ( 250 > $boost_points ) {
+							$boost_points .= ' / ' . __( 'Top up' );
+						}
+						?>
+						<a href="<?php echo home_url( 'account' ); ?>" class="button sm orange green boost-points">
+							<img src="<?php echo esc_url( THEME_URL ); ?>/assets/img/star.svg"
+							     alt="<?php esc_html_e( 'Boost Points' ); ?>">
+							<span class="count"><?php echo esc_attr( $boost_points ); ?></span>
+						</a>
+					<?php } ?>
 					<a class="button black sm header-login" href="<?php echo esc_url( home_url( 'account' ) ); ?>">
 						<img src="<?php echo esc_url( THEME_URL ); ?>/assets/img/user.svg" width="16" height="16"
 						     alt="">

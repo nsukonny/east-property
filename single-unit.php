@@ -57,29 +57,28 @@ while ( have_posts() ) {
 						<div class="h2"><?php echo esc_attr( __( 'Apartment by' ) . ' ' . $property->get_title() ); ?></div>
 						<h1><?php echo esc_html( $unit->get_price_html() ); ?></h1>
 						<div class="single-items-top-buttons">
-							<?php
-							get_template_part( 'core/components/ui/button', null,
-								array(
-									'class'  => 'gray sm',
-									'text'   => __( 'Share' ),
-									'src'    => THEME_URL . '/assets/img/share.svg',
-									'alt'    => __( 'Share' ),
-									'link'   => $whatsapp_share_text,
-									'target' => '_blank',
-									'rel'    => 'noopener noreferrer',
-								)
-							);
-							//TODO add saving to wishlist
+							<a class="button gray sm"
+							   href="<?php echo esc_url( $whatsapp_share_text ); ?>"
+							   target="_blank" rel="noopener noreferrer">
+								<img src="<?php echo esc_url( THEME_URL . '/assets/img/share.svg' ); ?>" width="16"
+								     height="16" alt="<?php esc_html_e( 'Share' ); ?>">
+								<?php esc_html_e( 'Share' ); ?>
+							</a>
 
-							//						get_template_part( 'core/components/ui/button', null,
-							//							array(
-							//								'class' => 'gray sm',
-							//								'text'  => __( 'Save' ),
-							//								'src'   => THEME_URL . '/assets/img/bookmark.svg',
-							//								'alt'   => __( 'Save' ),
-							//							)
-							//						);
-							?>
+							<button class="button sm toggle-favorite <?php echo $unit->is_favorite() ? 'orange green' : 'gray'; ?>"
+							        data-unit-id="<?php echo $unit->get_id(); ?>">
+								<img src="<?php echo esc_url( THEME_URL . '/assets/img/bookmark.svg' ); ?>"
+								     width="16" height="16" alt="<?php esc_html_e( 'Save' ); ?>">
+								<span>
+									<?php
+									if ( $unit->is_favorite() ) {
+										esc_html_e( 'Saved' );
+									} else {
+										esc_html_e( 'Save' );
+									}
+									?>
+								</span>
+							</button>
 						</div>
 						<?php if ( ! empty( $amenities ) ) { ?>
 							<div class="single-items-top-items">
@@ -123,7 +122,8 @@ while ( have_posts() ) {
 								</div>
 								<div class="broker-bottom">
 									<?php
-									get_template_part( 'core/components/ui/button', null,
+									get_template_part( 'core/components/ui/button',
+										null,
 										array(
 											'class' => 'orange sm',
 											'text'  => __( 'Contact broker' ),
@@ -351,7 +351,8 @@ while ( have_posts() ) {
 						<div class="single-info-block">
 							<h3><?php _e( 'Location' ); ?></h3>
 							<?php
-							get_template_part( 'core/components/properties/map', null,
+							get_template_part( 'core/components/properties/map',
+								null,
 								array(
 									'property'     => $property,
 									'show_sidebar' => false,
