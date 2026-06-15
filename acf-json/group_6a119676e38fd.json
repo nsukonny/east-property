@@ -6,6 +6,7 @@
             "key": "field_6a1196a9b040c",
             "label": "Verified by Email",
             "name": "email_verified",
+            "aria-label": "",
             "type": "true_false",
             "instructions": "",
             "required": 1,
@@ -53,5 +54,9 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1779537845
+    "show_in_rest": false,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1780672428
 }

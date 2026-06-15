@@ -15,6 +15,10 @@ while ( have_posts() ) {
 		continue;
 	}
 
+	if ( 'publish' !== $unit->get_status() ) {
+		wp_safe_redirect( home_url( '/404' ) );
+	}
+
 	$property = $unit->get_property();
 	if ( ! $property->exists() ) {
 		continue;
@@ -102,20 +106,26 @@ while ( have_posts() ) {
 							<div class="broker">
 								<div class="broker-top">
 									<div class="broker-top-left">
-										<?php if ( ! empty( $broker['avatar'] ) ) { ?>
+										<?php
+										$broker_avatar = $broker->get_avatar();
+										if ( ! empty( $broker_avatar ) ) {
+											?>
 											<div class="broker-img">
-												<img src="<?php echo esc_url( $broker['avatar'] ); ?>" width="64"
-												     height="64" alt="<?php echo esc_html( $broker['name'] ); ?>">
+												<img src="<?php echo esc_url( $broker_avatar ); ?>" width="64"
+												     height="64" alt="<?php echo esc_html( $broker->display_name ); ?>">
 											</div>
 										<?php } ?>
 										<div class="broker-info">
-											<span class="broker-name"><?php echo esc_html( $broker['name'] ); ?></span>
+											<span class="broker-name"><?php echo esc_html( $broker->display_name ); ?></span>
 											<span class="broker-position"><?php _e( 'Property broker' ); ?></span>
 										</div>
 									</div>
-									<?php if ( ! empty( $broker['logo'] ) ) { ?>
+									<?php
+									$agency_logo = $broker->get_agency_logo();
+									if ( ! empty( $agency_logo ) ) {
+										?>
 										<div class="broker-estate">
-											<img src="<?php echo esc_url( $broker['logo'] ); ?>" height="66"
+											<img src="<?php echo esc_url( $agency_logo ); ?>" height="66"
 											     alt="Real estate">
 										</div>
 									<?php } ?>

@@ -12,7 +12,7 @@ while ( have_posts() ) {
 
 	$property = new Property( get_the_ID() );
 
-	if ( $_GET['units'] && 'all' === $_GET['units'] ) {
+	if ( ! empty( $_GET['units'] ) && 'all' === $_GET['units'] ) {
 		get_template_part(
 			'core/components/properties/property-units-list',
 			null,
@@ -25,7 +25,7 @@ while ( have_posts() ) {
 			'core/components/properties/property-single',
 			null,
 			array(
-				'property'          => $property,
+				'property' => $property,
 				'quote_button_args' => array(
 					'class' => 'orange sm request-quote',
 					'text'  => __( 'Request quote' ),

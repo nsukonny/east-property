@@ -6,6 +6,7 @@
             "key": "field_6991dabdd3211",
             "label": "Unit ID",
             "name": "unit_id",
+            "aria-label": "",
             "type": "number",
             "instructions": "",
             "required": 0,
@@ -27,6 +28,7 @@
             "key": "field_694e9b3902bb4",
             "label": "Property",
             "name": "property",
+            "aria-label": "",
             "type": "post_object",
             "instructions": "",
             "required": 0,
@@ -43,12 +45,14 @@
             "allow_null": 0,
             "multiple": 0,
             "return_format": "object",
-            "ui": 1
+            "ui": 1,
+            "bidirectional_target": []
         },
         {
             "key": "field_694e9bdbf9b88",
             "label": "Broker",
             "name": "broker",
+            "aria-label": "",
             "type": "user",
             "instructions": "",
             "required": 0,
@@ -63,12 +67,14 @@
             ],
             "allow_null": 0,
             "multiple": 0,
-            "return_format": "object"
+            "return_format": "object",
+            "bidirectional_target": []
         },
         {
             "key": "field_694ea5354ae1e",
             "label": "Listing Type",
             "name": "type_of_sale",
+            "aria-label": "",
             "type": "select",
             "instructions": "new : New Property\r\nresale : Resale",
             "required": 0,
@@ -87,12 +93,15 @@
             "ui": 0,
             "return_format": "value",
             "ajax": 0,
-            "placeholder": ""
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
         },
         {
             "key": "field_694ea57c4ae1f",
             "label": "Unit Type",
             "name": "unit_type",
+            "aria-label": "",
             "type": "select",
             "instructions": "",
             "required": 0,
@@ -116,12 +125,15 @@
             "ui": 0,
             "return_format": "value",
             "ajax": 0,
-            "placeholder": ""
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
         },
         {
             "key": "field_694ea59e4ae20",
             "label": "Price",
             "name": "price",
+            "aria-label": "",
             "type": "number",
             "instructions": "",
             "required": 0,
@@ -140,9 +152,56 @@
             "step": ""
         },
         {
+            "key": "field_6a22deca0ae38",
+            "label": "Original Price",
+            "name": "original_price",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": "",
+            "max": "",
+            "allow_in_bindings": 1,
+            "placeholder": "",
+            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6a22df640ae39",
+            "label": "Discount",
+            "name": "discount",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": "",
+            "max": "",
+            "allow_in_bindings": 1,
+            "placeholder": "",
+            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_6991dd5f12c62",
             "label": "Price Per Square Foot",
             "name": "price_per_square_foot",
+            "aria-label": "",
             "type": "number",
             "instructions": "",
             "required": 0,
@@ -164,6 +223,7 @@
             "key": "field_694ea5b34ae21",
             "label": "Bedrooms",
             "name": "bedrooms",
+            "aria-label": "",
             "type": "number",
             "instructions": "0 - Studio",
             "required": 0,
@@ -185,6 +245,7 @@
             "key": "field_694ea5c44ae22",
             "label": "Bathrooms",
             "name": "bathrooms",
+            "aria-label": "",
             "type": "number",
             "instructions": "",
             "required": 0,
@@ -206,6 +267,7 @@
             "key": "field_694ea5d04ae23",
             "label": "Area Size",
             "name": "area_size",
+            "aria-label": "",
             "type": "number",
             "instructions": "",
             "required": 0,
@@ -227,6 +289,7 @@
             "key": "field_69511fd1d7cab",
             "label": "Gallery",
             "name": "gallery",
+            "aria-label": "",
             "type": "gallery",
             "instructions": "",
             "required": 0,
@@ -254,6 +317,7 @@
             "key": "field_69789d75e1ef8",
             "label": "Popular",
             "name": "is_popular",
+            "aria-label": "",
             "type": "true_false",
             "instructions": "",
             "required": 0,
@@ -273,6 +337,7 @@
             "key": "field_697f9c0a1e58f",
             "label": "Floor Plans",
             "name": "floor_plans",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -286,12 +351,14 @@
             "min": 0,
             "max": 0,
             "layout": "table",
-            "button_label": "",
+            "button_label": "Add Row",
+            "rows_per_page": 20,
             "sub_fields": [
                 {
                     "key": "field_6991d826ff83e",
                     "label": "Description",
                     "name": "description",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -305,12 +372,14 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_697f9c0a1e58f"
                 },
                 {
                     "key": "field_6991d82fff83f",
                     "label": "Layout image",
                     "name": "layout",
+                    "aria-label": "",
                     "type": "image",
                     "instructions": "",
                     "required": 0,
@@ -329,7 +398,8 @@
                     "max_width": "",
                     "max_height": "",
                     "max_size": "",
-                    "mime_types": ""
+                    "mime_types": "",
+                    "parent_repeater": "field_697f9c0a1e58f"
                 }
             ]
         },
@@ -337,6 +407,7 @@
             "key": "field_6991cc9083f2d",
             "label": "Publish Date",
             "name": "created_at",
+            "aria-label": "",
             "type": "date_time_picker",
             "instructions": "",
             "required": 0,
@@ -348,12 +419,14 @@
             },
             "display_format": "d\/m\/Y g:i a",
             "return_format": "d\/m\/Y g:i a",
-            "first_day": 1
+            "first_day": 1,
+            "default_to_current_date": 0
         },
         {
             "key": "field_6991da0c50c7e",
             "label": "Floor",
             "name": "floor",
+            "aria-label": "",
             "type": "number",
             "instructions": "",
             "required": 0,
@@ -375,6 +448,7 @@
             "key": "field_6991da90c6fba",
             "label": "Height",
             "name": "height",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -394,6 +468,7 @@
             "key": "field_6991dce929d92",
             "label": "Number",
             "name": "number",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -413,6 +488,7 @@
             "key": "field_6991df0ea1de9",
             "label": "Views",
             "name": "views",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -426,12 +502,14 @@
             "min": 0,
             "max": 0,
             "layout": "table",
-            "button_label": "",
+            "button_label": "Add Row",
+            "rows_per_page": 20,
             "sub_fields": [
                 {
                     "key": "field_6991df1ba1dea",
                     "label": "Id",
                     "name": "id",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -445,12 +523,14 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_6991df0ea1de9"
                 },
                 {
                     "key": "field_6991df26a1deb",
                     "label": "Name",
                     "name": "name",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -464,7 +544,8 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_6991df0ea1de9"
                 }
             ]
         },
@@ -472,6 +553,7 @@
             "key": "field_69a6ca4c78161",
             "label": "Reasons",
             "name": "reasons",
+            "aria-label": "",
             "type": "textarea",
             "instructions": "Reasons why this is distress",
             "required": 0,
@@ -491,6 +573,7 @@
             "key": "field_69fdf3e8f3d6f",
             "label": "Boost End Date",
             "name": "boost_end_date",
+            "aria-label": "",
             "type": "date_time_picker",
             "instructions": "",
             "required": 0,
@@ -502,12 +585,14 @@
             },
             "display_format": "F j, Y g:i a",
             "return_format": "Y-m-d H:i:s",
-            "first_day": 1
+            "first_day": 1,
+            "default_to_current_date": 0
         },
         {
             "key": "field_69fdf42ff3d70",
             "label": "Boost Score",
             "name": "boost_score",
+            "aria-label": "",
             "type": "number",
             "instructions": "",
             "required": 0,
@@ -543,5 +628,9 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1778250952
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1780672428
 }

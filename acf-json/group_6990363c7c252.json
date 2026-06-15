@@ -6,6 +6,7 @@
             "key": "field_699036436736e",
             "label": "District ID",
             "name": "district_id",
+            "aria-label": "",
             "type": "number",
             "instructions": "",
             "required": 0,
@@ -27,6 +28,7 @@
             "key": "field_699043c5a20a4",
             "label": "Emirate ID",
             "name": "emirate_id",
+            "aria-label": "",
             "type": "number",
             "instructions": "",
             "required": 0,
@@ -62,5 +64,9 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1776497895
+    "show_in_rest": false,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1780672428
 }

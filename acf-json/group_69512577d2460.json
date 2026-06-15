@@ -6,6 +6,7 @@
             "key": "field_6951257c87a11",
             "label": "Whats App",
             "name": "whats_app",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -25,6 +26,7 @@
             "key": "field_697a322323f6a",
             "label": "Phone",
             "name": "phone",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -44,6 +46,7 @@
             "key": "field_698063d6d328f",
             "label": "Avatar",
             "name": "avatar",
+            "aria-label": "",
             "type": "image",
             "instructions": "",
             "required": 0,
@@ -68,6 +71,7 @@
             "key": "field_69f5b1c81c68d",
             "label": "Agency",
             "name": "agency",
+            "aria-label": "",
             "type": "post_object",
             "instructions": "",
             "required": 0,
@@ -84,12 +88,14 @@
             "allow_null": 0,
             "multiple": 0,
             "return_format": "object",
-            "ui": 1
+            "ui": 1,
+            "bidirectional_target": []
         },
         {
             "key": "field_69f8ec8a5f218",
             "label": "Boost Points",
             "name": "boost_points",
+            "aria-label": "",
             "type": "number",
             "instructions": "",
             "required": 0,
@@ -125,5 +131,9 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1777921196
+    "show_in_rest": false,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1780672428
 }

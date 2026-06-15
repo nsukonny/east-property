@@ -6,13 +6,13 @@
  */
 
 $unit_id        = $args['unit_id'] ?? null;
-$title          = $args['title'] ?: '';
-$price          = $args['price'] ?: '';
-$location       = $args['location'] ?: '';
-$gallery        = $args['gallery'] ?: '';
-$labels         = $args['labels'] ?: '';
-$amenities      = $args['amenities'] ?: '';
-$url            = $args['url'] ?: '#';
+$title          = $args['title'] ?? '';
+$price          = $args['price'] ?? '';
+$location       = $args['location'] ?? '';
+$gallery        = $args['gallery'] ?? '';
+$labels         = $args['labels'] ?? '';
+$amenities      = $args['amenities'] ?? '';
+$url            = $args['url'] ?? '#';
 $property_name  = $args['property_name'] ?? '';
 $property_url   = $args['property_url'] ?? '#';
 $developer_name = $args['developer_name'] ?? '';
@@ -44,16 +44,18 @@ if ( ! empty( $amenities ) ) {
 							</div>
 						<?php } ?>
 					</div>
-					<div class="swiper-buttons">
-						<button class="swiper-prev sm">
-							<img src="<?php echo THEME_URL ?>/assets/img/swiper-arr.svg"
-							     width="16" height="16" alt="<?php _e( 'Prev' ); ?>">
-						</button>
-						<button class="swiper-next sm">
-							<img src="<?php echo THEME_URL ?>/assets/img/swiper-arr.svg"
-							     width="16" height="16" alt="<?php _e( 'Next' ); ?>">
-						</button>
-					</div>
+					<?php if ( 1 < count( $gallery ) ) { ?>
+						<div class="swiper-buttons">
+							<button class="swiper-prev sm">
+								<img src="<?php echo THEME_URL ?>/assets/img/swiper-arr.svg"
+								     width="16" height="16" alt="<?php _e( 'Prev' ); ?>">
+							</button>
+							<button class="swiper-next sm">
+								<img src="<?php echo THEME_URL ?>/assets/img/swiper-arr.svg"
+								     width="16" height="16" alt="<?php _e( 'Next' ); ?>">
+							</button>
+						</div>
+					<?php } ?>
 				</div>
 			<?php } ?>
 		</div>
@@ -111,10 +113,12 @@ if ( ! empty( $amenities ) ) {
 					<div class="unit-card-info-bottom">
 						<p><?php echo esc_html( $title ); ?></p>
 						<div class="unit-card-info-buttons">
-							<a href="<?php echo esc_url( $url ); ?>" class="button gray sm"
-							   target="_blank">
-								<?php esc_html_e( 'View details' ); ?>
-							</a>
+							<?php if ( ! empty( $url ) ) { ?>
+								<a href="<?php echo esc_url( $url ); ?>" class="button gray sm"
+								   target="_blank">
+									<?php esc_html_e( 'View details' ); ?>
+								</a>
+							<?php } ?>
 							<?php
 							if ( ! empty( $edit_link ) || true === $is_can_boost ) {
 								if ( ! empty( $edit_link ) ) {

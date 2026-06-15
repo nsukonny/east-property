@@ -5,12 +5,15 @@
 
 define( 'THEME_PATH', get_template_directory() );
 define( 'THEME_URL', get_template_directory_uri() );
-define( 'THEME_VERSION', time() ); //TODO change to version like 1.0.1
-define( "IS_DEV",
-	( isset( $_SERVER['HTTP_HOST'] ) && 'estate-agregator.local' === $_SERVER['HTTP_HOST'] ) || isset( $_GET['reset'] ) );
+$is_dev = ( isset( $_SERVER['HTTP_HOST'] ) && str_ends_with( $_SERVER['HTTP_HOST'], '.local' ) );
+$is_dev = isset( $_GET['reset'] ) && '1' === $_GET['reset'] ? true : $is_dev;
+define( 'IS_DEV', $is_dev );
+define( 'IS_DISTRESS', false );
+define( 'THEME_VERSION', IS_DEV ? time() : '1.0.1' );
 
 const THEME_NAME          = 'east-property';
 const PROJECT_NAME        = 'East Property';
+const PROJECT_PHONE       = '+971585235351';
 const WHATS_APP_LINK      = 'https://api.whatsapp.com/send/?phone=971585235351';
 const PROPERTIES_PER_PAGE = 20;
 
@@ -69,17 +72,19 @@ function add_theme_styles(): void {
 
 add_action( 'wp_enqueue_scripts', 'add_theme_styles' );
 
-if ( function_exists( 'acf_add_options_page' ) ) {
-	$option_page = acf_add_options_page(
-		array(
-			'page_title' => __( 'Настройки' ) . ' ' . PROJECT_NAME,
-			'menu_title' => __( 'Настройки' ) . ' ' . PROJECT_NAME,
-			'menu_slug'  => 'theme-options',
-			'capability' => 'edit_posts',
-			'redirect'   => false,
-		)
-	);
-}
+add_action( 'init', static function (): void {
+	if ( function_exists( 'acf_add_options_page' ) ) {
+		acf_add_options_page(
+			array(
+				'page_title' => __( 'Настройки' ) . ' ' . PROJECT_NAME,
+				'menu_title' => __( 'Настройки' ) . ' ' . PROJECT_NAME,
+				'menu_slug'  => 'theme-options',
+				'capability' => 'edit_posts',
+				'redirect'   => false,
+			)
+		);
+	}
+} );
 
 add_action( 'after_setup_theme', function (): void {
 	add_theme_support( 'post-thumbnails' );
@@ -96,7 +101,6 @@ add_image_size( 'unit-card', 500, 394, true );
 
 add_filter( 'woocommerce_enqueue_styles', '__return_false' );
 
-//add_action( 'wp_head', 'add_google_analytics' );
 function add_google_analytics() {
 	?>
 	<!-- Google tag (gtag.js) -->
@@ -115,6 +119,46 @@ function add_google_analytics() {
 	<?php
 }
 
+function add_yandex_metrica() {
+	?>
+	<!-- Yandex.Metrika counter -->
+	<script type="text/javascript">
+		(function (m, e, t, r, i, k, a) {
+			m[i] = m[i] || function () {
+				(m[i].a = m[i].a || []).push(arguments)
+			};
+			m[i].l = 1 * new Date();
+			for (var j = 0; j < document.scripts.length; j++) {
+				if (document.scripts[j].src === r) {
+					return;
+				}
+			}
+			k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+		})(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=109545373', 'ym');
+
+		ym(109545373, 'init', {
+			ssr: true,
+			webvisor: true,
+			clickmap: true,
+			ecommerce: "dataLayer",
+			referrer: document.referrer,
+			url: location.href,
+			accurateTrackBounce: true,
+			trackLinks: true
+		});
+	</script>
+	<noscript>
+		<div><img src="https://mc.yandex.ru/watch/109545373" style="position:absolute; left:-9999px;" alt=""/></div>
+	</noscript>
+	<!-- /Yandex.Metrika counter -->
+	<?php
+}
+
+if ( ! IS_DEV ) {
+	add_action( 'wp_head', 'add_google_analytics' );
+	add_action( 'wp_head', 'add_yandex_metrica' );
+}
+
 add_action(
 	'template_redirect',
 	static function () {
@@ -125,24 +169,28 @@ add_action(
 	}
 );
 
-//test email sending from server
-//add_action( 'init', function () {
-//	if ( isset( $_GET['test_email'] ) ) {
-//		get_template_part( 'core/components/email/send', null, array(
-//				'email'   => 'KajeNick@gmail.com',
-//				'subject' => 'Your East Property account has been created',
-//				'content' => 'Hello,
-//
-//Thank you for contacting East Property.
-//
-//We received your request and our team is preparing suitable property options for you. You can reply to this email if you want to add more details about your preferred location, budget, or property type.',
-//			)
-//		);
-//		wp_die();
-//	}
-//} );
+/**
+ * Disable wp-admin access for any instead administrator
+ */
+function restrict_broker_admin_access(): void {
+	if ( ! is_user_logged_in() ) {
+		return;
+	}
 
-include_once 'core/includes/entities/load.php';
+	if ( wp_doing_ajax() ) {
+		return;
+	}
+
+	$user = wp_get_current_user();
+	if ( empty( $user->roles ) || ! in_array( 'administrator', (array) $user->roles, true ) ) {
+		wp_safe_redirect( home_url( '/account/' ) );
+		exit;
+	}
+}
+
+add_action( 'admin_init', 'restrict_broker_admin_access' );
+
+require_once 'core/includes/entities/load.php';
 require_once 'core/includes/registers/acf/loader.php';
 require_once 'core/includes/registers/post-types/loader.php';
 require_once 'core/includes/registers/user-roles/loader.php';

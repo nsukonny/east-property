@@ -3498,6 +3498,11 @@ form .custom-checkbox span {
   border-top-left-radius: 12px;
   border-bottom-left-radius: 12px;
 }
+@media (max-width: 480px) {
+  .unit-card .single-swiper .swiper-slide img {
+    border-radius: 0 0 8px 8px;
+  }
+}
 .unit-card-right {
   display: flex;
   flex-direction: column;
@@ -5775,6 +5780,11 @@ fieldset {
     min-height: 169px;
   }
 }
+.input-group-errors {
+  color: #FF4C00;
+  font-size: 12px;
+  border-bottom: 3px solid #FF4C00;
+}
 
 .dropdown-button {
   align-items: center;
@@ -7739,6 +7749,122 @@ main ul:not([class]), .content ul:not([class]) {
 }
 .notifications .notification-close::after {
   transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.cookie-notice {
+  position: fixed;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.cookie-notice__content {
+  width: 100%;
+  max-width: 980px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px 24px;
+  background: #fff;
+  border: 1px solid #e9dfd2;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(27, 38, 49, 0.08);
+  pointer-events: auto;
+}
+
+.cookie-notice__text strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 18px;
+  line-height: 1.2;
+  color: #1f2a37;
+}
+
+.cookie-notice__text p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #5b6470;
+  max-width: 680px;
+}
+
+.cookie-notice__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.cookie-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.cookie-btn--secondary {
+  background: #f7f2eb;
+  color: #6d5c4b;
+}
+
+.cookie-btn--secondary:hover {
+  background: #efe6da;
+}
+
+.cookie-btn--primary {
+  background: #c8a77b;
+  color: #fff;
+}
+
+.cookie-btn--primary:hover {
+  background: #b89568;
+}
+
+@media (max-width: 768px) {
+  .cookie-notice {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+  }
+  .cookie-notice__content {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 18px;
+    gap: 16px;
+  }
+  .cookie-notice__actions {
+    width: 100%;
+  }
+  .cookie-btn {
+    flex: 1;
+    width: 100%;
+  }
+}
+.wp-theme-distress .cookie-notice__content {
+  background: #fff;
+  border: 1px solid #d4e9d2;
+}
+.wp-theme-distress .cookie-btn--secondary {
+  background: #dfefda;
+  color: #0D994E;
+}
+.wp-theme-distress .cookie-btn--secondary:hover {
+  background: #dfefda;
+}
+.wp-theme-distress .cookie-btn--primary {
+  background: #0FC764;
+  color: #fff;
+}
+.wp-theme-distress .cookie-btn--primary:hover {
+  background: #0FC764;
 }
 
 .contact-manager-modal {

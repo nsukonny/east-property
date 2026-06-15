@@ -6,6 +6,7 @@
             "key": "field_694c22c935f61",
             "label": "Общие",
             "name": "",
+            "aria-label": "",
             "type": "tab",
             "instructions": "",
             "required": 0,
@@ -16,12 +17,14 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_694d27d658f10",
             "label": "Главная",
             "name": "",
+            "aria-label": "",
             "type": "tab",
             "instructions": "",
             "required": 0,
@@ -32,12 +35,14 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_694d27eb58f11",
             "label": "Hero Block With Filters",
             "name": "hero_section",
+            "aria-label": "",
             "type": "group",
             "instructions": "",
             "required": 0,
@@ -53,6 +58,7 @@
                     "key": "field_694d293958f13",
                     "label": "Заголовок",
                     "name": "title",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -72,6 +78,7 @@
                     "key": "field_694d294e58f14",
                     "label": "Описание",
                     "name": "description",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -107,5 +114,9 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1776497895
+    "show_in_rest": false,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1780672428
 }
