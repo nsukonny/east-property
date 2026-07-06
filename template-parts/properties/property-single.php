@@ -95,7 +95,7 @@ $button_url           = $args['button_url'] ?? '';
 
 										<div class="single-info-col">
 											<span><?php echo esc_html( $info['label'] ); ?></span>
-											<p><?php echo esc_html( $info['value'] ); ?></p>
+											<p><?php echo esc_html( ucfirst( $info['value'] ) ); ?></p>
 										</div>
 
 									<?php } ?>

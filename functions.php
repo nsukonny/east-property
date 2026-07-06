@@ -9,7 +9,7 @@ $is_dev = ( isset( $_SERVER['HTTP_HOST'] ) && str_ends_with( $_SERVER['HTTP_HOST
 $is_dev = isset( $_GET['reset'] ) && '1' === $_GET['reset'] ? true : $is_dev;
 define( 'IS_DEV', $is_dev );
 define( 'IS_DISTRESS', false );
-define( 'THEME_VERSION', IS_DEV ? time() : '1.0.1' );
+define( 'THEME_VERSION', IS_DEV ? time() : '1.0.11' );
 
 const THEME_NAME          = 'east-property';
 const PROJECT_NAME        = 'East Property';
@@ -172,23 +172,23 @@ add_action(
 /**
  * Disable wp-admin access for any instead administrator
  */
-function restrict_broker_admin_access(): void {
-	if ( ! is_user_logged_in() ) {
-		return;
-	}
-
-	if ( wp_doing_ajax() ) {
-		return;
-	}
-
-	$user = wp_get_current_user();
-	if ( empty( $user->roles ) || ! in_array( 'administrator', (array) $user->roles, true ) ) {
-		wp_safe_redirect( home_url( '/account/' ) );
-		exit;
-	}
-}
-
-add_action( 'admin_init', 'restrict_broker_admin_access' );
+//function restrict_broker_admin_access(): void {
+//	if ( ! is_user_logged_in() ) {
+//		return;
+//	}
+//
+//	if ( wp_doing_ajax() ) {
+//		return;
+//	}
+//
+//	$user = wp_get_current_user();
+//	if ( empty( $user->roles ) || ! in_array( 'administrator', (array) $user->roles, true ) ) {
+//		wp_safe_redirect( home_url( '/account/' ) );
+//		exit;
+//	}
+//}
+//
+//add_action( 'admin_init', 'restrict_broker_admin_access' );
 
 require_once 'core/includes/entities/load.php';
 require_once 'core/includes/registers/acf/loader.php';

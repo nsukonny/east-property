@@ -66,7 +66,7 @@ if ( ! empty( $amenities ) ) {
 					<div class="unit-card-top-title">
 						<span class="unit-card-price"><?php echo esc_html( $price ); ?></span>
 						<?php if ( ! empty( $developer_name ) ) { ?>
-							<span class="unit-card-desc"><?php _e( 'Apartment by' ); ?><?php echo esc_html( $developer_name ); ?></span>
+							<span class="unit-card-desc"><?php _e( 'Apartment by ' ); ?><?php echo esc_html( $developer_name ); ?></span>
 						<?php } ?>
 
 						<?php if ( ! empty( $property_name ) ) { ?>
@@ -144,9 +144,13 @@ if ( ! empty( $amenities ) ) {
 								}
 							} else {
 								?>
-								<button class="button orange sm" data-modal-open="broker-modal">
+								<a href="<?php echo esc_url( $url ); ?>" class="button orange sm"
+								   target="_blank">
 									<?php esc_html_e( 'Contact broker' ); ?>
-								</button>
+								</a>
+								<!--								<button class="button orange sm" data-modal-open="broker-modal">-->
+								<!--									--><?php //esc_html_e( 'Contact broker' ); ?>
+								<!--								</button>-->
 							<?php } ?>
 						</div>
 					</div>
