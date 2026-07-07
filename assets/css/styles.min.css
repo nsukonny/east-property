@@ -5542,6 +5542,8 @@ header.header {
 }
 .search-tabs .tab-field {
   width: 100%;
+  height: -moz-max-content;
+  height: max-content;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -5663,7 +5665,7 @@ header.header {
   min-width: max-content;
   max-height: 400px;
   position: absolute;
-  top: 100%;
+  top: 97%;
   left: 0;
   z-index: 5;
   display: flex;
@@ -8507,6 +8509,10 @@ main ul:not([class]), .content ul:not([class]) {
   border-bottom: 1px solid rgba(24, 26, 32, 0.1);
   border-radius: inherit;
   font-size: 12px;
+}
+
+.wp-theme-east-property .tab-selector .dropdown-search-input {
+  font-size: 14px;
 }
 
 .tab-dropdown {
