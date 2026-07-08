@@ -18,6 +18,8 @@ $property_url   = $args['property_url'] ?? '#';
 $developer_name = $args['developer_name'] ?? '';
 $edit_link      = $args['edit_link'] ?? '';
 $is_can_boost   = $args['is_can_boost'] ?? false;
+$is_favorite    = $args['is_favorite'] ?? false;
+$broker         = $args['broker'] ?? '';
 
 if ( empty( $title ) || empty( $price ) || empty( $gallery ) ) {
 	return;
@@ -113,12 +115,6 @@ if ( ! empty( $amenities ) ) {
 					<div class="unit-card-info-bottom">
 						<p><?php echo esc_html( $title ); ?></p>
 						<div class="unit-card-info-buttons">
-							<?php if ( ! empty( $url ) ) { ?>
-								<a href="<?php echo esc_url( $url ); ?>" class="button gray sm"
-								   target="_blank">
-									<?php esc_html_e( 'View details' ); ?>
-								</a>
-							<?php } ?>
 							<?php
 							if ( ! empty( $edit_link ) || true === $is_can_boost ) {
 								if ( ! empty( $edit_link ) ) {
@@ -144,13 +140,29 @@ if ( ! empty( $amenities ) ) {
 								}
 							} else {
 								?>
-								<a href="<?php echo esc_url( $url ); ?>" class="button orange sm"
-								   target="_blank">
-									<?php esc_html_e( 'Contact broker' ); ?>
-								</a>
-								<!--								<button class="button orange sm" data-modal-open="broker-modal">-->
-								<!--									--><?php //esc_html_e( 'Contact broker' ); ?>
-								<!--								</button>-->
+								<button class="button sm toggle-favorite <?php echo $is_favorite ? 'orange green' : 'gray'; ?>"
+								        data-unit-id="<?php echo $unit_id; ?>">
+									<?php require THEME_PATH . '/assets/img/bookmark.svg'; ?>
+								</button>
+								<?php if ( ! empty( $url ) ) { ?>
+									<a href="<?php echo esc_url( $url ); ?>" class="button gray sm"
+									   target="_blank">
+										<?php esc_html_e( 'View details' ); ?>
+									</a>
+								<?php } ?>
+
+								<?php if ( ! empty( $broker ) ) {
+									$whatsapp_text  = __( 'Hello, I am interested in property -' ) . ' ' . $url;
+									$whats_app_link = $broker->get_whatsapp( $whatsapp_text ) ?: WHATS_APP_LINK;
+									?>
+									<button class="button orange sm"
+									        data-modal-open="broker-modal"
+									        data-broker-phone="tel:<?php echo $broker->get_phone(); ?>"
+									        data-broker-whatsapp="<?php echo esc_url( $whats_app_link ) ?>"
+									>
+										<?php echo esc_html( 'Contact broker' ); ?>
+									</button>
+								<?php } ?>
 							<?php } ?>
 						</div>
 					</div>
