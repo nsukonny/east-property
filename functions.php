@@ -9,13 +9,14 @@ $is_dev = ( isset( $_SERVER['HTTP_HOST'] ) && str_ends_with( $_SERVER['HTTP_HOST
 $is_dev = isset( $_GET['reset'] ) && '1' === $_GET['reset'] ? true : $is_dev;
 define( 'IS_DEV', $is_dev );
 define( 'IS_DISTRESS', false );
-define( 'THEME_VERSION', IS_DEV ? time() : '1.0.18' );
+define( 'THEME_VERSION', IS_DEV ? time() : '1.0.25' );
 
 const THEME_NAME          = 'east-property';
 const PROJECT_NAME        = 'East Property';
 const PROJECT_PHONE       = '+971585235351';
 const WHATS_APP_LINK      = 'https://api.whatsapp.com/send/?phone=971585235351';
 const PROPERTIES_PER_PAGE = 20;
+const SUPPORT_EMAIL       = 'support@eastproperty.com';
 
 /**
  * Add theme menus

@@ -25,6 +25,8 @@ $longitude            = $args['longitude'] ?? '';
 $payment_plans        = $args['payment_plans'] ?? array();
 $button_text          = $args['button_text'] ?? '';
 $button_url           = $args['button_url'] ?? '';
+
+$description = get_the_content();
 ?>
 <section class="single-items">
 	<div class="container">
@@ -100,16 +102,16 @@ $button_url           = $args['button_url'] ?? '';
 
 									<?php } ?>
 								</div>
-								<?php if ( ! empty( $location ) && ! empty( $developer ) ) { ?>
+								<?php if ( ! empty( $location->slug ) ) { ?>
 									<div class="single-info-row">
 										<div class="single-info-col">
 											<span><?php _e( 'Location' ); ?></span>
-											<a href="<?php echo esc_url( $developer->get_developer_url() ); ?>"
+											<a href="<?php echo esc_url( home_url( '/properties' ) . '/?location=' . $location->slug ); ?>"
 											   target="_blank"
 											   rel="noopener noreferrer">
-												<?php echo esc_html( $location ); ?>
+												<?php echo esc_html( $location->name ); ?>
 												<img src="<?php echo THEME_URL; ?>/assets/img/link.svg" width="16"
-												     height="16" alt="<?php echo esc_html( $location ); ?>">
+												     height="16" alt="<?php echo esc_html( $location->name ); ?>">
 											</a>
 										</div>
 									</div>
@@ -200,17 +202,14 @@ $button_url           = $args['button_url'] ?? '';
 						</div>
 					<?php } ?>
 
-					<div class="single-info-block">
-						<h3><?php _e( 'Description' ); ?></h3>
-						<div class="texts">
-							<?php the_content(); ?>
+					<?php if ( ! empty( $description ) ) { ?>
+						<div class="single-info-block">
+							<h3><?php _e( 'Description' ); ?></h3>
+							<div class="texts">
+								<?php the_content(); ?>
+							</div>
 						</div>
-						<button class="button learn-more" data-modal-open="desc-modal">
-							<?php _e( 'Learn more' ); ?>
-							<img src="<?php echo THEME_URL; ?>/assets/img/link.svg" width="16" height="16"
-							     alt="Vector link">
-						</button>
-					</div>
+					<?php } ?>
 
 					<?php if ( ! empty( $latitude ) && ! empty( $longitude ) ) { ?>
 						<div class="single-info-block">

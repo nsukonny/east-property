@@ -39,7 +39,7 @@ while ( have_posts() ) {
 	$broker     = $unit->get_broker();
 	$desc       = $unit->get_description_full();
 
-	$location             = $property->get_location()->name;
+	$location             = $property->get_location();
 	$down_payment_group   = $property->get_down_payment_group();
 	$delivery_date        = $property->get_delivery_date();
 	$property_information = $property->get_key_information();
@@ -97,7 +97,7 @@ while ( have_posts() ) {
 						<?php } ?>
 
 						<?php if ( ! empty( $location ) ) { ?>
-							<p><?php echo esc_html( $location ); ?></p>
+							<p><?php echo esc_html( $location->name ); ?></p>
 						<?php } ?>
 					</div>
 
@@ -142,7 +142,7 @@ while ( have_posts() ) {
 									);
 									?>
 									<p>
-										<?php _e( 'Get in touch with broker using email, phone ow Whatsapp. It’s freeand does not
+										<?php _e( 'Get in touch with broker using email, phone or WhatsApp. It’s free and does not
                                                                         require any commitment from your side' ); ?>
 									</p>
 								</div>
@@ -166,16 +166,9 @@ while ( have_posts() ) {
 						<h3><?php echo esc_html( $unit->get_title() ); ?></h3>
 						<div class="texts">
 							<p>
-								<?php echo $unit->get_description_short(); ?>
+								<?php echo $desc; ?>
 							</p>
 						</div>
-						<?php if ( ! empty( $desc ) ) { ?>
-							<button class="button learn-more" data-modal-open="desc-modal">
-								<?php esc_html_e( 'Learn more' ); ?>
-								<img src="<?php echo THEME_URL; ?>/assets/img/link.svg" width="16" height="16"
-								     alt="<?php esc_html_e( 'Learn more' ); ?>">
-							</button>
-						<?php } ?>
 					</div>
 
 					<?php if ( ! empty( $payment_plans[0]['items'] ) ) { ?>
@@ -258,16 +251,16 @@ while ( have_posts() ) {
 
 									<?php } ?>
 								</div>
-								<?php if ( ! empty( $location ) && ! empty( $developer ) ) { ?>
+								<?php if ( ! empty( $location ) ) { ?>
 									<div class="single-info-row">
 										<div class="single-info-col">
 											<span><?php _e( 'Location' ); ?></span>
-											<a href="<?php echo esc_url( $developer->get_developer_url() ); ?>"
+											<a href="<?php echo esc_url( home_url( '/units' ) . '/?location=' . $location->slug ); ?>"
 											   target="_blank"
 											   rel="noopener noreferrer">
-												<?php echo esc_html( $location ); ?>
+												<?php echo esc_html( $location->name ); ?>
 												<img src="<?php echo THEME_URL; ?>/assets/img/link.svg" width="16"
-												     height="16" alt="<?php echo esc_html( $location ); ?>">
+												     height="16" alt="<?php echo esc_html( $location->name ); ?>">
 											</a>
 										</div>
 									</div>
