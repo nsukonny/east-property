@@ -17,7 +17,7 @@
                     <li>
                         <img src="<?php echo THEME_URL; ?>/assets/img/secure.svg" width="24" height="24"
                              alt="<?php _e( 'Vector icon' ); ?>">
-                        <?php _e( 'We facilitate the entire process for you We facilitate the entire process for you' ); ?>
+                        <?php _e( 'We facilitate the entire process for you' ); ?>
                     </li>
                     <li>
                         <img src="<?php echo THEME_URL; ?>/assets/img/money.svg" width="24" height="24"

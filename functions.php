@@ -3,13 +3,16 @@
  * Functions and definitions
  */
 
+use Entities\Property;
+
 define( 'THEME_PATH', get_template_directory() );
 define( 'THEME_URL', get_template_directory_uri() );
 $is_dev = ( isset( $_SERVER['HTTP_HOST'] ) && str_ends_with( $_SERVER['HTTP_HOST'], '.local' ) );
 $is_dev = isset( $_GET['reset'] ) && '1' === $_GET['reset'] ? true : $is_dev;
+$is_dev = isset( $_GET['w3tc_note'] ) ? true : $is_dev;
 define( 'IS_DEV', $is_dev );
 define( 'IS_DISTRESS', false );
-define( 'THEME_VERSION', IS_DEV ? time() : '1.0.25' );
+define( 'THEME_VERSION', IS_DEV ? time() : '1.0.31' );
 
 const THEME_NAME          = 'east-property';
 const PROJECT_NAME        = 'East Property';
@@ -91,11 +94,6 @@ add_action( 'after_setup_theme', function (): void {
 	add_theme_support( 'post-thumbnails' );
 } );
 
-$current_user = wp_get_current_user();
-if ( ! $current_user || ! in_array( 'administrator', (array) $current_user->roles, true ) ) {
-	add_filter( 'show_admin_bar', '__return_false' );
-}
-
 add_image_size( 'product-thumb', 143, 171, true );
 add_image_size( 'featured-card', 740, 480, true );
 add_image_size( 'unit-card', 500, 394, true );
@@ -169,27 +167,6 @@ add_action(
 		}
 	}
 );
-
-/**
- * Disable wp-admin access for any instead administrator
- */
-//function restrict_broker_admin_access(): void {
-//	if ( ! is_user_logged_in() ) {
-//		return;
-//	}
-//
-//	if ( wp_doing_ajax() ) {
-//		return;
-//	}
-//
-//	$user = wp_get_current_user();
-//	if ( empty( $user->roles ) || ! in_array( 'administrator', (array) $user->roles, true ) ) {
-//		wp_safe_redirect( home_url( '/account/' ) );
-//		exit;
-//	}
-//}
-//
-//add_action( 'admin_init', 'restrict_broker_admin_access' );
 
 require_once 'core/includes/entities/load.php';
 require_once 'core/includes/registers/acf/loader.php';

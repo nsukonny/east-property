@@ -11,9 +11,9 @@
 					<div class="footer-block">
 						<span>Address</span>
 						<address>
-							Sheikh Zayed Road, Building 25 <br>
-							Al Quoz 3 <br>
-							Dubai
+							Office 1-042S,<br>
+							Dubai Investment Park 1,<br>
+							Dubai, United Arab Emirates.
 						</address>
 					</div>
 					<div class="footer-block">

@@ -115,7 +115,14 @@ if ( ! empty( $amenities ) ) {
 					<div class="unit-card-info-bottom">
 						<p><?php echo esc_html( $title ); ?></p>
 						<div class="unit-card-info-buttons">
-							<?php
+							<?php if ( ! empty( $url ) ) { ?>
+								<a href="<?php echo esc_url( $url ); ?>" class="button gray sm view_details"
+								   target="_blank">
+									<?php esc_html_e( 'View details' ); ?>
+								</a>
+								<?php
+							}
+
 							if ( ! empty( $edit_link ) || true === $is_can_boost ) {
 								if ( ! empty( $edit_link ) ) {
 									?>
@@ -144,12 +151,6 @@ if ( ! empty( $amenities ) ) {
 								        data-unit-id="<?php echo $unit_id; ?>">
 									<?php require THEME_PATH . '/assets/img/bookmark.svg'; ?>
 								</button>
-								<?php if ( ! empty( $url ) ) { ?>
-									<a href="<?php echo esc_url( $url ); ?>" class="button gray sm"
-									   target="_blank">
-										<?php esc_html_e( 'View details' ); ?>
-									</a>
-								<?php } ?>
 
 								<?php if ( ! empty( $broker ) ) {
 									$whatsapp_text  = __( 'Hello, I am interested in property -' ) . ' ' . $url;

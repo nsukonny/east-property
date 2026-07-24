@@ -11,6 +11,7 @@ if ( empty( $title ) ) {
 
 $labels               = $args['labels'] ?? array();
 $whatsapp_share_text  = $args['whatsapp_share_text'] ?? '';
+$whats_app_link       = $args['whats_app_link'] ?? '';
 $property_information = $args['property_information'] ?? array();
 $units                = $args['units'] ?? array();
 $all_units_link       = $args['all_units_link'] ?? '';
@@ -60,12 +61,14 @@ $description = get_the_content();
 						)
 					);
 
-					get_template_part(
-						'core/components/ui/button',
-						null,
-						$quote_button_args
-					);
-					?>
+					if ( ! empty( $whats_app_link ) ) { ?>
+						<a href="<?php echo esc_url( $whats_app_link ); ?>" target="_blank" rel="noopener noreferrer"
+						   class="button sm orange">
+							<img src="<?php echo THEME_URL; ?>/assets/img/call.svg" width="16" height="16"
+							     alt="vector link">
+							<?php _e( 'Contact us' ); ?>
+						</a>
+					<?php } ?>
 				</div>
 				<?php
 				get_template_part(
