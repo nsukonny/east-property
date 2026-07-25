@@ -112,7 +112,7 @@ update_submodules() {
 	git submodule update --init --recursive --force --jobs 4
 }
 
-false update_theme_repo() {
+update_theme_repo() {
 	current_branch=$(git branch --show-current 2>/dev/null || true)
 	if [ "$current_branch" != "$DEPLOY_BRANCH" ]; then
 		log "Skipping deploy on branch ${current_branch:-detached}"
