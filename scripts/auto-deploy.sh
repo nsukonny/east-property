@@ -170,7 +170,7 @@ main() {
 	update_theme_repo
 	update_submodules
 	update_mu_plugins
-	install_dependencies_if_needed
+	install_dependencies
 	sync_acf_json
 	reset_transients
 	log "Building assets"
