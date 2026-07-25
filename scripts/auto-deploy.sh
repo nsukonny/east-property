@@ -45,26 +45,22 @@ repo_changed_files_match() {
 	return 1
 }
 
-install_dependencies_if_needed() {
-	old_ref=${1:-}
-	new_ref=${2:-}
-
-	if [ ! -d node_modules ]; then
-		log "Installing npm dependencies"
+install_dependencies() {
+	  cd "$REPO_ROOT"
+    log "Refreshing npm dependencies"
 		npm ci --no-audit --no-fund
-		return 0
-	fi
 
-	if repo_changed_files_match "$REPO_ROOT" '(^|/)(package\.json|package-lock\.json)$' "$old_ref" "$new_ref"; then
-		log "Refreshing npm dependencies"
-		npm ci --no-audit --no-fund
-	fi
+		if [ -d "east-property" ]; then
+    	cd east-property
+    elif [ -d "distress" ]; then
+    	cd distress
+    fi
+    log "Refreshing npm dependencies in submodules"
+    npm ci --no-audit --no-fund
+    cd "$REPO_ROOT"
 }
 
 sync_acf_json() {
-	if ! repo_changed_files_match "$REPO_ROOT" '(^|/)acf-json/.+\.json$' "$old_theme_head" "$new_theme_head"; then
-		return 0
-	fi
 
 	if ! command -v wp >/dev/null 2>&1; then
 		printf '[auto-deploy] wp-cli is required to sync ACF JSON\n' >&2
@@ -113,22 +109,15 @@ update_submodules() {
 }
 
 update_theme_repo() {
-	current_branch=$(git branch --show-current 2>/dev/null || true)
-	if [ "$current_branch" != "$DEPLOY_BRANCH" ]; then
-		log "Skipping deploy on branch ${current_branch:-detached}"
-		exit 0
-	fi
-
-	old_theme_head=$(git rev-parse HEAD)
+	log "Change branch to main";
+	git switch main
 
 	log "Updating theme repo"
-	git fetch --prune origin
+	git fetch --prune origin "$DEPLOY_BRANCH"
 	log "Discarding theme repo changes"
 	discard_repo_changes "$REPO_ROOT"
 	git reset --hard "origin/$DEPLOY_BRANCH"
 	git clean -fd
-
-	new_theme_head=$(git rev-parse HEAD)
 }
 
 update_mu_plugins() {
@@ -177,11 +166,11 @@ update_mu_plugins() {
 
 main() {
 	cd "$REPO_ROOT"
-	log "Running deploy for $DEPLOY_BRANCH"
+	log "Running deploy for $DEPLOY_BRANCH in $REPO_ROOT"
 	update_theme_repo
 	update_submodules
 	update_mu_plugins
-	install_dependencies_if_needed "$old_theme_head" "$new_theme_head"
+	install_dependencies_if_needed
 	sync_acf_json
 	reset_transients
 	log "Building assets"
