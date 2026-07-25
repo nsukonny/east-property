@@ -1,2 +1,6 @@
 /.DS_Store
 /node_modules
+/assets/css/styles.min.css
+/assets/css/styles.min.css.map
+/assets/js/main.min.js
+/assets/js/main.min.js.map

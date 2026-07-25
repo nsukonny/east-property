@@ -80,6 +80,15 @@ sync_acf_json() {
 	wp --path="$WP_ROOT" acf json sync
 }
 
+reset_transients() {
+  if ! command -v wp >/dev/null 2>&1; then
+    printf '[auto-deploy] wp-cli is required to reset all transients\n' >&2
+    exit 1
+  fi
+
+  wp --path="$WP_ROOT" transient delete --all --allow-root
+}
+
 discard_submodule_changes() {
 	if [ ! -f .gitmodules ]; then
 		return 0
@@ -174,6 +183,7 @@ main() {
 	update_mu_plugins
 	install_dependencies_if_needed "$old_theme_head" "$new_theme_head"
 	sync_acf_json
+	reset_transients
 	log "Building assets"
 	npm run build
 	log "Deploy completed"
