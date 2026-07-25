@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 set -eu
 
 REPO_ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
@@ -112,7 +112,7 @@ update_submodules() {
 	git submodule update --init --recursive --force --jobs 4
 }
 
-update_theme_repo() {
+false update_theme_repo() {
 	current_branch=$(git branch --show-current 2>/dev/null || true)
 	if [ "$current_branch" != "$DEPLOY_BRANCH" ]; then
 		log "Skipping deploy on branch ${current_branch:-detached}"
@@ -177,7 +177,6 @@ update_mu_plugins() {
 
 main() {
 	cd "$REPO_ROOT"
-	md "1_pushed"
 	log "Running deploy for $DEPLOY_BRANCH"
 	update_theme_repo
 	update_submodules
