@@ -177,6 +177,7 @@ update_mu_plugins() {
 
 main() {
 	cd "$REPO_ROOT"
+	md "1_pushed"
 	log "Running deploy for $DEPLOY_BRANCH"
 	update_theme_repo
 	update_submodules
