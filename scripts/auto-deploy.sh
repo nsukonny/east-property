@@ -52,8 +52,8 @@ install_dependencies() {
 
 		if [ -d "east-property" ]; then
     	cd east-property
-    elif [ -d "distress" ]; then
-    	cd distress
+    elif [ -d "disstress" ]; then
+    	cd disstress
     fi
     log "Refreshing npm dependencies in submodules"
     npm ci --no-audit --no-fund
