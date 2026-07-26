@@ -49,7 +49,7 @@ function add_theme_styles(): void {
 		THEME_NAME . '-style',
 		THEME_URL . '/assets/css/styles.min.css',
 		null,
-		filemtime( THEME_URL . '/assets/css/styles.min.css' ),
+		filemtime( THEME_PATH . '/assets/css/styles.min.css' ),
 		false
 	);
 
@@ -59,7 +59,7 @@ function add_theme_styles(): void {
 		THEME_NAME . '-app',
 		THEME_URL . '/assets/js/main.min.js',
 		null,
-		filemtime( THEME_URL . '/assets/js/main.min.js' ),
+		filemtime( THEME_PATH . '/assets/js/main.min.js' ),
 		true
 	);
 
