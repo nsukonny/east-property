@@ -83,6 +83,10 @@ reset_transients() {
   fi
 
   wp --path="$WP_ROOT" transient delete --all --allow-root
+  log "All transients have been reset"
+
+  wp --path="$WP_ROOT" rewrite flush --hard --allow-root
+  log "Permalinks rules have been flushed"
 }
 
 discard_submodule_changes() {

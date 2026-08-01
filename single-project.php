@@ -1,6 +1,6 @@
 <?php
 /**
- * Single template for Properties (CPT: property)
+ * Single template for Project (CPT: property)
  */
 
 use Entities\Property;

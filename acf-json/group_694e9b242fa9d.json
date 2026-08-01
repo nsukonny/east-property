@@ -73,10 +73,10 @@
         {
             "key": "field_694ea5354ae1e",
             "label": "Listing Type",
-            "name": "type_of_sale",
+            "name": "listing_type",
             "aria-label": "",
             "type": "select",
-            "instructions": "new : New Property\r\nresale : Resale",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -85,13 +85,15 @@
                 "id": ""
             },
             "choices": {
-                "new": "new"
+                "off-plan": "Off Plan",
+                "secondary": "Secondary"
             },
-            "default_value": false,
-            "allow_null": 0,
-            "multiple": 0,
-            "ui": 0,
+            "default_value": "off-plan",
             "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "allow_in_bindings": 1,
+            "ui": 0,
             "ajax": 0,
             "placeholder": "",
             "create_options": 0,
@@ -632,5 +634,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1780672428
+    "modified": 1785489575
 }

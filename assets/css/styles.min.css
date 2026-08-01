@@ -4110,7 +4110,6 @@ form .custom-checkbox span {
   margin: auto 0;
   transform: translateX(100%);
   transition: transform ease-in-out 200ms;
-  border-top: 1px solid #FEF5E5;
 }
 @media (min-width: 992px) {
   .header nav ul {
@@ -4151,7 +4150,7 @@ form .custom-checkbox span {
     line-height: 18px;
   }
 }
-.header nav li.active a {
+.header nav li.active a, .header nav li.current_page_item a {
   font-weight: 700;
 }
 @media (min-width: 992px) {
@@ -8595,6 +8594,12 @@ main ul:not([class]), .content ul:not([class]) {
 .texts a:hover,
 .privacy a:hover {
   text-decoration: none;
+}
+
+@media screen and (max-width: 600px) {
+  #wpadminbar {
+    position: fixed;
+  }
 }
 
 .avatar-uploader {

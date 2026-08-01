@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Template Name: Units Listing Page
+ * Template Name: Secondary Units Listing Page
  */
 get_header( null, array( 'color' => 'sand' ) );
 
@@ -26,6 +27,7 @@ get_template_part(
 			'max_area'      => false,
 		),
 		'card_template' => 'unit-card',
+		'listing_type'  => 'secondary',
 	)
 );
 

@@ -255,7 +255,7 @@ while ( have_posts() ) {
 									<div class="single-info-row">
 										<div class="single-info-col">
 											<span><?php _e( 'Location' ); ?></span>
-											<a href="<?php echo esc_url( home_url( '/units' ) . '/?location=' . $location->slug ); ?>"
+											<a href="<?php echo esc_url( home_url( '/projects' ) . '/?location=' . $location->slug ); ?>"
 											   target="_blank"
 											   rel="noopener noreferrer">
 												<?php echo esc_html( $location->name ); ?>
