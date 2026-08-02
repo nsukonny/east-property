@@ -19,7 +19,7 @@ $in_construction_properties_count = get_count_of_units_by_date( date( 'Y-m-d' ),
 					'core/components/filters/search-tabs',
 					null,
 					array(
-						'form_action' => home_url( '/units/' ),
+						'form_action' => home_url( '/off-plan/' ),
 						'show_tabs'   => true,
 					)
 				); ?>
@@ -29,7 +29,7 @@ $in_construction_properties_count = get_count_of_units_by_date( date( 'Y-m-d' ),
                             <?php echo esc_attr( $available_properties_count ); ?>+
                         </span>
 						<p>
-							<?php _e( 'Available immediately' ); ?>
+							<?php _e( 'Available immediately', 'east-property' ); ?>
 						</p>
 					</div>
 					<div class="hero-item">
@@ -37,7 +37,7 @@ $in_construction_properties_count = get_count_of_units_by_date( date( 'Y-m-d' ),
                            <?php echo esc_attr( $in_construction_properties_count ); ?>+
                         </span>
 						<p>
-							<?php _e( 'In construction' ); ?>
+							<?php _e( 'In construction', 'east-property' ); ?>
 						</p>
 					</div>
 				</div>

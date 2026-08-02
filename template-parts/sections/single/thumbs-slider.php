@@ -14,9 +14,9 @@ if ( empty( $gallery ) ) {
         <?php } ?>
     </div>
     <button class="swiper-prev"><img src="<?php echo THEME_URL; ?>/assets/img/swiper-arr.svg" width="16"
-                                     height="16" alt="<?php _e( 'Prev' ); ?>"></button>
+                                     height="16" alt="<?php _e( 'Prev' , 'east-property' ); ?>"></button>
     <button class="swiper-next"><img src="<?php echo THEME_URL; ?>/assets/img/swiper-arr.svg" width="16"
-                                     height="16" alt="<?php _e( 'Next' ); ?>"></button>
+                                     height="16" alt="<?php _e( 'Next' , 'east-property' ); ?>"></button>
 </div>
 <div class="swiper thumbs-swiper-container">
     <div class="swiper-wrapper">

@@ -8602,6 +8602,15 @@ main ul:not([class]), .content ul:not([class]) {
   }
 }
 
+.language-switcher .current-lang {
+  display: none;
+}
+.language-switcher a span {
+  color: #111;
+  font-size: 14px;
+  line-height: 18px;
+}
+
 .avatar-uploader {
   width: 100%;
 }

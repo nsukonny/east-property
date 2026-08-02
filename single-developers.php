@@ -24,7 +24,7 @@ while ( have_posts() ) {
 	get_component_template(
 		'search-results/filters',
 		array(
-			'h2'              => __( 'Buy properties from developer' ) . ' ' . $developer->get_title(),
+			'h2'              => __( 'Buy properties from developer' , 'east-property' ) . ' ' . $developer->get_title(),
 			'properties'      => $properties,
 			'search_by'       => array(
 				'title'         => false,
@@ -46,7 +46,7 @@ while ( have_posts() ) {
 	get_component_template(
 		'search-results/properties-list',
 		array(
-			'h2'            => $developer->get_title() . ': <span>' . $properties['total'] . ' ' . __( 'projects found' ) . '</span>',
+			'h2'            => $developer->get_title() . ': <span>' . $properties['total'] . ' ' . __( 'projects found' , 'east-property' ) . '</span>',
 			'description'   => get_the_content(),
 			'card_template' => 'large-card',
 			'properties'    => $properties,

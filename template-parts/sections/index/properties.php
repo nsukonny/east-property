@@ -8,7 +8,7 @@ $units = $args['units'] ?? null;
 $h2            = $args['h2'] ?? '';
 $description   = $args['description'] ?? '';
 $href          = $args['href'] ?? '#';
-$link_text     = $args['link_text'] ?? __( 'See all new properties' );
+$link_text     = $args['link_text'] ?? __( 'See all new properties' , 'east-property' );
 $card_template = $args['card_template'] ?? 'unit-card';
 ?>
 <section class="properties">

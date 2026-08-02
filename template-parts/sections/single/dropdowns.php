@@ -17,7 +17,7 @@ if ( $args['min_area'] === $args['max_area'] || ( empty( $args['min_area'] ) || 
 	$area = $args['min_area'];
 }
 
-$price = sprintf( '%s %s', __( 'AED' ), number_format( (float) $args['price'], 0, '.', ',' ) );
+$price = sprintf( '%s %s', __( 'AED' , 'east-property' ), number_format( (float) $args['price'], 0, '.', ',' ) );
 ?>
 <div class="dropdown info-dropdown">
 	<button class="dropdown-button" type="button" aria-haspopup="true" aria-expanded="false">
@@ -29,7 +29,7 @@ $price = sprintf( '%s %s', __( 'AED' ), number_format( (float) $args['price'], 0
 				<span class="button-row-item">
                 <img class="button-row-ico" src="<?php echo THEME_URL; ?>/assets/img/bed.svg" width="16" height="16"
                      alt="">
-                <span class="button-row-text"><?php echo esc_html( $beds ); ?><?php echo ' ' . __( 'Bed' ); ?></span>
+                <span class="button-row-text"><?php echo esc_html( $beds ); ?><?php echo ' ' . __( 'Bed' , 'east-property' ); ?></span>
             </span>
 			<?php } ?>
 
@@ -37,12 +37,12 @@ $price = sprintf( '%s %s', __( 'AED' ), number_format( (float) $args['price'], 0
 				<span class="button-row-item">
                 <img class="button-row-ico" src="<?php echo THEME_URL; ?>/assets/img/meters.svg" width="16" height="16"
                      alt="">
-                <span class="button-row-text"><?php echo esc_html( $area ); ?><?php echo ' ' . __( 'sqft' ); ?></span>
+                <span class="button-row-text"><?php echo esc_html( $area ); ?><?php echo ' ' . __( 'sqft' , 'east-property' ); ?></span>
             </span>
 			<?php } ?>
 
              <span class="button-row-item">
-                <span class="button-row-price"><?php _e( 'from' ); ?> <em><?php echo esc_html( $price ); ?></em></span>
+                <span class="button-row-price"><?php _e( 'from' , 'east-property' ); ?> <em><?php echo esc_html( $price ); ?></em></span>
             </span>
         </span>
 	</button>
@@ -58,21 +58,21 @@ $price = sprintf( '%s %s', __( 'AED' ), number_format( (float) $args['price'], 0
 					<?php if ( ! empty( $unit_beds ) ) { ?>
 						<div class="dropdown-content-col">
 							<img src="<?php echo THEME_URL; ?>/assets/img/bed.svg" width="16" height="16" alt="">
-							<span class="button-row-text"><?php echo esc_html( $unit->get_beds() ); ?><?php echo ' ' . __( 'Bed' ); ?></span>
+							<span class="button-row-text"><?php echo esc_html( $unit->get_beds() ); ?><?php echo ' ' . __( 'Bed' , 'east-property' ); ?></span>
 						</div>
 					<?php } ?>
 
 					<?php if ( ! empty( $unit_baths ) ) { ?>
 						<div class="dropdown-content-col">
 							<img src="<?php echo THEME_URL; ?>/assets/img/bath.svg" width="16" height="16" alt="">
-							<span class="button-row-text"><?php echo esc_html( $unit_baths ); ?><?php echo ' ' . __( 'Baths' ); ?></span>
+							<span class="button-row-text"><?php echo esc_html( $unit_baths ); ?><?php echo ' ' . __( 'Baths' , 'east-property' ); ?></span>
 						</div>
 					<?php } ?>
 
 					<?php if ( ! empty( $unit_area ) ) { ?>
 						<div class="dropdown-content-col">
 							<img src="<?php echo THEME_URL; ?>/assets/img/meters.svg" width="16" height="16" alt="">
-							<span class="button-row-text"><?php echo esc_html( $unit->get_area() ); ?><?php echo ' ' . __( 'sqft' ); ?></span>
+							<span class="button-row-text"><?php echo esc_html( $unit->get_area() ); ?><?php echo ' ' . __( 'sqft' , 'east-property' ); ?></span>
 						</div>
 					<?php } ?>
 

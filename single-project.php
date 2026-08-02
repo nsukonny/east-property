@@ -28,7 +28,7 @@ while ( have_posts() ) {
 				'property' => $property,
 				'quote_button_args' => array(
 					'class' => 'orange sm request-quote',
-					'text'  => __( 'Request quote' ),
+					'text'  => __( 'Request quote' , 'east-property' ),
 					'modal' => 'quote-modal',
 				),
 			)

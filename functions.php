@@ -30,10 +30,10 @@ const SUPPORT_EMAIL       = 'support@eastproperty.com';
 function add_menus(): void {
 	register_nav_menus(
 		array(
-			'header_menu'             => __( 'Header' ),
-			'footer_menu_popular'     => __( 'Footer | Popular Search' ),
-			'footer_menu_discovery'   => __( 'Footer | Discovery' ),
-			'footer_menu_quick_links' => __( 'Footer | Quick Links' ),
+			'header_menu'             => __( 'Header', 'east-property' ),
+			'footer_menu_popular'     => __( 'Footer | Popular Search', 'east-property' ),
+			'footer_menu_discovery'   => __( 'Footer | Discovery', 'east-property' ),
+			'footer_menu_quick_links' => __( 'Footer | Quick Links', 'east-property' ),
 		)
 	);
 }
@@ -81,8 +81,8 @@ add_action( 'init', static function (): void {
 	if ( function_exists( 'acf_add_options_page' ) ) {
 		acf_add_options_page(
 			array(
-				'page_title' => __( 'Настройки' ) . ' ' . PROJECT_NAME,
-				'menu_title' => __( 'Настройки' ) . ' ' . PROJECT_NAME,
+				'page_title' => __( 'Настройки', 'east-property' ) . ' ' . PROJECT_NAME,
+				'menu_title' => __( 'Настройки', 'east-property' ) . ' ' . PROJECT_NAME,
 				'menu_slug'  => 'theme-options',
 				'capability' => 'edit_posts',
 				'redirect'   => false,
@@ -168,6 +168,10 @@ add_action(
 		}
 	}
 );
+
+add_action( 'after_setup_theme', static function (): void {
+	load_theme_textdomain( 'east-property', THEME_PATH . '/languages' );
+} );
 
 require_once 'core/includes/entities/load.php';
 require_once 'core/includes/registers/acf/loader.php';
