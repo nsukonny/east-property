@@ -30,6 +30,7 @@ if ( 404 === get_query_var( 'pagename' ) || is_404() ) {
 					'items' => $properties,
 				),
 				'show_sidebar' => true,
+				'class' => 'full-width',
 			)
 		);
 		?>

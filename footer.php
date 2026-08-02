@@ -14,6 +14,7 @@ get_template_part(
 			'broker-modal',
 			'boost-modal',
 			'boost-info-modal',
+			'map-coords-picker',
 		),
 	)
 );
