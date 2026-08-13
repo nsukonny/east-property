@@ -12,7 +12,7 @@ if ( is_tax( 'product_cat' ) ) {
 		'category' => get_queried_object(),
 	) );
 } else {
-	wp_safe_redirect( home_url( '/404' ) );
+	wp_safe_redirect( core_home_url( '/404' ) );
 	exit;
 }
 

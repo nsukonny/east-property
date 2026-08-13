@@ -9,7 +9,7 @@
 
 get_header();
 
-wp_safe_redirect( home_url( '/404' ) );
+wp_safe_redirect( core_home_url( '/404' ) );
 exit;
 
 get_footer();

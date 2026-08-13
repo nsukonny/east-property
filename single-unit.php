@@ -16,7 +16,7 @@ while ( have_posts() ) {
 	}
 
 	if ( 'publish' !== $unit->get_status() ) {
-		wp_safe_redirect( home_url( '/404' ) );
+		wp_safe_redirect( core_home_url( '/404' ) );
 	}
 
 	$property = $unit->get_property();
@@ -259,7 +259,7 @@ while ( have_posts() ) {
 									<div class="single-info-row">
 										<div class="single-info-col">
 											<span><?php _e( 'Location', 'east-property' ); ?></span>
-											<a href="<?php echo esc_url( home_url( '/projects' ) . '/?location=' . $location->slug ); ?>"
+											<a href="<?php echo esc_url( core_home_url( '/projects' ) . '/?location=' . $location->slug ); ?>"
 											   target="_blank"
 											   rel="noopener noreferrer">
 												<?php echo esc_html( $location->name ); ?>
@@ -309,7 +309,7 @@ while ( have_posts() ) {
 					<?php
 					$featured_units = $property->get_random_units( 3 );
 					if ( ! empty( $featured_units ) ) {
-						$all_units_link = home_url( '/units' );
+						$all_units_link = core_home_url( '/units' );
 						get_component_template(
 							'units/featured',
 							array(

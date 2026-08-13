@@ -19,7 +19,7 @@ $in_construction_properties_count = get_count_of_units_by_date( date( 'Y-m-d' ),
 					'core/components/filters/search-tabs',
 					null,
 					array(
-						'form_action' => home_url( '/off-plan/' ),
+						'form_action' => core_home_url( '/off-plan/' ),
 						'show_tabs'   => true,
 					)
 				); ?>

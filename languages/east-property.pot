@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-02T08:45:01+00:00\n"
+"POT-Creation-Date: 2026-08-07T06:41:13+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: east-property\n"
@@ -241,7 +241,7 @@ msgstr ""
 msgid "Accept"
 msgstr ""
 
-#: core/components/common/functions.php:22
+#: core/components/common/functions.php:20
 #: core/includes/registers/post-types/properties.php:10
 #: core/template-parts/sections/explore.php:34
 msgid "Properties"
@@ -251,11 +251,11 @@ msgstr ""
 msgid "Off Plan Properties"
 msgstr ""
 
-#: core/components/common/functions.php:35
+#: core/components/common/functions.php:38
 msgid "Secondary Listings"
 msgstr ""
 
-#: core/components/common/functions.php:43
+#: core/components/common/functions.php:52
 msgid "Projects in UAE"
 msgstr ""
 
@@ -397,13 +397,13 @@ msgstr ""
 #: core/components/filters/functions.php:148
 #: core/components/filters/functions.php:385
 #: core/includes/registers/post-types/locations.php:10
-#: core/template-parts/account/edit-property.php:135
+#: core/template-parts/account/edit-property.php:145
 #: core/template-parts/filters/result-filters.php:59
 #: core/template-parts/properties/property-single.php:111
 #: core/template-parts/properties/property-single.php:219
 #: core/template-parts/properties/property-units-list.php:28
-#: single-unit.php:257
-#: single-unit.php:355
+#: single-unit.php:261
+#: single-unit.php:359
 msgid "Location"
 msgstr ""
 
@@ -430,7 +430,7 @@ msgstr ""
 #: core/components/filters/functions.php:409
 #: core/includes/registers/post-types/developers.php:11
 #: core/includes/registers/post-types/developers.php:37
-#: core/template-parts/account/edit-property.php:86
+#: core/template-parts/account/edit-property.php:88
 #: core/template-parts/filters/result-filters.php:262
 #: core/template-parts/filters/search-tabs.php:144
 msgid "Developer"
@@ -495,7 +495,7 @@ msgid "Any Locations"
 msgstr ""
 
 #: core/components/filters/functions.php:681
-#: core/template-parts/search-results/properties-list.php:69
+#: core/template-parts/search-results/properties-list.php:70
 #: core/template-parts/search-results/tabs.php:63
 #: core/template-parts/search-results/units-list.php:64
 msgid "Items not found"
@@ -566,9 +566,9 @@ msgstr ""
 
 #: core/components/modals/boost-modal.php:41
 #: core/components/modals/create-modal.php:132
-#: core/template-parts/account/edit-property.php:87
-#: core/template-parts/account/edit-property.php:136
-#: core/template-parts/account/edit-property.php:151
+#: core/template-parts/account/edit-property.php:89
+#: core/template-parts/account/edit-property.php:146
+#: core/template-parts/account/edit-property.php:162
 #: core/template-parts/account/edit-unit.php:155
 #: core/template-parts/account/edit-unit.php:171
 #: core/template-parts/account/login-form.php:193
@@ -587,7 +587,7 @@ msgstr ""
 
 #: core/components/modals/broker-modal.php:25
 #: core/template-parts/common/contact-panel.php:24
-#: single-unit.php:139
+#: single-unit.php:141
 msgid "Contact broker"
 msgstr ""
 
@@ -730,7 +730,7 @@ msgstr ""
 #: core/components/modals/signin-modal.php:43
 #: core/template-parts/account/login-form.php:20
 #: core/template-parts/account/login-form.php:61
-#: core/template-parts/common/header.php:44
+#: core/template-parts/common/header.php:36
 msgid "Sign in"
 msgstr ""
 
@@ -785,6 +785,10 @@ msgstr ""
 
 #: core/components/modals/functions.php:54
 msgid "Password reset request sent to your email address. Check your inbox."
+msgstr ""
+
+#: core/components/modals/map-coords-picker.php:17
+msgid "Pick property coordinates"
 msgstr ""
 
 #: core/components/modals/quote-modal.php:36
@@ -959,7 +963,7 @@ msgid "Handover:"
 msgstr ""
 
 #: core/includes/entities/class-entity-property.php:529
-#: core/template-parts/account/edit-property.php:166
+#: core/template-parts/account/edit-property.php:178
 msgid "Handover Date"
 msgstr ""
 
@@ -1497,70 +1501,74 @@ msgstr ""
 msgid "Edit property project:"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:19
+#: core/template-parts/account/edit-property.php:20
 msgid "Add new property project"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:20
+#: core/template-parts/account/edit-property.php:21
 msgid "Edit property project"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:20
+#: core/template-parts/account/edit-property.php:21
 msgid "Add property project"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:46
+#: core/template-parts/account/edit-property.php:48
 #: core/template-parts/account/edit-unit.php:56
 msgid "My account"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:67
+#: core/template-parts/account/edit-property.php:69
 #: core/template-parts/account/edit-unit.php:84
 msgid "Title"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:70
+#: core/template-parts/account/edit-property.php:72
 msgid "azizi “beach oasis”"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:100
+#: core/template-parts/account/edit-property.php:104
+msgid "Pick on map"
+msgstr ""
+
+#: core/template-parts/account/edit-property.php:110
 msgid "Latitude"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:111
+#: core/template-parts/account/edit-property.php:121
 msgid "Longitude"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:150
+#: core/template-parts/account/edit-property.php:161
 msgid "Ownership type"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:190
+#: core/template-parts/account/edit-property.php:202
 msgid "Project is already completed / Ready"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:201
+#: core/template-parts/account/edit-property.php:214
 msgid "Contain Property Types "
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:225
+#: core/template-parts/account/edit-property.php:238
 #: core/template-parts/account/edit-unit.php:226
 #: core/template-parts/properties/property-single.php:210
 msgid "Description"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:254
-#: single-unit.php:75
-#: single-unit.php:81
+#: core/template-parts/account/edit-property.php:267
+#: single-unit.php:76
+#: single-unit.php:82
 msgid "Save"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:297
+#: core/template-parts/account/edit-property.php:310
 #: core/template-parts/account/edit-unit.php:314
 msgid "Pictures"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:299
+#: core/template-parts/account/edit-property.php:312
 #: core/template-parts/account/edit-unit.php:316
 msgid "Browse files"
 msgstr ""
@@ -1894,19 +1902,39 @@ msgstr ""
 msgid "Contact broker to learn more and get special offers."
 msgstr ""
 
-#: core/template-parts/common/footer.php:33
+#: core/template-parts/common/footer.php:13
+msgid "Address"
+msgstr ""
+
+#: core/template-parts/common/footer.php:16
+msgid "Office 1-042S,"
+msgstr ""
+
+#: core/template-parts/common/footer.php:17
+msgid "Dubai Investment Park 1,"
+msgstr ""
+
+#: core/template-parts/common/footer.php:18
+msgid "Dubai, United Arab Emirates."
+msgstr ""
+
+#: core/template-parts/common/footer.php:22
+msgid "Live Support?"
+msgstr ""
+
+#: core/template-parts/common/footer.php:35
 msgid "Popular Search"
 msgstr ""
 
-#: core/template-parts/common/footer.php:52
+#: core/template-parts/common/footer.php:54
 msgid "Discovery"
 msgstr ""
 
-#: core/template-parts/common/footer.php:72
+#: core/template-parts/common/footer.php:74
 msgid "Quick Links"
 msgstr ""
 
-#: core/template-parts/common/footer.php:89
+#: core/template-parts/common/footer.php:91
 msgid "© East Property – All rights reserved"
 msgstr ""
 
@@ -1914,27 +1942,23 @@ msgstr ""
 msgid "Vector logotype"
 msgstr ""
 
-#: core/template-parts/common/header.php:38
-msgid "Русский"
-msgstr ""
-
-#: core/template-parts/common/header.php:48
+#: core/template-parts/common/header.php:40
 msgid "Create"
 msgstr ""
 
-#: core/template-parts/common/header.php:49
+#: core/template-parts/common/header.php:41
 msgid "Create Account"
 msgstr ""
 
-#: core/template-parts/common/header.php:55
+#: core/template-parts/common/header.php:47
 msgid "Top up"
 msgstr ""
 
-#: core/template-parts/common/header.php:60
+#: core/template-parts/common/header.php:52
 msgid "Boost Points"
 msgstr ""
 
-#: core/template-parts/common/header.php:70
+#: core/template-parts/common/header.php:62
 msgid "Open menu"
 msgstr ""
 
@@ -2068,24 +2092,24 @@ msgstr ""
 msgid "Your information is kept strictly confidential"
 msgstr ""
 
-#: core/template-parts/properties/map.php:51
+#: core/template-parts/properties/map.php:57
 msgid "Explore Project"
 msgstr ""
 
 #: core/template-parts/properties/property-single.php:56
-#: single-unit.php:68
 #: single-unit.php:69
+#: single-unit.php:70
 msgid "Share"
 msgstr ""
 
 #: core/template-parts/properties/property-single.php:86
 #: core/template-parts/properties/property-units-list.php:67
-#: single-unit.php:232
+#: single-unit.php:236
 msgid "Property information"
 msgstr ""
 
 #: core/template-parts/properties/property-single.php:143
-#: single-unit.php:345
+#: single-unit.php:349
 msgid "View developer"
 msgstr ""
 
@@ -2094,17 +2118,17 @@ msgid "properties available in this project"
 msgstr ""
 
 #: core/template-parts/properties/property-single.php:160
-#: single-unit.php:315
+#: single-unit.php:319
 msgid "All properties"
 msgstr ""
 
 #: core/template-parts/properties/property-single.php:185
-#: single-unit.php:176
+#: single-unit.php:179
 msgid "Payment plan"
 msgstr ""
 
 #: core/template-parts/properties/property-single.php:199
-#: single-unit.php:296
+#: single-unit.php:300
 msgid "Amenities"
 msgstr ""
 
@@ -2116,13 +2140,13 @@ msgstr ""
 msgid "Explore a wide selection of properties across Dubai. From modern apartments and family villas to premium off-plan opportunities  in the city’s most sought-after communities. Compare prices, locations, and layouts in one place and find the property that matches your goals and budget."
 msgstr ""
 
-#: core/template-parts/search-results/properties-list.php:21
+#: core/template-parts/search-results/properties-list.php:22
 #: core/template-parts/search-results/tabs.php:16
 #: core/template-parts/search-results/units-list.php:20
 msgid "List view"
 msgstr ""
 
-#: core/template-parts/search-results/properties-list.php:25
+#: core/template-parts/search-results/properties-list.php:26
 #: core/template-parts/search-results/tabs.php:20
 msgid "Map view"
 msgstr ""
@@ -2204,58 +2228,58 @@ msgstr ""
 msgid "Apartment by"
 msgstr ""
 
-#: single-unit.php:79
+#: single-unit.php:80
 msgid "Saved"
 msgstr ""
 
-#: single-unit.php:120
+#: single-unit.php:121
 msgid "Property broker"
 msgstr ""
 
-#: single-unit.php:145
+#: single-unit.php:147
 msgid ""
 "Get in touch with broker using email, phone or WhatsApp. It’s free and does not\n"
 "                                                                        require any commitment from your side"
 msgstr ""
 
-#: single-unit.php:192
+#: single-unit.php:195
 msgid "Down payment"
 msgstr ""
 
-#: single-unit.php:194
+#: single-unit.php:197
 msgid "Sales launch"
 msgstr ""
 
-#: single-unit.php:202
+#: single-unit.php:205
 msgid "During construction"
 msgstr ""
 
-#: single-unit.php:204
+#: single-unit.php:207
 msgid "installments"
 msgstr ""
 
-#: single-unit.php:212
+#: single-unit.php:216
 msgid "On handover"
 msgstr ""
 
-#: single-unit.php:222
-#: single-unit.php:225
+#: single-unit.php:226
+#: single-unit.php:229
 msgid "Floor plan"
 msgstr ""
 
-#: single-unit.php:275
+#: single-unit.php:279
 msgid "Building Information"
 msgstr ""
 
-#: single-unit.php:280
+#: single-unit.php:284
 msgid "Building name"
 msgstr ""
 
-#: single-unit.php:285
+#: single-unit.php:289
 msgid "Floors"
 msgstr ""
 
-#: single-unit.php:312
+#: single-unit.php:316
 msgid "More properties like this"
 msgstr ""
 

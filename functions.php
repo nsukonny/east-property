@@ -163,7 +163,7 @@ add_action(
 	'template_redirect',
 	static function () {
 		if ( is_page( 'register' ) ) {
-			wp_redirect( home_url( '/account/?tab=register' ) );
+			wp_redirect( core_home_url( '/account/?tab=register' ) );
 			exit;
 		}
 	}
