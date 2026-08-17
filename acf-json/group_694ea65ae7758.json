@@ -20,7 +20,8 @@
             "placeholder": "",
             "prepend": "",
             "append": "",
-            "maxlength": ""
+            "maxlength": "",
+            "pll_default_value": ""
         },
         {
             "key": "field_694ea661114df",
@@ -40,7 +41,8 @@
             "placeholder": "",
             "prepend": "",
             "append": "",
-            "maxlength": ""
+            "maxlength": "",
+            "pll_default_value": ""
         },
         {
             "key": "field_694ea68a114e0",
@@ -60,7 +62,8 @@
             "placeholder": "",
             "prepend": "",
             "append": "",
-            "maxlength": ""
+            "maxlength": "",
+            "pll_default_value": ""
         },
         {
             "key": "field_694ea695114e1",
@@ -80,7 +83,8 @@
             "placeholder": "",
             "prepend": "",
             "append": "",
-            "maxlength": ""
+            "maxlength": "",
+            "pll_default_value": ""
         },
         {
             "key": "field_694ea6b3114e2",
@@ -100,7 +104,8 @@
             "placeholder": "",
             "prepend": "",
             "append": "",
-            "maxlength": ""
+            "maxlength": "",
+            "pll_default_value": ""
         },
         {
             "key": "field_694ea7f2a1146",
@@ -149,7 +154,8 @@
             "toggle": 0,
             "return_format": "value",
             "save_custom": 0,
-            "custom_choice_button_text": "Add new choice"
+            "custom_choice_button_text": "Add new choice",
+            "pll_default_value": []
         },
         {
             "key": "field_695121424fcb6",
@@ -171,7 +177,8 @@
             "append": "",
             "min": "",
             "max": "",
-            "step": ""
+            "step": "",
+            "pll_default_value": ""
         },
         {
             "key": "field_694ea835a1148",
@@ -191,7 +198,8 @@
             "placeholder": "",
             "prepend": "",
             "append": "",
-            "maxlength": ""
+            "maxlength": "",
+            "pll_default_value": ""
         },
         {
             "key": "field_694ea841a1149",
@@ -232,7 +240,8 @@
             "append": "",
             "min": "",
             "max": "",
-            "step": ""
+            "step": "",
+            "pll_default_value": ""
         },
         {
             "key": "field_694ea872a114b",
@@ -254,7 +263,8 @@
             "append": "",
             "min": "",
             "max": "",
-            "step": ""
+            "step": "",
+            "pll_default_value": ""
         },
         {
             "key": "field_694ea884a114c",
@@ -287,7 +297,8 @@
             "ajax": 0,
             "placeholder": "",
             "create_options": 0,
-            "save_options": 0
+            "save_options": 0,
+            "pll_default_value": "freehold"
         },
         {
             "key": "field_694ea893a114d",
@@ -307,7 +318,8 @@
             "placeholder": "",
             "maxlength": "",
             "rows": "",
-            "new_lines": ""
+            "new_lines": "",
+            "pll_default_value": ""
         },
         {
             "key": "field_694ea8a5a114e",
@@ -324,9 +336,8 @@
                 "id": ""
             },
             "return_format": "array",
-            "preview_size": "medium",
-            "insert": "append",
             "library": "all",
+            "translations": "sync",
             "min": "",
             "max": "",
             "min_width": "",
@@ -335,7 +346,9 @@
             "max_width": "",
             "max_height": "",
             "max_size": "",
-            "mime_types": ""
+            "mime_types": "",
+            "insert": "append",
+            "preview_size": "medium"
         },
         {
             "key": "field_694ea6c0114e3",
@@ -379,7 +392,8 @@
             "default_value": 0,
             "ui": 0,
             "ui_on_text": "",
-            "ui_off_text": ""
+            "ui_off_text": "",
+            "pll_default_value": 0
         },
         {
             "key": "field_695145f4ad625",
@@ -399,7 +413,8 @@
             "default_value": 0,
             "ui": 0,
             "ui_on_text": "",
-            "ui_off_text": ""
+            "ui_off_text": "",
+            "pll_default_value": 0
         },
         {
             "key": "field_69904532e8800",
@@ -419,7 +434,8 @@
             "placeholder": "",
             "prepend": "",
             "append": "",
-            "maxlength": ""
+            "maxlength": "",
+            "pll_default_value": ""
         },
         {
             "key": "field_6990489a7f033",
@@ -457,7 +473,8 @@
                     "append": "",
                     "min": "",
                     "max": "",
-                    "step": ""
+                    "step": "",
+                    "pll_default_value": ""
                 },
                 {
                     "key": "field_699048bc7f035",
@@ -479,7 +496,8 @@
                     "append": "",
                     "min": "",
                     "max": "",
-                    "step": ""
+                    "step": "",
+                    "pll_default_value": ""
                 }
             ]
         },
@@ -525,7 +543,8 @@
                     "min": "",
                     "max": "",
                     "step": "",
-                    "parent_repeater": "field_6990c0b94aab8"
+                    "parent_repeater": "field_6990c0b94aab8",
+                    "pll_default_value": ""
                 },
                 {
                     "key": "field_6990bc31ec19c",
@@ -546,7 +565,8 @@
                     "prepend": "",
                     "append": "",
                     "maxlength": "",
-                    "parent_repeater": "field_6990c0b94aab8"
+                    "parent_repeater": "field_6990c0b94aab8",
+                    "pll_default_value": ""
                 },
                 {
                     "key": "field_6990bb50ec199",
@@ -567,7 +587,8 @@
                     "prepend": "",
                     "append": "",
                     "maxlength": "",
-                    "parent_repeater": "field_6990c0b94aab8"
+                    "parent_repeater": "field_6990c0b94aab8",
+                    "pll_default_value": ""
                 },
                 {
                     "key": "field_6990bbeeec19a",
@@ -588,7 +609,8 @@
                     "prepend": "",
                     "append": "",
                     "maxlength": "",
-                    "parent_repeater": "field_6990c0b94aab8"
+                    "parent_repeater": "field_6990c0b94aab8",
+                    "pll_default_value": ""
                 },
                 {
                     "key": "field_6990bc43ec19d",
@@ -609,7 +631,8 @@
                     "prepend": "",
                     "append": "",
                     "maxlength": "",
-                    "parent_repeater": "field_6990c0b94aab8"
+                    "parent_repeater": "field_6990c0b94aab8",
+                    "pll_default_value": ""
                 },
                 {
                     "key": "field_6990bc5cec19e",
@@ -630,7 +653,8 @@
                     "prepend": "",
                     "append": "",
                     "maxlength": "",
-                    "parent_repeater": "field_6990c0b94aab8"
+                    "parent_repeater": "field_6990c0b94aab8",
+                    "pll_default_value": ""
                 },
                 {
                     "key": "field_6990bc72ec19f",
@@ -675,7 +699,8 @@
                             "min": "",
                             "max": "",
                             "step": "",
-                            "parent_repeater": "field_6990bc72ec19f"
+                            "parent_repeater": "field_6990bc72ec19f",
+                            "pll_default_value": ""
                         },
                         {
                             "key": "field_6990bcbeec1a2",
@@ -696,7 +721,8 @@
                             "prepend": "",
                             "append": "",
                             "maxlength": "",
-                            "parent_repeater": "field_6990bc72ec19f"
+                            "parent_repeater": "field_6990bc72ec19f",
+                            "pll_default_value": ""
                         },
                         {
                             "key": "field_6990bca1ec1a0",
@@ -717,7 +743,8 @@
                             "prepend": "",
                             "append": "",
                             "maxlength": "",
-                            "parent_repeater": "field_6990bc72ec19f"
+                            "parent_repeater": "field_6990bc72ec19f",
+                            "pll_default_value": ""
                         },
                         {
                             "key": "field_6990bcdeec1a3",
@@ -738,7 +765,8 @@
                             "prepend": "",
                             "append": "",
                             "maxlength": "",
-                            "parent_repeater": "field_6990bc72ec19f"
+                            "parent_repeater": "field_6990bc72ec19f",
+                            "pll_default_value": ""
                         }
                     ]
                 }
@@ -780,7 +808,8 @@
                     "append": "",
                     "min": "",
                     "max": "",
-                    "step": ""
+                    "step": "",
+                    "pll_default_value": ""
                 },
                 {
                     "key": "field_6990c2ce70cda",
@@ -802,7 +831,8 @@
                     "append": "",
                     "min": "",
                     "max": "",
-                    "step": ""
+                    "step": "",
+                    "pll_default_value": ""
                 }
             ]
         },
@@ -826,7 +856,8 @@
             "append": "",
             "min": "",
             "max": "",
-            "step": ""
+            "step": "",
+            "pll_default_value": ""
         },
         {
             "key": "field_6990c3bef62d3",
@@ -870,7 +901,8 @@
                     "min": "",
                     "max": "",
                     "step": "",
-                    "parent_repeater": "field_6990c3bef62d3"
+                    "parent_repeater": "field_6990c3bef62d3",
+                    "pll_default_value": ""
                 },
                 {
                     "key": "field_6990c3e6f62d5",
@@ -891,7 +923,8 @@
                     "prepend": "",
                     "append": "",
                     "maxlength": "",
-                    "parent_repeater": "field_6990c3bef62d3"
+                    "parent_repeater": "field_6990c3bef62d3",
+                    "pll_default_value": ""
                 }
             ]
         },
@@ -937,7 +970,8 @@
                     "min": "",
                     "max": "",
                     "step": "",
-                    "parent_repeater": "field_6990c423f62d6"
+                    "parent_repeater": "field_6990c423f62d6",
+                    "pll_default_value": ""
                 },
                 {
                     "key": "field_6990c423f62d8",
@@ -958,7 +992,8 @@
                     "prepend": "",
                     "append": "",
                     "maxlength": "",
-                    "parent_repeater": "field_6990c423f62d6"
+                    "parent_repeater": "field_6990c423f62d6",
+                    "pll_default_value": ""
                 }
             ]
         },
@@ -980,7 +1015,8 @@
             "placeholder": "",
             "prepend": "",
             "append": "",
-            "maxlength": ""
+            "maxlength": "",
+            "pll_default_value": ""
         },
         {
             "key": "field_6a2fa3f6bd8f8",
@@ -1003,7 +1039,8 @@
             "placeholder": "",
             "step": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "pll_default_value": ""
         },
         {
             "key": "field_6a2fb2d5f1174",
@@ -1026,7 +1063,8 @@
             "placeholder": "",
             "step": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "pll_default_value": ""
         },
         {
             "key": "field_6a2fb9a30338c",
@@ -1048,7 +1086,8 @@
             "step": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "pll_default_value": ""
         }
     ],
     "location": [
@@ -1072,5 +1111,6 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1781512642
+    "pll_display_field_instructions": 1,
+    "modified": 1786972502
 }
