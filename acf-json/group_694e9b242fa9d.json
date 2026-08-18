@@ -17,7 +17,7 @@
                 "id": ""
             },
             "default_value": "",
-            "translations": "sync",
+            "translations": "copy_once",
             "min": "",
             "max": "",
             "allow_in_bindings": 1,
@@ -48,7 +48,7 @@
             "taxonomy": "",
             "return_format": "object",
             "multiple": 0,
-            "translations": "sync",
+            "translations": "copy_once",
             "allow_null": 0,
             "allow_in_bindings": 1,
             "bidirectional": 0,
@@ -74,7 +74,7 @@
             ],
             "return_format": "object",
             "multiple": 0,
-            "translations": "sync",
+            "translations": "copy_once",
             "allow_null": 0,
             "allow_in_bindings": 1,
             "bidirectional": 0,
@@ -101,6 +101,7 @@
             "default_value": "off-plan",
             "return_format": "value",
             "multiple": 0,
+            "translations": "copy_once",
             "allow_null": 0,
             "allow_in_bindings": 1,
             "ui": 0,
@@ -133,10 +134,12 @@
                 "office": "Office"
             },
             "default_value": "apartment",
-            "allow_null": 0,
-            "multiple": 0,
-            "ui": 0,
             "return_format": "value",
+            "multiple": 0,
+            "translations": "copy_once",
+            "allow_null": 0,
+            "allow_in_bindings": 1,
+            "ui": 0,
             "ajax": 0,
             "placeholder": "",
             "create_options": 0,
@@ -158,12 +161,14 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
+            "translations": "copy_once",
             "min": "",
             "max": "",
+            "allow_in_bindings": 1,
+            "placeholder": "",
             "step": "",
+            "prepend": "",
+            "append": "",
             "pll_default_value": ""
         },
         {
@@ -181,6 +186,7 @@
                 "id": ""
             },
             "default_value": "",
+            "translations": "copy_once",
             "min": "",
             "max": "",
             "allow_in_bindings": 1,
@@ -205,6 +211,7 @@
                 "id": ""
             },
             "default_value": "",
+            "translations": "copy_once",
             "min": "",
             "max": "",
             "allow_in_bindings": 1,
@@ -229,12 +236,14 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
+            "translations": "copy_once",
             "min": "",
             "max": "",
+            "allow_in_bindings": 1,
+            "placeholder": "",
             "step": "",
+            "prepend": "",
+            "append": "",
             "pll_default_value": ""
         },
         {
@@ -252,12 +261,14 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
+            "translations": "copy_once",
             "min": "",
             "max": "",
+            "allow_in_bindings": 1,
+            "placeholder": "",
             "step": "",
+            "prepend": "",
+            "append": "",
             "pll_default_value": ""
         },
         {
@@ -275,12 +286,14 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
+            "translations": "copy_once",
             "min": "",
             "max": "",
+            "allow_in_bindings": 1,
+            "placeholder": "",
             "step": "",
+            "prepend": "",
+            "append": "",
             "pll_default_value": ""
         },
         {
@@ -298,12 +311,14 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
+            "translations": "copy_once",
             "min": "",
             "max": "",
+            "allow_in_bindings": 1,
+            "placeholder": "",
             "step": "",
+            "prepend": "",
+            "append": "",
             "pll_default_value": ""
         },
         {
@@ -321,9 +336,8 @@
                 "id": ""
             },
             "return_format": "array",
-            "preview_size": "medium",
-            "insert": "append",
             "library": "all",
+            "translations": "copy_once",
             "min": "",
             "max": "",
             "min_width": "",
@@ -332,7 +346,9 @@
             "max_width": "",
             "max_height": "",
             "max_size": "",
-            "mime_types": ""
+            "mime_types": "",
+            "insert": "append",
+            "preview_size": "medium"
         },
         {
             "key": "field_69789d75e1ef8",
@@ -350,6 +366,8 @@
             },
             "message": "",
             "default_value": 0,
+            "translations": "copy_once",
+            "allow_in_bindings": 1,
             "ui": 0,
             "ui_on_text": "",
             "ui_off_text": "",
@@ -663,5 +681,5 @@
     "allow_ai_access": false,
     "ai_description": "",
     "pll_display_field_instructions": 1,
-    "modified": 1785658225
+    "modified": 1786992081
 }

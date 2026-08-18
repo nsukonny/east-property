@@ -17,10 +17,12 @@
                 "id": ""
             },
             "default_value": "",
+            "translations": "copy_once",
+            "maxlength": "",
+            "allow_in_bindings": 1,
             "placeholder": "",
             "prepend": "",
             "append": "",
-            "maxlength": "",
             "pll_default_value": ""
         },
         {
@@ -38,10 +40,12 @@
                 "id": ""
             },
             "default_value": "",
+            "translations": "copy_once",
+            "maxlength": "",
+            "allow_in_bindings": 1,
             "placeholder": "",
             "prepend": "",
             "append": "",
-            "maxlength": "",
             "pll_default_value": ""
         },
         {
@@ -59,10 +63,12 @@
                 "id": ""
             },
             "default_value": "",
+            "translations": "copy_once",
+            "maxlength": "",
+            "allow_in_bindings": 1,
             "placeholder": "",
             "prepend": "",
             "append": "",
-            "maxlength": "",
             "pll_default_value": ""
         },
         {
@@ -80,10 +86,12 @@
                 "id": ""
             },
             "default_value": "",
+            "translations": "copy_once",
+            "maxlength": "",
+            "allow_in_bindings": 1,
             "placeholder": "",
             "prepend": "",
             "append": "",
-            "maxlength": "",
             "pll_default_value": ""
         },
         {
@@ -101,10 +109,12 @@
                 "id": ""
             },
             "default_value": "",
+            "translations": "copy_once",
+            "maxlength": "",
+            "allow_in_bindings": 1,
             "placeholder": "",
             "prepend": "",
             "append": "",
-            "maxlength": "",
             "pll_default_value": ""
         },
         {
@@ -124,7 +134,9 @@
             "display_format": "F j, Y",
             "return_format": "Ymd",
             "first_day": 1,
-            "default_to_current_date": 0
+            "default_to_current_date": 0,
+            "translations": "copy_once",
+            "allow_in_bindings": 1
         },
         {
             "key": "field_694ea826a1147",
@@ -148,11 +160,13 @@
                 "house": "Houses",
                 "office": "Offices"
             },
-            "allow_custom": 0,
             "default_value": [],
+            "return_format": "value",
+            "translations": "copy_once",
+            "allow_custom": 0,
+            "allow_in_bindings": 1,
             "layout": "vertical",
             "toggle": 0,
-            "return_format": "value",
             "save_custom": 0,
             "custom_choice_button_text": "Add new choice",
             "pll_default_value": []
@@ -172,12 +186,14 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
+            "translations": "copy_once",
             "min": "",
             "max": "",
+            "allow_in_bindings": 1,
+            "placeholder": "",
             "step": "",
+            "prepend": "",
+            "append": "",
             "pll_default_value": ""
         },
         {
@@ -195,10 +211,12 @@
                 "id": ""
             },
             "default_value": "",
+            "translations": "copy_once",
+            "maxlength": "",
+            "allow_in_bindings": 1,
             "placeholder": "",
             "prepend": "",
             "append": "",
-            "maxlength": "",
             "pll_default_value": ""
         },
         {
@@ -218,7 +236,9 @@
             "display_format": "d\/m\/Y",
             "return_format": "d\/m\/Y",
             "first_day": 1,
-            "default_to_current_date": 0
+            "default_to_current_date": 0,
+            "translations": "copy_once",
+            "allow_in_bindings": 1
         },
         {
             "key": "field_694ea858a114a",
@@ -235,12 +255,14 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
+            "translations": "copy_once",
             "min": "",
             "max": "",
+            "allow_in_bindings": 1,
+            "placeholder": "",
             "step": "",
+            "prepend": "",
+            "append": "",
             "pll_default_value": ""
         },
         {
@@ -258,12 +280,14 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
+            "translations": "copy_once",
             "min": "",
             "max": "",
+            "allow_in_bindings": 1,
+            "placeholder": "",
             "step": "",
+            "prepend": "",
+            "append": "",
             "pll_default_value": ""
         },
         {
@@ -290,10 +314,12 @@
                 "fractional": "Fractional Ownership"
             },
             "default_value": "freehold",
-            "allow_null": 0,
-            "multiple": 0,
-            "ui": 0,
             "return_format": "value",
+            "multiple": 0,
+            "translations": "copy_once",
+            "allow_null": 0,
+            "allow_in_bindings": 1,
+            "ui": 0,
             "ajax": 0,
             "placeholder": "",
             "create_options": 0,
@@ -315,9 +341,11 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "",
+            "translations": "copy_once",
             "maxlength": "",
+            "allow_in_bindings": 1,
             "rows": "",
+            "placeholder": "",
             "new_lines": "",
             "pll_default_value": ""
         },
@@ -337,7 +365,7 @@
             },
             "return_format": "array",
             "library": "all",
-            "translations": "sync",
+            "translations": "copy_once",
             "min": "",
             "max": "",
             "min_width": "",
@@ -367,10 +395,14 @@
             "post_type": [
                 "developers"
             ],
+            "post_status": "",
             "taxonomy": "",
-            "allow_null": 0,
-            "multiple": 0,
             "return_format": "object",
+            "multiple": 0,
+            "translations": "copy_once",
+            "allow_null": 0,
+            "allow_in_bindings": 1,
+            "bidirectional": 0,
             "ui": 1,
             "bidirectional_target": []
         },
@@ -390,6 +422,8 @@
             },
             "message": "",
             "default_value": 0,
+            "translations": "copy_once",
+            "allow_in_bindings": 1,
             "ui": 0,
             "ui_on_text": "",
             "ui_off_text": "",
@@ -411,6 +445,8 @@
             },
             "message": "",
             "default_value": 0,
+            "translations": "copy_once",
+            "allow_in_bindings": 1,
             "ui": 0,
             "ui_on_text": "",
             "ui_off_text": "",
@@ -431,10 +467,12 @@
                 "id": ""
             },
             "default_value": "",
+            "translations": "copy_once",
+            "maxlength": "",
+            "allow_in_bindings": 1,
             "placeholder": "",
             "prepend": "",
             "append": "",
-            "maxlength": "",
             "pll_default_value": ""
         },
         {
@@ -1012,10 +1050,12 @@
                 "id": ""
             },
             "default_value": "",
+            "translations": "copy_once",
+            "maxlength": "",
+            "allow_in_bindings": 1,
             "placeholder": "",
             "prepend": "",
             "append": "",
-            "maxlength": "",
             "pll_default_value": ""
         },
         {
@@ -1033,6 +1073,7 @@
                 "id": ""
             },
             "default_value": "",
+            "translations": "copy_once",
             "min": "",
             "max": "",
             "allow_in_bindings": 0,
@@ -1057,6 +1098,7 @@
                 "id": ""
             },
             "default_value": "",
+            "translations": "copy_once",
             "min": "",
             "max": "",
             "allow_in_bindings": 0,
@@ -1073,7 +1115,7 @@
             "aria-label": "",
             "type": "number",
             "instructions": "",
-            "required": false,
+            "required": 0,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -1081,10 +1123,12 @@
                 "id": ""
             },
             "default_value": "",
+            "translations": "copy_once",
             "min": "",
             "max": "",
-            "step": "",
+            "allow_in_bindings": 1,
             "placeholder": "",
+            "step": "",
             "prepend": "",
             "append": "",
             "pll_default_value": ""
@@ -1112,5 +1156,5 @@
     "allow_ai_access": false,
     "ai_description": "",
     "pll_display_field_instructions": 1,
-    "modified": 1786972502
+    "modified": 1786992269
 }

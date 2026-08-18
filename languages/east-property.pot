@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-07T06:41:13+00:00\n"
+"POT-Creation-Date: 2026-08-18T08:31:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: east-property\n"
 
 #. Theme Name of the theme
@@ -75,151 +75,131 @@ msgstr ""
 msgid "Offices"
 msgstr ""
 
-#: core/components/account/functions.php:524
-msgid "Unit title is required."
-msgstr ""
-
-#: core/components/account/functions.php:528
-msgid "Please select a valid property."
-msgstr ""
-
-#: core/components/account/functions.php:532
-msgid "Price must be greater than zero."
-msgstr ""
-
-#: core/components/account/functions.php:536
-msgid "Area size must be greater than zero."
-msgstr ""
-
-#: core/components/account/functions.php:540
-msgid "Selected unit type is invalid."
-msgstr ""
-
-#: core/components/account/functions.php:551
-#: core/components/account/functions.php:696
+#: core/components/account/functions.php:616
+#: core/components/account/functions.php:745
 msgid "Unit not found."
 msgstr ""
 
-#: core/components/account/functions.php:631
+#: core/components/account/functions.php:678
 msgid "Please sign in to add a property."
 msgstr ""
 
-#: core/components/account/functions.php:635
+#: core/components/account/functions.php:683
 msgid "Your account does not have permission to add property."
 msgstr ""
 
-#: core/components/account/functions.php:640
+#: core/components/account/functions.php:689
 msgid "Security check failed. Please try again."
 msgstr ""
 
-#: core/components/account/functions.php:661
+#: core/components/account/functions.php:710
 msgid "Property title is required."
 msgstr ""
 
-#: core/components/account/functions.php:665
+#: core/components/account/functions.php:714
 msgid "Property description is required."
 msgstr ""
 
-#: core/components/account/functions.php:669
+#: core/components/account/functions.php:718
 msgid "Latitude is required."
 msgstr ""
 
-#: core/components/account/functions.php:673
+#: core/components/account/functions.php:722
 msgid "Longitude is required."
 msgstr ""
 
-#: core/components/account/functions.php:677
+#: core/components/account/functions.php:726
 msgid "Please select a valid location."
 msgstr ""
 
-#: core/components/account/functions.php:681
+#: core/components/account/functions.php:730
 msgid "Please select a valid ownership type."
 msgstr ""
 
-#: core/components/account/functions.php:685
+#: core/components/account/functions.php:734
 msgid "Please select a valid property type."
 msgstr ""
 
-#: core/components/account/functions.php:839
-#: core/components/account/functions.php:1090
-#: core/components/account/functions.php:1182
+#: core/components/account/functions.php:892
+#: core/components/account/functions.php:1152
+#: core/components/account/functions.php:1244
 msgid "Property ID is required."
 msgstr ""
 
-#: core/components/account/functions.php:844
-#: core/components/account/functions.php:1095
+#: core/components/account/functions.php:897
+#: core/components/account/functions.php:1157
 msgid "Property not found."
 msgstr ""
 
-#: core/components/account/functions.php:857
-#: core/template-parts/account/edit-unit.php:358
+#: core/components/account/functions.php:910
+#: core/template-parts/account/edit-unit.php:426
 msgid "Property image"
 msgstr ""
 
-#: core/components/account/functions.php:1104
+#: core/components/account/functions.php:1166
 msgid "Not enough boost points for boost plan."
 msgstr ""
 
-#: core/components/account/functions.php:1107
+#: core/components/account/functions.php:1169
 msgid "Property boosted successfully."
 msgstr ""
 
-#: core/components/account/functions.php:1124
+#: core/components/account/functions.php:1186
 msgid "Broker not found."
 msgstr ""
 
-#: core/components/account/functions.php:1168
+#: core/components/account/functions.php:1230
 #: core/includes/registers/user-roles/client.php:7
 msgid "Client"
 msgstr ""
 
-#: core/components/account/functions.php:1169
+#: core/components/account/functions.php:1231
 #: core/includes/registers/user-roles/broker.php:18
 msgid "Broker"
 msgstr ""
 
-#: core/components/account/functions.php:1187
+#: core/components/account/functions.php:1249
 msgid "YOu are not authenticated."
 msgstr ""
 
-#: core/components/account/functions.php:1231
+#: core/components/account/functions.php:1293
 msgid "Hello "
 msgstr ""
 
-#: core/components/account/functions.php:1233
+#: core/components/account/functions.php:1295
 msgid "Thank you for registering with"
 msgstr ""
 
-#: core/components/account/functions.php:1235
+#: core/components/account/functions.php:1297
 msgid "To complete your registration and activate your account, please verify your email address by clicking the link below:"
 msgstr ""
 
-#: core/components/account/functions.php:1237
+#: core/components/account/functions.php:1300
 msgid "Verify email address"
 msgstr ""
 
-#: core/components/account/functions.php:1239
+#: core/components/account/functions.php:1302
 #: core/components/modals/functions.php:37
 msgid "or copy and paste the following link into your browser:"
 msgstr ""
 
-#: core/components/account/functions.php:1251
+#: core/components/account/functions.php:1314
 msgid "Verify your email address"
 msgstr ""
 
-#: core/components/account/functions.php:1265
+#: core/components/account/functions.php:1330
 msgid "Sign in to save this property to your favorites."
 msgstr ""
 
-#: core/components/account/functions.php:1281
+#: core/components/account/functions.php:1351
 msgid "You must be logged in."
 msgstr ""
 
-#: core/components/account/functions.php:1286
+#: core/components/account/functions.php:1356
 msgid "Verification email resent. Check your email."
 msgstr ""
 
-#: core/components/account/functions.php:1424
+#: core/components/account/functions.php:1496
 msgid "This property is not a distress deal. Below Market Score : "
 msgstr ""
 
@@ -261,7 +241,7 @@ msgstr ""
 
 #: core/components/common/nav.php:43
 #: core/template-parts/account/profile-client.php:42
-#: core/template-parts/account/profile.php:66
+#: core/template-parts/account/profile.php:67
 msgid "Logout"
 msgstr ""
 
@@ -447,7 +427,7 @@ msgid "Available immediately"
 msgstr ""
 
 #: core/components/filters/functions.php:198
-#: core/template-parts/account/edit-unit.php:184
+#: core/template-parts/account/edit-unit.php:238
 #: core/template-parts/filters/search-tabs.php:59
 msgid "Bedrooms"
 msgstr ""
@@ -465,7 +445,7 @@ msgstr ""
 #: core/components/filters/functions.php:233
 #: core/components/units/units-by-beds.php:74
 #: core/includes/entities/class-entity-property.php:87
-#: core/includes/entities/class-entity-unit.php:179
+#: core/includes/entities/class-entity-unit.php:210
 #: core/template-parts/cards/map-sidebar.php:77
 #: core/template-parts/cards/map-sidebar.php:78
 #: core/template-parts/cards/unit-card.php:30
@@ -474,9 +454,16 @@ msgstr ""
 msgid "Beds"
 msgstr ""
 
+#: core/components/filters/functions.php:237
+#: core/includes/entities/class-entity-unit.php:208
+#: core/template-parts/cards/unit-card.php:31
+#: core/template-parts/cards/unit-square-card.php:28
+msgid "Studio"
+msgstr ""
+
 #: core/components/filters/functions.php:286
 #: core/includes/entities/class-entity-property.php:99
-#: core/includes/entities/class-entity-unit.php:190
+#: core/includes/entities/class-entity-unit.php:221
 #: template-parts/sections/single/dropdowns.php:68
 msgid "Baths"
 msgstr ""
@@ -503,7 +490,6 @@ msgstr ""
 
 #: core/components/filters/functions.php:694
 #: core/components/filters/functions.php:790
-#, php-format
 msgid "%s property found"
 msgid_plural "%s properties found"
 msgstr[0] ""
@@ -569,11 +555,12 @@ msgstr ""
 #: core/template-parts/account/edit-property.php:89
 #: core/template-parts/account/edit-property.php:146
 #: core/template-parts/account/edit-property.php:162
-#: core/template-parts/account/edit-unit.php:155
-#: core/template-parts/account/edit-unit.php:171
+#: core/template-parts/account/edit-unit.php:205
+#: core/template-parts/account/edit-unit.php:223
 #: core/template-parts/account/login-form.php:193
 #: core/template-parts/filters/result-filters.php:163
 #: core/template-parts/ui/dropdown.php:12
+#: east-property/dev/src/js/filters.js:24
 msgid "Select"
 msgstr ""
 
@@ -671,8 +658,8 @@ msgstr ""
 
 #: core/components/modals/create-modal.php:114
 #: core/template-parts/account/login-form.php:171
-#: core/template-parts/account/profile-client.php:135
-#: core/template-parts/account/profile.php:361
+#: core/template-parts/account/profile-client.php:136
+#: core/template-parts/account/profile.php:369
 #: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:85
 msgid "Phone number"
 msgstr ""
@@ -680,19 +667,19 @@ msgstr ""
 #: core/components/modals/create-modal.php:121
 #: core/includes/registers/post-types/agencies.php:10
 #: core/includes/registers/post-types/agencies.php:36
-#: core/template-parts/account/profile.php:322
+#: core/template-parts/account/profile.php:327
 msgid "Agency"
 msgstr ""
 
 #: core/components/modals/create-modal.php:124
 #: core/template-parts/account/login-form.php:184
-#: core/template-parts/account/profile.php:325
+#: core/template-parts/account/profile.php:330
 msgid "If you can’t find your agency in the list, please contact us at "
 msgstr ""
 
 #: core/components/modals/create-modal.php:126
 #: core/template-parts/account/login-form.php:186
-#: core/template-parts/account/profile.php:327
+#: core/template-parts/account/profile.php:333
 msgid "Your request will be reviewed within 24 hours."
 msgstr ""
 
@@ -905,8 +892,8 @@ msgstr ""
 
 #: core/components/units/units-by-beds.php:20
 #: core/includes/entities/class-entity-property.php:220
-#: core/includes/entities/class-entity-unit.php:149
-#: core/includes/entities/class-entity-unit.php:164
+#: core/includes/entities/class-entity-unit.php:180
+#: core/includes/entities/class-entity-unit.php:195
 #: template-parts/sections/single/dropdowns.php:20
 msgid "AED"
 msgstr ""
@@ -920,7 +907,7 @@ msgstr ""
 #: core/components/units/units-by-beds.php:41
 #: core/components/units/units-by-beds.php:78
 #: core/includes/entities/class-entity-property.php:111
-#: core/includes/entities/class-entity-unit.php:198
+#: core/includes/entities/class-entity-unit.php:232
 #: core/template-parts/cards/map-sidebar.php:86
 #: template-parts/sections/single/dropdowns.php:40
 #: template-parts/sections/single/dropdowns.php:75
@@ -929,7 +916,6 @@ msgstr ""
 
 #: core/components/units/units-by-beds.php:54
 #: core/components/units/units-by-beds.php:57
-#, php-format
 msgid "Floor plan for %s bed unit"
 msgstr ""
 
@@ -953,12 +939,12 @@ msgstr ""
 
 #: core/includes/entities/class-entity-property.php:460
 #: core/includes/entities/class-entity-property.php:526
-#: core/includes/entities/class-entity-unit.php:275
+#: core/includes/entities/class-entity-unit.php:309
 msgid "Ready"
 msgstr ""
 
 #: core/includes/entities/class-entity-property.php:465
-#: core/includes/entities/class-entity-unit.php:280
+#: core/includes/entities/class-entity-unit.php:314
 msgid "Handover:"
 msgstr ""
 
@@ -983,58 +969,52 @@ msgstr ""
 msgid "Ownership Type"
 msgstr ""
 
-#: core/includes/entities/class-entity-unit.php:177
-#: core/template-parts/cards/unit-card.php:31
-#: core/template-parts/cards/unit-square-card.php:28
-msgid "Studio"
-msgstr ""
-
-#: core/includes/entities/class-entity-unit.php:190
+#: core/includes/entities/class-entity-unit.php:221
 msgid "1 Bath"
 msgstr ""
 
-#: core/includes/entities/class-entity-unit.php:289
+#: core/includes/entities/class-entity-unit.php:323
 msgid "Popular"
 msgstr ""
 
-#: core/includes/entities/class-entity-unit.php:297
+#: core/includes/entities/class-entity-unit.php:331
 msgid "Premium Developer"
 msgstr ""
 
-#: core/includes/entities/class-entity-unit.php:304
-#: core/template-parts/account/profile.php:118
+#: core/includes/entities/class-entity-unit.php:338
+#: core/template-parts/account/profile.php:122
 msgid "Promoted"
 msgstr ""
 
-#: core/includes/entities/class-entity-unit.php:313
+#: core/includes/entities/class-entity-unit.php:347
 msgid "Waiting for approval"
 msgstr ""
 
-#: core/includes/entities/class-entity-unit.php:320
+#: core/includes/entities/class-entity-unit.php:354
 msgid "Contains an error"
 msgstr ""
 
-#: core/includes/entities/class-entity-unit.php:464
+#: core/includes/entities/class-entity-unit.php:498
 msgid "Gallery should not be empty"
 msgstr ""
 
-#: core/includes/entities/class-entity-unit.php:469
+#: core/includes/entities/class-entity-unit.php:503
 msgid "Area should not be empty and must bigger than 200 sqft"
 msgstr ""
 
-#: core/includes/entities/class-entity-unit.php:474
+#: core/includes/entities/class-entity-unit.php:511
 msgid "Price should not be empty and must bigger than 200 000 AED"
 msgstr ""
 
-#: core/includes/entities/class-entity-unit.php:479
+#: core/includes/entities/class-entity-unit.php:519
 msgid "Title should not be empty and must bigger than 20 characters"
 msgstr ""
 
-#: core/includes/entities/class-entity-unit.php:486
+#: core/includes/entities/class-entity-unit.php:529
 msgid "Your unit has been submitted and is waiting for approval. Please fix the following issues:"
 msgstr ""
 
-#: core/includes/entities/class-entity-unit.php:496
+#: core/includes/entities/class-entity-unit.php:542
 msgid "Need to fix errors in your submitted property"
 msgstr ""
 
@@ -1514,12 +1494,12 @@ msgid "Add property project"
 msgstr ""
 
 #: core/template-parts/account/edit-property.php:48
-#: core/template-parts/account/edit-unit.php:56
+#: core/template-parts/account/edit-unit.php:60
 msgid "My account"
 msgstr ""
 
 #: core/template-parts/account/edit-property.php:69
-#: core/template-parts/account/edit-unit.php:84
+#: core/template-parts/account/edit-unit.php:120
 msgid "Title"
 msgstr ""
 
@@ -1552,7 +1532,7 @@ msgid "Contain Property Types "
 msgstr ""
 
 #: core/template-parts/account/edit-property.php:238
-#: core/template-parts/account/edit-unit.php:226
+#: core/template-parts/account/edit-unit.php:286
 #: core/template-parts/properties/property-single.php:210
 msgid "Description"
 msgstr ""
@@ -1564,110 +1544,110 @@ msgid "Save"
 msgstr ""
 
 #: core/template-parts/account/edit-property.php:310
-#: core/template-parts/account/edit-unit.php:314
+#: core/template-parts/account/edit-unit.php:381
 msgid "Pictures"
 msgstr ""
 
 #: core/template-parts/account/edit-property.php:312
-#: core/template-parts/account/edit-unit.php:316
+#: core/template-parts/account/edit-unit.php:383
 msgid "Browse files"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:18
+#: core/template-parts/account/edit-unit.php:20
 msgid "Edit property:"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:18
+#: core/template-parts/account/edit-unit.php:20
 msgid "Add new property"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:19
+#: core/template-parts/account/edit-unit.php:22
 #: core/template-parts/cards/large-card.php:118
 #: core/template-parts/cards/unit-card.php:133
 msgid "Edit property"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:19
+#: core/template-parts/account/edit-unit.php:22
 msgid "Add property"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:87
+#: core/template-parts/account/edit-unit.php:124
 msgid "City Walk 4BR Apartment on 2 floor"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:98
+#: core/template-parts/account/edit-unit.php:136
 msgid "Listing Type"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:100
-#: core/template-parts/account/edit-unit.php:103
+#: core/template-parts/account/edit-unit.php:138
+#: core/template-parts/account/edit-unit.php:142
 msgid "Off-plan"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:100
-#: core/template-parts/account/edit-unit.php:104
+#: core/template-parts/account/edit-unit.php:139
+#: core/template-parts/account/edit-unit.php:143
 msgid "Secondary"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:117
+#: core/template-parts/account/edit-unit.php:157
 msgid "Price, AED"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:127
+#: core/template-parts/account/edit-unit.php:171
 msgid "Area (sqft)"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:135
+#: core/template-parts/account/edit-unit.php:184
 msgid "Price per square foot:"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:152
+#: core/template-parts/account/edit-unit.php:202
 msgid "Project"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:153
-#: core/template-parts/account/profile.php:181
+#: core/template-parts/account/edit-unit.php:203
+#: core/template-parts/account/profile.php:185
 msgid "+ Add new project"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:170
+#: core/template-parts/account/edit-unit.php:222
 #: core/template-parts/filters/result-filters.php:235
 msgid "Property type"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:204
+#: core/template-parts/account/edit-unit.php:261
 msgid "Bathrooms"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:254
+#: core/template-parts/account/edit-unit.php:315
 msgid "Delete Property"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:257
+#: core/template-parts/account/edit-unit.php:318
 msgid "Are you sure to delete this property?"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:259
+#: core/template-parts/account/edit-unit.php:321
 msgid "No"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:262
+#: core/template-parts/account/edit-unit.php:325
 msgid "Yes, Delete"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:268
+#: core/template-parts/account/edit-unit.php:331
 msgid "New units are saved as drafts for moderation"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:276
+#: core/template-parts/account/edit-unit.php:339
 msgid "Submit Unit"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:332
+#: core/template-parts/account/edit-unit.php:399
 msgid "Select property pictures to include in unit page"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:335
+#: core/template-parts/account/edit-unit.php:403
 msgid "Select all"
 msgstr ""
 
@@ -1700,8 +1680,8 @@ msgid "Create a new account"
 msgstr ""
 
 #: core/template-parts/account/login-form.php:111
-#: core/template-parts/account/profile-client.php:126
-#: core/template-parts/account/profile.php:312
+#: core/template-parts/account/profile-client.php:127
+#: core/template-parts/account/profile.php:317
 msgid "Email address"
 msgstr ""
 
@@ -1715,8 +1695,8 @@ msgstr ""
 
 #: core/template-parts/account/profile-client.php:33
 #: core/template-parts/account/profile-client.php:52
-#: core/template-parts/account/profile.php:57
-#: core/template-parts/account/profile.php:238
+#: core/template-parts/account/profile.php:58
+#: core/template-parts/account/profile.php:242
 msgid "Saved properties"
 msgstr ""
 
@@ -1724,34 +1704,34 @@ msgstr ""
 msgid "My Account"
 msgstr ""
 
-#: core/template-parts/account/profile-client.php:92
-#: core/template-parts/account/profile.php:278
+#: core/template-parts/account/profile-client.php:93
+#: core/template-parts/account/profile.php:283
 msgid "You have not added any favorite units."
 msgstr ""
 
-#: core/template-parts/account/profile-client.php:102
-#: core/template-parts/account/profile.php:63
-#: core/template-parts/account/profile.php:288
+#: core/template-parts/account/profile-client.php:103
+#: core/template-parts/account/profile.php:64
+#: core/template-parts/account/profile.php:293
 msgid "Account details"
 msgstr ""
 
-#: core/template-parts/account/profile-client.php:117
-#: core/template-parts/account/profile.php:303
+#: core/template-parts/account/profile-client.php:118
+#: core/template-parts/account/profile.php:308
 msgid "Display name"
 msgstr ""
 
-#: core/template-parts/account/profile-client.php:144
-#: core/template-parts/account/profile.php:370
+#: core/template-parts/account/profile-client.php:145
+#: core/template-parts/account/profile.php:378
 msgid "WhatsApp number"
 msgstr ""
 
-#: core/template-parts/account/profile-client.php:153
-#: core/template-parts/account/profile.php:379
+#: core/template-parts/account/profile-client.php:154
+#: core/template-parts/account/profile.php:387
 msgid "Save changes"
 msgstr ""
 
-#: core/template-parts/account/profile-client.php:161
-#: core/template-parts/account/profile.php:387
+#: core/template-parts/account/profile-client.php:162
+#: core/template-parts/account/profile.php:395
 msgid "Avatar"
 msgstr ""
 
@@ -1763,61 +1743,58 @@ msgstr ""
 msgid "+ Add new property"
 msgstr ""
 
-#: core/template-parts/account/profile.php:33
+#: core/template-parts/account/profile.php:34
 msgid "My distress"
 msgstr ""
 
-#: core/template-parts/account/profile.php:33
+#: core/template-parts/account/profile.php:34
 msgid "My properties"
 msgstr ""
 
-#: core/template-parts/account/profile.php:50
+#: core/template-parts/account/profile.php:51
 msgid "My projects"
 msgstr ""
 
-#: core/template-parts/account/profile.php:79
-#, php-format
+#: core/template-parts/account/profile.php:80
 msgid "My distress (%d)"
 msgstr ""
 
-#: core/template-parts/account/profile.php:79
-#, php-format
+#: core/template-parts/account/profile.php:80
 msgid "My properties (%d)"
 msgstr ""
 
-#: core/template-parts/account/profile.php:104
+#: core/template-parts/account/profile.php:106
 msgid "Gold Star"
 msgstr ""
 
-#: core/template-parts/account/profile.php:107
+#: core/template-parts/account/profile.php:109
 msgid "Boost your property to get it sold faster"
 msgstr ""
 
-#: core/template-parts/account/profile.php:108
+#: core/template-parts/account/profile.php:111
 msgid "Get More Eyes, Get More Offers. Fast-Track Your Sale. Priority Listing: Sell 2x Faster."
 msgstr ""
 
-#: core/template-parts/account/profile.php:110
+#: core/template-parts/account/profile.php:114
 msgid "How it works"
 msgstr ""
 
-#: core/template-parts/account/profile.php:117
+#: core/template-parts/account/profile.php:121
 #: core/template-parts/cards/unit-card.php:86
 #: core/template-parts/cards/unit-card.php:143
 msgid "Star"
 msgstr ""
 
-#: core/template-parts/account/profile.php:154
-#: core/template-parts/account/profile.php:227
+#: core/template-parts/account/profile.php:158
+#: core/template-parts/account/profile.php:231
 msgid "You have not added any units yet."
 msgstr ""
 
-#: core/template-parts/account/profile.php:168
-#, php-format
+#: core/template-parts/account/profile.php:172
 msgid "My projects (%d)"
 msgstr ""
 
-#: core/template-parts/account/profile.php:334
+#: core/template-parts/account/profile.php:341
 msgid "select"
 msgstr ""
 
@@ -1991,7 +1968,7 @@ msgstr ""
 #: core/template-parts/filters/result-filters.php:258
 #: core/template-parts/filters/search-tabs.php:121
 #: core/template-parts/filters/search-tabs.php:142
-#: core/template-parts/ui/dropdown.php:49
+#: core/template-parts/ui/dropdown.php:50
 msgid "Search..."
 msgstr ""
 
@@ -2159,7 +2136,7 @@ msgstr ""
 msgid "Browse a wide selection of apartments in Dubai. From smart studios to spacious family residences and premium off-plan units in top locations. Compare prices, layouts, and communities in one place and find the apartment that fits your lifestyle, goals, and budget."
 msgstr ""
 
-#: core/template-parts/ui/dropdown.php:40
+#: core/template-parts/ui/dropdown.php:41
 msgid "Arrow down"
 msgstr ""
 
@@ -2187,8 +2164,8 @@ msgstr ""
 msgid "Footer | Quick Links"
 msgstr ""
 
-#: functions.php:84
-#: functions.php:85
+#: functions.php:90
+#: functions.php:91
 msgid "Настройки"
 msgstr ""
 
@@ -2297,4 +2274,20 @@ msgstr ""
 
 #: template-parts/sections/index/properties.php:11
 msgid "See all new properties"
+msgstr ""
+
+#: east-property/dev/src/js/filters.js:16
+msgid "beds"
+msgstr ""
+
+#: east-property/dev/src/js/filters.js:16
+msgid "bed"
+msgstr ""
+
+#: east-property/dev/src/js/filters.js:21
+msgid "baths"
+msgstr ""
+
+#: east-property/dev/src/js/filters.js:21
+msgid "bath"
 msgstr ""

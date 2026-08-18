@@ -59,7 +59,7 @@ function add_theme_styles(): void {
 	wp_register_script(
 		THEME_NAME . '-app',
 		THEME_URL . '/assets/js/main.min.js',
-		null,
+		array( 'wp-i18n' ),
 		filemtime( THEME_PATH . '/assets/js/main.min.js' ),
 		true
 	);
@@ -72,6 +72,12 @@ function add_theme_styles(): void {
 			'ajax_url'    => admin_url( 'admin-ajax.php' ),
 			'_ajax_nonce' => wp_create_nonce( 'get_filtered_properties' ),
 		)
+	);
+
+	wp_set_script_translations(
+		THEME_NAME . '-app',
+		'east-property',
+		get_template_directory() . '/languages'
 	);
 }
 

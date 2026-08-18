@@ -8605,6 +8605,11 @@ main ul:not([class]), .content ul:not([class]) {
 .language-switcher .current-lang {
   display: none;
 }
+.language-switcher a {
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
+}
 .language-switcher a span {
   color: #111;
   font-size: 14px;
