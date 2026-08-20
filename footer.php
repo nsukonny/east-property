@@ -6,7 +6,7 @@ get_template_part(
 	array(
 		'modals' => array(
 			'image-modal',
-			'desc-modal',
+			//'desc-modal',
 			'quote-modal',
 			'create-modal',
 			'signin-modal',

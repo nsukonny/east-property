@@ -168,9 +168,7 @@ while ( have_posts() ) {
 					<div class="single-info-block">
 						<h3><?php echo esc_html( $unit->get_title() ); ?></h3>
 						<div class="texts">
-							<p>
-								<?php echo $desc; ?>
-							</p>
+							<p><?php echo apply_filters( 'the_content', $desc ); ?></p>
 						</div>
 					</div>
 

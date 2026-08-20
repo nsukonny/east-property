@@ -1087,6 +1087,7 @@ strong {
 }
 .texts p {
   color: #111;
+  margin: 12px 0;
   font-family: "Inter", sans-serif;
   font-weight: 400;
   font-size: 13px;
