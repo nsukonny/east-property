@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: East Property 1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/east-property\n"
 "POT-Creation-Date: 2026-08-18T08:31:05+00:00\n"
-"PO-Revision-Date: 2026-08-19 21:23+0300\n"
+"PO-Revision-Date: 2026-08-20 08:45+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -438,13 +438,13 @@ msgstr "Площадь"
 #: core/components/filters/functions.php:195
 #: template-parts/sections/index/hero.php:32
 msgid "Available immediately"
-msgstr "Завершенных проектов"
+msgstr "Готовые проекты"
 
 #: core/components/filters/functions.php:198
 #: core/template-parts/account/edit-unit.php:238
 #: core/template-parts/filters/search-tabs.php:59
 msgid "Bedrooms"
-msgstr "Спальни"
+msgstr "Количество спален"
 
 #: core/components/filters/functions.php:202
 #: core/template-parts/filters/search-tabs.php:123
@@ -454,7 +454,7 @@ msgstr "Район"
 #: core/components/filters/functions.php:209
 #: template-parts/sections/index/hero.php:40
 msgid "In construction"
-msgstr "Строятся"
+msgstr "На этапе строительства"
 
 #: core/components/filters/functions.php:233
 #: core/components/units/units-by-beds.php:74
