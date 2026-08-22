@@ -96,7 +96,8 @@
             },
             "choices": {
                 "off-plan": "Off Plan",
-                "secondary": "Secondary"
+                "secondary": "Secondary",
+                "distress": "Distress"
             },
             "default_value": "off-plan",
             "return_format": "value",
@@ -316,7 +317,7 @@
             "max": "",
             "allow_in_bindings": 1,
             "placeholder": "",
-            "step": "",
+            "step": "0.01",
             "prepend": "",
             "append": "",
             "pll_default_value": ""

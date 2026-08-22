@@ -61,6 +61,14 @@ while ( have_posts() ) {
 						<div class="h2"><?php echo esc_attr( __( 'Apartment by',
 									'east-property' ) . ' ' . $property->get_title() ); ?></div>
 						<h1><?php echo esc_html( $unit->get_price_html() ); ?></h1>
+						<?php if ( $unit->has_discount() ) { ?>
+							<div class="discount">
+								<?php esc_html_e( 'Discount:', 'east-property' ); ?>
+								<span><?php echo esc_html( $unit->get_discount() ); ?>%</span>
+								<?php esc_html_e( 'of original price', 'east-property' ); ?>
+								<span><?php echo esc_html( $unit->get_original_price_html() ); ?></span>
+							</div>
+						<?php } ?>
 						<div class="single-items-top-buttons">
 							<a class="button gray sm"
 							   href="<?php echo esc_url( $whatsapp_share_text ); ?>"
@@ -307,7 +315,7 @@ while ( have_posts() ) {
 					<?php
 					$featured_units = $property->get_random_units( 3 );
 					if ( ! empty( $featured_units ) ) {
-						$all_units_link = core_home_url( '/units' );
+						$all_units_link = core_home_url( '/off-plan' );
 						get_component_template(
 							'units/featured',
 							array(
