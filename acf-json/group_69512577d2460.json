@@ -20,7 +20,8 @@
             "placeholder": "",
             "prepend": "",
             "append": "",
-            "maxlength": ""
+            "maxlength": "",
+            "pll_default_value": ""
         },
         {
             "key": "field_697a322323f6a",
@@ -40,7 +41,8 @@
             "placeholder": "",
             "prepend": "",
             "append": "",
-            "maxlength": ""
+            "maxlength": "",
+            "pll_default_value": ""
         },
         {
             "key": "field_698063d6d328f",
@@ -111,7 +113,8 @@
             "append": "",
             "min": "",
             "max": "",
-            "step": ""
+            "step": "",
+            "pll_default_value": 0
         }
     ],
     "location": [
@@ -131,9 +134,10 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "show_in_rest": false,
+    "show_in_rest": 0,
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1780672428
+    "pll_display_field_instructions": 1,
+    "modified": 1787578277
 }
