@@ -406,6 +406,7 @@ msgstr "Все годы"
 #: core/template-parts/properties/property-single.php:219
 #: core/template-parts/properties/property-units-list.php:28 single-unit.php:267
 #: single-unit.php:365
+#: east-property/dev/src/js/map/map.js
 msgid "Location"
 msgstr "Локация"
 
@@ -435,11 +436,13 @@ msgstr "Тип объекта"
 #: core/template-parts/account/edit-property.php:88
 #: core/template-parts/filters/result-filters.php:262
 #: core/template-parts/filters/search-tabs.php:144
+#: east-property/dev/src/js/map/html.js
 msgid "Developer"
 msgstr "Застройщик"
 
 #: core/components/filters/functions.php:178
 #: core/template-parts/cards/map-sidebar.php:85
+#: east-property/dev/src/js/map/html.js
 msgid "Area"
 msgstr "Площадь"
 
@@ -473,6 +476,7 @@ msgstr "На этапе строительства"
 #: core/template-parts/cards/unit-card.php:32
 #: core/template-parts/cards/unit-square-card.php:31
 #: core/template-parts/filters/result-filters.php:158
+#: east-property/dev/src/js/map/html.js
 msgid "Beds"
 msgstr "Спальни"
 
@@ -988,6 +992,7 @@ msgstr "Спальня"
 #: core/template-parts/cards/map-sidebar.php:86
 #: template-parts/sections/single/dropdowns.php:40
 #: template-parts/sections/single/dropdowns.php:75
+#: east-property/dev/src/js/map/html.js
 msgid "sqft"
 msgstr "кв. фут"
 
@@ -1251,6 +1256,7 @@ msgstr "Застройщики"
 
 #: core/includes/registers/post-types/developers.php:9
 msgctxt "Post Type Singular Name"
+#: east-property/dev/src/js/map/html.js
 msgid "Developer"
 msgstr "Застройщик"
 
@@ -1500,6 +1506,7 @@ msgstr "Лоты"
 
 #: core/includes/registers/post-types/units.php:11
 msgctxt "Post Type Singular Name"
+#: east-property/dev/src/js/map/html.js
 msgid "Unit"
 msgstr "Лот"
 
@@ -1509,6 +1516,7 @@ msgstr "Лоты"
 
 #: core/includes/registers/post-types/units.php:13
 #: core/includes/registers/post-types/units.php:36
+#: east-property/dev/src/js/map/html.js
 msgid "Unit"
 msgstr "Лот"
 
@@ -2445,3 +2453,7 @@ msgstr "ванна"
 
 #~ msgid "Русский"
 #~ msgstr "Русский"
+
+#: east-property/dev/src/js/map/map.js
+msgid "Selected location"
+msgstr "Выбранная точка"

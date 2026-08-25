@@ -9027,6 +9027,10 @@ main ul:not([class]), .content ul:not([class]) {
   background-color: #E6E6E6;
   color: #464646;
 }
+.lang-switcher a.has-errors {
+  border: 1px solid #FF3636;
+  color: #FF1200;
+}
 
 .accordion-wrapper {
   width: 100%;
