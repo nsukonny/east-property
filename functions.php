@@ -9,8 +9,22 @@ use Entities\Unit;
 define( 'THEME_PATH', get_template_directory() );
 define( 'THEME_URL', get_template_directory_uri() );
 $is_dev = ( isset( $_SERVER['HTTP_HOST'] ) && str_ends_with( $_SERVER['HTTP_HOST'], '.local' ) );
-$is_dev = isset( $_GET['reset'] ) && '1' === $_GET['reset'] ? true : $is_dev;
-$is_dev = isset( $_GET['w3tc_note'] ) ? true : $is_dev;
+
+/*
+ * IS_DEV turns off every transient the theme keeps - the search tab data, the
+ * filtered property lists, the unit counts per location - so a request made
+ * with it on rebuilds all of them from scratch. On this data set that is over a
+ * minute of PHP for /projects/.
+ *
+ * ?reset=1 and ?w3tc_note therefore have to stay away from production, where
+ * any visitor could append them and make the site recompute everything on every
+ * hit. They keep working wherever WP_ENVIRONMENT_TYPE says the install is not
+ * production - local, development and staging.
+ */
+if ( ! $is_dev && 'production' !== wp_get_environment_type() ) {
+	$is_dev = ( isset( $_GET['reset'] ) && '1' === $_GET['reset'] ) || isset( $_GET['w3tc_note'] );
+}
+
 define( 'IS_DEV', $is_dev );
 define( 'IS_DISTRESS', false );
 define( 'THEME_VERSION', IS_DEV ? time() : '1.0.31' );
