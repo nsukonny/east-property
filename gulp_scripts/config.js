@@ -11,6 +11,8 @@ export const paths = {
         src: 'assets/src/styles.scss',
         watch: [
             'src/scss/**/*.scss',
+            'assets/scss/**/*.scss',
+            'assets/src/**/*.scss',
             'core/**/*.scss',
         ],
         dest: 'assets/css'

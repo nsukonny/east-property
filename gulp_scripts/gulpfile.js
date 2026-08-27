@@ -10,6 +10,15 @@ const browserSync = browserSyncLib.create();
 
 const scriptsPipeline = series(validateJsSyntax, scripts);
 
+function reload(done) {
+    browserSync.reload();
+    done();
+}
+
+function stylesWatch() {
+    return styles().pipe(browserSync.stream());
+}
+
 function serve(cb) {
     browserSync.init({
         proxy: 'http://eastproperty.local',
@@ -18,9 +27,9 @@ function serve(cb) {
         notify: true
     });
 
-    watch(paths.styles.watch, series(styles, () => browserSync.reload()));
-    watch(paths.scripts.watch, series(scriptsPipeline, () => browserSync.reload()));
-    watch(['**/*.php', '!node_modules/**'], () => browserSync.reload());
+    watch(paths.styles.watch, stylesWatch);
+    watch(paths.scripts.watch, series(scriptsPipeline, reload));
+    watch(['**/*.php', '!node_modules/**'], reload);
 
     cb();
 }
