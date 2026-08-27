@@ -1,0 +1,16 @@
+@mixin hover {
+	@media (hover: hover) {
+		&:hover {
+			@content
+		}
+	}
+}
+
+@mixin hide-scroll {
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}

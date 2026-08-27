@@ -6,42 +6,12 @@ import postcss from 'gulp-postcss';
 import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
 import rename from 'gulp-rename';
-import {paths} from './config.js';
-import {isProd} from './config.js';
-import {createErrorHandler} from './config.js';
-import fg from "fast-glob";
-import path from "path";
-import fs from "fs";
+import {paths, isProd, createErrorHandler} from './config.js';
 
-const {src, dest, series} = gulp;
+const {src, dest} = gulp;
 const gulpSass = gulpSassFactory(dartSass);
-const rootDir = paths.projectName + '/dev/src';
-const outputFile = path.join(rootDir, 'scss', 'generated', '_html-modules.scss');
-const outputDir = path.dirname(outputFile);
 
-export async function stylesIndex() {
-    const files = await fg([
-        paths.projectName + '/dev/src/html/components/**/*.scss',
-        paths.projectName + '/dev/src/html/sections/**/*.scss',
-        '../core/components/**/*.scss',
-    ]);
-
-    const forwards = files
-        .filter((file) => !path.basename(file).startsWith('_'))
-        .map((file) => {
-            const relative = path.relative(outputDir, file).replace(/\\/g, '/');
-            const withoutExt = relative.replace(/\.scss$/, '');
-            return `@forward '${withoutExt}';`;
-        })
-        .sort();
-
-    const content = forwards.join('\n') + (forwards.length ? '\n' : '');
-
-    await fs.promises.mkdir(path.dirname(outputFile), {recursive: true});
-    await fs.promises.writeFile(outputFile, content);
-}
-
-function stylesCompile() {
+export function styles() {
     const plugins = [autoprefixer()];
     if (isProd) {
         plugins.push(cssnano());
@@ -51,7 +21,7 @@ function stylesCompile() {
         .pipe(
             gulpSass(
                 {
-                    includePaths: ['node_modules', 'dev/src/scss', 'dev/src/html']
+                    includePaths: ['node_modules', 'src/scss']
                 },
                 undefined
             )
@@ -64,5 +34,3 @@ function stylesCompile() {
         .pipe(postcss(plugins))
         .pipe(dest(paths.styles.dest, {sourcemaps: '.'}));
 }
-
-export const styles = series(stylesIndex, stylesCompile);

@@ -1,0 +1,13 @@
+@use '../../vars/vars' as v;
+
+@mixin t-label {
+	font-family: v.$ff;
+	font-weight: v.$fw-400;
+	font-size: 13px;
+	line-height: 16px;
+
+	@media(min-width: v.$md) {
+		font-size: 15px;
+		line-height: 18px;
+	}
+}

@@ -1,0 +1,112 @@
+@use '../../../vars/vars' as v;
+@use '../../../mixins/typography/titles' as h;
+@use '../../../mixins/typography/labels' as l;
+@use '../../../mixins/typography/text' as t;
+@use '../../../mixins/global' as g;
+
+.building-card {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	overflow: hidden;
+	gap: 24px;
+
+	&-header {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		align-items: flex-start;
+	}
+
+	&-slider {
+		width: 100%;
+		height: 150px;
+		border-radius: v.$br12;
+		overflow: hidden;
+		position: relative;
+
+		@media(min-width: v.$md) {
+			height: 188px;
+		}
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		.swiper-prev, .swiper-next {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			z-index: 1;
+		}
+
+		.swiper-prev {
+			left: 16px;
+		}
+
+		.swiper-next {
+			right: 16px;
+		}
+	}
+
+	&-info {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 16px;
+
+		h3 {
+			color: v.$c-black;
+
+			@include h.t-header;
+		}
+
+		p {
+			color: v.$c-dark-grey;
+
+			@include t.t-text;
+		}
+	}
+
+	&-meta {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+	}
+
+	&-badge {
+		background-color: v.$c-black;
+		color: v.$c-white;
+		padding: 6px 12px;
+		border-radius: v.$br12;
+
+		@include t.t-smallest(true);
+	}
+
+	&-price {
+		color: v.$c-dark-grey;
+
+		@include l.t-label;
+	}
+
+	&-units {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+	}
+
+	&-bottom {
+		width: 100%;
+		 display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 48px;
+	}
+}

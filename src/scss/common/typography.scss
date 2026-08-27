@@ -1,0 +1,43 @@
+@use '../vars/vars' as v;
+@use '../utils/placeholders/titles/titles' as *;
+@use '../mixins/typography/text' as t;
+@use '../mixins/global' as g;
+
+h1, .h1, h2, .h2, h3, .h3,
+h4, .h4, h5, .h5, h6, .h6 {
+	@extend %title
+}
+
+a {
+	display: inline-block;
+	text-decoration: none;
+	transition: opacity ease v.$tr;
+
+	@include g.hover {
+		opacity: v.$op;
+	}
+}
+
+p {
+	margin: 0;
+	padding: 0;
+}
+
+b,
+strong {
+	font-weight: v.$fw-700
+}
+
+.texts {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 16px;
+
+	p {
+		color: v.$c-black;
+		margin: 12px 0;
+
+		@include t.t-text;
+	}
+}

@@ -1,5 +1,4 @@
 import minimist from 'minimist';
-import notify from 'gulp-notify';
 import fs from 'fs';
 
 const argv = minimist(process.argv.slice(2));
@@ -8,13 +7,10 @@ export const isProd = Boolean(argv.prod);
 
 export const paths = {
     root: 'assets',
-    projectName: 'east-property',
     styles: {
         src: 'assets/src/styles.scss',
         watch: [
-            'east-property/dev/src/scss/**/*.scss',
-            '!east-property/dev/src/scss/generated/**/*.scss',
-            'east-property/dev/src/html/**/*.scss',
+            'src/scss/**/*.scss',
             'core/**/*.scss',
         ],
         dest: 'assets/css'
@@ -22,23 +18,18 @@ export const paths = {
     scripts: {
         src: 'assets/src/scripts.js',
         watch: [
-            'east-property/dev/src/js/**/*.js',
-            'east-property/dev/src/html/**/*.js',
+            'src/js/**/*.js',
             'assets/src/**/*.js',
             'core/**/*.js'
         ],
         dest: 'assets/js'
     },
-    static: {
-        src: 'dev/public/**/*',
-        dest: 'assets'
-    },
     images: {
-        src: 'dev/src/img/**/*.{png,jpg,jpeg,svg,gif,webp,ico}',
+        src: 'src/img/**/*.{png,jpg,jpeg,svg,gif,webp,ico}',
         dest: 'assets/img'
     },
     fonts: {
-        src: 'dev/src/fonts/**/*',
+        src: 'src/fonts/**/*',
         dest: 'assets/fonts'
     }
 };
@@ -66,7 +57,11 @@ export function createErrorHandler(taskName) {
         const message = rows.join('\n');
         console.error(`[${taskName}] ${message}`);
 
-        this.emit('end');
+        if (isProd) {
+            process.exit(1);
+        } else {
+            this.emit('end');
+        }
     };
 }
 

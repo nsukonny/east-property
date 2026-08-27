@@ -1,0 +1,56 @@
+@use '../../utils/placeholders/titles/titles' as *;
+@use '../../vars/vars' as v;
+
+@mixin t-headline {
+	@extend %title;
+
+	font-weight: v.$fw-900;
+	font-size: 40px;
+	line-height: 48px;
+	color: v.$c-black;
+
+	@media(min-width: v.$md) {
+		font-size: 50px;
+		line-height: 58px;
+	}
+}
+
+@mixin t-header {
+	@extend %title;
+
+	font-weight: v.$fw-800;
+	font-size: 24px;
+	line-height: 30px;
+	color: v.$c-black;
+
+	@media(min-width: v.$md) {
+		font-size: 30px;
+		line-height: 36px;
+	}
+}
+
+@mixin t-title-bold {
+	@extend %title;
+
+	font-weight: v.$fw-800;
+	font-size: 20px;
+	line-height: 28px;
+
+	@media(min-width: v.$md) {
+		font-size: 24px;
+		line-height: 32px;
+	}
+}
+
+.h2 {
+    @extend %title;
+
+    font-weight: v.$fw-800;
+    font-size: 20px;
+    line-height: 28px;
+
+    @media(min-width: v.$md) {
+      font-size: 24px;
+      line-height: 32px;
+    }
+}

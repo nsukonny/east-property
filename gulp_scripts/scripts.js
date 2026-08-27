@@ -89,7 +89,7 @@ export function scripts() {
                 platform: 'browser',
                 format: 'iife',
                 alias: {
-                    '@': path.resolve(paths.projectName + '/dev/src/js')
+                    '@': path.resolve('src/js')
                 }
             })
         );

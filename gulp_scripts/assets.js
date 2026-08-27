@@ -5,9 +5,9 @@ import {ensureDir} from './config.js';
 const {src, dest, parallel} = gulp;
 
 export function images() {
-    ensureDir(paths.projectName + '/dev/src/img');
+    ensureDir('src/img');
 
-    return src(paths.projectName + '/' + paths.images.src, {
+    return src(paths.images.src, {
         allowEmpty: true,
         encoding: false,
         buffer: true,
@@ -17,9 +17,9 @@ export function images() {
 }
 
 export function fonts() {
-    ensureDir(paths.projectName + '/dev/src/fonts');
+    ensureDir('src/fonts');
 
-    return src(paths.projectName + '/' + paths.fonts.src, {
+    return src(paths.fonts.src, {
         allowEmpty: true,
         encoding: false,
         buffer: true,

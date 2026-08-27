@@ -1,0 +1,33 @@
+@use '../vars/vars' as v;
+@use '../mixins/typography/text' as t;
+
+.woocommerce-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.breadcrumb-link, .delimiter, .breadcrumb-current {
+  @include t.t-text;
+}
+
+.delimiter {
+  color: v.$c-text-grey;
+}
+
+.breadcrumb-link {
+  color: v.$c-text-grey;
+  text-decoration: underline;
+}
+
+.breadcrumb-current {
+  color: v.$c-black;
+}
+
+.single {
+  .woocommerce-breadcrumb {
+    margin-bottom: 32px;
+  }
+}

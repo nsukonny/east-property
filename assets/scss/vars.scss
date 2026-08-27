@@ -1,6 +1,10 @@
-$color-main: #FAAF3F;
-$color-main-light: #FFA41B;
-$color-main-light-hover: #FFA41B;
-$color-secondary: #E6E6E6;
-$color-grey-90: #E6E6E6;
-$color-grey: #464646;
+@use '../../src/scss/vars/colors' as c;
+@forward '../../src/scss/vars/vars';
+
+// Project-specific variable aliases → src vars.
+$color-main: c.$c-yellow;
+$color-main-light: c.$c-orange;
+$color-main-light-hover: c.$c-orange;
+$color-secondary: c.$c-grey-90;
+$color-grey-90: c.$c-grey-90;
+$color-grey: c.$c-grey;

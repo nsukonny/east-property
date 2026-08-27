@@ -1,0 +1,50 @@
+@use '../../../vars/vars' as v;
+@use '../../../mixins/typography/labels' as l;
+@use '../../../mixins/typography/text' as p;
+
+.properties {
+	width: 100%;
+	background-color: v.$c-grey-97;
+	padding: 40px 0;
+
+	@media(min-width: v.$lg) {
+		padding: 64px 0;
+	}
+
+	&.white {
+		background-color: v.$c-white;
+	}
+
+	&.div {
+		padding: 0;
+
+		.top-title {
+			margin-bottom: 10px;
+		}
+	}
+
+	&-cards {
+		display: flex;
+		align-items: stretch;
+		flex-wrap: wrap;
+		gap: 32px;
+
+		@media(min-width: v.$xl) {
+			gap: 44px;
+		}
+
+        .property-card {
+          &:hover {
+            opacity: 0.9;
+          }
+        }
+	}
+
+    &-show-more-btn {
+      margin-top: 10px;
+    }
+}
+
+.single-info .properties-wrapper {
+  width: 100%;
+}

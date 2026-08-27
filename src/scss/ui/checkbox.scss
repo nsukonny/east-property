@@ -1,0 +1,41 @@
+@use '../vars/vars' as v;
+@use '../mixins/typography/text' as t;
+
+form .custom-checkbox {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 12px;
+	cursor: pointer;
+	user-select: none;
+	width: fit-content;
+
+	input {
+		appearance: none;
+		margin: 0;
+		width: 22px;
+		height: 22px;
+		background-color: v.$c-white;
+		border: 1px solid v.$c-black;
+		border-radius: v.$br6;
+		cursor: pointer;
+		flex-shrink: 0;
+		transition: background-color v.$tr ease, border-color v.$tr ease;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: 12px;
+        padding: 0 8px;
+
+		&:checked {
+			background-color: v.$c-orange;
+			border-color: v.$c-orange;
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+		}
+	}
+
+	span {
+		color: v.$c-black;
+
+		@include t.t-text;
+	}
+}

@@ -1,0 +1,38 @@
+@use '../../vars/vars' as v;
+
+@mixin t-text($bold: false) {
+	font-family: v.$ff;
+
+	@if $bold {
+		font-weight: v.$fw-700;
+	} @else {
+		font-weight: v.$fw-400;
+	}
+
+	font-size: 13px;
+	line-height: 16px;
+
+	@media(min-width: v.$md) {
+		font-size: 14px;
+		line-height: 18px;
+	}
+}
+
+@mixin t-smallest($bold: false) {
+	font-family: v.$ff;
+
+	@if $bold {
+		font-weight: v.$fw-700;
+	} @else {
+		font-weight: v.$fw-400;
+	}
+
+	font-size: 10px;
+	line-height: 13px;
+
+	@media(min-width: v.$md) {
+		font-size: 12px;
+		line-height: 15px;
+	}
+}
+

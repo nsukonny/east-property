@@ -1,0 +1,176 @@
+@use '../vars/vars' as v;
+@use '../mixins/typography/text' as p;
+@use '../utils/placeholders/buttons/button' as *;
+@forward '../../../node_modules/swiper/swiper-bundle.min.css';
+
+* {
+	outline: none;
+	box-sizing: border-box;
+}
+
+body,
+html {
+	height: 100%;
+	-webkit-tap-highlight-color: rgb(0 0 0 / 0%);
+	margin: 0
+}
+
+body {
+	position: relative;
+	min-width: 300px;
+	display: flex;
+	height: auto;
+	font-family: v.$ff;
+	font-size: v.$fs-md;
+	line-height: v.$lh;
+	color: v.$c-black;
+	background-color: v.$c-sand-light;
+}
+
+img {
+	max-width: 100%;
+	height: auto
+}
+
+form, fieldset {
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+
+form {
+	width: 100%;
+
+	fieldset {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 10px;
+		margin-bottom: 26px;
+	}
+
+	label {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 4px;
+
+		input,
+		select,
+		textarea {
+			width: 100%;
+			height: 40px;
+			background-color: v.$c-grey-97;
+			border-color: transparent;
+			border-radius: v.$br12;
+			color: v.$c-black;
+			padding: 16px;
+
+			@media(min-width: v.$md) {
+				height: 50px;
+			}
+
+			&:disabled,
+			&[readonly] {
+				color: v.$c-text-grey;
+			}
+		}
+	}
+
+	.submit-group {
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 16px;
+		align-items: center;
+
+		&.start {
+			justify-content: flex-start;
+		}
+
+		&.end {
+			justify-content: flex-end;
+		}
+
+		&.between {
+			justify-content: space-between;
+		}
+
+		.forgot {
+			@extend %button;
+
+			color: v.$c-black;
+			text-decoration: underline;
+
+			@include p.t-text;
+		}
+
+		span {
+			font-size: 13px;
+			line-height: 16px;
+		}
+
+		&-right {
+			display: flex;
+			flex-direction: row;
+			gap: 12px;
+
+		}
+
+		.accept-policy {
+			margin-bottom: 20px;
+
+			span {
+				display: flex;
+				gap: 4px;
+				flex-direction: row;
+				flex-wrap: wrap;
+			}
+		}
+	}
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none
+}
+
+address {
+	font-style: normal
+}
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0
+}
+
+.wrapper {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	min-height: 100vh;
+	overflow: hidden;
+
+	.footer {
+		margin-top: auto
+	}
+}
+
+footer.is-hidden {
+	display: none;
+}
+
+.login-form .between {
+	max-width: 400px;
+}
