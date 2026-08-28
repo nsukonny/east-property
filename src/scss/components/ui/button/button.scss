@@ -47,6 +47,19 @@
 			}
 		}
 
+		&.lg {
+			padding: 10px 16px;
+			font-family: v.$ff;
+			font-size: 15px;
+			line-height: 18px;
+			font-weight: v.$fw-600;
+
+			img, svg {
+				width: 20px;
+				height: 20px;
+			}
+		}
+
 		&.xl {
 			padding: 13px 24px;
 
@@ -83,6 +96,20 @@
 			img {
 				width: 16px;
 				height: 16px;
+			}
+		}
+
+		&.lg {
+			padding: 10px 16px;
+			border: none;
+			font-family: v.$ff;
+			font-size: 15px;
+			line-height: 18px;
+			font-weight: v.$fw-600;
+
+			img, svg {
+				width: 20px;
+				height: 20px;
 			}
 		}
 
@@ -129,6 +156,19 @@
 			img {
 				width: 16px;
 				height: 16px;
+			}
+		}
+
+		&.lg {
+			padding: 10px 16px;
+			font-family: v.$ff;
+			font-size: 15px;
+			line-height: 18px;
+			font-weight: v.$fw-600;
+
+			img, svg {
+				width: 20px;
+				height: 20px;
 			}
 		}
 
@@ -187,6 +227,19 @@
 			}
 		}
 
+		&.lg {
+			padding: 10px 16px;
+			font-family: v.$ff;
+			font-size: 15px;
+			line-height: 18px;
+			font-weight: v.$fw-600;
+
+			img, svg {
+				width: 20px;
+				height: 20px;
+			}
+		}
+
 		&.xl {
 			padding: 13px 24px;
 
@@ -196,6 +249,19 @@
 				width: 24px;
 				height: 24px;
 			}
+		}
+	}
+
+	&.lg {
+		padding: 10px 16px;
+		font-family: v.$ff;
+		font-size: 15px;
+		line-height: 18px;
+		font-weight: v.$fw-600;
+
+		img, svg {
+			width: 20px;
+			height: 20px;
 		}
 	}
 

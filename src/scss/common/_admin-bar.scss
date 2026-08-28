@@ -12,25 +12,31 @@ body.admin-bar {
 	}
 
 	.wrapper {
-		min-height: calc(100vh - 46px);
+		min-height: calc(100dvh - 46px);
 
 		@media (min-width: 783px) {
-			min-height: calc(100vh - 32px);
+			min-height: calc(100dvh - 32px);
 		}
 	}
 
-	.header nav {
-		top: 46px;
-		height: calc(100vh - 46px);
+	.header nav.header-nav,
+	.header .header-nav,
+	.header .header-nav-drawer,
+	.header-nav,
+	.header-nav-drawer {
+		top: 46px !important;
+		height: calc(100vh - 46px) !important;
+		height: calc(100dvh - 46px) !important;
 
 		@media (min-width: 783px) {
-			top: 32px;
-			height: calc(100vh - 32px);
+			top: 32px !important;
+			height: calc(100vh - 32px) !important;
+			height: calc(100dvh - 32px) !important;
 		}
 
 		@media (min-width: v.$lg) {
-			top: auto;
-			height: auto;
+			top: auto !important;
+			height: auto !important;
 		}
 	}
 
