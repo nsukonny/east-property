@@ -192,7 +192,7 @@ export function buildPdfHtml({ state, metrics, entryCosts, refId, dateStr }) {
 		<div class="doc-contacts">
 			<strong>East Property Brokerage LLC</strong><br>
 			+971 56 680 9684 · Dubai, UAE<br>
-			eastproperty.ae
+			eastproperty.com
 		</div>
 	</footer>
 
