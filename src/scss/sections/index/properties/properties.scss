@@ -15,6 +15,15 @@
 		background-color: v.$c-white;
 	}
 
+	&.has-border-top,
+	&.border-top {
+		padding: 32px 0;
+
+		@media (min-width: v.$lg) {
+			padding: 32px 0;
+		}
+	}
+
 	&.div {
 		padding: 0;
 
@@ -45,6 +54,15 @@
     }
 }
 
+.properties-wrapper {
+	width: 100%;
+
+	&.border-top {
+		padding-top: 32px;
+		border-top: 1px solid v.$c-grey-90;
+	}
+}
+
 .single-info .properties-wrapper {
-  width: 100%;
+	width: 100%;
 }
