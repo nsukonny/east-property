@@ -1,0 +1,73 @@
+@use '../vars/vars' as v;
+@use '../mixins/typography/text' as p;
+@use '../mixins/global' as g;
+
+.pagination {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+
+  nav {
+    display: flex;
+    justify-content: center;
+    margin-top: v.$container-padding;
+  }
+
+  &__list {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  &__item {
+
+    &--prev,
+    &--next {
+      img {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    &--next {
+      transform: scaleX(-1);
+    }
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    border-radius: v.$br8;
+    background-color: v.$c-grey-95;
+    color: v.$c-grey;
+    border: 2px solid transparent;
+    transition: background-color v.$tr, color v.$tr, border-color v.$tr;
+
+    @include p.t-text;
+
+    @include g.hover {
+      background-color: v.$c-grey-90;
+    }
+
+    &:focus-visible {
+      outline: 2px solid v.$c-grey;
+    }
+
+    &--current {
+      background-color: v.$c-orange-dark;
+      color: v.$c-white;
+      border-color: v.$c-orange-dark;
+
+      @include g.hover {
+        background-color: v.$c-orange-dark;
+        color: v.$c-white;
+        border-color: v.$c-orange-dark;
+      }
+    }
+  }
+}

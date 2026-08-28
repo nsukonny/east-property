@@ -1,0 +1,145 @@
+@use '../../vars/vars' as v;
+@use '../../mixins/typography/titles' as t;
+@use '../../mixins/typography/text' as p;
+
+.mortgage-faq-section {
+	width: 100%;
+	padding: 32px 0;
+}
+
+.mortgage-faq-wrapper {
+	width: 100%;
+	padding-top: 32px;
+	border-top: 1px solid v.$c-grey-90;
+	display: flex;
+	flex-direction: column;
+}
+
+.mortgage-faq-title {
+	margin-bottom: 16px;
+	color: v.$c-black;
+
+	@include t.t-header;
+}
+
+.mortgage-faq-list {
+	width: 100%;
+	max-width: 680px;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.mortgage-faq-item {
+	&.dropdown {
+		width: 100%;
+		background-color: v.$c-grey-97;
+		border-radius: v.$br8;
+		transition: background-color v.$tr ease;
+		margin-top: 0;
+		position: static;
+	}
+
+	.faq-question-btn {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		width: 100%;
+		padding: 16px;
+		min-height: 42px;
+		text-align: left;
+
+		@media(min-width: v.$md) {
+			min-height: 55px;
+		}
+	}
+
+	.faq-question-text {
+		color: v.$c-black;
+		font-family: v.$ff;
+		font-weight: v.$fw-700;
+		font-size: 15px;
+		line-height: 20px;
+		letter-spacing: -0.08px;
+		text-align: left;
+		flex: 1 1 auto;
+	}
+
+	.faq-toggle-icon {
+		position: relative;
+		width: 20px;
+		height: 20px;
+		flex-shrink: 0;
+		transition: transform 0.25s ease;
+
+		&::before,
+		&::after {
+			content: '';
+			position: absolute;
+			background-color: v.$c-black;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			border-radius: 4px;
+			width: 100%;
+			height: 2px;
+		}
+
+		&::before {
+			width: 100%;
+			height: 2px;
+		}
+
+		&::after {
+			width: 2px;
+			height: 100%;
+		}
+	}
+
+	.dropdown-content {
+		position: static;
+		width: 100%;
+		max-width: 100%;
+		height: 0;
+		opacity: 0;
+		overflow: hidden;
+		margin: 0;
+		padding: 0;
+		background: transparent;
+		box-shadow: none;
+		border-radius: 0;
+		z-index: auto;
+		transition: height v.$tr ease, opacity v.$tr ease;
+
+		p {
+			margin: 0;
+			color: v.$c-black;
+			font-family: v.$ff;
+			font-weight: v.$fw-400;
+			font-size: 15px;
+			line-height: 20px;
+			letter-spacing: -0.08px;
+		}
+	}
+
+	.dropdown-inner {
+		padding: 0 16px 16px 16px !important;
+		width: 100%;
+		max-width: 600px;
+		gap: 0;
+		max-height: none;
+	}
+
+	&.opened {
+		.faq-toggle-icon {
+			transform: rotate(45deg);
+		}
+
+		.dropdown-content {
+			margin-top: 0;
+			opacity: 1;
+			overflow: visible;
+		}
+	}
+}

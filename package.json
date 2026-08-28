@@ -13,6 +13,7 @@
     "browser-sync": "^3.0.4",
     "cssnano": "^7.0.0",
     "del": "^8.0.1",
+    "dotenv": "^17.3.1",
     "esbuild": "^0.27.0",
     "fast-glob": "^3.3.0",
     "gulp": "^5.0.1",
@@ -35,6 +36,7 @@
     "w3c-html-validator": "^2.0.2"
   },
   "dependencies": {
+    "@googlemaps/js-api-loader": "^2.1.1",
     "body-scroll-lock": "^3.1.5",
     "filepond": "^4.32.12",
     "filepond-plugin-image-preview": "^4.6.12",

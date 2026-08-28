@@ -1,0 +1,31 @@
+//libs
+@forward '../../node_modules/filepond/dist/filepond.min.css';
+@forward '../../node_modules/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+
+// Defaults styles.
+@forward 'common/fonts';
+@forward 'vars/vars';
+@forward 'common/typography';
+@forward 'common/grid';
+@forward 'common/base';
+@forward 'common/admin-bar';
+@forward 'common/templates';
+
+//ui
+@forward 'ui/label';
+@forward 'ui/modal';
+@forward 'ui/swiper-thumbs';
+@forward 'ui/tabs';
+@forward 'ui/coockie';
+@forward 'ui/breadcrumbs';
+@forward 'ui/dropdowns';
+@forward 'ui/beds-baths';
+@forward 'ui/render-map';
+@forward 'ui/checkbox';
+@forward 'ui/uploader';
+
+// components & sections
+@forward 'components/index';
+@forward 'sections/index';
+@forward 'common/pagination';
+@forward 'common/404';

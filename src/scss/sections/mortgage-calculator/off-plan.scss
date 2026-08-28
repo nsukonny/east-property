@@ -1,0 +1,130 @@
+@use '../../vars/vars' as v;
+@use '../../mixins/typography/titles' as t;
+
+.mortgage-offplan-section {
+	width: 100%;
+	padding: 32px 0;
+}
+
+.mortgage-offplan-wrapper {
+	width: 100%;
+	padding-top: 32px;
+	border-top: 1px solid v.$c-grey-90;
+	display: flex;
+	flex-direction: column;
+}
+
+.mortgage-offplan-grid {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+	width: 100%;
+
+	@media (min-width: v.$sm) {
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		gap: 48px;
+	}
+}
+
+.mortgage-offplan-info {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+
+	@media (min-width: v.$lg) {
+		max-width: 556px;
+	}
+}
+
+.mortgage-offplan-title {
+	margin: 0 0 16px;
+	color: v.$c-black;
+
+	@include t.t-header;
+}
+
+.mortgage-offplan-text {
+	margin-bottom: 24px;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+
+	p {
+		font-family: v.$ff;
+		font-weight: v.$fw-400;
+		font-size: 12px;
+		line-height: 15px;
+		vertical-align: middle;
+
+		b,
+		strong {
+			font-weight: v.$fw-700;
+		}
+	}
+}
+
+.mortgage-offplan-btn {
+	display: flex;
+	align-items: center;
+
+	.button {
+		font-size: 15px;
+		font-weight: v.$fw-700 !important;
+		min-width: 150px;
+	}
+}
+
+.mortgage-offplan-logos {
+	width: 100%;
+
+	@media (min-width: v.$lg) {
+		max-width: 454px;
+	}
+}
+
+.offplan-logos-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	align-items: center;
+	row-gap: 28px;
+	column-gap: 20px;
+	width: 100%;
+
+	@media (min-width: v.$md) {
+		row-gap: 32px;
+		column-gap: 24px;
+	}
+}
+
+.offplan-logo-item {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	min-height: 48px;
+
+	// 1st column: left aligned
+	&:nth-child(3n + 1) {
+		justify-content: flex-start;
+	}
+
+	// 2nd column: center aligned
+	&:nth-child(3n + 2) {
+		justify-content: center;
+	}
+
+	// 3rd column: right aligned
+	&:nth-child(3n) {
+		justify-content: flex-end;
+	}
+
+	img {
+		max-width: 100%;
+		max-height: 76px;
+		width: auto;
+		height: auto;
+		object-fit: contain;
+		display: block;
+	}
+}

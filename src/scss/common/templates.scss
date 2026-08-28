@@ -1,0 +1,6 @@
+@use "../vars/colors" as v;
+
+body.page-template-page-mortgage-calculator,
+body.page-template-page-mortgage-calculator-php {
+	background-color: v.$c-white;
+}

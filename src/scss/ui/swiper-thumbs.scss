@@ -1,0 +1,69 @@
+@use '../vars/vars' as v;
+@use '../mixins/global' as g;
+
+.swiper-next img {
+	transform: scaleX(-1);
+}
+
+.swiper-prev, .swiper-next {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 40px;
+	height: 40px;
+	border: 0;
+	padding: 0;
+	border-radius: v.$br8;
+	background-color: v.$c-grey-90;
+	transition: background-color ease-in-out v.$tr, scale ease-in-out v.$tr;
+	cursor: pointer;
+
+	@media(min-width: v.$md) {
+		width: 52px;
+		height: 52px;
+	}
+
+	img {
+		width: 16px;
+		height: 16px;
+		aspect-ratio: 1;
+
+		@media(min-width: v.$md) {
+			width: 24px;
+			height: 24px;
+		}
+	}
+
+	&.xs {
+		width: 24px;
+		height: 24px;
+
+		img {
+			width: 12px;
+			height: 12px;
+		}
+	}
+
+	&.sm {
+		width: 32px;
+		height: 32px;
+	}
+
+	@include g.hover {
+		background-color: v.$c-grey-95;
+	}
+
+	&:active {
+		background-color: v.$c-grey-97;
+		scale: 0.95;
+	}
+
+	&[disabled] {
+		opacity: v.$op;
+		cursor: not-allowed;
+
+		&:active {
+			scale: 1;
+		}
+	}
+}

@@ -1,0 +1,44 @@
+@use '../vars/vars' as v;
+@use '../mixins/typography/text' as p;
+@use '../mixins/global' as g;
+
+.single-404 {
+  display: flex;
+  flex-direction: column;
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 100px 0;
+
+    img {
+      max-width: 600px;
+    }
+
+    .text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      position: absolute;
+      padding: 24px;
+      background: #ffffff50;
+      border-radius: 16px;
+      color: v.$c-dark-grey;
+
+      h1 {
+        font-size: 100px;
+      }
+
+      p {
+        font-size: 32px;
+      }
+
+      a {
+
+      }
+    }
+  }
+}

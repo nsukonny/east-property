@@ -1,0 +1,46 @@
+@use '../vars/vars' as v;
+
+html:has(body.admin-bar) {
+	margin-top: 0 !important;
+}
+
+body.admin-bar {
+	padding-top: 46px;
+
+	@media (min-width: 783px) {
+		padding-top: 32px;
+	}
+
+	.wrapper {
+		min-height: calc(100vh - 46px);
+
+		@media (min-width: 783px) {
+			min-height: calc(100vh - 32px);
+		}
+	}
+
+	.header nav {
+		top: 46px;
+		height: calc(100vh - 46px);
+
+		@media (min-width: 783px) {
+			top: 32px;
+			height: calc(100vh - 32px);
+		}
+
+		@media (min-width: v.$lg) {
+			top: auto;
+			height: auto;
+		}
+	}
+
+	.modal-wrapper {
+		top: 46px;
+		height: calc(100dvh - 46px);
+
+		@media (min-width: 783px) {
+			top: 32px;
+			height: calc(100dvh - 32px);
+		}
+	}
+}

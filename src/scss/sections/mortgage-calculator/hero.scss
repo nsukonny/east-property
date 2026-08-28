@@ -1,0 +1,51 @@
+@use '../../vars/vars' as v;
+@use '../../mixins/typography/titles' as t;
+@use '../../mixins/typography/text' as p;
+
+.mortgage-hero {
+	width: 100%;
+	padding: 16px 0 10px;
+
+	@media (min-width: v.$md) {
+		padding-top: 32px;
+	}
+
+	&-wrapper {
+		width: 100%;
+		max-width: 774px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+	}
+
+	&-title {
+		color: v.$c-black;
+		margin: 0;
+
+		@include t.t-headline;
+
+		span {
+			color: v.$c-orange;
+		}
+	}
+
+	&-texts {
+		width: 100%;
+		max-width: 398px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 16px;
+	}
+
+	&-subtitle, &-accent {
+		color: v.$c-black;
+
+		@include p.t-smallest;
+	}
+
+	&-accent {
+		color: v.$c-green;
+	}
+}

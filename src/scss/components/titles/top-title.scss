@@ -1,0 +1,51 @@
+@use '../../vars/vars' as v;
+@use '../../mixins/typography/titles' as h;
+@use '../../mixins/typography/text' as t;
+@use '../../mixins/global' as g;
+
+.top-title {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 32px;
+	margin-bottom: 32px;
+
+	&.center {
+		align-items: center;
+	}
+
+	&-info {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+
+		h2 {
+			color: v.$c-black;
+
+			@include h.t-header;
+		}
+
+		p {
+			color: v.$c-text-grey;
+
+			@include t.t-text;
+		}
+	}
+
+	a {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		color: v.$c-black;
+
+		@include t.t-text;
+
+		img {
+			width: 16px;
+			height: 16px;
+		}
+	}
+}

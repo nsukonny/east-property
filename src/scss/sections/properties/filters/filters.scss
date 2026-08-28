@@ -1,0 +1,10 @@
+@use '../../../vars/vars' as v;
+@use '../../../mixins/typography/titles' as t;
+@use '../../../mixins/typography/text' as p;
+@use '../../../utils/placeholders/buttons/button' as *;
+@use '../../../mixins/global' as g;
+
+.results-filters {
+	width: 100%;
+	padding: 22px 0;
+}

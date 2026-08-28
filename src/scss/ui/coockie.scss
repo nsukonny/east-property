@@ -1,0 +1,7 @@
+@use '../vars/vars' as v;
+@use '../mixins/global' as g;
+
+.cookie {
+	border: 1px solid v.$c-text-grey;
+	background: v.$c-sand;
+}

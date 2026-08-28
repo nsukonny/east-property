@@ -1,0 +1,175 @@
+@use "../../vars/vars" as v;
+@use "../../vars/colors" as c;
+@use "../../mixins/typography/titles" as t;
+@use "../../mixins/typography/text" as p;
+
+.mortgage-entry-section {
+	padding: 32px 0;
+	width: 100%;
+}
+
+.mortgage-entry-grid {
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+	width: 100%;
+	min-width: 0;
+	padding-top: 32px;
+	border-top: 1px solid v.$c-grey-90;
+
+	@media (min-width: v.$md) {
+		flex-direction: row;
+		align-items: flex-start;
+		gap: 40px;
+
+		.mortgage-entry-col:first-child {
+			flex: 1 1 680px;
+			max-width: 680px;
+			min-width: 0;
+		}
+
+		.mortgage-entry-col:last-child {
+			flex: 0 1 453px;
+			max-width: 453px;
+			min-width: 0;
+		}
+	}
+
+	@media (min-width: v.$lg) {
+		gap: 64px;
+	}
+}
+
+.mortgage-entry-col {
+	width: 100%;
+	min-width: 0;
+}
+
+.mortgage-entry-title {
+	margin-bottom: 16px;
+
+	@include t.t-title-bold;
+}
+
+.entry-costs-card {
+	background-color: v.$c-grey-97;
+	border-radius: v.$br8;
+	padding: 8px;
+	width: 100%;
+}
+
+.entry-costs-table {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.entry-cost-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 8px 0;
+
+	.entry-cost-label, .entry-cost-value {
+		font-family: v.$ff;
+		font-weight: v.$fw-400;
+		font-size: 14px;
+		line-height: 18px;
+		min-width: 0;
+	}
+
+	.entry-cost-value {
+		white-space: nowrap;
+		flex-shrink: 0;
+	}
+
+	&--total {
+		padding-top: 11px;
+		border-top: 1px solid v.$c-grey-90;
+		margin-top: 6px;
+
+		.entry-cost-label {
+			color: v.$c-black;
+			font-weight: v.$fw-700;
+		}
+
+		.entry-cost-value {
+			color: #16181D;
+			font-size: 15px;
+			font-weight: 700;
+
+			@media (min-width: v.$sm) {
+				font-size: 16px;
+			}
+		}
+	}
+}
+
+.deal-steps-list {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 100%;
+
+	@media (min-width: v.$sm) {
+		gap: 16px;
+	}
+}
+
+.deal-step-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	width: 100%;
+
+	.deal-step-num {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 28px;
+		height: 28px;
+		background-color: v.$c-grey-97;
+		color: v.$c-black;
+		border-radius: 50%;
+		flex-shrink: 0;
+
+		@include p.t-text;
+
+		@media (min-width: v.$sm) {
+			width: 32px;
+			height: 32px;
+			font-size: 14px;
+		}
+	}
+
+	.deal-step-content {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		min-width: 0;
+	}
+
+	.deal-step-name, .deal-step-desc {
+		@include p.t-text;
+
+		& {
+			font-weight: v.$fw-700;
+			color: v.$c-black;
+		}
+	}
+
+	.deal-step-desc {
+		font-weight: v.$fw-400;
+	}
+}
+
+.deal-timeline-badge {
+	margin-top: 16px;
+
+	@include p.t-smallest;
+
+	& {
+		color: v.$c-text-grey;
+	}
+}

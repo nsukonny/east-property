@@ -1,0 +1,114 @@
+@use '../../../vars/vars' as v;
+@use '../../../mixins/typography/text' as t;
+@use '../../../mixins/typography/titles' as h;
+@use '../../../mixins/typography/text' as p;
+
+.about {
+	width: 100%;
+	background-color: v.$c-sand-medium;
+	position: relative;
+
+	&::after {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		display: block;
+		width: 100%;
+		height: 100%;
+		background: v.$sand-gradient;
+	}
+
+	&-wrapper {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+
+		@media(min-width: v.$lg) {
+			flex-direction: row;
+			align-items: center;
+		}
+	}
+
+	&-info {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 24px;
+		padding: 40px 16px;
+		position: relative;
+		z-index: 1;
+
+		@media(min-width: v.$lg) {
+			max-width: 450px;
+			padding: 59px 0 94px;
+		}
+
+		h2 {
+			color: v.$c-black;
+
+			@include h.t-header;
+		}
+
+		ul {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: stretch;
+			gap: 16px;
+
+			li {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 4px;
+				color: v.$c-black;
+				text-align: center;
+				background-color: v.$c-sand;
+				border-radius: v.$br8;
+				padding: 12px;
+
+				@include t.t-text;
+
+				img {
+					width: 24px;
+					height: 24px;
+				}
+
+				@media(min-width: v.$lg) {
+					flex-direction: row;
+					text-align: left;
+					background-color: transparent;
+					border-radius: 0;
+					padding: 0;
+				}
+			}
+		}
+	}
+
+	&-img {
+		margin: 0 auto;
+		position: relative;
+		z-index: 1;
+		opacity: 0.3;
+		max-height: 242px;
+
+		@media(min-width: v.$lg) {
+			margin: 0 0 0 auto;
+			opacity: 1;
+			max-height: 332px;
+		}
+	}
+}
+
+section.is-hidden {
+  display: none;
+}
+
+main ul:not([class]),.content ul:not([class]) {
+	list-style: none;
+	padding-left: 0;
+	margin-bottom: 0;
+}

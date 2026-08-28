@@ -1,0 +1,102 @@
+@use '../../../vars/vars' as v;
+@use '../../../mixins/typography/titles' as t;
+@use '../../../mixins/typography/text' as p;
+
+.hero {
+	width: 100%;
+	padding: 10px 0;
+
+	@media(min-width: v.$xl) {
+		padding: 10px 0 20px;
+	}
+
+	&-wrapper {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 10px;
+		padding: 40px 0;
+
+		@media(min-width: v.$md) {
+			padding: 60px 10px 60px 20px;
+		}
+
+		@media(min-width: v.$xl) {
+			flex-direction: row;
+			align-items: center;
+		}
+	}
+
+	&-left {
+		width: 100%;
+		max-width: 574px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 24px;
+
+		@media(min-width: v.$md) {
+			gap: 32px;
+		}
+
+		h1 {
+			color: v.$c-black;
+
+			@include t.t-headline;
+		}
+	}
+
+	&-items {
+		display: flex;
+		align-items: center;
+		gap: 24px;
+
+		@media(min-width: v.$md) {
+			gap: 32px;
+		}
+	}
+
+	&-item {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+
+		span {
+			color: v.$c-black;
+
+			@include t.t-header;
+		}
+
+		p {
+			color: v.$c-black;
+
+			@include p.t-text;
+		}
+	}
+
+	&-right {
+		width: 100%;
+		flex: 1;
+
+		@media(min-width: v.$xl) {
+			width: auto;
+		}
+	}
+
+	&-img {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		img {
+			max-width: 100%;
+			height: auto;
+
+			@media(min-width: v.$xl) {
+				max-width: 613px;
+			}
+		}
+	}
+}

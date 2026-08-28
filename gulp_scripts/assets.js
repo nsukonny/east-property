@@ -1,30 +1,33 @@
 import gulp from 'gulp';
+import newer from 'gulp-newer';
 import {paths} from './config.js';
 import {ensureDir} from './config.js';
 
 const {src, dest, parallel} = gulp;
 
 export function images() {
-    ensureDir(paths.projectName + '/dev/src/img');
+    ensureDir('src/img');
 
-    return src(paths.projectName + '/' + paths.images.src, {
+    return src(paths.images.src, {
         allowEmpty: true,
         encoding: false,
         buffer: true,
         objectMode: false
     })
+        .pipe(newer(paths.images.dest))
         .pipe(dest(paths.images.dest));
 }
 
 export function fonts() {
-    ensureDir(paths.projectName + '/dev/src/fonts');
+    ensureDir('src/fonts');
 
-    return src(paths.projectName + '/' + paths.fonts.src, {
+    return src(paths.fonts.src, {
         allowEmpty: true,
         encoding: false,
         buffer: true,
         objectMode: false
     })
+        .pipe(newer(paths.fonts.dest))
         .pipe(dest(paths.fonts.dest));
 }
 

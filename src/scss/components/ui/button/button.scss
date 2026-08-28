@@ -1,0 +1,234 @@
+@use '../../../vars/vars' as v;
+@use '../../../mixins/typography/text' as t;
+@use '../../../mixins/typography/labels' as l;
+@use '../../../utils/placeholders/buttons/button' as *;
+@use '../../../mixins/global' as g;
+
+.button {
+	@extend %button;
+
+	flex-shrink: 0;
+	gap: 7px;
+	border-radius: v.$br8;
+	outline: 3px solid transparent;
+
+	&:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
+
+	&.black {
+		background-color: v.$c-black;
+		color: v.$c-white;
+		outline: 3px solid transparent;
+
+		@include g.hover {
+			background-color: v.$c-dark-grey;
+		}
+
+		&:active {
+			scale: 0.95;
+			background-color: v.$c-black;
+		}
+
+		&:focus-visible {
+			outline-color: v.$c-black;
+			background-color: v.$c-grey;
+		}
+
+		&.sm {
+			padding: 9.5px 12px;
+
+			@include t.t-text;
+
+			img {
+				width: 16px;
+				height: 16px;
+			}
+		}
+
+		&.xl {
+			padding: 13px 24px;
+
+			@include l.t-label;
+
+			img {
+				width: 24px;
+				height: 24px;
+			}
+		}
+	}
+
+	&.orange {
+		background-color: v.$c-yellow;
+		color: v.$c-black;
+
+		&.xs {
+			padding: 6px 8px;
+			border: none;
+			font-size: 13px;
+
+			img {
+				width: 16px;
+				height: 16px;
+			}
+		}
+
+		&.sm {
+			padding: 9.5px 12px;
+			border: none;
+
+			@include t.t-text;
+
+			img {
+				width: 16px;
+				height: 16px;
+			}
+		}
+
+		&.xl {
+			padding: 13px;
+			border: none;
+
+			@include l.t-label;
+
+			img {
+				width: 24px;
+				height: 24px;
+			}
+		}
+
+		&.text_white {
+			color: #FFF;
+		}
+
+		@include g.hover {
+			background-color: v.$c-orange;
+		}
+
+		&:active {
+			scale: 0.95;
+			background-color: v.$c-orange-dark;
+		}
+
+		&:focus-visible {
+			outline-color: v.$c-orange-dark;
+			background-color: v.$c-yellow;
+		}
+	}
+
+	&.gray {
+		background-color: v.$c-grey-90;
+		color: v.$c-grey;
+
+		&.sm {
+			padding: 9.5px 12px;
+
+			@include t.t-text;
+
+			img {
+				width: 16px;
+				height: 16px;
+			}
+		}
+
+		&.xl {
+			padding: 13px;
+
+			@include l.t-label;
+
+			img {
+				width: 24px;
+				height: 24px;
+			}
+		}
+
+		@include g.hover {
+			background-color: v.$c-grey-95;
+		}
+
+		&:active {
+			scale: 0.95;
+			background-color: v.$c-grey-97;
+		}
+
+		&:focus-visible {
+			outline-color: v.$c-text-grey;
+			background-color: v.$c-grey-90;
+		}
+	}
+
+	&.white {
+		background-color: v.$c-white;
+		color: v.$c-black;
+		border: 1px solid v.$c-grey-90;
+
+		@include g.hover {
+			background-color: v.$c-grey-97;
+		}
+
+		&:active {
+			scale: 0.95;
+			background-color: v.$c-grey-95;
+		}
+
+		&:focus-visible {
+			outline-color: v.$c-text-grey;
+		}
+
+		&.sm {
+			padding: 9.5px 12px;
+
+			@include t.t-text;
+
+			img {
+				width: 16px;
+				height: 16px;
+			}
+		}
+
+		&.xl {
+			padding: 13px 24px;
+
+			@include l.t-label;
+
+			img {
+				width: 24px;
+				height: 24px;
+			}
+		}
+	}
+
+	&.full-width {
+		width: 100%;
+	}
+}
+
+.link {
+	color: v.$c-black;
+	text-decoration: underline;
+
+	&.logout {
+		padding: 0 30px;
+		font-size: 14px;
+	}
+}
+
+.header-nav {
+	.menu-item {
+		.link.logout {
+			padding: 0 25px;
+			font-size: 20px;
+		}
+	}
+}
+
+@media (max-width: 576px) {
+	.profile-tabs-buttons .link.logout {
+		display: none;
+	}
+}
+
+.edit-property-link {
+	margin-bottom: 0;
+}
