@@ -10,3 +10,11 @@ import './swiper.js';
 import './dropdowns.js';
 import './submit-unit';
 import './uploader';
+import {initMortgageCalculator} from './mortgage-calculator/index.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+	initMortgageCalculator();
+});
+
+
+
