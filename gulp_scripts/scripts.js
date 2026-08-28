@@ -45,12 +45,12 @@ function createObfuscateStream() {
     });
 }
 
-export async function validateJsSyntax() {
-    const files = await fg(paths.scripts.watch);
+export async function validateJsSyntax(files) {
+    const list = Array.isArray(files) ? files : await fg(paths.scripts.watch);
 
     let hasErrors = false;
 
-    for (const file of files) {
+    for (const file of list) {
         const code = await fs.readFile(file, 'utf8');
         try {
             await esbuild.transform(code, {
