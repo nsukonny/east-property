@@ -1,4 +1,5 @@
 import gulp from 'gulp';
+import newer from 'gulp-newer';
 import {paths} from './config.js';
 import {ensureDir} from './config.js';
 
@@ -13,6 +14,7 @@ export function images() {
         buffer: true,
         objectMode: false
     })
+        .pipe(newer(paths.images.dest))
         .pipe(dest(paths.images.dest));
 }
 
@@ -25,6 +27,7 @@ export function fonts() {
         buffer: true,
         objectMode: false
     })
+        .pipe(newer(paths.fonts.dest))
         .pipe(dest(paths.fonts.dest));
 }
 

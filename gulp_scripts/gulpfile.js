@@ -10,6 +10,21 @@ const browserSync = browserSyncLib.create();
 
 const scriptsPipeline = series(validateJsSyntax, scripts);
 
+async function scriptsWatch(event, filePath) {
+    if (event === 'unlink') {
+        return;
+    }
+    try {
+        await validateJsSyntax([filePath]);
+    } catch {
+        return;
+    }
+    await new Promise((resolve) => {
+        scripts().on('end', resolve);
+    });
+    browserSync.reload();
+}
+
 function reload(done) {
     browserSync.reload();
     done();
@@ -28,7 +43,7 @@ function serve(cb) {
     });
 
     watch(paths.styles.watch, stylesWatch);
-    watch(paths.scripts.watch, series(scriptsPipeline, reload));
+    watch(paths.scripts.watch).on('all', scriptsWatch);
     watch(['**/*.php', '!node_modules/**'], reload);
 
     cb();
