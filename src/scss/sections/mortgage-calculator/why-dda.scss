@@ -1,0 +1,87 @@
+@use '../../vars/vars' as v;
+@use '../../mixins/typography/titles' as t;
+
+.mortgage-why-section {
+	width: 100%;
+	padding: 32px 0;
+}
+
+.mortgage-why-wrapper {
+	width: 100%;
+	padding-top: 32px;
+	border-top: 1px solid v.$c-grey-90;
+	display: flex;
+	flex-direction: column;
+}
+
+.mortgage-why-title {
+	margin-bottom: 24px;
+	color: v.$c-black;
+
+	@include t.t-header;
+
+	@media (min-width: v.$md) {
+		margin-bottom: 32px;
+	}
+}
+
+.mortgage-why-grid {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	width: 100%;
+
+	@media (min-width: v.$md) {
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: 20px 0;
+	}
+
+	@media (min-width: v.$lg) {
+		row-gap: 25px;
+	}
+}
+
+.mortgage-why-item {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	width: 100%;
+	padding: 8px 16px 8px 0;
+
+	@media (min-width: v.$md) {
+		width: 50%;
+	}
+
+	@media (min-width: v.$lg) {
+		width: 33.3333%;
+		padding: 25px 25px 25px 0;
+	}
+
+	.why-item-title,
+	.why-item-desc {
+		width: 100%;
+
+		@media (min-width: v.$lg) {
+			max-width: 262px;
+		}
+	}
+
+	.why-item-title {
+		margin: 0;
+		color: v.$c-black;
+		font-family: v.$ff;
+		font-weight: v.$fw-700;
+		font-size: 15px;
+		line-height: 18px;
+	}
+
+	.why-item-desc {
+		margin: 0;
+		color: v.$c-black;
+		font-family: v.$ff;
+		font-weight: v.$fw-400;
+		font-size: 15px;
+		line-height: 18px;
+	}
+}
