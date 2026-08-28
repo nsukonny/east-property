@@ -12,20 +12,21 @@ body.admin-bar {
 	}
 
 	.wrapper {
-		min-height: calc(100vh - 46px);
+		min-height: calc(100dvh - 46px);
 
 		@media (min-width: 783px) {
-			min-height: calc(100vh - 32px);
+			min-height: calc(100dvh - 32px);
 		}
 	}
 
-	.header nav {
+	.header-nav,
+	.header-nav-drawer {
 		top: 46px;
-		height: calc(100vh - 46px);
+		height: calc(100dvh - 46px);
 
 		@media (min-width: 783px) {
 			top: 32px;
-			height: calc(100vh - 32px);
+			height: calc(100dvh - 32px);
 		}
 
 		@media (min-width: v.$lg) {
