@@ -15,5 +15,6 @@ get_template_part( 'template-parts/sections/mortgage-calculator/hero' );
 get_template_part( 'template-parts/sections/mortgage-calculator/calculator' );
 get_template_part( 'template-parts/sections/mortgage-calculator/entry-costs' );
 get_template_part( 'template-parts/sections/mortgage-calculator/matched-units' );
+get_template_part( 'template-parts/sections/mortgage-calculator/faq' );
 
 get_footer();
