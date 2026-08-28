@@ -200,7 +200,7 @@
 				<div class="calc-result-card">
 					
 					<div class="calc-result-header">
-						<div class="calc-result-amount" id="mcMonthlyPayment" data-mc-display="monthly-payment">7 265 AED</div>
+						<div class="calc-result-amount" id="mcMonthlyPayment" data-mc-display="monthly-payment">6 073 AED</div>
 						<div class="calc-result-label"><?php _e( 'Monthly payment', 'east-property' ); ?></div>
 					</div>
 					<div class="calc-grid-wrapper">
@@ -215,7 +215,7 @@
 								</div>
 								<div class="calc-stat-item">
 									<span class="calc-stat-name"><?php _e( 'Interest paid', 'east-property' ); ?></span>
-									<strong class="calc-stat-value" id="mcStatInterest" data-mc-display="interest">503 621</strong>
+									<strong class="calc-stat-value" id="mcStatInterest" data-mc-display="interest">497 624</strong>
 								</div>
 							</div>
 
