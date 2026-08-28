@@ -21,3 +21,18 @@ export function parseNumericInput(rawValue) {
 	const parsed = parseFloat(sanitized);
 	return Number.isFinite(parsed) ? parsed : 0;
 }
+
+/**
+ * Ставка выводится с той же точностью, с какой её можно выбрать: шаг слайдера
+ * 0.05, поэтому округление до одного знака показывало «4» там, где считалось
+ * по 4.05.
+ *
+ * @param {number} value Годовая ставка в процентах.
+ *
+ * @return {string}
+ */
+export function formatRate(value) {
+	if (!Number.isFinite(value)) return '0';
+
+	return String(Number(value.toFixed(2))).replace('.', ',');
+}

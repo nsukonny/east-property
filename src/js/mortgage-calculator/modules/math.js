@@ -23,8 +23,10 @@ export function calculateMortgage({price, downPct, years, rate}) {
 	const totalPayable = Math.round(exactMonthlyPayment * totalMonths);
 	const totalInterest = Math.max(0, totalPayable - loanAmount);
 
-	let principalPct = 69;
-	let interestPct = 31;
+	// Без кредита делить нечего: диаграмма должна быть пустой, а не показывать
+	// какие-то доли.
+	let principalPct = 0;
+	let interestPct = 0;
 
 	if (totalPayable > 0) {
 		principalPct = Math.min(100, Math.max(1, Math.round((loanAmount / totalPayable) * 100)));
