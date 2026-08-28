@@ -1,0 +1,95 @@
+@use '../../vars/vars' as v;
+@use '../../mixins/global' as g;
+
+.news-card {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+
+	&-link {
+		display: flex;
+		flex-direction: column;
+		text-decoration: none;
+		color: inherit;
+		width: 100%;
+		height: 100%;
+		background-color: v.$c-white;
+		border-radius: 12px;
+		box-shadow: v.$shadow-1;
+		overflow: hidden;
+
+		@include g.hover {
+
+			.news-card-thumb img {
+				transform: scale(1.03);
+			}
+		}
+	}
+
+	&-thumb {
+		width: 100%;
+		aspect-ratio: 388 / 240;
+		overflow: hidden;
+		background-color: #F8F6F2;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			transition: transform 0.35s ease;
+		}
+
+		&--placeholder {
+			background-color: #F8F6F2;
+
+			.news-card-placeholder-logo {
+				width: 130px;
+				height: auto;
+				max-width: 48%;
+				max-height: 48%;
+				object-fit: contain;
+				opacity: 0.8;
+				transition: transform 0.35s ease, opacity 0.35s ease;
+			}
+		}
+	}
+
+	&-body {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		padding: 16px 20px;
+		flex: 1 1 auto;
+		justify-content: space-between;
+	}
+
+	&-title {
+		margin: 0;
+		color: v.$c-black-total;
+		font-family: v.$ff;
+		font-weight: v.$fw-600;
+		font-size: 15px;
+		line-height: 20px;
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		word-break: break-word;
+	}
+
+	&-date {
+		font-family: v.$ff;
+		font-weight: v.$fw-400;
+		font-size: 15px;
+		line-height: 18px;
+		color: v.$c-black-total;
+	}
+}
