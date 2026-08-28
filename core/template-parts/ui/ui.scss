@@ -1,0 +1,113 @@
+.checkbox-buttons-wrapper {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 4px;
+
+	.checkbox-buttons {
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 7px;
+	}
+
+	.checkbox-btn {
+		min-width: 50px;
+		height: 50px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: #F7F7F7;
+		border-radius: 8px;
+		color: #111;
+		transition: background-color 200ms ease, color 200ms ease;
+		cursor: pointer;
+		font-family: "Inter", sans-serif;
+		font-weight: 400;
+		font-size: 13px;
+		line-height: 16px;
+		border: none;
+		padding: 8px;
+
+		&.active {
+			background-color: #FFA41B;
+			color: #FFF;
+		}
+	}
+}
+
+.wp-theme-distress {
+	.checkbox-buttons-wrapper {
+		.checkbox-buttons {
+			.checkbox-btn.active {
+				background-color: #00843D;
+			}
+		}
+	}
+}
+
+.delete_wrapper {
+	width: 100%;
+	display: flex;
+	justify-content: flex-start;
+	font-size: 14px;
+
+	.delete_approve_call {
+		color: #FF4C00;
+		text-decoration: underline;
+	}
+
+	.delete_approve {
+		display: none;
+
+		@media(min-width: 992px) {
+			span {
+				width: 100%;
+			}
+		}
+
+		.cancel {
+			text-decoration: underline;
+			color: #008cff;
+		}
+
+		.delete_confirmation {
+			color: #FF4C00;
+			text-decoration: underline;
+		}
+	}
+
+	&.showed {
+		.delete_approve_call {
+			display: none;
+		}
+
+		.delete_approve {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			gap: 10px;
+		}
+	}
+}
+
+.wp-theme-distress .button.green {
+	svg {
+		stroke: #FFF;
+		fill: #FFF;
+
+		path {
+			stroke: #FFF;
+			fill: #FFF;
+		}
+	}
+}
+
+.required {
+	color: #FF4C00;
+	position: absolute;
+	left: -8px;
+}

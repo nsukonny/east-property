@@ -1,0 +1,61 @@
+.boost-modal {
+	.modal {
+		width: 100%;
+		max-width: 403px;
+		padding: 24px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		border-radius: 16px;
+		gap: 16px;
+		background-color: #FFF;
+
+		&-title {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 8px;
+			margin-bottom: 10px;
+
+			h3 {
+				color: #111;
+				font-weight: 800;
+				font-size: 24px;
+				line-height: 30px;
+
+				@media(min-width: 768px) {
+					font-size: 30px;
+					line-height: 36px;
+				}
+			}
+
+			.modal-close {
+				width: 24px;
+				height: 24px;
+				margin-left: auto;
+
+				img {
+					width: 100%;
+					height: 100%;
+				}
+			}
+		}
+
+		&-info {
+			width: 100%;
+		}
+	}
+
+	p, label {
+		color: #111;
+		font-family: "Inter", sans-serif;
+		font-weight: 400;
+		font-size: 13px;
+		line-height: 16px;
+	}
+
+	p {
+		margin: 20px 0;
+	}
+}
