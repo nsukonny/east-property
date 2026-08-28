@@ -37,7 +37,23 @@
 	}
 
 	&-left {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+
+		.contact-panel-title {
+			margin: 0;
+			color: v.$c-black;
+
+			@include t.t-text;
+
+			& {
+				font-weight: v.$fw-700;
+			}
+		}
+
 		p {
+			margin: 0;
 			color: v.$c-black;
 
 			@include t.t-text;
@@ -47,17 +63,42 @@
 	&-right {
 		display: flex;
 		align-items: center;
-		gap: 10px;
+		gap: 16px;
 
-		@media(min-width: v.$md) {
-			gap: 16px;
+		@media (min-width: v.$md) {
+			gap: 24px;
 		}
 
 		.button.sm {
+			font-weight: v.$fw-700;
+
 			img {
 				width: 24px;
 				height: 24px;
 			}
+		}
+	}
+
+	&-phone {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		color: v.$c-grey;
+		font-family: v.$ff;
+		font-weight: v.$fw-600;
+		font-size: 15px;
+		line-height: 18px;
+		text-decoration: none;
+		white-space: nowrap;
+		transition: opacity v.$tr ease;
+
+		&:hover {
+			opacity: 0.75;
+		}
+
+		.flag-icon {
+			font-size: 16px;
+			line-height: 1;
 		}
 	}
 }
