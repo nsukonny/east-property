@@ -1,6 +1,6 @@
 import { DEFAULTS, RESIDENCY, SLIDER_CONFIG, FORMATTING } from '../config/index.js';
 import { calculateMortgage, calculateEntryCosts } from './math.js';
-import { formatCurrency, parseNumericInput } from './formatter.js';
+import { formatCurrency, formatRate, parseNumericInput } from './formatter.js';
 import { DonutChart } from './donut-chart.js';
 import { generateMortgagePdf } from './pdf/index.js';
 
@@ -216,7 +216,7 @@ export class MortgageCalculator {
 		}
 
 		if (elements.rateInput && document.activeElement !== elements.rateInput) {
-			elements.rateInput.value = metrics.rate.toFixed(1).replace('.0', '').replace('.', ',');
+			elements.rateInput.value = formatRate(metrics.rate);
 		}
 
 		if (elements.rateSlider) {

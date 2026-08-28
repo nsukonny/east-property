@@ -7,3 +7,4 @@ assets/js/main.min.js.map
 .env
 ../.env.example
 !../.env.example
+core/vendor
