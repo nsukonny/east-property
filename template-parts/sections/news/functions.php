@@ -82,7 +82,7 @@ function core_get_other_news( int $exclude_id = 0, int $count = 3 ): WP_Query {
 function ajax_load_more_news(): void {
 	$page = isset( $_POST['page'] ) ? max( 1, (int) $_POST['page'] ) : 1;
 
-	$cache_key = 'news_ajax_page_' . $page;
+	$cache_key = core_news_cache_key( $page );
 	$cached    = wp_cache_get( $cache_key, 'east_news' );
 
 	if ( false !== $cached ) {
@@ -142,7 +142,33 @@ function core_invalidate_news_cache( int $post_id ): void {
 		return;
 	}
 
-	wp_cache_flush_group( 'east_news' );
+	/*
+	 * wp_cache_flush_group() calls $wp_object_cache->flush_group() with no guard
+	 * of its own, and a drop-in that does not implement the method turns that
+	 * into a fatal — W3TC on production replaces the object cache. Bumping a
+	 * version that the keys carry retires the group on any backend.
+	 */
+	update_option( 'core_news_cache_version', core_get_news_cache_version() + 1, false );
+}
+
+/**
+ * Current generation of the news cache.
+ *
+ * @return int
+ */
+function core_get_news_cache_version(): int {
+	return max( 1, (int) get_option( 'core_news_cache_version', 1 ) );
+}
+
+/**
+ * Cache key for one page of the news feed.
+ *
+ * @param int $page Page number.
+ *
+ * @return string
+ */
+function core_news_cache_key( int $page ): string {
+	return 'news_ajax_page_' . $page . '_v' . core_get_news_cache_version();
 }
 
 add_action( 'save_post', 'core_invalidate_news_cache' );

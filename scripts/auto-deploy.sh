@@ -58,13 +58,20 @@ sync_acf_json() {
 		exit 1
 	fi
 
-	if ! wp --path="$WP_ROOT" cli has-command acf json >/dev/null 2>&1; then
-		printf '[auto-deploy] `wp acf json` command is unavailable\n' >&2
-		exit 1
+	if wp --path="$WP_ROOT" cli has-command acf sync >/dev/null 2>&1; then
+		log "Syncing ACF JSON with \`wp acf sync\`"
+		wp --path="$WP_ROOT" acf sync --all
+		return 0
 	fi
 
-	log "Syncing ACF JSON"
-	wp --path="$WP_ROOT" acf json sync
+	if wp --path="$WP_ROOT" cli has-command acf json >/dev/null 2>&1; then
+		log "Syncing ACF JSON with \`wp acf json sync\`"
+		wp --path="$WP_ROOT" acf json sync
+		return 0
+	fi
+
+	printf '[auto-deploy] no supported ACF sync command found (`wp acf sync` or `wp acf json sync`)\n' >&2
+	exit 1
 }
 
 reset_transients() {
