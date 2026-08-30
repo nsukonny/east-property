@@ -9,13 +9,14 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-22T19:28:04+00:00\n"
+"POT-Creation-Date: 2026-08-30T15:28:42+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: east-property\n"
 
 #. Theme Name of the theme
 #: style.css
+#: page-news.php:39
 msgid "East Property"
 msgstr ""
 
@@ -48,12 +49,12 @@ msgid "Go to properties"
 msgstr ""
 
 #: core/components/account/functions.php:125
-#: core/components/filters/functions.php:437
+#: core/components/filters/functions.php:438
 msgid "Apartments"
 msgstr ""
 
 #: core/components/account/functions.php:126
-#: core/components/filters/functions.php:453
+#: core/components/filters/functions.php:454
 msgid "Villas"
 msgstr ""
 
@@ -66,144 +67,144 @@ msgid "Penthouses"
 msgstr ""
 
 #: core/components/account/functions.php:129
-#: core/components/filters/functions.php:445
+#: core/components/filters/functions.php:446
 msgid "Houses"
 msgstr ""
 
 #: core/components/account/functions.php:130
-#: core/components/filters/functions.php:461
+#: core/components/filters/functions.php:462
 msgid "Offices"
 msgstr ""
 
-#: core/components/account/functions.php:600
+#: core/components/account/functions.php:671
 msgid "A distress listing needs an original price higher than the asking price."
 msgstr ""
 
-#: core/components/account/functions.php:642
-#: core/components/account/functions.php:771
+#: core/components/account/functions.php:713
 msgid "Unit not found."
 msgstr ""
 
-#: core/components/account/functions.php:704
-msgid "Please sign in to add a property."
-msgstr ""
-
-#: core/components/account/functions.php:709
-msgid "Your account does not have permission to add property."
-msgstr ""
-
-#: core/components/account/functions.php:715
-msgid "Security check failed. Please try again."
-msgstr ""
-
-#: core/components/account/functions.php:736
+#: core/components/account/functions.php:788
 msgid "Property title is required."
 msgstr ""
 
-#: core/components/account/functions.php:740
+#: core/components/account/functions.php:789
 msgid "Property description is required."
 msgstr ""
 
-#: core/components/account/functions.php:744
+#: core/components/account/functions.php:799
 msgid "Latitude is required."
 msgstr ""
 
-#: core/components/account/functions.php:748
+#: core/components/account/functions.php:800
 msgid "Longitude is required."
 msgstr ""
 
-#: core/components/account/functions.php:752
+#: core/components/account/functions.php:801
 msgid "Please select a valid location."
 msgstr ""
 
-#: core/components/account/functions.php:756
+#: core/components/account/functions.php:802
 msgid "Please select a valid ownership type."
 msgstr ""
 
-#: core/components/account/functions.php:760
+#: core/components/account/functions.php:803
 msgid "Please select a valid property type."
 msgstr ""
 
-#: core/components/account/functions.php:918
-#: core/components/account/functions.php:1178
-#: core/components/account/functions.php:1270
-msgid "Property ID is required."
-msgstr ""
-
-#: core/components/account/functions.php:923
-#: core/components/account/functions.php:1183
+#: core/components/account/functions.php:842
+#: core/components/account/functions.php:1090
+#: core/components/account/functions.php:1350
 msgid "Property not found."
 msgstr ""
 
-#: core/components/account/functions.php:936
+#: core/components/account/functions.php:900
+msgid "Please sign in to add a property."
+msgstr ""
+
+#: core/components/account/functions.php:905
+msgid "Your account does not have permission to add property."
+msgstr ""
+
+#: core/components/account/functions.php:911
+msgid "Security check failed. Please try again."
+msgstr ""
+
+#: core/components/account/functions.php:1085
+#: core/components/account/functions.php:1345
+#: core/components/account/functions.php:1437
+msgid "Property ID is required."
+msgstr ""
+
+#: core/components/account/functions.php:1103
 #: core/template-parts/account/edit-unit.php:458
 msgid "Property image"
 msgstr ""
 
-#: core/components/account/functions.php:1192
+#: core/components/account/functions.php:1359
 msgid "Not enough boost points for boost plan."
 msgstr ""
 
-#: core/components/account/functions.php:1195
+#: core/components/account/functions.php:1362
 msgid "Property boosted successfully."
 msgstr ""
 
-#: core/components/account/functions.php:1212
+#: core/components/account/functions.php:1379
 msgid "Broker not found."
 msgstr ""
 
-#: core/components/account/functions.php:1256
+#: core/components/account/functions.php:1423
 #: core/includes/registers/user-roles/client.php:7
 msgid "Client"
 msgstr ""
 
-#: core/components/account/functions.php:1257
+#: core/components/account/functions.php:1424
 #: core/includes/registers/user-roles/broker.php:18
 msgid "Broker"
 msgstr ""
 
-#: core/components/account/functions.php:1275
+#: core/components/account/functions.php:1442
 msgid "YOu are not authenticated."
 msgstr ""
 
-#: core/components/account/functions.php:1319
+#: core/components/account/functions.php:1486
 msgid "Hello "
 msgstr ""
 
-#: core/components/account/functions.php:1321
+#: core/components/account/functions.php:1488
 msgid "Thank you for registering with"
 msgstr ""
 
-#: core/components/account/functions.php:1323
+#: core/components/account/functions.php:1490
 msgid "To complete your registration and activate your account, please verify your email address by clicking the link below:"
 msgstr ""
 
-#: core/components/account/functions.php:1326
+#: core/components/account/functions.php:1493
 msgid "Verify email address"
 msgstr ""
 
-#: core/components/account/functions.php:1328
+#: core/components/account/functions.php:1495
 #: core/components/modals/functions.php:37
 msgid "or copy and paste the following link into your browser:"
 msgstr ""
 
-#: core/components/account/functions.php:1340
+#: core/components/account/functions.php:1507
 msgid "Verify your email address"
 msgstr ""
 
-#: core/components/account/functions.php:1356
+#: core/components/account/functions.php:1523
 msgid "Sign in to save this property to your favorites."
 msgstr ""
 
-#: core/components/account/functions.php:1377
+#: core/components/account/functions.php:1544
 msgid "You must be logged in."
 msgstr ""
 
-#: core/components/account/functions.php:1382
+#: core/components/account/functions.php:1549
 msgid "Verification email resent. Check your email."
 msgstr ""
 
-#: core/components/account/functions.php:1522
+#: core/components/account/functions.php:1689
 msgid "This property is not a distress deal. Below Market Score : "
 msgstr ""
 
@@ -243,14 +244,29 @@ msgstr ""
 msgid "Distress Deals"
 msgstr ""
 
-#: core/components/common/functions.php:57
+#: core/components/common/functions.php:60
 msgid "Projects in UAE"
 msgstr ""
 
-#: core/components/common/nav.php:43
-#: core/template-parts/account/profile-client.php:42
+#: core/components/common/nav.php:29
+msgid "Close menu"
+msgstr ""
+
+#: core/components/common/nav.php:69
+#: core/template-parts/account/profile-client.php:41
 #: core/template-parts/account/profile.php:67
 msgid "Logout"
+msgstr ""
+
+#: core/components/common/nav.php:75
+#: core/components/modals/create-modal.php:177
+#: core/components/modals/forgot-modal.php:23
+#: core/components/modals/signin-modal.php:10
+#: core/components/modals/signin-modal.php:43
+#: core/template-parts/account/login-form.php:20
+#: core/template-parts/account/login-form.php:61
+#: core/template-parts/common/header.php:45
+msgid "Sign in"
 msgstr ""
 
 #: core/components/common/notifications/notifications.php:22
@@ -362,19 +378,19 @@ msgid "Mailer"
 msgstr ""
 
 #: core/components/filters/functions.php:109
-#: core/components/filters/functions.php:541
+#: core/components/filters/functions.php:542
 #: core/template-parts/filters/search-tabs.php:146
 msgid "Any Developers"
 msgstr ""
 
 #: core/components/filters/functions.php:126
-#: core/components/filters/functions.php:374
-#: core/components/filters/functions.php:391
+#: core/components/filters/functions.php:375
+#: core/components/filters/functions.php:392
 msgid "Available"
 msgstr ""
 
 #: core/components/filters/functions.php:130
-#: core/components/filters/functions.php:378
+#: core/components/filters/functions.php:379
 msgid "In Construction"
 msgstr ""
 
@@ -383,15 +399,16 @@ msgid "All Years"
 msgstr ""
 
 #: core/components/filters/functions.php:150
-#: core/components/filters/functions.php:387
+#: core/components/filters/functions.php:388
 #: core/includes/registers/post-types/locations.php:10
-#: core/template-parts/account/edit-property.php:145
+#: core/template-parts/account/edit-property.php:188
 #: core/template-parts/filters/result-filters.php:59
 #: core/template-parts/properties/property-single.php:111
 #: core/template-parts/properties/property-single.php:219
 #: core/template-parts/properties/property-units-list.php:28
 #: single-unit.php:267
 #: single-unit.php:365
+#: src/js/map/map.js:183
 msgid "Location"
 msgstr ""
 
@@ -399,58 +416,60 @@ msgstr ""
 msgid "Handover Year Before"
 msgstr ""
 
-#: core/components/filters/functions.php:154
+#: core/components/filters/functions.php:155
 msgid "Completion Year After"
 msgstr ""
 
-#: core/components/filters/functions.php:158
-#: core/components/filters/functions.php:395
+#: core/components/filters/functions.php:159
+#: core/components/filters/functions.php:396
 msgid "Price (AED)"
 msgstr ""
 
-#: core/components/filters/functions.php:165
-#: core/components/filters/functions.php:402
+#: core/components/filters/functions.php:166
+#: core/components/filters/functions.php:403
 #: core/includes/entities/class-entity-property.php:553
 msgid "Property Type"
 msgstr ""
 
-#: core/components/filters/functions.php:174
-#: core/components/filters/functions.php:411
+#: core/components/filters/functions.php:175
+#: core/components/filters/functions.php:412
 #: core/includes/registers/post-types/developers.php:11
 #: core/includes/registers/post-types/developers.php:37
-#: core/template-parts/account/edit-property.php:88
+#: core/template-parts/account/edit-property.php:125
 #: core/template-parts/filters/result-filters.php:262
 #: core/template-parts/filters/search-tabs.php:144
+#: src/js/map/html.js:58
 msgid "Developer"
 msgstr ""
 
-#: core/components/filters/functions.php:178
+#: core/components/filters/functions.php:179
 #: core/template-parts/cards/map-sidebar.php:85
+#: src/js/map/html.js:66
 msgid "Area"
 msgstr ""
 
-#: core/components/filters/functions.php:197
+#: core/components/filters/functions.php:198
 #: template-parts/sections/index/hero.php:32
 msgid "Available immediately"
 msgstr ""
 
-#: core/components/filters/functions.php:200
+#: core/components/filters/functions.php:201
 #: core/template-parts/account/edit-unit.php:266
 #: core/template-parts/filters/search-tabs.php:59
 msgid "Bedrooms"
 msgstr ""
 
-#: core/components/filters/functions.php:204
+#: core/components/filters/functions.php:205
 #: core/template-parts/filters/search-tabs.php:123
 msgid "District"
 msgstr ""
 
-#: core/components/filters/functions.php:211
+#: core/components/filters/functions.php:212
 #: template-parts/sections/index/hero.php:40
 msgid "In construction"
 msgstr ""
 
-#: core/components/filters/functions.php:235
+#: core/components/filters/functions.php:236
 #: core/components/units/units-by-beds.php:74
 #: core/includes/entities/class-entity-property.php:87
 #: core/includes/entities/class-entity-unit.php:210
@@ -459,51 +478,54 @@ msgstr ""
 #: core/template-parts/cards/unit-card.php:32
 #: core/template-parts/cards/unit-square-card.php:31
 #: core/template-parts/filters/result-filters.php:158
+#: src/js/map/html.js:62
+#: src/js/map/html.js:63
 msgid "Beds"
 msgstr ""
 
-#: core/components/filters/functions.php:239
+#: core/components/filters/functions.php:240
 #: core/includes/entities/class-entity-unit.php:208
 #: core/template-parts/cards/unit-card.php:33
 #: core/template-parts/cards/unit-square-card.php:32
 msgid "Studio"
 msgstr ""
 
-#: core/components/filters/functions.php:288
+#: core/components/filters/functions.php:289
 #: core/includes/entities/class-entity-property.php:99
 #: core/includes/entities/class-entity-unit.php:221
 #: template-parts/sections/single/dropdowns.php:68
 msgid "Baths"
 msgstr ""
 
-#: core/components/filters/functions.php:370
+#: core/components/filters/functions.php:371
 msgid "Any year"
 msgstr ""
 
-#: core/components/filters/functions.php:429
+#: core/components/filters/functions.php:430
 msgid "Any"
 msgstr ""
 
-#: core/components/filters/functions.php:571
+#: core/components/filters/functions.php:572
 #: core/template-parts/filters/search-tabs.php:125
 msgid "Any Locations"
 msgstr ""
 
-#: core/components/filters/functions.php:683
+#: core/components/filters/functions.php:762
 #: core/template-parts/search-results/properties-list.php:70
 #: core/template-parts/search-results/tabs.php:63
 #: core/template-parts/search-results/units-list.php:64
 msgid "Items not found"
 msgstr ""
 
-#: core/components/filters/functions.php:696
-#: core/components/filters/functions.php:792
+#: core/components/filters/functions.php:775
+#: core/components/filters/functions.php:871
+#, php-format
 msgid "%s property found"
 msgid_plural "%s properties found"
 msgstr[0] ""
 msgstr[1] ""
 
-#: core/components/filters/functions.php:780
+#: core/components/filters/functions.php:859
 msgid "Properties not found"
 msgstr ""
 
@@ -560,15 +582,15 @@ msgstr ""
 
 #: core/components/modals/boost-modal.php:41
 #: core/components/modals/create-modal.php:132
-#: core/template-parts/account/edit-property.php:89
-#: core/template-parts/account/edit-property.php:146
-#: core/template-parts/account/edit-property.php:162
+#: core/template-parts/account/edit-property.php:127
+#: core/template-parts/account/edit-property.php:189
+#: core/template-parts/account/edit-property.php:208
 #: core/template-parts/account/edit-unit.php:233
 #: core/template-parts/account/edit-unit.php:251
-#: core/template-parts/account/login-form.php:193
+#: core/template-parts/account/login-form.php:198
 #: core/template-parts/filters/result-filters.php:163
 #: core/template-parts/ui/dropdown.php:12
-#: east-property/dev/src/js/filters.js:24
+#: src/js/filters.js:24
 msgid "Select"
 msgstr ""
 
@@ -581,7 +603,7 @@ msgid "Hello, I am interested in property"
 msgstr ""
 
 #: core/components/modals/broker-modal.php:25
-#: core/template-parts/common/contact-panel.php:24
+#: core/template-parts/common/contact-panel.php:66
 #: single-unit.php:149
 msgid "Contact broker"
 msgstr ""
@@ -591,27 +613,27 @@ msgstr ""
 msgid "You can get more information about the available properties, special deals and prices."
 msgstr ""
 
-#: core/components/modals/broker-modal.php:38
+#: core/components/modals/broker-modal.php:39
 msgid "We work directly with brokers"
 msgstr ""
 
-#: core/components/modals/broker-modal.php:43
+#: core/components/modals/broker-modal.php:44
 #: core/components/modals/quote-modal.php:54
 #: template-parts/sections/index/about.php:20
 msgid "We facilitate the entire process for you"
 msgstr ""
 
-#: core/components/modals/broker-modal.php:48
+#: core/components/modals/broker-modal.php:49
 #: core/components/modals/quote-modal.php:59
 #: template-parts/sections/index/about.php:25
 msgid "We don’t add anything on top of the price"
 msgstr ""
 
-#: core/components/modals/broker-modal.php:59
+#: core/components/modals/broker-modal.php:60
 msgid "Phone"
 msgstr ""
 
-#: core/components/modals/broker-modal.php:68
+#: core/components/modals/broker-modal.php:69
 msgid "WhatsApp"
 msgstr ""
 
@@ -619,7 +641,7 @@ msgstr ""
 #: core/components/modals/create-modal.php:172
 #: core/components/modals/signin-modal.php:27
 #: core/template-parts/account/login-form.php:26
-#: core/template-parts/account/login-form.php:234
+#: core/template-parts/account/login-form.php:240
 msgid "Create account"
 msgstr ""
 
@@ -649,25 +671,25 @@ msgstr ""
 #: core/components/modals/create-modal.php:69
 #: core/components/modals/signin-modal.php:37
 #: core/template-parts/account/login-form.php:50
-#: core/template-parts/account/login-form.php:122
+#: core/template-parts/account/login-form.php:124
 #: core/template-parts/account/reset-password.php:34
 msgid "Password"
 msgstr ""
 
 #: core/components/modals/create-modal.php:75
-#: core/template-parts/account/login-form.php:130
+#: core/template-parts/account/login-form.php:132
 msgid "Repeat Password"
 msgstr ""
 
 #: core/components/modals/create-modal.php:83
-#: core/template-parts/account/login-form.php:139
+#: core/template-parts/account/login-form.php:141
 msgid "Choose your role"
 msgstr ""
 
 #: core/components/modals/create-modal.php:114
-#: core/template-parts/account/login-form.php:171
-#: core/template-parts/account/profile-client.php:136
-#: core/template-parts/account/profile.php:369
+#: core/template-parts/account/login-form.php:173
+#: core/template-parts/account/profile-client.php:137
+#: core/template-parts/account/profile.php:370
 #: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:85
 msgid "Phone number"
 msgstr ""
@@ -680,13 +702,13 @@ msgid "Agency"
 msgstr ""
 
 #: core/components/modals/create-modal.php:124
-#: core/template-parts/account/login-form.php:184
+#: core/template-parts/account/login-form.php:187
 #: core/template-parts/account/profile.php:330
 msgid "If you can’t find your agency in the list, please contact us at "
 msgstr ""
 
 #: core/components/modals/create-modal.php:126
-#: core/template-parts/account/login-form.php:186
+#: core/template-parts/account/login-form.php:190
 #: core/template-parts/account/profile.php:333
 msgid "Your request will be reviewed within 24 hours."
 msgstr ""
@@ -696,37 +718,27 @@ msgid "vector arrow"
 msgstr ""
 
 #: core/components/modals/create-modal.php:159
-#: core/template-parts/account/login-form.php:221
+#: core/template-parts/account/login-form.php:227
 msgid "I have read and agree to the"
 msgstr ""
 
 #: core/components/modals/create-modal.php:161
-#: core/template-parts/account/login-form.php:223
+#: core/template-parts/account/login-form.php:229
 msgid "Terms of Use"
 msgstr ""
 
 #: core/components/modals/create-modal.php:163
-#: core/template-parts/account/login-form.php:225
+#: core/template-parts/account/login-form.php:231
 msgid "and"
 msgstr ""
 
 #: core/components/modals/create-modal.php:165
-#: core/template-parts/account/login-form.php:227
+#: core/template-parts/account/login-form.php:233
 msgid "Privacy Policy"
 msgstr ""
 
 #: core/components/modals/create-modal.php:175
 msgid "Have an account?"
-msgstr ""
-
-#: core/components/modals/create-modal.php:177
-#: core/components/modals/forgot-modal.php:23
-#: core/components/modals/signin-modal.php:10
-#: core/components/modals/signin-modal.php:43
-#: core/template-parts/account/login-form.php:20
-#: core/template-parts/account/login-form.php:61
-#: core/template-parts/common/header.php:45
-msgid "Sign in"
 msgstr ""
 
 #: core/components/modals/forgot-modal.php:6
@@ -931,11 +943,13 @@ msgstr ""
 #: core/template-parts/cards/map-sidebar.php:86
 #: template-parts/sections/single/dropdowns.php:40
 #: template-parts/sections/single/dropdowns.php:75
+#: src/js/map/html.js:67
 msgid "sqft"
 msgstr ""
 
 #: core/components/units/units-by-beds.php:54
 #: core/components/units/units-by-beds.php:57
+#, php-format
 msgid "Floor plan for %s bed unit"
 msgstr ""
 
@@ -945,15 +959,15 @@ msgstr ""
 msgid "from"
 msgstr ""
 
-#: core/includes/entities/class-entity-estate-user.php:205
+#: core/includes/entities/class-entity-estate-user.php:254
 msgid "Your email address has been successfully verified."
 msgstr ""
 
-#: core/includes/entities/class-entity-estate-user.php:206
+#: core/includes/entities/class-entity-estate-user.php:255
 msgid "You can now enjoy all the features of your account and start using our services."
 msgstr ""
 
-#: core/includes/entities/class-entity-estate-user.php:213
+#: core/includes/entities/class-entity-estate-user.php:263
 msgid "Email Verified"
 msgstr ""
 
@@ -969,7 +983,7 @@ msgid "Handover:"
 msgstr ""
 
 #: core/includes/entities/class-entity-property.php:529
-#: core/template-parts/account/edit-property.php:178
+#: core/template-parts/account/edit-property.php:224
 msgid "Handover Date"
 msgstr ""
 
@@ -1024,10 +1038,6 @@ msgstr ""
 
 #: core/includes/entities/class-entity-unit.php:535
 msgid "Price should not be empty and must bigger than 200 000 AED"
-msgstr ""
-
-#: core/includes/entities/class-entity-unit.php:543
-msgid "Title should not be empty and must bigger than 20 characters"
 msgstr ""
 
 #: core/includes/entities/class-entity-unit.php:553
@@ -1445,6 +1455,7 @@ msgstr ""
 
 #: core/includes/registers/post-types/units.php:13
 #: core/includes/registers/post-types/units.php:36
+#: src/js/map/html.js:53
 msgid "Unit"
 msgstr ""
 
@@ -1498,78 +1509,82 @@ msgstr ""
 msgid "Units insighted by this author"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:19
+#: core/template-parts/account/edit-property.php:21
 msgid "Edit property project:"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:20
+#: core/template-parts/account/edit-property.php:22
 msgid "Add new property project"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:21
+#: core/template-parts/account/edit-property.php:23
 msgid "Edit property project"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:21
+#: core/template-parts/account/edit-property.php:24
 msgid "Add property project"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:48
+#: core/template-parts/account/edit-property.php:52
 #: core/template-parts/account/edit-unit.php:62
 msgid "My account"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:69
+#: core/template-parts/account/edit-property.php:104
 #: core/template-parts/account/edit-unit.php:125
 msgid "Title"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:72
+#: core/template-parts/account/edit-property.php:109
 msgid "azizi “beach oasis”"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:104
+#: core/template-parts/account/edit-property.php:142
 msgid "Pick on map"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:110
+#: core/template-parts/account/edit-property.php:148
 msgid "Latitude"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:121
+#: core/template-parts/account/edit-property.php:161
 msgid "Longitude"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:161
+#: core/template-parts/account/edit-property.php:205
 msgid "Ownership type"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:202
+#: core/template-parts/account/edit-property.php:243
 msgid "Project is already completed / Ready"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:214
+#: core/template-parts/account/edit-property.php:256
 msgid "Contain Property Types "
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:238
+#: core/template-parts/account/edit-property.php:282
 #: core/template-parts/account/edit-unit.php:314
 #: core/template-parts/properties/property-single.php:210
 msgid "Description"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:267
+#: core/template-parts/account/edit-property.php:311
+msgid "Update project"
+msgstr ""
+
+#: core/template-parts/account/edit-property.php:312
 #: single-unit.php:84
 #: single-unit.php:90
 msgid "Save"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:310
+#: core/template-parts/account/edit-property.php:359
 #: core/template-parts/account/edit-unit.php:413
 msgid "Pictures"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:312
+#: core/template-parts/account/edit-property.php:361
 #: core/template-parts/account/edit-unit.php:415
 msgid "Browse files"
 msgstr ""
@@ -1699,59 +1714,59 @@ msgstr ""
 msgid "Create a new account"
 msgstr ""
 
-#: core/template-parts/account/login-form.php:111
-#: core/template-parts/account/profile-client.php:127
+#: core/template-parts/account/login-form.php:112
+#: core/template-parts/account/profile-client.php:126
 #: core/template-parts/account/profile.php:317
 msgid "Email address"
 msgstr ""
 
-#: core/template-parts/account/login-form.php:113
+#: core/template-parts/account/login-form.php:114
 msgid "admin@example.com"
 msgstr ""
 
-#: core/template-parts/account/login-form.php:181
+#: core/template-parts/account/login-form.php:183
 msgid "Choose your agency"
 msgstr ""
 
-#: core/template-parts/account/profile-client.php:33
-#: core/template-parts/account/profile-client.php:52
+#: core/template-parts/account/profile-client.php:32
+#: core/template-parts/account/profile-client.php:51
 #: core/template-parts/account/profile.php:58
 #: core/template-parts/account/profile.php:242
 msgid "Saved properties"
 msgstr ""
 
-#: core/template-parts/account/profile-client.php:39
+#: core/template-parts/account/profile-client.php:38
 msgid "My Account"
 msgstr ""
 
-#: core/template-parts/account/profile-client.php:93
+#: core/template-parts/account/profile-client.php:92
 #: core/template-parts/account/profile.php:283
 msgid "You have not added any favorite units."
 msgstr ""
 
-#: core/template-parts/account/profile-client.php:103
+#: core/template-parts/account/profile-client.php:102
 #: core/template-parts/account/profile.php:64
 #: core/template-parts/account/profile.php:293
 msgid "Account details"
 msgstr ""
 
-#: core/template-parts/account/profile-client.php:118
+#: core/template-parts/account/profile-client.php:117
 #: core/template-parts/account/profile.php:308
 msgid "Display name"
 msgstr ""
 
-#: core/template-parts/account/profile-client.php:145
-#: core/template-parts/account/profile.php:378
+#: core/template-parts/account/profile-client.php:150
+#: core/template-parts/account/profile.php:383
 msgid "WhatsApp number"
 msgstr ""
 
-#: core/template-parts/account/profile-client.php:154
-#: core/template-parts/account/profile.php:387
+#: core/template-parts/account/profile-client.php:165
+#: core/template-parts/account/profile.php:398
 msgid "Save changes"
 msgstr ""
 
-#: core/template-parts/account/profile-client.php:162
-#: core/template-parts/account/profile.php:395
+#: core/template-parts/account/profile-client.php:173
+#: core/template-parts/account/profile.php:406
 msgid "Avatar"
 msgstr ""
 
@@ -1776,10 +1791,12 @@ msgid "My projects"
 msgstr ""
 
 #: core/template-parts/account/profile.php:80
+#, php-format
 msgid "My distress (%d)"
 msgstr ""
 
 #: core/template-parts/account/profile.php:80
+#, php-format
 msgid "My properties (%d)"
 msgstr ""
 
@@ -1811,6 +1828,7 @@ msgid "You have not added any units yet."
 msgstr ""
 
 #: core/template-parts/account/profile.php:172
+#, php-format
 msgid "My projects (%d)"
 msgstr ""
 
@@ -1877,6 +1895,7 @@ msgstr ""
 
 #. translators: %d is the discount percent off the original price.
 #: core/template-parts/cards/unit-card.php:80
+#, php-format
 msgid "-%d%%"
 msgstr ""
 
@@ -1896,12 +1915,23 @@ msgstr ""
 msgid "Original Price:"
 msgstr ""
 
-#: core/template-parts/common/breadcrumbs.php:13
+#: core/template-parts/common/breadcrumbs.php:14
 msgid "Home"
 msgstr ""
 
-#: core/template-parts/common/contact-panel.php:7
+#: core/template-parts/common/contact-panel.php:20
+#: page-mortgage-calculator.php:28
+msgid "Free consultation and pre-approval. A DDA specialist will contact you and advise on the next step."
+msgstr ""
+
+#: core/template-parts/common/contact-panel.php:24
 msgid "Contact broker to learn more and get special offers."
+msgstr ""
+
+#: core/template-parts/common/contact-panel.php:55
+#: page-mortgage-calculator.php:30
+#: template-parts/sections/mortgage-calculator/calculator.php:252
+msgid "Get pre-approved"
 msgstr ""
 
 #: core/template-parts/common/footer.php:13
@@ -2101,6 +2131,7 @@ msgstr ""
 #: core/template-parts/properties/property-single.php:56
 #: single-unit.php:77
 #: single-unit.php:78
+#: single.php:81
 msgid "Share"
 msgstr ""
 
@@ -2121,6 +2152,7 @@ msgstr ""
 
 #: core/template-parts/properties/property-single.php:160
 #: single-unit.php:325
+#: template-parts/sections/mortgage-calculator/matched-units.php:30
 msgid "All properties"
 msgstr ""
 
@@ -2169,6 +2201,10 @@ msgstr ""
 msgid "Loading project details..."
 msgstr ""
 
+#: core/template-parts/ui/tooltip.php:10
+msgid "More info"
+msgstr ""
+
 #: core/template-parts/units/featured.php:13
 msgid "See all properties"
 msgstr ""
@@ -2208,6 +2244,35 @@ msgstr ""
 
 #. Template Name of the theme
 msgid "Homepage"
+msgstr ""
+
+#. Template Name of the theme
+msgid "Mortgage Calculator"
+msgstr ""
+
+#: page-mortgage-calculator.php:27
+msgid "Ready to find out the exact terms for your deal?"
+msgstr ""
+
+#. Template Name of the theme
+msgid "News Listing Page"
+msgstr ""
+
+#: page-news.php:20
+#: single.php:36
+msgid "News"
+msgstr ""
+
+#: page-news.php:44
+msgid "No news articles found"
+msgstr ""
+
+#: page-news.php:47
+msgid "We are preparing the latest market updates and property news. Please check back later."
+msgstr ""
+
+#: page-news.php:60
+msgid "Show older news"
 msgstr ""
 
 #. Template Name of the theme
@@ -2257,6 +2322,9 @@ msgid ""
 msgstr ""
 
 #: single-unit.php:201
+#: template-parts/sections/mortgage-calculator/calculator.php:85
+#: template-parts/sections/mortgage-calculator/calculator.php:213
+#: template-parts/sections/mortgage-calculator/entry-costs.php:15
 msgid "Down payment"
 msgstr ""
 
@@ -2297,6 +2365,29 @@ msgstr ""
 msgid "More properties like this"
 msgstr ""
 
+#: single.php:134
+msgid "Copy link"
+msgstr ""
+
+#: single.php:141
+msgid "Link copied to clipboard!"
+msgstr ""
+
+#: single.php:167
+#, php-format
+msgid "Updated: %s"
+msgstr ""
+
+#: single.php:182
+msgid "Other news"
+msgstr ""
+
+#. translators: %s is a district name.
+#: taxonomy-location.php:36
+#, php-format
+msgid "Projects in %s"
+msgstr ""
+
 #: template-parts/sections/index/about.php:10
 msgid "Why East Property"
 msgstr ""
@@ -2313,18 +2404,380 @@ msgstr ""
 msgid "See all new properties"
 msgstr ""
 
-#: east-property/dev/src/js/filters.js:16
+#: template-parts/sections/mortgage-calculator/calculator.php:8
+msgid "Residency status"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:16
+msgid "UAE resident"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:25
+msgid "Non-resident"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:32
+msgid "Minimum income"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:36
+msgid "Age"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:37
+msgid "from 21, loan repaid by 65"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:40
+msgid "Bank financing"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:41
+msgid "up to 80%"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:47
+msgid "Property price"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:50
+msgid "Total purchase price of the property in AED"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:76
+msgid "from 300,000"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:77
+msgid "to 20,000,000"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:88
+msgid "Upfront equity contribution (min 20% for residents, 40% for non-residents)"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:114
+msgid "from 20"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:115
+msgid "to 80"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:123
+msgid "Loan term"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:126
+msgid "Mortgage duration in years (up to 25 years)"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:140
+msgid "years"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:152
+msgid "from 1"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:153
+msgid "to 25"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:161
+msgid "Interest rate"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:164
+msgid "Annual interest rate offered by UAE mortgage lenders"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:190
+msgid "from 2,5"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:191
+msgid "to 8"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:204
+msgid "Monthly payment"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:209
+msgid "Loan"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:217
+msgid "Interest paid"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:231
+msgid "Principal"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:237
+msgid "Interest over term"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:245
+msgid "Preliminary estimate. The final rate depends on the bank, your profile, and the property."
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:260
+msgid "Download calculation"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/calculator.php:266
+msgid "DDA mortgage services"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:7
+msgid "Full cost of mortgage entry"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:24
+msgid "DLD fee (4% + 580 AED)"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:33
+msgid "Agency commission (2%)"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:42
+msgid "Bank fee (up to 1% of loan)"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:51
+msgid "Property valuation"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:60
+msgid "Mortgage registration (0.25% + 290 AED)"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:69
+msgid "Total"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:82
+msgid "The deal in 6 steps"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:90
+msgid "Pre-approval"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:91
+msgid "Preliminary approval from the bank"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:98
+msgid "MOU (Form F)"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:99
+msgid "Sales contract signing, ~10% deposit"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:106
+msgid "Bank valuation"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:107
+msgid "Property valuation inspection"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:114
+msgid "Final approval"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:115
+msgid "Final mortgage offer & facility letter"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:122
+msgid "DLD registration"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:123
+msgid "Registration of ownership and mortgage"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:130
+msgid "Funds transfer & keys"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:131
+msgid "Disbursement of funds and key handover"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:138
+msgid "4–8 weeks from MOU to keys · full process 30–100 days"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/faq.php:5
+msgid "Can a non-resident get a mortgage in Dubai?"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/faq.php:6
+msgid "Yes. Non-residents can get a mortgage with a down payment from 40% and verified income from 10,000 USD per month."
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/faq.php:10
+msgid "Is life insurance mandatory?"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/faq.php:11
+msgid "Yes, UAE banks require life insurance as a mandatory condition for securing a mortgage loan."
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/faq.php:15
+msgid "Can I get a mortgage on an off-plan property?"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/faq.php:16
+msgid "Yes, mortgages are available for completed as well as off-plan projects from authorized developers with up to 50% financing."
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/faq.php:20
+msgid "How long does the whole process take?"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/faq.php:21
+msgid "The entire process typically takes between 30 and 100 days from the initial application to the key handover and deed registration."
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/faq.php:25
+msgid "What is pre-approval and how long is it valid?"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/faq.php:26
+msgid "Pre-approval is an initial assessment from a bank confirming the loan amount you qualify for. It is usually valid for 60 to 90 days."
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/faq.php:30
+msgid "What costs are there besides the down payment?"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/faq.php:31
+msgid "Additional costs include the DLD fee (4% + 580 AED), agency commission (2%), bank processing fee (up to 1%), property valuation, and mortgage registration."
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/faq.php:40
+msgid "Questions and answers"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/hero.php:7
+msgid "Mortgage calculator in"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/hero.php:7
+msgid "Dubai"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/hero.php:12
+msgid "Monthly payment, full cost of entering the deal, and a comparison of mortgage vs. developer payment plan — in a single calculation."
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/hero.php:16
+msgid "Free consultation and pre-approval. Response within 15 minutes"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/matched-units.php:27
+msgid "Objects that match your criteria"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/off-plan.php:26
+msgid "Mortgage on an off-plan property"
+msgstr ""
+
+#. translators: %s: 50% complete
+#: template-parts/sections/mortgage-calculator/off-plan.php:34
+#, php-format
+msgid "An off-plan mortgage becomes available once the building is more than %s, the buyer has paid over 50%% of the price, and the developer is accredited by the bank."
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/off-plan.php:35
+msgid "50% complete"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/off-plan.php:40
+msgid "Before that stage, buyers use the developer’s payment plan."
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/off-plan.php:51
+msgid "Learn more"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:5
+msgid "LTV / AECB / DBR Expertise"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:6
+msgid "In-house mortgage advisory department"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:9
+msgid "Direct Negotiations with Banks"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:10
+msgid "Tailored terms based on your profile"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:13
+msgid "Free of Charge"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:14
+msgid "Free consultation and pre-approval"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:17
+msgid "RU / EN / AR"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:18
+msgid "Response within 15 minutes"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:21
+msgid "We Work with Non-Residents"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:22
+msgid "Full end-to-end support for purchases from abroad"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:25
+msgid "Islamic Financing"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:26
+msgid "Murabaha · Ijarah · Musharakah → separate page"
+msgstr ""
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:34
+msgid "Why DDA"
+msgstr ""
+
+#: src/js/filters.js:16
 msgid "beds"
 msgstr ""
 
-#: east-property/dev/src/js/filters.js:16
+#: src/js/filters.js:16
 msgid "bed"
 msgstr ""
 
-#: east-property/dev/src/js/filters.js:21
+#: src/js/filters.js:21
 msgid "baths"
 msgstr ""
 
-#: east-property/dev/src/js/filters.js:21
+#: src/js/filters.js:21
 msgid "bath"
+msgstr ""
+
+#: src/js/map/map.js:325
+msgid "Selected location"
 msgstr ""

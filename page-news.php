@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Template Name: News Listing Page
+ */
+
 get_header( null, array( 'color' => 'white' ) );
 
 $paged      = pagination_get_current_page();

@@ -11,6 +11,7 @@ const NEWS_PER_PAGE = 6;
  * Get news query (Optimized)
  *
  * @param array $custom_args
+ *
  * @return WP_Query
  */
 function core_get_news( array $custom_args = array() ): WP_Query {
@@ -46,6 +47,7 @@ function core_get_news( array $custom_args = array() ): WP_Query {
  *
  * @param int $exclude_id
  * @param int $count
+ *
  * @return WP_Query
  */
 function core_get_other_news( int $exclude_id = 0, int $count = 3 ): WP_Query {
@@ -151,37 +153,64 @@ add_action( 'deleted_post', 'core_invalidate_news_cache' );
  *
  * @param string $permalink
  * @param WP_Post $post
+ * @param bool $leavename
+ *
  * @return string
  */
-function core_news_post_link( string $permalink, WP_Post $post ): string {
-	if ( 'post' === $post->post_type ) {
-		return core_home_url( '/news/' . $post->post_name . '/' );
+function core_news_post_link( string $permalink, WP_Post $post, bool $leavename = false ): string {
+	if ( 'post' !== $post->post_type ) {
+		return $permalink;
 	}
 
-	return $permalink;
+	$name = $leavename ? '%postname%' : $post->post_name;
+
+	return core_home_url( '/news/' . $name . '/' );
 }
 
-add_filter( 'post_link', 'core_news_post_link', 10, 2 );
+add_filter( 'post_link', 'core_news_post_link', 10, 3 );
 
 /**
  * Register rewrite rules for news posts and pagination
  */
 function core_register_news_pagination_rewrite(): void {
-	add_rewrite_rule(
-		'^news/page-([0-9]+)/?$',
-		'index.php?pagename=news&cur_page=$matches[1]',
-		'top'
-	);
-	add_rewrite_rule(
-		'^news/page/([0-9]+)/?$',
-		'index.php?pagename=news&cur_page=$matches[1]',
-		'top'
-	);
-	add_rewrite_rule(
-		'^news/([^/]+)/?$',
-		'index.php?name=$matches[1]',
-		'top'
-	);
+	$prefixes = array( '' );
+
+	/*
+	 * Polylang does not build language prefixed variants of hand written rewrite
+	 * rules, so without these a Russian post sat at /ru/news/{slug}/ and answered
+	 * 404 — the permalink pointed at an address that did not route.
+	 */
+	if ( function_exists( 'pll_languages_list' ) && function_exists( 'pll_default_language' ) ) {
+		$default_language = (string) pll_default_language( 'slug' );
+
+		foreach ( (array) pll_languages_list() as $language ) {
+			if ( '' === (string) $language || $language === $default_language ) {
+				continue;
+			}
+
+			$prefixes[] = $language . '/';
+		}
+	}
+
+	foreach ( $prefixes as $prefix ) {
+		$lang = '' === $prefix ? '' : '&lang=' . rtrim( $prefix, '/' );
+
+		add_rewrite_rule(
+			'^' . $prefix . 'news/page-([0-9]+)/?$',
+			'index.php?pagename=news&cur_page=$matches[1]' . $lang,
+			'top'
+		);
+		add_rewrite_rule(
+			'^' . $prefix . 'news/page/([0-9]+)/?$',
+			'index.php?pagename=news&cur_page=$matches[1]' . $lang,
+			'top'
+		);
+		add_rewrite_rule(
+			'^' . $prefix . 'news/([^/]+)/?$',
+			'index.php?name=$matches[1]' . $lang,
+			'top'
+		);
+	}
 }
 
 add_action( 'init', 'core_register_news_pagination_rewrite' );

@@ -49,15 +49,6 @@ install_dependencies() {
 	  cd "$REPO_ROOT"
     log "Refreshing npm dependencies"
 		npm ci --no-audit --no-fund
-
-		if [ -d "east-property" ]; then
-    	cd east-property
-    elif [ -d "disstress" ]; then
-    	cd disstress
-    fi
-    log "Refreshing npm dependencies in submodules"
-    npm ci --no-audit --no-fund
-    cd "$REPO_ROOT"
 }
 
 sync_acf_json() {
@@ -87,29 +78,6 @@ reset_transients() {
 
   wp --path="$WP_ROOT" rewrite flush --hard --allow-root
   log "Permalinks rules have been flushed"
-}
-
-discard_submodule_changes() {
-	if [ ! -f .gitmodules ]; then
-		return 0
-	fi
-
-	git submodule foreach --quiet --recursive '
-		git reset --hard HEAD
-		git clean -fd
-	'
-}
-
-update_submodules() {
-	if [ ! -f .gitmodules ]; then
-		return 0
-	fi
-
-	log "Discarding submodule changes"
-	discard_submodule_changes
-	log "Syncing submodules"
-	git submodule sync --recursive
-	git submodule update --init --recursive --force --jobs 4
 }
 
 update_theme_repo() {
@@ -172,7 +140,6 @@ main() {
 	cd "$REPO_ROOT"
 	log "Running deploy for $DEPLOY_BRANCH in $REPO_ROOT"
 	update_theme_repo
-	update_submodules
 	update_mu_plugins
 	install_dependencies
 	sync_acf_json
