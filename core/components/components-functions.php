@@ -99,3 +99,31 @@ function core_home_url( string $path = '' ): string {
 
 	return home_url( $path );
 }
+/**
+ * Keep the account area out of every shared cache.
+ *
+ * The account template serves personal broker data to signed-in visitors and a
+ * form carrying a fresh nonce to everyone else, so a copy held by a proxy, a CDN
+ * or another visitor's browser is either a leak or an expired nonce that breaks
+ * logging in. Matching on the resolved template rather than on a slug keeps this
+ * true for every translation of the page.
+ *
+ * @param string $template Template chosen by the template loader.
+ *
+ * @return string
+ */
+function core_never_cache_account( string $template ): string {
+	if ( 'page-account.php' !== basename( $template ) ) {
+		return $template;
+	}
+
+	if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+		define( 'DONOTCACHEPAGE', true );
+	}
+
+	nocache_headers();
+
+	return $template;
+}
+
+add_filter( 'template_include', 'core_never_cache_account' );

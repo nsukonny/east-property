@@ -3,15 +3,7 @@
  * Display errors, success or info messages if they exists
  */
 
-if ( session_status() !== PHP_SESSION_ACTIVE ) {
-	session_start();
-}
-
-$notifications = array();
-if ( ! empty( $_SESSION['core_notifications'] ) && is_array( $_SESSION['core_notifications'] ) ) {
-	$notifications = $_SESSION['core_notifications'];
-	unset( $_SESSION['core_notifications'] );
-}
+$notifications = core_notifications();
 
 if ( empty( $notifications ) ) {
 	return;
