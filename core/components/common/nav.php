@@ -15,10 +15,9 @@ if ( empty( $current_user ) || 0 === $current_user->ID ) {
 	$current_user = null;
 }
 
-$estate_user   = $current_user ? new Estate_User( $current_user ) : null;
-$logout_url    = wp_logout_url( core_get_account_page_url() );
-$lang          = function_exists( 'pll_current_language' ) ? pll_current_language() : null;
-$all_languages = function_exists( 'get_all_languages' ) ? get_all_languages() : array();
+$estate_user = $current_user ? new Estate_User( $current_user ) : null;
+$logout_url  = wp_logout_url( core_get_account_page_url() );
+$switcher    = function_exists( 'core_get_language_switcher' ) ? core_get_language_switcher() : array();
 ?>
 <nav id="header-nav" class="header-nav">
 	<div class="header-nav-drawer">
@@ -42,21 +41,15 @@ $all_languages = function_exists( 'get_all_languages' ) ? get_all_languages() : 
 		);
 		?>
 
-		<?php if ( function_exists( 'pll_the_languages' ) && ! empty( $all_languages ) ) : ?>
+		<?php if ( ! empty( $switcher ) ) : ?>
 			<div class="header-nav-languages mobile">
 				<ul class="language-switcher">
-					<?php foreach ( $all_languages as $language ) {
-						if ( $language['slug'] === $lang ) {
-							continue;
-						}
-
-						$label = 'ru' === $language['slug'] ? 'РУ' : strtoupper( $language['slug'] );
-						?>
+					<?php foreach ( $switcher as $language ) { ?>
 						<a lang="<?php echo esc_attr( $language['locale'] ); ?>"
 						   hreflang="<?php echo esc_attr( $language['locale'] ); ?>"
 						   href="<?php echo esc_url( $language['url'] ); ?>">
 							<?php require THEME_PATH . '/assets/img/lang/earth.svg'; ?>
-							<span><?php echo esc_html( $label ); ?></span>
+							<span><?php echo esc_html( $language['label'] ); ?></span>
 						</a>
 					<?php } ?>
 				</ul>

@@ -312,3 +312,313 @@ function core_sitemap_cache_headers( $headers ): array {
 }
 
 add_filter( 'wpseo_sitemap_http_headers', 'core_sitemap_cache_headers' );
+
+/**
+ * The paginated listing a template is about to render.
+ *
+ * The listings paginate through custom /page-N/ rewrite rules instead of through
+ * WP_Query, so WordPress never learns that a page number is out of range and
+ * renders an empty listing under a 200 — a soft 404 — while Yoast, seeing no
+ * paged query, resolves %%page%% to nothing and ships one title for the whole
+ * sequence. Asking the same getter the template is about to ask answers both:
+ * an empty page past the first one is out of range, and the total says how many
+ * pages there are.
+ *
+ * @param string $template Basename of the template chosen by the loader.
+ *
+ * @return array|null Items, total and page size; null when this is no listing.
+ */
+function core_paginated_listing( string $template ): ?array {
+	static $memo = array();
+
+	$page = pagination_get_current_page();
+	$key  = $template . '|' . $page;
+
+	if ( array_key_exists( $key, $memo ) ) {
+		return $memo[ $key ];
+	}
+
+	$per_page = defined( 'PROPERTIES_PER_PAGE' ) ? PROPERTIES_PER_PAGE : 20;
+	$listing  = null;
+
+	switch ( $template ) {
+		case 'page-off-plan.php':
+			$listing = core_listing_from_units( 'off-plan', $per_page );
+			break;
+
+		case 'page-secondary.php':
+			$listing = core_listing_from_units( 'secondary', $per_page );
+			break;
+
+		case 'page-distress.php':
+			$listing = core_listing_from_units( 'distress', $per_page );
+			break;
+
+		case 'page-properties.php':
+		case 'taxonomy-location.php':
+			$properties = get_properties( $per_page );
+			$listing    = array(
+				'items'    => $properties['items'] ?? array(),
+				'total'    => (int) ( $properties['total'] ?? 0 ),
+				'per_page' => $per_page,
+			);
+			break;
+
+		case 'page-news.php':
+			$query   = core_get_news( array( 'paged' => $page ) );
+			$listing = array(
+				'items'    => $query->posts,
+				'total'    => (int) $query->found_posts,
+				'per_page' => max( 1, (int) $query->get( 'posts_per_page' ) ),
+			);
+			break;
+
+		case 'single-developers.php':
+			$developer  = new Developer( get_queried_object_id() );
+			$properties = $developer->get_properties();
+			$listing    = array(
+				'items'    => array_slice( $properties, ( $page - 1 ) * $per_page, $per_page ),
+				'total'    => count( $properties ),
+				'per_page' => $per_page,
+			);
+			break;
+	}
+
+	$memo[ $key ] = $listing;
+
+	return $listing;
+}
+
+/**
+ * One page of a units listing, shaped for core_paginated_listing().
+ *
+ * @param string $listing_type Listing type slug.
+ * @param int    $per_page     Page size.
+ *
+ * @return array
+ */
+function core_listing_from_units( string $listing_type, int $per_page ): array {
+	$units = get_units( $listing_type, $per_page );
+
+	return array(
+		'items'    => $units['items'] ?? array(),
+		'total'    => (int) ( $units['total'] ?? 0 ),
+		'per_page' => $per_page,
+	);
+}
+
+/**
+ * Template of the paginated listing being rendered past its first page.
+ *
+ * Set once the guard has confirmed the page exists, so the canonical and title
+ * filters that run later during wp_head can tell a genuine page of a listing
+ * from any other request without repeating the work.
+ *
+ * @param string|null $template Value to store, null to read the stored one.
+ *
+ * @return string Empty when this request is not such a page.
+ */
+function core_paginated_listing_template( ?string $template = null ): string {
+	static $stored = '';
+
+	if ( null !== $template ) {
+		$stored = $template;
+	}
+
+	return $stored;
+}
+
+/**
+ * Turn an out-of-range listing page into a real 404.
+ *
+ * The template_include filter is the last hook before the template starts
+ * writing output, so a status set here still reaches the browser.
+ *
+ * @param string $template Template chosen by the template loader.
+ *
+ * @return string
+ */
+function core_pagination_soft_404( string $template ): string {
+	if ( 2 > pagination_get_current_page() ) {
+		return $template;
+	}
+
+	$basename = basename( $template );
+	$listing  = core_paginated_listing( $basename );
+
+	if ( null === $listing ) {
+		return $template;
+	}
+
+	if ( ! empty( $listing['items'] ) ) {
+		core_paginated_listing_template( $basename );
+
+		return $template;
+	}
+
+	global $wp_query;
+
+	$wp_query->set_404();
+	status_header( 404 );
+	nocache_headers();
+
+	return get_404_template();
+}
+
+add_filter( 'template_include', 'core_pagination_soft_404' );
+
+/**
+ * Point a page of a listing at itself.
+ *
+ * Yoast derives the canonical from the page permalink, which knows nothing about
+ * the /page-N/ rewrites, so every page of a listing claimed to be page one.
+ * Google treats each page of a sequence as a URL in its own right, so page N
+ * canonicalises to page N — but only where the paginated URL is the canonical
+ * path to begin with. /projects/{district}/ and the developer aliases
+ * deliberately canonicalise onto a different path, and pinning a page number
+ * onto those would invent a URL that does not resolve.
+ *
+ * @param string $canonical Canonical URL built by Yoast.
+ *
+ * @return string
+ */
+function core_pagination_canonical( $canonical ) {
+	$page = pagination_get_current_page();
+	if ( '' === core_paginated_listing_template() || 2 > $page || ! is_string( $canonical ) || '' === $canonical ) {
+		return $canonical;
+	}
+
+	$canonical_path = (string) wp_parse_url( $canonical, PHP_URL_PATH );
+	$request_uri    = sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ) );
+	$request_path   = (string) wp_parse_url( $request_uri, PHP_URL_PATH );
+
+	if ( '' === $canonical_path || ! str_starts_with( $request_path, $canonical_path ) ) {
+		return $canonical;
+	}
+
+	return user_trailingslashit( trailingslashit( $canonical ) . 'page-' . $page );
+}
+
+add_filter( 'wpseo_canonical', 'core_pagination_canonical' );
+
+/**
+ * Fill in the page counter the title template already asks for.
+ *
+ * The configured template carries %%page%%, which Yoast resolves from
+ * $wp_query->max_num_pages and the paged query var — neither of which the custom
+ * rewrites set, so it collapsed to nothing and every page of a listing shipped
+ * an identical title. Filling the replacement instead of appending to the
+ * finished title keeps the counter where the template puts it and carries over
+ * to any other place the variable is used.
+ *
+ * @param mixed $replacements Replacement per variable, keyed with delimiters.
+ *
+ * @return mixed
+ */
+function core_pagination_replacements( $replacements ) {
+	/*
+	 * The filter fires for every replace-var pass — titles, descriptions, social
+	 * and breadcrumbs alike — and resolving the separator reaches back into the
+	 * same machinery, so a reentrant call would recurse until memory ran out.
+	 */
+	static $inside = false;
+
+	$template = core_paginated_listing_template();
+	if ( $inside || ! is_array( $replacements ) || '' === $template ) {
+		return $replacements;
+	}
+
+	$page    = pagination_get_current_page();
+	$listing = core_paginated_listing( $template );
+	if ( 2 > $page || null === $listing ) {
+		return $replacements;
+	}
+
+	$per_page = max( 1, (int) ( $listing['per_page'] ?? 1 ) );
+	$total    = (int) ceil( (int) ( $listing['total'] ?? 0 ) / $per_page );
+	if ( 2 > $total ) {
+		return $replacements;
+	}
+
+	$inside    = true;
+	$separator = function_exists( 'YoastSEO' )
+		? (string) YoastSEO()->helpers->options->get_title_separator()
+		: '-';
+	$inside    = false;
+
+	/* translators: 1: current page number, 2: total number of pages. */
+	$replacements['%%page%%'] = $separator . ' ' . sprintf( __( 'Page %1$d of %2$d', 'east-property' ), $page, $total );
+
+	return $replacements;
+}
+
+add_filter( 'wpseo_replacements', 'core_pagination_replacements' );
+
+/**
+ * Complete the hreflang set Polylang prints into the head.
+ *
+ * Two gaps are closed here. Polylang adds x-default only on the front page and
+ * only while the default language keeps a directory of its own — with
+ * hide_default enabled, as it is here, the tag never appears at all, leaving
+ * speakers of every other language without a declared fallback. And its guard
+ * against paginated views leans on is_paged(), which the custom /page-N/
+ * rewrites never set: page two therefore declared the unpaginated URL as its own
+ * alternate, pointing each language at a page listing different properties.
+ *
+ * Nothing is added where Polylang printed nothing: it emits the block only once
+ * a translation actually exists, which is exactly the rule an hreflang set has
+ * to follow — a reference to a missing translation is an error, not a hint.
+ *
+ * @param array $hreflangs URL per language code, self link included.
+ *
+ * @return array
+ */
+function core_hreflang_attributes( $hreflangs ) {
+	if ( ! is_array( $hreflangs ) || empty( $hreflangs ) ) {
+		return $hreflangs;
+	}
+
+	if ( 1 < pagination_get_current_page() ) {
+		return array();
+	}
+
+	if ( isset( $hreflangs['x-default'] ) || ! function_exists( 'pll_default_language' ) ) {
+		return $hreflangs;
+	}
+
+	$default = core_hreflang_default_url( $hreflangs );
+	if ( '' !== $default ) {
+		$hreflangs['x-default'] = $default;
+	}
+
+	return $hreflangs;
+}
+
+add_filter( 'pll_rel_hreflang_attributes', 'core_hreflang_attributes' );
+
+/**
+ * URL of the default language within a printed hreflang set.
+ *
+ * Polylang keys the set by bare language code and falls back to the display
+ * locale once two languages share a code, so both spellings are looked up.
+ *
+ * @param array $hreflangs URL per language code.
+ *
+ * @return string Empty when the default language is not part of the set.
+ */
+function core_hreflang_default_url( array $hreflangs ): string {
+	$candidates = array( (string) pll_default_language( 'slug' ) );
+
+	$locale = (string) pll_default_language( 'locale' );
+	if ( '' !== $locale ) {
+		$candidates[] = str_replace( '_', '-', $locale );
+	}
+
+	foreach ( $candidates as $candidate ) {
+		if ( '' !== $candidate && ! empty( $hreflangs[ $candidate ] ) ) {
+			return (string) $hreflangs[ $candidate ];
+		}
+	}
+
+	return '';
+}

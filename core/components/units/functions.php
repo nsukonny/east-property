@@ -57,8 +57,21 @@ function get_units( $listing_type = '', $limit = 25 ): array {
 			'listing_type' => $listing_type,
 		)
 	);
-	$units        = ! IS_DEV ? get_transient( 'units_' . $filters_hash ) : false;
+
+	/*
+	 * The listing is asked for twice per request: once by the pagination guard
+	 * that has to know before any output whether the page exists, once by the
+	 * template. The hash already encodes every input, so one answer serves both.
+	 */
+	static $memo = array();
+	if ( isset( $memo[ $filters_hash ] ) ) {
+		return $memo[ $filters_hash ];
+	}
+
+	$units = ! IS_DEV ? get_transient( 'units_' . $filters_hash ) : false;
 	if ( false !== $units ) {
+		$memo[ $filters_hash ] = $units;
+
 		return $units;
 	}
 
@@ -235,6 +248,7 @@ function get_units( $listing_type = '', $limit = 25 ): array {
 			'total' => 0,
 		);
 		set_transient( 'units_' . $filters_hash, $units, DAY_IN_SECONDS );
+		$memo[ $filters_hash ] = $units;
 
 		return $units;
 	}
@@ -252,6 +266,7 @@ function get_units( $listing_type = '', $limit = 25 ): array {
 	);
 
 	set_transient( 'units_' . $filters_hash, $units, DAY_IN_SECONDS );
+	$memo[ $filters_hash ] = $units;
 
 	return $units;
 }

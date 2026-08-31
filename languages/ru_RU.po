@@ -2941,3 +2941,8 @@ msgstr "Выбранная точка"
 
 #~ msgid "Русский"
 #~ msgstr "Русский"
+
+#. translators: 1: current page number, 2: total number of pages.
+#: core/components/seo/functions.php:604
+msgid "Page %1$d of %2$d"
+msgstr "Страница %1$d из %2$d"

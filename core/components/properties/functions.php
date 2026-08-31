@@ -27,6 +27,16 @@ function get_properties( $limit = - 1, $skip_filters = false ): array {
 		)
 	);
 
+	/*
+	 * The listing is asked for twice per request: once by the pagination guard
+	 * that has to know before any output whether the page exists, once by the
+	 * template. The hash already encodes every input, so one answer serves both.
+	 */
+	static $memo = array();
+	if ( isset( $memo[ $filters_hash ] ) ) {
+		return $memo[ $filters_hash ];
+	}
+
 	$properties = ! IS_DEV ? get_transient( 'properties_' . $filters_hash ) : false;
 	if ( ! empty( $properties ) ) {
 		//return $properties;
@@ -180,6 +190,7 @@ function get_properties( $limit = - 1, $skip_filters = false ): array {
 			'total' => 0,
 		);
 		set_transient( 'properties_' . $filters_hash, $properties, DAY_IN_SECONDS );
+		$memo[ $filters_hash ] = $properties;
 
 		return $properties;
 	}
@@ -198,6 +209,7 @@ function get_properties( $limit = - 1, $skip_filters = false ): array {
 	);
 
 	set_transient( 'properties_' . $filters_hash, $properties, DAY_IN_SECONDS );
+	$memo[ $filters_hash ] = $properties;
 
 	return $properties;
 }
