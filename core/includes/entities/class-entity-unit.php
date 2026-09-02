@@ -255,15 +255,83 @@ final class Unit {
 			return $this->property;
 		}
 
-		$property = $this->get_field( 'property' );
+		$property_id = $this->resolve_property_id();
 
-		if ( empty( $property->ID ) ) {
+		if ( 0 === $property_id ) {
 			return null;
 		}
 
-		$this->property = new Property( $property->ID );
+		$this->property = new Property( $property_id );
 
 		return $this->property;
+	}
+
+	/**
+	 * Resolve the project this unit belongs to.
+	 *
+	 * Translations created before the account form carried the field over hold no
+	 * project of their own, and the permalink then degrades to
+	 * /property/no-project/{slug}/. In the default language that URL still heals
+	 * itself through the wrong-slug redirect, so the damage stayed invisible; under
+	 * /ru/ it is a plain 404, and most cards of the Russian listings pointed there.
+	 *
+	 * A sibling translation describes the same unit in the same building, so its
+	 * project stands in — preferring that project's own translation in this unit's
+	 * language when one exists, so the URL stays inside its language.
+	 *
+	 * @return int Zero when no sibling knows the project either.
+	 */
+	private function resolve_property_id(): int {
+		$property = $this->get_field( 'property' );
+
+		if ( ! empty( $property->ID ) ) {
+			return (int) $property->ID;
+		}
+
+		if ( ! function_exists( 'pll_get_post_translations' ) ) {
+			return 0;
+		}
+
+		$id           = $this->get_id();
+		$translations = pll_get_post_translations( $id );
+		$language     = function_exists( 'pll_get_post_language' )
+			? (string) pll_get_post_language( $id, 'slug' )
+			: '';
+
+		// The default language holds the original data, so it is asked first.
+		if ( function_exists( 'pll_default_language' ) ) {
+			$default = (string) pll_default_language( 'slug' );
+
+			if ( isset( $translations[ $default ] ) ) {
+				$translations = array( $default => $translations[ $default ] ) + $translations;
+			}
+		}
+
+		foreach ( $translations as $sibling_id ) {
+			if ( (int) $sibling_id === $id ) {
+				continue;
+			}
+
+			$candidate = (int) get_post_meta( $sibling_id, 'property', true );
+
+			if ( 0 === $candidate ) {
+				continue;
+			}
+
+			if ( '' !== $language && function_exists( 'pll_get_post' ) ) {
+				$translated = (int) pll_get_post( $candidate, $language );
+
+				if ( 0 < $translated ) {
+					$candidate = $translated;
+				}
+			}
+
+			if ( 'property' === get_post_type( $candidate ) && 'publish' === get_post_status( $candidate ) ) {
+				return $candidate;
+			}
+		}
+
+		return 0;
 	}
 
 	/**
