@@ -622,3 +622,183 @@ function core_hreflang_default_url( array $hreflangs ): string {
 
 	return '';
 }
+
+/*
+ * ---------------------------------------------------------------------------
+ * Installations that must never be indexed
+ * ---------------------------------------------------------------------------
+ *
+ * The staging site is a byte-for-byte clone of production, canonicals and all,
+ * so search engines treat it as a second site rather than folding it into the
+ * first. Closing it through blog_public alone does not hold: that value lives in
+ * the database, and every clone brings production's copy of it back. This lives
+ * in the theme, so it survives the import — and unlike the option it can also
+ * shut both sitemaps, which no database setting can.
+ */
+
+/**
+ * Hosts whose content must stay out of search results.
+ *
+ * Named explicitly rather than derived as "anything that is not production".
+ * A host missing from this list stays indexable, so a domain change, a bare IP
+ * or a www variant can never silence the live site by accident: being too
+ * permissive here costs one duplicate, being too strict costs real traffic.
+ *
+ * @return array
+ */
+function core_get_unindexable_hosts(): array {
+	return array( 'stage.eastproperty.com' );
+}
+
+/**
+ * Whether this installation must stay out of search results.
+ *
+ * Read from home_url() rather than from the request: it identifies the
+ * installation itself, and a Host header cannot forge it.
+ *
+ * @return bool
+ */
+function core_is_unindexable_host(): bool {
+	static $unindexable = null;
+
+	if ( null === $unindexable ) {
+		$host        = strtolower( (string) wp_parse_url( home_url(), PHP_URL_HOST ) );
+		$unindexable = in_array( $host, core_get_unindexable_hosts(), true );
+	}
+
+	return $unindexable;
+}
+
+/**
+ * Answer noindex through the header as well as the meta tag.
+ *
+ * The header covers what a meta tag cannot — XML, PDFs, images — and reaches
+ * responses that never render a document at all.
+ *
+ * @return void
+ */
+function core_unindexable_host_header(): void {
+	if ( ! core_is_unindexable_host() || headers_sent() ) {
+		return;
+	}
+
+	header( 'X-Robots-Tag: noindex, nofollow, noarchive, nosnippet', true );
+}
+
+add_action( 'send_headers', 'core_unindexable_host_header' );
+
+/**
+ * Add noindex to the robots directives WordPress builds.
+ *
+ * @param mixed $robots Robots directives keyed by directive name.
+ *
+ * @return array
+ */
+function core_unindexable_host_wp_robots( $robots ): array {
+	$robots = (array) $robots;
+
+	if ( ! core_is_unindexable_host() ) {
+		return $robots;
+	}
+
+	unset( $robots['max-image-preview'], $robots['max-snippet'], $robots['max-video-preview'] );
+
+	$robots['noindex']  = true;
+	$robots['nofollow'] = true;
+
+	return $robots;
+}
+
+add_filter( 'wp_robots', 'core_unindexable_host_wp_robots' );
+
+/**
+ * Add noindex to the robots directives Yoast builds.
+ *
+ * Yoast assembles its own array and keys it differently from core, hence the
+ * second callback rather than one shared with wp_robots.
+ *
+ * @param mixed $robots Robots directives.
+ *
+ * @return array
+ */
+function core_unindexable_host_yoast_robots( $robots ): array {
+	$robots = (array) $robots;
+
+	if ( ! core_is_unindexable_host() ) {
+		return $robots;
+	}
+
+	$robots['index']  = 'noindex';
+	$robots['follow'] = 'nofollow';
+
+	return $robots;
+}
+
+add_filter( 'wpseo_robots_array', 'core_unindexable_host_yoast_robots', 20 );
+
+/**
+ * Switch the WordPress sitemap off.
+ *
+ * @param mixed $enabled Whether core should serve its sitemap.
+ *
+ * @return bool
+ */
+function core_unindexable_host_core_sitemap( $enabled ): bool {
+	return core_is_unindexable_host() ? false : (bool) $enabled;
+}
+
+add_filter( 'wp_sitemaps_enabled', 'core_unindexable_host_core_sitemap' );
+
+/**
+ * Answer 404 for every sitemap of an unindexable installation.
+ *
+ * Yoast reads enable_xml_sitemap while the plugin loads, long before a theme
+ * gets a say, so its sitemap cannot be filtered off from here — the request has
+ * to be turned away instead. Matching the path also covers the per-type maps
+ * (/unit-sitemap2.xml) and core's (/wp-sitemap-posts-page-1.xml) in one rule.
+ *
+ * @return void
+ */
+function core_unindexable_host_block_sitemaps(): void {
+	if ( ! core_is_unindexable_host() ) {
+		return;
+	}
+
+	$request = sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ) );
+	$path    = (string) wp_parse_url( $request, PHP_URL_PATH );
+
+	if ( ! preg_match( '~sitemap[^/]*\.xml$~i', $path ) ) {
+		return;
+	}
+
+	status_header( 404 );
+	nocache_headers();
+	core_unindexable_host_header();
+
+	exit;
+}
+
+add_action( 'init', 'core_unindexable_host_block_sitemaps', 0 );
+
+/**
+ * Stop robots.txt from advertising a sitemap that is gone.
+ *
+ * The crawl itself stays allowed: a Disallow would keep robots from ever
+ * reading the noindex, and a URL found through a link could still be listed.
+ *
+ * @param mixed $output Contents of robots.txt.
+ *
+ * @return string
+ */
+function core_unindexable_host_robots_txt( $output ): string {
+	$output = (string) $output;
+
+	if ( ! core_is_unindexable_host() ) {
+		return $output;
+	}
+
+	return (string) preg_replace( '~^\s*Sitemap:.*$~mi', '', $output );
+}
+
+// Yoast rebuilds robots.txt from scratch at 99999, so this has to come after.
+add_filter( 'robots_txt', 'core_unindexable_host_robots_txt', 100000 );
