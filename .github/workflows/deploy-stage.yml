@@ -1,12 +1,12 @@
-name: Deploy main
+name: Deploy Stage
 
 on:
   push:
     branches:
-      - main
+      - dev
 
 concurrency:
-  group: deploy-main
+  group: deploy-dev
   cancel-in-progress: false
 
 jobs:
@@ -28,7 +28,7 @@ jobs:
       - name: Run deploy
         env:
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-          DEPLOY_PATH: ${{ secrets.PROD_DEPLOY_PATH }}
+          DEPLOY_PATH: ${{ secrets.STAGE_DEPLOY_PATH }}
           DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
         run: |
@@ -37,4 +37,4 @@ jobs:
             -o StrictHostKeyChecking=yes \
             -p "${DEPLOY_PORT:-22}" \
             "$DEPLOY_USER@$DEPLOY_HOST" \
-            "cd '$DEPLOY_PATH' && bash ./scripts/auto-deploy.sh main"
+            "cd '$DEPLOY_PATH' && bash ./scripts/auto-deploy.sh dev"

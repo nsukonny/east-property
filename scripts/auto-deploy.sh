@@ -1,9 +1,29 @@
 #!/usr/bin/env bash
 set -eu
 
-REPO_ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+REPO_ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd -P)
 DEPLOY_BRANCH=${1:-main}
-WP_ROOT=$(CDPATH= cd -- "$REPO_ROOT/../../.." && pwd)
+WP_ROOT=$(CDPATH= cd -- "$REPO_ROOT/../../.." && pwd -P)
+
+case "$DEPLOY_BRANCH" in
+	dev)
+		EXPECTED_WP_ROOT="/var/www/stage.eastproperty.com/public"
+		;;
+	main)
+		EXPECTED_WP_ROOT="/var/www/eastproperty.com/public"
+		;;
+	*)
+		printf '[auto-deploy] ERROR: branch %s has no target, expected dev or main\n' \
+			"$DEPLOY_BRANCH" >&2
+		exit 1
+		;;
+esac
+
+if [ "$WP_ROOT" != "$EXPECTED_WP_ROOT" ]; then
+	printf '[auto-deploy] ERROR: branch %s cannot be deployed to %s\n' \
+		"$DEPLOY_BRANCH" "$WP_ROOT" >&2
+	exit 1
+fi
 
 log() {
 	printf '[auto-deploy] %s\n' "$1"
@@ -58,15 +78,15 @@ sync_acf_json() {
 		exit 1
 	fi
 
-	if wp --path="$WP_ROOT" cli has-command acf sync >/dev/null 2>&1; then
+	if wp --path="$WP_ROOT" cli has-command acf sync --allow-root >/dev/null 2>&1; then
 		log "Syncing ACF JSON with \`wp acf sync\`"
-		wp --path="$WP_ROOT" acf sync --all
+		wp --path="$WP_ROOT" acf sync --all --allow-root
 		return 0
 	fi
 
-	if wp --path="$WP_ROOT" cli has-command acf json >/dev/null 2>&1; then
+	if wp --path="$WP_ROOT" cli has-command acf json --allow-root >/dev/null 2>&1; then
 		log "Syncing ACF JSON with \`wp acf json sync\`"
-		wp --path="$WP_ROOT" acf json sync
+		wp --path="$WP_ROOT" acf json sync --allow-root
 		return 0
 	fi
 
@@ -88,13 +108,12 @@ reset_transients() {
 }
 
 update_theme_repo() {
-	log "Change branch to main";
-	git switch main
+	log "Updating theme repo to $DEPLOY_BRANCH"
 
-	log "Updating theme repo"
 	git fetch --prune origin "$DEPLOY_BRANCH"
 	log "Discarding theme repo changes"
 	discard_repo_changes "$REPO_ROOT"
+	git switch --force-create "$DEPLOY_BRANCH" "origin/$DEPLOY_BRANCH"
 	git reset --hard "origin/$DEPLOY_BRANCH"
 	git clean -fd
 }
@@ -106,31 +125,32 @@ update_mu_plugins() {
 		return 0
 	fi
 
-	mu_branch=$(git -C "$mu_plugins_path" branch --show-current 2>/dev/null || true)
-	case "$mu_branch" in
-		main|master)
-			;;
-		*)
-			log "Skipping mu-plugins on branch ${mu_branch:-detached}"
-			return 0
-			;;
-	esac
-
 	old_mu_head=$(git -C "$mu_plugins_path" rev-parse HEAD)
 
-	log "Updating mu-plugins"
-	git -C "$mu_plugins_path" fetch --prune origin
-	log "Discarding mu-plugins changes"
+	log "Updating mu-plugins to $DEPLOY_BRANCH"
+
+	git -C "$mu_plugins_path" fetch --prune origin "$DEPLOY_BRANCH"
+
 	discard_repo_changes "$mu_plugins_path"
-	git -C "$mu_plugins_path" reset --hard "origin/$mu_branch"
+
+	git -C "$mu_plugins_path" checkout -B \
+		"$DEPLOY_BRANCH" \
+		"origin/$DEPLOY_BRANCH"
+
+	git -C "$mu_plugins_path" reset --hard "origin/$DEPLOY_BRANCH"
 	git -C "$mu_plugins_path" clean -fd
 
 	new_mu_head=$(git -C "$mu_plugins_path" rev-parse HEAD)
+
 	if [ "$old_mu_head" = "$new_mu_head" ]; then
 		return 0
 	fi
 
-	if ! repo_changed_files_match "$mu_plugins_path" '(^|/)(composer\.json|composer\.lock)$' "$old_mu_head" "$new_mu_head"; then
+	if ! repo_changed_files_match \
+		"$mu_plugins_path" \
+		'(^|/)(composer\.json|composer\.lock)$' \
+		"$old_mu_head" \
+		"$new_mu_head"; then
 		return 0
 	fi
 
@@ -140,7 +160,12 @@ update_mu_plugins() {
 	fi
 
 	log "Refreshing mu-plugins dependencies"
-	composer install --working-dir "$mu_plugins_path" --no-interaction --prefer-dist --optimize-autoloader
+
+	composer install \
+		--working-dir "$mu_plugins_path" \
+		--no-interaction \
+		--prefer-dist \
+		--optimize-autoloader
 }
 
 main() {
