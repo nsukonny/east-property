@@ -184,5 +184,6 @@ require_once 'core/includes/registers/acf/loader.php';
 require_once 'core/includes/registers/post-types/loader.php';
 require_once 'core/includes/registers/user-roles/loader.php';
 require_once 'core/includes/localization.php';
+require_once 'core/includes/tools/load.php';
 require_once 'core/components/load-components.php';
 require_once 'template-parts/template-parts.php';

@@ -84,7 +84,7 @@ final class Property {
 
 			$this->specifications[] = array(
 				'icon'  => THEME_URL . '/assets/img/bed.svg',
-				'value' => $beds . ' ' . __( 'Beds' , 'east-property' ),
+				'value' => $beds . ' ' . __( 'Beds', 'east-property' ),
 			);
 		}
 
@@ -96,7 +96,7 @@ final class Property {
 
 			$this->specifications[] = array(
 				'icon'  => THEME_URL . '/assets/img/bath.svg',
-				'value' => $baths . ' ' . __( 'Baths' , 'east-property' ),
+				'value' => $baths . ' ' . __( 'Baths', 'east-property' ),
 			);
 		}
 
@@ -108,7 +108,7 @@ final class Property {
 
 			$this->specifications[] = array(
 				'icon'  => THEME_URL . '/assets/img/meters.svg',
-				'value' => $area . ' ' . __( 'sqft' , 'east-property' ),
+				'value' => $area . ' ' . __( 'sqft', 'east-property' ),
 			);
 		}
 
@@ -174,7 +174,8 @@ final class Property {
 			return null;
 		}
 
-		$this->developer = new Developer( $developer->ID );
+		$developer_id    = $developer->ID ?? $developer;
+		$this->developer = new Developer( $developer_id );
 		if ( empty( $this->developer ) ) {
 			return null;
 		}
@@ -217,7 +218,7 @@ final class Property {
 	public function get_price_html(): string {
 		$price = $this->get_price();
 
-		return sprintf( '%s %s', __( 'AED' , 'east-property' ), number_format( (float) $price, 0, '.', ',' ) );
+		return sprintf( '%s %s', __( 'AED', 'east-property' ), number_format( (float) $price, 0, '.', ',' ) );
 	}
 
 	/**
@@ -457,12 +458,12 @@ final class Property {
 		if ( ! empty( $delivery_date ) ) {
 			if ( strtotime( $delivery_date ) < time() ) {
 				$labels[] = array(
-					'name'  => __( 'Ready' , 'east-property' ),
+					'name'  => __( 'Ready', 'east-property' ),
 					'color' => 'black',
 				);
 			} else {
 				$labels[] = array(
-					'name'  => __( 'Handover:' , 'east-property' ) . ' ' . $delivery_date,
+					'name'  => __( 'Handover:', 'east-property' ) . ' ' . $delivery_date,
 					'color' => 'orange',
 				);
 			}
@@ -523,10 +524,10 @@ final class Property {
 	public function get_key_information(): array {
 		$information = array();
 
-		$delivery_date = $this->is_completed() ? __( 'Ready' , 'east-property' ) : $this->get_delivery_date();
+		$delivery_date = $this->is_completed() ? __( 'Ready', 'east-property' ) : $this->get_delivery_date();
 		if ( ! empty( $delivery_date ) ) {
 			$information[] = array(
-				'label' => __( 'Handover Date' , 'east-property' ),
+				'label' => __( 'Handover Date', 'east-property' ),
 				'value' => $delivery_date,
 			);
 		}
@@ -534,7 +535,7 @@ final class Property {
 		$construction_started = $this->get_field( 'construction_started' );
 		if ( ! empty( $construction_started ) ) {
 			$information[] = array(
-				'label' => __( 'Construction Started' , 'east-property' ),
+				'label' => __( 'Construction Started', 'east-property' ),
 				'value' => date_i18n( get_option( 'date_format' ), strtotime( $construction_started ) ),
 			);
 		}
@@ -542,7 +543,7 @@ final class Property {
 		$number_of_buildings = $this->get_field( 'number_of_buildings' );
 		if ( ! empty( $number_of_buildings ) ) {
 			$information[] = array(
-				'label' => __( 'Number of Buildings' , 'east-property' ),
+				'label' => __( 'Number of Buildings', 'east-property' ),
 				'value' => (string) $number_of_buildings,
 			);
 		}
@@ -550,7 +551,7 @@ final class Property {
 		$property_type = $this->get_field( 'property_type' );
 		if ( ! empty( $property_type[0] ) ) {
 			$information[] = array(
-				'label' => __( 'Property Type' , 'east-property' ),
+				'label' => __( 'Property Type', 'east-property' ),
 				'value' => (string) $property_type[0],
 			);
 		}
@@ -558,7 +559,7 @@ final class Property {
 		$government_fee = $this->get_field( 'government_fee' );
 		if ( ! empty( $government_fee ) ) {
 			$information[] = array(
-				'label' => __( 'Government Fee' , 'east-property' ),
+				'label' => __( 'Government Fee', 'east-property' ),
 				'value' => (string) $government_fee,
 			);
 		}
@@ -566,7 +567,7 @@ final class Property {
 		$ownership_type = $this->get_field( 'ownership_type' );
 		if ( ! empty( $ownership_type ) ) {
 			$information[] = array(
-				'label' => __( 'Ownership Type' , 'east-property' ),
+				'label' => __( 'Ownership Type', 'east-property' ),
 				'value' => (string) $ownership_type,
 			);
 		}
@@ -622,6 +623,7 @@ final class Property {
 
 		return strtotime( '2000-01-01' ) === strtotime( $delivery_date );
 	}
+
 	/**
 	 * Get property translations by pll_get_post_translations
 	 *
