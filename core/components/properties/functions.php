@@ -39,7 +39,7 @@ function get_properties( $limit = - 1, $skip_filters = false ): array {
 
 	$properties = ! IS_DEV ? get_transient( 'properties_' . $filters_hash ) : false;
 	if ( ! empty( $properties ) ) {
-		//return $properties;
+		return $properties;
 	}
 
 	if ( 0 > $limit ) {
