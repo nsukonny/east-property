@@ -51,6 +51,17 @@ export class PropertyMap {
 		this.lat = MAP_CONFIG.DEFAULT_CENTER.lat;
 		this.lng = MAP_CONFIG.DEFAULT_CENTER.lng;
 
+		// The markup carries the coordinates now, so a single map no longer depends
+		// on filterPropertiesJson — which the listing map empties for a project
+		// with no available units, leaving the map on the default centre.
+		const markupLat = parseFloat(root.dataset.latitude);
+		const markupLng = parseFloat(root.dataset.longitude);
+
+		if (!Number.isNaN(markupLat) && !Number.isNaN(markupLng)) {
+			this.lat = markupLat;
+			this.lng = markupLng;
+		}
+
 		if (this.mode === 'select' && this.latitudeInput?.value && this.longitudeInput?.value) {
 			const latitude = parseFloat(this.latitudeInput.value);
 			const longitude = parseFloat(this.longitudeInput.value);
@@ -93,12 +104,15 @@ export class PropertyMap {
 				await this.loadProperties(filterPropertiesJson);
 			}
 
-			// если сингл мод -- ищем точку в жсон
+			// если сингл мод -- уточняем точку по жсон, когда она там есть
 			if (this.mode === 'single' && this.propertyId) {
 				const prop = this.properties.find(p => p.id.toString() === this.propertyId.toString());
-				if (prop) {
-					this.lat = parseFloat(prop.latitude);
-					this.lng = parseFloat(prop.longitude);
+				const lat = prop ? parseFloat(prop.latitude) : NaN;
+				const lng = prop ? parseFloat(prop.longitude) : NaN;
+
+				if (!Number.isNaN(lat) && !Number.isNaN(lng)) {
+					this.lat = lat;
+					this.lng = lng;
 				}
 			}
 

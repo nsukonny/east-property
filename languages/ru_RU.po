@@ -2946,3 +2946,8 @@ msgstr "Выбранная точка"
 #: core/components/seo/functions.php:604
 msgid "Page %1$d of %2$d"
 msgstr "Страница %1$d из %2$d"
+
+#. translators: %s: district name.
+#: core/template-parts/properties/property-single.php:140
+msgid "More about %s"
+msgstr "Подробнее о районе %s"
