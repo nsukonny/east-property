@@ -218,6 +218,30 @@ $description = get_the_content();
 						<div class="single-info-block">
 							<h3><?php _e( 'Location' , 'east-property' ); ?></h3>
 							<?php
+							/*
+							 * A few sentences about the district, in the markup rather than
+							 * behind the map: an AI crawler runs no JavaScript and would
+							 * otherwise learn nothing about where the project stands. Only
+							 * an excerpt — the full text belongs to the district page, and
+							 * repeating a whole paragraph across every project of a district
+							 * would put the same content on thousands of pages.
+							 */
+							?>
+							<?php if ( ! empty( $location->description ) ) { ?>
+								<p class="location-summary">
+									<?php echo esc_html( wp_trim_words( $location->description, 45, '…' ) ); ?>
+									<a href="<?php echo esc_url( get_term_link( $location ) ); ?>">
+										<?php
+										printf(
+											/* translators: %s: district name. */
+											esc_html__( 'More about %s', 'east-property' ),
+											esc_html( $location->name )
+										);
+										?>
+									</a>
+								</p>
+							<?php } ?>
+							<?php
 							get_template_part(
 								'core/components/properties/map',
 								null,
