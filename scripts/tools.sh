@@ -20,6 +20,10 @@ PROD_DOMAIN=${PROD_DOMAIN:-eastproperty.com}
 STAGE_DOMAIN=${STAGE_DOMAIN:-stage.eastproperty.com}
 DUMP_DIR=${DUMP_DIR:-$STAGE_PATH}
 
+# The account the deploy runs under, and the group the web server reads as.
+DEPLOY_USER=${DEPLOY_USER:-deploy}
+WEB_GROUP=${WEB_GROUP:-www-data}
+
 ASSUME_YES=0
 DRY_RUN=0
 KEEP_DUMP=0
@@ -32,6 +36,9 @@ Commands:
   clone-to-stage   Copy the production database onto staging, rewriting the
                    domain on the way. Staging data is destroyed. Ends with
                    lock-stage, because the import re-enables indexing.
+  fix-permissions  Hand the repositories and build directories back to the
+                   deploy account. Run as root after any git, npm or composer
+                   command that was run as root. Idempotent.
   lock-stage       Keep staging out of search results: noindex site-wide and no
                    XML sitemap. Safe to run at any time.
   help             Show this text.
@@ -53,6 +60,8 @@ Environment:
   PROD_DOMAIN             (default eastproperty.com)
   STAGE_DOMAIN            (default stage.eastproperty.com)
   DUMP_DIR                (default: STAGE_PATH)
+  DEPLOY_USER             (default deploy)
+  WEB_GROUP               (default www-data)
 USAGE
 }
 
@@ -194,6 +203,68 @@ cmd_lock_stage() {
 	log "  curl -s https://${STAGE_DOMAIN}/ | grep -o \"<meta name='robots'[^>]*>\""
 }
 
+# Hands the repositories and build directories back to the deploy account.
+#
+# Every git, npm or composer command run as root leaves files the deploy account
+# cannot overwrite, and the next deploy stops on the first of them — the theme's
+# .git, then mu-plugins, then node_modules. This puts all of it back and is safe
+# to re-run.
+cmd_fix_permissions() {
+	[ "$(id -u)" = '0' ] || die 'must run as root: this changes ownership'
+	command -v git >/dev/null 2>&1 || die 'git is required'
+	id -u "$DEPLOY_USER" >/dev/null 2>&1 || die "no such user: $DEPLOY_USER"
+	getent group "$WEB_GROUP" >/dev/null 2>&1 || die "no such group: $WEB_GROUP"
+
+	for install in "$PROD_PATH" "$STAGE_PATH"; do
+		[ -d "$install" ] || continue
+
+		theme="$install/wp-content/themes/east-property"
+		mu="$install/wp-content/mu-plugins"
+
+		log "$install"
+
+		for repo in "$theme" "$mu"; do
+			[ -d "$repo" ] || continue
+
+			log "  $(basename "$repo"): ownership to $DEPLOY_USER:$WEB_GROUP"
+			run chown -R "$DEPLOY_USER:$WEB_GROUP" "$repo"
+
+			# setgid, so files written later keep the group the web server reads as.
+			run find "$repo" -type d -exec chmod 2775 {} +
+			run find "$repo" -type f -exec chmod 664 {} +
+
+			if [ -d "$repo/.git" ]; then
+				# A deploy clone has no use for reflogs — every run resets hard — and
+				# they are exactly the files a root-run git leaves unwritable.
+				log "  $(basename "$repo"): reflogs off"
+				run sudo -u "$DEPLOY_USER" git -C "$repo" config core.logAllRefUpdates false
+			fi
+		done
+
+		[ -d "$theme/scripts" ] && run chmod +x "$theme/scripts/auto-deploy.sh" "$theme/scripts/tools.sh"
+
+		# ACF writes its JSON from the browser, so the web server needs it writable.
+		if [ -d "$theme/acf-json" ]; then
+			log '  acf-json: writable by the web server'
+			run chmod -R g+w "$theme/acf-json"
+		fi
+	done
+
+	log "Verifying as $DEPLOY_USER"
+
+	for install in "$PROD_PATH" "$STAGE_PATH"; do
+		for repo in "$install/wp-content/themes/east-property" "$install/wp-content/mu-plugins"; do
+			[ -d "$repo/.git" ] || continue
+
+			if sudo -u "$DEPLOY_USER" git -C "$repo" fetch --dry-run origin >/dev/null 2>&1; then
+				log "  ok: $repo"
+			else
+				warn "still unwritable or unreachable: $repo"
+			fi
+		done
+	done
+}
+
 cmd_clone_to_stage() {
 	preflight
 
@@ -253,6 +324,7 @@ main() {
 	case $command in
 		clone-to-stage) cmd_clone_to_stage ;;
 		lock-stage) cmd_lock_stage ;;
+		fix-permissions) cmd_fix_permissions ;;
 		help|-h|--help) usage ;;
 		*) usage >&2; die "unknown command: $command" ;;
 	esac
