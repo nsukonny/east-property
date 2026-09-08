@@ -33,6 +33,267 @@ final class CLI {
 	public static function register(): void {
 		WP_CLI::add_command( 'tools import-properties', array( __CLASS__, 'import_properties' ) );
 		WP_CLI::add_command( 'tools import-distress-units', array( __CLASS__, 'import_distress_units' ) );
+		WP_CLI::add_command( 'tools flag-untranslated', array( __CLASS__, 'flag_untranslated' ) );
+	}
+
+	/**
+	 * Bring need_translate in line with what the Russian posts actually contain.
+	 *
+	 * Both importers flag the placeholders they create, but the flag drifts:
+	 * records predating the tooling never got one, and a post translated later
+	 * by hand keeps a flag it no longer deserves. Either way the backlog lies —
+	 * once by hiding work, once by showing work already done.
+	 *
+	 * The rule is exact rather than a guess, and deliberately ignores the title:
+	 * project names like SOBHA "330 Riverside Crescent" stay in Latin script in
+	 * the Russian version too, so judging by the title would flag them wrongly.
+	 *
+	 *   - Russian content byte-identical to the English content -> placeholder,
+	 *     the flag belongs there.
+	 *   - Russian content carries Cyrillic and differs from English -> really
+	 *     translated, the flag is stale.
+	 *   - No content on either side -> nothing to judge, left alone. Treating
+	 *     these as translated is exactly the bug the first version had.
+	 *
+	 * Additive by default: missing flags are added, stale ones only reported.
+	 * Removing a flag takes work out of somebody's queue, so it is opt-in.
+	 *
+	 * ## OPTIONS
+	 *
+	 * [--post-type=<types>]
+	 * : Comma-separated post types to walk.
+	 * ---
+	 * default: property,unit
+	 * ---
+	 *
+	 * [--remove-stale]
+	 * : Also drop the flag from posts that are genuinely translated.
+	 *
+	 * [--dry-run]
+	 * : Report what would change and write nothing.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp tools flag-untranslated --dry-run
+	 *     wp tools flag-untranslated
+	 *     wp tools flag-untranslated --remove-stale
+	 *     wp tools flag-untranslated --post-type=unit --dry-run
+	 *
+	 * @param array $args Positional arguments, unused.
+	 * @param array $assoc_args Flags.
+	 *
+	 * @return void
+	 */
+	public static function flag_untranslated( array $args, array $assoc_args ): void {
+		$dry_run      = (bool) Utils\get_flag_value( $assoc_args, 'dry-run', false );
+		$remove_stale = (bool) Utils\get_flag_value( $assoc_args, 'remove-stale', false );
+		$types        = array_filter(
+			array_map( 'trim', explode( ',', (string) Utils\get_flag_value( $assoc_args, 'post-type', 'property,unit' ) ) )
+		);
+
+		if ( ! function_exists( 'pll_get_post_language' ) ) {
+			WP_CLI::error( 'Polylang не активен — сопоставить языки нечем' );
+		}
+
+		$totals = array(
+			'added'    => 0,
+			'stale'    => 0,
+			'removed'  => 0,
+			'correct'  => 0,
+			'unclear'  => 0,
+			'no_pair'  => 0,
+			'no_text'  => 0,
+			'examined' => 0,
+		);
+
+		$unclear = array();
+
+		foreach ( $types as $type ) {
+			$ids = get_posts(
+				array(
+					'post_type'        => $type,
+					'post_status'      => 'any',
+					'posts_per_page'   => -1,
+					'fields'           => 'ids',
+					'lang'             => '',
+					'suppress_filters' => true,
+				)
+			);
+
+			foreach ( $ids as $id ) {
+				if ( 'ru' !== (string) pll_get_post_language( $id, 'slug' ) ) {
+					continue;
+				}
+
+				++$totals['examined'];
+
+				$verdict = self::translation_verdict( (int) $id );
+
+				if ( 'no_pair' === $verdict ) {
+					++$totals['no_pair'];
+					continue;
+				}
+
+				if ( 'no_text' === $verdict ) {
+					++$totals['no_text'];
+					continue;
+				}
+
+				$flagged = (bool) get_post_meta( $id, Distress_Units_Importer::NEED_TRANSLATE_META, true );
+
+				if ( 'placeholder' === $verdict && ! $flagged ) {
+					++$totals['added'];
+
+					if ( ! $dry_run ) {
+						self::set_translation_flag( (int) $id );
+					}
+
+					continue;
+				}
+
+				if ( 'translated' === $verdict && $flagged ) {
+					++$totals['stale'];
+
+					if ( $remove_stale && ! $dry_run ) {
+						delete_post_meta( $id, Distress_Units_Importer::NEED_TRANSLATE_META );
+						++$totals['removed'];
+					}
+
+					continue;
+				}
+
+				if ( 'unclear' === $verdict ) {
+					++$totals['unclear'];
+
+					if ( count( $unclear ) < 10 ) {
+						$unclear[] = sprintf( '#%d %s', $id, get_the_title( $id ) );
+					}
+
+					continue;
+				}
+
+				++$totals['correct'];
+			}
+		}
+
+		WP_CLI::log( sprintf( 'Типы:                 %s', implode( ', ', $types ) ) );
+		WP_CLI::log( sprintf( 'RU-записей осмотрено: %d', $totals['examined'] ) );
+		WP_CLI::log( sprintf( 'Флаг уже верен:       %d', $totals['correct'] ) );
+		WP_CLI::log( sprintf( 'Флага не хватало:     %d%s', $totals['added'], $dry_run ? ' (не записано)' : ' — добавлен' ) );
+		WP_CLI::log(
+			sprintf(
+				'Флаг устарел:         %d%s',
+				$totals['stale'],
+				$remove_stale
+					? ( $dry_run ? ' (не записано)' : ' — снят: ' . $totals['removed'] )
+					: ' — оставлен, нужен --remove-stale'
+			)
+		);
+		WP_CLI::log( sprintf( 'Без пары на другом языке: %d', $totals['no_pair'] ) );
+		WP_CLI::log( sprintf( 'Текста нет ни на одном языке, не тронуты: %d', $totals['no_text'] ) );
+
+		if ( $totals['unclear'] > 0 ) {
+			WP_CLI::warning(
+				sprintf(
+					'не берусь судить у %d записей (текст свой, но без кириллицы) — посмотрите глазами:',
+					$totals['unclear']
+				)
+			);
+
+			foreach ( $unclear as $line ) {
+				WP_CLI::log( '  ' . $line );
+			}
+		}
+
+		if ( $dry_run ) {
+			WP_CLI::success( 'dry-run завершён, ничего не записано' );
+
+			return;
+		}
+
+		WP_CLI::success( 'готово' );
+	}
+
+	/**
+	 * Flag one Russian post, and keep the flag off its English counterpart.
+	 *
+	 * Polylang is configured to synchronise custom fields — `post_meta` sits in
+	 * its sync list — and that synchronisation fires on a plain
+	 * update_post_meta(), not only on a full save. Verified by experiment: after
+	 * writing the flag on a Russian post the English sibling had it too.
+	 *
+	 * On the English post the flag is meaningless and actively misleading: it
+	 * claims the source text needs translating. So it is stripped right back off.
+	 *
+	 * The importers avoid this by accident, not by design — they set the flag
+	 * before pll_save_post_translations(), while the pair does not exist yet and
+	 * there is nothing to sync to.
+	 *
+	 * @param int $post_id Russian post.
+	 *
+	 * @return void
+	 */
+	private static function set_translation_flag( int $post_id ): void {
+		update_post_meta( $post_id, Distress_Units_Importer::NEED_TRANSLATE_META, 1 );
+
+		if ( ! function_exists( 'pll_get_post_translations' ) ) {
+			return;
+		}
+
+		foreach ( pll_get_post_translations( $post_id ) as $lang => $sibling ) {
+			if ( 'ru' === $lang || (int) $sibling === $post_id ) {
+				continue;
+			}
+
+			delete_post_meta( (int) $sibling, Distress_Units_Importer::NEED_TRANSLATE_META );
+		}
+	}
+
+	/**
+	 * Decide what a Russian post actually holds.
+	 *
+	 * @param int $post_id Russian post.
+	 *
+	 * @return string One of: placeholder, translated, unclear, no_pair, no_text.
+	 */
+	private static function translation_verdict( int $post_id ): string {
+		if ( ! function_exists( 'pll_get_post_translations' ) ) {
+			return 'no_pair';
+		}
+
+		$translations = pll_get_post_translations( $post_id );
+		$default      = function_exists( 'pll_default_language' ) ? (string) pll_default_language( 'slug' ) : 'en';
+
+		if ( empty( $translations[ $default ] ) ) {
+			return 'no_pair';
+		}
+
+		$ru = trim( wp_strip_all_tags( (string) get_post_field( 'post_content', $post_id ) ) );
+		$en = trim( wp_strip_all_tags( (string) get_post_field( 'post_content', $translations[ $default ] ) ) );
+
+		// Текста нет ни на одном языке — судить не о чем, запись не трогаем.
+		// Раньше такие попадали в «переведённые» и предлагались к снятию флага:
+		// 127 записей на локальной копии, ни одна из них переводом не является.
+		if ( '' === $ru && '' === $en ) {
+			return 'no_text';
+		}
+
+		// Точное совпадение — это копия, оставленная импортёром.
+		if ( $ru === $en ) {
+			return 'placeholder';
+		}
+
+		// Пустой русский текст при заполненном английском — читать нечего.
+		if ( '' === $ru ) {
+			return 'placeholder';
+		}
+
+		if ( preg_match( '~\p{Cyrillic}~u', $ru ) ) {
+			return 'translated';
+		}
+
+		// Текст свой, но без кириллицы: судить машинно нельзя.
+		return 'unclear';
 	}
 
 	/**

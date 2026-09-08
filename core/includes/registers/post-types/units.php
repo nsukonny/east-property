@@ -164,18 +164,63 @@ add_action( 'template_redirect', static function () {
 } );
 
 /**
- * Add support pagination for units pages off-plan and secondary
+ * Slugs of the unit listing pages, all of which paginate the same way.
+ *
+ * The page slug is shared across languages — Polylang keeps `off-plan` for the
+ * Russian translation too — so one list covers every language.
+ *
+ * @return string[]
  */
-add_action( 'init', static function () {
-	add_rewrite_rule(
-		'^off-plan/page-([0-9]+)/?$',
-		'index.php?pagename=off-plan&cur_page=$matches[1]',
-		'top'
-	);
+function core_unit_listing_slugs(): array {
+	return array( 'off-plan', 'secondary', 'distress' );
+}
 
-	add_rewrite_rule(
-		'^secondary/page-([0-9]+)/?$',
-		'index.php?pagename=secondary&cur_page=$matches[1]',
-		'top'
-	);
-} );
+/**
+ * Register pagination for the unit listing pages, in every language.
+ *
+ * Two things were broken here and both are worth naming.
+ *
+ * `distress` had no rule at all: the page was added after this block was
+ * written and never got one, so /distress/page-2/ answered 404 while
+ * /off-plan/page-2/ worked.
+ *
+ * And no rule carried a language prefix. Polylang does not build prefixed
+ * variants of hand written rewrite rules, so /ru/off-plan/page-2/,
+ * /ru/secondary/page-2/ and /ru/distress/page-2/ all answered 404 — every
+ * Russian listing lost everything past the first page. The news section hit
+ * exactly this and solved it the same way; see
+ * core_register_news_pagination_rewrite().
+ *
+ * Both URL shapes are registered: `page-2` is what the theme's own pagination
+ * links use, `page/2` is what WordPress and outside links produce.
+ *
+ * @return void
+ */
+function core_register_unit_listing_pagination(): void {
+	$prefixes = array( '' );
+
+	if ( function_exists( 'pll_languages_list' ) && function_exists( 'pll_default_language' ) ) {
+		$default_language = (string) pll_default_language( 'slug' );
+
+		foreach ( (array) pll_languages_list() as $language ) {
+			if ( '' === (string) $language || $language === $default_language ) {
+				continue;
+			}
+
+			$prefixes[] = $language . '/';
+		}
+	}
+
+	foreach ( $prefixes as $prefix ) {
+		$lang = '' === $prefix ? '' : '&lang=' . rtrim( $prefix, '/' );
+
+		foreach ( core_unit_listing_slugs() as $slug ) {
+			$target = 'index.php?pagename=' . $slug . '&cur_page=$matches[1]' . $lang;
+
+			add_rewrite_rule( '^' . $prefix . $slug . '/page-([0-9]+)/?$', $target, 'top' );
+			add_rewrite_rule( '^' . $prefix . $slug . '/page/([0-9]+)/?$', $target, 'top' );
+		}
+	}
+}
+
+add_action( 'init', 'core_register_unit_listing_pagination' );
