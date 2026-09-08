@@ -50,7 +50,7 @@ final class Distress_Units_Importer {
 	 * Without a leading underscore on purpose, matching the property importer:
 	 * the flag has to be visible in the editor and queryable at once.
 	 */
-	private const NEED_TRANSLATE_META = 'need_translate';
+	public const NEED_TRANSLATE_META = 'need_translate';
 
 	/**
 	 * Every imported unit is a distress listing by definition of the task.
@@ -530,6 +530,8 @@ final class Distress_Units_Importer {
 
 			return 0;
 		}
+
+		WP_CLI::log( sprintf( 'Создан %s #%d "%s"', $post_type, $post_id, $title ) );
 
 		if ( function_exists( 'pll_set_post_language' ) && '' !== $language ) {
 			pll_set_post_language( (int) $post_id, $language );

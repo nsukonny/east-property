@@ -33,6 +33,28 @@ $path       = $parsed_uri['path'] ?? '';
 $query      = $parsed_uri['query'] ?? '';
 parse_str( $query, $query_args );
 
+/*
+ * Убираем языковой сегмент из пути.
+ *
+ * Путь приходит из REQUEST_URI и уже содержит префикс — /ru/distress/ — а
+ * core_home_url() ниже добавляет его ещё раз, потому что возвращает
+ * pll_home_url(), то есть http://site/ru/. Без этой нормализации ссылка
+ * получалась /ru/ru/distress/page-2/ на всех русских листингах.
+ *
+ * Отрезаем ровно тот сегмент, который хелпер приклеит обратно, а не «первый
+ * двухбуквенный»: язык по умолчанию префикса не имеет, и на английских
+ * страницах отрезать нечего.
+ */
+$home_path = '/' . trim( (string) wp_parse_url( core_home_url(), PHP_URL_PATH ), '/' );
+
+if ( '/' !== $home_path ) {
+	if ( str_starts_with( $path, $home_path . '/' ) ) {
+		$path = substr( $path, strlen( $home_path ) );
+	} elseif ( $path === $home_path ) {
+		$path = '/';
+	}
+}
+
 $prev_page      = $current_page - 1;
 $next_page      = $current_page + 1;
 $pages          = array();
