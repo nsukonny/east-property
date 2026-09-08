@@ -29,7 +29,7 @@ while ( have_posts() ) {
 	$whatsapp_share_text = 'https://wa.me/?text=' . rawurlencode( sprintf(
 			'%s | %s | %s View %s',
 			$unit->get_title(),
-			$property ? $property->get_location()->name : '',
+			$property?->get_location()?->name ?? '',
 			$unit->get_price_html(),
 			get_permalink( $unit->get_id() )
 		) );

@@ -200,6 +200,78 @@ function core_noindex_utility_pages( $robots ): array {
 
 add_filter( 'wpseo_robots_array', 'core_noindex_utility_pages' );
 
+/**
+ * Keep an empty project stub out of the index until someone fills it in.
+ *
+ * The unit importer has to publish a stub for a project the site lacks:
+ * Unit::resolve_property_id() accepts a project only in `publish`, so a draft
+ * stub degrades the unit's own url to /property/no-project/... and the unit
+ * answers 404. Publishing it is therefore the only way to keep the units
+ * reachable, and this is what stops the empty page being indexed meanwhile.
+ *
+ * Done here rather than through Yoast's own post meta on purpose: Yoast 28
+ * serves robots from its indexables table, so writing
+ * _yoast_wpseo_meta-robots-noindex during an import has no effect until the
+ * indexable is rebuilt. This filter runs at output time and needs no reindex.
+ *
+ * Remove the flag once the project has content:
+ *
+ *     wp post meta delete <id> _core_import_stub
+ *
+ * @param mixed $robots Robots directives.
+ *
+ * @return array
+ */
+function core_noindex_import_stubs( $robots ): array {
+	$robots = (array) $robots;
+
+	// Без проверки is_singular(): она здесь возвращает false даже на странице
+	// проекта — фильтр Yoast срабатывает в контексте, где состояние основного
+	// запроса этому условию не отвечает. Проверено отладочным логом. Наличия
+	// флага у запрошенного объекта достаточно и работает в любом контексте.
+	$post_id = get_queried_object_id();
+	if ( ! $post_id ) {
+		return $robots;
+	}
+
+	if ( ! get_post_meta( $post_id, '_core_import_stub', true ) ) {
+		return $robots;
+	}
+
+	$robots['index'] = 'noindex';
+
+	return $robots;
+}
+
+add_filter( 'wpseo_robots_array', 'core_noindex_import_stubs' );
+
+/**
+ * Keep the same stubs out of the sitemap, so both channels agree.
+ *
+ * @param string $where     WHERE clause Yoast built.
+ * @param string $post_type Post type being listed.
+ *
+ * @return string
+ */
+function core_exclude_import_stubs_from_sitemap( $where, $post_type ): string {
+	global $wpdb;
+
+	if ( 'property' !== $post_type ) {
+		return (string) $where;
+	}
+
+	return $where . $wpdb->prepare(
+		" AND {$wpdb->posts}.ID NOT IN (
+			SELECT post_id FROM {$wpdb->postmeta}
+			WHERE meta_key = %s AND meta_value = %s
+		)",
+		'_core_import_stub',
+		'1'
+	);
+}
+
+add_filter( 'wpseo_posts_where', 'core_exclude_import_stubs_from_sitemap', 10, 2 );
+
 /*
  * ---------------------------------------------------------------------------
  * Only units that resolve

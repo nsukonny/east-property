@@ -368,6 +368,7 @@ final class Property_Importer {
 		// translation points at whatever developer the project already has.
 		$this->write_fields( $translation, $row, (int) get_post_meta( $source, 'developer_rel', true ) );
 		$this->flag_translation( $translation, $row );
+		$this->mirror_location( $source, $translation );
 
 		$group['ru'] = $translation;
 
@@ -382,6 +383,35 @@ final class Property_Importer {
 		$this->assert_shared_slug( $slug, $group );
 
 		return true;
+	}
+
+	/**
+	 * Give a translation the district its original belongs to.
+	 *
+	 * One term serves every language. The location taxonomy is not translated —
+	 * pll_is_translated_taxonomy( 'location' ) is false — so Polylang neither
+	 * filters these terms by language nor keeps a counterpart per language, and
+	 * the same term reads back correctly from a Russian project. Districts have
+	 * no translations to carry, which is why it is set up that way.
+	 *
+	 * The export names no district, so on a freshly created project there is
+	 * nothing to copy yet. It is on the other path that this earns its place: a
+	 * project the site already has carries a district, and its new Russian
+	 * version would otherwise sit outside every /areas/ listing.
+	 *
+	 * @param int $source_id Post in the default language.
+	 * @param int $target_id Translation to fill.
+	 *
+	 * @return void
+	 */
+	private function mirror_location( int $source_id, int $target_id ): void {
+		$terms = wp_get_post_terms( $source_id, 'location', array( 'fields' => 'ids' ) );
+
+		if ( is_wp_error( $terms ) || empty( $terms ) ) {
+			return;
+		}
+
+		wp_set_post_terms( $target_id, array_map( 'intval', $terms ), 'location' );
 	}
 
 	/**
@@ -467,6 +497,7 @@ final class Property_Importer {
 
 		$this->write_fields( $translation, $row, $developer );
 		$this->flag_translation( $translation, $row );
+		$this->mirror_location( $post_id, $translation );
 
 		$group = array(
 			$default => $post_id,

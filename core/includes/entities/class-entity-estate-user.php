@@ -26,9 +26,15 @@ final class Estate_User {
 			$this->id           = (int) $wp_user->ID;
 			$this->display_name = $this->wp_user->display_name;
 		} else {
-			$this->id           = (int) $wp_user;
-			$this->wp_user      = get_user( $this->id );
-			$this->display_name = $this->wp_user;
+			$this->id      = (int) $wp_user;
+			$this->wp_user = get_user( $this->id );
+
+			// Раньше здесь присваивался сам объект, из-за чего esc_html() в
+			// шаблоне получал WP_User и падал с фатальной ошибкой. Ветка не
+			// выполнялась, пока ни одна запись не хранила broker простым id.
+			$this->display_name = $this->wp_user instanceof WP_User
+				? $this->wp_user->display_name
+				: '';
 		}
 	}
 
