@@ -1,22 +1,22 @@
+const {__} = window.wp.i18n;
+
 export const getBedsBathsText = (selectedBeds, selectedBaths) => {
 	const bedsArray = Array.from(selectedBeds).sort()
 	//const bathsArray = Array.from(selectedBaths).sort()
 
 	let text = ''
 	if (bedsArray.length > 0) {
+		console.log(bedsArray);
 		if (!bedsArray.includes('studio')) {
-			text += bedsArray.join(',') + ' bed' + (bedsArray.length > 1 || bedsArray.includes('5+') ? 's' : '')
+			text += bedsArray.join(',') + ' ' + (bedsArray.length > 1 ? __('Beds', 'east-property') : __('Bed', 'east-property'));
 		} else {
 			text += bedsArray.join(',');
 		}
 
+		text = text.replace('studio', __('Studio', 'east-property'));
 	}
-	// if (bathsArray.length > 0) {
-	//     if (text) text += ', '
-	//     text += bathsArray.join(',') + ' bath' + (bathsArray.length > 1 || bathsArray.includes('5+') ? 's' : '')
-	// }
 
-	return text || 'Select'
+	return text || __('Select', 'east-property')
 }
 
 export const updateBedsBathsButtons = (container, tempBeds, tempBaths) => {

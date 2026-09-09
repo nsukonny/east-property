@@ -91,6 +91,7 @@
 
 	.tab-field-label {
 		color: v.$c-black;
+		text-align: left;
 
 		@include t.t-text(true);
 	}
