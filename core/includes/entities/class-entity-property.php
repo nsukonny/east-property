@@ -255,8 +255,9 @@ final class Property {
 				'posts_per_page' => - 1,
 				'meta_query'     => array(
 					array(
-						'key'   => 'property',
-						'value' => $this->get_id(),
+						'key'     => 'property',
+						'value'   => $this->linked_property_ids(),
+						'compare' => 'IN',
 					),
 				),
 			)
@@ -291,16 +292,47 @@ final class Property {
 				'fields'         => 'ids',
 				'meta_query'     => array(
 					array(
-						'key'   => 'property',
-						'value' => $this->get_id(),
+						'key'     => 'property',
+						'value'   => $this->linked_property_ids(),
+						'compare' => 'IN',
 					),
 				),
 			)
 		);
 
-		$this->units = empty( $units ) ? array() : $units;
+		// Раньше здесь заполнялось $this->units, а не $this->units_ids: кэш
+		// не работал вовсе, а $this->units затирался массивом чисел, из-за
+		// чего последующий get_units() возвращал их вместо объектов Unit.
+		$this->units_ids = empty( $units ) ? array() : array_map( 'intval', $units );
 
-		return $this->units;
+		return $this->units_ids;
+	}
+
+	/**
+	 * Идентификаторы, по которым юнит может ссылаться на этот проект.
+	 *
+	 * Юнит хранит ссылку на проект того языка, на котором его заводили: все
+	 * русские юниты указывают на английский проект — так их пишет импортёр, и
+	 * по той же причине Unit::resolve_property_id() мостит переводы в обратную
+	 * сторону. Без учёта переводов русский проект показывал ноль юнитов при
+	 * трёх существующих: карточка в сайдбаре карты выводила «0 apartments for
+	 * sale», хотя маркер на карте показывал 3.
+	 *
+	 * Утечки чужого языка это не создаёт: get_posts() фильтруется Polylang по
+	 * текущему языку, поэтому русский проект получит только русские юниты.
+	 *
+	 * @return int[]
+	 */
+	private function linked_property_ids(): array {
+		$ids = array( (int) $this->get_id() );
+
+		if ( function_exists( 'pll_get_post_translations' ) ) {
+			foreach ( pll_get_post_translations( $this->get_id() ) as $translation ) {
+				$ids[] = (int) $translation;
+			}
+		}
+
+		return array_values( array_unique( array_filter( $ids ) ) );
 	}
 
 	/**
