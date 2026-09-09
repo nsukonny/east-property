@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^2.1.1",
+    "@googlemaps/markerclusterer": "^2.6.2",
     "body-scroll-lock": "^3.1.5",
     "filepond": "^4.32.12",
     "filepond-plugin-image-preview": "^4.6.12",

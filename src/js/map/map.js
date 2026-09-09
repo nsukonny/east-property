@@ -1,4 +1,5 @@
 import {importLibrary} from '@googlemaps/js-api-loader';
+import {MarkerClusterer} from '@googlemaps/markerclusterer';
 import Swiper from 'swiper';
 import {Navigation} from 'swiper/modules';
 import {MAP_CONFIG} from './config';
@@ -79,6 +80,9 @@ export class PropertyMap {
 		this.sidebarTarget = root.querySelector('.js-sidebar-card-target');
 		this.properties = [];
 		this.markers = [];
+		// Группировкой булавок распоряжается кластеризатор. Живёт только в
+		// режимах со множеством объектов — в single и select группировать нечего.
+		this.clusterer = null;
 		this.isDragging = false;
 		this.startY = 0;
 		this.currentTranslation = 0;
@@ -161,6 +165,11 @@ export class PropertyMap {
 	}
 
 	clearMarkers() {
+		// Кластеризатор держит собственный список булавок и сам рисует кластеры,
+		// поэтому одного marker.map = null не хватает: без этого вызова после
+		// смены фильтра на карте остаются кластеры от прошлой выборки.
+		this.clusterer?.clearMarkers();
+
 		this.markers.forEach(marker => {
 			marker.map = null;
 		});
@@ -458,9 +467,16 @@ export class PropertyMap {
 			markerElement.className = 'map-marker';
 			markerElement.innerHTML = `<span>${prop.units_available}</span>`;
 
+			// Намеренно без map: булавкой распоряжается кластеризатор, он сам
+			// показывает и скрывает её по зуму. Если передать map здесь, булавка
+			// останется на карте поверх собственного кластера навсегда.
 			const marker = new AdvancedMarkerElement({
-				map: this.map, position: {lat, lng}, content: markerElement, title: prop.name
+				position: {lat, lng}, content: markerElement, title: prop.name
 			});
+
+			// Кластеру нужно знать, сколько квартир он в себя собрал, а данные
+			// объекта доступны только здесь.
+			marker.propertyData = prop;
 
 			marker.addListener('gmp-click', () => {
 				this.openSidebar(prop);
@@ -468,6 +484,68 @@ export class PropertyMap {
 
 			this.markers.push(marker);
 		});
+
+		this.getClusterer(AdvancedMarkerElement).addMarkers(this.markers);
+	}
+
+	/**
+	 * Кластеризатор карты, создаётся при первом обращении и переживает смену
+	 * фильтров: пересоздавать его на каждое обновление значит терять текущее
+	 * состояние группировки и заново перерисовывать всю карту.
+	 *
+	 * Клик по кластеру обрабатывает сама библиотека — она делает fitBounds по
+	 * границам кластера, то есть приближает карту ровно настолько, чтобы группа
+	 * распалась на отдельные булавки. Именно это и нужно, своего обработчика не
+	 * добавляем.
+	 */
+	getClusterer(AdvancedMarkerElement) {
+		if (this.clusterer) {
+			return this.clusterer;
+		}
+
+		this.clusterer = new MarkerClusterer({
+			map: this.map,
+			algorithmOptions: {
+				radius: MAP_CONFIG.CLUSTER_RADIUS,
+				maxZoom: MAP_CONFIG.CLUSTER_MAX_ZOOM,
+			},
+			renderer: this.createClusterRenderer(AdvancedMarkerElement),
+		});
+
+		return this.clusterer;
+	}
+
+	/**
+	 * Внешний вид кластера.
+	 *
+	 * В одиночной булавке стоит число доступных квартир, поэтому и в кластере
+	 * показываем их сумму, а не количество слипшихся булавок: покупателю важно,
+	 * сколько предложений внутри, а не сколько проектов оказалось рядом.
+	 */
+	createClusterRenderer(AdvancedMarkerElement) {
+		return {
+			render: ({count, position, markers}) => {
+				const units = markers.reduce((sum, marker) => {
+					const available = parseInt(marker.propertyData?.units_available, 10);
+
+					return sum + (Number.isNaN(available) ? 0 : available);
+				}, 0);
+
+				const element = document.createElement('div');
+				element.className = 'map-marker map-marker--cluster';
+				element.innerHTML = `<span>${units || count}</span>`;
+
+				return new AdvancedMarkerElement({
+					position,
+					content: element,
+					title: `${count} ${__('projects on the map', 'east-property')}`,
+					// Кластер должен лежать выше одиночных булавок: без этого
+					// булавка с теми же координатами перекрывает его и по группе
+					// невозможно щёлкнуть.
+					zIndex: 1000 + count,
+				});
+			},
+		};
 	}
 
 	openSidebar(prop) {
