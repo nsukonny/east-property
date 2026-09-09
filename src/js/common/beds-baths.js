@@ -6,7 +6,7 @@ export const getBedsBathsText = (selectedBeds, selectedBaths) => {
 
 	let text = ''
 	if (bedsArray.length > 0) {
-		console.log(bedsArray);
+
 		if (!bedsArray.includes('studio')) {
 			text += bedsArray.join(',') + ' ' + (bedsArray.length > 1 ? __('Beds', 'east-property') : __('Bed', 'east-property'));
 		} else {
