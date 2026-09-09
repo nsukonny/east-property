@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-30T15:28:42+00:00\n"
+"POT-Creation-Date: 2026-09-09T08:50:08+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: east-property\n"
 
 #. Theme Name of the theme
@@ -248,100 +248,100 @@ msgstr ""
 msgid "Projects in UAE"
 msgstr ""
 
-#: core/components/common/nav.php:29
+#: core/components/common/nav.php:28
 msgid "Close menu"
 msgstr ""
 
-#: core/components/common/nav.php:69
+#: core/components/common/nav.php:62
 #: core/template-parts/account/profile-client.php:41
 #: core/template-parts/account/profile.php:67
 msgid "Logout"
 msgstr ""
 
-#: core/components/common/nav.php:75
+#: core/components/common/nav.php:68
 #: core/components/modals/create-modal.php:177
 #: core/components/modals/forgot-modal.php:23
 #: core/components/modals/signin-modal.php:10
 #: core/components/modals/signin-modal.php:43
 #: core/template-parts/account/login-form.php:20
 #: core/template-parts/account/login-form.php:61
-#: core/template-parts/common/header.php:45
+#: core/template-parts/common/header.php:35
 msgid "Sign in"
 msgstr ""
 
-#: core/components/common/notifications/notifications.php:22
+#: core/components/common/notifications/notifications.php:14
 msgid "Your property has been submitted successfully and saved as draft. Wait approve."
 msgstr ""
 
-#: core/components/common/notifications/notifications.php:23
+#: core/components/common/notifications/notifications.php:15
 msgid "Your profile has been created successfully."
 msgstr ""
 
-#: core/components/common/notifications/notifications.php:24
+#: core/components/common/notifications/notifications.php:16
 msgid "Your profile has been updated."
 msgstr ""
 
-#: core/components/common/notifications/notifications.php:25
+#: core/components/common/notifications/notifications.php:17
 msgid "Your property has been deleted."
 msgstr ""
 
-#: core/components/common/notifications/notifications.php:26
+#: core/components/common/notifications/notifications.php:18
 msgid "Your password has been updated. Now you can login."
 msgstr ""
 
-#: core/components/common/notifications/notifications.php:27
+#: core/components/common/notifications/notifications.php:19
 msgid "Your email has been verified successfully."
 msgstr ""
 
-#: core/components/common/notifications/notifications.php:30
+#: core/components/common/notifications/notifications.php:22
 msgid "Security error. Please try again."
 msgstr ""
 
-#: core/components/common/notifications/notifications.php:31
+#: core/components/common/notifications/notifications.php:23
 msgid "Validation error. Please check your input and try again."
 msgstr ""
 
-#: core/components/common/notifications/notifications.php:32
+#: core/components/common/notifications/notifications.php:24
 msgid "Please enter login and password."
 msgstr ""
 
-#: core/components/common/notifications/notifications.php:33
+#: core/components/common/notifications/notifications.php:25
 msgid "Please fill in all required fields."
 msgstr ""
 
-#: core/components/common/notifications/notifications.php:34
+#: core/components/common/notifications/notifications.php:26
 msgid "This email is already registered. Please use another email."
 msgstr ""
 
-#: core/components/common/notifications/notifications.php:35
+#: core/components/common/notifications/notifications.php:27
 msgid "An error occurred while updating your profile. Please try again later."
 msgstr ""
 
-#: core/components/common/notifications/notifications.php:36
+#: core/components/common/notifications/notifications.php:28
 msgid "An error occurred while uploading your avatar. Please try again later."
 msgstr ""
 
-#: core/components/common/notifications/notifications.php:37
+#: core/components/common/notifications/notifications.php:29
 msgid "Your password reset link has expired. Please request a new one."
 msgstr ""
 
-#: core/components/common/notifications/notifications.php:38
+#: core/components/common/notifications/notifications.php:30
 msgid "Your password must be at least 8 characters long."
 msgstr ""
 
-#: core/components/common/notifications/notifications.php:39
+#: core/components/common/notifications/notifications.php:31
 msgid "Your password and confirmation password do not match."
 msgstr ""
 
-#: core/components/common/notifications/notifications.php:40
+#: core/components/common/notifications/notifications.php:32
 msgid "Invalid or expired verification token."
 msgstr ""
 
-#: core/components/common/notifications/notifications.php:43
+#: core/components/common/notifications/notifications.php:35
 msgid "Unknown error occurred. Please try again later."
 msgstr ""
 
-#: core/components/common/notifications/notifications.php:59
+#: core/components/common/notifications/notifications.php:51
 msgid "Close notification"
 msgstr ""
 
@@ -408,7 +408,7 @@ msgstr ""
 #: core/template-parts/properties/property-units-list.php:28
 #: single-unit.php:267
 #: single-unit.php:365
-#: src/js/map/map.js:183
+#: src/js/map/map.js:206
 msgid "Location"
 msgstr ""
 
@@ -427,7 +427,7 @@ msgstr ""
 
 #: core/components/filters/functions.php:166
 #: core/components/filters/functions.php:403
-#: core/includes/entities/class-entity-property.php:553
+#: core/includes/entities/class-entity-property.php:554
 msgid "Property Type"
 msgstr ""
 
@@ -478,6 +478,7 @@ msgstr ""
 #: core/template-parts/cards/unit-card.php:32
 #: core/template-parts/cards/unit-square-card.php:31
 #: core/template-parts/filters/result-filters.php:158
+#: src/js/common/beds-baths.js:11
 #: src/js/map/html.js:62
 #: src/js/map/html.js:63
 msgid "Beds"
@@ -487,6 +488,7 @@ msgstr ""
 #: core/includes/entities/class-entity-unit.php:208
 #: core/template-parts/cards/unit-card.php:33
 #: core/template-parts/cards/unit-square-card.php:32
+#: src/js/common/beds-baths.js:16
 msgid "Studio"
 msgstr ""
 
@@ -510,22 +512,21 @@ msgstr ""
 msgid "Any Locations"
 msgstr ""
 
-#: core/components/filters/functions.php:762
+#: core/components/filters/functions.php:770
 #: core/template-parts/search-results/properties-list.php:70
 #: core/template-parts/search-results/tabs.php:63
 #: core/template-parts/search-results/units-list.php:64
 msgid "Items not found"
 msgstr ""
 
-#: core/components/filters/functions.php:775
-#: core/components/filters/functions.php:871
-#, php-format
+#: core/components/filters/functions.php:783
+#: core/components/filters/functions.php:879
 msgid "%s property found"
 msgid_plural "%s properties found"
 msgstr[0] ""
 msgstr[1] ""
 
-#: core/components/filters/functions.php:859
+#: core/components/filters/functions.php:867
 msgid "Properties not found"
 msgstr ""
 
@@ -590,6 +591,7 @@ msgstr ""
 #: core/template-parts/account/login-form.php:198
 #: core/template-parts/filters/result-filters.php:163
 #: core/template-parts/ui/dropdown.php:12
+#: src/js/common/beds-baths.js:19
 #: src/js/filters.js:24
 msgid "Select"
 msgstr ""
@@ -878,6 +880,11 @@ msgstr ""
 msgid "Sorry, you are not allowed to access this resource."
 msgstr ""
 
+#. translators: 1: current page number, 2: total number of pages.
+#: core/components/seo/functions.php:622
+msgid "Page %1$d of %2$d"
+msgstr ""
+
 #: core/components/units/featured.php:30
 msgid "Featured new projects in the UAE"
 msgstr ""
@@ -923,7 +930,7 @@ msgid "Pricing"
 msgstr ""
 
 #: core/components/units/units-by-beds.php:20
-#: core/includes/entities/class-entity-property.php:220
+#: core/includes/entities/class-entity-property.php:221
 #: core/includes/entities/class-entity-unit.php:180
 #: core/includes/entities/class-entity-unit.php:195
 #: template-parts/sections/single/dropdowns.php:20
@@ -933,6 +940,7 @@ msgstr ""
 #: core/components/units/units-by-beds.php:34
 #: template-parts/sections/single/dropdowns.php:32
 #: template-parts/sections/single/dropdowns.php:61
+#: src/js/common/beds-baths.js:11
 msgid "Bed"
 msgstr ""
 
@@ -949,7 +957,6 @@ msgstr ""
 
 #: core/components/units/units-by-beds.php:54
 #: core/components/units/units-by-beds.php:57
-#, php-format
 msgid "Floor plan for %s bed unit"
 msgstr ""
 
@@ -959,47 +966,47 @@ msgstr ""
 msgid "from"
 msgstr ""
 
-#: core/includes/entities/class-entity-estate-user.php:254
+#: core/includes/entities/class-entity-estate-user.php:260
 msgid "Your email address has been successfully verified."
 msgstr ""
 
-#: core/includes/entities/class-entity-estate-user.php:255
+#: core/includes/entities/class-entity-estate-user.php:261
 msgid "You can now enjoy all the features of your account and start using our services."
 msgstr ""
 
-#: core/includes/entities/class-entity-estate-user.php:263
+#: core/includes/entities/class-entity-estate-user.php:269
 msgid "Email Verified"
 msgstr ""
 
-#: core/includes/entities/class-entity-property.php:460
-#: core/includes/entities/class-entity-property.php:526
-#: core/includes/entities/class-entity-unit.php:309
+#: core/includes/entities/class-entity-property.php:461
+#: core/includes/entities/class-entity-property.php:527
+#: core/includes/entities/class-entity-unit.php:377
 msgid "Ready"
 msgstr ""
 
-#: core/includes/entities/class-entity-property.php:465
-#: core/includes/entities/class-entity-unit.php:314
+#: core/includes/entities/class-entity-property.php:466
+#: core/includes/entities/class-entity-unit.php:382
 msgid "Handover:"
 msgstr ""
 
-#: core/includes/entities/class-entity-property.php:529
+#: core/includes/entities/class-entity-property.php:530
 #: core/template-parts/account/edit-property.php:224
 msgid "Handover Date"
 msgstr ""
 
-#: core/includes/entities/class-entity-property.php:537
+#: core/includes/entities/class-entity-property.php:538
 msgid "Construction Started"
 msgstr ""
 
-#: core/includes/entities/class-entity-property.php:545
+#: core/includes/entities/class-entity-property.php:546
 msgid "Number of Buildings"
 msgstr ""
 
-#: core/includes/entities/class-entity-property.php:561
+#: core/includes/entities/class-entity-property.php:562
 msgid "Government Fee"
 msgstr ""
 
-#: core/includes/entities/class-entity-property.php:569
+#: core/includes/entities/class-entity-property.php:570
 msgid "Ownership Type"
 msgstr ""
 
@@ -1007,44 +1014,44 @@ msgstr ""
 msgid "1 Bath"
 msgstr ""
 
-#: core/includes/entities/class-entity-unit.php:323
+#: core/includes/entities/class-entity-unit.php:391
 msgid "Popular"
 msgstr ""
 
-#: core/includes/entities/class-entity-unit.php:331
+#: core/includes/entities/class-entity-unit.php:399
 msgid "Premium Developer"
 msgstr ""
 
-#: core/includes/entities/class-entity-unit.php:338
+#: core/includes/entities/class-entity-unit.php:406
 #: core/template-parts/account/profile.php:122
 msgid "Promoted"
 msgstr ""
 
-#: core/includes/entities/class-entity-unit.php:347
+#: core/includes/entities/class-entity-unit.php:415
 msgid "Waiting for approval"
 msgstr ""
 
-#: core/includes/entities/class-entity-unit.php:354
+#: core/includes/entities/class-entity-unit.php:422
 msgid "Contains an error"
 msgstr ""
 
-#: core/includes/entities/class-entity-unit.php:522
+#: core/includes/entities/class-entity-unit.php:590
 msgid "Gallery should not be empty"
 msgstr ""
 
-#: core/includes/entities/class-entity-unit.php:527
+#: core/includes/entities/class-entity-unit.php:595
 msgid "Area should not be empty and must bigger than 200 sqft"
 msgstr ""
 
-#: core/includes/entities/class-entity-unit.php:535
+#: core/includes/entities/class-entity-unit.php:603
 msgid "Price should not be empty and must bigger than 200 000 AED"
 msgstr ""
 
-#: core/includes/entities/class-entity-unit.php:553
+#: core/includes/entities/class-entity-unit.php:621
 msgid "Your unit has been submitted and is waiting for approval. Please fix the following issues:"
 msgstr ""
 
-#: core/includes/entities/class-entity-unit.php:566
+#: core/includes/entities/class-entity-unit.php:634
 msgid "Need to fix errors in your submitted property"
 msgstr ""
 
@@ -1791,12 +1798,10 @@ msgid "My projects"
 msgstr ""
 
 #: core/template-parts/account/profile.php:80
-#, php-format
 msgid "My distress (%d)"
 msgstr ""
 
 #: core/template-parts/account/profile.php:80
-#, php-format
 msgid "My properties (%d)"
 msgstr ""
 
@@ -1828,7 +1833,6 @@ msgid "You have not added any units yet."
 msgstr ""
 
 #: core/template-parts/account/profile.php:172
-#, php-format
 msgid "My projects (%d)"
 msgstr ""
 
@@ -1895,7 +1899,6 @@ msgstr ""
 
 #. translators: %d is the discount percent off the original price.
 #: core/template-parts/cards/unit-card.php:80
-#, php-format
 msgid "-%d%%"
 msgstr ""
 
@@ -1970,27 +1973,27 @@ msgstr ""
 msgid "© East Property – All rights reserved"
 msgstr ""
 
-#: core/template-parts/common/header.php:20
+#: core/template-parts/common/header.php:16
 msgid "Vector logotype"
 msgstr ""
 
-#: core/template-parts/common/header.php:49
+#: core/template-parts/common/header.php:39
 msgid "Create"
 msgstr ""
 
-#: core/template-parts/common/header.php:50
+#: core/template-parts/common/header.php:40
 msgid "Create Account"
 msgstr ""
 
-#: core/template-parts/common/header.php:56
+#: core/template-parts/common/header.php:46
 msgid "Top up"
 msgstr ""
 
-#: core/template-parts/common/header.php:61
+#: core/template-parts/common/header.php:51
 msgid "Boost Points"
 msgstr ""
 
-#: core/template-parts/common/header.php:71
+#: core/template-parts/common/header.php:61
 msgid "Open menu"
 msgstr ""
 
@@ -2124,7 +2127,7 @@ msgstr ""
 msgid "Your information is kept strictly confidential"
 msgstr ""
 
-#: core/template-parts/properties/map.php:57
+#: core/template-parts/properties/map.php:96
 msgid "Explore Project"
 msgstr ""
 
@@ -2164,6 +2167,11 @@ msgstr ""
 #: core/template-parts/properties/property-single.php:199
 #: single-unit.php:306
 msgid "Amenities"
+msgstr ""
+
+#. translators: %s: district name.
+#: core/template-parts/properties/property-single.php:237
+msgid "More about %s"
 msgstr ""
 
 #: core/template-parts/properties/property-units-list.php:57
@@ -2374,7 +2382,6 @@ msgid "Link copied to clipboard!"
 msgstr ""
 
 #: single.php:167
-#, php-format
 msgid "Updated: %s"
 msgstr ""
 
@@ -2384,7 +2391,6 @@ msgstr ""
 
 #. translators: %s is a district name.
 #: taxonomy-location.php:36
-#, php-format
 msgid "Projects in %s"
 msgstr ""
 
@@ -2694,7 +2700,6 @@ msgstr ""
 
 #. translators: %s: 50% complete
 #: template-parts/sections/mortgage-calculator/off-plan.php:34
-#, php-format
 msgid "An off-plan mortgage becomes available once the building is more than %s, the buyer has paid over 50%% of the price, and the developer is accredited by the bank."
 msgstr ""
 
@@ -2778,6 +2783,10 @@ msgstr ""
 msgid "bath"
 msgstr ""
 
-#: src/js/map/map.js:325
+#: src/js/map/map.js:348
 msgid "Selected location"
+msgstr ""
+
+#: src/js/map/map.js:541
+msgid "projects on the map"
 msgstr ""

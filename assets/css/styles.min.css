@@ -6181,6 +6181,7 @@ body.resize-transitions-disabled * {
 }
 .search-tabs .tab-field-label {
   color: #111;
+  text-align: left;
   font-family: "Inter", sans-serif;
   font-weight: 700;
   font-size: 13px;
