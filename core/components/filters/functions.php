@@ -663,6 +663,14 @@ function core_flush_listing_caches(): void {
 		}
 	}
 
+	// Mirrors the key built in get_properties_by_count_of_units(). Listing them
+	// explicitly matters on production: the LIKE sweep below only runs without
+	// an external object cache, and production has Redis, so the explicit list
+	// is the only thing that clears anything there.
+	foreach ( $languages as $language ) {
+		$keys[] = 'properties_by_count_of_units' . ( '' === $language ? '' : '_' . $language );
+	}
+
 	foreach ( array_unique( $keys ) as $key ) {
 		delete_transient( $key );
 	}

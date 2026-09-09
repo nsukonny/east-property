@@ -284,31 +284,96 @@ add_action( 'wp_ajax_nopriv_get_map_property', 'ajax_get_map_property' );
 function get_properties_by_count_of_units(): array {
 	global $wpdb;
 
-	$results = get_transient( 'properties_by_count_of_units' );
+	// Polylang держит язык в таксономии `language`, а функция работает сырым
+	// SQL — плагин её не фильтрует, и язык приходится добавлять руками. Без
+	// этого счётчик складывал языки: у проекта #921 значилось 28 юнитов, хотя
+	// это 27 английских плюс один русский.
+	$language = function_exists( 'pll_current_language' )
+		? (string) pll_current_language( 'slug' )
+		: '';
+
+	// Ключ кэша обязан включать язык. Иначе первый прогретый язык отдавался бы
+	// второму, и подмена была бы молчаливой — тот же приём уже применён для
+	// units_count_by_bedrooms_ в core_flush_listing_caches().
+	$cache_key = 'properties_by_count_of_units' . ( '' === $language ? '' : '_' . $language );
+
+	$results = get_transient( $cache_key );
 	if ( false === $results ) {
+		$language_join = '';
+		$params        = array();
+
+		if ( '' !== $language ) {
+			$language_join = "
+			JOIN {$wpdb->term_relationships} tr ON tr.object_id = u.ID
+			JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id = tr.term_taxonomy_id AND tt.taxonomy = 'language'
+			JOIN {$wpdb->terms} t ON t.term_id = tt.term_id AND t.slug = %s
+		";
+
+			$params[] = $language;
+		}
+
+		// Соединения внутренние, а не LEFT: считаем только существующие юниты
+		// нужного языка, и HAVING остаётся как страховка на случай, если кто-то
+		// вернёт LEFT обратно.
 		$query = "
 		SELECT p.ID, COUNT(u.ID) as units_count
 		FROM {$wpdb->posts} p
-			LEFT JOIN {$wpdb->postmeta} pm ON pm.meta_value = p.ID AND pm.meta_key = 'property'
-			LEFT JOIN {$wpdb->posts} u ON u.ID = pm.post_id AND u.post_type = 'unit' AND u.post_status = 'publish'
+			JOIN {$wpdb->postmeta} pm ON pm.meta_value = p.ID AND pm.meta_key = 'property'
+			JOIN {$wpdb->posts} u ON u.ID = pm.post_id AND u.post_type = 'unit' AND u.post_status = 'publish'
+			{$language_join}
 		WHERE p.post_type = 'property' AND p.post_status = 'publish'
 		GROUP BY p.ID
 		HAVING units_count > 0
 		ORDER BY units_count DESC
 	";
 
+		if ( ! empty( $params ) ) {
+			$query = $wpdb->prepare( $query, $params );
+		}
+
 		$results = $wpdb->get_results( $query, ARRAY_A );
-		set_transient( 'properties_by_count_of_units', $results, HOUR_IN_SECONDS );
+		set_transient( $cache_key, $results, HOUR_IN_SECONDS );
 	}
 
 	if ( empty( $results ) ) {
 		return array();
 	}
 
-	$properties = array();
+	// Юнит ссылается на проект того языка, на котором его заводили: измерено —
+	// 64 русских юнита указывают на английский проект и только один на русский.
+	// Поэтому после подсчёта проект переводится на текущий язык, иначе русская
+	// главная выводила бы английские карточки с русскими счётчиками.
+	$counts = array();
+
 	foreach ( $results as $result ) {
-		$property = new \Entities\Property( $result['ID'] );
-		$property->set_units_count( (int) $result['units_count'] );
+		$property_id = (int) $result['ID'];
+
+		if ( '' !== $language && function_exists( 'pll_get_post' ) ) {
+			$translated = (int) pll_get_post( $property_id, $language );
+
+			// Перевода нет — лучше пропустить проект, чем показать его на
+			// чужом языке.
+			if ( 0 === $translated ) {
+				continue;
+			}
+
+			$property_id = $translated;
+		}
+
+		// Складываем, а не перезаписываем: если часть юнитов указывает на
+		// английский проект, а часть на его русский перевод, после перевода
+		// обе группы сходятся в одну запись.
+		$counts[ $property_id ] = ( $counts[ $property_id ] ?? 0 ) + (int) $result['units_count'];
+	}
+
+	// Слияние могло нарушить порядок, а функция обещает сортировку по числу
+	// юнитов.
+	arsort( $counts );
+
+	$properties = array();
+	foreach ( $counts as $property_id => $units_count ) {
+		$property = new \Entities\Property( $property_id );
+		$property->set_units_count( $units_count );
 		$properties[] = $property;
 	}
 
