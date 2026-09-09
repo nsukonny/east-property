@@ -2,6 +2,7 @@
 @use '../../../mixins/typography/labels' as l;
 @use '../../../mixins/typography/text' as t;
 @use '../../../mixins/global' as g;
+
 .search-tabs {
 	width: 100%;
 	display: flex;
@@ -59,7 +60,7 @@
 		align-items: stretch;
 		flex-wrap: wrap;
 		gap: 16px;
-        min-height: 80px;
+		min-height: 80px;
 
 		@media(min-width: v.$md) {
 			flex-wrap: nowrap;
@@ -103,6 +104,10 @@
 		color: v.$c-black;
 		transition: background-color v.$tr;
 
+		@media(max-width: v.$sm) {
+			height: 56px;
+		}
+
 		@include l.t-label;
 
 		.tab-selector-value {
@@ -129,10 +134,24 @@
 			border-bottom-right-radius: 0;
 
 			.tab-selector-value {
+				display: none;
+				opacity: 0;
+				max-height: 0;
+				position: absolute;
+
 				img {
 					transform: rotate(180deg);
 				}
 			}
+
+			.tab-field-label {
+				display: none;
+			}
+
+			.result-filter-search {
+				position: inherit;
+			}
+
 		}
 
 		&:focus-visible {
@@ -172,7 +191,7 @@
 	.tab-dropdown {
 		width: 100%;
 		min-width: max-content;
-        max-height: 400px;
+		max-height: 400px;
 		position: absolute;
 		top: 97%;
 		left: 0;
@@ -182,7 +201,7 @@
 		border-bottom-left-radius: v.$br8;
 		border-bottom-right-radius: v.$br8;
 		background-color: v.$c-grey-97;
-        overflow-y: scroll;
+		overflow-y: scroll;
 
 		&[hidden] {
 			display: none;

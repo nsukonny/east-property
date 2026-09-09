@@ -6202,6 +6202,13 @@ body.resize-transitions-disabled * {
   padding: 8px;
   color: #111;
   transition: background-color 200ms;
+}
+@media (max-width: 480px) {
+  .search-tabs .tab-selector {
+    height: 56px;
+  }
+}
+.search-tabs .tab-selector {
   font-family: "Inter", sans-serif;
   font-weight: 400;
   font-size: 13px;
@@ -6244,8 +6251,20 @@ body.resize-transitions-disabled * {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
+.search-tabs .tab-selector.is-open .tab-selector-value {
+  display: none;
+  opacity: 0;
+  max-height: 0;
+  position: absolute;
+}
 .search-tabs .tab-selector.is-open .tab-selector-value img {
   transform: rotate(180deg);
+}
+.search-tabs .tab-selector.is-open .tab-field-label {
+  display: none;
+}
+.search-tabs .tab-selector.is-open .result-filter-search {
+  position: inherit;
 }
 .search-tabs .tab-selector:focus-visible {
   background-color: #F2F2F2;
