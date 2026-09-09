@@ -2637,7 +2637,6 @@ body.page-template-page-mortgage-calculator-php {
 .beds-baths-dropdown {
   width: 252px;
   position: absolute;
-  top: 100%;
   left: 0;
   z-index: 90;
   transform: translateX(-5%);
@@ -6172,6 +6171,11 @@ body.resize-transitions-disabled * {
   .search-tabs .tab-field {
     width: auto;
     max-width: 160px;
+    min-width: 130px;
+  }
+}
+@media (min-width: 768px) {
+  .search-tabs .tab-field:first-child {
     min-width: 100px;
   }
 }

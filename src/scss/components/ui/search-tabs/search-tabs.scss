@@ -79,7 +79,13 @@
 		@media(min-width: v.$md) {
 			width: auto;
 			max-width: 160px;
-			min-width: 100px;
+			min-width: 130px;
+		}
+
+		&:first-child {
+			@media(min-width: v.$md) {
+				min-width: 100px;
+			}
 		}
 	}
 
