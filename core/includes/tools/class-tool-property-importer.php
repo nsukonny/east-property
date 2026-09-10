@@ -115,12 +115,13 @@ final class Property_Importer {
 		 * and a backslash is just a backslash. Verified against this export: the
 		 * two settings parse all 2325 rows identically, so nothing shifts.
 		 */
+		$columns_count = count( self::COLUMNS ) - 1;
 		while ( false !== ( $raw = fgetcsv( $handle, null, ',', '"', '' ) ) ) {
 			++ $line;
 
-			if ( count( $raw ) !== count( self::COLUMNS ) ) {
+			if ( count( $raw ) < ( $columns_count ) ) {
 				$this->error( (string) $line,
-					sprintf( 'expected %d columns, found %d', count( self::COLUMNS ), count( $raw ) ) );
+					sprintf( 'expected %d columns, found %d', $columns_count, count( $raw ) ) );
 				continue;
 			}
 
