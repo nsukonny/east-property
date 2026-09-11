@@ -93,7 +93,6 @@ $redirect_to = core_home_url( '/account?tab=account' );
 					      enctype="multipart/form-data" class="login-form registration-form">
 						<input type="hidden" name="action" value="core_account_register">
 						<input type="hidden" name="redirect_to" value="<?php echo esc_url( $redirect_to ); ?>">
-						<?php // Hand written for the same reason as the login nonce above. ?>
 						<input type="hidden" name="core_account_register_nonce"
 						       value="<?php echo esc_attr( wp_create_nonce( 'core_account_register' ) ); ?>">
 						<?php wp_referer_field(); ?>

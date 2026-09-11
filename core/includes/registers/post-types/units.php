@@ -70,12 +70,7 @@ function register_units_post_type(): void {
 add_action( 'init', 'register_units_post_type', 0 );
 
 /**
- * Slug of the project a unit belongs to.
- *
- * The one place that decides whether a unit has a project at all, so the
- * permalink and the canonical redirect can never disagree about it. A project
- * that was deleted counts as no project: the meta row still holds its id, but
- * there is no slug left to put in a URL.
+ * Slug of the project a unit belongs to. A deleted project counts as none.
  *
  * @param Unit $unit Unit to look at.
  *
@@ -94,11 +89,10 @@ function core_unit_project_slug( Unit $unit ): string {
 /**
  * URL path prefixes of every language, the default language first.
  *
- * Polylang only prefixes the rewrite rules WordPress generates itself; rules
- * added by hand it leaves alone. Every such rule therefore has to be
- * registered once per language, or the Russian copy of the page answers 404.
+ * Polylang prefixes only the rules WordPress generates, so hand written ones
+ * have to be registered per language.
  *
- * @return string[] Empty string for the default language, `ru/` and so on for the rest.
+ * @return string[] Empty string for the default language, `ru/` for the rest.
  */
 function core_language_url_prefixes(): array {
 	$prefixes = array( '' );
@@ -121,12 +115,8 @@ function core_language_url_prefixes(): array {
 }
 
 /**
- * Build the unit permalink.
- *
- * /property/%project%/%unit%/ with a project, /property/%unit%/ without one.
- * The short shape replaced /property/no-project/%unit%/, which was a 404 by
- * construction — the project segment was a literal that matched no project, so
- * the page it named could not exist.
+ * Build the unit permalink: /property/%project%/%unit%/, or /property/%unit%/
+ * when the unit has no project.
  */
 add_filter( 'post_type_link', static function ( $permalink, $post ) {
 	if ( 'unit' !== $post->post_type ) {
@@ -154,14 +144,6 @@ add_action( 'init', static function () {
 		'top'
 	);
 
-	/*
-	 * A unit without a project lives one segment higher, so that shape needs a
-	 * rule of its own. WordPress does generate one from the post type's
-	 * permastruct — property/([^&]+)/?$ — but it only sets project_slug and
-	 * leaves the query pointing at nothing, so every single-segment address
-	 * under /property/ rendered the home page under a 200. A soft 404, and the
-	 * reason this rule is registered on top rather than left to core.
-	 */
 	foreach ( core_language_url_prefixes() as $prefix ) {
 		$lang = '' === $prefix ? '' : '&lang=' . rtrim( $prefix, '/' );
 
@@ -191,21 +173,10 @@ add_filter( 'query_vars', static function ( $vars ) {
 } );
 
 /**
- * Keep every unit on a single URL.
+ * Keep every unit on a single URL, answering 301 from any other shape.
  *
- * Anything that is not the canonical shape answers 301 to it: the old
- * /properties/%location%/%project%/%unit%/ links, an address carrying the
- * wrong project, the retired /property/no-project/%unit%/, and the case this
- * was extended for — /property/%unit%/ when the unit does have a project.
- *
- * Comparing the two slugs is the whole rule. An empty project_slug means the
- * request came through the single-segment rule, and an empty expected slug
- * means the unit has no project, so the two agree only when the address is
- * already right.
- *
- * Drafts and previews are left alone: they are reached by ?p= or
- * ?preview=true, which carry no project segment, and redirecting them to the
- * permalink would break the preview from the account form.
+ * Drafts and previews are skipped: they carry no project segment and would be
+ * redirected away from the preview.
  */
 add_action( 'template_redirect', static function () {
 	if ( ! is_singular( 'unit' ) ) {
@@ -238,10 +209,7 @@ add_action( 'template_redirect', static function () {
 } );
 
 /**
- * Slugs of the unit listing pages, all of which paginate the same way.
- *
- * The page slug is shared across languages — Polylang keeps `off-plan` for the
- * Russian translation too — so one list covers every language.
+ * Slugs of the unit listing pages. Shared across languages by Polylang.
  *
  * @return string[]
  */
@@ -252,21 +220,8 @@ function core_unit_listing_slugs(): array {
 /**
  * Register pagination for the unit listing pages, in every language.
  *
- * Two things were broken here and both are worth naming.
- *
- * `distress` had no rule at all: the page was added after this block was
- * written and never got one, so /distress/page-2/ answered 404 while
- * /off-plan/page-2/ worked.
- *
- * And no rule carried a language prefix. Polylang does not build prefixed
- * variants of hand written rewrite rules, so /ru/off-plan/page-2/,
- * /ru/secondary/page-2/ and /ru/distress/page-2/ all answered 404 — every
- * Russian listing lost everything past the first page. The news section hit
- * exactly this and solved it the same way; see
- * core_register_news_pagination_rewrite().
- *
- * Both URL shapes are registered: `page-2` is what the theme's own pagination
- * links use, `page/2` is what WordPress and outside links produce.
+ * Both `page-2` and `page/2` are registered: the theme links the first shape,
+ * WordPress and outside links produce the second.
  *
  * @return void
  */
