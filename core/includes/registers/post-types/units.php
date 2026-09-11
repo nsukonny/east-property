@@ -70,21 +70,74 @@ function register_units_post_type(): void {
 add_action( 'init', 'register_units_post_type', 0 );
 
 /**
- * Make permalink for unit like /property/%property%/%unit%/
+ * Slug of the project a unit belongs to.
+ *
+ * The one place that decides whether a unit has a project at all, so the
+ * permalink and the canonical redirect can never disagree about it. A project
+ * that was deleted counts as no project: the meta row still holds its id, but
+ * there is no slug left to put in a URL.
+ *
+ * @param Unit $unit Unit to look at.
+ *
+ * @return string Empty string when the unit has no project.
+ */
+function core_unit_project_slug( Unit $unit ): string {
+	$property = $unit->get_property();
+
+	if ( null === $property || ! $property->exists() ) {
+		return '';
+	}
+
+	return $property->get_slug();
+}
+
+/**
+ * URL path prefixes of every language, the default language first.
+ *
+ * Polylang only prefixes the rewrite rules WordPress generates itself; rules
+ * added by hand it leaves alone. Every such rule therefore has to be
+ * registered once per language, or the Russian copy of the page answers 404.
+ *
+ * @return string[] Empty string for the default language, `ru/` and so on for the rest.
+ */
+function core_language_url_prefixes(): array {
+	$prefixes = array( '' );
+
+	if ( ! function_exists( 'pll_languages_list' ) || ! function_exists( 'pll_default_language' ) ) {
+		return $prefixes;
+	}
+
+	$default_language = (string) pll_default_language( 'slug' );
+
+	foreach ( (array) pll_languages_list() as $language ) {
+		if ( '' === (string) $language || $language === $default_language ) {
+			continue;
+		}
+
+		$prefixes[] = $language . '/';
+	}
+
+	return $prefixes;
+}
+
+/**
+ * Build the unit permalink.
+ *
+ * /property/%project%/%unit%/ with a project, /property/%unit%/ without one.
+ * The short shape replaced /property/no-project/%unit%/, which was a 404 by
+ * construction — the project segment was a literal that matched no project, so
+ * the page it named could not exist.
  */
 add_filter( 'post_type_link', static function ( $permalink, $post ) {
-	if ( $post->post_type !== 'unit' ) {
+	if ( 'unit' !== $post->post_type ) {
 		return $permalink;
 	}
 
-	$unit     = new Unit( $post );
-	$property = $unit->get_property();
+	$unit         = new Unit( $post );
+	$project_slug = core_unit_project_slug( $unit );
+	$project_path = '' === $project_slug ? '' : $project_slug . '/';
 
-	if ( ! $property ) {
-		return core_home_url( '/property/no-project/' . $unit->get_slug() . '/' );
-	}
-
-	return core_home_url( '/property/' . $property->get_slug() . '/' . $unit->get_slug() . '/' );
+	return core_home_url( '/property/' . $project_path . $unit->get_slug() . '/' );
 }, 10, 2 );
 
 /**
@@ -100,6 +153,24 @@ add_action( 'init', static function () {
 		'index.php?post_type=unit&project_slug=$matches[1]&name=$matches[2]',
 		'top'
 	);
+
+	/*
+	 * A unit without a project lives one segment higher, so that shape needs a
+	 * rule of its own. WordPress does generate one from the post type's
+	 * permastruct — property/([^&]+)/?$ — but it only sets project_slug and
+	 * leaves the query pointing at nothing, so every single-segment address
+	 * under /property/ rendered the home page under a 200. A soft 404, and the
+	 * reason this rule is registered on top rather than left to core.
+	 */
+	foreach ( core_language_url_prefixes() as $prefix ) {
+		$lang = '' === $prefix ? '' : '&lang=' . rtrim( $prefix, '/' );
+
+		add_rewrite_rule(
+			'^' . $prefix . 'property/([^/]+)/?$',
+			'index.php?post_type=unit&name=$matches[1]' . $lang,
+			'top'
+		);
+	}
 
 	//old unit pages
 	add_rewrite_rule(
@@ -120,15 +191,24 @@ add_filter( 'query_vars', static function ( $vars ) {
 } );
 
 /**
- * Show 404 if unit's property doesn't match URL
+ * Keep every unit on a single URL.
+ *
+ * Anything that is not the canonical shape answers 301 to it: the old
+ * /properties/%location%/%project%/%unit%/ links, an address carrying the
+ * wrong project, the retired /property/no-project/%unit%/, and the case this
+ * was extended for — /property/%unit%/ when the unit does have a project.
+ *
+ * Comparing the two slugs is the whole rule. An empty project_slug means the
+ * request came through the single-segment rule, and an empty expected slug
+ * means the unit has no project, so the two agree only when the address is
+ * already right.
+ *
+ * Drafts and previews are left alone: they are reached by ?p= or
+ * ?preview=true, which carry no project segment, and redirecting them to the
+ * permalink would break the preview from the account form.
  */
 add_action( 'template_redirect', static function () {
 	if ( ! is_singular( 'unit' ) ) {
-		return;
-	}
-
-	$requested_property_slug = get_query_var( 'project_slug' );
-	if ( ! $requested_property_slug ) {
 		return;
 	}
 
@@ -142,21 +222,16 @@ add_action( 'template_redirect', static function () {
 		return;
 	}
 
-	$unit     = new Unit( $unit_post );
-	$property = $unit->get_property();
-
-	if ( ! $property || ! $property->exists() ) {
-		global $wp_query;
-		$wp_query->set_404();
-		status_header( 404 );
-		nocache_headers();
-
+	if ( is_preview() || 'publish' !== $unit_post->post_status ) {
 		return;
 	}
 
-	$is_old_url               = 1 === (int) get_query_var( 'is_old_url' );
-	$is_wrong_property_in_url = $property->get_slug() !== $requested_property_slug;
-	if ( $is_old_url || $is_wrong_property_in_url ) {
+	$unit              = new Unit( $unit_post );
+	$expected_project  = core_unit_project_slug( $unit );
+	$requested_project = (string) get_query_var( 'project_slug' );
+	$is_old_url        = 1 === (int) get_query_var( 'is_old_url' );
+
+	if ( $is_old_url || $requested_project !== $expected_project ) {
 		wp_redirect( get_permalink( $unit_id ), 301 );
 		exit;
 	}
@@ -196,21 +271,7 @@ function core_unit_listing_slugs(): array {
  * @return void
  */
 function core_register_unit_listing_pagination(): void {
-	$prefixes = array( '' );
-
-	if ( function_exists( 'pll_languages_list' ) && function_exists( 'pll_default_language' ) ) {
-		$default_language = (string) pll_default_language( 'slug' );
-
-		foreach ( (array) pll_languages_list() as $language ) {
-			if ( '' === (string) $language || $language === $default_language ) {
-				continue;
-			}
-
-			$prefixes[] = $language . '/';
-		}
-	}
-
-	foreach ( $prefixes as $prefix ) {
+	foreach ( core_language_url_prefixes() as $prefix ) {
 		$lang = '' === $prefix ? '' : '&lang=' . rtrim( $prefix, '/' );
 
 		foreach ( core_unit_listing_slugs() as $slug ) {

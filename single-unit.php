@@ -20,8 +20,8 @@ while ( have_posts() ) {
 	}
 
 	$property = $unit->get_property();
-	if ( ! $property->exists() ) {
-		continue;
+	if ( null !== $property && ! $property->exists() ) {
+		$property = null;
 	}
 
 	$gallery             = $unit->get_gallery();
@@ -39,16 +39,16 @@ while ( have_posts() ) {
 	$broker     = $unit->get_broker();
 	$desc       = $unit->get_description_full();
 
-	$location             = $property->get_location();
-	$down_payment_group   = $property->get_down_payment_group();
-	$delivery_date        = $property->get_delivery_date();
-	$property_information = $property->get_key_information();
-	$property_amenities   = $property->get_amenities();
-	$building_name        = $property->get_title();
-	$floors               = $property->get_floors();
-	$latitude             = $property->get_latitude();
-	$longitude            = $property->get_longitude();
-	$payment_plans        = $property->get_payment_plans();
+	$location             = $property?->get_location();
+	$down_payment_group   = $property?->get_down_payment_group();
+	$delivery_date        = $property?->get_delivery_date();
+	$property_information = $property?->get_key_information();
+	$property_amenities   = $property?->get_amenities() ?? array();
+	$building_name        = $property?->get_title();
+	$floors               = $property?->get_floors();
+	$latitude             = $property?->get_latitude();
+	$longitude            = $property?->get_longitude();
+	$payment_plans        = $property?->get_payment_plans() ?? array();
 	?>
 	<section class="single-items">
 		<div class="container">
@@ -58,8 +58,10 @@ while ( have_posts() ) {
 				?>
 				<div class="single-items-top">
 					<div class="single-items-top-left">
-						<div class="h2"><?php echo esc_attr( __( 'Apartment by',
-									'east-property' ) . ' ' . $property->get_title() ); ?></div>
+						<?php if ( null !== $property ) { ?>
+							<div class="h2"><?php echo esc_attr( __( 'Apartment by',
+										'east-property' ) . ' ' . $property->get_title() ); ?></div>
+						<?php } ?>
 						<h1><?php echo esc_html( $unit->get_price_html() ); ?></h1>
 						<?php if ( $unit->has_discount() ) { ?>
 							<div class="discount">
@@ -74,14 +76,14 @@ while ( have_posts() ) {
 							   href="<?php echo esc_url( $whatsapp_share_text ); ?>"
 							   target="_blank" rel="noopener noreferrer">
 								<img src="<?php echo esc_url( THEME_URL . '/assets/img/share.svg' ); ?>" width="16"
-								     height="16" alt="<?php esc_html_e( 'Share', 'east-property' ); ?>">
+									 height="16" alt="<?php esc_html_e( 'Share', 'east-property' ); ?>">
 								<?php esc_html_e( 'Share', 'east-property' ); ?>
 							</a>
 
 							<button class="button sm toggle-favorite <?php echo $unit->is_favorite() ? 'orange green' : 'gray'; ?>"
-							        data-unit-id="<?php echo $unit->get_id(); ?>">
+									data-unit-id="<?php echo $unit->get_id(); ?>">
 								<img src="<?php echo esc_url( THEME_URL . '/assets/img/bookmark.svg' ); ?>"
-								     width="16" height="16" alt="<?php esc_html_e( 'Save', 'east-property' ); ?>">
+									 width="16" height="16" alt="<?php esc_html_e( 'Save', 'east-property' ); ?>">
 								<span>
 									<?php
 									if ( $unit->is_favorite() ) {
@@ -98,7 +100,7 @@ while ( have_posts() ) {
 								<?php foreach ( $amenities as $amenity ) { ?>
 									<span>
                                     <img src="<?php echo esc_url( $amenity['icon'] ); ?>" width="16" height="16"
-                                         alt="Vector icon">
+										 alt="Vector icon">
                                     <?php echo esc_html( $amenity['value'] ); ?>
                                 </span>
 								<?php } ?>
@@ -121,7 +123,7 @@ while ( have_posts() ) {
 											?>
 											<div class="broker-img">
 												<img src="<?php echo esc_url( $broker_avatar ); ?>" width="64"
-												     height="64" alt="<?php echo esc_html( $broker->display_name ); ?>">
+													 height="64" alt="<?php echo esc_html( $broker->display_name ); ?>">
 											</div>
 										<?php } ?>
 										<div class="broker-info">
@@ -136,7 +138,7 @@ while ( have_posts() ) {
 										?>
 										<div class="broker-estate">
 											<img src="<?php echo esc_url( $agency_logo ); ?>" height="66"
-											     alt="Real estate">
+												 alt="Real estate">
 										</div>
 									<?php } ?>
 								</div>
@@ -204,8 +206,8 @@ while ( have_posts() ) {
 								</div>
 								<div class="single-step-arrow">
 									<img src="<?php echo THEME_URL; ?>/assets/img/arrow-right.svg" width="24"
-									     height="24"
-									     alt="Vector arrow">
+										 height="24"
+										 alt="Vector arrow">
 								</div>
 								<div class="single-step">
 									<h3><?php _e( 'During construction', 'east-property' ); ?></h3>
@@ -215,13 +217,16 @@ while ( have_posts() ) {
 								</div>
 								<div class="single-step-arrow">
 									<img src="<?php echo THEME_URL; ?>/assets/img/arrow-right.svg" width="24"
-									     height="24"
-									     alt="Vector arrow">
+										 height="24"
+										 alt="Vector arrow">
 								</div>
 								<div class="single-step">
 									<h3><?php _e( 'On handover', 'east-property' ); ?></h3>
 									<span><?php echo esc_html( $down_payment_group['on_handover'] ); ?>%</span>
-									<p><?php echo esc_html( $delivery_date ); ?></p>
+
+									<?php if ( ! empty( $delivery_date ) ) { ?>
+										<p><?php echo esc_html( $delivery_date ); ?></p>
+									<?php } ?>
 								</div>
 							</div>
 						</div>
@@ -232,7 +237,7 @@ while ( have_posts() ) {
 							<h3><?php _e( 'Floor plan', 'east-property' ); ?></h3>
 							<div class="single-info-block-img" data-modal-open="plan-modal">
 								<img src="<?php echo esc_url( $floor_plan[0]['layout']['sizes']['large'] ); ?>"
-								     alt="<?php _e( 'Floor plan', 'east-property' ); ?>">
+									 alt="<?php _e( 'Floor plan', 'east-property' ); ?>">
 							</div>
 						</div>
 					<?php } ?>
@@ -270,7 +275,7 @@ while ( have_posts() ) {
 											   rel="noopener noreferrer">
 												<?php echo esc_html( $location->name ); ?>
 												<img src="<?php echo THEME_URL; ?>/assets/img/link.svg" width="16"
-												     height="16" alt="<?php echo esc_html( $location->name ); ?>">
+													 height="16" alt="<?php echo esc_html( $location->name ); ?>">
 											</a>
 										</div>
 									</div>
@@ -313,7 +318,7 @@ while ( have_posts() ) {
 					<?php } ?>
 
 					<?php
-					$featured_units = $property->get_random_units( 3 );
+					$featured_units = $property?->get_random_units( 3 );
 					if ( ! empty( $featured_units ) ) {
 						$all_units_link = core_home_url( '/off-plan' );
 						get_component_template(
@@ -333,7 +338,7 @@ while ( have_posts() ) {
 					?>
 
 					<?php
-					$developer = $property->get_developer();
+					$developer = $property?->get_developer();
 					if ( ! empty( $developer ) ) {
 						$developer_thumb = $developer->get_thumb() ?: '';
 						$developer_title = $developer->get_title() ?: '';
@@ -344,8 +349,8 @@ while ( have_posts() ) {
 								<?php if ( ! empty( $developer_thumb ) ) { ?>
 									<div class="developer-image">
 										<img src="<?php echo esc_url( $developer_thumb ); ?>"
-										     height="50"
-										     alt="<?php echo esc_attr( $developer_title ); ?>">
+											 height="50"
+											 alt="<?php echo esc_attr( $developer_title ); ?>">
 									</div>
 								<?php } ?>
 								<div class="developer-info">

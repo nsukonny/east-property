@@ -8,3 +8,4 @@ assets/js/main.min.js.map
 ../.env.example
 !../.env.example
 core/vendor
+/package-lock.json
