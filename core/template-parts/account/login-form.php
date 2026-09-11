@@ -40,15 +40,17 @@ $redirect_to = core_home_url( '/account?tab=account' );
 					      class="login-form">
 						<input type="hidden" name="action" value="core_account_login">
 						<input type="hidden" name="redirect_to" value="<?php echo esc_url( $redirect_to ); ?>">
-						<?php wp_nonce_field( 'core_account_login', 'core_account_login_nonce' ); ?>
+						<input type="hidden" name="core_account_login_nonce"
+						       value="<?php echo esc_attr( wp_create_nonce( 'core_account_login' ) ); ?>">
+						<?php wp_referer_field(); ?>
 						<fieldset>
-							<label for="distress-account-log">
+							<label for="account-log">
 								<?php esc_html_e( 'Email or username', 'east-property' ); ?>
-								<input type="text" id="distress-account-log" name="log" required>
+								<input type="text" id="account-log" name="log" required>
 							</label>
-							<label for="distress-account-pwd">
+							<label for="account-pwd">
 								<?php esc_html_e( 'Password', 'east-property' ); ?>
-								<input type="password" id="distress-account-pwd" name="pwd" required>
+								<input type="password" id="account-pwd" name="pwd" required>
 							</label>
 						</fieldset>
 						<div class="submit-group between">
@@ -91,15 +93,18 @@ $redirect_to = core_home_url( '/account?tab=account' );
 					      enctype="multipart/form-data" class="login-form registration-form">
 						<input type="hidden" name="action" value="core_account_register">
 						<input type="hidden" name="redirect_to" value="<?php echo esc_url( $redirect_to ); ?>">
-						<?php wp_nonce_field( 'core_account_register', 'core_account_register_nonce' ); ?>
+						<?php // Hand written for the same reason as the login nonce above. ?>
+						<input type="hidden" name="core_account_register_nonce"
+						       value="<?php echo esc_attr( wp_create_nonce( 'core_account_register' ) ); ?>">
+						<?php wp_referer_field(); ?>
 						<div class="submit-unit-inner">
 							<div class="submit-unit-left">
 								<fieldset>
 									<div class="input-group">
-										<label for="distress-register-first-name">
+										<label for="first_name">
 											<span class="required">*</span>
 											<?php esc_html_e( 'First name', 'east-property' ); ?>
-											<input type="text" id="distress-register-first-name" name="first_name"
+											<input type="text" id="first_name" name="first_name"
 											       placeholder="<?php esc_html_e( 'First name', 'east-property' ); ?>"
 											       required
 											>
