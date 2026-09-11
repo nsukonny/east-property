@@ -11,6 +11,8 @@
 function switch_to_lang( string $locale ): void {
 	$parts = preg_split( '/[-_]/', $locale );
 
+	//new line
+
 	if ( count( $parts ) >= 2 ) {
 		$locale = strtolower( $parts[0] ) . '_' . strtoupper( $parts[1] );
 	}
