@@ -1,19 +1,23 @@
+@use 'sass:color';
+@use '../../../../assets/scss/vars' as v;
+
 .contact-manager-modal {
-  --ccm-bg: #f5f5f5;
-  --ccm-bg-elevated: #ffffff;
-  --ccm-bg-block: #f9f9f9;
-  --ccm-bg-block-hover: #f5f5f5;
-  --ccm-border: #e5e5e5;
-  --ccm-border-subtle: #f0f0f0;
-  --ccm-text: #000000;
-  --ccm-text-muted: #666666;
-  --ccm-text-subtle: #999999;
-  --ccm-green: #2d8a63;
-  --ccm-green-hover: #267452;
-  --ccm-green-subtle: rgba(45, 138, 99, 0.1);
-  --ccm-radius: 6px;
-  --ccm-radius-lg: 12px;
-  --ccm-transition: 0.2s ease;
+  --ccm-bg-elevated: #{v.$c-white};
+  --ccm-bg-block: #{v.$c-grey-97};
+  --ccm-bg-highlight: #{v.$c-sand-medium};
+  --ccm-border: #{v.$c-grey-90};
+  --ccm-border-accent: #{v.$c-orange};
+  --ccm-text: #{v.$c-black};
+  --ccm-text-muted: #{v.$c-grey};
+  --ccm-text-subtle: #{v.$c-text-grey};
+  --ccm-accent: #{v.$c-yellow};
+  --ccm-accent-hover: #{v.$c-orange-dark};
+  --ccm-accent-soft: #{v.$c-sand};
+  --ccm-on-accent: #{v.$c-black};
+  --ccm-on-dark: #{v.$c-white};
+  --ccm-radius: #{v.$br6};
+  --ccm-radius-lg: #{v.$br12};
+  --ccm-transition: #{v.$tr} ease;
 
   &.ccm-open {
     opacity: 1;
@@ -100,11 +104,6 @@
     color: var(--ccm-text-muted);
   }
 
-  // ---- Content ----
-  .ccm-content {
-    padding: 28px 0 20px;
-  }
-
   // ---- Blocks ----
   .ccm-block {
     padding: 20px;
@@ -113,14 +112,14 @@
     transition: all var(--ccm-transition);
 
     &-primary {
-      background: #f0f7f3;
-      border-color: var(--ccm-green);
+      background: var(--ccm-bg-highlight);
+      border-color: var(--ccm-border-accent);
       border-width: 2px;
       position: relative;
 
       &:hover {
-        border-color: var(--ccm-green-hover);
-        box-shadow: 0 4px 12px rgba(45, 138, 99, 0.15);
+        border-color: var(--ccm-accent-hover);
+        box-shadow: 0 4px 12px #{color.change(v.$c-orange-dark, $alpha: 0.18)};
       }
     }
 
@@ -129,7 +128,7 @@
       border-color: var(--ccm-border);
 
       &:hover {
-        background: #ffffff;
+        background: var(--ccm-bg-elevated);
         border-color: var(--ccm-text-subtle);
       }
     }
@@ -167,12 +166,12 @@
     align-items: center;
     gap: 6px;
     padding: 6px 12px;
-    background: #e8f4ed;
-    border: 1px solid var(--ccm-green);
+    background: var(--ccm-accent-soft);
+    border: 1px solid var(--ccm-border-accent);
     border-radius: 20px;
     font-size: 11px;
     font-weight: 600;
-    color: var(--ccm-green);
+    color: var(--ccm-text);
     letter-spacing: 0.02em;
     text-transform: uppercase;
     margin-bottom: 14px;
@@ -189,12 +188,12 @@
     border-radius: var(--ccm-radius);
 
     &-whatsapp {
-      background: var(--ccm-green-subtle);
-      color: var(--ccm-green);
+      background: var(--ccm-accent-soft);
+      color: var(--ccm-text);
     }
 
     &-phone {
-      background: #f0f0f0;
+      background: var(--ccm-bg-block);
       color: var(--ccm-text-muted);
     }
   }
@@ -217,23 +216,23 @@
     border: none;
 
     &-primary {
-      background: var(--ccm-green);
-      color: #ffffff;
-      box-shadow: 0 2px 8px rgba(45, 138, 99, 0.25);
+      background: var(--ccm-accent);
+      color: var(--ccm-on-accent);
+      box-shadow: 0 2px 8px #{color.change(v.$c-orange-dark, $alpha: 0.25)};
 
       &:hover {
-        background: var(--ccm-green-hover);
-        box-shadow: 0 4px 16px rgba(45, 138, 99, 0.35);
+        background: var(--ccm-accent-hover);
+        box-shadow: 0 4px 16px #{color.change(v.$c-orange-dark, $alpha: 0.35)};
         transform: translateY(-1px);
       }
     }
 
     &-secondary {
       background: var(--ccm-text);
-      color: #ffffff;
+      color: var(--ccm-on-dark);
 
       &:hover {
-        background: var(--ccm-text-muted);
+        background: #{v.$c-dark-grey};
       }
     }
   }
@@ -282,7 +281,7 @@
     padding: 12px 14px;
     font-size: 15px;
     color: var(--ccm-text);
-    background: #f5f5f5;
+    background: var(--ccm-bg-block);
     border: 1px solid var(--ccm-border);
     border-radius: var(--ccm-radius);
     outline: none;
@@ -294,9 +293,9 @@
     }
 
     &:focus {
-      background: #ffffff;
-      border-color: var(--ccm-green);
-      box-shadow: 0 0 0 3px rgba(45, 138, 99, 0.1);
+      background: var(--ccm-bg-elevated);
+      border-color: var(--ccm-border-accent);
+      box-shadow: 0 0 0 3px #{color.change(v.$c-orange, $alpha: 0.18)};
     }
   }
 
@@ -319,8 +318,8 @@
     height: 0;
 
     &:checked + .ccm-checkbox-custom {
-      background: var(--ccm-green);
-      border-color: var(--ccm-green);
+      background: var(--ccm-text);
+      border-color: var(--ccm-text);
 
       &::after {
         content: '';
@@ -329,14 +328,14 @@
         left: 5px;
         width: 5px;
         height: 9px;
-        border: solid #ffffff;
+        border: solid var(--ccm-on-dark);
         border-width: 0 2px 2px 0;
         transform: rotate(45deg);
       }
     }
 
     &:focus + .ccm-checkbox-custom {
-      box-shadow: 0 0 0 3px rgba(45, 138, 99, 0.2);
+      box-shadow: 0 0 0 3px #{color.change(v.$c-orange, $alpha: 0.25)};
     }
   }
 
@@ -346,7 +345,7 @@
     height: 18px;
     border: 1px solid var(--ccm-border);
     border-radius: 4px;
-    background: #ffffff;
+    background: var(--ccm-bg-elevated);
     position: relative;
     transition: all var(--ccm-transition);
   }
@@ -357,7 +356,6 @@
 
   // ---- Footer ----
   .ccm-footer {
-    padding: 0 32px 24px;
     text-align: center;
   }
 
@@ -367,7 +365,7 @@
     gap: 6px;
     margin: 0;
     padding: 10px 16px;
-    background: #f5f5f5;
+    background: var(--ccm-bg-block);
     border: 1px solid var(--ccm-border);
     border-radius: 20px;
     font-size: 12px;
@@ -375,8 +373,8 @@
     letter-spacing: 0.01em;
 
     svg {
-      color: var(--ccm-green);
-      opacity: 0.8;
+      color: var(--ccm-border-accent);
+      opacity: 1;
     }
   }
 
@@ -388,16 +386,8 @@
       max-height: calc(100vh - 24px);
     }
 
-    .ccm-header {
-      padding: 24px 20px 0;
-    }
-
     .ccm-title {
       font-size: 24px;
-    }
-
-    .ccm-content {
-      padding: 20px 16px 16px;
     }
 
     .ccm-block {
@@ -411,10 +401,6 @@
     .ccm-icon {
       width: 40px;
       height: 40px;
-    }
-
-    .ccm-footer {
-      padding: 0 20px 20px;
     }
   }
 }

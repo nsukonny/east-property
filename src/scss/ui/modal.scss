@@ -18,7 +18,7 @@
 	pointer-events: none;
 	transition: opacity v.$tr ease, visibility v.$tr ease;
 	overflow-y: auto;
-	z-index: 100;
+	z-index: 1100;
 
 	.modal {
 		display: flex;

@@ -17,6 +17,7 @@ if ( 404 === get_query_var( 'pagename' ) || is_404() ) {
 		<?php
 		get_template_part( 'template-parts/sections/index/hero' );
 		get_template_part( 'core/components/sections/explore-by-districts' );
+		get_template_part( 'template-parts/sections/index/distress' );
 		get_template_part( 'core/components/sections/explore-by-beds' );
 		get_template_part( 'core/components/units/featured', null, array( 'limit' => 3 ) );
 		get_template_part( 'template-parts/sections/index/about' );

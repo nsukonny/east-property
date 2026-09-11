@@ -32,6 +32,8 @@ const attachGlobalHandlers = () => {
 	})
 }
 
+const DISTRESS_TAB = 'distress'
+
 const initSearchTabs = async () => {
 	const containers = document.querySelectorAll('[data-search-tabs]')
 	if (!containers.length) return
@@ -48,6 +50,8 @@ const initSearchTabs = async () => {
 		const developerValue = container.querySelector('[data-search-developer-value]')
 		const locationValue = container.querySelector('[data-search-location-value]')
 		const panel = container.querySelector('[role="tabpanel"]')
+		const searchPanel = container.querySelector('[data-search-panel]')
+		const distressPanel = container.querySelector('[data-search-distress-panel]')
 		const selectors = Array.from(container.querySelectorAll('[data-search-selector]'))
 
 		if (!tabs.length || !typeField || !locationText || !developerText || !locationValue || !developerValue || !panel) return
@@ -156,6 +160,15 @@ const initSearchTabs = async () => {
 			updateDropdownSelection(filterKey, currentValue)
 		}
 
+		const togglePanels = (type) => {
+			if (!searchPanel || !distressPanel) return
+
+			const isDistress = type === DISTRESS_TAB
+
+			searchPanel.hidden = isDistress
+			distressPanel.hidden = !isDistress
+		}
+
 		const applyCategoryDefaults = (type) => {
 			const category = searchData?.categories?.find((c) => c?.slug === type)
 			const defaults = category?.defaults
@@ -173,8 +186,12 @@ const initSearchTabs = async () => {
 		const initialType = activeTab?.dataset?.type ?? typeField.value
 
 		if (typeof initialType === 'string' && initialType) {
-			typeField.value = initialType
-			applyCategoryDefaults(initialType)
+			togglePanels(initialType)
+
+			if (initialType !== DISTRESS_TAB) {
+				typeField.value = initialType
+				applyCategoryDefaults(initialType)
+			}
 		}
 
 		selectors.forEach((selector) => {
@@ -227,9 +244,14 @@ const initSearchTabs = async () => {
 				tab.classList.add('is-active')
 				tab.setAttribute('aria-selected', 'true')
 				tab.setAttribute('tabindex', '0')
-				panel.setAttribute('aria-labelledby', tab.id)
 
 				const type = tab.dataset.type ?? ''
+
+				togglePanels(type)
+
+				if (type === DISTRESS_TAB) return
+
+				panel.setAttribute('aria-labelledby', tab.id)
 				typeField.value = type
 				applyCategoryDefaults(type)
 			})

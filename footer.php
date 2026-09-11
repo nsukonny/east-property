@@ -11,6 +11,7 @@ get_template_part(
 			'create-modal',
 			'signin-modal',
 			'forgot-modal',
+			'contact-manager-modal',
 			'broker-modal',
 			'boost-modal',
 			'boost-info-modal',
