@@ -42,7 +42,6 @@ function register_post_type_agencies() {
 			'excerpt',
 			'author',
 			'thumbnail',
-			'comments',
 			'revisions',
 			'custom-fields',
 		),

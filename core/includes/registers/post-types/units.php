@@ -42,7 +42,6 @@ function register_units_post_type(): void {
 			'excerpt',
 			'author',
 			'thumbnail',
-			'comments',
 			'revisions',
 			'custom-fields',
 		),
