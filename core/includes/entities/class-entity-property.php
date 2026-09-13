@@ -486,7 +486,7 @@ final class Property {
 	public function get_labels(): array {
 		$labels = array();
 
-		$delivery_date = $this->get_delivery_date();
+		$delivery_date = $this->get_delivery_date(false);
 		if ( ! empty( $delivery_date ) ) {
 			if ( strtotime( $delivery_date ) < time() ) {
 				$labels[] = array(
@@ -494,8 +494,9 @@ final class Property {
 					'color' => 'black',
 				);
 			} else {
+				$formatted_delivery_date = date_i18n( get_option( 'date_format' ), strtotime( $delivery_date ) );
 				$labels[] = array(
-					'name'  => __( 'Handover:', 'east-property' ) . ' ' . $delivery_date,
+					'name'  => __( 'Handover:', 'east-property' ) . ' ' . $formatted_delivery_date,
 					'color' => 'orange',
 				);
 			}

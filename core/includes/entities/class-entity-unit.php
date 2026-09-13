@@ -370,7 +370,7 @@ final class Unit {
 		$property  = $this->get_property();
 		$developer = $this->get_developer();
 
-		$delivery_date = $property?->get_delivery_date() ?: '';
+		$delivery_date = $property?->get_delivery_date( false ) ?: '';
 		if ( ! empty( $delivery_date ) ) {
 			if ( strtotime( $delivery_date ) < time() ) {
 				$labels[] = array(
@@ -378,8 +378,9 @@ final class Unit {
 					'color' => 'grey',
 				);
 			} else {
+				$formated_delivery_date = $property?->get_delivery_date( false ) ?: '';
 				$labels[] = array(
-					'name'  => __( 'Handover:', 'east-property' ) . ' ' . $delivery_date,
+					'name'  => __( 'Handover:', 'east-property' ) . ' ' . $formated_delivery_date,
 					'color' => 'grey',
 				);
 			}
