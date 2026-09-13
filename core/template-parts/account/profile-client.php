@@ -6,9 +6,9 @@
 
 use Entities\Estate_User;
 
-$user_units = $args['user_units'] ?? array();
-
 global $current_user;
+
+$favourites = $args['favourites'] ?? array();
 
 $client      = new Estate_User( $current_user );
 $user_avatar = get_field( 'avatar', 'user_' . $current_user->ID );
@@ -26,15 +26,15 @@ $languages      = get_all_languages();
 		<div class="profile-tabs-wrapper">
 			<div class="profile-tabs-buttons" role="tablist">
 				<button class="result-tab-button <?php echo 'units' === $active_tab ? 'active' : ''; ?>" type="button"
-				        id="profile-tabs-units-tab" data-tab-button data-tab="units" role="tab"
-				        aria-selected="<?php echo 'units' === $active_tab ? 'true' : 'false'; ?>"
-				        aria-controls="profile-tabs-units-panel">
+						id="profile-tabs-units-tab" data-tab-button data-tab="units" role="tab"
+						aria-selected="<?php echo 'units' === $active_tab ? 'true' : 'false'; ?>"
+						aria-controls="profile-tabs-units-panel">
 					<?php esc_html_e( 'Saved properties', 'east-property' ); ?>
 				</button>
 				<button class="result-tab-button <?php echo 'account' === $active_tab ? 'active' : ''; ?>" type="button"
-				        id="profile-tabs-account-tab" data-tab-button data-tab="account" role="tab"
-				        aria-selected="<?php echo 'account' === $active_tab ? 'true' : 'false'; ?>"
-				        aria-controls="profile-tabs-account-panel">
+						id="profile-tabs-account-tab" data-tab-button data-tab="account" role="tab"
+						aria-selected="<?php echo 'account' === $active_tab ? 'true' : 'false'; ?>"
+						aria-controls="profile-tabs-account-panel">
 					<?php esc_html_e( 'My Account', 'east-property' ); ?>
 				</button>
 				<a class="button link logout" href="<?php echo esc_url( $logout_url ); ?>">
@@ -43,13 +43,15 @@ $languages      = get_all_languages();
 			</div>
 
 			<div class="profile-tabs-content <?php echo 'units' === $active_tab ? 'active' : ''; ?>"
-			     id="profile-tabs-units-panel" data-tab-panel data-tab="units" role="tabpanel"
-			     aria-labelledby="profile-tabs-units-tab">
+				 id="profile-tabs-units-panel" data-tab-panel data-tab="units" role="tabpanel"
+				 aria-labelledby="profile-tabs-units-tab">
 				<div class="content-title">
 					<div class="title-top">
 						<h2>
 							<?php esc_html_e( 'Saved properties', 'east-property' ); ?>
-							(<?php echo esc_attr( $user_units['total'] ); ?>)
+							<?php if ( 0 < $favourites['total'] ) { ?>
+								(<?php echo esc_attr( $favourites['total'] ); ?>)
+							<?php } ?>
 						</h2>
 					</div>
 				</div>
@@ -57,12 +59,12 @@ $languages      = get_all_languages();
 					<?php
 					if ( ! $client->is_verified() ) {
 						get_component_template( 'account/email-verification' );
-					} elseif ( ! empty( $user_units['items'] ) ) {
+					} elseif ( ! empty( $favourites['items'] ) ) {
 						?>
 						<div class="properties-section-items">
 							<?php
 							$limit = $posts_per_page;
-							foreach ( $user_units['items'] as $unit ) {
+							foreach ( $favourites['items'] as $unit ) {
 								get_template_part(
 									'core/components/cards/unit-card',
 									null,
@@ -82,7 +84,7 @@ $languages      = get_all_languages();
 								'core/components/common/pagination',
 								null,
 								array(
-									'total_items'    => $user_units['total'] ?? count( $user_units ),
+									'total_items'    => $favourites['total'] ?? count( $favourites ),
 									'items_per_page' => $posts_per_page,
 								)
 							);
@@ -95,8 +97,8 @@ $languages      = get_all_languages();
 			</div>
 
 			<div class="profile-tabs-content <?php echo 'account' === $active_tab ? 'active' : ''; ?>"
-			     id="profile-tabs-account-panel" data-tab-panel data-tab="account" role="tabpanel"
-			     aria-labelledby="profile-tabs-account-tab">
+				 id="profile-tabs-account-panel" data-tab-panel data-tab="account" role="tabpanel"
+				 aria-labelledby="profile-tabs-account-tab">
 				<div class="content-title">
 					<div class="title-top">
 						<h2><?php esc_html_e( 'Account details', 'east-property' ); ?></h2>
@@ -104,7 +106,7 @@ $languages      = get_all_languages();
 				</div>
 				<div class="content-list submit-unit">
 					<form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="POST"
-					      enctype="multipart/form-data">
+						  enctype="multipart/form-data">
 						<input type="hidden" name="action" value="account_update_profile">
 						<?php wp_nonce_field( 'update_profile' ); ?>
 
@@ -116,8 +118,8 @@ $languages      = get_all_languages();
 										<label for="display_name">
 											<?php esc_html_e( 'Display name', 'east-property' ); ?>
 											<input type="text" id="display_name" name="display_name"
-											       value="<?php echo esc_attr( $current_user->display_name ); ?>"
-											       required>
+												   value="<?php echo esc_attr( $current_user->display_name ); ?>"
+												   required>
 										</label>
 									</div>
 
@@ -125,8 +127,8 @@ $languages      = get_all_languages();
 										<label for="email">
 											<?php esc_html_e( 'Email address', 'east-property' ); ?>
 											<input type="text" id="email" name="email"
-											       value="<?php echo esc_attr( $current_user->user_email ); ?>"
-											       readonly="readonly">
+												   value="<?php echo esc_attr( $current_user->user_email ); ?>"
+												   readonly="readonly">
 										</label>
 									</div>
 
@@ -137,9 +139,9 @@ $languages      = get_all_languages();
 												<?php esc_html_e( 'Phone number', 'east-property' ); ?>
 												(<?php echo esc_attr( $language['name'] ); ?>)
 												<input type="text" id="phone_<?php echo esc_attr( $language_slug ); ?>"
-												       name="phone[<?php echo esc_attr( $language_slug ); ?>]"
-												       value="<?php echo esc_attr( $client->get_phone( $language_slug ) ); ?>"
-												       placeholder="971509670043">
+													   name="phone[<?php echo esc_attr( $language_slug ); ?>]"
+													   value="<?php echo esc_attr( $client->get_phone( $language_slug ) ); ?>"
+													   placeholder="971509670043">
 											</label>
 										</div>
 									<?php } ?>
@@ -150,12 +152,12 @@ $languages      = get_all_languages();
 												<?php esc_html_e( 'WhatsApp number', 'east-property' ); ?>
 												(<?php echo esc_attr( $language['name'] ); ?>)
 												<input type="text"
-												       id="whatsapp_<?php echo esc_attr( $language_slug ); ?>"
-												       name="whatsapp[<?php echo esc_attr( $language_slug ); ?>]"
-												       value="<?php echo esc_attr( $client->get_whatsapp( $language_slug,
+													   id="whatsapp_<?php echo esc_attr( $language_slug ); ?>"
+													   name="whatsapp[<?php echo esc_attr( $language_slug ); ?>]"
+													   value="<?php echo esc_attr( $client->get_whatsapp( $language_slug,
 														   '',
 														   false ) ); ?>"
-												       placeholder="971509670043">
+													   placeholder="971509670043">
 											</label>
 										</div>
 									<?php } ?>
@@ -175,12 +177,12 @@ $languages      = get_all_languages();
 								</div>
 								<div class="avatar-uploader">
 									<input type="hidden" name="current_avatar_id" id="current_avatar_id"
-									       value="<?php echo esc_attr( $user_avatar_id ); ?>">
+										   value="<?php echo esc_attr( $user_avatar_id ); ?>">
 									<input type="file" id="avatar" name="avatar" accept="image/*" class="avatar-input">
 									<div class="avatar-uploader-wrapper">
 										<div class="avatar-preview">
 											<img src="<?php echo esc_url( $user_avatar_url ); ?>"
-											     alt="<?php echo esc_attr( $current_user->display_name ); ?>">
+												 alt="<?php echo esc_attr( $current_user->display_name ); ?>">
 										</div>
 									</div>
 								</div>

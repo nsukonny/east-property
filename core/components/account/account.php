@@ -133,6 +133,6 @@ $user_favorite_units = get_user_meta( $current_user->ID, 'favorite_units', true 
 get_component_template(
 	'account/profile-client',
 	array(
-		'user_units' => core_get_current_user_favorite_units(),
+		'favourites' => core_get_current_user_favorite_units(),
 	)
 );

@@ -38,29 +38,29 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 		<div class="profile-tabs-wrapper">
 			<div class="profile-tabs-buttons" role="tablist">
 				<button class="result-tab-button <?php echo 'units' === $active_tab ? 'active' : ''; ?>" type="button"
-				        id="profile-tabs-units-tab" data-tab-button data-tab="units" role="tab"
-				        aria-selected="<?php echo 'units' === $active_tab ? 'true' : 'false'; ?>"
-				        aria-controls="profile-tabs-units-panel">
+						id="profile-tabs-units-tab" data-tab-button data-tab="units" role="tab"
+						aria-selected="<?php echo 'units' === $active_tab ? 'true' : 'false'; ?>"
+						aria-controls="profile-tabs-units-panel">
 					<?php echo esc_attr( $my_properties_text ); ?>
 				</button>
 				<button class="result-tab-button <?php echo 'projects' === $active_tab ? 'active' : ''; ?>"
-				        type="button"
-				        id="profile-tabs-projects-tab" data-tab-button data-tab="projects" role="tab"
-				        aria-selected="<?php echo 'projects' === $active_tab ? 'true' : 'false'; ?>"
-				        aria-controls="profile-tabs-projects-panel">
+						type="button"
+						id="profile-tabs-projects-tab" data-tab-button data-tab="projects" role="tab"
+						aria-selected="<?php echo 'projects' === $active_tab ? 'true' : 'false'; ?>"
+						aria-controls="profile-tabs-projects-panel">
 					<?php esc_html_e( 'My projects', 'east-property' ); ?>
 				</button>
 				<button class="result-tab-button <?php echo 'favourites' === $active_tab ? 'active' : ''; ?>"
-				        type="button"
-				        id="profile-tabs-favourites-tab" data-tab-button data-tab="favourites" role="tab"
-				        aria-selected="<?php echo 'favourites' === $active_tab ? 'true' : 'false'; ?>"
-				        aria-controls="profile-tabs-units-panel">
+						type="button"
+						id="profile-tabs-favourites-tab" data-tab-button data-tab="favourites" role="tab"
+						aria-selected="<?php echo 'favourites' === $active_tab ? 'true' : 'false'; ?>"
+						aria-controls="profile-tabs-units-panel">
 					<?php esc_html_e( 'Saved properties', 'east-property' ); ?>
 				</button>
 				<button class="result-tab-button <?php echo 'account' === $active_tab ? 'active' : ''; ?>" type="button"
-				        id="profile-tabs-account-tab" data-tab-button data-tab="account" role="tab"
-				        aria-selected="<?php echo 'account' === $active_tab ? 'true' : 'false'; ?>"
-				        aria-controls="profile-tabs-account-panel">
+						id="profile-tabs-account-tab" data-tab-button data-tab="account" role="tab"
+						aria-selected="<?php echo 'account' === $active_tab ? 'true' : 'false'; ?>"
+						aria-controls="profile-tabs-account-panel">
 					<?php esc_html_e( 'Account details', 'east-property' ); ?>
 				</button>
 				<a class="button link logout" href="<?php echo esc_url( $logout_url ); ?>">
@@ -69,8 +69,8 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 			</div>
 
 			<div class="profile-tabs-content <?php echo 'units' === $active_tab ? 'active' : ''; ?>"
-			     id="profile-tabs-units-panel" data-tab-panel data-tab="units" role="tabpanel"
-			     aria-labelledby="profile-tabs-units-tab">
+				 id="profile-tabs-units-panel" data-tab-panel data-tab="units" role="tabpanel"
+				 aria-labelledby="profile-tabs-units-tab">
 				<div class="content-title">
 					<div class="title-top">
 						<h2>
@@ -103,7 +103,7 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 								<div class="boost-promo">
 									<div class="boost-promo-img">
 										<img src="<?php echo esc_url( THEME_URL ); ?>/assets/img/gold_star.png"
-										     alt="<?php esc_html_e( 'Gold Star', 'east-property' ); ?>">
+											 alt="<?php esc_html_e( 'Gold Star', 'east-property' ); ?>">
 									</div>
 									<div class="boost-promo-text">
 										<div class="boost-promo-title"><?php esc_html_e( 'Boost your property to get it sold faster',
@@ -118,7 +118,7 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 										<div class="boost-promo-label">
 											<div class="label red">
 												<img src="<?php echo esc_url( THEME_URL ); ?>/assets/img/star_white.svg"
-												     alt="<?php esc_html_e( 'Star', 'east-property' ); ?>">
+													 alt="<?php esc_html_e( 'Star', 'east-property' ); ?>">
 												<?php esc_html_e( 'Promoted', 'east-property' ); ?>
 											</div>
 										</div>
@@ -161,8 +161,8 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 			</div>
 
 			<div class="profile-tabs-content <?php echo 'projects' === $active_tab ? 'active' : ''; ?>"
-			     id="profile-tabs-projects-panel" data-tab-panel data-tab="projects" role="tabpanel"
-			     aria-labelledby="profile-tabs-projects-tab">
+				 id="profile-tabs-projects-panel" data-tab-panel data-tab="projects" role="tabpanel"
+				 aria-labelledby="profile-tabs-projects-tab">
 				<div class="content-title">
 					<div class="title-top">
 						<h2>
@@ -234,13 +234,15 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 			</div>
 
 			<div class="profile-tabs-content <?php echo 'favourites' === $active_tab ? 'active' : ''; ?>"
-			     id="profile-tabs-favourites-panel" data-tab-panel data-tab="favourites" role="tabpanel"
-			     aria-labelledby="profile-tabs-favourites-tab">
+				 id="profile-tabs-favourites-panel" data-tab-panel data-tab="favourites" role="tabpanel"
+				 aria-labelledby="profile-tabs-favourites-tab">
 				<div class="content-title">
 					<div class="title-top">
 						<h2>
 							<?php esc_html_e( 'Saved properties', 'east-property' ); ?>
-							(<?php echo esc_attr( $favourites['total'] ); ?>)
+							<?php if ( 0 < $favourites['total'] ) { ?>
+								(<?php echo esc_attr( $favourites['total'] ); ?>)
+							<?php } ?>
 						</h2>
 					</div>
 				</div>
@@ -286,8 +288,8 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 			</div>
 
 			<div class="profile-tabs-content <?php echo 'account' === $active_tab ? 'active' : ''; ?>"
-			     id="profile-tabs-account-panel" data-tab-panel data-tab="account" role="tabpanel"
-			     aria-labelledby="profile-tabs-account-tab">
+				 id="profile-tabs-account-panel" data-tab-panel data-tab="account" role="tabpanel"
+				 aria-labelledby="profile-tabs-account-tab">
 				<div class="content-title">
 					<div class="title-top">
 						<h2><?php esc_html_e( 'Account details', 'east-property' ); ?></h2>
@@ -295,7 +297,7 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 				</div>
 				<div class="content-list submit-unit">
 					<form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="POST"
-					      enctype="multipart/form-data">
+						  enctype="multipart/form-data">
 						<input type="hidden" name="action" value="account_update_profile">
 						<?php wp_nonce_field( 'update_profile' ); ?>
 
@@ -307,8 +309,8 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 										<label for="display_name">
 											<?php esc_html_e( 'Display name', 'east-property' ); ?>
 											<input type="text" id="display_name" name="display_name"
-											       value="<?php echo esc_attr( $current_user->display_name ); ?>"
-											       required>
+												   value="<?php echo esc_attr( $current_user->display_name ); ?>"
+												   required>
 										</label>
 									</div>
 
@@ -316,8 +318,8 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 										<label for="email">
 											<?php esc_html_e( 'Email address', 'east-property' ); ?>
 											<input type="text" id="email" name="email"
-											       value="<?php echo esc_attr( $current_user->user_email ); ?>"
-											       readonly="readonly">
+												   value="<?php echo esc_attr( $current_user->user_email ); ?>"
+												   readonly="readonly">
 										</label>
 									</div>
 
@@ -343,15 +345,15 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 														</span>
 													<span class="dropdown-arrow">
 															<img src="<?php echo THEME_URL; ?>/assets/img/arrow-down.svg"
-															     width="16" height="16"
-															     alt="vector arrow">
+																 width="16" height="16"
+																 alt="vector arrow">
 														</span>
 												</button>
 												<div class="dropdown-content">
 													<div class="dropdown-inner">
 														<?php foreach ( $agencies_posts as $agency ) { ?>
 															<button type="button" class="dropdown-option"
-															        data-value="<?php echo esc_attr( $agency->ID ); ?>">
+																	data-value="<?php echo esc_attr( $agency->ID ); ?>">
 																<?php echo esc_html( $agency->post_title ); ?>
 															</button>
 														<?php } ?>
@@ -359,8 +361,8 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 												</div>
 											</div>
 											<input type="hidden" name="agency_id"
-											       value="<?php echo esc_attr( $user_agency_id ); ?>"
-											       data-required>
+												   value="<?php echo esc_attr( $user_agency_id ); ?>"
+												   data-required>
 										</div>
 									</div>
 									<br>
@@ -370,9 +372,9 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 												<?php esc_html_e( 'Phone number', 'east-property' ); ?>
 												(<?php echo esc_attr( $language['name'] ); ?>)
 												<input type="text" id="phone_<?php echo esc_attr( $language_slug ); ?>"
-												       name="phone[<?php echo esc_attr( $language_slug ); ?>]"
-												       value="<?php echo esc_attr( $user_entity->get_phone( $language_slug ) ); ?>"
-												       placeholder="971509670043">
+													   name="phone[<?php echo esc_attr( $language_slug ); ?>]"
+													   value="<?php echo esc_attr( $user_entity->get_phone( $language_slug ) ); ?>"
+													   placeholder="971509670043">
 											</label>
 										</div>
 									<?php } ?>
@@ -383,12 +385,12 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 												<?php esc_html_e( 'WhatsApp number', 'east-property' ); ?>
 												(<?php echo esc_attr( $language['name'] ); ?>)
 												<input type="text"
-												       id="whatsapp_<?php echo esc_attr( $language_slug ); ?>"
-												       name="whatsapp[<?php echo esc_attr( $language_slug ); ?>]"
-												       value="<?php echo esc_attr( $user_entity->get_whatsapp( $language_slug,
+													   id="whatsapp_<?php echo esc_attr( $language_slug ); ?>"
+													   name="whatsapp[<?php echo esc_attr( $language_slug ); ?>]"
+													   value="<?php echo esc_attr( $user_entity->get_whatsapp( $language_slug,
 														   '',
 														   false ) ); ?>"
-												       placeholder="971509670043">
+													   placeholder="971509670043">
 											</label>
 										</div>
 									<?php } ?>
@@ -408,12 +410,12 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 								</div>
 								<div class="avatar-uploader">
 									<input type="hidden" name="current_avatar_id" id="current_avatar_id"
-									       value="<?php echo esc_attr( $user_avatar_id ); ?>">
+										   value="<?php echo esc_attr( $user_avatar_id ); ?>">
 									<input type="file" id="avatar" name="avatar" accept="image/*" class="avatar-input">
 									<div class="avatar-uploader-wrapper">
 										<div class="avatar-preview">
 											<img src="<?php echo esc_url( $user_avatar_url ); ?>"
-											     alt="<?php echo esc_attr( $current_user->display_name ); ?>">
+												 alt="<?php echo esc_attr( $current_user->display_name ); ?>">
 										</div>
 									</div>
 								</div>
