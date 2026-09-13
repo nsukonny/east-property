@@ -53,7 +53,7 @@ $description = get_the_content();
 						null,
 						array(
 							'class'  => 'gray sm',
-							'text'   => __( 'Share' , 'east-property' ),
+							'text'   => __( 'Share', 'east-property' ),
 							'src'    => THEME_URL . '/assets/img/share.svg',
 							'link'   => $whatsapp_share_text,
 							'target' => '_blank',
@@ -65,8 +65,8 @@ $description = get_the_content();
 						<a href="<?php echo esc_url( $whats_app_link ); ?>" target="_blank" rel="noopener noreferrer"
 						   class="button sm orange">
 							<img src="<?php echo THEME_URL; ?>/assets/img/call.svg" width="16" height="16"
-							     alt="vector link">
-							<?php _e( 'Contact us' , 'east-property' ); ?>
+								 alt="vector link">
+							<?php _e( 'Contact us', 'east-property' ); ?>
 						</a>
 					<?php } ?>
 				</div>
@@ -83,7 +83,7 @@ $description = get_the_content();
 				<div class="single-info">
 					<?php if ( ! empty( $property_information ) ) { ?>
 						<div class="single-info-block">
-							<h3><?php _e( 'Property information' , 'east-property' ); ?></h3>
+							<h3><?php _e( 'Property information', 'east-property' ); ?></h3>
 							<div class="single-info-rows">
 								<div class="single-info-row">
 									<?php
@@ -108,13 +108,13 @@ $description = get_the_content();
 								<?php if ( ! empty( $location->slug ) ) { ?>
 									<div class="single-info-row">
 										<div class="single-info-col">
-											<span><?php _e( 'Location' , 'east-property' ); ?></span>
+											<span><?php _e( 'Location', 'east-property' ); ?></span>
 											<a href="<?php echo esc_url( core_home_url( '/projects' ) . '/?location=' . $location->slug ); ?>"
 											   target="_blank"
 											   rel="noopener noreferrer">
 												<?php echo esc_html( $location->name ); ?>
 												<img src="<?php echo THEME_URL; ?>/assets/img/link.svg" width="16"
-												     height="16" alt="<?php echo esc_html( $location->name ); ?>">
+													 height="16" alt="<?php echo esc_html( $location->name ); ?>">
 											</a>
 										</div>
 									</div>
@@ -132,15 +132,15 @@ $description = get_the_content();
 									<?php if ( ! empty( $developer_thumb ) ) { ?>
 										<div class="developer-image">
 											<img src="<?php echo esc_url( $developer_thumb ); ?>" width="80"
-											     height="50"
-											     alt="<?php echo esc_attr( $developer_title ); ?>">
+												 height="50"
+												 alt="<?php echo esc_attr( $developer_title ); ?>">
 										</div>
 									<?php } ?>
 									<div class="developer-info">
 										<span><?php echo esc_html( $developer_title ); ?></span>
 										<?php if ( ! empty( $developer_url ) ) { ?>
 											<a href="<?php echo esc_url( $developer_url ); ?>">
-												<?php _e( 'View developer' , 'east-property' ); ?>
+												<?php _e( 'View developer', 'east-property' ); ?>
 											</a>
 										<?php } ?>
 									</div>
@@ -154,10 +154,11 @@ $description = get_the_content();
 					get_component_template(
 						'units/featured',
 						array(
-							'h2'            => count( $units ) . ' ' . __( 'properties available in this project' , 'east-property' ),
+							'h2'            => count( $units ) . ' ' . __( 'properties available in this project',
+									'east-property' ),
 							'href'          => $all_units_link,
 							'show_all_link' => $all_units_link,
-							'link_text'     => __( 'All properties' , 'east-property' ),
+							'link_text'     => __( 'All properties', 'east-property' ),
 							'units'         => $tree_latest_units,
 							'card_template' => 'unit-square-card',
 							'before'        => '',
@@ -182,7 +183,7 @@ $description = get_the_content();
 
 					<?php if ( ! empty( $payment_plans ) ) { ?>
 						<div class="single-info-block">
-							<h3><?php _e( 'Payment plan' , 'east-property' ); ?></h3>
+							<h3><?php _e( 'Payment plan', 'east-property' ); ?></h3>
 							<div class="single-steps">
 								<?php foreach ( $payment_plans as $key => $plan ) { ?>
 									<div class="single-step">
@@ -196,7 +197,7 @@ $description = get_the_content();
 
 					<?php if ( 0 < count( $amenities ) ) { ?>
 						<div class="single-info-block">
-							<h3><?php _e( 'Amenities' , 'east-property' ); ?></h3>
+							<h3><?php _e( 'Amenities', 'east-property' ); ?></h3>
 							<ul class="single-list">
 								<?php foreach ( $amenities as $amenity ) { ?>
 									<li><?php echo esc_html( $amenity ); ?></li>
@@ -207,7 +208,7 @@ $description = get_the_content();
 
 					<?php if ( ! empty( $description ) ) { ?>
 						<div class="single-info-block">
-							<h3><?php _e( 'Description' , 'east-property' ); ?></h3>
+							<h3><?php _e( 'Description', 'east-property' ); ?></h3>
 							<div class="texts">
 								<?php the_content(); ?>
 							</div>
@@ -216,7 +217,7 @@ $description = get_the_content();
 
 					<?php if ( ! empty( $latitude ) && ! empty( $longitude ) ) { ?>
 						<div class="single-info-block">
-							<h3><?php _e( 'Location' , 'east-property' ); ?></h3>
+							<h3><?php _e( 'Location', 'east-property' ); ?></h3>
 							<?php
 							/*
 							 * A few sentences about the district, in the markup rather than
@@ -233,7 +234,7 @@ $description = get_the_content();
 									<a href="<?php echo esc_url( get_term_link( $location ) ); ?>">
 										<?php
 										printf(
-											/* translators: %s: district name. */
+										/* translators: %s: district name. */
 											esc_html__( 'More about %s', 'east-property' ),
 											esc_html( $location->name )
 										);

@@ -15,13 +15,21 @@ if ( $property === null || ! $property->exists() ) {
 	return;
 }
 
-$whatsapp_share_text = 'https://wa.me/?text=' . rawurlencode( sprintf(
-		'%s | %s | %s View %s',
-		$property->get_title(),
-		$property?->get_location()->name ?? '',
-		$property->get_price_html(),
-		get_permalink( $property->get_id() )
-	) );
+$title = html_entity_decode(
+	$property->get_title(),
+	ENT_QUOTES | ENT_HTML5,
+	'UTF-8'
+);
+
+$raw_url_encode_text = rawurlencode( sprintf(
+	'%s | %s | %s View %s',
+	$title,
+	$property?->get_location()->name ?? '',
+	$property->get_price_html(),
+	get_permalink( $property->get_id() ) ) );
+
+$whatsapp_share_text = 'https://wa.me/?text=' . $raw_url_encode_text;
+$whatsapp_link       = WHATS_APP_LINK . '?text=' . $raw_url_encode_text;
 
 $property_units = $property->get_units();
 $featured_units = ! empty( $property_units ) ? array_slice( $property_units, 0, 6 ) : array();
@@ -34,7 +42,7 @@ get_component_template(
 		'title'                => $property->get_title(),
 		'labels'               => $property->get_labels(),
 		'whatsapp_share_text'  => $whatsapp_share_text,
-		'whats_app_link'       => WHATS_APP_LINK,
+		'whats_app_link'       => $whatsapp_link,
 		'property_information' => $property->get_key_information(),
 		'location'             => $property?->get_location() ?? '',
 		'developer'            => $property?->get_developer() ?? '',
@@ -48,7 +56,7 @@ get_component_template(
 		'latitude'             => $property?->get_latitude() ?? '',
 		'longitude'            => $property?->get_longitude() ?? '',
 		'payment_plans'        => $payment_plans[0]['items'] ?? array(),
-		'button_text'          => __( 'Show all properties in this project' , 'east-property' ),
+		'button_text'          => __( 'Show all properties in this project', 'east-property' ),
 		'button_url'           => $all_units_link,
 	)
 );
