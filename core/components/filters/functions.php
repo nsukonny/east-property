@@ -44,14 +44,14 @@ function core_unit_filter_source( string $language, string $listing_type = 'all'
 		$params[] = $listing_type;
 	}
 
-	if ( '' !== $language ) {
+	$language_id = '' === $language ? 0 : core_language_term_taxonomy_id( $language );
+
+	if ( 0 !== $language_id ) {
 		$sql      .= "
-			JOIN {$wpdb->term_relationships} tr_l ON tr_l.object_id = u.ID
-			JOIN {$wpdb->term_taxonomy} tt_l
-				ON tt_l.term_taxonomy_id = tr_l.term_taxonomy_id AND tt_l.taxonomy = 'language'
-			JOIN {$wpdb->terms} t_l ON t_l.term_id = tt_l.term_id AND t_l.slug = %s
+			JOIN {$wpdb->term_relationships} tr_l
+				ON tr_l.object_id = u.ID AND tr_l.term_taxonomy_id = %d
 		";
-		$params[] = $language;
+		$params[] = $language_id;
 	}
 
 	return array( 'sql' => $sql, 'params' => $params );
@@ -437,56 +437,163 @@ function get_filter_baths_options(): array {
 }
 
 /**
+ * term_taxonomy_id of a Polylang language.
+ *
+ * Joining `term_relationships` to `term_taxonomy` and `terms` inside an
+ * aggregate lets MySQL drive from the language term and cross join the tens of
+ * thousands of rows it owns. One integer resolved up front turns every language
+ * check into a primary key lookup instead.
+ *
+ * @param string $slug Language slug.
+ *
+ * @return int Zero when the language is unknown.
+ */
+function core_language_term_taxonomy_id( string $slug ): int {
+	static $cache = array();
+
+	if ( isset( $cache[ $slug ] ) ) {
+		return $cache[ $slug ];
+	}
+
+	$term = get_term_by( 'slug', $slug, 'language' );
+
+	$cache[ $slug ] = $term instanceof WP_Term ? (int) $term->term_taxonomy_id : 0;
+
+	return $cache[ $slug ];
+}
+
+/**
+ * Lowest and highest project price across the listing.
+ *
+ * A project's price is the average price of its units, the same
+ * `round( sum / count )` Property::get_price() computes — units without a price
+ * count as zero and still divide, so this is a plain sum over the group rather
+ * than AVG over non-empty rows. Units are matched against the project and its
+ * Polylang translations, which is what Property::linked_property_ids() does.
+ *
+ * @param string $language Polylang slug, empty when the plugin is off.
+ *
+ * @return array{min: ?int, max: ?int}
+ */
+function core_property_filter_price_range( string $language ): array {
+	global $wpdb;
+
+	$language_property = '';
+	$language_unit     = '';
+	$params            = array();
+	$language_id       = '' === $language ? 0 : core_language_term_taxonomy_id( $language );
+
+	if ( 0 !== $language_id ) {
+		$language_property = "JOIN {$wpdb->term_relationships} tr_p
+			ON tr_p.object_id = p.ID AND tr_p.term_taxonomy_id = %d";
+		$language_unit     = "JOIN {$wpdb->term_relationships} tr_u
+			ON tr_u.object_id = u.ID AND tr_u.term_taxonomy_id = %d";
+
+		$params = array( $language_id, $language_id );
+	}
+
+	$sql = "
+		SELECT MIN(avg_price) AS price_min, MAX(avg_price) AS price_max
+		FROM (
+			SELECT ROUND(SUM(unit_price) / COUNT(*)) AS avg_price
+			FROM (
+				SELECT p.ID AS property_id, u.ID AS unit_id,
+					MAX(COALESCE(NULLIF(pm_price.meta_value, '') + 0, 0)) AS unit_price
+				FROM {$wpdb->postmeta} pm_link
+					JOIN {$wpdb->posts} u
+						ON u.ID = pm_link.post_id AND u.post_type = 'unit' AND u.post_status = 'publish'
+					JOIN {$wpdb->posts} r
+						ON r.ID = pm_link.meta_value AND r.post_type = 'property'
+					JOIN {$wpdb->term_relationships} tr_g ON tr_g.object_id = r.ID
+					JOIN {$wpdb->term_taxonomy} tt_g
+						ON tt_g.term_taxonomy_id = tr_g.term_taxonomy_id AND tt_g.taxonomy = 'post_translations'
+					JOIN {$wpdb->term_relationships} tr_m ON tr_m.term_taxonomy_id = tt_g.term_taxonomy_id
+					JOIN {$wpdb->posts} p
+						ON p.ID = tr_m.object_id AND p.post_type = 'property' AND p.post_status = 'publish'
+					LEFT JOIN {$wpdb->postmeta} pm_price
+						ON pm_price.post_id = u.ID AND pm_price.meta_key = 'price'
+					{$language_property}
+					{$language_unit}
+				WHERE pm_link.meta_key = 'property'
+				GROUP BY p.ID, u.ID
+			) pairs
+			GROUP BY property_id
+		) per_property
+		WHERE avg_price > 0
+	";
+
+	$row = $wpdb->get_row( empty( $params ) ? $sql : $wpdb->prepare( $sql, $params ), ARRAY_A );
+
+	return array(
+		'min' => isset( $row['price_min'] ) ? (int) $row['price_min'] : null,
+		'max' => isset( $row['price_max'] ) ? (int) $row['price_max'] : null,
+	);
+}
+
+/**
+ * Handover years of the published projects, this year and later.
+ *
+ * @param string $language Polylang slug, empty when the plugin is off.
+ *
+ * @return string[] Years as strings, ascending.
+ */
+function core_property_filter_delivery_years( string $language ): array {
+	global $wpdb;
+
+	$language_join = '';
+	$params        = array();
+
+	$language_id = '' === $language ? 0 : core_language_term_taxonomy_id( $language );
+
+	if ( 0 !== $language_id ) {
+		$language_join = "JOIN {$wpdb->term_relationships} tr_l
+			ON tr_l.object_id = p.ID AND tr_l.term_taxonomy_id = %d";
+		$params[]      = $language_id;
+	}
+
+	$params[] = (int) date( 'Y' );
+
+	$sql = "
+		SELECT DISTINCT YEAR(pm_date.meta_value) AS delivery_year
+		FROM {$wpdb->posts} p
+			JOIN {$wpdb->postmeta} pm_date
+				ON pm_date.post_id = p.ID AND pm_date.meta_key = 'delivery_date' AND pm_date.meta_value <> ''
+			{$language_join}
+		WHERE p.post_type = 'property' AND p.post_status = 'publish'
+		HAVING delivery_year >= %d
+		ORDER BY delivery_year ASC
+	";
+
+	return array_map( 'strval', (array) $wpdb->get_col( $wpdb->prepare( $sql, $params ) ) );
+}
+
+/**
  * Temp solution for get filters for properties //TODO rebuild after run
  *
  * @return array
  */
 function get_properties_search_tabs_data(): array {
-	$properties = get_posts(
-		array(
-			'post_type'      => 'property',
-			'posts_per_page' => - 1,
-			'post_status'    => 'publish',
-		)
-	);
+	$language = function_exists( 'pll_current_language' ) ? (string) pll_current_language( 'slug' ) : '';
+	$price    = core_property_filter_price_range( $language );
+	$years    = core_property_filter_delivery_years( $language );
 
-	if ( empty( $properties ) ) {
+	$price_min = $price['min'];
+	$price_max = $price['max'];
+
+	// Declared by the original and never assigned, so every `defaults.available`
+	// below has always been null. Kept as is rather than quietly changed.
+	$delivery_date_max = null;
+
+	if ( null === $price_min && empty( $years ) ) {
 		return array();
 	}
 
-	$developers        = array();
-	$delivery_dates    = array();
-	$price_min         = null;
-	$price_max         = null;
-	$delivery_date_max = null;
-	$current_year      = date( 'Y' );
-
-	foreach ( $properties as $property_post ) {
-		$property  = new Entities\Property( $property_post );
-		$developer = $property->get_developer();
-		if ( null !== $developer && ! isset( $developers[ $developer->get_id() ] ) ) {
-			$developers[ $developer->get_id() ] = array(
-				'value' => $developer->get_id(),
-				'label' => $developer->get_title(),
-			);
-		}
-
-		$price = $property->get_price();
-		if ( ! empty( $price ) && ( null === $price_min || $price < $price_min ) ) {
-			$price_min = $price;
-		}
-		if ( ! empty( $price ) && ( null === $price_max || $price > $price_max ) ) {
-			$price_max = $price;
-		}
-
-		$delivery_date = $property->get_delivery_date();
-		$delivery_date = ! empty( $delivery_date ) ? date( 'Y', strtotime( $delivery_date ) ) : null;
-		if ( ! empty( $delivery_date ) && ! isset( $delivery_dates[ $delivery_date ] ) && $delivery_date >= $current_year ) {
-			$delivery_dates[ $delivery_date ] = array(
-				'value' => $delivery_date,
-				'label' => $delivery_date,
-			);
-		}
+	$delivery_dates = array();
+	foreach ( $years as $year ) {
+		$delivery_dates[] = array(
+			'value' => $year,
+			'label' => $year,
+		);
 	}
 
 	sort( $delivery_dates );
@@ -652,15 +759,44 @@ function get_range_steps( $min = 0, $max = 0, $steps_count = 6, $is_price = fals
  * Get list of posts with post_type developer
  */
 function get_developers_list(): array {
-	$developers = get_posts(
-		array(
-			'post_type'      => 'developers',
-			'posts_per_page' => - 1,
-			'post_status'    => 'publish',
-			'orderby'        => 'title',
-			'order'          => 'ASC',
-		)
-	);
+	global $wpdb;
+
+	$language_id       = function_exists( 'pll_current_language' )
+		? core_language_term_taxonomy_id( (string) pll_current_language( 'slug' ) )
+		: 0;
+	$language_developer = '';
+	$language_property  = '';
+	$params             = array();
+
+	if ( 0 !== $language_id ) {
+		$language_developer = "JOIN {$wpdb->term_relationships} tr_d
+			ON tr_d.object_id = d.ID AND tr_d.term_taxonomy_id = %d";
+		$language_property  = "JOIN {$wpdb->term_relationships} tr_p
+			ON tr_p.object_id = p.ID AND tr_p.term_taxonomy_id = %d";
+
+		$params = array( $language_id, $language_id );
+	}
+
+	// CAST keeps the comparison between strings so the meta_key_value index
+	// still applies; comparing the text column to a number makes MySQL scan
+	// every row of postmeta once per developer.
+	$sql = "
+		SELECT d.ID, d.post_title
+		FROM {$wpdb->posts} d
+			{$language_developer}
+		WHERE d.post_type = 'developers' AND d.post_status = 'publish'
+			AND EXISTS (
+				SELECT 1
+				FROM {$wpdb->postmeta} pm
+					JOIN {$wpdb->posts} p
+						ON p.ID = pm.post_id AND p.post_type = 'property' AND p.post_status = 'publish'
+					{$language_property}
+				WHERE pm.meta_key = 'developer_rel' AND pm.meta_value = CAST( d.ID AS CHAR )
+			)
+		ORDER BY d.post_title ASC
+	";
+
+	$rows = $wpdb->get_results( empty( $params ) ? $sql : $wpdb->prepare( $sql, $params ) );
 
 	$results = array(
 		array(
@@ -668,16 +804,11 @@ function get_developers_list(): array {
 			'label' => __( 'Any Developers', 'east-property' ),
 		),
 	);
-	foreach ( $developers as $dev ) {
-		$developer      = new Developer( $dev );
-		$projects_count = $developer->get_properties_count();
-		if ( 0 === $projects_count ) {
-			continue;
-		}
 
+	foreach ( (array) $rows as $row ) {
 		$results[] = array(
-			'value' => (string) $developer->get_id(),
-			'label' => (string) $developer->get_title(),
+			'value' => (string) (int) $row->ID,
+			'label' => (string) apply_filters( 'the_title', $row->post_title, (int) $row->ID ),
 		);
 	}
 

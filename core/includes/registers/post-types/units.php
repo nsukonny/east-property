@@ -7,34 +7,34 @@ use Entities\Unit;
  */
 function register_units_post_type(): void {
 	$labels = array(
-		'name'                     => _x( 'Units', 'Post Type General Name' , 'east-property' ),
-		'singular_name'            => _x( 'Unit', 'Post Type Singular Name' , 'east-property' ),
-		'menu_name'                => __( 'Units' , 'east-property' ),
-		'name_admin_bar'           => __( 'Unit' , 'east-property' ),
-		'archives'                 => __( 'Unit Archives' , 'east-property' ),
-		'attributes'               => __( 'Unit Attributes' , 'east-property' ),
-		'parent_item_colon'        => __( 'Parent Unit:' , 'east-property' ),
-		'all_items'                => __( 'All Units' , 'east-property' ),
-		'add_new_item'             => __( 'Add New Unit' , 'east-property' ),
-		'add_new'                  => __( 'Add New' , 'east-property' ),
-		'new_item'                 => __( 'New Unit' , 'east-property' ),
-		'edit_item'                => __( 'Edit Unit' , 'east-property' ),
-		'update_item'              => __( 'Update Unit' , 'east-property' ),
-		'view_item'                => __( 'View Unit' , 'east-property' ),
-		'view_items'               => __( 'View Units' , 'east-property' ),
-		'search_items'             => __( 'Search Unit' , 'east-property' ),
-		'not_found'                => __( 'Not found' , 'east-property' ),
-		'not_found_in_trash'       => __( 'Not found in Trash' , 'east-property' ),
-		'featured_image'           => __( 'Featured Image' , 'east-property' ),
-		'set_featured_image'       => __( 'Set featured image' , 'east-property' ),
-		'remove_featured_image'    => __( 'Remove featured image' , 'east-property' ),
-		'use_featured_image'       => __( 'Use as featured image' , 'east-property' ),
-		'insighted_by_this_author' => __( 'Units insighted by this author' , 'east-property' ),
-		'all_insighted_items'      => __( 'All Units' , 'east-property' ),
+		'name'                     => _x( 'Units', 'Post Type General Name', 'east-property' ),
+		'singular_name'            => _x( 'Unit', 'Post Type Singular Name', 'east-property' ),
+		'menu_name'                => __( 'Units', 'east-property' ),
+		'name_admin_bar'           => __( 'Unit', 'east-property' ),
+		'archives'                 => __( 'Unit Archives', 'east-property' ),
+		'attributes'               => __( 'Unit Attributes', 'east-property' ),
+		'parent_item_colon'        => __( 'Parent Unit:', 'east-property' ),
+		'all_items'                => __( 'All Units', 'east-property' ),
+		'add_new_item'             => __( 'Add New Unit', 'east-property' ),
+		'add_new'                  => __( 'Add New', 'east-property' ),
+		'new_item'                 => __( 'New Unit', 'east-property' ),
+		'edit_item'                => __( 'Edit Unit', 'east-property' ),
+		'update_item'              => __( 'Update Unit', 'east-property' ),
+		'view_item'                => __( 'View Unit', 'east-property' ),
+		'view_items'               => __( 'View Units', 'east-property' ),
+		'search_items'             => __( 'Search Unit', 'east-property' ),
+		'not_found'                => __( 'Not found', 'east-property' ),
+		'not_found_in_trash'       => __( 'Not found in Trash', 'east-property' ),
+		'featured_image'           => __( 'Featured Image', 'east-property' ),
+		'set_featured_image'       => __( 'Set featured image', 'east-property' ),
+		'remove_featured_image'    => __( 'Remove featured image', 'east-property' ),
+		'use_featured_image'       => __( 'Use as featured image', 'east-property' ),
+		'insighted_by_this_author' => __( 'Units insighted by this author', 'east-property' ),
+		'all_insighted_items'      => __( 'All Units', 'east-property' ),
 	);
 	$args   = array(
-		'label'               => __( 'Unit' , 'east-property' ),
-		'description'         => __( 'Post Type Description' , 'east-property' ),
+		'label'               => __( 'Unit', 'east-property' ),
+		'description'         => __( 'Post Type Description', 'east-property' ),
 		'labels'              => $labels,
 		'supports'            => array(
 			'title',
@@ -144,12 +144,25 @@ add_action( 'init', static function () {
 		'top'
 	);
 
+	//404 for wrong UR with params
+	add_rewrite_rule(
+		'^property/([^/]+)/([^/]+)/.+/?$',
+		'index.php?core_force_404=1',
+		'top'
+	);
+
 	foreach ( core_language_url_prefixes() as $prefix ) {
 		$lang = '' === $prefix ? '' : '&lang=' . rtrim( $prefix, '/' );
 
 		add_rewrite_rule(
 			'^' . $prefix . 'property/([^/]+)/?$',
 			'index.php?post_type=unit&name=$matches[1]' . $lang,
+			'top'
+		);
+
+		add_rewrite_rule(
+			'^' . $prefix . 'property/([^/]+)/([^/]+)/.+/?$',
+			'index.php?core_force_404=1',
 			'top'
 		);
 	}
@@ -163,11 +176,13 @@ add_action( 'init', static function () {
 
 	add_rewrite_tag( '%project_slug%', '([^&]+)' );
 	add_rewrite_tag( '%is_old_url%', '([^&]+)' );
+	add_rewrite_tag( '%core_force_404%', '([01])' );
 }, 20 );
 
 add_filter( 'query_vars', static function ( $vars ) {
 	$vars[] = 'project_slug';
 	$vars[] = 'is_old_url';
+	$vars[] = 'core_force_404';
 
 	return $vars;
 } );
@@ -207,6 +222,30 @@ add_action( 'template_redirect', static function () {
 		exit;
 	}
 } );
+
+/**
+ * Force redirect to 404 page when the unit is not found.
+ */
+add_action( 'template_redirect', static function (): void {
+	if ( ! get_query_var( 'core_force_404' ) ) {
+		return;
+	}
+
+	global $wp_query;
+
+	$wp_query->set_404();
+
+	status_header( 404 );
+	nocache_headers();
+
+	$template = get_404_template();
+
+	if ( $template ) {
+		include $template;
+	}
+
+	exit;
+}, 0 );
 
 /**
  * Slugs of the unit listing pages. Shared across languages by Polylang.

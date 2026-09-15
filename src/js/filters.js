@@ -243,7 +243,11 @@ const initPropertiesFilters = () => {
 	if (!filterButtons) return
 
 	filterButtons.forEach(button => {
-		button.addEventListener('change', () => {
+		button.addEventListener('change', (e) => {
+			if (e.target.classList.contains('dropdown-search-input')) {
+				return;
+			}
+
 			updatePropertiesList();
 		});
 	});
@@ -251,16 +255,12 @@ const initPropertiesFilters = () => {
 
 const updatePropertiesList = () => {
 	const filterItem = document.querySelector('.results-filters-items');
-	let filterButtons = filterItem.querySelectorAll('button.result-filter'),
-		formData = new FormData(),
+	let filterButtons = filterItem.querySelectorAll('button.result-filter'), formData = new FormData(),
 		resultsBlock = document.getElementById('result-tabs-list-panel'),
-		contentList = resultsBlock.querySelector('.content-list'),
-		resultTabs = document.querySelector('.result-tabs'),
-		h2Block = resultsBlock.querySelector('.title-top h2'),
-		h2BlockSpan = h2Block.querySelector('span'),
+		contentList = resultsBlock.querySelector('.content-list'), resultTabs = document.querySelector('.result-tabs'),
+		h2Block = resultsBlock.querySelector('.title-top h2'), h2BlockSpan = h2Block.querySelector('span'),
 		action = filterItem.querySelector('input[name="action"]'),
-		mapInstances = document.querySelectorAll('.js-map-instance'),
-		allInputs = filterItem?.querySelectorAll('input');
+		mapInstances = document.querySelectorAll('.js-map-instance'), allInputs = filterItem?.querySelectorAll('input');
 
 	if (h2BlockSpan) {
 		h2Block = h2BlockSpan;
@@ -291,9 +291,7 @@ const updatePropertiesList = () => {
 	formData.append('current_href', urlWithFilters);
 
 	fetch(ajax_object.ajax_url, {
-		method: 'POST',
-		body: formData,
-		headers: {
+		method: 'POST', body: formData, headers: {
 			'Accept': 'application/json'
 		}
 	})
