@@ -205,6 +205,11 @@ function core_cache_remember( string $key, callable $build, int $ttl, array $opt
 	$hit   = false;
 	$entry = ( ! empty( $options['respect_dev'] ) && IS_DEV ) ? false : get_transient( $key );
 
+	// A warm-up request rebuilds whatever is out of date before it answers.
+	if ( core_cache_warming() && is_array( $entry ) && core_cache_is_outdated( $entry ) ) {
+		$entry = false;
+	}
+
 	if (
 		is_array( $entry )
 		&& isset( $entry['core_cache'], $entry['expires'] )
@@ -213,10 +218,14 @@ function core_cache_remember( string $key, callable $build, int $ttl, array $opt
 	) {
 		$hit = true;
 
-		$outdated = (int) $entry['expires'] <= time()
-			|| ( $entry['generation'] ?? '' ) !== core_cache_generation();
+		/*
+		 * Out of date because the catalogue changed and a warm-up is already
+		 * queued: that run rebuilds it, so this visitor only gets the stored
+		 * value. Otherwise the rebuild happens after this response.
+		 */
+		$changed = ( $entry['generation'] ?? '' ) !== core_cache_generation();
 
-		if ( $outdated ) {
+		if ( core_cache_is_outdated( $entry ) && ! ( $changed && wp_next_scheduled( 'core_cache_warm' ) ) ) {
 			core_after_response(
 				static function () use ( $key, $build, $ttl ) {
 					core_cache_rebuild( $key, $build, $ttl );
@@ -443,6 +452,11 @@ function core_cache_mark_stale(): void {
 		'shutdown',
 		static function () {
 			update_option( 'core_cache_generation', uniqid( '', true ), true );
+
+			// One warm-up a minute at most: every change until it runs rides along.
+			if ( ! wp_next_scheduled( 'core_cache_warm' ) ) {
+				wp_schedule_single_event( time() + MINUTE_IN_SECONDS, 'core_cache_warm' );
+			}
 		},
 		0
 	);
@@ -526,4 +540,96 @@ add_action(
 	},
 	10,
 	3
+);
+
+/**
+ * Whether a stored cache entry is past its lifetime or its catalogue generation.
+ *
+ * @param array $entry Entry as stored by core_cache_store().
+ *
+ * @return bool
+ */
+function core_cache_is_outdated( array $entry ): bool {
+	return (int) ( $entry['expires'] ?? 0 ) <= time()
+		|| ( $entry['generation'] ?? '' ) !== core_cache_generation();
+}
+
+/*
+ * The warm-up token is taken out of the request before anything reads it: the
+ * listing caches are keyed by the request's parameters, and a warm-up has to
+ * fill the same keys a visitor uses.
+ */
+if ( isset( $_GET['core_cache_warm'] ) ) {
+	$GLOBALS['core_cache_warm_token'] = (string) wp_unslash( $_GET['core_cache_warm'] );
+	unset( $_GET['core_cache_warm'], $_REQUEST['core_cache_warm'] );
+}
+
+/**
+ * Whether this request is a warm-up sent by core_cache_warm.
+ *
+ * @return bool
+ */
+function core_cache_warming(): bool {
+	static $warming = null;
+
+	if ( null === $warming ) {
+		$token   = (string) ( $GLOBALS['core_cache_warm_token'] ?? '' );
+		$warming = '' !== $token && hash_equals( wp_hash( 'core_cache_warm' ), $token );
+	}
+
+	return $warming;
+}
+
+/**
+ * Pages a warm-up requests: the homepage and the main listings in every language.
+ *
+ * @return string[]
+ */
+function core_cache_warm_urls(): array {
+	$languages = function_exists( 'pll_languages_list' ) ? (array) pll_languages_list() : array( '' );
+	$urls      = array();
+
+	foreach ( $languages as $language ) {
+		$urls[] = ( '' !== $language && function_exists( 'pll_home_url' ) ) ? pll_home_url( $language ) : home_url( '/' );
+
+		foreach ( array( 'projects', 'off-plan', 'secondary', 'distress' ) as $path ) {
+			$page = get_page_by_path( $path );
+
+			if ( ! $page ) {
+				continue;
+			}
+
+			$page_id = ( '' !== $language && function_exists( 'pll_get_post' ) ) ? (int) pll_get_post( $page->ID, $language ) : (int) $page->ID;
+
+			if ( $page_id > 0 ) {
+				$urls[] = get_permalink( $page_id );
+			}
+		}
+	}
+
+	return array_values( array_unique( array_filter( (array) apply_filters( 'core_cache_warm_urls', $urls ) ) ) );
+}
+
+/*
+ * The warm-up itself: one pass over the key pages right after a batch of
+ * changes, each request rebuilding what it reads before it answers. Visitors
+ * keep getting the previous data until then.
+ */
+add_action(
+	'core_cache_warm',
+	static function () {
+		$token = wp_hash( 'core_cache_warm' );
+
+		foreach ( core_cache_warm_urls() as $url ) {
+			wp_remote_get(
+				add_query_arg( 'core_cache_warm', $token, $url ),
+				array(
+					'timeout'     => 60,
+					'redirection' => 0,
+					'sslverify'   => false,
+					'headers'     => array( 'Cache-Control' => 'no-cache' ),
+				)
+			);
+		}
+	}
 );
