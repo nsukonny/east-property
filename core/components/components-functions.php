@@ -181,12 +181,12 @@ function core_after_response( callable $callback ): void {
 /**
  * A cached value that is refreshed without making a visitor wait for it.
  *
- * Replaces the get_transient() / set_transient() pairs with the same key and the
- * same lifetime, so data is exactly as fresh as before. What changes is the
- * moment the lifetime runs out: the stored value is still returned, and the new
- * one is built after the response and stored for the next request, instead of
- * that visitor waiting for the rebuild. With nothing stored at all the value is
- * built on the spot, as before.
+ * Replaces the get_transient() / set_transient() pairs with the same keys and
+ * lifetimes. A stored value is out of date when its lifetime has run out or when
+ * the catalogue changed after it was built (core_cache_mark_stale()). Either
+ * way it is still returned, and the new one is built after the response and
+ * stored for the next request, instead of a visitor waiting for the rebuild.
+ * With nothing stored at all the value is built on the spot, as before.
  *
  * Options mirror the checks each call site used to make:
  *  - respect_dev: do not read in dev mode (the "! IS_DEV ?" checks);
@@ -213,7 +213,10 @@ function core_cache_remember( string $key, callable $build, int $ttl, array $opt
 	) {
 		$hit = true;
 
-		if ( (int) $entry['expires'] <= time() ) {
+		$outdated = (int) $entry['expires'] <= time()
+			|| ( $entry['generation'] ?? '' ) !== core_cache_generation();
+
+		if ( $outdated ) {
 			core_after_response(
 				static function () use ( $key, $build, $ttl ) {
 					core_cache_rebuild( $key, $build, $ttl );
@@ -224,8 +227,9 @@ function core_cache_remember( string $key, callable $build, int $ttl, array $opt
 		return $entry['value'];
 	}
 
-	$value = $build();
-	core_cache_store( $key, $value, $ttl );
+	$generation = core_cache_generation();
+	$value      = $build();
+	core_cache_store( $key, $value, $ttl, $generation );
 
 	return $value;
 }
@@ -236,18 +240,20 @@ function core_cache_remember( string $key, callable $build, int $ttl, array $opt
  * The transient itself lives for two lifetimes, so an expired value is still
  * there to be served while the next one is built.
  *
- * @param string $key   Transient key.
- * @param mixed  $value Value.
- * @param int    $ttl   Lifetime in seconds.
+ * @param string $key        Transient key.
+ * @param mixed  $value      Value.
+ * @param int    $ttl        Lifetime in seconds.
+ * @param string $generation Catalogue generation the value was built from.
  *
  * @return void
  */
-function core_cache_store( string $key, $value, int $ttl ): void {
+function core_cache_store( string $key, $value, int $ttl, string $generation ): void {
 	set_transient(
 		$key,
 		array(
 			'core_cache' => 1,
 			'expires'    => time() + $ttl,
+			'generation' => $generation,
 			'value'      => $value,
 		),
 		2 * $ttl
@@ -283,7 +289,10 @@ function core_cache_rebuild( string $key, callable $build, int $ttl ): void {
 	}
 
 	try {
-		core_cache_store( $key, $build(), $ttl );
+		// Read before building: a change that lands mid-build leaves this value
+		// marked with the older generation, so it is rebuilt once more.
+		$generation = core_cache_generation();
+		core_cache_store( $key, $build(), $ttl, $generation );
 	} finally {
 		if ( $external ) {
 			wp_cache_delete( $lock, 'core_cache' );
@@ -400,3 +409,121 @@ function core_first_meta_values( array $post_ids, string $meta_key ): array {
 
 	return $values;
 }
+
+/**
+ * The current catalogue generation.
+ *
+ * Changes whenever a project, unit, developer or location changes; cached values
+ * built from an older generation are served once more and rebuilt.
+ *
+ * @return string
+ */
+function core_cache_generation(): string {
+	return (string) get_option( 'core_cache_generation', '' );
+}
+
+/**
+ * Flag every cached catalogue value as out of date.
+ *
+ * The flag is set once, at the end of the request, however many posts or fields
+ * the request changed - an import or a batch approval moves it one time.
+ *
+ * @return void
+ */
+function core_cache_mark_stale(): void {
+	static $queued = false;
+
+	if ( $queued ) {
+		return;
+	}
+
+	$queued = true;
+
+	add_action(
+		'shutdown',
+		static function () {
+			update_option( 'core_cache_generation', uniqid( '', true ), true );
+		},
+		0
+	);
+}
+
+/**
+ * Post types whose changes show up in cached listings, filters and the map.
+ *
+ * @return string[]
+ */
+function core_cache_watched_post_types(): array {
+	return array( 'property', 'unit', 'developers' );
+}
+
+add_action(
+	'save_post',
+	static function ( $post_id, $post ) {
+		if ( wp_is_post_revision( $post_id ) || wp_is_post_autosave( $post_id ) ) {
+			return;
+		}
+
+		if ( $post instanceof WP_Post && in_array( $post->post_type, core_cache_watched_post_types(), true ) ) {
+			core_cache_mark_stale();
+		}
+	},
+	10,
+	2
+);
+
+add_action(
+	'deleted_post',
+	static function ( $post_id, $post = null ) {
+		if ( $post instanceof WP_Post && in_array( $post->post_type, core_cache_watched_post_types(), true ) ) {
+			core_cache_mark_stale();
+		}
+	},
+	10,
+	2
+);
+
+/*
+ * Fields are often written after save_post has fired - update_field() calls in
+ * the account forms and the importers - so field changes flag the cache too.
+ * Keys starting with an underscore are ACF references and WordPress internals
+ * that accompany a real field, and the units counter is written by the cache's
+ * own readers; neither says the catalogue changed.
+ */
+foreach ( array( 'added_post_meta', 'updated_post_meta', 'deleted_post_meta' ) as $core_cache_meta_hook ) {
+	add_action(
+		$core_cache_meta_hook,
+		static function ( $meta_id, $object_id, $meta_key ) {
+			if ( '' === (string) $meta_key || '_' === $meta_key[0] || in_array( $meta_key, array( 'units_count', 'units_count_expired' ), true ) ) {
+				return;
+			}
+
+			if ( in_array( get_post_type( (int) $object_id ), core_cache_watched_post_types(), true ) ) {
+				core_cache_mark_stale();
+			}
+		},
+		10,
+		3
+	);
+}
+unset( $core_cache_meta_hook );
+
+add_action(
+	'set_object_terms',
+	static function ( $object_id ) {
+		if ( in_array( get_post_type( (int) $object_id ), core_cache_watched_post_types(), true ) ) {
+			core_cache_mark_stale();
+		}
+	}
+);
+
+add_action(
+	'edited_term',
+	static function ( $term_id, $tt_id, $taxonomy ) {
+		if ( 'location' === $taxonomy ) {
+			core_cache_mark_stale();
+		}
+	},
+	10,
+	3
+);
