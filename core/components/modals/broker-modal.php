@@ -2,7 +2,7 @@
 
 use Entities\Estate_User;
 
-if ( ! empty( $post ) || 'unit' === $post->post_type ) {
+if ( ! empty( $post ) && 'unit' === $post->post_type ) {
 	$unit   = new \Entities\Unit( $post->ID );
 	$broker = $unit->get_broker();
 } else {
@@ -40,12 +40,12 @@ $phone          = $broker?->get_phone( '', true ) ?: PROJECT_PHONE;
 					</li>
 					<li>
 						<img src="<?php echo THEME_URL; ?>/assets/img/secure.svg" width="16" height="16"
-						     alt="vector icon">
+							 alt="vector icon">
 						<?php _e( 'We facilitate the entire process for you', 'east-property' ); ?>
 					</li>
 					<li>
 						<img src="<?php echo THEME_URL; ?>/assets/img/money.svg" width="16" height="16"
-						     alt="vector icon">
+							 alt="vector icon">
 						<?php _e( 'We don’t add anything on top of the price', 'east-property' ); ?>
 					</li>
 				</ul>
@@ -56,7 +56,7 @@ $phone          = $broker?->get_phone( '', true ) ?: PROJECT_PHONE;
 					   rel="noopener noreferrer"
 					   class="button sm orange">
 						<img src="<?php echo THEME_URL; ?>/assets/img/phone.svg" width="16" height="16"
-						     alt="vector link">
+							 alt="vector link">
 						<?php _e( 'Phone', 'east-property' ); ?>
 					</a>
 				<?php } ?>
@@ -65,7 +65,7 @@ $phone          = $broker?->get_phone( '', true ) ?: PROJECT_PHONE;
 					<a href="<?php echo $whats_app_link; ?>" id="bm_whatsapp" target="_blank" rel="noopener noreferrer"
 					   class="button sm orange">
 						<img src="<?php echo THEME_URL; ?>/assets/img/call.svg" width="16" height="16"
-						     alt="vector link">
+							 alt="vector link">
 						<?php _e( 'WhatsApp', 'east-property' ); ?>
 					</a>
 				<?php } ?>
