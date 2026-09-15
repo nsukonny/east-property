@@ -1079,16 +1079,21 @@ function get_map_properties_json( array $properties, bool $skip_empty = false ):
 	$properties_json = array();
 
 	/*
-	 * The coordinates go through get_field(), which loads each project's meta on
-	 * its own: 868 queries and 838 ms for the homepage map. Loading it in one
-	 * batch first is 4 queries and 366 ms with the same output. Posts already in
-	 * the cache are skipped, so a listing's twenty cards cost nothing extra.
+	 * The map needs two meta values per project, and going through get_field()
+	 * loads every field of every project: for the 868 on the homepage that was
+	 * the whole cost of building this JSON. The coordinates are read in one
+	 * query each instead - the same stored values get_latitude() and
+	 * get_longitude() return - and only the posts and their terms are loaded
+	 * for the titles and permalinks.
 	 */
 	$property_ids = array();
 	foreach ( $properties as $property ) {
 		$property_ids[] = $property->get_id();
 	}
-	update_meta_cache( 'post', $property_ids );
+	_prime_post_caches( $property_ids, true, false );
+	$latitudes  = core_first_meta_values( $property_ids, 'latitude' );
+	$longitudes = core_first_meta_values( $property_ids, 'longitude' );
+
 	foreach ( $properties as $property ) {
 		$units_available = $property->get_units_count();
 		if ( $skip_empty && 0 === $units_available ) {
@@ -1100,8 +1105,8 @@ function get_map_properties_json( array $properties, bool $skip_empty = false ):
 			'name'            => $property->get_title(),
 			'url'             => $property->get_url(),
 			'units_available' => $units_available,
-			'longitude'       => $property?->get_longitude() ?? '',
-			'latitude'        => $property?->get_latitude() ?? '',
+			'longitude'       => ( $longitudes[ $property->get_id() ] ?? '' ) ?: '',
+			'latitude'        => ( $latitudes[ $property->get_id() ] ?? '' ) ?: '',
 		);
 	}
 

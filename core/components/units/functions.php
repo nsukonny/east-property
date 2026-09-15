@@ -80,6 +80,8 @@ function get_units( $listing_type = '', $limit = 25 ): array {
 		)
 	);
 
+	core_prime_listing( $memo[ $filters_hash ]['items'] ?? array() );
+
 	return $memo[ $filters_hash ];
 }
 
