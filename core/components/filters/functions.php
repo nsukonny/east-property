@@ -442,36 +442,41 @@ function get_filter_baths_options(): array {
  * @return array
  */
 function get_properties_search_tabs_data(): array {
-	$properties = get_posts(
+	/*
+	 * Ids only. The loop needs a price and a year per property, and hydrating
+	 * every post primed the meta cache for all fields of all 5 582 properties:
+	 * 3.3 s and 600 MB before the loop even started. get_posts() still runs the
+	 * query, so Polylang narrows it to the current language exactly as before.
+	 *
+	 * The developer of each property used to be looked up here too, one query
+	 * each, into an array nothing read: the options come from
+	 * get_developers_list().
+	 */
+	$property_ids = get_posts(
 		array(
 			'post_type'      => 'property',
 			'posts_per_page' => - 1,
 			'post_status'    => 'publish',
+			'fields'         => 'ids',
 		)
 	);
 
-	if ( empty( $properties ) ) {
+	if ( empty( $property_ids ) ) {
 		return array();
 	}
 
-	$developers        = array();
 	$delivery_dates    = array();
 	$price_min         = null;
 	$price_max         = null;
 	$delivery_date_max = null;
 	$current_year      = date( 'Y' );
 
-	foreach ( $properties as $property_post ) {
-		$property  = new Entities\Property( $property_post );
-		$developer = $property->get_developer();
-		if ( null !== $developer && ! isset( $developers[ $developer->get_id() ] ) ) {
-			$developers[ $developer->get_id() ] = array(
-				'value' => $developer->get_id(),
-				'label' => $developer->get_title(),
-			);
-		}
+	$prices    = core_property_average_prices( $property_ids );
+	$raw_dates = core_first_meta_values( $property_ids, 'delivery_date' );
+	$years     = array();
 
-		$price = $property->get_price();
+	foreach ( $property_ids as $property_id ) {
+		$price = $prices[ $property_id ] ?? 0;
 		if ( ! empty( $price ) && ( null === $price_min || $price < $price_min ) ) {
 			$price_min = $price;
 		}
@@ -479,8 +484,15 @@ function get_properties_search_tabs_data(): array {
 			$price_max = $price;
 		}
 
-		$delivery_date = $property->get_delivery_date();
-		$delivery_date = ! empty( $delivery_date ) ? date( 'Y', strtotime( $delivery_date ) ) : null;
+		// Property::get_delivery_date() and the year taken from it, worked out
+		// once per stored value: there are a few dozen distinct dates in all.
+		$raw = $raw_dates[ $property_id ] ?? '';
+		if ( ! array_key_exists( $raw, $years ) ) {
+			$date          = core_property_delivery_date( $raw );
+			$years[ $raw ] = ! empty( $date ) ? date( 'Y', strtotime( $date ) ) : null;
+		}
+
+		$delivery_date = $years[ $raw ];
 		if ( ! empty( $delivery_date ) && ! isset( $delivery_dates[ $delivery_date ] ) && $delivery_date >= $current_year ) {
 			$delivery_dates[ $delivery_date ] = array(
 				'value' => $delivery_date,
@@ -597,6 +609,161 @@ function get_properties_search_tabs_data(): array {
 }
 
 /**
+ * First stored value of one meta key for many posts, in one query.
+ *
+ * The first row by meta_id, which is the row get_post_meta( $id, $key, true )
+ * returns.
+ *
+ * @param int[]  $post_ids
+ * @param string $meta_key
+ *
+ * @return array<int, string> post id => value; posts without the key are absent
+ */
+function core_first_meta_values( array $post_ids, string $meta_key ): array {
+	global $wpdb;
+
+	if ( empty( $post_ids ) ) {
+		return array();
+	}
+
+	$placeholders = implode( ',', array_fill( 0, count( $post_ids ), '%d' ) );
+	$rows         = $wpdb->get_results(
+		$wpdb->prepare(
+			"SELECT post_id, meta_value FROM {$wpdb->postmeta}
+				WHERE meta_key = %s AND post_id IN ($placeholders)
+				ORDER BY meta_id ASC",
+			array_merge( array( $meta_key ), array_map( 'intval', $post_ids ) )
+		)
+	);
+
+	$values = array();
+	foreach ( $rows as $row ) {
+		$post_id = (int) $row->post_id;
+		if ( ! isset( $values[ $post_id ] ) ) {
+			$values[ $post_id ] = (string) $row->meta_value;
+		}
+	}
+
+	return $values;
+}
+
+/**
+ * What Property::get_delivery_date() returns, from the stored meta value.
+ *
+ * get_field() formats a date picker value with acf_format_date() and the
+ * field's return format (Ymd), and get_delivery_date() then formats that with
+ * the site's date format.
+ *
+ * @param string $raw
+ *
+ * @return string
+ */
+function core_property_delivery_date( string $raw ): string {
+	if ( '' === $raw ) {
+		return '';
+	}
+
+	$date = function_exists( 'acf_format_date' ) ? acf_format_date( $raw, 'Ymd' ) : $raw;
+	if ( empty( $date ) ) {
+		return '';
+	}
+
+	return date_i18n( get_option( 'date_format' ), strtotime( $date ) );
+}
+
+/**
+ * Average unit price of many properties at once.
+ *
+ * Property::get_price() answers for one property with a units query and an
+ * entity per unit - across the catalogue that was one query per property and
+ * 7.9 s. This reads the same numbers in two queries, under the same rules:
+ *
+ *  - a unit belongs to a property when its 'property' meta holds the
+ *    property's id or the id of one of its translations;
+ *  - the units come from get_posts(), so Polylang keeps them to the current
+ *    language;
+ *  - a unit's price is its first 'price' value cast to int, zero when missing,
+ *    and such a unit still counts towards the average;
+ *  - the average is rounded.
+ *
+ * @param int[] $property_ids
+ *
+ * @return array<int, int> property id => average price; no units, no entry
+ */
+function core_property_average_prices( array $property_ids ): array {
+	global $wpdb;
+
+	$unit_ids = get_posts(
+		array(
+			'post_type'      => 'unit',
+			'posts_per_page' => - 1,
+			'fields'         => 'ids',
+		)
+	);
+
+	if ( empty( $unit_ids ) || empty( $property_ids ) ) {
+		return array();
+	}
+
+	$placeholders = implode( ',', array_fill( 0, count( $unit_ids ), '%d' ) );
+	$rows         = $wpdb->get_results(
+		$wpdb->prepare(
+			"SELECT post_id, meta_key, meta_value FROM {$wpdb->postmeta}
+				WHERE meta_key IN ( 'property', 'price' ) AND post_id IN ($placeholders)
+				ORDER BY meta_id ASC",
+			array_map( 'intval', $unit_ids )
+		)
+	);
+
+	$units_by_target = array();
+	$unit_prices     = array();
+	foreach ( $rows as $row ) {
+		$unit_id = (int) $row->post_id;
+		if ( 'price' === $row->meta_key ) {
+			if ( ! isset( $unit_prices[ $unit_id ] ) ) {
+				$unit_prices[ $unit_id ] = (int) $row->meta_value;
+			}
+			continue;
+		}
+
+		$units_by_target[ (string) $row->meta_value ][ $unit_id ] = true;
+	}
+
+	// pll_get_post_translations() reads a term per post; load them together.
+	if ( function_exists( 'pll_get_post_translations' ) ) {
+		update_object_term_cache( $property_ids, 'property' );
+	}
+
+	$averages = array();
+	foreach ( $property_ids as $property_id ) {
+		$linked_ids = array( (int) $property_id );
+		if ( function_exists( 'pll_get_post_translations' ) ) {
+			foreach ( pll_get_post_translations( $property_id ) as $translation ) {
+				$linked_ids[] = (int) $translation;
+			}
+		}
+
+		$units = array();
+		foreach ( array_unique( array_filter( $linked_ids ) ) as $linked_id ) {
+			$units += $units_by_target[ (string) $linked_id ] ?? array();
+		}
+
+		if ( empty( $units ) ) {
+			continue;
+		}
+
+		$sum = 0;
+		foreach ( array_keys( $units ) as $unit_id ) {
+			$sum += $unit_prices[ $unit_id ] ?? 0;
+		}
+
+		$averages[ (int) $property_id ] = (int) round( $sum / count( $units ) );
+	}
+
+	return $averages;
+}
+
+/**
  * Get steps before min and max values for range filters
  */
 function get_range_steps( $min = 0, $max = 0, $steps_count = 6, $is_price = false, $round_by = 0 ): array {
@@ -668,9 +835,38 @@ function get_developers_list(): array {
 			'label' => __( 'Any Developers', 'east-property' ),
 		),
 	);
+	/*
+	 * Developer::get_properties_count() for every developer in one query rather
+	 * than one each: the same language-filtered properties, counted per
+	 * 'developer_rel' value.
+	 */
+	global $wpdb;
+
+	$counts       = array();
+	$property_ids = get_posts(
+		array(
+			'post_type'      => 'property',
+			'posts_per_page' => - 1,
+			'post_status'    => 'publish',
+			'fields'         => 'ids',
+		)
+	);
+	if ( ! empty( $property_ids ) ) {
+		$placeholders = implode( ',', array_fill( 0, count( $property_ids ), '%d' ) );
+		$counts       = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT meta_value, COUNT(DISTINCT post_id) AS properties FROM {$wpdb->postmeta}
+					WHERE meta_key = 'developer_rel' AND post_id IN ($placeholders)
+					GROUP BY meta_value",
+				array_map( 'intval', $property_ids )
+			),
+			OBJECT_K
+		);
+	}
+
 	foreach ( $developers as $dev ) {
 		$developer      = new Developer( $dev );
-		$projects_count = $developer->get_properties_count();
+		$projects_count = (int) ( $counts[ (string) $developer->get_id() ]->properties ?? 0 );
 		if ( 0 === $projects_count ) {
 			continue;
 		}
