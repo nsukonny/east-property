@@ -2,7 +2,7 @@
 
 use Entities\Estate_User;
 
-if ( ! empty( $post ) || 'unit' === $post->post_type ) {
+if ( ! empty( $post ) && 'unit' === $post->post_type ) {
 	$unit   = new \Entities\Unit( $post->ID );
 	$broker = $unit->get_broker();
 } else {
