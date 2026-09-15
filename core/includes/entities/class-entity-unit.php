@@ -378,8 +378,8 @@ final class Unit {
 					'color' => 'grey',
 				);
 			} else {
-				$formated_delivery_date = $property?->get_delivery_date( false ) ?: '';
-				$labels[] = array(
+				$formated_delivery_date = $property?->get_delivery_date() ?: '';
+				$labels[]               = array(
 					'name'  => __( 'Handover:', 'east-property' ) . ' ' . $formated_delivery_date,
 					'color' => 'grey',
 				);

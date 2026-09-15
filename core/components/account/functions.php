@@ -834,8 +834,10 @@ function update_property_translation( mixed $language, array $property_data ): i
 	$delivery_date  = sanitize_text_field( wp_unslash( $property_data['delivery_date'] ?? '' ) );
 	$is_completed   = ! empty( $property_data['is_completed'] );
 
-	if ( $is_completed ) {
-		$delivery_date = '2000-01-01';
+	if ( $is_completed || empty( $delivery_date ) ) {
+		$delivery_date = date( 'Ymd', strtotime( '-1 month' ) );
+	} else {
+		$delivery_date = date( 'Ymd', strtotime( $delivery_date ) );
 	}
 
 	if ( ! empty( $property_data['property_id'] ) ) {
