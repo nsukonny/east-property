@@ -1078,19 +1078,21 @@ function ajax_get_property(): void {
 function get_map_properties_json( array $properties, bool $skip_empty = false ): string {
 	$properties_json = array();
 
-	//transient with current language
-	$language_slug = function_exists( 'pll_current_language' ) ? (string) pll_current_language( 'slug' ) : '';
-	$cache_key     = 'map_properties_' . $language_slug;
-	$cached        = ! IS_DEV ? get_transient( $cache_key ) : false;
-	if ( ! empty( $cached ) ) {
-		return $cached;
-	}
-
+	/*
+	 * The map needs two meta values per project, and going through get_field()
+	 * loads every field of every project: for the 868 on the homepage that was
+	 * the whole cost of building this JSON. The coordinates are read in one
+	 * query each instead - the same stored values get_latitude() and
+	 * get_longitude() return - and only the posts and their terms are loaded
+	 * for the titles and permalinks.
+	 */
 	$property_ids = array();
 	foreach ( $properties as $property ) {
 		$property_ids[] = $property->get_id();
 	}
-	update_meta_cache( 'post', $property_ids );
+	_prime_post_caches( $property_ids, true, false );
+	$latitudes  = core_first_meta_values( $property_ids, 'latitude' );
+	$longitudes = core_first_meta_values( $property_ids, 'longitude' );
 
 	foreach ( $properties as $property ) {
 		$units_available = $property->get_units_count();
@@ -1103,16 +1105,12 @@ function get_map_properties_json( array $properties, bool $skip_empty = false ):
 			'name'            => $property->get_title(),
 			'url'             => $property->get_url(),
 			'units_available' => $units_available,
-			'longitude'       => $property?->get_longitude() ?? '',
-			'latitude'        => $property?->get_latitude() ?? '',
+			'longitude'       => ( $longitudes[ $property->get_id() ] ?? '' ) ?: '',
+			'latitude'        => ( $latitudes[ $property->get_id() ] ?? '' ) ?: '',
 		);
 	}
 
-	$properties_json = json_encode( $properties_json );
-
-	set_transient( $cache_key, $properties_json, DAY_IN_SECONDS );
-
-	return $properties_json;
+	return json_encode( $properties_json );
 }
 
 add_action( 'wp_ajax_nopriv_get_property', 'ajax_get_property' );

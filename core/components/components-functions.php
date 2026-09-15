@@ -292,3 +292,111 @@ function core_cache_rebuild( string $key, callable $build, int $ttl ): void {
 		}
 	}
 }
+
+/**
+ * Load posts, their terms and their meta for many ids in a few queries.
+ *
+ * Nothing is read differently afterwards: the same functions return the same
+ * values, they just find them in the object cache instead of asking the
+ * database one post at a time.
+ *
+ * @param int[] $ids Post ids.
+ *
+ * @return void
+ */
+function core_prime_posts( array $ids ): void {
+	$ids = array_values( array_unique( array_filter( array_map( 'intval', $ids ) ) ) );
+
+	if ( empty( $ids ) ) {
+		return;
+	}
+
+	_prime_post_caches( $ids, true, true );
+
+	// Posts that were already cached are skipped above; their meta may not be.
+	update_meta_cache( 'post', $ids );
+}
+
+/**
+ * Warm the object cache for everything a page of listing cards reads.
+ *
+ * A unit card reads the unit, its project and the project's developer, and a
+ * project card reads the project and its developer. Each of those used to load
+ * its own post, terms and meta on first use - about seventy queries for twenty
+ * cards. Loading them level by level takes a handful.
+ *
+ * @param array $entities Unit or Property entities.
+ *
+ * @return void
+ */
+function core_prime_listing( array $entities ): void {
+	$ids = array();
+	foreach ( $entities as $entity ) {
+		if ( is_object( $entity ) && method_exists( $entity, 'get_id' ) ) {
+			$ids[] = (int) $entity->get_id();
+		}
+	}
+
+	if ( empty( $ids ) ) {
+		return;
+	}
+
+	core_prime_posts( $ids );
+
+	// The projects the units belong to; for projects this finds nothing.
+	$projects = array();
+	foreach ( $ids as $id ) {
+		$projects[] = (int) get_post_meta( $id, 'property', true );
+	}
+	core_prime_posts( $projects );
+
+	// The developers of the listed projects and of the units' projects.
+	$developers = array();
+	foreach ( array_merge( $ids, $projects ) as $id ) {
+		if ( $id > 0 ) {
+			$developers[] = (int) get_post_meta( $id, 'developer_rel', true );
+		}
+	}
+	core_prime_posts( $developers );
+}
+
+/**
+ * First stored value of one meta key for many posts, in one query.
+ *
+ * The first row by meta_id, which is the row get_post_meta( $id, $key, true )
+ * returns.
+ *
+ * @param int[]  $post_ids Post ids.
+ * @param string $meta_key Meta key.
+ *
+ * @return array<int, string> Post id => value; posts without the key are absent.
+ */
+function core_first_meta_values( array $post_ids, string $meta_key ): array {
+	global $wpdb;
+
+	$post_ids = array_values( array_unique( array_filter( array_map( 'intval', $post_ids ) ) ) );
+
+	if ( empty( $post_ids ) ) {
+		return array();
+	}
+
+	$placeholders = implode( ',', array_fill( 0, count( $post_ids ), '%d' ) );
+	$rows         = $wpdb->get_results(
+		$wpdb->prepare(
+			"SELECT post_id, meta_value FROM {$wpdb->postmeta}
+				WHERE meta_key = %s AND post_id IN ($placeholders)
+				ORDER BY meta_id ASC",
+			array_merge( array( $meta_key ), $post_ids )
+		)
+	);
+
+	$values = array();
+	foreach ( $rows as $row ) {
+		$post_id = (int) $row->post_id;
+		if ( ! isset( $values[ $post_id ] ) ) {
+			$values[ $post_id ] = (string) $row->meta_value;
+		}
+	}
+
+	return $values;
+}

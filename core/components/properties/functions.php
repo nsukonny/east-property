@@ -46,6 +46,8 @@ function get_properties( $limit = - 1, $skip_filters = false ): array {
 		array( 'respect_dev' => true )
 	);
 
+	core_prime_listing( $memo[ $filters_hash ]['items'] ?? array() );
+
 	return $memo[ $filters_hash ];
 }
 
