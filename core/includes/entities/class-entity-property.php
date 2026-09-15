@@ -35,36 +35,42 @@ final class Property {
 
 		global $wpdb;
 
-		$all_properties_specifications = get_transient( 'all_properties_specifications' );
-		if ( empty( $all_properties_specifications ) ) {
-			$sql = $wpdb->prepare(
-				"SELECT
-				CAST(property_meta.meta_value AS UNSIGNED) AS property_id,
-				MAX(CASE WHEN unit_meta.meta_key = 'bedrooms' THEN CAST(unit_meta.meta_value AS UNSIGNED) END) AS max_beds,
-				MIN(CASE WHEN unit_meta.meta_key = 'bedrooms' THEN CAST(unit_meta.meta_value AS UNSIGNED) END) AS min_beds,
-				MAX(CASE WHEN unit_meta.meta_key = 'bathrooms' THEN CAST(unit_meta.meta_value AS UNSIGNED) END) AS max_baths,
-				MIN(CASE WHEN unit_meta.meta_key = 'bathrooms' THEN CAST(unit_meta.meta_value AS UNSIGNED) END) AS min_baths,
-				MAX(CASE WHEN unit_meta.meta_key = 'area_size' THEN CAST(unit_meta.meta_value AS DECIMAL(10,2)) END) AS max_area,
-				MIN(CASE WHEN unit_meta.meta_key = 'area_size' THEN CAST(unit_meta.meta_value AS DECIMAL(10,2)) END) AS min_area
-				FROM {$wpdb->posts} unit
-						 INNER JOIN {$wpdb->postmeta} property_meta
-									ON property_meta.post_id = unit.ID
-										AND property_meta.meta_key = 'property'
-						 INNER JOIN {$wpdb->posts} property
-									ON property.ID = CAST(property_meta.meta_value AS UNSIGNED)
-										AND property.post_status = 'publish'
-						 LEFT JOIN {$wpdb->postmeta} unit_meta
-								   ON unit_meta.post_id = unit.ID
-									   AND unit_meta.meta_key IN ('bedrooms', 'bathrooms', 'area_size')
-				WHERE unit.post_type = 'unit'
-				  AND unit.post_status = 'publish'
-				
-				GROUP BY CAST(property_meta.meta_value AS UNSIGNED);"
-			);
+		$all_properties_specifications = core_cache_remember(
+			'all_properties_specifications',
+			static function () {
+				global $wpdb;
 
-			$all_properties_specifications = $wpdb->get_results( $sql, ARRAY_A );
-			set_transient( 'all_properties_specifications', $all_properties_specifications, DAY_IN_SECONDS );
-		}
+				$sql = $wpdb->prepare(
+					"SELECT
+					CAST(property_meta.meta_value AS UNSIGNED) AS property_id,
+					MAX(CASE WHEN unit_meta.meta_key = 'bedrooms' THEN CAST(unit_meta.meta_value AS UNSIGNED) END) AS max_beds,
+					MIN(CASE WHEN unit_meta.meta_key = 'bedrooms' THEN CAST(unit_meta.meta_value AS UNSIGNED) END) AS min_beds,
+					MAX(CASE WHEN unit_meta.meta_key = 'bathrooms' THEN CAST(unit_meta.meta_value AS UNSIGNED) END) AS max_baths,
+					MIN(CASE WHEN unit_meta.meta_key = 'bathrooms' THEN CAST(unit_meta.meta_value AS UNSIGNED) END) AS min_baths,
+					MAX(CASE WHEN unit_meta.meta_key = 'area_size' THEN CAST(unit_meta.meta_value AS DECIMAL(10,2)) END) AS max_area,
+					MIN(CASE WHEN unit_meta.meta_key = 'area_size' THEN CAST(unit_meta.meta_value AS DECIMAL(10,2)) END) AS min_area
+					FROM {$wpdb->posts} unit
+							 INNER JOIN {$wpdb->postmeta} property_meta
+										ON property_meta.post_id = unit.ID
+											AND property_meta.meta_key = 'property'
+							 INNER JOIN {$wpdb->posts} property
+										ON property.ID = CAST(property_meta.meta_value AS UNSIGNED)
+											AND property.post_status = 'publish'
+							 LEFT JOIN {$wpdb->postmeta} unit_meta
+									   ON unit_meta.post_id = unit.ID
+										   AND unit_meta.meta_key IN ('bedrooms', 'bathrooms', 'area_size')
+					WHERE unit.post_type = 'unit'
+					  AND unit.post_status = 'publish'
+				
+					GROUP BY CAST(property_meta.meta_value AS UNSIGNED);"
+				);
+
+				$all_properties_specifications = $wpdb->get_results( $sql, ARRAY_A );
+
+				return $all_properties_specifications;
+			},
+			DAY_IN_SECONDS
+		);
 
 		$property_specifications = array();
 		foreach ( $all_properties_specifications as $item ) {
@@ -369,8 +375,23 @@ final class Property {
 		);
 
 		$this->units_count = $count;
-		update_post_meta( $this->id, 'units_count', $this->units_count );
-		update_post_meta( $this->id, 'units_count_expired', time() + DAY_IN_SECONDS );
+
+		// The same two rows as before, written once the page has been sent, so a
+		// visitor does not wait on writes to the database while it renders. Queued
+		// once per project, since cards and the map can each ask for it.
+		static $queued = array();
+
+		if ( ! isset( $queued[ $this->id ] ) ) {
+			$queued[ $this->id ] = true;
+			$property_id         = $this->id;
+
+			core_after_response(
+				static function () use ( $property_id, $count ) {
+					update_post_meta( $property_id, 'units_count', $count );
+					update_post_meta( $property_id, 'units_count_expired', time() + DAY_IN_SECONDS );
+				}
+			);
+		}
 
 		return $this->units_count;
 	}

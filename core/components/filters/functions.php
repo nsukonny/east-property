@@ -180,19 +180,40 @@ function get_search_tabs_data( string $post_type = 'property', string $listing_t
 	$language  = function_exists( 'pll_current_language' ) ? (string) pll_current_language( 'slug' ) : '';
 	$cache_key = 'search_tabs_data_' . $post_type . '_' . $listing_type . ( '' === $language ? '' : '_' . $language );
 
-	$search_tabs_data = ! IS_DEV ? get_transient( $cache_key ) : false;
-	if ( ! empty( $search_tabs_data ) ) {
-		$search_tabs_data['filters']['beds'] = get_filter_beds_options();
+	$hit              = false;
+	$search_tabs_data = core_cache_remember(
+		$cache_key,
+		static function () use ( $post_type, $language, $listing_type ) {
+			return core_build_search_tabs_data( $post_type, $language, $listing_type );
+		},
+		DAY_IN_SECONDS,
+		array( 'respect_dev' => true ),
+		$hit
+	);
 
-		return $search_tabs_data;
+	// A stored copy gets its bedroom options refreshed, exactly as before.
+	if ( $hit ) {
+		$search_tabs_data['filters']['beds'] = get_filter_beds_options();
 	}
 
+	return $search_tabs_data;
+}
+
+/**
+ * Filter tab data for one post type and listing, uncached.
+ *
+ * Split out of get_search_tabs_data() so the cache can rebuild it after the
+ * response; the body is unchanged.
+ *
+ * @param string $post_type    unit or property.
+ * @param string $language     Polylang slug.
+ * @param string $listing_type Listing slug.
+ *
+ * @return array
+ */
+function core_build_search_tabs_data( string $post_type, string $language, string $listing_type ): array {
 	if ( 'property' === $post_type ) {
-		$search_tabs_data = get_properties_search_tabs_data();
-
-		set_transient( $cache_key, $search_tabs_data, DAY_IN_SECONDS );
-
-		return $search_tabs_data;
+		return get_properties_search_tabs_data();
 	}
 
 	$ranges     = core_unit_filter_ranges( $post_type, $language, $listing_type );
@@ -341,8 +362,6 @@ function get_search_tabs_data( string $post_type = 'property', string $listing_t
 			),
 		),
 	);
-
-	set_transient( $cache_key, $search_tabs_data, DAY_IN_SECONDS );
 
 	return $search_tabs_data;
 }
