@@ -1108,18 +1108,18 @@ function get_map_properties_json( array $properties, bool $skip_empty = false ):
 function core_build_map_properties_json( array $properties, bool $skip_empty = false ): string {
 	$properties_json = array();
 
-	/*
-	 * The map needs two meta values per project, and going through get_field()
-	 * loads every field of every project: for the 868 on the homepage that was
-	 * the whole cost of building this JSON. The coordinates are read in one
-	 * query each instead - the same stored values get_latitude() and
-	 * get_longitude() return - and only the posts and their terms are loaded
-	 * for the titles and permalinks.
-	 */
+	$language_slug = function_exists( 'pll_current_language' ) ? (string) pll_current_language( 'slug' ) : '';
+	$cache_key     = 'map_properties_' . $language_slug;
+	$cached        = ! IS_DEV ? get_transient( $cache_key ) : false;
+	if ( ! empty( $cached ) ) {
+		return $cached;
+	}
+
 	$property_ids = array();
 	foreach ( $properties as $property ) {
 		$property_ids[] = $property->get_id();
 	}
+	update_meta_cache( 'post', $property_ids );
 	_prime_post_caches( $property_ids, true, false );
 	$latitudes  = core_first_meta_values( $property_ids, 'latitude' );
 	$longitudes = core_first_meta_values( $property_ids, 'longitude' );
@@ -1140,7 +1140,11 @@ function core_build_map_properties_json( array $properties, bool $skip_empty = f
 		);
 	}
 
-	return json_encode( $properties_json );
+	$properties_json = json_encode( $properties_json );
+
+	set_transient( $cache_key, $properties_json, DAY_IN_SECONDS );
+
+	return $properties_json;
 }
 
 add_action( 'wp_ajax_nopriv_get_property', 'ajax_get_property' );

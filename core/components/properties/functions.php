@@ -366,8 +366,6 @@ function get_properties_by_count_of_units(): array {
 	// главная выводила бы английские карточки с русскими счётчиками.
 	$counts = array();
 
-	// pll_get_post() reads each project's translation group from its terms: load
-	// the posts and their terms for the whole list at once rather than per row.
 	_prime_post_caches( array_map( 'intval', wp_list_pluck( $results, 'ID' ) ), true, false );
 
 	foreach ( $results as $result ) {
@@ -395,7 +393,6 @@ function get_properties_by_count_of_units(): array {
 	// юнитов.
 	arsort( $counts );
 
-	// The translated ids may not be loaded yet, and new Property() reads its post.
 	_prime_post_caches( array_keys( $counts ), true, false );
 
 	$properties = array();
