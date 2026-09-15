@@ -1058,6 +1058,18 @@ function ajax_get_property(): void {
  */
 function get_map_properties_json( array $properties, bool $skip_empty = false ): string {
 	$properties_json = array();
+
+	/*
+	 * The coordinates go through get_field(), which loads each project's meta on
+	 * its own: 868 queries and 838 ms for the homepage map. Loading it in one
+	 * batch first is 4 queries and 366 ms with the same output. Posts already in
+	 * the cache are skipped, so a listing's twenty cards cost nothing extra.
+	 */
+	$property_ids = array();
+	foreach ( $properties as $property ) {
+		$property_ids[] = $property->get_id();
+	}
+	update_meta_cache( 'post', $property_ids );
 	foreach ( $properties as $property ) {
 		$units_available = $property->get_units_count();
 		if ( $skip_empty && 0 === $units_available ) {
