@@ -345,6 +345,8 @@ function get_properties_by_count_of_units(): array {
 	// главная выводила бы английские карточки с русскими счётчиками.
 	$counts = array();
 
+	_prime_post_caches( array_map( 'intval', wp_list_pluck( $results, 'ID' ) ), true, false );
+
 	foreach ( $results as $result ) {
 		$property_id = (int) $result['ID'];
 
@@ -369,6 +371,8 @@ function get_properties_by_count_of_units(): array {
 	// Слияние могло нарушить порядок, а функция обещает сортировку по числу
 	// юнитов.
 	arsort( $counts );
+
+	_prime_post_caches( array_keys( $counts ), true, false );
 
 	$properties = array();
 	foreach ( $counts as $property_id => $units_count ) {

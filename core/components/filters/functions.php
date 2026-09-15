@@ -761,7 +761,7 @@ function get_range_steps( $min = 0, $max = 0, $steps_count = 6, $is_price = fals
 function get_developers_list(): array {
 	global $wpdb;
 
-	$language_id       = function_exists( 'pll_current_language' )
+	$language_id        = function_exists( 'pll_current_language' )
 		? core_language_term_taxonomy_id( (string) pll_current_language( 'slug' ) )
 		: 0;
 	$language_developer = '';
@@ -1058,6 +1058,21 @@ function ajax_get_property(): void {
  */
 function get_map_properties_json( array $properties, bool $skip_empty = false ): string {
 	$properties_json = array();
+
+	//transient with current language
+	$language_slug = function_exists( 'pll_current_language' ) ? (string) pll_current_language( 'slug' ) : '';
+	$cache_key     = 'map_properties_' . $language_slug;
+	$cached        = ! IS_DEV ? get_transient( $cache_key ) : false;
+	if ( ! empty( $cached ) ) {
+		return $cached;
+	}
+
+	$property_ids = array();
+	foreach ( $properties as $property ) {
+		$property_ids[] = $property->get_id();
+	}
+	update_meta_cache( 'post', $property_ids );
+
 	foreach ( $properties as $property ) {
 		$units_available = $property->get_units_count();
 		if ( $skip_empty && 0 === $units_available ) {
@@ -1074,7 +1089,11 @@ function get_map_properties_json( array $properties, bool $skip_empty = false ):
 		);
 	}
 
-	return json_encode( $properties_json );
+	$properties_json = json_encode( $properties_json );
+
+	set_transient( $cache_key, $properties_json, DAY_IN_SECONDS );
+
+	return $properties_json;
 }
 
 add_action( 'wp_ajax_nopriv_get_property', 'ajax_get_property' );
