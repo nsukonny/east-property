@@ -1076,6 +1076,36 @@ function ajax_get_property(): void {
  * @return string
  */
 function get_map_properties_json( array $properties, bool $skip_empty = false ): string {
+	$language = function_exists( 'pll_current_language' ) ? (string) pll_current_language( 'slug' ) : '';
+	$ids      = array();
+	foreach ( $properties as $property ) {
+		$ids[] = $property->get_id();
+	}
+
+	/*
+	 * Cached per list of projects and language. A change to a project or unit
+	 * flags it (core_cache_mark_stale()): visitors keep the previous map until
+	 * the rebuild after the next response stores the new one.
+	 */
+	return core_cache_remember(
+		'map_json_' . md5( wp_json_encode( array( $ids, $skip_empty, $language ) ) ),
+		static function () use ( $properties, $skip_empty ) {
+			return core_build_map_properties_json( $properties, $skip_empty );
+		},
+		HOUR_IN_SECONDS,
+		array( 'respect_dev' => true )
+	);
+}
+
+/**
+ * The map JSON for a list of projects, uncached.
+ *
+ * @param Property[] $properties Projects.
+ * @param bool       $skip_empty Leave out projects without available units.
+ *
+ * @return string
+ */
+function core_build_map_properties_json( array $properties, bool $skip_empty = false ): string {
 	$properties_json = array();
 
 	/*
