@@ -68,12 +68,33 @@ function get_units( $listing_type = '', $limit = 25 ): array {
 		return $memo[ $filters_hash ];
 	}
 
-	$units = ! IS_DEV ? get_transient( 'units_' . $filters_hash ) : false;
-	if ( false !== $units ) {
-		$memo[ $filters_hash ] = $units;
+	$memo[ $filters_hash ] = core_cache_remember(
+		'units_' . $filters_hash,
+		static function () use ( $listing_type, $limit, $current_page, $current_language ) {
+			return core_query_units( $listing_type, $limit, $current_page, $current_language );
+		},
+		DAY_IN_SECONDS,
+		array(
+			'respect_dev' => true,
+			'keep_empty'  => true,
+		)
+	);
 
-		return $units;
-	}
+	core_prime_listing( $memo[ $filters_hash ]['items'] ?? array() );
+
+	return $memo[ $filters_hash ];
+}
+
+/**
+ * The units listing for the current filters, uncached.
+ *
+ * Split out of get_units() so the cache can rebuild it after the response; the
+ * body is unchanged.
+ *
+ * @return array
+ */
+function core_query_units( $listing_type, $limit, $current_page, $current_language ): array {
+	global $wpdb;
 
 	if ( 0 > $limit ) {
 		$limit = PROPERTIES_PER_PAGE;
@@ -247,9 +268,6 @@ function get_units( $listing_type = '', $limit = 25 ): array {
 			'items' => array(),
 			'total' => 0,
 		);
-		set_transient( 'units_' . $filters_hash, $units, DAY_IN_SECONDS );
-		$memo[ $filters_hash ] = $units;
-
 		return $units;
 	}
 	$total = ! empty( $units_posts[0]->total_count ) ? (int) $units_posts[0]->total_count : 0;
@@ -264,9 +282,6 @@ function get_units( $listing_type = '', $limit = 25 ): array {
 		'items' => $units_entities,
 		'total' => $total,
 	);
-
-	set_transient( 'units_' . $filters_hash, $units, DAY_IN_SECONDS );
-	$memo[ $filters_hash ] = $units;
 
 	return $units;
 }

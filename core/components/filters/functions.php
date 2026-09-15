@@ -180,19 +180,40 @@ function get_search_tabs_data( string $post_type = 'property', string $listing_t
 	$language  = function_exists( 'pll_current_language' ) ? (string) pll_current_language( 'slug' ) : '';
 	$cache_key = 'search_tabs_data_' . $post_type . '_' . $listing_type . ( '' === $language ? '' : '_' . $language );
 
-	$search_tabs_data = ! IS_DEV ? get_transient( $cache_key ) : false;
-	if ( ! empty( $search_tabs_data ) ) {
-		$search_tabs_data['filters']['beds'] = get_filter_beds_options();
+	$hit              = false;
+	$search_tabs_data = core_cache_remember(
+		$cache_key,
+		static function () use ( $post_type, $language, $listing_type ) {
+			return core_build_search_tabs_data( $post_type, $language, $listing_type );
+		},
+		DAY_IN_SECONDS,
+		array( 'respect_dev' => true ),
+		$hit
+	);
 
-		return $search_tabs_data;
+	// A stored copy gets its bedroom options refreshed, exactly as before.
+	if ( $hit ) {
+		$search_tabs_data['filters']['beds'] = get_filter_beds_options();
 	}
 
+	return $search_tabs_data;
+}
+
+/**
+ * Filter tab data for one post type and listing, uncached.
+ *
+ * Split out of get_search_tabs_data() so the cache can rebuild it after the
+ * response; the body is unchanged.
+ *
+ * @param string $post_type    unit or property.
+ * @param string $language     Polylang slug.
+ * @param string $listing_type Listing slug.
+ *
+ * @return array
+ */
+function core_build_search_tabs_data( string $post_type, string $language, string $listing_type ): array {
 	if ( 'property' === $post_type ) {
-		$search_tabs_data = get_properties_search_tabs_data();
-
-		set_transient( $cache_key, $search_tabs_data, DAY_IN_SECONDS );
-
-		return $search_tabs_data;
+		return get_properties_search_tabs_data();
 	}
 
 	$ranges     = core_unit_filter_ranges( $post_type, $language, $listing_type );
@@ -341,8 +362,6 @@ function get_search_tabs_data( string $post_type = 'property', string $listing_t
 			),
 		),
 	);
-
-	set_transient( $cache_key, $search_tabs_data, DAY_IN_SECONDS );
 
 	return $search_tabs_data;
 }
@@ -761,7 +780,7 @@ function get_range_steps( $min = 0, $max = 0, $steps_count = 6, $is_price = fals
 function get_developers_list(): array {
 	global $wpdb;
 
-	$language_id        = function_exists( 'pll_current_language' )
+	$language_id       = function_exists( 'pll_current_language' )
 		? core_language_term_taxonomy_id( (string) pll_current_language( 'slug' ) )
 		: 0;
 	$language_developer = '';
@@ -1057,9 +1076,38 @@ function ajax_get_property(): void {
  * @return string
  */
 function get_map_properties_json( array $properties, bool $skip_empty = false ): string {
+	$language = function_exists( 'pll_current_language' ) ? (string) pll_current_language( 'slug' ) : '';
+	$ids      = array();
+	foreach ( $properties as $property ) {
+		$ids[] = $property->get_id();
+	}
+
+	/*
+	 * Cached per list of projects and language. A change to a project or unit
+	 * flags it (core_cache_mark_stale()): visitors keep the previous map until
+	 * the rebuild after the next response stores the new one.
+	 */
+	return core_cache_remember(
+		'map_json_' . md5( wp_json_encode( array( $ids, $skip_empty, $language ) ) ),
+		static function () use ( $properties, $skip_empty ) {
+			return core_build_map_properties_json( $properties, $skip_empty );
+		},
+		HOUR_IN_SECONDS,
+		array( 'respect_dev' => true )
+	);
+}
+
+/**
+ * The map JSON for a list of projects, uncached.
+ *
+ * @param Property[] $properties Projects.
+ * @param bool       $skip_empty Leave out projects without available units.
+ *
+ * @return string
+ */
+function core_build_map_properties_json( array $properties, bool $skip_empty = false ): string {
 	$properties_json = array();
 
-	//transient with current language
 	$language_slug = function_exists( 'pll_current_language' ) ? (string) pll_current_language( 'slug' ) : '';
 	$cache_key     = 'map_properties_' . $language_slug;
 	$cached        = ! IS_DEV ? get_transient( $cache_key ) : false;
@@ -1072,6 +1120,9 @@ function get_map_properties_json( array $properties, bool $skip_empty = false ):
 		$property_ids[] = $property->get_id();
 	}
 	update_meta_cache( 'post', $property_ids );
+	_prime_post_caches( $property_ids, true, false );
+	$latitudes  = core_first_meta_values( $property_ids, 'latitude' );
+	$longitudes = core_first_meta_values( $property_ids, 'longitude' );
 
 	foreach ( $properties as $property ) {
 		$units_available = $property->get_units_count();
@@ -1084,8 +1135,8 @@ function get_map_properties_json( array $properties, bool $skip_empty = false ):
 			'name'            => $property->get_title(),
 			'url'             => $property->get_url(),
 			'units_available' => $units_available,
-			'longitude'       => $property?->get_longitude() ?? '',
-			'latitude'        => $property?->get_latitude() ?? '',
+			'longitude'       => ( $longitudes[ $property->get_id() ] ?? '' ) ?: '',
+			'latitude'        => ( $latitudes[ $property->get_id() ] ?? '' ) ?: '',
 		);
 	}
 

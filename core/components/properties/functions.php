@@ -37,10 +37,30 @@ function get_properties( $limit = - 1, $skip_filters = false ): array {
 		return $memo[ $filters_hash ];
 	}
 
-	$properties = ! IS_DEV ? get_transient( 'properties_' . $filters_hash ) : false;
-	if ( ! empty( $properties ) ) {
-		return $properties;
-	}
+	$memo[ $filters_hash ] = core_cache_remember(
+		'properties_' . $filters_hash,
+		static function () use ( $limit, $skip_filters, $current_page, $current_language ) {
+			return core_query_properties( $limit, $skip_filters, $current_page, $current_language );
+		},
+		DAY_IN_SECONDS,
+		array( 'respect_dev' => true )
+	);
+
+	core_prime_listing( $memo[ $filters_hash ]['items'] ?? array() );
+
+	return $memo[ $filters_hash ];
+}
+
+/**
+ * The properties listing for the current filters, uncached.
+ *
+ * Split out of get_properties() so the cache can rebuild it after the response;
+ * the body is unchanged.
+ *
+ * @return array
+ */
+function core_query_properties( $limit, $skip_filters, $current_page, $current_language ): array {
+	global $wpdb;
 
 	if ( 0 > $limit ) {
 		$limit = PROPERTIES_PER_PAGE;
@@ -189,9 +209,6 @@ function get_properties( $limit = - 1, $skip_filters = false ): array {
 			'items' => array(),
 			'total' => 0,
 		);
-		set_transient( 'properties_' . $filters_hash, $properties, DAY_IN_SECONDS );
-		$memo[ $filters_hash ] = $properties;
-
 		return $properties;
 	}
 	$total = ! empty( $properties_posts[0]->total_count ) ? (int) $properties_posts[0]->total_count : 0;
@@ -207,9 +224,6 @@ function get_properties( $limit = - 1, $skip_filters = false ): array {
 		'map_items' => array(),
 		'total'     => $total,
 	);
-
-	set_transient( 'properties_' . $filters_hash, $properties, DAY_IN_SECONDS );
-	$memo[ $filters_hash ] = $properties;
 
 	return $properties;
 }
@@ -297,43 +311,50 @@ function get_properties_by_count_of_units(): array {
 	// units_count_by_bedrooms_ в core_flush_listing_caches().
 	$cache_key = 'properties_by_count_of_units' . ( '' === $language ? '' : '_' . $language );
 
-	$results = get_transient( $cache_key );
-	if ( false === $results ) {
-		$language_join = '';
-		$params        = array();
+	$results = core_cache_remember(
+		$cache_key,
+		static function () use ( $language ) {
+			global $wpdb;
 
-		if ( '' !== $language ) {
-			$language_join = "
-			JOIN {$wpdb->term_relationships} tr ON tr.object_id = u.ID
-			JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id = tr.term_taxonomy_id AND tt.taxonomy = 'language'
-			JOIN {$wpdb->terms} t ON t.term_id = tt.term_id AND t.slug = %s
+			$language_join = '';
+			$params        = array();
+
+			if ( '' !== $language ) {
+				$language_join = "
+				JOIN {$wpdb->term_relationships} tr ON tr.object_id = u.ID
+				JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id = tr.term_taxonomy_id AND tt.taxonomy = 'language'
+				JOIN {$wpdb->terms} t ON t.term_id = tt.term_id AND t.slug = %s
+			";
+
+				$params[] = $language;
+			}
+
+			// Соединения внутренние, а не LEFT: считаем только существующие юниты
+			// нужного языка, и HAVING остаётся как страховка на случай, если кто-то
+			// вернёт LEFT обратно.
+			$query = "
+			SELECT p.ID, COUNT(u.ID) as units_count
+			FROM {$wpdb->posts} p
+				JOIN {$wpdb->postmeta} pm ON pm.meta_value = p.ID AND pm.meta_key = 'property'
+				JOIN {$wpdb->posts} u ON u.ID = pm.post_id AND u.post_type = 'unit' AND u.post_status = 'publish'
+				{$language_join}
+			WHERE p.post_type = 'property' AND p.post_status = 'publish'
+			GROUP BY p.ID
+			HAVING units_count > 0
+			ORDER BY units_count DESC
 		";
 
-			$params[] = $language;
-		}
+			if ( ! empty( $params ) ) {
+				$query = $wpdb->prepare( $query, $params );
+			}
 
-		// Соединения внутренние, а не LEFT: считаем только существующие юниты
-		// нужного языка, и HAVING остаётся как страховка на случай, если кто-то
-		// вернёт LEFT обратно.
-		$query = "
-		SELECT p.ID, COUNT(u.ID) as units_count
-		FROM {$wpdb->posts} p
-			JOIN {$wpdb->postmeta} pm ON pm.meta_value = p.ID AND pm.meta_key = 'property'
-			JOIN {$wpdb->posts} u ON u.ID = pm.post_id AND u.post_type = 'unit' AND u.post_status = 'publish'
-			{$language_join}
-		WHERE p.post_type = 'property' AND p.post_status = 'publish'
-		GROUP BY p.ID
-		HAVING units_count > 0
-		ORDER BY units_count DESC
-	";
+			$results = $wpdb->get_results( $query, ARRAY_A );
 
-		if ( ! empty( $params ) ) {
-			$query = $wpdb->prepare( $query, $params );
-		}
-
-		$results = $wpdb->get_results( $query, ARRAY_A );
-		set_transient( $cache_key, $results, HOUR_IN_SECONDS );
-	}
+			return $results;
+		},
+		HOUR_IN_SECONDS,
+		array( 'keep_empty' => true )
+	);
 
 	if ( empty( $results ) ) {
 		return array();

@@ -114,46 +114,6 @@ trait EntityTrait {
 	}
 
 	/**
-	 * Get gallery attachment ids
-	 *
-	 * @return array
-	 */
-	public function get_gallery_ids(): array {
-		$attachment_ids = array();
-		foreach ( $this->get_gallery() as $item ) {
-			$attachment_ids[] = (int) $item['id'];
-		}
-
-		return $attachment_ids;
-	}
-
-	/**
-	 * Attachment ids stored by this entity's gallery field.
-	 *
-	 * Read from the meta rather than through get_field(): the ids are all that is
-	 * needed to build the gallery below.
-	 *
-	 * @return int[]
-	 */
-	private function get_gallery_attachment_ids(): array {
-		$raw = get_post_meta( $this->id, 'gallery', true );
-
-		if ( empty( $raw ) || ! is_array( $raw ) ) {
-			return array();
-		}
-
-		$ids = array();
-		foreach ( $raw as $item ) {
-			$id = is_object( $item ) ? (int) ( $item->ID ?? 0 ) : (int) $item;
-			if ( $id > 0 ) {
-				$ids[] = $id;
-			}
-		}
-
-		return $ids;
-	}
-
-	/**
 	 * Build the gallery array from the attachment metadata.
 	 *
 	 * Replaces the ACF gallery formatter, which builds the same shape through
@@ -244,6 +204,46 @@ trait EntityTrait {
 		}
 
 		return $gallery;
+	}
+
+	/**
+	 * Get gallery attachment ids
+	 *
+	 * @return array
+	 */
+	public function get_gallery_ids(): array {
+		$attachment_ids = array();
+		foreach ( $this->get_gallery() as $item ) {
+			$attachment_ids[] = (int) $item['id'];
+		}
+
+		return $attachment_ids;
+	}
+
+	/**
+	 * Attachment ids stored by this entity's gallery field.
+	 *
+	 * Read from the meta rather than through get_field(): the ids are all that is
+	 * needed to build the gallery below.
+	 *
+	 * @return int[]
+	 */
+	private function get_gallery_attachment_ids(): array {
+		$raw = get_post_meta( $this->id, 'gallery', true );
+
+		if ( empty( $raw ) || ! is_array( $raw ) ) {
+			return array();
+		}
+
+		$ids = array();
+		foreach ( $raw as $item ) {
+			$id = is_object( $item ) ? (int) ( $item->ID ?? 0 ) : (int) $item;
+			if ( $id > 0 ) {
+				$ids[] = $id;
+			}
+		}
+
+		return $ids;
 	}
 
 	/**
