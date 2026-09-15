@@ -2,6 +2,7 @@
 
 require THEME_PATH . '/core/components/components-functions.php';
 require THEME_PATH . '/core/components/security/functions.php';
+require THEME_PATH . '/core/components/security/comments.php';
 require THEME_PATH . '/core/components/seo/functions.php';
 require THEME_PATH . '/core/components/account/functions.php';
 require THEME_PATH . '/core/components/properties/functions.php';

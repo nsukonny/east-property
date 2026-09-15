@@ -53,6 +53,70 @@
 		@media(min-width: v.$xs) {
 			padding: 20px 8px;
 		}
+
+		&[hidden] {
+			display: none;
+		}
+	}
+
+	.tab-distress {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		white-space: nowrap;
+	}
+
+	.tab-distress-flames {
+		font-size: 12px;
+		line-height: 1;
+	}
+
+	.distress-panel {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		padding: 20px 16px;
+
+		.distress-panel-title {
+			color: v.$c-black;
+			margin: 0 0 6px;
+
+			@include t.t-text(true);
+		}
+
+		.distress-panel-descr {
+			color: v.$c-grey;
+			margin: 0;
+			max-width: 640px;
+
+			@include t.t-smallest;
+		}
+
+		.distress-panel-actions {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+
+			@media(min-width: v.$md) {
+				flex-direction: row;
+				align-items: center;
+			}
+
+			.button {
+				width: 100%;
+
+				@media(min-width: v.$md) {
+					width: auto;
+				}
+			}
+		}
+
+		.distress-panel-note {
+			color: v.$c-text-grey;
+			margin: 0;
+
+			@include t.t-smallest;
+		}
 	}
 
 	.tabs-fields {

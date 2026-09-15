@@ -204,10 +204,11 @@ add_filter( 'wpseo_robots_array', 'core_noindex_utility_pages' );
  * Keep an empty project stub out of the index until someone fills it in.
  *
  * The unit importer has to publish a stub for a project the site lacks:
- * Unit::resolve_property_id() accepts a project only in `publish`, so a draft
- * stub degrades the unit's own url to /property/no-project/... and the unit
- * answers 404. Publishing it is therefore the only way to keep the units
- * reachable, and this is what stops the empty page being indexed meanwhile.
+ * Unit::resolve_property_id() accepts a project only in `publish`, so under a
+ * draft stub the unit counts as having no project at all — it moves to
+ * /property/%unit%/ and the page drops everything about the building.
+ * Publishing the stub is therefore the only way to keep the unit attached to
+ * its project, and this is what stops the empty page being indexed meanwhile.
  *
  * Done here rather than through Yoast's own post meta on purpose: Yoast 28
  * serves robots from its indexables table, so writing
@@ -277,10 +278,13 @@ add_filter( 'wpseo_posts_where', 'core_exclude_import_stubs_from_sitemap', 10, 2
  * Only units that resolve
  * ---------------------------------------------------------------------------
  *
- * A unit URL is built from its project slug. Without a published project the
- * permalink falls back to /property/no-project/{slug}/, which is a 404. Filter
- * those out in SQL rather than per entry, so the page counts in the sitemap
- * index stay consistent with the pages themselves.
+ * A unit without a published project renders from its own data alone, at
+ * /property/%unit%/ — no building, no location, no payment plan. That used to
+ * be a 404 and the exclusion below followed from it; since
+ * core_unit_project_slug() the page works, so keeping it out of the sitemap is
+ * now a choice about thin content rather than about dead links. Filtered in
+ * SQL rather than per entry, so the page counts in the sitemap index stay
+ * consistent with the pages themselves.
  *
  * EXISTS rather than a JOIN on purpose: Yoast counts rows with a plain
  * COUNT(wp_posts.ID), so a duplicated meta row would inflate the count and

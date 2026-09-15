@@ -270,10 +270,10 @@ final class Unit {
 	 * Resolve the project this unit belongs to.
 	 *
 	 * Translations created before the account form carried the field over hold no
-	 * project of their own, and the permalink then degrades to
-	 * /property/no-project/{slug}/. In the default language that URL still heals
-	 * itself through the wrong-slug redirect, so the damage stayed invisible; under
-	 * /ru/ it is a plain 404, and most cards of the Russian listings pointed there.
+	 * project of their own. The permalink then loses its project segment and the
+	 * page renders without the building, its location or its payment plan — and
+	 * back when that address was /property/no-project/{slug}/ it was a plain 404
+	 * under /ru/, which is where most cards of the Russian listings pointed.
 	 *
 	 * A sibling translation describes the same unit in the same building, so its
 	 * project stands in — preferring that project's own translation in this unit's
@@ -370,7 +370,7 @@ final class Unit {
 		$property  = $this->get_property();
 		$developer = $this->get_developer();
 
-		$delivery_date = $property?->get_delivery_date() ?: '';
+		$delivery_date = $property?->get_delivery_date( false ) ?: '';
 		if ( ! empty( $delivery_date ) ) {
 			if ( strtotime( $delivery_date ) < time() ) {
 				$labels[] = array(
@@ -378,8 +378,9 @@ final class Unit {
 					'color' => 'grey',
 				);
 			} else {
-				$labels[] = array(
-					'name'  => __( 'Handover:', 'east-property' ) . ' ' . $delivery_date,
+				$formated_delivery_date = $property?->get_delivery_date() ?: '';
+				$labels[]               = array(
+					'name'  => __( 'Handover:', 'east-property' ) . ' ' . $formated_delivery_date,
 					'color' => 'grey',
 				);
 			}

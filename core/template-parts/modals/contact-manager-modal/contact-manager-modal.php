@@ -1,6 +1,3 @@
-<?php
-$user_location = $_SERVER['REMOTE_ADDR']; //Get it by geoip2/geoip2 or any other method you prefer
-?>
 <div class="modal-wrapper desc-modal contact-manager-modal" data-modal-id="contact-manager-modal">
     <div class="modal">
         <div class="modal-info">
@@ -13,8 +10,7 @@ $user_location = $_SERVER['REMOTE_ADDR']; //Get it by geoip2/geoip2 or any other
 
             <div class="ccm-header">
                 <p class="ccm-subtitle">
-                    <?php _e( 'Choose the most convenient way to connect with our team. Message us on WhatsApp for the fastest
-                                        reply, or leave your number and a dedicated specialist will call you back shortly.' , 'east-property' ); ?>
+                    <?php _e( 'Message us on WhatsApp — it is the fastest way to reach our team with any question about pricing, availability or a viewing.' , 'east-property' ); ?>
                 </p>
             </div>
 
@@ -54,52 +50,6 @@ $user_location = $_SERVER['REMOTE_ADDR']; //Get it by geoip2/geoip2 or any other
                         </svg>
                     </a>
                     <small class="ccm-helper"><?php _e( 'We usually reply within 5–10 minutes during working hours.' , 'east-property' ); ?></small>
-                </div>
-
-                <!-- Divider -->
-                <div class="ccm-divider"><span><?php _e( 'or' , 'east-property' ); ?></span></div>
-
-                <!-- Callback Block - Secondary -->
-                <div class="ccm-block ccm-block-secondary">
-                    <div class="ccm-block-header">
-                        <div class="ccm-icon ccm-icon-phone">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                 stroke-width="1.5">
-                                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
-                            </svg>
-                        </div>
-                        <div class="ccm-block-titles">
-                            <h4 class="ccm-block-label"><?php _e( 'Request a callback' , 'east-property' ); ?></h4>
-                            <p class="ccm-block-description">
-                                <?php _e( 'Leave your phone number and our specialist will contact you shortly.' , 'east-property' ); ?>
-                            </p>
-                        </div>
-                    </div>
-                    <form class="ccm-callback-form" id="ccmCallbackForm" name="contact_manager_form" method="post">
-                        <div class="ccm-input-wrapper">
-                            <input
-                                    type="tel"
-                                    class="ccm-input"
-                                    placeholder="<?php _e( 'Enter your phone number' , 'east-property' ); ?>"
-                                    required
-                                    aria-label="<?php _e( 'Phone number' , 'east-property' ); ?>"
-                                    name="phone_number"
-                            />
-                            <input type="hidden" name="action" value="contact_manager_callback_form">
-                            <input type="hidden" name="user_location" value="<?php echo $user_location; ?>">
-                        </div>
-                        <label class="ccm-checkbox-wrapper">
-                            <input type="checkbox" class="ccm-checkbox" required/>
-                            <span class="ccm-checkbox-custom"></span>
-                            <span class="ccm-checkbox-label"><?php _e( 'I agree to the processing of my personal data.' , 'east-property' ); ?></span>
-                        </label>
-                        <button type="submit" class="ccm-btn ccm-btn-secondary">
-                            <?php _e( 'Request a callback' , 'east-property' ); ?>
-                        </button>
-                    </form>
-                    <small class="ccm-helper">
-                        <?php _e( 'No spam. Only a personal response from our team regarding your request.' , 'east-property' ); ?>
-                    </small>
                 </div>
 
             </div>

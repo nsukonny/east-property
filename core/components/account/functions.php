@@ -200,12 +200,15 @@ function core_get_current_user_favorite_units( int $limit = PROPERTIES_PER_PAGE 
 
 	$items = array();
 	foreach ( $favorite_unit_ids as $unit_id ) {
-		$items[] = new Unit( $unit_id );
+		$unit = new Unit( $unit_id );
+		if ( $unit->exists() ) {
+			$items[] = $unit;
+		}
 	}
 
 	return array(
 		'items' => $items,
-		'total' => (int) count( $favorite_unit_ids ),
+		'total' => (int) count( $items ),
 	);
 }
 
@@ -831,8 +834,10 @@ function update_property_translation( mixed $language, array $property_data ): i
 	$delivery_date  = sanitize_text_field( wp_unslash( $property_data['delivery_date'] ?? '' ) );
 	$is_completed   = ! empty( $property_data['is_completed'] );
 
-	if ( $is_completed ) {
-		$delivery_date = '2000-01-01';
+	if ( $is_completed || empty( $delivery_date ) ) {
+		$delivery_date = date( 'Ymd', strtotime( '-1 month' ) );
+	} else {
+		$delivery_date = date( 'Ymd', strtotime( $delivery_date ) );
 	}
 
 	if ( ! empty( $property_data['property_id'] ) ) {
@@ -1097,10 +1102,10 @@ function ajax_get_property_presets(): void {
 		foreach ( $property_images as $property_image ) {
 			?>
 			<div class="uploader-item"
-			     data-id="<?php echo esc_attr( $property_image['ID'] ); ?>"
-			     data-url="<?php echo esc_url( $property_image['sizes']['large'] ); ?>">
+				 data-id="<?php echo esc_attr( $property_image['ID'] ); ?>"
+				 data-url="<?php echo esc_url( $property_image['sizes']['large'] ); ?>">
 				<img src="<?php echo esc_url( $property_image['sizes']['thumbnail'] ); ?>"
-				     alt="<?php esc_html_e( 'Property image', 'east-property' ); ?>">
+					 alt="<?php esc_html_e( 'Property image', 'east-property' ); ?>">
 			</div>
 			<?php
 		}

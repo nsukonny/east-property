@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-09T08:50:08+00:00\n"
+"POT-Creation-Date: 2026-09-11T12:07:43+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: east-property\n"
@@ -264,7 +264,7 @@ msgstr ""
 #: core/components/modals/signin-modal.php:10
 #: core/components/modals/signin-modal.php:43
 #: core/template-parts/account/login-form.php:20
-#: core/template-parts/account/login-form.php:61
+#: core/template-parts/account/login-form.php:63
 #: core/template-parts/common/header.php:35
 msgid "Sign in"
 msgstr ""
@@ -379,7 +379,7 @@ msgstr ""
 
 #: core/components/filters/functions.php:109
 #: core/components/filters/functions.php:542
-#: core/template-parts/filters/search-tabs.php:146
+#: core/template-parts/filters/search-tabs.php:155
 msgid "Any Developers"
 msgstr ""
 
@@ -406,8 +406,8 @@ msgstr ""
 #: core/template-parts/properties/property-single.php:111
 #: core/template-parts/properties/property-single.php:219
 #: core/template-parts/properties/property-units-list.php:28
-#: single-unit.php:267
-#: single-unit.php:365
+#: single-unit.php:272
+#: single-unit.php:370
 #: src/js/map/map.js:206
 msgid "Location"
 msgstr ""
@@ -427,7 +427,7 @@ msgstr ""
 
 #: core/components/filters/functions.php:166
 #: core/components/filters/functions.php:403
-#: core/includes/entities/class-entity-property.php:554
+#: core/includes/entities/class-entity-property.php:586
 msgid "Property Type"
 msgstr ""
 
@@ -437,7 +437,7 @@ msgstr ""
 #: core/includes/registers/post-types/developers.php:37
 #: core/template-parts/account/edit-property.php:125
 #: core/template-parts/filters/result-filters.php:262
-#: core/template-parts/filters/search-tabs.php:144
+#: core/template-parts/filters/search-tabs.php:153
 #: src/js/map/html.js:58
 msgid "Developer"
 msgstr ""
@@ -455,12 +455,12 @@ msgstr ""
 
 #: core/components/filters/functions.php:201
 #: core/template-parts/account/edit-unit.php:266
-#: core/template-parts/filters/search-tabs.php:59
+#: core/template-parts/filters/search-tabs.php:68
 msgid "Bedrooms"
 msgstr ""
 
 #: core/components/filters/functions.php:205
-#: core/template-parts/filters/search-tabs.php:123
+#: core/template-parts/filters/search-tabs.php:132
 msgid "District"
 msgstr ""
 
@@ -508,7 +508,7 @@ msgid "Any"
 msgstr ""
 
 #: core/components/filters/functions.php:572
-#: core/template-parts/filters/search-tabs.php:125
+#: core/template-parts/filters/search-tabs.php:134
 msgid "Any Locations"
 msgstr ""
 
@@ -588,7 +588,7 @@ msgstr ""
 #: core/template-parts/account/edit-property.php:208
 #: core/template-parts/account/edit-unit.php:233
 #: core/template-parts/account/edit-unit.php:251
-#: core/template-parts/account/login-form.php:198
+#: core/template-parts/account/login-form.php:202
 #: core/template-parts/filters/result-filters.php:163
 #: core/template-parts/ui/dropdown.php:12
 #: src/js/common/beds-baths.js:19
@@ -606,7 +606,7 @@ msgstr ""
 
 #: core/components/modals/broker-modal.php:25
 #: core/template-parts/common/contact-panel.php:66
-#: single-unit.php:149
+#: single-unit.php:151
 msgid "Contact broker"
 msgstr ""
 
@@ -643,7 +643,7 @@ msgstr ""
 #: core/components/modals/create-modal.php:172
 #: core/components/modals/signin-modal.php:27
 #: core/template-parts/account/login-form.php:26
-#: core/template-parts/account/login-form.php:240
+#: core/template-parts/account/login-form.php:244
 msgid "Create account"
 msgstr ""
 
@@ -660,8 +660,8 @@ msgid "Get updates about new listings"
 msgstr ""
 
 #: core/components/modals/create-modal.php:57
-#: core/template-parts/account/login-form.php:101
-#: core/template-parts/account/login-form.php:103
+#: core/template-parts/account/login-form.php:105
+#: core/template-parts/account/login-form.php:107
 msgid "First name"
 msgstr ""
 
@@ -672,27 +672,26 @@ msgstr ""
 
 #: core/components/modals/create-modal.php:69
 #: core/components/modals/signin-modal.php:37
-#: core/template-parts/account/login-form.php:50
-#: core/template-parts/account/login-form.php:124
+#: core/template-parts/account/login-form.php:52
+#: core/template-parts/account/login-form.php:128
 #: core/template-parts/account/reset-password.php:34
 msgid "Password"
 msgstr ""
 
 #: core/components/modals/create-modal.php:75
-#: core/template-parts/account/login-form.php:132
+#: core/template-parts/account/login-form.php:136
 msgid "Repeat Password"
 msgstr ""
 
 #: core/components/modals/create-modal.php:83
-#: core/template-parts/account/login-form.php:141
+#: core/template-parts/account/login-form.php:145
 msgid "Choose your role"
 msgstr ""
 
 #: core/components/modals/create-modal.php:114
-#: core/template-parts/account/login-form.php:173
+#: core/template-parts/account/login-form.php:177
 #: core/template-parts/account/profile-client.php:137
 #: core/template-parts/account/profile.php:370
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:85
 msgid "Phone number"
 msgstr ""
 
@@ -704,13 +703,13 @@ msgid "Agency"
 msgstr ""
 
 #: core/components/modals/create-modal.php:124
-#: core/template-parts/account/login-form.php:187
+#: core/template-parts/account/login-form.php:191
 #: core/template-parts/account/profile.php:330
 msgid "If you can’t find your agency in the list, please contact us at "
 msgstr ""
 
 #: core/components/modals/create-modal.php:126
-#: core/template-parts/account/login-form.php:190
+#: core/template-parts/account/login-form.php:194
 #: core/template-parts/account/profile.php:333
 msgid "Your request will be reviewed within 24 hours."
 msgstr ""
@@ -720,22 +719,22 @@ msgid "vector arrow"
 msgstr ""
 
 #: core/components/modals/create-modal.php:159
-#: core/template-parts/account/login-form.php:227
+#: core/template-parts/account/login-form.php:231
 msgid "I have read and agree to the"
 msgstr ""
 
 #: core/components/modals/create-modal.php:161
-#: core/template-parts/account/login-form.php:229
+#: core/template-parts/account/login-form.php:233
 msgid "Terms of Use"
 msgstr ""
 
 #: core/components/modals/create-modal.php:163
-#: core/template-parts/account/login-form.php:231
+#: core/template-parts/account/login-form.php:235
 msgid "and"
 msgstr ""
 
 #: core/components/modals/create-modal.php:165
-#: core/template-parts/account/login-form.php:233
+#: core/template-parts/account/login-form.php:237
 msgid "Privacy Policy"
 msgstr ""
 
@@ -750,7 +749,7 @@ msgstr ""
 #: core/components/modals/forgot-modal.php:16
 #: core/components/modals/forgot-modal.php:18
 #: core/components/modals/signin-modal.php:33
-#: core/template-parts/account/login-form.php:46
+#: core/template-parts/account/login-form.php:48
 msgid "Email or username"
 msgstr ""
 
@@ -823,7 +822,7 @@ msgid "Don’t have an account?"
 msgstr ""
 
 #: core/components/modals/signin-modal.php:46
-#: core/template-parts/account/login-form.php:71
+#: core/template-parts/account/login-form.php:73
 msgid "Forgot password?"
 msgstr ""
 
@@ -881,7 +880,7 @@ msgid "Sorry, you are not allowed to access this resource."
 msgstr ""
 
 #. translators: 1: current page number, 2: total number of pages.
-#: core/components/seo/functions.php:622
+#: core/components/seo/functions.php:626
 msgid "Page %1$d of %2$d"
 msgstr ""
 
@@ -922,6 +921,7 @@ msgid "Secondary"
 msgstr ""
 
 #: core/components/units/functions.php:20
+#: core/template-parts/filters/search-tabs.php:55
 msgid "Distress"
 msgstr ""
 
@@ -978,35 +978,35 @@ msgstr ""
 msgid "Email Verified"
 msgstr ""
 
-#: core/includes/entities/class-entity-property.php:461
-#: core/includes/entities/class-entity-property.php:527
+#: core/includes/entities/class-entity-property.php:493
+#: core/includes/entities/class-entity-property.php:559
 #: core/includes/entities/class-entity-unit.php:377
 msgid "Ready"
 msgstr ""
 
-#: core/includes/entities/class-entity-property.php:466
+#: core/includes/entities/class-entity-property.php:498
 #: core/includes/entities/class-entity-unit.php:382
 msgid "Handover:"
 msgstr ""
 
-#: core/includes/entities/class-entity-property.php:530
+#: core/includes/entities/class-entity-property.php:562
 #: core/template-parts/account/edit-property.php:224
 msgid "Handover Date"
 msgstr ""
 
-#: core/includes/entities/class-entity-property.php:538
+#: core/includes/entities/class-entity-property.php:570
 msgid "Construction Started"
 msgstr ""
 
-#: core/includes/entities/class-entity-property.php:546
+#: core/includes/entities/class-entity-property.php:578
 msgid "Number of Buildings"
 msgstr ""
 
-#: core/includes/entities/class-entity-property.php:562
+#: core/includes/entities/class-entity-property.php:594
 msgid "Government Fee"
 msgstr ""
 
-#: core/includes/entities/class-entity-property.php:570
+#: core/includes/entities/class-entity-property.php:602
 msgid "Ownership Type"
 msgstr ""
 
@@ -1581,8 +1581,8 @@ msgid "Update project"
 msgstr ""
 
 #: core/template-parts/account/edit-property.php:312
-#: single-unit.php:84
-#: single-unit.php:90
+#: single-unit.php:86
+#: single-unit.php:92
 msgid "Save"
 msgstr ""
 
@@ -1639,7 +1639,7 @@ msgid "Original price, AED"
 msgstr ""
 
 #: core/template-parts/account/edit-unit.php:212
-#: single-unit.php:66
+#: single-unit.php:68
 msgid "Discount:"
 msgstr ""
 
@@ -1717,21 +1717,21 @@ msgstr ""
 msgid "Sign in to start selling"
 msgstr ""
 
-#: core/template-parts/account/login-form.php:86
+#: core/template-parts/account/login-form.php:88
 msgid "Create a new account"
 msgstr ""
 
-#: core/template-parts/account/login-form.php:112
+#: core/template-parts/account/login-form.php:116
 #: core/template-parts/account/profile-client.php:126
 #: core/template-parts/account/profile.php:317
 msgid "Email address"
 msgstr ""
 
-#: core/template-parts/account/login-form.php:114
+#: core/template-parts/account/login-form.php:118
 msgid "admin@example.com"
 msgstr ""
 
-#: core/template-parts/account/login-form.php:183
+#: core/template-parts/account/login-form.php:187
 msgid "Choose your agency"
 msgstr ""
 
@@ -2024,8 +2024,8 @@ msgstr ""
 
 #: core/template-parts/filters/result-filters.php:55
 #: core/template-parts/filters/result-filters.php:258
-#: core/template-parts/filters/search-tabs.php:121
-#: core/template-parts/filters/search-tabs.php:142
+#: core/template-parts/filters/search-tabs.php:130
+#: core/template-parts/filters/search-tabs.php:151
 #: core/template-parts/ui/dropdown.php:50
 msgid "Search..."
 msgstr ""
@@ -2040,13 +2040,13 @@ msgstr ""
 
 #: core/template-parts/filters/result-filters.php:142
 #: core/template-parts/filters/result-filters.php:206
-#: core/template-parts/filters/search-tabs.php:102
+#: core/template-parts/filters/search-tabs.php:111
 msgid "Cancel"
 msgstr ""
 
 #: core/template-parts/filters/result-filters.php:145
 #: core/template-parts/filters/result-filters.php:209
-#: core/template-parts/filters/search-tabs.php:105
+#: core/template-parts/filters/search-tabs.php:114
 msgid "Apply"
 msgstr ""
 
@@ -2059,71 +2059,64 @@ msgstr ""
 msgid "Max Area"
 msgstr ""
 
-#: core/template-parts/filters/search-tabs.php:127
-#: core/template-parts/filters/search-tabs.php:148
+#: core/template-parts/filters/search-tabs.php:136
+#: core/template-parts/filters/search-tabs.php:157
 msgid "Dropdown arrow"
 msgstr ""
 
-#: core/template-parts/filters/search-tabs.php:161
+#: core/template-parts/filters/search-tabs.php:170
 msgid "Search"
 msgstr ""
 
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:8
+#: core/template-parts/filters/search-tabs.php:184
+msgid "Distress deals are sold below market price"
+msgstr ""
+
+#: core/template-parts/filters/search-tabs.php:187
+msgid "Owners who need a fast exit, verified by us and limited in number. These listings are not published openly — we send them out on request."
+msgstr ""
+
+#: core/template-parts/filters/search-tabs.php:193
+msgid "Explore distress deals"
+msgstr ""
+
+#: core/template-parts/filters/search-tabs.php:196
+msgid "Sell my property"
+msgstr ""
+
+#: core/template-parts/filters/search-tabs.php:200
+msgid "One short call: we send the current list and check your property against buyer demand."
+msgstr ""
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:5
 msgid "Get a quick consultation"
 msgstr ""
 
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:16
-msgid ""
-"Choose the most convenient way to connect with our team. Message us on WhatsApp for the fastest\n"
-"                                        reply, or leave your number and a dedicated specialist will call you back shortly."
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:13
+msgid "Message us on WhatsApp — it is the fastest way to reach our team with any question about pricing, availability or a viewing."
 msgstr ""
 
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:29
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:25
 msgid "Recommended"
 msgstr ""
 
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:38
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:34
 msgid "WhatsApp — fastest reply"
 msgstr ""
 
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:40
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:36
 msgid "Best for urgent questions, pricing, and quick consultation."
 msgstr ""
 
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:50
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:46
 msgid "Open WhatsApp"
 msgstr ""
 
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:56
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:52
 msgid "We usually reply within 5–10 minutes during working hours."
 msgstr ""
 
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:60
-msgid "or"
-msgstr ""
-
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:72
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:97
-msgid "Request a callback"
-msgstr ""
-
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:74
-msgid "Leave your phone number and our specialist will contact you shortly."
-msgstr ""
-
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:83
-msgid "Enter your phone number"
-msgstr ""
-
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:94
-msgid "I agree to the processing of my personal data."
-msgstr ""
-
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:101
-msgid "No spam. Only a personal response from our team regarding your request."
-msgstr ""
-
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:113
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:63
 msgid "Your information is kept strictly confidential"
 msgstr ""
 
@@ -2132,20 +2125,20 @@ msgid "Explore Project"
 msgstr ""
 
 #: core/template-parts/properties/property-single.php:56
-#: single-unit.php:77
-#: single-unit.php:78
+#: single-unit.php:79
+#: single-unit.php:80
 #: single.php:81
 msgid "Share"
 msgstr ""
 
 #: core/template-parts/properties/property-single.php:86
 #: core/template-parts/properties/property-units-list.php:67
-#: single-unit.php:242
+#: single-unit.php:247
 msgid "Property information"
 msgstr ""
 
 #: core/template-parts/properties/property-single.php:143
-#: single-unit.php:355
+#: single-unit.php:360
 msgid "View developer"
 msgstr ""
 
@@ -2154,18 +2147,18 @@ msgid "properties available in this project"
 msgstr ""
 
 #: core/template-parts/properties/property-single.php:160
-#: single-unit.php:325
+#: single-unit.php:330
 #: template-parts/sections/mortgage-calculator/matched-units.php:30
 msgid "All properties"
 msgstr ""
 
 #: core/template-parts/properties/property-single.php:185
-#: single-unit.php:185
+#: single-unit.php:187
 msgid "Payment plan"
 msgstr ""
 
 #: core/template-parts/properties/property-single.php:199
-#: single-unit.php:306
+#: single-unit.php:311
 msgid "Amenities"
 msgstr ""
 
@@ -2307,69 +2300,69 @@ msgstr ""
 msgid "Request quote"
 msgstr ""
 
-#: single-unit.php:61
+#: single-unit.php:62
 msgid "Apartment by"
 msgstr ""
 
-#: single-unit.php:68
+#: single-unit.php:70
 msgid "of original price"
 msgstr ""
 
-#: single-unit.php:88
+#: single-unit.php:90
 msgid "Saved"
 msgstr ""
 
-#: single-unit.php:129
+#: single-unit.php:131
 msgid "Property broker"
 msgstr ""
 
-#: single-unit.php:155
+#: single-unit.php:157
 msgid ""
 "Get in touch with broker using email, phone or WhatsApp. It’s free and does not\n"
 "                                                                        require any commitment from your side"
 msgstr ""
 
-#: single-unit.php:201
+#: single-unit.php:203
 #: template-parts/sections/mortgage-calculator/calculator.php:85
 #: template-parts/sections/mortgage-calculator/calculator.php:213
 #: template-parts/sections/mortgage-calculator/entry-costs.php:15
 msgid "Down payment"
 msgstr ""
 
-#: single-unit.php:203
+#: single-unit.php:205
 msgid "Sales launch"
 msgstr ""
 
-#: single-unit.php:211
+#: single-unit.php:213
 msgid "During construction"
 msgstr ""
 
-#: single-unit.php:213
+#: single-unit.php:215
 msgid "installments"
 msgstr ""
 
-#: single-unit.php:222
+#: single-unit.php:224
 msgid "On handover"
 msgstr ""
 
-#: single-unit.php:232
-#: single-unit.php:235
+#: single-unit.php:237
+#: single-unit.php:240
 msgid "Floor plan"
 msgstr ""
 
-#: single-unit.php:285
+#: single-unit.php:290
 msgid "Building Information"
 msgstr ""
 
-#: single-unit.php:290
+#: single-unit.php:295
 msgid "Building name"
 msgstr ""
 
-#: single-unit.php:295
+#: single-unit.php:300
 msgid "Floors"
 msgstr ""
 
-#: single-unit.php:322
+#: single-unit.php:327
 msgid "More properties like this"
 msgstr ""
 

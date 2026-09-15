@@ -390,14 +390,15 @@ final class Distress_Units_Importer {
 	/**
 	 * Project the unit belongs to, creating a stub when it is missing.
 	 *
-	 * A unit's permalink is built from its project slug, so a unit without a
-	 * project has nowhere to live.
+	 * A unit's permalink carries its project slug, and a unit without a project
+	 * falls back to the shorter /property/%unit%/ with no building on the page.
 	 *
 	 * The stub has to be published, counter-intuitive as that is for an empty
-	 * page: Unit::resolve_property_id() accepts a project only in `publish`,
-	 * so a draft stub degrades the unit's own url to /property/no-project/...
-	 * and the unit then answers 404. Measured, not assumed — a draft stub was
-	 * tried first and produced exactly that.
+	 * page: Unit::resolve_property_id() accepts a project only in `publish`, so
+	 * under a draft stub the unit counts as having no project at all. Measured,
+	 * not assumed — a draft stub was tried first and the unit lost its project
+	 * segment. Back then that address answered 404 as well; it renders now, but
+	 * the unit still shows up stripped of its building.
 	 *
 	 * Thin content is handled the right way instead, with a robots meta: the
 	 * stub is excluded from the index and the sitemap until someone fills it

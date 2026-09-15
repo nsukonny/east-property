@@ -40,7 +40,6 @@ function register_property_post_type(): void {
 			'excerpt',
 			'author',
 			'thumbnail',
-			'comments',
 			'revisions',
 			'custom-fields',
 		),

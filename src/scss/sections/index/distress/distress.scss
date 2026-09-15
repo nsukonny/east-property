@@ -1,0 +1,134 @@
+@use 'sass:color';
+@use '../../../vars/vars' as v;
+@use '../../../mixins/global' as g;
+@use '../../../mixins/typography/titles' as h;
+@use '../../../mixins/typography/text' as t;
+
+.distress-banner {
+	width: 100%;
+	padding: 24px 0;
+
+	@media (min-width: v.$md) {
+		padding: 40px 0;
+	}
+
+	.distress-banner-inner {
+		position: relative;
+		display: block;
+		overflow: hidden;
+		border-radius: v.$br16;
+		color: v.$c-white;
+
+		&::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			pointer-events: none;
+			background: linear-gradient(
+				to top,
+				#{color.change(v.$c-black, $alpha: 0.6)} 0%,
+				#{color.change(v.$c-black, $alpha: 0.2)} 45%,
+				#{color.change(v.$c-black, $alpha: 0)} 72%
+			);
+
+			@media (min-width: v.$md) {
+				background: linear-gradient(
+					to right,
+					#{color.change(v.$c-black, $alpha: 0.55)} 0%,
+					#{color.change(v.$c-black, $alpha: 0.25)} 45%,
+					#{color.change(v.$c-black, $alpha: 0)} 78%
+				);
+			}
+		}
+	}
+
+	.distress-banner-bg {
+		display: block;
+
+		img {
+			display: block;
+			width: 100%;
+			height: auto;
+			aspect-ratio: 941 / 1672;
+
+			@media (min-width: v.$md) {
+				aspect-ratio: 2155 / 730;
+			}
+		}
+	}
+
+	.distress-banner-content {
+		position: absolute;
+		z-index: 1;
+		inset: auto 0 0;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+		padding: 24px 20px;
+
+		h2 {
+			margin: 0;
+
+			@include h.t-header;
+
+			color: v.$c-white;
+		}
+
+		p {
+			margin: 0;
+			max-width: 560px;
+
+			@include t.t-text;
+
+			color: v.$c-white;
+		}
+
+		&.is-desktop {
+			display: none;
+
+			@media (min-width: v.$md) {
+				display: flex;
+				inset: 0 auto 0 0;
+				justify-content: center;
+				padding: 40px 48px;
+				max-width: 620px;
+			}
+		}
+
+		&.is-mobile {
+			@media (min-width: v.$md) {
+				display: none;
+			}
+		}
+	}
+
+	.distress-banner-eyebrow {
+		letter-spacing: 0.08em;
+
+		@include t.t-smallest(true);
+
+		color: v.$c-yellow;
+	}
+
+	.distress-banner-cta {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		margin-top: 8px;
+		padding: 12px 20px;
+		border-radius: v.$br8;
+		background-color: v.$c-yellow;
+		text-decoration: none;
+		transition: gap ease v.$tr, background-color ease v.$tr;
+
+		@include t.t-text(true);
+
+		color: v.$c-black;
+
+		@include g.hover {
+			gap: 12px;
+			background-color: v.$c-orange-dark;
+		}
+	}
+}

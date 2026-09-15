@@ -11,19 +11,26 @@
  * @return void
  */
 function get_component_template( string $template_path, array $args = array() ): void {
-	$template_path = 'template-parts/' . $template_path;
-	$template      = locate_template( $template_path . '.php' );
-	if ( ! $template ) {
-		$template_path = 'core/' . $template_path;
-		$template      = locate_template( $template_path . '.php' );
+	static $resolved = array();
+
+	if ( ! isset( $resolved[ $template_path ] ) ) {
+		$candidate = 'template-parts/' . $template_path;
+		if ( ! locate_template( $candidate . '.php' ) ) {
+			$candidate = 'core/' . $candidate;
+			if ( ! locate_template( $candidate . '.php' ) ) {
+				$candidate = '';
+			}
+		}
+
+		$resolved[ $template_path ] = $candidate;
 	}
 
-	if ( ! $template ) {
+	if ( '' === $resolved[ $template_path ] ) {
 		return;
 	}
 
 	get_template_part(
-		$template_path,
+		$resolved[ $template_path ],
 		null,
 		$args
 	);
@@ -99,6 +106,7 @@ function core_home_url( string $path = '' ): string {
 
 	return home_url( $path );
 }
+
 /**
  * Keep the account area out of every shared cache.
  *

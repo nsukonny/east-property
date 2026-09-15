@@ -303,9 +303,9 @@ final class CLI {
 	 * with listing_type = distress, owned by the given author, who also becomes
 	 * its broker. A project the site does not have is created as a published
 	 * stub carrying a noindex robots meta: resolve_property_id() accepts a
-	 * project only in `publish`, so a draft stub would degrade the unit's url
-	 * to /property/no-project/... and make the unit answer 404. The robots meta
-	 * is what keeps the empty page out of the index and the sitemap instead.
+	 * project only in `publish`, so under a draft stub the unit would count as
+	 * having no project and render without its building. The robots meta is
+	 * what keeps the empty page out of the index and the sitemap instead.
 	 *
 	 * The run is idempotent: each post carries _core_import_source with the
 	 * source host and id, so a second run skips what it already made, and the
@@ -336,7 +336,8 @@ final class CLI {
 	 *
 	 * [--project-status=<status>]
 	 * : Status for project stubs. Must stay publish: resolve_property_id() accepts
-	 * a project only in publish, and a draft stub makes the unit answer 404.
+	 * a project only in publish, and under a draft stub the unit renders with no
+	 * building and drops the project from its url.
 	 * ---
 	 * default: publish
 	 * ---

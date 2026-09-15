@@ -33,6 +33,7 @@ function get_all_languages(): array {
 			),
 		);
 }
+
 /**
  * Language switcher entries for the page being rendered.
  *
@@ -243,9 +244,9 @@ function core_transliteration_table(): array {
  * entry created before this filter existed — transliterating there would stop
  * their URLs from matching.
  *
- * @param string $title     Title after remove_accents().
+ * @param string $title Title after remove_accents().
  * @param string $raw_title Title before sanitisation.
- * @param string $context   Either 'save' or 'query'.
+ * @param string $context Either 'save' or 'query'.
  *
  * @return string
  */
@@ -276,9 +277,9 @@ function core_old_slug_redirect_language( $post_id ) {
 	$post_id = (int) $post_id;
 
 	if ( 0 === $post_id
-		|| ! function_exists( 'pll_current_language' )
-		|| ! function_exists( 'pll_get_post_language' )
-		|| ! function_exists( 'pll_get_post' ) ) {
+	     || ! function_exists( 'pll_current_language' )
+	     || ! function_exists( 'pll_get_post_language' )
+	     || ! function_exists( 'pll_get_post' ) ) {
 		return $post_id;
 	}
 

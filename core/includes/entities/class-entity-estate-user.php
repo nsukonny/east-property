@@ -180,15 +180,23 @@ final class Estate_User {
 			$whatsapp_number = $this->get_field( 'whatsapp' ) ?: '';
 		}
 
-		if ( ! $is_link ) {
+		if ( ! $is_link || str_starts_with( $whatsapp_number, 'https' ) ) {
 			return $whatsapp_number;
 		}
 
-		if ( str_starts_with( $whatsapp_number, 'https' ) ) {
-			return $whatsapp_number;
+		$whatsapp_number = preg_replace( '/\D+/', '', $whatsapp_number );
+		if ( empty( $whatsapp_number ) ) {
+			return WHATS_APP_LINK;
 		}
 
-		return 'https://api.whatsapp.com/send/?phone=' . $whatsapp_number . '&text=' . $text;
+		$whats_app_link = 'https://wa.me/';
+		$whats_app_link .= str_replace( ' ', '', $whatsapp_number );
+
+		if ( ! empty( $text ) ) {
+			$whats_app_link .= '?text=' . $text;
+		}
+
+		return $whats_app_link;
 	}
 
 	/**

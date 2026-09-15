@@ -40,27 +40,36 @@ $beds  = $search_tabs_data['filters']['beds'];
 				if ( 0 === $category_key ) {
 					?>
 				is-active<?php } ?>" role="tab"
-				        id="search-tabs-tab-<?php echo esc_attr( $category['slug'] ); ?>"
-				        aria-controls="search-tabs-panel" aria-selected="true" tabindex="0" data-search-tab
-				        data-type="<?php echo esc_attr( $category['slug'] ); ?>">
+						id="search-tabs-tab-<?php echo esc_attr( $category['slug'] ); ?>"
+						aria-controls="search-tabs-panel"
+						aria-selected="<?php echo 0 === $category_key ? 'true' : 'false'; ?>"
+						tabindex="<?php echo 0 === $category_key ? '0' : '-1'; ?>" data-search-tab
+						data-type="<?php echo esc_attr( $category['slug'] ); ?>">
 					<?php echo esc_html( $category['label'] ); ?>
 				</button>
 			<?php } ?>
+			<button type="button" class="button tab-distress" role="tab"
+					id="search-tabs-tab-distress" aria-controls="search-tabs-distress-panel"
+					aria-selected="false" tabindex="-1" data-search-tab data-type="distress">
+				<span class="tab-distress-flames" aria-hidden="true">🔥</span>
+				<?php esc_html_e( 'Distress', 'east-property' ); ?>
+				<span class="tab-distress-flames" aria-hidden="true">🔥</span>
+			</button>
 		</div>
 	<?php } ?>
 	<form action="<?php echo esc_url( $form_action ); ?>" class="tabs-panel" method="get"
-	      data-search-panel>
+		  data-search-panel>
 		<div class="tabs-fields" role="tabpanel" id="search-tabs-panel" aria-labelledby="search-tabs-tab-all">
 
 			<?php if ( ! empty( $baths['options'] ) || ! empty( $beds['options'] ) ) { ?>
 				<div class="tab-field">
 					<button type="button" class="tab-selector" data-search-selector="beds_baths" aria-haspopup="true"
-					        aria-expanded="false">
-						<span class="tab-field-label"><?php _e( 'Bedrooms' , 'east-property' ); ?></span>
+							aria-expanded="false">
+						<span class="tab-field-label"><?php _e( 'Bedrooms', 'east-property' ); ?></span>
 						<span class="tab-selector-value">
-						<span data-search-beds-baths-text><?php _e( '' , 'east-property' ); ?></span>
+						<span data-search-beds-baths-text><?php _e( '', 'east-property' ); ?></span>
 						<img src="<?php echo THEME_URL; ?>/assets/img/arrow-down.svg" width="16" height="16"
-						     alt="Dropdown arrow">
+							 alt="Dropdown arrow">
 					</span>
 					</button>
 					<div class="beds-baths-dropdown" data-search-dropdown="beds_baths" hidden>
@@ -74,8 +83,8 @@ $beds  = $search_tabs_data['filters']['beds'];
 											$class = ! empty( $bed['active'] ) && true === $bed['active'] ? ' active' : '';
 											?>
 											<button type="button"
-											        class="beds-baths-btn<?php echo esc_attr( $class ); ?>"
-											        data-beds="<?php echo esc_attr( $bed['value'] ); ?>"><?php echo esc_attr( $bed['label'] ); ?></button>
+													class="beds-baths-btn<?php echo esc_attr( $class ); ?>"
+													data-beds="<?php echo esc_attr( $bed['value'] ); ?>"><?php echo esc_attr( $bed['label'] ); ?></button>
 										<?php } ?>
 									</div>
 								</div>
@@ -90,8 +99,8 @@ $beds  = $search_tabs_data['filters']['beds'];
 											$class = ! empty( $bath['active'] ) && true === $bath['active'] ? ' active' : '';
 											?>
 											<button type="button"
-											        class="beds-baths-btn<?php echo esc_attr( $class ); ?>"
-											        data-baths="<?php echo esc_attr( $bath['value'] ); ?>"><?php echo esc_attr( $bath['label'] ); ?></button>
+													class="beds-baths-btn<?php echo esc_attr( $class ); ?>"
+													data-baths="<?php echo esc_attr( $bath['value'] ); ?>"><?php echo esc_attr( $bath['label'] ); ?></button>
 										<?php } ?>
 									</div>
 								</div>
@@ -99,10 +108,10 @@ $beds  = $search_tabs_data['filters']['beds'];
 
 							<div class="beds-baths-actions">
 								<button class="button gray sm beds-baths-cancel" type="button">
-									<span><?php _e( 'Cancel' , 'east-property' ); ?></span>
+									<span><?php _e( 'Cancel', 'east-property' ); ?></span>
 								</button>
 								<button class="button orange green sm beds-baths-apply" type="button">
-									<span><?php _e( 'Apply' , 'east-property' ); ?></span>
+									<span><?php _e( 'Apply', 'east-property' ); ?></span>
 								</button>
 							</div>
 						</div>
@@ -114,51 +123,51 @@ $beds  = $search_tabs_data['filters']['beds'];
 
 			<div class="tab-field">
 				<button type="button" class="tab-selector" data-search-selector="location" aria-haspopup="listbox"
-				        aria-expanded="false">
+						aria-expanded="false">
 					<label for="location-input-search" class="result-filter-search">
 						<input type="text" class="dropdown-search-input"
-						       id="location-input-search"
-						       placeholder="<?php esc_html_e( 'Search...' , 'east-property' ); ?>">
+							   id="location-input-search"
+							   placeholder="<?php esc_html_e( 'Search...', 'east-property' ); ?>">
 					</label>
-					<span class="tab-field-label"><?php esc_html_e( 'District' , 'east-property' ); ?></span>
+					<span class="tab-field-label"><?php esc_html_e( 'District', 'east-property' ); ?></span>
 					<span class="tab-selector-value">
-						<span data-search-location-text><?php _e( 'Any Locations' , 'east-property' ); ?></span>
+						<span data-search-location-text><?php _e( 'Any Locations', 'east-property' ); ?></span>
 						<img src="<?php echo THEME_URL; ?>/assets/img/arrow-down.svg" width="16" height="16"
-						     alt="<?php esc_html_e( 'Dropdown arrow' , 'east-property' ); ?>">
+							 alt="<?php esc_html_e( 'Dropdown arrow', 'east-property' ); ?>">
 					</span>
 				</button>
 				<div class="tab-dropdown" role="listbox" tabindex="-1" data-search-dropdown="location"
-				     data-check-icon="<?php echo THEME_URL; ?>/assets/img/check.svg" hidden></div>
+					 data-check-icon="<?php echo THEME_URL; ?>/assets/img/check.svg" hidden></div>
 			</div>
 
 			<div class="tab-divider" aria-hidden="true"></div>
 
 			<div class="tab-field">
 				<button type="button" class="tab-selector" data-search-selector="developer" aria-haspopup="listbox"
-				        aria-expanded="false">
+						aria-expanded="false">
 					<label for="developer-input-search" class="result-filter-search">
 						<input type="text" class="dropdown-search-input"
-						       id="developer-input-search"
-						       placeholder="<?php esc_html_e( 'Search...' , 'east-property' ); ?>">
+							   id="developer-input-search"
+							   placeholder="<?php esc_html_e( 'Search...', 'east-property' ); ?>">
 					</label>
-					<span class="tab-field-label"><?php esc_html_e( 'Developer' , 'east-property' ); ?></span>
+					<span class="tab-field-label"><?php esc_html_e( 'Developer', 'east-property' ); ?></span>
 					<span class="tab-selector-value">
-						<span data-search-developer-text><?php _e( 'Any Developers' , 'east-property' ); ?></span>
+						<span data-search-developer-text><?php _e( 'Any Developers', 'east-property' ); ?></span>
 						<img src="<?php echo THEME_URL; ?>/assets/img/arrow-down.svg" width="16" height="16"
-						     alt="<?php esc_html_e( 'Dropdown arrow' , 'east-property' ); ?>">
+							 alt="<?php esc_html_e( 'Dropdown arrow', 'east-property' ); ?>">
 					</span>
 				</button>
 				<div class="tab-dropdown" role="listbox" tabindex="-1" data-search-dropdown="developer"
-				     data-check-icon="<?php echo THEME_URL; ?>/assets/img/check.svg" hidden></div>
+					 data-check-icon="<?php echo THEME_URL; ?>/assets/img/check.svg" hidden></div>
 			</div>
 
 			<button class="button green orange xl submit">
 				<svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path fill-rule="evenodd" clip-rule="evenodd"
-					      d="M17.0392 15.6244C18.2714 14.084 19.0082 12.1301 19.0082 10.0041C19.0082 5.03127 14.9769 1 10.0041 1C5.03127 1 1 5.03127 1 10.0041C1 14.9769 5.03127 19.0082 10.0041 19.0082C12.1301 19.0082 14.084 18.2714 15.6244 17.0392L21.2921 22.707C21.6828 23.0977 22.3163 23.0977 22.707 22.707C23.0977 22.3163 23.0977 21.6828 22.707 21.2921L17.0392 15.6244ZM10.0041 17.0173C6.1308 17.0173 2.99087 13.8774 2.99087 10.0041C2.99087 6.1308 6.1308 2.99087 10.0041 2.99087C13.8774 2.99087 17.0173 6.1308 17.0173 10.0041C17.0173 13.8774 13.8774 17.0173 10.0041 17.0173Z"
-					      fill="#0F0F0F"/>
+						  d="M17.0392 15.6244C18.2714 14.084 19.0082 12.1301 19.0082 10.0041C19.0082 5.03127 14.9769 1 10.0041 1C5.03127 1 1 5.03127 1 10.0041C1 14.9769 5.03127 19.0082 10.0041 19.0082C12.1301 19.0082 14.084 18.2714 15.6244 17.0392L21.2921 22.707C21.6828 23.0977 22.3163 23.0977 22.707 22.707C23.0977 22.3163 23.0977 21.6828 22.707 21.2921L17.0392 15.6244ZM10.0041 17.0173C6.1308 17.0173 2.99087 13.8774 2.99087 10.0041C2.99087 6.1308 6.1308 2.99087 10.0041 2.99087C13.8774 2.99087 17.0173 6.1308 17.0173 10.0041C17.0173 13.8774 13.8774 17.0173 10.0041 17.0173Z"
+						  fill="#0F0F0F"/>
 				</svg>
-				<?php esc_html_e( 'Search' , 'east-property' ); ?>
+				<?php esc_html_e( 'Search', 'east-property' ); ?>
 			</button>
 		</div>
 
@@ -169,4 +178,27 @@ $beds  = $search_tabs_data['filters']['beds'];
 		<input type="hidden" name="beds" value="" data-search-beds-value>
 		<input type="hidden" name="baths" value="" data-search-baths-value>
 	</form>
+	<div class="tabs-panel distress-panel" id="search-tabs-distress-panel" role="tabpanel"
+		 aria-labelledby="search-tabs-tab-distress" data-search-distress-panel hidden>
+		<div class="distress-panel-text">
+			<p class="distress-panel-title"><?php esc_html_e( 'Distress deals are sold below market price',
+					'east-property' ); ?></p>
+			<p class="distress-panel-descr">
+				<?php esc_html_e( 'Owners who need a fast exit, verified by us and limited in number. These listings are not published openly — we send them out on request.',
+					'east-property' ); ?>
+			</p>
+		</div>
+		<div class="distress-panel-actions">
+			<a class="button green orange xl" href="<?php echo esc_url( core_home_url( '/distress' ) ); ?>">
+				<?php esc_html_e( 'Explore distress deals', 'east-property' ); ?>
+			</a>
+			<button class="button black xl" type="button" data-modal-open="contact-manager-modal">
+				<?php esc_html_e( 'Sell my property', 'east-property' ); ?>
+			</button>
+		</div>
+		<p class="distress-panel-note">
+			<?php esc_html_e( 'One short call: we send the current list and check your property against buyer demand.',
+				'east-property' ); ?>
+		</p>
+	</div>
 </div>

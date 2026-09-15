@@ -29,8 +29,8 @@ if ( empty( $title ) || empty( $price ) || empty( $gallery ) ) {
 
 if ( ! empty( $amenities ) ) {
 	foreach ( $amenities as $key => $amenity ) {
-		if ( '0 ' . __( 'Beds' , 'east-property' ) === $amenity['value'] ) {
-			$amenities[ $key ]['value'] = __( 'Studio' , 'east-property' );
+		if ( '0 ' . __( 'Beds', 'east-property' ) === $amenity['value'] ) {
+			$amenities[ $key ]['value'] = __( 'Studio', 'east-property' );
 		}
 	}
 }
@@ -44,7 +44,7 @@ if ( ! empty( $amenities ) ) {
 						<?php foreach ( $gallery as $image ) { ?>
 							<div class="swiper-slide">
 								<img src="<?php echo esc_url( $image['sizes']['unit-card'] ); ?>"
-								     alt="Image">
+									 alt="Image">
 							</div>
 						<?php } ?>
 					</div>
@@ -52,11 +52,11 @@ if ( ! empty( $amenities ) ) {
 						<div class="swiper-buttons">
 							<button class="swiper-prev sm">
 								<img src="<?php echo THEME_URL ?>/assets/img/swiper-arr.svg"
-								     width="16" height="16" alt="<?php _e( 'Prev' , 'east-property' ); ?>">
+									 width="16" height="16" alt="<?php _e( 'Prev', 'east-property' ); ?>">
 							</button>
 							<button class="swiper-next sm">
 								<img src="<?php echo THEME_URL ?>/assets/img/swiper-arr.svg"
-								     width="16" height="16" alt="<?php _e( 'Next' , 'east-property' ); ?>">
+									 width="16" height="16" alt="<?php _e( 'Next', 'east-property' ); ?>">
 							</button>
 						</div>
 					<?php } ?>
@@ -77,7 +77,7 @@ if ( ! empty( $amenities ) ) {
 									<span class="unit-card-discount-badge">
 										<?php
 										/* translators: %d is the discount percent off the original price. */
-										printf( esc_html__( '-%d%%' , 'east-property' ), (int) $discount );
+										printf( esc_html__( '-%d%%', 'east-property' ), (int) $discount );
 										?>
 									</span>
 								<?php } ?>
@@ -85,7 +85,8 @@ if ( ! empty( $amenities ) ) {
 						<?php } ?>
 
 						<?php if ( ! empty( $developer_name ) ) { ?>
-							<span class="unit-card-desc"><?php _e( 'Apartment by ' , 'east-property' ); ?><?php echo esc_html( $developer_name ); ?></span>
+							<span class="unit-card-desc"><?php _e( 'Apartment by ',
+									'east-property' ); ?><?php echo esc_html( $developer_name ); ?></span>
 						<?php } ?>
 
 						<?php if ( ! empty( $property_name ) ) { ?>
@@ -100,7 +101,7 @@ if ( ! empty( $amenities ) ) {
 								<div class="label <?php echo esc_html( $label['color'] ); ?>">
 									<?php if ( ! empty( $label['icon'] ) ) { ?>
 										<img src="<?php echo esc_url( $label['icon'] ); ?>"
-										     alt="<?php esc_html_e( 'Star' , 'east-property' ); ?>">
+											 alt="<?php esc_html_e( 'Star', 'east-property' ); ?>">
 										<?php
 									}
 
@@ -121,7 +122,7 @@ if ( ! empty( $amenities ) ) {
 								<?php foreach ( $amenities as $amenity ) { ?>
 									<span>
                                         <img src="<?php echo esc_url( $amenity['icon'] ); ?>" width="16" height="16"
-                                             alt="<?php _e( 'Vector icon' , 'east-property' ); ?>">
+											 alt="<?php _e( 'Vector icon', 'east-property' ); ?>">
                                         <?php echo esc_html( $amenity['value'] ); ?>
                                     </span>
 								<?php } ?>
@@ -135,7 +136,7 @@ if ( ! empty( $amenities ) ) {
 							<?php if ( ! empty( $url ) ) { ?>
 								<a href="<?php echo esc_url( $url ); ?>" class="button gray sm view_details"
 								   target="_blank">
-									<?php esc_html_e( 'View details' , 'east-property' ); ?>
+									<?php esc_html_e( 'View details', 'east-property' ); ?>
 								</a>
 								<?php
 							}
@@ -146,8 +147,8 @@ if ( ! empty( $amenities ) ) {
 									<a href="<?php echo esc_url( $edit_link ); ?>"
 									   class="button gray sm edit-property-link">
 										<img src="<?php echo esc_url( THEME_URL . '/assets/img/edit.svg' ); ?>"
-										     alt="<?php esc_html_e( 'Edit' , 'east-property' ); ?>">
-										<?php _e( 'Edit property' , 'east-property' ); ?>
+											 alt="<?php esc_html_e( 'Edit', 'east-property' ); ?>">
+										<?php _e( 'Edit property', 'east-property' ); ?>
 									</a>
 									<?php
 								}
@@ -155,30 +156,31 @@ if ( ! empty( $amenities ) ) {
 								if ( ! empty( $is_can_boost ) ) {
 									?>
 									<button class="button orange sm" data-modal-open="boost-modal"
-									        data-unit_id="<?php echo esc_attr( $unit_id ); ?>">
+											data-unit_id="<?php echo esc_attr( $unit_id ); ?>">
 										<img src="<?php echo esc_url( THEME_URL . '/assets/img/star.svg' ); ?>"
-										     alt="<?php esc_html_e( 'Star' , 'east-property' ); ?>">
-										<?php esc_html_e( 'Boost property' , 'east-property' ); ?>
+											 alt="<?php esc_html_e( 'Star', 'east-property' ); ?>">
+										<?php esc_html_e( 'Boost property', 'east-property' ); ?>
 									</button>
 									<?php
 								}
 							} else {
 								?>
 								<button class="button sm toggle-favorite <?php echo $is_favorite ? 'orange green' : 'gray'; ?>"
-								        data-unit-id="<?php echo $unit_id; ?>">
+										data-unit-id="<?php echo $unit_id; ?>">
 									<?php require THEME_PATH . '/assets/img/bookmark.svg'; ?>
 								</button>
 
 								<?php if ( ! empty( $broker ) ) {
-									$whatsapp_text  = __( 'Hello, I am interested in property -' , 'east-property' ) . ' ' . $url;
+									$whatsapp_text  = __( 'Hello, I am interested in property -',
+											'east-property' ) . ' ' . $url;
 									$whats_app_link = $broker->get_whatsapp( $whatsapp_text ) ?: WHATS_APP_LINK;
 									?>
 									<button class="button orange sm"
-									        data-modal-open="broker-modal"
-									        data-broker-phone="tel:<?php echo $broker->get_phone(); ?>"
-									        data-broker-whatsapp="<?php echo esc_url( $whats_app_link ) ?>"
+											data-modal-open="broker-modal"
+											data-broker-phone="tel:<?php echo $broker->get_phone(); ?>"
+											data-broker-whatsapp="<?php echo esc_url( $whats_app_link ) ?>"
 									>
-										<?php echo esc_html( 'Contact broker' ); ?>
+										<?php _e( 'Contact broker', 'east-property' ); ?>
 									</button>
 								<?php } ?>
 							<?php } ?>
