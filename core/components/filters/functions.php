@@ -294,7 +294,7 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 	$search_tabs_data['filters'] = array(
 		'location'      => array(
 			'label'   => __( 'Location', 'east-property' ),
-			'options' => get_locations(),
+			'options' => get_locations( $listing_type, $language ),
 		),
 		'available'     => array(
 			'label'   => 'off-plan' === $listing_type ? __( 'Handover Year Before',
@@ -349,7 +349,7 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 				),
 				'location' => array(
 					'label'   => __( 'District', 'east-property' ),
-					'options' => get_locations(),
+					'options' => get_locations( $listing_type, $language ),
 				),
 			),
 		),
@@ -638,7 +638,7 @@ function get_properties_search_tabs_data(): array {
 	$search_tabs_data['filters'] = array(
 		'location'      => array(
 			'label'   => __( 'Location', 'east-property' ),
-			'options' => get_locations(),
+			'options' => get_locations( 'property', $language ),
 		),
 		'available'     => array(
 			'label'   => __( 'Available', 'east-property' ),
@@ -835,10 +835,27 @@ function get_developers_list(): array {
 }
 
 /**
- * Get a list of all parent 0 categories instead of uncategorized
+ * Districts offered by a listing's location filter: only those it can show.
+ *
+ * The list used to be the districts of every published unit's project - one
+ * list for every listing and language - so on /off-plan/ 55 of its 83 districts
+ * led to "0 found", and 41 on /distress/ (2026-09-13 dump). It is now the
+ * districts of what the listing filters: units of that listing type in the
+ * language, by their own location (what core_query_units() matches), or projects
+ * with available units (what core_query_properties() matches).
+ *
+ * @param string $scope    'property' for the projects listing; a listing type,
+ *                         or 'all', for units.
+ * @param string $language Polylang slug; the current language when empty.
+ *
+ * @return array
  */
-function get_locations(): array {
+function get_locations( string $scope = 'all', string $language = '' ): array {
 	global $wpdb;
+
+	if ( '' === $language && function_exists( 'pll_current_language' ) ) {
+		$language = (string) pll_current_language( 'slug' );
+	}
 
 	$selected_location = $_REQUEST['location'] ?? null;
 
@@ -849,29 +866,45 @@ function get_locations(): array {
 		),
 	);
 
-	$sql = "SELECT DISTINCT
-				t.term_id,
-				t.name,
-				t.slug,
-				tt.taxonomy,
-				tt.parent,
-				tt.count
-			FROM wp_posts AS u
-			LEFT JOIN wp_postmeta AS pm_property
-				ON pm_property.post_id = u.ID
-				AND pm_property.meta_key = 'property'
-			INNER JOIN wp_term_relationships AS tr
-				ON tr.object_id = CAST(pm_property.meta_value AS UNSIGNED)
-			INNER JOIN wp_term_taxonomy AS tt
-				ON tt.term_taxonomy_id = tr.term_taxonomy_id
-				AND tt.taxonomy = 'location'
-			INNER JOIN wp_terms AS t
-				ON t.term_id = tt.term_id
-			WHERE u.post_type = 'unit'
-			  AND u.post_status = 'publish'
-			ORDER BY t.name ASC;";
+	$location_joins = "
+		JOIN {$wpdb->term_taxonomy} tt_loc
+			ON tt_loc.term_taxonomy_id = tr_loc.term_taxonomy_id AND tt_loc.taxonomy = 'location'
+		JOIN {$wpdb->terms} t ON t.term_id = tt_loc.term_id
+	";
 
-	$locations = $wpdb->get_results( $sql, ARRAY_A );
+	if ( 'property' === $scope ) {
+		$language_id   = '' === $language ? 0 : core_language_term_taxonomy_id( $language );
+		$language_join = 0 !== $language_id
+			? "JOIN {$wpdb->term_relationships} tr_l ON tr_l.object_id = p.ID AND tr_l.term_taxonomy_id = %d"
+			: '';
+
+		$sql    = "
+			SELECT DISTINCT t.slug, t.name
+			FROM {$wpdb->posts} p
+				JOIN {$wpdb->postmeta} pm_units_count
+					ON pm_units_count.post_id = p.ID AND pm_units_count.meta_key = 'units_count'
+				JOIN {$wpdb->term_relationships} tr_loc ON tr_loc.object_id = p.ID
+				{$location_joins}
+				{$language_join}
+			WHERE p.post_type = 'property' AND p.post_status = 'publish'
+				AND CAST( pm_units_count.meta_value AS UNSIGNED ) > 0
+			ORDER BY t.name ASC
+		";
+		$params = 0 !== $language_id ? array( $language_id ) : array();
+	} else {
+		$source = core_unit_filter_source( $language, $scope );
+		$sql    = "
+			SELECT DISTINCT t.slug, t.name
+			{$source['sql']}
+				JOIN {$wpdb->term_relationships} tr_loc ON tr_loc.object_id = u.ID
+				{$location_joins}
+			WHERE u.post_type = 'unit' AND u.post_status = 'publish'
+			ORDER BY t.name ASC
+		";
+		$params = $source['params'];
+	}
+
+	$locations = $wpdb->get_results( empty( $params ) ? $sql : $wpdb->prepare( $sql, $params ), ARRAY_A );
 	if ( empty( $locations ) ) {
 		return $results;
 	}
