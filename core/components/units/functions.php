@@ -75,8 +75,9 @@ function get_units( $listing_type = '', $limit = 25 ): array {
 		},
 		DAY_IN_SECONDS,
 		array(
-			'respect_dev' => true,
-			'keep_empty'  => true,
+			'respect_dev'  => true,
+			'keep_empty'   => true,
+			'keep_expired' => false,
 		)
 	);
 

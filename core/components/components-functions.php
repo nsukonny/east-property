@@ -191,7 +191,14 @@ function core_after_response( callable $callback ): void {
  * Options mirror the checks each call site used to make:
  *  - respect_dev: do not read in dev mode (the "! IS_DEV ?" checks);
  *  - keep_empty:  an empty stored value is a hit (the "false !==" checks) rather
- *                 than a miss (the "! empty()" checks).
+ *                 than a miss (the "! empty()" checks);
+ *  - keep_expired: true by default - the value is kept for a second lifetime so
+ *                 it can be served while it rebuilds. Pass false for keys built
+ *                 from request parameters (listings, maps): there is one per URL
+ *                 crawled, so a second lifetime doubles how many sit in memory.
+ *                 An expired value is then gone and built on the spot; a value
+ *                 outdated by a catalogue change is still served and rebuilt
+ *                 after the response.
  *
  * @param string $key Transient key.
  * @param callable $build Builds the value.
@@ -207,6 +214,13 @@ function core_cache_remember( string $key, callable $build, int $ttl, array $opt
 
 	// A warm-up request rebuilds whatever is out of date before it answers.
 	if ( core_cache_warming() && is_array( $entry ) && core_cache_is_outdated( $entry ) ) {
+		$entry = false;
+	}
+
+	$keep_expired = $options['keep_expired'] ?? true;
+
+	// Kept for one lifetime only: past it the value is gone, even if still stored.
+	if ( ! $keep_expired && is_array( $entry ) && (int) ( $entry['expires'] ?? 0 ) <= time() ) {
 		$entry = false;
 	}
 
@@ -227,8 +241,8 @@ function core_cache_remember( string $key, callable $build, int $ttl, array $opt
 
 		if ( core_cache_is_outdated( $entry ) && ! ( $changed && wp_next_scheduled( 'core_cache_warm' ) ) ) {
 			core_after_response(
-				static function () use ( $key, $build, $ttl ) {
-					core_cache_rebuild( $key, $build, $ttl );
+				static function () use ( $key, $build, $ttl, $keep_expired ) {
+					core_cache_rebuild( $key, $build, $ttl, $keep_expired );
 				}
 			);
 		}
@@ -238,7 +252,7 @@ function core_cache_remember( string $key, callable $build, int $ttl, array $opt
 
 	$generation = core_cache_generation();
 	$value      = $build();
-	core_cache_store( $key, $value, $ttl, $generation );
+	core_cache_store( $key, $value, $ttl, $generation, $keep_expired );
 
 	return $value;
 }
@@ -247,16 +261,18 @@ function core_cache_remember( string $key, callable $build, int $ttl, array $opt
  * Store a value for core_cache_remember().
  *
  * The transient itself lives for two lifetimes, so an expired value is still
- * there to be served while the next one is built.
+ * there to be served while the next one is built - unless $keep_expired is
+ * false, see core_cache_remember().
  *
  * @param string $key Transient key.
  * @param mixed $value Value.
  * @param int $ttl Lifetime in seconds.
  * @param string $generation Catalogue generation the value was built from.
+ * @param bool $keep_expired Keep the value for a second lifetime.
  *
  * @return void
  */
-function core_cache_store( string $key, $value, int $ttl, string $generation ): void {
+function core_cache_store( string $key, $value, int $ttl, string $generation, bool $keep_expired = true ): void {
 	set_transient(
 		$key,
 		array(
@@ -265,7 +281,7 @@ function core_cache_store( string $key, $value, int $ttl, string $generation ): 
 			'generation' => $generation,
 			'value'      => $value,
 		),
-		2 * $ttl
+		$keep_expired ? 2 * $ttl : $ttl
 	);
 }
 
@@ -278,10 +294,11 @@ function core_cache_store( string $key, $value, int $ttl, string $generation ): 
  * @param string $key Transient key.
  * @param callable $build Builds the value.
  * @param int $ttl Lifetime in seconds.
+ * @param bool $keep_expired Keep the value for a second lifetime.
  *
  * @return void
  */
-function core_cache_rebuild( string $key, callable $build, int $ttl ): void {
+function core_cache_rebuild( string $key, callable $build, int $ttl, bool $keep_expired = true ): void {
 	$lock     = 'core_cache_lock_' . md5( $key );
 	$external = wp_using_ext_object_cache();
 
@@ -301,7 +318,7 @@ function core_cache_rebuild( string $key, callable $build, int $ttl ): void {
 		// Read before building: a change that lands mid-build leaves this value
 		// marked with the older generation, so it is rebuilt once more.
 		$generation = core_cache_generation();
-		core_cache_store( $key, $build(), $ttl, $generation );
+		core_cache_store( $key, $build(), $ttl, $generation, $keep_expired );
 	} finally {
 		if ( $external ) {
 			wp_cache_delete( $lock, 'core_cache' );

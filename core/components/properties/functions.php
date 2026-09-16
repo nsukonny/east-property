@@ -43,7 +43,10 @@ function get_properties( $limit = - 1, $skip_filters = false ): array {
 			return core_query_properties( $limit, $skip_filters, $current_page, $current_language );
 		},
 		DAY_IN_SECONDS,
-		array( 'respect_dev' => true )
+		array(
+			'respect_dev'  => true,
+			'keep_expired' => false,
+		)
 	);
 
 	core_prime_listing( $memo[ $filters_hash ]['items'] ?? array() );

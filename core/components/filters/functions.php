@@ -1102,7 +1102,10 @@ function get_map_properties_json( array $properties, bool $skip_empty = false ):
 			return core_build_map_properties_json( $properties, $skip_empty );
 		},
 		HOUR_IN_SECONDS,
-		array( 'respect_dev' => true )
+		array(
+			'respect_dev'  => true,
+			'keep_expired' => false,
+		)
 	);
 }
 
