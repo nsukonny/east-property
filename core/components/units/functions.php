@@ -144,7 +144,21 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 	if ( ! empty( $_REQUEST['available'] ) && 'all' !== $_REQUEST['available'] ) {
 		// The listing's own type: the off-plan page passes it as an argument, not in
 		// the request, so reading $_REQUEST applied the "after" rule there too.
-		if ( 'off-plan' === $listing_type ) {
+		$available = sanitize_text_field( wp_unslash( $_REQUEST['available'] ) );
+
+		/*
+		 * The homepage search sends these two instead of a year. They were read as
+		 * a year - strtotime() failed and every unit passed - and with the rule
+		 * below would match nothing; the projects listing already handles them,
+		 * with the same bounds.
+		 */
+		if ( 'available_immediately' === $available ) {
+			$date_from = '20000101';
+			$date_to   = date( 'Ymd' );
+		} elseif ( 'in_construction' === $available ) {
+			$date_from = date( 'Ymd' );
+			$date_to   = date( 'Ymd', strtotime( '+20 years' ) );
+		} elseif ( 'off-plan' === $listing_type ) {
 			$year    = sanitize_text_field( wp_unslash( $_REQUEST['available'] ) );
 			$date_to = date( 'Ymd', strtotime( $year . '1231' ) );
 		} else {
