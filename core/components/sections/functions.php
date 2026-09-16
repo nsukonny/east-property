@@ -7,36 +7,100 @@
  *
  * @return array
  */
-function get_units_count_by_locations( $locations_ids ): array {
-	global $wpdb;
+function get_projects_count_by_locations( $locations_ids ): array {
+	$language = '';
+	if ( function_exists( 'pll_current_language' ) ) {
+		$language = (string) pll_current_language( 'slug' );
+
+		if ( '' === $language && function_exists( 'pll_default_language' ) ) {
+			$language = (string) pll_default_language( 'slug' );
+		}
+	}
+
+	$transient_key = 'projects_count_by_locations_' . md5( implode( ',', (array) $locations_ids ) . '|' . $language );
 
 	return core_cache_remember(
-		'units_count_by_locations',
-		static function () use ( $locations_ids ) {
+		$transient_key,
+		static function () use ( $locations_ids, $language ) {
 			global $wpdb;
 
+			/**
+			 * SELECT t_location.term_id, t_location.name, COUNT(DISTINCT p.ID) AS properties_count
+			 * FROM wp_posts p
+			 * INNER JOIN wp_term_relationships AS tr_location
+			 * ON tr_location.object_id = p.ID
+			 * INNER JOIN wp_term_taxonomy AS tt_location
+			 * ON tt_location.term_taxonomy_id = tr_location.term_taxonomy_id
+			 * AND tt_location.taxonomy = 'location'
+			 * INNER JOIN wp_terms AS t_location
+			 * ON t_location.term_id = tt_location.term_id
+			 *
+			 * INNER JOIN wp_postmeta AS pm_units_count
+			 * ON pm_units_count.post_id = p.ID
+			 * AND pm_units_count.meta_key = 'units_count'
+			 *
+			 * INNER JOIN wp_term_relationships AS pll_language_relation
+			 * ON pll_language_relation.object_id = p.ID
+			 * INNER JOIN wp_term_taxonomy AS pll_language_taxonomy
+			 * ON pll_language_taxonomy.term_taxonomy_id =
+			 * pll_language_relation.term_taxonomy_id
+			 * AND pll_language_taxonomy.taxonomy = 'language'
+			 * INNER JOIN wp_terms AS pll_language
+			 * ON pll_language.term_id = pll_language_taxonomy.term_id
+			 * AND pll_language.slug = 'ru'
+			 * WHERE t_location.term_id IN (4, 19, 5, 9)
+			 * AND p.post_type = 'property'
+			 * AND p.post_status = 'publish'
+			 * AND CAST(pm_units_count.meta_value AS UNSIGNED) > 0
+			 * GROUP BY t_location.term_id;
+			 */
+
 			$where_in = $locations_ids ? implode( ',', array_map( 'intval', $locations_ids ) ) : '0';
-			$query    = $wpdb->prepare( "SELECT t.term_id, t.name, COUNT(p.ID) as posts_count
-			 FROM {$wpdb->posts} p
-			 INNER JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
-		     INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
-		     INNER JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
-				WHERE t.term_id IN (" . $where_in . ")
-				  AND p.post_type = 'unit'
+
+			$results = $wpdb->get_results(
+				"SELECT t_location.term_id, t_location.name, COUNT(DISTINCT p.ID) AS properties_count
+				FROM {$wpdb->posts} p
+				    INNER JOIN {$wpdb->term_relationships} AS tr_location
+                    ON tr_location.object_id = p.ID
+					INNER JOIN {$wpdb->term_taxonomy} AS tt_location
+							ON tt_location.term_taxonomy_id = tr_location.term_taxonomy_id
+								AND tt_location.taxonomy = 'location'
+					INNER JOIN {$wpdb->terms} AS t_location
+							ON t_location.term_id = tt_location.term_id
+					
+					INNER JOIN {$wpdb->postmeta} AS pm_units_count
+							ON pm_units_count.post_id = p.ID
+								AND pm_units_count.meta_key = 'units_count'
+					
+					INNER JOIN {$wpdb->term_relationships} AS pll_language_relation
+							ON pll_language_relation.object_id = p.ID
+					INNER JOIN {$wpdb->term_taxonomy} AS pll_language_taxonomy
+							ON pll_language_taxonomy.term_taxonomy_id =
+							   pll_language_relation.term_taxonomy_id
+								AND pll_language_taxonomy.taxonomy = 'language'
+					INNER JOIN {$wpdb->terms} AS pll_language
+							ON pll_language.term_id = pll_language_taxonomy.term_id
+								AND pll_language.slug = '{$language}'
+				    
+				WHERE t_location.term_id IN ({$where_in})
+				  AND p.post_type = 'property'
 				  AND p.post_status = 'publish'
-				  GROUP BY t.term_id, t.name;
-		     " );
+				  AND CAST(pm_units_count.meta_value AS UNSIGNED) > 0
+				GROUP BY t_location.term_id",
+				ARRAY_A
+			);
 
-			$results = $wpdb->get_results( $query, ARRAY_A );
-
-			$units_count = array();
+			$projects_count = array();
 			foreach ( $results as $location ) {
-				$units_count[ $location['term_id'] ] = $location['posts_count'];
+				$projects_count[ $location['term_id'] ] = $location['properties_count'];
 			}
 
-			return $units_count;
+			return $projects_count;
 		},
-		HOUR_IN_SECONDS
+		HOUR_IN_SECONDS,
+		array(
+			'respect_dev' => true,
+		)
 	);
 }
 
@@ -60,6 +124,7 @@ function get_units_count_by_bedrooms( string $listing_type = '' ): array {
 	}
 
 	$transient_key = 'units_count_by_bedrooms_' . md5( $listing_type . '|' . $current_language );
+
 	return core_cache_remember(
 		$transient_key,
 		static function () use ( $listing_type, $current_language ) {

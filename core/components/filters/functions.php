@@ -205,8 +205,8 @@ function get_search_tabs_data( string $post_type = 'property', string $listing_t
  * Split out of get_search_tabs_data() so the cache can rebuild it after the
  * response; the body is unchanged.
  *
- * @param string $post_type    unit or property.
- * @param string $language     Polylang slug.
+ * @param string $post_type unit or property.
+ * @param string $language Polylang slug.
  * @param string $listing_type Listing slug.
  *
  * @return array
@@ -780,7 +780,7 @@ function get_range_steps( $min = 0, $max = 0, $steps_count = 6, $is_price = fals
 function get_developers_list(): array {
 	global $wpdb;
 
-	$language_id       = function_exists( 'pll_current_language' )
+	$language_id        = function_exists( 'pll_current_language' )
 		? core_language_term_taxonomy_id( (string) pll_current_language( 'slug' ) )
 		: 0;
 	$language_developer = '';
@@ -907,8 +907,6 @@ function core_get_listings_cache_version(): int {
  * @return void
  */
 function core_flush_listing_caches(): void {
-	//TODO Recheck after cloude
-	return;
 	update_option( 'core_listings_cache_version', core_get_listings_cache_version() + 1, false );
 
 	$keys = array(
@@ -971,6 +969,16 @@ function core_flush_listing_caches(): void {
 		}
 	}
 }
+
+/**
+ * Retire the listing caches whenever W3 Total Cache is emptied.
+ *
+ * ep_flush_all_transients() already runs on this action, but it only deletes
+ * transients and flushes the object cache. The listings are keyed by
+ * core_listings_cache_version, an option those two never touch, so without this
+ * a flushed site keeps serving the figures it had before.
+ */
+add_action( 'w3tc_flush_all', 'core_flush_listing_caches', 10 );
 
 /**
  * Build hash for filters request to understand is filters changed or not
@@ -1087,6 +1095,7 @@ function get_map_properties_json( array $properties, bool $skip_empty = false ):
 	 * flags it (core_cache_mark_stale()): visitors keep the previous map until
 	 * the rebuild after the next response stores the new one.
 	 */
+
 	return core_cache_remember(
 		'map_json_' . md5( wp_json_encode( array( $ids, $skip_empty, $language ) ) ),
 		static function () use ( $properties, $skip_empty ) {
@@ -1101,7 +1110,7 @@ function get_map_properties_json( array $properties, bool $skip_empty = false ):
  * The map JSON for a list of projects, uncached.
  *
  * @param Property[] $properties Projects.
- * @param bool       $skip_empty Leave out projects without available units.
+ * @param bool $skip_empty Leave out projects without available units.
  *
  * @return string
  */
