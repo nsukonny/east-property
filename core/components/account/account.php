@@ -95,7 +95,14 @@ if ( isset( $_GET['action'] ) && in_array( $_GET['action'], array( 'add_property
 		'account/edit-property',
 		array(
 			'property'               => isset( $_GET['id'] ) ? new Property( $_GET['id'] ) : null,
-			'locations'              => get_terms( 'location' ),
+			// Every district, including ones no project uses yet: get_terms() hides
+			// empty terms by default, so a district just added could not be picked.
+			'locations'              => get_terms(
+				array(
+					'taxonomy'   => 'location',
+					'hide_empty' => false,
+				)
+			),
 			'developers'             => $developers ?: array(),
 			'property_type_options'  => $property_type_options,
 			'ownership_type_options' => $ownership_type_options,
