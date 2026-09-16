@@ -94,12 +94,12 @@ function core_query_properties( $limit, $skip_filters, $current_page, $current_l
 		";
 
 		if ( ! empty( $date_from ) ) {
-			$where[]  = 'pm_delivery_date.meta_value >= %s';
+			$where[]  = core_sql_delivery_date( 'pm_delivery_date' ) . ' >= %s';
 			$params[] = $date_from;
 		}
 
 		if ( ! empty( $date_to ) ) {
-			$where[]  = 'pm_delivery_date.meta_value <= %s';
+			$where[]  = core_sql_delivery_date( 'pm_delivery_date' ) . ' <= %s';
 			$params[] = $date_to;
 		}
 	}

@@ -142,7 +142,9 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 	}
 
 	if ( ! empty( $_REQUEST['available'] ) && 'all' !== $_REQUEST['available'] ) {
-		if ( 'off-plan' === $_REQUEST['listing_type'] ) {
+		// The listing's own type: the off-plan page passes it as an argument, not in
+		// the request, so reading $_REQUEST applied the "after" rule there too.
+		if ( 'off-plan' === $listing_type ) {
 			$year    = sanitize_text_field( wp_unslash( $_REQUEST['available'] ) );
 			$date_to = date( 'Ymd', strtotime( $year . '1231' ) );
 		} else {
@@ -157,12 +159,12 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 		";
 
 		if ( ! empty( $date_from ) ) {
-			$where[]  = 'pm_delivery_date.meta_value >= %s';
+			$where[]  = core_sql_delivery_date( 'pm_delivery_date' ) . ' >= %s';
 			$params[] = $date_from;
 		}
 
 		if ( ! empty( $date_to ) ) {
-			$where[]  = 'pm_delivery_date.meta_value <= %s';
+			$where[]  = core_sql_delivery_date( 'pm_delivery_date' ) . ' <= %s';
 			$params[] = $date_to;
 		}
 	}
@@ -340,6 +342,8 @@ add_action(
 function get_count_of_units_by_date( $date_from = '2000-01-01', $date_to = '2050-01-01' ): int {
 	global $wpdb;
 
+	$delivery_date = core_sql_delivery_date( 'pm_delivery_date' );
+
 	$sql = "
 		SELECT COUNT(DISTINCT u.ID) AS total_count
 		FROM {$wpdb->posts} AS u
@@ -350,15 +354,16 @@ function get_count_of_units_by_date( $date_from = '2000-01-01', $date_to = '2050
 				AND pm_delivery_date.meta_key = 'delivery_date'
 		WHERE u.post_type = %s
 			  AND u.post_status = %s
-			  AND pm_delivery_date.meta_value >= %s
-			  AND pm_delivery_date.meta_value <= %s
+			  AND {$delivery_date} >= %s
+			  AND {$delivery_date} <= %s
 	";
 
 	$params = array(
 		'unit',
 		'publish',
-		$date_from,
-		$date_to,
+		// Callers pass Y-m-d as well as Ymd; the column is compared as Ymd.
+		str_replace( '-', '', (string) $date_from ),
+		str_replace( '-', '', (string) $date_to ),
 	);
 
 	$query       = $wpdb->prepare( $sql, $params );

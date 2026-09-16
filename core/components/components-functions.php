@@ -329,6 +329,23 @@ function core_cache_rebuild( string $key, callable $build, int $ttl, bool $keep_
 }
 
 /**
+ * SQL for a delivery_date meta value in one comparable form, Ymd.
+ *
+ * The date picker and the account form store 20270630, the Geniemap feed stored
+ * 2027-06-30 as it came (4 117 of 5 047 projects on the 2026-09-13 dump). As
+ * strings the two do not compare: '2027-06-30' sorts below '20270101', so the
+ * year filters put more than a thousand projects on the wrong side. Dropping
+ * the dashes makes both one format; compare against Ymd values.
+ *
+ * @param string $alias Alias of the postmeta join holding delivery_date.
+ *
+ * @return string
+ */
+function core_sql_delivery_date( string $alias ): string {
+	return "REPLACE( {$alias}.meta_value, '-', '' )";
+}
+
+/**
  * Load posts, their terms and their meta for many ids in a few queries.
  *
  * Nothing is read differently afterwards: the same functions return the same
