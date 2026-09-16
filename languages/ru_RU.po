@@ -2874,3 +2874,11 @@ msgstr "Смотреть предложения"
 
 #~ msgid "EXPLORE DISTRESS DEALS"
 #~ msgstr "СМОТРЕТЬ ДИСТРЕСС"
+
+#: core/components/sections/explore-by-districts.php
+msgid "Explore projects by district"
+msgstr "Подберите проекты по району"
+
+#: core/components/sections/explore-by-districts.php
+msgid "All Projects"
+msgstr "Все проекты"

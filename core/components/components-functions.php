@@ -193,11 +193,11 @@ function core_after_response( callable $callback ): void {
  *  - keep_empty:  an empty stored value is a hit (the "false !==" checks) rather
  *                 than a miss (the "! empty()" checks).
  *
- * @param string    $key     Transient key.
- * @param callable  $build   Builds the value.
- * @param int       $ttl     Lifetime in seconds.
- * @param array     $options See above.
- * @param bool|null $hit     Set to true when the value came from storage.
+ * @param string $key Transient key.
+ * @param callable $build Builds the value.
+ * @param int $ttl Lifetime in seconds.
+ * @param array $options See above.
+ * @param bool|null $hit Set to true when the value came from storage.
  *
  * @return mixed
  */
@@ -249,9 +249,9 @@ function core_cache_remember( string $key, callable $build, int $ttl, array $opt
  * The transient itself lives for two lifetimes, so an expired value is still
  * there to be served while the next one is built.
  *
- * @param string $key        Transient key.
- * @param mixed  $value      Value.
- * @param int    $ttl        Lifetime in seconds.
+ * @param string $key Transient key.
+ * @param mixed $value Value.
+ * @param int $ttl Lifetime in seconds.
  * @param string $generation Catalogue generation the value was built from.
  *
  * @return void
@@ -275,9 +275,9 @@ function core_cache_store( string $key, $value, int $ttl, string $generation ): 
  * Concurrent requests that find the same expired value keep serving it rather
  * than all rebuilding it together.
  *
- * @param string   $key   Transient key.
+ * @param string $key Transient key.
  * @param callable $build Builds the value.
- * @param int      $ttl   Lifetime in seconds.
+ * @param int $ttl Lifetime in seconds.
  *
  * @return void
  */
@@ -384,7 +384,7 @@ function core_prime_listing( array $entities ): void {
  * The first row by meta_id, which is the row get_post_meta( $id, $key, true )
  * returns.
  *
- * @param int[]  $post_ids Post ids.
+ * @param int[] $post_ids Post ids.
  * @param string $meta_key Meta key.
  *
  * @return array<int, string> Post id => value; posts without the key are absent.
@@ -508,7 +508,9 @@ foreach ( array( 'added_post_meta', 'updated_post_meta', 'deleted_post_meta' ) a
 	add_action(
 		$core_cache_meta_hook,
 		static function ( $meta_id, $object_id, $meta_key ) {
-			if ( '' === (string) $meta_key || '_' === $meta_key[0] || in_array( $meta_key, array( 'units_count', 'units_count_expired' ), true ) ) {
+			if ( '' === (string) $meta_key || '_' === $meta_key[0] || in_array( $meta_key,
+					array( 'units_count', 'units_count_expired' ),
+					true ) ) {
 				return;
 			}
 
@@ -551,7 +553,7 @@ add_action(
  */
 function core_cache_is_outdated( array $entry ): bool {
 	return (int) ( $entry['expires'] ?? 0 ) <= time()
-		|| ( $entry['generation'] ?? '' ) !== core_cache_generation();
+	       || ( $entry['generation'] ?? '' ) !== core_cache_generation();
 }
 
 /*
@@ -599,7 +601,8 @@ function core_cache_warm_urls(): array {
 				continue;
 			}
 
-			$page_id = ( '' !== $language && function_exists( 'pll_get_post' ) ) ? (int) pll_get_post( $page->ID, $language ) : (int) $page->ID;
+			$page_id = ( '' !== $language && function_exists( 'pll_get_post' ) ) ? (int) pll_get_post( $page->ID,
+				$language ) : (int) $page->ID;
 
 			if ( $page_id > 0 ) {
 				$urls[] = get_permalink( $page_id );
