@@ -35,10 +35,10 @@ get_component_template(
 	'sections/explore',
 	array(
 		'top_title' => array(
-			'h2'   => __( 'Explore properties by district', 'east-property' ),
+			'h2'   => __( 'Explore projects by district', 'east-property' ),
 			'desc' => __( 'Quick picks for you in UAE', 'east-property' ),
-			'href' => core_home_url( '/off-plan/' ),
-			'link' => __( 'All Properties', 'east-property' ),
+			'href' => core_home_url( '/projects/' ),
+			'link' => __( 'All Projects', 'east-property' ),
 		),
 		'cards'     => $cards,
 	)
