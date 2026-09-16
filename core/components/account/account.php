@@ -61,10 +61,7 @@ if ( ! is_user_logged_in() ) {
 
 $estate_user = new Estate_User( $current_user );
 if ( isset( $_GET['action'] ) && in_array( $_GET['action'], array( 'add_unit', 'edit_unit' ) ) ) {
-	$properties = get_properties( 5000, true );
-	if ( ! empty( $properties['items'] ) ) {
-		$properties = $properties['items'];
-	}
+	$project_choices = core_get_project_choices();
 
 	$unit_type_field = function_exists( 'get_field_object' ) ? get_field_object( 'field_694ea57c4ae1f' ) : null;
 
@@ -76,7 +73,7 @@ if ( isset( $_GET['action'] ) && in_array( $_GET['action'], array( 'add_unit', '
 		'account/edit-unit',
 		array(
 			'unit'              => isset( $_GET['id'] ) ? new Unit( $_GET['id'] ) : null,
-			'properties'        => $properties,
+			'project_choices'   => $project_choices,
 			'unit_type_choices' => $unit_type_choices,
 		)
 	);

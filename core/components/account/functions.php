@@ -26,6 +26,70 @@ function core_get_account_page_url( array $args = array() ): string {
 }
 
 /**
+ * Projects offered by the unit form's project dropdown, as id => title.
+ *
+ * The form needs ids and titles only, but took them from
+ * get_properties( 5000, true ): every published project hydrated as an entity,
+ * about 6 MB serialized, and cached under a key built from the whole request -
+ * so every unit opened for editing stored its own 6 MB copy. On 2026-09-16 those
+ * copies filled Redis (929 keys, 4.4 GB) until the kernel killed it 82 times.
+ *
+ * Same projects, same order and same titles as that listing gave: published,
+ * current language, by title, at most 5000 - read in one query, not cached.
+ *
+ * @return array<int, string>
+ */
+function core_get_project_choices(): array {
+	global $wpdb;
+
+	$language_joins = '';
+	$params         = array();
+
+	if ( function_exists( 'pll_current_language' ) ) {
+		$language_joins = "
+			INNER JOIN {$wpdb->term_relationships} AS pll_language_relation
+				ON pll_language_relation.object_id = p.ID
+			INNER JOIN {$wpdb->term_taxonomy} AS pll_language_taxonomy
+				ON pll_language_taxonomy.term_taxonomy_id = pll_language_relation.term_taxonomy_id
+				AND pll_language_taxonomy.taxonomy = 'language'
+			INNER JOIN {$wpdb->terms} AS pll_language
+				ON pll_language.term_id = pll_language_taxonomy.term_id
+				AND pll_language.slug = %s
+		";
+		$params[]       = (string) pll_current_language( 'slug' );
+	}
+
+	$params[] = 'property';
+	$params[] = 'publish';
+
+	$rows = $wpdb->get_results(
+		$wpdb->prepare(
+			"SELECT p.ID, p.post_title, p.post_password
+			FROM {$wpdb->posts} AS p
+			{$language_joins}
+			WHERE p.post_type = %s
+				AND p.post_status = %s
+			GROUP BY p.ID
+			ORDER BY p.post_title ASC
+			LIMIT 5000",
+			$params
+		)
+	);
+
+	$choices = array();
+	foreach ( (array) $rows as $row ) {
+		$id = (int) $row->ID;
+
+		// What get_the_title() returns, without loading 5000 posts to get there.
+		$choices[ $id ] = '' === (string) $row->post_password
+			? (string) apply_filters( 'the_title', $row->post_title, $id )
+			: get_the_title( $id );
+	}
+
+	return $choices;
+}
+
+/**
  * Validate redirect URL.
  *
  * @param string $redirect_url Requested redirect URL.

@@ -12,7 +12,7 @@ if ( null !== $unit && ! $unit->exists() ) {
 
 $translations = null !== $unit ? $unit->get_translations() : array();
 
-$properties        = $args['properties'] ?? array();
+$project_choices   = $args['project_choices'] ?? array();
 $unit_type_choices = $args['unit_type_choices'] ?? array();
 $beds_options      = function_exists( 'get_filter_beds_options' ) ? get_filter_beds_options() : array();
 $baths_options     = function_exists( 'get_filter_baths_options' ) ? get_filter_baths_options() : array();
@@ -35,15 +35,16 @@ $listing_type   = core_sanitize_listing_type( $unit ? $unit->get_listing_type() 
 $is_distress    = 'distress' === $listing_type;
 $original_price = $unit && $is_distress ? $unit->get_original_price() : '';
 
-$selected_property = $properties[0] ?? null;
-if ( ! empty( $unit_property_id ) ) {
-	foreach ( $properties as $property ) {
-		if ( $property->get_id() === $unit_property_id ) {
-			$selected_property = $property;
-			break;
-		}
-	}
+/*
+ * The unit's own project when it is in the list, the first project otherwise.
+ * Only this one is loaded as an entity - the galleries below need it; the
+ * dropdown needs just ids and titles.
+ */
+$selected_project_id = (int) array_key_first( $project_choices );
+if ( ! empty( $unit_property_id ) && isset( $project_choices[ (int) $unit_property_id ] ) ) {
+	$selected_project_id = (int) $unit_property_id;
 }
+$selected_property = $selected_project_id ? new Entities\Property( $selected_project_id ) : null;
 
 $errors           = $unit ? $unit->get_approve_errors() : '';
 $languages        = get_all_languages();
@@ -218,11 +219,6 @@ $current_language = pll_current_language();
 								<div class="inputs-group">
 									<div class="input-group" data-project-images-switcher="true">
 										<?php
-										$properties_items = array();
-										foreach ( $properties as $property ) {
-											$properties_items[ $property->get_id() ] = $property->get_title();
-										}
-
 										get_component_template(
 											'ui/dropdown',
 											array(
@@ -233,7 +229,7 @@ $current_language = pll_current_language();
 												'selected_title' => $selected_property->get_title() ?? __( 'Select',
 														'east-property' ),
 												'selected_key'   => $selected_property->get_id() ?? '',
-												'items'          => $properties_items,
+												'items'          => $project_choices,
 												'lang_sync'      => 'property_id',
 											)
 										);
