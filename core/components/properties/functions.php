@@ -14,8 +14,12 @@
 function get_properties( int $limit = - 1, bool $skip_filters = false, array $args = array() ): array {
 	$current_language = core_get_current_language();
 	$current_page     = pagination_get_current_page() ?? 1;
-	$cache_key        = 'properties_' . $current_language . '_'
-	                    . md5( (string) $limit . (string) $skip_filters . (string) $current_page . wp_json_encode( $args ) );
+
+	$request_params = $_REQUEST['location'] ?? '';
+	$request_params .= $_REQUEST['available'] ?? '';
+	$request_params .= $_REQUEST['developer'] ?? '';
+	$cache_key      = 'properties_' . $current_language . '_'
+	                  . md5( (string) $limit . (string) $skip_filters . (string) $current_page . wp_json_encode( $args ) . $request_params );
 
 	static $memo = array();
 	if ( isset( $memo[ $cache_key ] ) ) {
