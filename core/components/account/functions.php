@@ -227,29 +227,15 @@ function core_get_current_user_properties( int $limit = PROPERTIES_PER_PAGE ): a
 		);
 	}
 
-	$current_page = pagination_get_current_page();
-	$current_page = $current_page > 0 ? $current_page : 1;
-
-	$query = new WP_Query(
-		array(
-			'post_type'      => 'property',
-			'post_status'    => array( 'publish', 'draft', 'pending', 'future', 'private' ),
-			'posts_per_page' => $limit,
-			'paged'          => $current_page,
-			'author'         => get_current_user_id(),
-			'orderby'        => 'date',
-			'order'          => 'DESC',
-		)
-	);
-
-	$items = array();
-	foreach ( $query->posts as $property_post ) {
-		$items[] = new Property( $property_post );
-	}
+	$user_properties = get_properties( $limit, true, array(
+		'author_id'      => get_current_user_id(),
+		'specifications' => true,
+		'galleries'      => true,
+	) );
 
 	return array(
-		'items' => $items,
-		'total' => (int) $query->found_posts,
+		'items' => $user_properties['items'],
+		'total' => $user_properties['total'],
 	);
 }
 
@@ -635,12 +621,6 @@ function account_create_unit(): void {
 
 	core_sync_translation_slugs( $unit_translations );
 
-	core_flush_listing_caches();
-
-//	if ( ! empty( $errors ) ) {
-//		show_notify_error( 'account?action=add_unit', $errors );
-//	}
-
 	show_notify_success( 'account', 'property_added' );
 }
 
@@ -989,10 +969,6 @@ function core_handle_account_create_property(): void {
 	}
 
 	core_sync_translation_slugs( $property_translations );
-
-	// The old code hashed $_REQUEST of this POST, which never matches the hash a
-	// listing page builds from the visitor's filters, so nothing was ever dropped.
-	core_flush_listing_caches();
 
 	show_notify_success( 'account?tab=projects', 'property_added' );
 }

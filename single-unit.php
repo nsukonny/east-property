@@ -372,7 +372,11 @@ while ( have_posts() ) {
 							get_template_part( 'core/components/properties/map',
 								null,
 								array(
-									'property'     => $property,
+									'property'     => array(
+										'ID'        => $property->get_id(),
+										'latitude'  => $latitude,
+										'longitude' => $longitude,
+									),
 									'show_sidebar' => false,
 									'mode'         => 'single',
 									'class'        => 'full-width',

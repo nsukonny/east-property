@@ -21,6 +21,7 @@ if ( empty( $card_title ) || empty( $price ) || empty( $gallery ) ) {
 
 $first_image = $gallery[0];
 unset( $gallery[0] );
+$amenities = \Entities\Property::build_amenities( $specifications );
 ?>
 
 <div class="large-card">
@@ -55,7 +56,7 @@ unset( $gallery[0] );
 					<?php if ( 0 < $pure_price ) { ?>
 						<div class="large-card-top-title">
 							<span class="subtext">
-								<?php esc_html_e( 'from' , 'east-property' ); ?>
+								<?php esc_html_e( 'from', 'east-property' ); ?>
 							</span>
 							<span class="large-card-price">
 								<?php echo esc_html( $price ); ?>
@@ -67,7 +68,7 @@ unset( $gallery[0] );
 					<?php } else { ?>
 						<div class="large-card-top-title">
 							<span class="subtext">
-								<?php esc_html_e( 'Average price unavailable' , 'east-property' ); ?>
+								<?php esc_html_e( 'Average price unavailable', 'east-property' ); ?>
 							</span>
 							<span class="large-card-price">
 								<?php echo esc_html( $card_title ); ?>
@@ -89,15 +90,15 @@ unset( $gallery[0] );
 			</div>
 			<div class="large-card-bottom">
 				<div class="large-card-info">
-					<?php if ( ! empty( $specifications ) ) { ?>
+					<?php if ( ! empty( $amenities ) ) { ?>
 						<div class="large-card-info-top">
 							<div class="large-card-info-items">
-								<?php foreach ( $specifications as $specification ) { ?>
+								<?php foreach ( $amenities as $amenity ) { ?>
 									<span>
-										<img src="<?php echo esc_url( $specification['icon'] ); ?>" width="16"
-										     height="16"
-										     alt="<?php _e( 'Vector icon' , 'east-property' ); ?>">
-										<?php echo esc_html( $specification['value'] ); ?>
+										<img src="<?php echo esc_url( $amenity['icon'] ); ?>" width="16"
+											 height="16"
+											 alt="<?php _e( 'Vector icon', 'east-property' ); ?>">
+										<?php echo esc_html( $amenity['value'] ); ?>
 									</span>
 								<?php } ?>
 							</div>
@@ -114,14 +115,14 @@ unset( $gallery[0] );
 								<a href="<?php echo esc_url( $edit_link ); ?>"
 								   class="button gray sm edit-property-link">
 									<img src="<?php echo esc_url( THEME_URL . '/assets/img/edit.svg' ); ?>"
-									     alt="<?php esc_html_e( 'Edit' , 'east-property' ); ?>">
-									<?php esc_html_e( 'Edit property' , 'east-property' ); ?>
+										 alt="<?php esc_html_e( 'Edit', 'east-property' ); ?>">
+									<?php esc_html_e( 'Edit property', 'east-property' ); ?>
 								</a>
 								<?php
 							}
 						} elseif ( ! empty( $url ) ) { ?>
 							<a href="<?php echo esc_url( $url ); ?>" class="button gray sm property-details-lnk">
-								<?php esc_html_e( 'View details' , 'east-property' ); ?>
+								<?php esc_html_e( 'View details', 'east-property' ); ?>
 							</a>
 						<?php } ?>
 					</div>

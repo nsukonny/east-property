@@ -6,49 +6,47 @@
 /**
  * Get properties list by filters if they is set
  *
+ * @param int $limit
+ * @param bool $skip_filters
+ *
  * @return array
  */
-function get_properties( $limit = - 1, $skip_filters = false ): array {
-	global $wpdb;
+function get_properties( int $limit = - 1, bool $skip_filters = false, array $args = array() ): array {
+	$current_language = core_get_current_language();
+	$current_page     = pagination_get_current_page() ?? 1;
+	$cache_key        = 'properties_' . $current_language . '_'
+	                    . md5( (string) $limit . (string) $skip_filters . (string) $current_page . wp_json_encode( $args ) );
 
-	$current_language = 'en';
-	if ( function_exists( 'pll_current_language' ) ) {
-		$current_language = (string) pll_current_language( 'slug' );
-	}
-
-	$current_page = pagination_get_current_page() ?? 1;
-	$filters_hash = build_filters_hash(
-		$_REQUEST,
-		array(
-			'limit'        => $limit,
-			'page'         => $current_page,
-			'skip_filters' => $skip_filters,
-			'language'     => $current_language,
-		)
-	);
-
-	/*
-	 * The listing is asked for twice per request: once by the pagination guard
-	 * that has to know before any output whether the page exists, once by the
-	 * template. The hash already encodes every input, so one answer serves both.
-	 */
 	static $memo = array();
-	if ( isset( $memo[ $filters_hash ] ) ) {
-		return $memo[ $filters_hash ];
+	if ( isset( $memo[ $cache_key ] ) ) {
+		return $memo[ $cache_key ];
 	}
 
-	$memo[ $filters_hash ] = core_cache_remember(
-		'properties_' . $filters_hash,
-		static function () use ( $limit, $skip_filters, $current_page, $current_language ) {
-			return core_query_properties( $limit, $skip_filters, $current_page, $current_language );
-		},
-		DAY_IN_SECONDS,
-		array( 'respect_dev' => true )
-	);
+	$properties = wp_cache_get( $cache_key, 'properties' );
+	if ( false === $properties ) {
+		$properties = core_query_properties( $limit, $skip_filters, $current_page, $current_language, $args );
+	}
 
-	core_prime_listing( $memo[ $filters_hash ]['items'] ?? array() );
+	if ( ! empty( $args['specifications'] ) ) {
+		$specifications = \Entities\Property::get_specifications( array_column( $properties['items'], 'ID' ) );
 
-	return $memo[ $filters_hash ];
+		foreach ( $properties['items'] as $key => $item ) {
+			$properties['items'][ $key ]['specifications'] = $specifications[ $item['ID'] ] ?? array();
+		}
+	}
+
+	if ( ! empty( $args['galleries'] ) ) {
+		$galleries = \Entities\Property::get_galleries( array_column( $properties['items'], 'ID' ) );
+
+		foreach ( $properties['items'] as $key => $item ) {
+			$properties['items'][ $key ]['gallery'] = $galleries[ $item['ID'] ] ?? array();
+		}
+	}
+
+	wp_cache_set( $cache_key, $properties, 'properties', DAY_IN_SECONDS );
+	$memo[ $cache_key ] = $properties;
+
+	return $properties;
 }
 
 /**
@@ -57,9 +55,21 @@ function get_properties( $limit = - 1, $skip_filters = false ): array {
  * Split out of get_properties() so the cache can rebuild it after the response;
  * the body is unchanged.
  *
+ * @param int $limit
+ * @param bool $skip_filters
+ * @param int $current_page
+ * @param string $current_language
+ * @param array $args
+ *
  * @return array
  */
-function core_query_properties( $limit, $skip_filters, $current_page, $current_language ): array {
+function core_query_properties(
+	int $limit,
+	bool $skip_filters,
+	int $current_page,
+	string $current_language,
+	array $args = array()
+): array {
 	global $wpdb;
 
 	if ( 0 > $limit ) {
@@ -112,17 +122,17 @@ function core_query_properties( $limit, $skip_filters, $current_page, $current_l
 		$params[]      = $property_type;
 	}
 
-	if ( ! empty( $_REQUEST['location'] ) && 'all' !== $_REQUEST['location'] ) {
-		$location = sanitize_title( wp_unslash( $_REQUEST['location'] ) );
-		$joins[]  = "
-			INNER JOIN {$wpdb->term_relationships} AS tr_location
+	$joins[] = "
+			LEFT JOIN {$wpdb->term_relationships} AS tr_location
 				ON tr_location.object_id = p.ID
-			INNER JOIN {$wpdb->term_taxonomy} AS tt_location
+			LEFT JOIN {$wpdb->term_taxonomy} AS tt_location
 				ON tt_location.term_taxonomy_id = tr_location.term_taxonomy_id
 				AND tt_location.taxonomy = 'location'
-			INNER JOIN {$wpdb->terms} AS t_location
+			LEFT JOIN {$wpdb->terms} AS t_location
 				ON t_location.term_id = tt_location.term_id
 		";
+	if ( ! empty( $_REQUEST['location'] ) && 'all' !== $_REQUEST['location'] ) {
+		$location = sanitize_title( wp_unslash( $_REQUEST['location'] ) );
 		$where[]  = 't_location.slug = %s';
 		$params[] = $location;
 	}
@@ -172,6 +182,24 @@ function core_query_properties( $limit, $skip_filters, $current_page, $current_l
 		}
 	}
 
+	$joins[] = "
+		LEFT JOIN {$wpdb->postmeta} AS pm_label_delivery
+			ON pm_label_delivery.post_id = p.ID
+			AND pm_label_delivery.meta_key = 'delivery_date'
+		LEFT JOIN {$wpdb->postmeta} AS pm_label_popular
+			ON pm_label_popular.post_id = p.ID
+			AND pm_label_popular.meta_key = 'is_popular'
+		LEFT JOIN {$wpdb->postmeta} AS pm_label_premium
+			ON pm_label_premium.post_id = p.ID
+			AND pm_label_premium.meta_key = 'is_premium_developer'
+		LEFT JOIN {$wpdb->postmeta} AS pm_latitude
+			ON pm_latitude.post_id = p.ID
+			AND pm_latitude.meta_key = 'latitude'
+		LEFT JOIN {$wpdb->postmeta} AS pm_longitude
+			ON pm_longitude.post_id = p.ID
+			AND pm_longitude.meta_key = 'longitude'
+	";
+
 	//add polylang support
 	if ( function_exists( 'pll_current_language' ) ) {
 		$joins[] = "INNER JOIN {$wpdb->term_relationships} AS pll_language_relation
@@ -185,11 +213,29 @@ function core_query_properties( $limit, $skip_filters, $current_page, $current_l
 						AND pll_language.slug = '{$current_language}'";
 	}
 
+	if ( ! empty( $args['author_id'] ) ) {
+		$author_id = (int) $args['author_id'];
+		if ( $author_id > 0 ) {
+			$where[]  = 'p.post_author = %d';
+			$params[] = $author_id;
+		}
+	}
+
 	$join_sql  = implode( "\n", $joins );
 	$where_sql = implode( "\nAND ", $where );
 	$sql       = "
 		SELECT 
 			p.ID,
+			p.post_title,
+			p.post_author,
+			t_location.term_id AS location_term_id,
+			t_location.name AS location_name,
+			pm_label_delivery.meta_value AS delivery_date,
+			pm_label_popular.meta_value AS is_popular,
+			pm_label_premium.meta_value AS is_premium_developer,
+			pm_latitude.meta_value AS latitude,
+			pm_longitude.meta_value AS longitude,
+			pm_units_count.meta_value AS units_count,
 			COUNT(*) OVER() AS total_count
 		FROM {$wpdb->posts} AS p
 		{$join_sql}
@@ -198,34 +244,73 @@ function core_query_properties( $limit, $skip_filters, $current_page, $current_l
 		ORDER BY p.post_title ASC
 		LIMIT %d OFFSET %d
 	";
-	$params[]  = (int) $limit;
-	$params[]  = (int) $offset;
-	$query     = $wpdb->prepare( $sql, $params );
+	$params[]  = $limit;
+	$params[]  = $offset;
 
-	$properties_posts = $wpdb->get_results( $query );
+	$query            = $wpdb->prepare( $sql, $params );
+	$properties_posts = $wpdb->get_results( $query, ARRAY_A );
 
-	if ( empty( $properties_posts ) ) {
-		$properties = array(
-			'items' => array(),
-			'total' => 0,
-		);
-		return $properties;
-	}
-	$total = ! empty( $properties_posts[0]->total_count ) ? (int) $properties_posts[0]->total_count : 0;
-
-	$properties_entities = array();
-	foreach ( $properties_posts as $post ) {
-		unset( $post->total_count );
-		$properties_entities[] = new \Entities\Property( $post->ID );
-	}
-
-	$properties = array(
-		'items'     => $properties_entities,
-		'map_items' => array(),
-		'total'     => $total,
+	_prime_post_caches(
+		array_column( $properties_posts, 'ID' ),
+		false,
+		false
 	);
 
-	return $properties;
+	foreach ( $properties_posts as $key => $row ) {
+		$properties_posts[ $key ]['labels'] = core_property_labels( $row );
+		$properties_posts[ $key ]['url']    = get_the_permalink( $row['ID'] );
+	}
+
+	return array(
+		'items' => $properties_posts,
+		'total' => ! empty( $properties_posts[0]['total_count'] ) ? (int) $properties_posts[0]['total_count'] : 0,
+	);
+}
+
+/**
+ * Labels of a project, built from the values core_query_properties() selects.
+ *
+ * Mirrors Property::get_labels(); the dates and the wording stay in PHP because
+ * date_i18n() and the text domain have no SQL equivalent.
+ *
+ * @param array $row Row with delivery_date, is_popular and is_premium_developer.
+ *
+ * @return array
+ */
+function core_property_labels( array $row ): array {
+	$labels = array();
+
+	$delivery_date = $row['delivery_date'] ?? '';
+	if ( ! empty( $delivery_date ) ) {
+		if ( strtotime( $delivery_date ) < time() ) {
+			$labels[] = array(
+				'name'  => __( 'Ready', 'east-property' ),
+				'color' => 'black',
+			);
+		} else {
+			$labels[] = array(
+				'name'  => __( 'Handover:', 'east-property' ) . ' ' . date_i18n( get_option( 'date_format' ),
+						strtotime( $delivery_date ) ),
+				'color' => 'orange',
+			);
+		}
+	}
+
+	if ( ! empty( $row['is_popular'] ) ) {
+		$labels[] = array(
+			'name'  => 'Popular',
+			'color' => 'red',
+		);
+	}
+
+	if ( ! empty( $row['is_premium_developer'] ) ) {
+		$labels[] = array(
+			'name'  => 'Premium Developer',
+			'color' => 'black',
+		);
+	}
+
+	return $labels;
 }
 
 /**

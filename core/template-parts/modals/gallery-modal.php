@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * @var array $gallery
+ */
+
 $gallery = $args['gallery'] ?? null;
 if ( empty( $gallery ) ) {
 	return;
@@ -10,15 +15,15 @@ if ( empty( $gallery ) ) {
 			<div class="gallery-modal-counter"></div>
 			<button class="modal-close" data-modal-close aria-label="Close">
 				<img src="<?php echo esc_attr( THEME_URL ); ?>/assets/img/close-white.svg" width="24" height="24"
-					alt="Close icon">
+					 alt="Close icon">
 			</button>
 		</div>
 		<div class="swiper gallery-swiper">
 			<div class="swiper-wrapper">
 				<?php foreach ( $gallery as $image ) { ?>
 					<div class="swiper-slide">
-						<img src="<?php echo esc_url( $image['sizes']['large'] ); ?>"
-							alt="<?php echo esc_attr( $image['title'] ); ?>">
+						<img src="<?php echo esc_url( $image['sizes']['2048x2048'] ); ?>"
+							 alt="<?php echo esc_attr( $image['alt'] ); ?>">
 					</div>
 				<?php } ?>
 			</div>
@@ -27,11 +32,11 @@ if ( empty( $gallery ) ) {
 			<div class="swiper-actions">
 				<button class="swiper-prev gallery-arrow-prev">
 					<img src="<?php echo esc_attr( THEME_URL ); ?>/assets/img/swiper-arr.svg" width="16" height="16"
-						alt="Prev">
+						 alt="Prev">
 				</button>
 				<button class="swiper-next gallery-arrow-next">
 					<img src="<?php echo esc_attr( THEME_URL ); ?>/assets/img/swiper-arr.svg" width="16" height="16"
-						alt="Next">
+						 alt="Next">
 				</button>
 			</div>
 		<?php } ?>

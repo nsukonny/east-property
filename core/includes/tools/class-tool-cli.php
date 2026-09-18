@@ -871,13 +871,6 @@ final class CLI {
 			)
 		);
 
-		// Keyed by a filter hash and versioned apart from the transients, so
-		// deleting those does not on its own retire a listing already in memory.
-		if ( function_exists( 'core_flush_listing_caches' ) ) {
-			WP_CLI::log( 'Retiring the listing caches' );
-			core_flush_listing_caches();
-		}
-
 		if ( function_exists( 'w3tc_flush_all' ) ) {
 			// Also fires the w3tc_flush_all action, which the theme uses to purge
 			// transients from the object cache that `transient delete` cannot see.

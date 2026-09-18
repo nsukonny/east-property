@@ -19,36 +19,46 @@ final class Property {
 	private int $units_count;
 	private int $middle_price;
 	private $developer;
-	private $specifications;
+	protected static $specifications = array();
+	protected static $galleries = array();
 
 	/**
 	 * Get specifications by included units
 	 *
-	 * @param int $limit
+	 * @param array $property_ids
 	 *
 	 * @return array
 	 */
-	public function get_specifications( int $limit = 100 ): array {
-		if ( ! empty( $this->specifications ) ) {
-			return $this->specifications;
+	public static function get_specifications( array $property_ids = array() ): array {
+		$specifications = array();
+
+		if ( empty( $property_ids ) ) {
+			return $specifications;
+		}
+
+		foreach ( $property_ids as $property_id ) {
+			if ( ! isset( self::$specifications[ $property_id ] ) ) {
+				break;
+			}
+
+			$specifications[ $property_id ] = self::$specifications[ $property_id ];
+		}
+
+		if ( count( $property_ids ) === count( $specifications ) ) {
+			return $specifications;
 		}
 
 		global $wpdb;
 
-		$all_properties_specifications = core_cache_remember(
-			'all_properties_specifications',
-			static function () {
-				global $wpdb;
-
-				$sql = $wpdb->prepare(
-					"SELECT
+		$sql = "SELECT
 					CAST(property_meta.meta_value AS UNSIGNED) AS property_id,
 					MAX(CASE WHEN unit_meta.meta_key = 'bedrooms' THEN CAST(unit_meta.meta_value AS UNSIGNED) END) AS max_beds,
 					MIN(CASE WHEN unit_meta.meta_key = 'bedrooms' THEN CAST(unit_meta.meta_value AS UNSIGNED) END) AS min_beds,
 					MAX(CASE WHEN unit_meta.meta_key = 'bathrooms' THEN CAST(unit_meta.meta_value AS UNSIGNED) END) AS max_baths,
 					MIN(CASE WHEN unit_meta.meta_key = 'bathrooms' THEN CAST(unit_meta.meta_value AS UNSIGNED) END) AS min_baths,
 					MAX(CASE WHEN unit_meta.meta_key = 'area_size' THEN CAST(unit_meta.meta_value AS DECIMAL(10,2)) END) AS max_area,
-					MIN(CASE WHEN unit_meta.meta_key = 'area_size' THEN CAST(unit_meta.meta_value AS DECIMAL(10,2)) END) AS min_area
+					MIN(CASE WHEN unit_meta.meta_key = 'area_size' THEN CAST(unit_meta.meta_value AS DECIMAL(10,2)) END) AS min_area,
+					MIN(CASE WHEN unit_meta.meta_key = 'price' THEN NULLIF(CAST(unit_meta.meta_value AS UNSIGNED), 0) END) AS min_price
 					FROM {$wpdb->posts} unit
 							 INNER JOIN {$wpdb->postmeta} property_meta
 										ON property_meta.post_id = unit.ID
@@ -58,67 +68,150 @@ final class Property {
 											AND property.post_status = 'publish'
 							 LEFT JOIN {$wpdb->postmeta} unit_meta
 									   ON unit_meta.post_id = unit.ID
-										   AND unit_meta.meta_key IN ('bedrooms', 'bathrooms', 'area_size')
+										   AND unit_meta.meta_key IN ('bedrooms', 'bathrooms', 'area_size', 'price')
 					WHERE unit.post_type = 'unit'
 					  AND unit.post_status = 'publish'
+					  AND property_meta.meta_value IN (" . implode( ',', array_map( 'intval', $property_ids ) ) . ")
 				
-					GROUP BY CAST(property_meta.meta_value AS UNSIGNED);"
-				);
+					GROUP BY CAST(property_meta.meta_value AS UNSIGNED);";
 
-				$all_properties_specifications = $wpdb->get_results( $sql, ARRAY_A );
+		$all_properties_specifications = $wpdb->get_results( $sql, ARRAY_A );
 
-				return $all_properties_specifications;
-			},
-			DAY_IN_SECONDS
-		);
+		foreach ( $all_properties_specifications as $specification ) {
+			$property_id                          = (int) $specification['property_id'];
+			self::$specifications[ $property_id ] = array(
+				'min_beds'  => (int) $specification['min_beds'],
+				'max_beds'  => (int) $specification['max_beds'],
+				'min_baths' => (int) $specification['min_baths'],
+				'max_baths' => (int) $specification['max_baths'],
+				'min_area'  => (float) $specification['min_area'],
+				'max_area'  => (float) $specification['max_area'],
+				'min_price' => (int) $specification['min_price'],
+			);
+			$specifications[ $property_id ]       = self::$specifications[ $property_id ];
+		}
 
-		$property_specifications = array();
-		foreach ( $all_properties_specifications as $item ) {
-			if ( (int) ( $item['property_id'] ?? 0 ) === $this->get_id() ) {
-				$property_specifications = $item;
+		return $specifications;
+	}
+
+	/**
+	 * Get galleries by property ids
+	 *
+	 * @param array $property_ids
+	 *
+	 * @return array
+	 */
+	public static function get_galleries( array $property_ids = array() ): array {
+		$galleries = array();
+
+		if ( empty( $property_ids ) ) {
+			return $galleries;
+		}
+
+		foreach ( $property_ids as $property_id ) {
+			if ( ! isset( self::$galleries[ $property_id ] ) ) {
 				break;
 			}
+
+			$galleries[ $property_id ] = self::$galleries[ $property_id ];
 		}
 
-		$this->specifications = array();
+		if ( count( $property_ids ) === count( $galleries ) ) {
+			return $galleries;
+		}
 
-		if ( ! empty( $property_specifications['min_beds'] ) && ! empty( $property_specifications['max_beds'] ) ) {
-			$beds = $property_specifications['min_beds'];
-			if ( $beds < $property_specifications['max_beds'] ) {
-				$beds .= ' - ' . $property_specifications['max_beds'];
+		global $wpdb;
+
+		$rows = $wpdb->get_results(
+			"SELECT post_id, meta_value
+				FROM {$wpdb->postmeta}
+				WHERE meta_key = 'gallery'
+					AND post_id IN (" . implode( ',', array_map( 'intval', $property_ids ) ) . ")",
+			ARRAY_A
+		);
+
+		$attachment_ids = array();
+
+		foreach ( $rows as $row ) {
+			$raw = maybe_unserialize( $row['meta_value'] );
+
+			if ( empty( $raw ) || ! is_array( $raw ) ) {
+				continue;
 			}
 
-			$this->specifications[] = array(
+			$ids = array();
+			foreach ( $raw as $item ) {
+				$id = is_object( $item ) ? (int) ( $item->ID ?? 0 ) : (int) $item;
+				if ( $id > 0 ) {
+					$ids[] = $id;
+				}
+			}
+
+			if ( ! empty( $ids ) ) {
+				$attachment_ids = array_merge( $attachment_ids, $ids );
+			}
+		}
+
+		if ( ! empty( $attachment_ids ) ) {
+			_prime_post_caches( array_unique( $attachment_ids ), false, true );
+		}
+
+		foreach ( $property_ids as $property_id ) {
+			$property_id = (int) $property_id;
+			$gallery     = self::build_gallery( $property_id );
+
+			self::$galleries[ $property_id ] = $gallery;
+			$galleries[ $property_id ]       = $gallery;
+		}
+
+		return $galleries;
+	}
+
+	/**
+	 * Build amenities with icon and value for property
+	 *
+	 * @param array $specifications
+	 *
+	 * @return array
+	 */
+	public static function build_amenities( array $specifications ): array {
+		$amenities = array(
+			'beds'  => array(
 				'icon'  => THEME_URL . '/assets/img/bed.svg',
-				'value' => $beds . ' ' . __( 'Beds', 'east-property' ),
-			);
-		}
-
-		if ( ! empty( $property_specifications['min_baths'] ) && ! empty( $property_specifications['max_baths'] ) ) {
-			$baths = $property_specifications['min_baths'];
-			if ( $baths < $property_specifications['max_baths'] ) {
-				$baths .= ' - ' . $property_specifications['max_baths'];
-			}
-
-			$this->specifications[] = array(
+				'value' => $specifications['min_beds'] . ' ' . __( 'Beds', 'east-property' ),
+			),
+			'baths' => array(
 				'icon'  => THEME_URL . '/assets/img/bath.svg',
-				'value' => $baths . ' ' . __( 'Baths', 'east-property' ),
-			);
-		}
-
-		if ( ! empty( $property_specifications['min_area'] ) && ! empty( $property_specifications['max_area'] ) ) {
-			$area = round( $property_specifications['min_area'] );
-			if ( $area < round( $property_specifications['max_area'] ) ) {
-				$area .= ' - ' . round( $property_specifications['max_area'] );
-			}
-
-			$this->specifications[] = array(
+				'value' => $specifications['min_baths'] . ' ' . __( 'Baths', 'east-property' ),
+			),
+			'area'  => array(
 				'icon'  => THEME_URL . '/assets/img/meters.svg',
-				'value' => $area . ' ' . __( 'sqft', 'east-property' ),
-			);
+				'value' => $specifications['min_area'] . ' ' . __( 'sqft', 'east-property' ),
+			),
+		);
+
+		if ( (int) $specifications['min_beds'] < (int) $specifications['max_beds'] ) {
+			$min_beds                   = 0 === (int) $specifications['min_beds'] ? __( 'Studio',
+				'east-property' ) : $specifications['min_beds'];
+			$amenities['beds']['value'] = $min_beds . ' - ' . $specifications['max_beds'] . ' ' . __( 'Beds',
+					'east-property' );
 		}
 
-		return $this->specifications;
+		if ( (int) $specifications['min_beds'] === (int) $specifications['max_beds'] && (int) $specifications['min_beds'] === 0 ) {
+			$amenities['beds']['value'] = __( 'Studio', 'east-property' );
+		}
+
+		if ( (int) $specifications['min_baths'] < (int) $specifications['max_baths'] ) {
+			$amenities['baths']['value'] = $specifications['min_baths'] . ' - ' . $specifications['max_baths'] . ' ' . __( 'Baths',
+					'east-property' );
+		}
+
+		if ( (int) $specifications['min_area'] < (int) $specifications['max_area'] ) {
+			$amenities['area']['value'] = $specifications['min_area'] . ' - ' . $specifications['max_area'] . ' ' . __( 'sqft',
+					'east-property' );
+		}
+
+		return $amenities;
 	}
 
 	/**
@@ -505,9 +598,25 @@ final class Property {
 	 * @return array
 	 */
 	public function get_labels(): array {
-		$labels = array();
-
 		$delivery_date = $this->get_delivery_date( false );
+
+		return self::build_labels(
+			array(
+				'delivery_date'        => $delivery_date,
+				'is_popular'           => $this->get_field( 'is_popular' ),
+				'is_premium_developer' => $this->get_field( 'is_premium_developer' ),
+			)
+		);
+	}
+
+	/**
+	 * Get property labels
+	 *
+	 * @return array
+	 */
+	public static function build_labels( array $property = array() ): array {
+		$labels        = array();
+		$delivery_date = $property['delivery_date'] ?? null;
 		if ( ! empty( $delivery_date ) ) {
 			if ( strtotime( $delivery_date ) < time() ) {
 				$labels[] = array(
@@ -523,7 +632,7 @@ final class Property {
 			}
 		}
 
-		$is_popular = $this->get_field( 'is_popular' );
+		$is_popular = $property['is_popular'] ?? null;
 		if ( ! empty( $is_popular ) ) {
 			$labels[] = array(
 				'name'  => 'Popular',
@@ -531,7 +640,7 @@ final class Property {
 			);
 		}
 
-		$is_premium_developer = $this->get_field( 'is_premium_developer' );
+		$is_premium_developer = $property['is_premium_developer'] ?? null;
 		if ( ! empty( $is_premium_developer ) ) {
 			$labels[] = array(
 				'name'  => 'Premium Developer',

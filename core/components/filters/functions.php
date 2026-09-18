@@ -177,24 +177,21 @@ function core_unit_filter_delivery_years( string $post_type, string $language, s
  * @param string $listing_type off-plan or secondary
  */
 function get_search_tabs_data( string $post_type = 'property', string $listing_type = 'off-plan' ): array {
-	$language  = function_exists( 'pll_current_language' ) ? (string) pll_current_language( 'slug' ) : '';
-	$cache_key = 'search_tabs_data_' . $post_type . '_' . $listing_type . ( '' === $language ? '' : '_' . $language );
+	$language  = core_get_current_language();
+	$cache_key = 'search_tabs_data_' . md5( (string) $post_type . (string) $listing_type . (string) $language );
 
-	$hit              = false;
-	$search_tabs_data = core_cache_remember(
-		$cache_key,
-		static function () use ( $post_type, $language, $listing_type ) {
-			return core_build_search_tabs_data( $post_type, $language, $listing_type );
-		},
-		DAY_IN_SECONDS,
-		array( 'respect_dev' => true ),
-		$hit
-	);
-
-	// A stored copy gets its bedroom options refreshed, exactly as before.
-	if ( $hit ) {
-		$search_tabs_data['filters']['beds'] = get_filter_beds_options();
+	static $memo = array();
+	if ( isset( $memo[ $cache_key ] ) ) {
+		return $memo[ $cache_key ];
 	}
+
+	$search_tabs_data = wp_cache_get( $cache_key, 'search_tabs_data' );
+	if ( false === $search_tabs_data ) {
+		$search_tabs_data = core_build_search_tabs_data( $post_type, $language, $listing_type );
+	}
+
+	wp_cache_set( $cache_key, $search_tabs_data, 'search_tabs_data', DAY_IN_SECONDS );
+	$memo[ $cache_key ] = $search_tabs_data;
 
 	return $search_tabs_data;
 }
@@ -664,6 +661,7 @@ function get_properties_search_tabs_data(): array {
 			'label'   => __( 'Developer', 'east-property' ),
 			'options' => get_developers_list(),
 		),
+		'beds'          => get_filter_beds_options(),
 	);
 
 	$all_units_types = get_field_object( 'field_694ea57c4ae1f' );
@@ -897,139 +895,17 @@ function core_get_listings_cache_version(): int {
 }
 
 /**
- * Retire the cached listings after the catalogue changed.
- *
- * properties_* and units_* are keyed by the visitor's filters, so their keys
- * cannot be enumerated — behind an external object cache they cannot even be
- * scanned. Bumping the version that build_filters_hash() mixes in retires them
- * all at once, on any backend. The fixed key caches are deleted outright.
- *
- * @return void
- */
-function core_flush_listing_caches(): void {
-	update_option( 'core_listings_cache_version', core_get_listings_cache_version() + 1, false );
-
-	$keys = array(
-		'all_properties_specifications',
-		'properties_by_count_of_units',
-		'units_count_by_locations',
-	);
-
-	$listing_types = array_merge(
-		array( '', 'all' ),
-		function_exists( 'core_get_listing_type_choices' ) ? array_keys( core_get_listing_type_choices() ) : array()
-	);
-
-	$languages   = function_exists( 'pll_languages_list' ) ? (array) pll_languages_list() : array();
-	$languages[] = '';
-
-	foreach ( array( 'property', 'unit' ) as $post_type ) {
-		$keys[] = 'search_tabs_data_' . $post_type;
-		foreach ( $listing_types as $listing_type ) {
-			$base = 'search_tabs_data_' . $post_type . '_' . $listing_type;
-
-			foreach ( $languages as $language ) {
-				$keys[] = $base . ( '' === $language ? '' : '_' . $language );
-			}
-		}
-	}
-
-	foreach ( $listing_types as $listing_type ) {
-		foreach ( $languages as $language ) {
-			// Mirrors the key built in get_units_count_by_bedrooms().
-			$keys[] = 'units_count_by_bedrooms_' . md5( $listing_type . '|' . $language );
-		}
-	}
-
-	// Mirrors the key built in get_properties_by_count_of_units(). Listing them
-	// explicitly matters on production: the LIKE sweep below only runs without
-	// an external object cache, and production has Redis, so the explicit list
-	// is the only thing that clears anything there.
-	foreach ( $languages as $language ) {
-		$keys[] = 'properties_by_count_of_units' . ( '' === $language ? '' : '_' . $language );
-	}
-
-	foreach ( array_unique( $keys ) as $key ) {
-		delete_transient( $key );
-	}
-
-	// The retired entries would otherwise sit in the options table until they
-	// expire. An external object cache evicts on its own.
-	if ( ! wp_using_ext_object_cache() ) {
-		global $wpdb;
-
-		foreach ( array( 'properties_', 'units_' ) as $prefix ) {
-			$wpdb->query(
-				$wpdb->prepare(
-					"DELETE FROM {$wpdb->options} WHERE option_name LIKE %s OR option_name LIKE %s",
-					$wpdb->esc_like( '_transient_' . $prefix ) . '%',
-					$wpdb->esc_like( '_transient_timeout_' . $prefix ) . '%'
-				)
-			);
-		}
-	}
-}
-
-/**
- * Retire the listing caches whenever W3 Total Cache is emptied.
- *
- * ep_flush_all_transients() already runs on this action, but it only deletes
- * transients and flushes the object cache. The listings are keyed by
- * core_listings_cache_version, an option those two never touch, so without this
- * a flushed site keeps serving the figures it had before.
- */
-add_action( 'w3tc_flush_all', 'core_flush_listing_caches', 10 );
-
-/**
- * Build hash for filters request to understand is filters changed or not
- *
- * @param array $request
- *
- * @return string
- */
-function build_filters_hash( array $request, array $args = array() ): string {
-	unset(
-		$request['_wpnonce'],
-		$request['_wp_http_referer'],
-		$request['paged'],
-		$request['page']
-	);
-
-	$request = array_merge( $request, $args );
-
-	// Retiring the whole generation of cached listings is a matter of bumping
-	// this: the keys depend on the visitor's filters and cannot be enumerated.
-	$request['__cache_version'] = core_get_listings_cache_version();
-
-	$normalize = function ( &$array ) use ( &$normalize ) {
-		if ( ! is_array( $array ) ) {
-			return;
-		}
-
-		ksort( $array );
-
-		foreach ( $array as &$value ) {
-			if ( is_array( $value ) ) {
-				$normalize( $value );
-			}
-		}
-	};
-
-	$normalize( $request );
-
-	$json = wp_json_encode( $request );
-
-	return md5( $json );
-}
-
-/**
  * Get updated filters and list of products
+ * @throws JsonException
  */
 function ajax_get_property(): void {
 	//check_ajax_referer( 'filterjdj3' ); //TODO Check, maybe javascript was cached it
 
 	$posts_per_page = PROPERTIES_PER_PAGE ?? 20;
-	$properties     = get_properties( $posts_per_page );
+	$properties     = get_properties( $posts_per_page, false, array(
+		'specifications' => true,
+		'galleries'      => true,
+	) );
 
 	ob_start();
 
@@ -1059,14 +935,12 @@ function ajax_get_property(): void {
 	}
 
 	$properties_html = ob_get_clean();
-
-	$map_properties = get_map_properties_json( $properties['items'] ?? array(), true );
-	$total_found    = $properties['total'] ?? count( $properties );
+	$total_found     = $properties['total'] ?? count( $properties );
 
 	wp_send_json_success(
 		array(
 			'properties'       => $properties_html,
-			'map_properties'   => $map_properties,
+			'map_properties'   => get_map_properties_json( $properties['items'] ?? array(), true ),
 			'properties_found' => sprintf(
 				_n( '%s property found', '%s properties found', $total_found, 'east-property' ),
 				$total_found
@@ -1082,78 +956,29 @@ function ajax_get_property(): void {
  * @param bool $skip_empty
  *
  * @return string
+ * @throws JsonException
  */
 function get_map_properties_json( array $properties, bool $skip_empty = false ): string {
-	$language = function_exists( 'pll_current_language' ) ? (string) pll_current_language( 'slug' ) : '';
-	$ids      = array();
-	foreach ( $properties as $property ) {
-		$ids[] = $property->get_id();
-	}
-
-	/*
-	 * Cached per list of projects and language. A change to a project or unit
-	 * flags it (core_cache_mark_stale()): visitors keep the previous map until
-	 * the rebuild after the next response stores the new one.
-	 */
-
-	return core_cache_remember(
-		'map_json_' . md5( wp_json_encode( array( $ids, $skip_empty, $language ) ) ),
-		static function () use ( $properties, $skip_empty ) {
-			return core_build_map_properties_json( $properties, $skip_empty );
-		},
-		HOUR_IN_SECONDS,
-		array( 'respect_dev' => true )
-	);
-}
-
-/**
- * The map JSON for a list of projects, uncached.
- *
- * @param Property[] $properties Projects.
- * @param bool $skip_empty Leave out projects without available units.
- *
- * @return string
- */
-function core_build_map_properties_json( array $properties, bool $skip_empty = false ): string {
 	$properties_json = array();
 
-	$language_slug = function_exists( 'pll_current_language' ) ? (string) pll_current_language( 'slug' ) : '';
-	$cache_key     = 'map_properties_' . $language_slug;
-	$cached        = ! IS_DEV ? get_transient( $cache_key ) : false;
-	if ( ! empty( $cached ) ) {
-		return $cached;
-	}
-
-	$property_ids = array();
 	foreach ( $properties as $property ) {
-		$property_ids[] = $property->get_id();
-	}
-	update_meta_cache( 'post', $property_ids );
-	_prime_post_caches( $property_ids, true, false );
-	$latitudes  = core_first_meta_values( $property_ids, 'latitude' );
-	$longitudes = core_first_meta_values( $property_ids, 'longitude' );
-
-	foreach ( $properties as $property ) {
-		$units_available = $property->get_units_count();
-		if ( $skip_empty && 0 === $units_available ) {
+		$is_empty        = $skip_empty && 0 <= $property['units_count'];
+		$is_empty_coords = empty( $property['latitude'] ) || empty( $property['longitude'] );
+		if ( $is_empty || $is_empty_coords ) {
 			continue;
 		}
 
 		$properties_json[] = array(
-			'id'              => $property->get_id(),
-			'name'            => $property->get_title(),
-			'url'             => $property->get_url(),
-			'units_available' => $units_available,
-			'longitude'       => ( $longitudes[ $property->get_id() ] ?? '' ) ?: '',
-			'latitude'        => ( $latitudes[ $property->get_id() ] ?? '' ) ?: '',
+			'id'              => $property['ID'],
+			'name'            => $property['post_title'] ?? '',
+			'url'             => $property['url'] ?? '',
+			'units_available' => $property['units_count'] ?? '',
+			'longitude'       => $property['longitude'],
+			'latitude'        => $property['latitude'],
 		);
 	}
 
-	$properties_json = json_encode( $properties_json );
-
-	set_transient( $cache_key, $properties_json, DAY_IN_SECONDS );
-
-	return $properties_json;
+	return json_encode( $properties_json, JSON_THROW_ON_ERROR );
 }
 
 add_action( 'wp_ajax_nopriv_get_property', 'ajax_get_property' );

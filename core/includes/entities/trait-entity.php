@@ -87,120 +87,46 @@ trait EntityTrait {
 			return $this->gallery;
 		}
 
-		$gallery = self::build_gallery( $this->get_gallery_attachment_ids() );
-		if ( empty( $gallery ) ) {
-			$this->gallery = array(
-				array(
-					'ID'    => 0,
-					'id'    => 0,
-					'url'   => $this->no_image_url,
-					'sizes' => array(
-						'medium'        => $this->no_image_url,
-						'large'         => $this->no_image_url,
-						'unit-card'     => $this->no_image_url,
-						'product-thumb' => $this->no_image_url,
-						'featured-card' => $this->no_image_url,
-						'medium_large'  => $this->no_image_url,
-					),
-				),
-			);
-
-			return $this->gallery;
-		}
-
-		$this->gallery = $gallery;
+		$this->gallery = self::build_gallery( $this->get_id() );
 
 		return $this->gallery;
 	}
 
 	/**
-	 * Build the gallery array from the attachment metadata.
+	 * Return just needed data from gallery
 	 *
-	 * Replaces the ACF gallery formatter, which builds the same shape through
-	 * acf_get_attachment() and pays for a permalink, a mime icon lookup and a
-	 * wp_get_attachment_image_src() call per registered size on every image. On
-	 * the September 2026 catalogue that was 1.19 s for the twenty cards of one
-	 * listing page, the largest single cost of a cached page.
-	 *
-	 * The one key not reproduced is 'link', the attachment's own permalink:
-	 * nothing reads it off a gallery item, and producing it is a permalink lookup
-	 * per image. get_attachment_link( $item['ID'] ) still answers if it is ever
-	 * needed.
-	 *
-	 * @param int[] $ids Attachment ids.
+	 * @param $post_id
 	 *
 	 * @return array
 	 */
-	private static function build_gallery( array $ids ): array {
-		if ( empty( $ids ) ) {
-			return array();
+	public static function build_gallery( $post_id ): array {
+		$gallery_data = get_field( 'gallery', $post_id );
+		$gallery      = array();
+
+		if ( empty( $gallery_data ) ) {
+			static $no_image = get_field( 'no_image', 'option' );
+			$gallery_data[] = $no_image;
 		}
 
-		// One round trip for the posts and their meta rather than one each.
-		_prime_post_caches( $ids, false, true );
+		if ( ! empty( $gallery_data ) ) {
+			$gallery_ids = array_column( $gallery_data, 'ID' );
+			_prime_post_caches( $gallery_ids, false, true );
 
-		$registered_sizes = get_intermediate_image_sizes();
-		$gallery          = array();
+			$registered_sizes = get_intermediate_image_sizes();
 
-		foreach ( $ids as $id ) {
-			$attachment = get_post( $id );
-			if ( ! $attachment || 'attachment' !== $attachment->post_type ) {
-				continue;
-			}
+			foreach ( $gallery_data as $gallery_data_item ) {
+				$sizes = array();
 
-			$meta   = wp_get_attachment_metadata( $id );
-			$url    = wp_get_attachment_url( $id );
-			$base   = trailingslashit( dirname( (string) $url ) );
-			$width  = (int) ( $meta['width'] ?? 0 );
-			$height = (int) ( $meta['height'] ?? 0 );
-
-			if ( str_contains( (string) $attachment->post_mime_type, '/' ) ) {
-				list( $type, $subtype ) = explode( '/', $attachment->post_mime_type, 2 );
-			} else {
-				$type    = (string) $attachment->post_mime_type;
-				$subtype = '';
-			}
-
-			$sizes = array();
-			foreach ( $registered_sizes as $size ) {
-				if ( ! empty( $meta['sizes'][ $size ]['file'] ) ) {
-					$sizes[ $size ]             = $base . $meta['sizes'][ $size ]['file'];
-					$sizes[ $size . '-width' ]  = (int) $meta['sizes'][ $size ]['width'];
-					$sizes[ $size . '-height' ] = (int) $meta['sizes'][ $size ]['height'];
-				} else {
-					// WordPress falls back to the full image for a size that was
-					// never generated, and so does this.
-					$sizes[ $size ]             = $url;
-					$sizes[ $size . '-width' ]  = $width;
-					$sizes[ $size . '-height' ] = $height;
+				foreach ( $registered_sizes as $size ) {
+					$sizes[ $size ] = $gallery_data_item['sizes'][ $size ] ?? '';
 				}
-			}
 
-			$gallery[] = array(
-				'ID'          => $id,
-				'id'          => $id,
-				'title'       => $attachment->post_title,
-				'filename'    => wp_basename( (string) ( $meta['file'] ?? $url ) ),
-				'filesize'    => (int) ( $meta['filesize'] ?? 0 ),
-				'url'         => $url,
-				'alt'         => (string) get_post_meta( $id, '_wp_attachment_image_alt', true ),
-				'author'      => $attachment->post_author,
-				'description' => $attachment->post_content,
-				'caption'     => $attachment->post_excerpt,
-				'name'        => $attachment->post_name,
-				'status'      => $attachment->post_status,
-				'uploaded_to' => $attachment->post_parent,
-				'date'        => $attachment->post_date_gmt,
-				'modified'    => $attachment->post_modified_gmt,
-				'menu_order'  => $attachment->menu_order,
-				'mime_type'   => $attachment->post_mime_type,
-				'type'        => $type,
-				'subtype'     => $subtype,
-				'icon'        => wp_mime_type_icon( $id ),
-				'width'       => $width,
-				'height'      => $height,
-				'sizes'       => $sizes,
-			);
+				$gallery[] = array(
+					'ID'    => $gallery_data_item['ID'],
+					'alt'   => $gallery_data_item['alt'] ?? '',
+					'sizes' => $sizes,
+				);
+			}
 		}
 
 		return $gallery;
@@ -212,38 +138,9 @@ trait EntityTrait {
 	 * @return array
 	 */
 	public function get_gallery_ids(): array {
-		$attachment_ids = array();
-		foreach ( $this->get_gallery() as $item ) {
-			$attachment_ids[] = (int) $item['id'];
-		}
+		$gallery = $this->get_gallery();
 
-		return $attachment_ids;
-	}
-
-	/**
-	 * Attachment ids stored by this entity's gallery field.
-	 *
-	 * Read from the meta rather than through get_field(): the ids are all that is
-	 * needed to build the gallery below.
-	 *
-	 * @return int[]
-	 */
-	private function get_gallery_attachment_ids(): array {
-		$raw = get_post_meta( $this->id, 'gallery', true );
-
-		if ( empty( $raw ) || ! is_array( $raw ) ) {
-			return array();
-		}
-
-		$ids = array();
-		foreach ( $raw as $item ) {
-			$id = is_object( $item ) ? (int) ( $item->ID ?? 0 ) : (int) $item;
-			if ( $id > 0 ) {
-				$ids[] = $id;
-			}
-		}
-
-		return $ids;
+		return array_column( $gallery, 'ID' );
 	}
 
 	/**
@@ -257,7 +154,7 @@ trait EntityTrait {
 		$gallery        = $this->get_gallery();
 		$attachment_ids = ! empty( $gallery ) ? array_map(
 			static function ( $item ) {
-				return $item['id'];
+				return $item['ID'];
 			},
 			$gallery
 		) : array();

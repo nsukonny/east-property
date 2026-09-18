@@ -759,7 +759,6 @@ final class Distress_Units_Importer {
 	 *
 	 * Goes through media_sideload_image so the whole normal pipeline runs: the
 	 * S3 offload picks the file up, and every registered size — including the
-	 * theme's own product-thumb, featured-card and unit-card — is generated.
 	 * A missing "thumbnail" size makes the card render empty, so the sizes are
 	 * not optional.
 	 *
