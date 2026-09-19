@@ -38,10 +38,6 @@ final class Unit {
 	public function get_discount() {
 		$discount = $this->get_field( 'discount' );
 
-		if ( empty( $discount ) && IS_DISTRESS ) {
-			return 15; //TODO Temp solution for test database
-		}
-
 		return $discount;
 	}
 
@@ -429,6 +425,110 @@ final class Unit {
 	}
 
 	/**
+	 * Build the same labels as get_labels() from a listing row
+	 *
+	 * Colors supported: red, orange, black, grey
+	 *
+	 * @return array
+	 */
+	public static function build_labels( array $unit = array() ): array {
+		$labels = array();
+
+		$delivery_date = $unit['delivery_date'] ?? '';
+		if ( ! empty( $delivery_date ) ) {
+			if ( strtotime( $delivery_date ) < time() ) {
+				$labels[] = array(
+					'name'  => __( 'Ready', 'east-property' ),
+					'color' => 'grey',
+				);
+			} else {
+				$formatted_delivery_date = date_i18n( get_option( 'date_format' ), strtotime( $delivery_date ) );
+				$labels[]                = array(
+					'name'  => __( 'Handover:', 'east-property' ) . ' ' . $formatted_delivery_date,
+					'color' => 'grey',
+				);
+			}
+		}
+
+		if ( ! empty( $unit['is_popular'] ) ) {
+			$labels[] = array(
+				'name'  => __( 'Popular', 'east-property' ),
+				'color' => 'red',
+			);
+		}
+
+		if ( ! empty( $unit['is_premium_developer'] ) ) {
+			$labels[] = array(
+				'name'  => __( 'Premium Developer', 'east-property' ),
+				'color' => 'black',
+			);
+		}
+
+		if ( 0 < (int) ( $unit['boost_score'] ?? 0 ) ) {
+			$labels[] = array(
+				'name'  => __( 'Promoted', 'east-property' ),
+				'color' => 'red',
+				'icon'  => THEME_URL . '/assets/img/star_white.svg',
+			);
+		}
+
+		if ( 'draft' === ( $unit['post_status'] ?? '' ) ) {
+			$labels[] = array(
+				'name'  => __( 'Waiting for approval', 'east-property' ),
+				'color' => 'red',
+			);
+		}
+
+		if ( 1 === (int) ( $unit['is_wait_user_actions'] ?? 0 ) ) {
+			$labels[] = array(
+				'name'  => __( 'Contains an error', 'east-property' ),
+				'color' => 'red',
+			);
+		}
+
+		return $labels;
+	}
+
+	/**
+	 * Build the same amenities as get_amenities() from a listing row
+	 *
+	 * @param array $unit
+	 *
+	 * @return array
+	 */
+	public static function build_amenities( array $unit = array() ): array {
+		$beds      = (int) ( $unit['bedrooms'] ?? 0 );
+		$amenities = array(
+			array(
+				'icon'  => THEME_URL . '/assets/img/bed.svg',
+				'value' => 0 === $beds
+					? __( 'Studio', 'east-property' )
+					: $beds . ' ' . __( 'Beds', 'east-property' ),
+			),
+		);
+
+		$baths = (int) ( $unit['bathrooms'] ?? 0 );
+		if ( 0 < $baths ) {
+			$amenities[] = array(
+				'icon'  => THEME_URL . '/assets/img/bath.svg',
+				'value' => 1 === $baths
+					? __( '1 Bath', 'east-property' )
+					: $baths . ' ' . __( 'Baths', 'east-property' ),
+			);
+		}
+
+		$area = (float) ( $unit['area_size'] ?? 0 );
+		if ( 0 < $area ) {
+			$amenities[] = array(
+				'icon'  => THEME_URL . '/assets/img/meters.svg',
+				'value' => $area . ' ' . __( 'sqft', 'east-property' ),
+			);
+		}
+
+		return $amenities;
+	}
+
+	/**
 	 * Get unit type
 	 *
 	 * @return ?string
@@ -533,32 +633,28 @@ final class Unit {
 	/**
 	 * True if unit is in user favorites
 	 *
+	 * @param int $unit_id
+	 *
 	 * @return bool
 	 */
-	public function is_favorite(): bool {
-		if ( ! empty( $this->is_favorite ) ) {
-			return $this->is_favorite;
-		}
-
+	public static function is_favorite( int $unit_id ): bool {
 		global $current_user;
 		if ( ! $current_user || ! is_user_logged_in() ) {
-			$this->is_favorite = false;
-
-			return $this->is_favorite;
+			return false;
 		}
 
-		$user_favorites = get_user_meta( $current_user->ID, 'favorite_units', true );
+		static $user_favorites = null;
+		if ( null === $user_favorites ) {
+			$user_favorites = get_user_meta( $current_user->ID, 'favorite_units', true );
+		}
+
 		if ( ! empty( $user_favorites )
 		     && is_array( $user_favorites )
-		     && in_array( $this->id, $user_favorites, true ) ) {
-			$this->is_favorite = true;
-
-			return $this->is_favorite;
+		     && in_array( $unit_id, $user_favorites, true ) ) {
+			return true;
 		}
 
-		$this->is_favorite = false;
-
-		return $this->is_favorite;
+		return false;
 	}
 
 	/**

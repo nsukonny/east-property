@@ -16,8 +16,8 @@ trait EntityTrait {
 	protected array $post_meta;
 	protected ?WP_Post $post = null;
 	protected string $thumb;
-	protected string $no_image_url = THEME_URL . '/assets/img/no-image.jpg';
 	protected array $gallery;
+	protected static $galleries = array();
 
 	public function __construct( int|WP_Post $post ) {
 		if ( $post instanceof WP_Post ) {
@@ -93,6 +93,79 @@ trait EntityTrait {
 	}
 
 	/**
+	 * Get galleries by posts ids
+	 *
+	 * @param array $posts_ids
+	 *
+	 * @return array
+	 */
+	public static function get_galleries( array $posts_ids = array() ): array {
+		$galleries = array();
+
+		if ( empty( $posts_ids ) ) {
+			return $galleries;
+		}
+
+		foreach ( $posts_ids as $post_id ) {
+			if ( ! isset( self::$galleries[ $post_id ] ) ) {
+				break;
+			}
+
+			$galleries[ $post_id ] = self::$galleries[ $post_id ];
+		}
+
+		if ( count( $posts_ids ) === count( $galleries ) ) {
+			return $galleries;
+		}
+
+		global $wpdb;
+
+		$rows = $wpdb->get_results(
+			"SELECT post_id, meta_value
+				FROM {$wpdb->postmeta}
+				WHERE meta_key = 'gallery'
+					AND post_id IN (" . implode( ',', array_map( 'intval', $posts_ids ) ) . ")",
+			ARRAY_A
+		);
+
+		$attachment_ids = array();
+
+		foreach ( $rows as $row ) {
+			$raw = maybe_unserialize( $row['meta_value'] );
+
+			if ( empty( $raw ) || ! is_array( $raw ) ) {
+				continue;
+			}
+
+			$ids = array();
+			foreach ( $raw as $item ) {
+				$id = is_object( $item ) ? (int) ( $item->ID ?? 0 ) : (int) $item;
+				if ( $id > 0 ) {
+					$ids[] = $id;
+				}
+			}
+
+			if ( ! empty( $ids ) ) {
+				$attachment_ids = array_merge( $attachment_ids, $ids );
+			}
+		}
+
+		if ( ! empty( $attachment_ids ) ) {
+			_prime_post_caches( array_unique( $attachment_ids ), false, true );
+		}
+
+		foreach ( $posts_ids as $post_id ) {
+			$post_id = (int) $post_id;
+			$gallery = self::build_gallery( $post_id );
+
+			self::$galleries[ $post_id ] = $gallery;
+			$galleries[ $post_id ]       = $gallery;
+		}
+
+		return $galleries;
+	}
+
+	/**
 	 * Return just needed data from gallery
 	 *
 	 * @param $post_id
@@ -100,7 +173,7 @@ trait EntityTrait {
 	 * @return array
 	 */
 	public static function build_gallery( $post_id ): array {
-		$gallery_data = get_field( 'gallery', $post_id );
+		$gallery_data = get_field( 'gallery', $post_id ) ?: array();
 		$gallery      = array();
 
 		if ( empty( $gallery_data ) ) {

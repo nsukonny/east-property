@@ -990,8 +990,15 @@ add_action( 'wp_ajax_get_property', 'ajax_get_property' );
 function ajax_get_unit(): void {
 	//check_ajax_referer( 'get_filtered_properties' ); //TODO Check, maybe javascript was cached it
 
+	echo '<pre>---prd-' . print_r( $_REQUEST, true ) . '</pre>';
+	wp_die();
 	$posts_per_page = PROPERTIES_PER_PAGE ?? 20;
-	$units          = get_units( $posts_per_page );
+	if ( ! empty( $_REQUEST['listing_type'] ) ) {
+		$listing_type = sanitize_text_field( wp_unslash( $_REQUEST['listing_type'] ) );
+	}
+	$units = get_units( $listing_type, $posts_per_page, array(
+		'galleries' => true,
+	) );
 
 	ob_start();
 

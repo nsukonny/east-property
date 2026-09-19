@@ -93,7 +93,11 @@ $amenities = \Entities\Property::build_amenities( $specifications );
 					<?php if ( ! empty( $amenities ) ) { ?>
 						<div class="large-card-info-top">
 							<div class="large-card-info-items">
-								<?php foreach ( $amenities as $amenity ) { ?>
+								<?php foreach ( $amenities as $amenity ) {
+									if ( empty( $amenity['value'] ) || empty( $amenity['icon'] ) ) {
+										continue;
+									}
+									?>
 									<span>
 										<img src="<?php echo esc_url( $amenity['icon'] ); ?>" width="16"
 											 height="16"

@@ -80,13 +80,13 @@ while ( have_posts() ) {
 								<?php esc_html_e( 'Share', 'east-property' ); ?>
 							</a>
 
-							<button class="button sm toggle-favorite <?php echo $unit->is_favorite() ? 'orange green' : 'gray'; ?>"
+							<button class="button sm toggle-favorite <?php echo Unit::is_favorite( $unit->get_id() ) ? 'orange green' : 'gray'; ?>"
 									data-unit-id="<?php echo $unit->get_id(); ?>">
 								<img src="<?php echo esc_url( THEME_URL . '/assets/img/bookmark.svg' ); ?>"
 									 width="16" height="16" alt="<?php esc_html_e( 'Save', 'east-property' ); ?>">
 								<span>
 									<?php
-									if ( $unit->is_favorite() ) {
+									if ( Unit::is_favorite( $unit->get_id() ) ) {
 										esc_html_e( 'Saved', 'east-property' );
 									} else {
 										esc_html_e( 'Save', 'east-property' );

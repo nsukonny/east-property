@@ -27,9 +27,13 @@ function get_properties( int $limit = - 1, bool $skip_filters = false, array $ar
 	}
 
 	$properties = wp_cache_get( $cache_key, 'properties' );
-	if ( false === $properties ) {
-		$properties = core_query_properties( $limit, $skip_filters, $current_page, $current_language, $args );
+	if ( false !== $properties ) {
+		$memo[ $cache_key ] = $properties;
+
+		return $properties;
 	}
+
+	$properties = core_query_properties( $limit, $skip_filters, $current_page, $current_language, $args );
 
 	if ( ! empty( $args['specifications'] ) ) {
 		$specifications = \Entities\Property::get_specifications( array_column( $properties['items'], 'ID' ) );

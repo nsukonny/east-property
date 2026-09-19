@@ -20,7 +20,6 @@ final class Property {
 	private int $middle_price;
 	private $developer;
 	protected static $specifications = array();
-	protected static $galleries = array();
 
 	/**
 	 * Get specifications by included units
@@ -95,79 +94,6 @@ final class Property {
 	}
 
 	/**
-	 * Get galleries by property ids
-	 *
-	 * @param array $property_ids
-	 *
-	 * @return array
-	 */
-	public static function get_galleries( array $property_ids = array() ): array {
-		$galleries = array();
-
-		if ( empty( $property_ids ) ) {
-			return $galleries;
-		}
-
-		foreach ( $property_ids as $property_id ) {
-			if ( ! isset( self::$galleries[ $property_id ] ) ) {
-				break;
-			}
-
-			$galleries[ $property_id ] = self::$galleries[ $property_id ];
-		}
-
-		if ( count( $property_ids ) === count( $galleries ) ) {
-			return $galleries;
-		}
-
-		global $wpdb;
-
-		$rows = $wpdb->get_results(
-			"SELECT post_id, meta_value
-				FROM {$wpdb->postmeta}
-				WHERE meta_key = 'gallery'
-					AND post_id IN (" . implode( ',', array_map( 'intval', $property_ids ) ) . ")",
-			ARRAY_A
-		);
-
-		$attachment_ids = array();
-
-		foreach ( $rows as $row ) {
-			$raw = maybe_unserialize( $row['meta_value'] );
-
-			if ( empty( $raw ) || ! is_array( $raw ) ) {
-				continue;
-			}
-
-			$ids = array();
-			foreach ( $raw as $item ) {
-				$id = is_object( $item ) ? (int) ( $item->ID ?? 0 ) : (int) $item;
-				if ( $id > 0 ) {
-					$ids[] = $id;
-				}
-			}
-
-			if ( ! empty( $ids ) ) {
-				$attachment_ids = array_merge( $attachment_ids, $ids );
-			}
-		}
-
-		if ( ! empty( $attachment_ids ) ) {
-			_prime_post_caches( array_unique( $attachment_ids ), false, true );
-		}
-
-		foreach ( $property_ids as $property_id ) {
-			$property_id = (int) $property_id;
-			$gallery     = self::build_gallery( $property_id );
-
-			self::$galleries[ $property_id ] = $gallery;
-			$galleries[ $property_id ]       = $gallery;
-		}
-
-		return $galleries;
-	}
-
-	/**
 	 * Build amenities with icon and value for property
 	 *
 	 * @param array $specifications
@@ -175,40 +101,48 @@ final class Property {
 	 * @return array
 	 */
 	public static function build_amenities( array $specifications ): array {
-		$amenities = array(
-			'beds'  => array(
+		$amenities = array();
+
+		if ( ! empty( $specifications['min_beds'] ) ) {
+			$amenities['beds'] = array(
 				'icon'  => THEME_URL . '/assets/img/bed.svg',
 				'value' => $specifications['min_beds'] . ' ' . __( 'Beds', 'east-property' ),
-			),
-			'baths' => array(
+			);
+
+			if ( (int) $specifications['min_beds'] < (int) $specifications['max_beds'] ) {
+				$min_beds                   = 0 === (int) $specifications['min_beds'] ? __( 'Studio',
+					'east-property' ) : $specifications['min_beds'];
+				$amenities['beds']['value'] = $min_beds . ' - ' . $specifications['max_beds'] . ' ' . __( 'Beds',
+						'east-property' );
+			}
+
+			if ( (int) $specifications['min_beds'] === (int) $specifications['max_beds'] && (int) $specifications['min_beds'] === 0 ) {
+				$amenities['beds']['value'] = __( 'Studio', 'east-property' );
+			}
+		}
+
+		if ( ! empty( $specifications['min_baths'] ) ) {
+			$amenities['baths'] = array(
 				'icon'  => THEME_URL . '/assets/img/bath.svg',
 				'value' => $specifications['min_baths'] . ' ' . __( 'Baths', 'east-property' ),
-			),
-			'area'  => array(
+			);
+
+			if ( (int) $specifications['min_baths'] < (int) $specifications['max_baths'] ) {
+				$amenities['baths']['value'] = $specifications['min_baths'] . ' - ' . $specifications['max_baths'] . ' ' . __( 'Baths',
+						'east-property' );
+			}
+		}
+
+		if ( ! empty( $specifications['min_area'] ) ) {
+			$amenities['area'] = array(
 				'icon'  => THEME_URL . '/assets/img/meters.svg',
 				'value' => $specifications['min_area'] . ' ' . __( 'sqft', 'east-property' ),
-			),
-		);
+			);
 
-		if ( (int) $specifications['min_beds'] < (int) $specifications['max_beds'] ) {
-			$min_beds                   = 0 === (int) $specifications['min_beds'] ? __( 'Studio',
-				'east-property' ) : $specifications['min_beds'];
-			$amenities['beds']['value'] = $min_beds . ' - ' . $specifications['max_beds'] . ' ' . __( 'Beds',
-					'east-property' );
-		}
-
-		if ( (int) $specifications['min_beds'] === (int) $specifications['max_beds'] && (int) $specifications['min_beds'] === 0 ) {
-			$amenities['beds']['value'] = __( 'Studio', 'east-property' );
-		}
-
-		if ( (int) $specifications['min_baths'] < (int) $specifications['max_baths'] ) {
-			$amenities['baths']['value'] = $specifications['min_baths'] . ' - ' . $specifications['max_baths'] . ' ' . __( 'Baths',
-					'east-property' );
-		}
-
-		if ( (int) $specifications['min_area'] < (int) $specifications['max_area'] ) {
-			$amenities['area']['value'] = $specifications['min_area'] . ' - ' . $specifications['max_area'] . ' ' . __( 'sqft',
-					'east-property' );
+			if ( (int) $specifications['min_area'] < (int) $specifications['max_area'] ) {
+				$amenities['area']['value'] = $specifications['min_area'] . ' - ' . $specifications['max_area'] . ' ' . __( 'sqft',
+						'east-property' );
+			}
 		}
 
 		return $amenities;
