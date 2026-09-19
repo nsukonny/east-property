@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: East Property 1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/east-property\n"
 "POT-Creation-Date: 2026-09-11T12:07:43+00:00\n"
-"PO-Revision-Date: 2026-09-15 12:30+0300\n"
+"PO-Revision-Date: 2026-09-19 19:45+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -2774,11 +2774,11 @@ msgstr "Почему DDA"
 
 #: src/js/filters.js:16
 msgid "beds"
-msgstr "кроватей"
+msgstr "спален"
 
 #: src/js/filters.js:16
 msgid "bed"
-msgstr "кровать"
+msgstr "спальня"
 
 #: src/js/filters.js:21
 msgid "baths"
@@ -2837,6 +2837,14 @@ msgstr "Решайте быстро — лучшие предложения не
 msgid "View Deals"
 msgstr "Смотреть предложения"
 
+#: core/components/sections/explore-by-districts.php
+msgid "Explore projects by district"
+msgstr "Подберите проекты по району"
+
+#: core/components/sections/explore-by-districts.php
+msgid "All Projects"
+msgstr "Все проекты"
+
 #~ msgid ""
 #~ "Choose the most convenient way to connect with our team. Message us on WhatsApp for the "
 #~ "fastest\n"
@@ -2874,11 +2882,3 @@ msgstr "Смотреть предложения"
 
 #~ msgid "EXPLORE DISTRESS DEALS"
 #~ msgstr "СМОТРЕТЬ ДИСТРЕСС"
-
-#: core/components/sections/explore-by-districts.php
-msgid "Explore projects by district"
-msgstr "Подберите проекты по району"
-
-#: core/components/sections/explore-by-districts.php
-msgid "All Projects"
-msgstr "Все проекты"

@@ -249,7 +249,7 @@ add_filter( 'wpseo_robots_array', 'core_noindex_import_stubs' );
 /**
  * Keep the same stubs out of the sitemap, so both channels agree.
  *
- * @param string $where     WHERE clause Yoast built.
+ * @param string $where WHERE clause Yoast built.
  * @param string $post_type Post type being listed.
  *
  * @return string
@@ -262,13 +262,13 @@ function core_exclude_import_stubs_from_sitemap( $where, $post_type ): string {
 	}
 
 	return $where . $wpdb->prepare(
-		" AND {$wpdb->posts}.ID NOT IN (
+			" AND {$wpdb->posts}.ID NOT IN (
 			SELECT post_id FROM {$wpdb->postmeta}
 			WHERE meta_key = %s AND meta_value = %s
 		)",
-		'_core_import_stub',
-		'1'
-	);
+			'_core_import_stub',
+			'1'
+		);
 }
 
 add_filter( 'wpseo_posts_where', 'core_exclude_import_stubs_from_sitemap', 10, 2 );
@@ -474,7 +474,7 @@ function core_paginated_listing( string $template ): ?array {
  * @return array
  */
 function core_listing_from_units( string $listing_type, int $per_page ): array {
-	$units = get_units( $listing_type, $per_page );
+	$units = get_units( $listing_type, $per_page, array( 'galleries' => true ) );
 
 	return array(
 		'items'    => $units['items'] ?? array(),

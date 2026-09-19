@@ -291,7 +291,7 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 	$search_tabs_data['filters'] = array(
 		'location'      => array(
 			'label'   => __( 'Location', 'east-property' ),
-			'options' => get_locations(),
+			'options' => get_locations( $listing_type ),
 		),
 		'available'     => array(
 			'label'   => 'off-plan' === $listing_type ? __( 'Handover Year Before',
@@ -346,7 +346,7 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 				),
 				'location' => array(
 					'label'   => __( 'District', 'east-property' ),
-					'options' => get_locations(),
+					'options' => get_locations( $listing_type ),
 				),
 			),
 		),
@@ -833,19 +833,87 @@ function get_developers_list(): array {
 }
 
 /**
- * Get a list of all parent 0 categories instead of uncategorized
+ * Locations that carry published units, for the district filter
+ *
+ * @param string $listing_type Listing slug; empty or 'all' counts every unit.
+ *
+ * @return array
  */
-function get_locations(): array {
-	global $wpdb;
+function get_locations( string $listing_type = '' ): array {
+	$listing_type = '' !== $listing_type && 'all' !== $listing_type
+		? core_sanitize_listing_type( $listing_type )
+		: '';
+
+	$language  = core_get_current_language();
+	$cache_key = md5( 'locations_' . $language . '_' . $listing_type );
+
+	static $memo = array();
+	if ( ! isset( $memo[ $cache_key ] ) ) {
+		$locations = wp_cache_get( $cache_key, 'locations' );
+
+		if ( false === $locations ) {
+			$locations = core_query_locations( $listing_type, $language );
+
+			wp_cache_set( $cache_key, $locations, 'locations', DAY_IN_SECONDS );
+		}
+
+		$memo[ $cache_key ] = $locations;
+	}
 
 	$selected_location = $_REQUEST['location'] ?? null;
-
-	$results = array(
+	$results           = array(
 		array(
 			'value' => 'all',
 			'label' => __( 'Any Locations', 'east-property' ),
 		),
 	);
+
+	foreach ( $memo[ $cache_key ] as $location ) {
+		$location['selected'] = $location['value'] === $selected_location;
+		$results[]            = $location;
+	}
+
+	return $results;
+}
+
+/**
+ * The districts of a listing, uncached
+ *
+ * Split out of get_locations() so the cache keeps only what every visitor sees
+ * alike: the chosen district and the translated "any" option are added after.
+ *
+ * @param string $listing_type Listing slug, already sanitized; empty counts every unit.
+ * @param string $language Polylang slug; empty counts every language.
+ *
+ * @return array
+ */
+function core_query_locations( string $listing_type = '', string $language = '' ): array {
+	global $wpdb;
+
+	$listing_join  = '';
+	$listing_where = '';
+	$params        = array();
+
+	$language_join = '';
+	if ( '' !== $language ) {
+		$language_join = "INNER JOIN {$wpdb->term_relationships} AS pll_language_relation
+				ON pll_language_relation.object_id = u.ID
+			INNER JOIN {$wpdb->term_taxonomy} AS pll_language_taxonomy
+				ON pll_language_taxonomy.term_taxonomy_id = pll_language_relation.term_taxonomy_id
+				AND pll_language_taxonomy.taxonomy = 'language'
+			INNER JOIN {$wpdb->terms} AS pll_language
+				ON pll_language.term_id = pll_language_taxonomy.term_id
+				AND pll_language.slug = %s";
+		$params[]      = $language;
+	}
+
+	if ( '' !== $listing_type ) {
+		$listing_join  = "INNER JOIN {$wpdb->postmeta} AS pm_listing_type
+				ON pm_listing_type.post_id = u.ID
+				AND pm_listing_type.meta_key = 'listing_type'";
+		$listing_where = 'AND pm_listing_type.meta_value = %s';
+		$params[]      = $listing_type;
+	}
 
 	$sql = "SELECT DISTINCT
 				t.term_id,
@@ -865,20 +933,20 @@ function get_locations(): array {
 				AND tt.taxonomy = 'location'
 			INNER JOIN wp_terms AS t
 				ON t.term_id = tt.term_id
+			{$language_join}
+			{$listing_join}
 			WHERE u.post_type = 'unit'
 			  AND u.post_status = 'publish'
+			  {$listing_where}
 			ORDER BY t.name ASC;";
 
-	$locations = $wpdb->get_results( $sql, ARRAY_A );
-	if ( empty( $locations ) ) {
-		return $results;
-	}
+	$locations = $wpdb->get_results( empty( $params ) ? $sql : $wpdb->prepare( $sql, $params ), ARRAY_A );
 
-	foreach ( $locations as $location ) {
+	$results = array();
+	foreach ( (array) $locations as $location ) {
 		$results[] = array(
-			'value'    => $location['slug'],
-			'label'    => $location['name'],
-			'selected' => $location['slug'] === $selected_location,
+			'value' => $location['slug'],
+			'label' => $location['name'],
 		);
 	}
 
@@ -990,8 +1058,6 @@ add_action( 'wp_ajax_get_property', 'ajax_get_property' );
 function ajax_get_unit(): void {
 	//check_ajax_referer( 'get_filtered_properties' ); //TODO Check, maybe javascript was cached it
 
-	echo '<pre>---prd-' . print_r( $_REQUEST, true ) . '</pre>';
-	wp_die();
 	$posts_per_page = PROPERTIES_PER_PAGE ?? 20;
 	if ( ! empty( $_REQUEST['listing_type'] ) ) {
 		$listing_type = sanitize_text_field( wp_unslash( $_REQUEST['listing_type'] ) );
