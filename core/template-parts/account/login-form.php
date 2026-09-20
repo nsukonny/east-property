@@ -14,22 +14,22 @@ $redirect_to = core_home_url( '/account?tab=account' );
 		<div class="profile-tabs-wrapper">
 			<div class="profile-tabs-buttons" role="tablist">
 				<button class="result-tab-button <?php echo 'login' === $active_tab ? 'active' : ''; ?>" type="button"
-				        id="profile-tabs-login-tab" data-tab-button data-tab="login" role="tab"
-				        aria-selected="<?php echo 'login' === $active_tab ? 'true' : 'false'; ?>"
-				        aria-controls="profile-tabs-login-panel">
+						id="profile-tabs-login-tab" data-tab-button data-tab="login" role="tab"
+						aria-selected="<?php echo 'login' === $active_tab ? 'true' : 'false'; ?>"
+						aria-controls="profile-tabs-login-panel">
 					<?php esc_html_e( 'Sign in', 'east-property' ); ?>
 				</button>
 				<button class="result-tab-button <?php echo 'register' === $active_tab ? 'active' : ''; ?>"
-				        type="button" id="profile-tabs-register-tab" data-tab-button data-tab="register" role="tab"
-				        aria-selected="<?php echo 'register' === $active_tab ? 'true' : 'false'; ?>"
-				        aria-controls="profile-tabs-register-panel">
+						type="button" id="profile-tabs-register-tab" data-tab-button data-tab="register" role="tab"
+						aria-selected="<?php echo 'register' === $active_tab ? 'true' : 'false'; ?>"
+						aria-controls="profile-tabs-register-panel">
 					<?php esc_html_e( 'Create account', 'east-property' ); ?>
 				</button>
 			</div>
 
 			<div class="profile-tabs-content <?php echo 'login' === $active_tab ? 'active' : ''; ?>"
-			     id="profile-tabs-login-panel" data-tab-panel data-tab="login" role="tabpanel"
-			     aria-labelledby="profile-tabs-login-tab">
+				 id="profile-tabs-login-panel" data-tab-panel data-tab="login" role="tabpanel"
+				 aria-labelledby="profile-tabs-login-tab">
 				<div class="content-title">
 					<div class="title-top">
 						<h2><?php esc_html_e( 'Sign in to start selling', 'east-property' ); ?></h2>
@@ -37,11 +37,11 @@ $redirect_to = core_home_url( '/account?tab=account' );
 				</div>
 				<div class="content-list">
 					<form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post"
-					      class="login-form">
+						  class="login-form">
 						<input type="hidden" name="action" value="core_account_login">
 						<input type="hidden" name="redirect_to" value="<?php echo esc_url( $redirect_to ); ?>">
 						<input type="hidden" name="core_account_login_nonce"
-						       value="<?php echo esc_attr( wp_create_nonce( 'core_account_login' ) ); ?>">
+							   value="<?php echo esc_attr( wp_create_nonce( 'core_account_login' ) ); ?>">
 						<?php wp_referer_field(); ?>
 						<fieldset>
 							<label for="account-log">
@@ -81,8 +81,8 @@ $redirect_to = core_home_url( '/account?tab=account' );
 			</div>
 
 			<div class="profile-tabs-content <?php echo 'register' === $active_tab ? 'active' : ''; ?>"
-			     id="profile-tabs-register-panel" data-tab-panel data-tab="register" role="tabpanel"
-			     aria-labelledby="profile-tabs-register-tab">
+				 id="profile-tabs-register-panel" data-tab-panel data-tab="register" role="tabpanel"
+				 aria-labelledby="profile-tabs-register-tab">
 				<div class="content-title">
 					<div class="title-top">
 						<h2><?php esc_html_e( 'Create a new account', 'east-property' ); ?></h2>
@@ -90,11 +90,11 @@ $redirect_to = core_home_url( '/account?tab=account' );
 				</div>
 				<div class="content-list submit-unit">
 					<form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="POST"
-					      enctype="multipart/form-data" class="login-form registration-form">
+						  enctype="multipart/form-data" class="login-form registration-form">
 						<input type="hidden" name="action" value="core_account_register">
 						<input type="hidden" name="redirect_to" value="<?php echo esc_url( $redirect_to ); ?>">
 						<input type="hidden" name="core_account_register_nonce"
-						       value="<?php echo esc_attr( wp_create_nonce( 'core_account_register' ) ); ?>">
+							   value="<?php echo esc_attr( wp_create_nonce( 'core_account_register' ) ); ?>">
 						<?php wp_referer_field(); ?>
 						<div class="submit-unit-inner">
 							<div class="submit-unit-left">
@@ -104,8 +104,8 @@ $redirect_to = core_home_url( '/account?tab=account' );
 											<span class="required">*</span>
 											<?php esc_html_e( 'First name', 'east-property' ); ?>
 											<input type="text" id="first_name" name="first_name"
-											       placeholder="<?php esc_html_e( 'First name', 'east-property' ); ?>"
-											       required
+												   placeholder="<?php esc_html_e( 'First name', 'east-property' ); ?>"
+												   required
 											>
 										</label>
 									</div>
@@ -115,9 +115,9 @@ $redirect_to = core_home_url( '/account?tab=account' );
 											<span class="required">*</span>
 											<?php esc_html_e( 'Email address', 'east-property' ); ?>
 											<input type="text" id="user_email" name="user_email"
-											       placeholder="<?php esc_html_e( 'admin@example.com',
+												   placeholder="<?php esc_html_e( 'admin@example.com',
 													   'east-property' ); ?>"
-											       required
+												   required
 											>
 										</label>
 									</div>
@@ -152,14 +152,14 @@ $redirect_to = core_home_url( '/account?tab=account' );
 														</span>
 													<span class="dropdown-arrow">
 															<img src="<?php echo THEME_URL; ?>/assets/img/arrow-down.svg"
-															     width="16" height="16" alt="vector arrow">
+																 width="16" height="16" alt="vector arrow">
 														</span>
 												</button>
 												<div class="dropdown-content">
 													<div class="dropdown-inner">
 														<?php foreach ( $user_roles as $role_key => $role ) { ?>
 															<button type="button" class="dropdown-option"
-															        data-value="<?php echo esc_attr( $role_key ); ?>">
+																	data-value="<?php echo esc_attr( $role_key ); ?>">
 																<?php echo esc_html( $role ); ?>
 															</button>
 														<?php } ?>
@@ -167,8 +167,8 @@ $redirect_to = core_home_url( '/account?tab=account' );
 												</div>
 											</div>
 											<input type="hidden" name="user_role"
-											       value="<?php echo esc_attr( array_key_first( $user_roles ) ); ?>"
-											       data-required>
+												   value="<?php echo esc_attr( array_key_first( $user_roles ) ); ?>"
+												   data-required>
 										</div>
 									</div>
 
@@ -176,7 +176,7 @@ $redirect_to = core_home_url( '/account?tab=account' );
 										<label for="phone_number_inp">
 											<?php esc_html_e( 'Phone number', 'east-property' ); ?>
 											<input type="text" id="phone_number_inp" name="phone_number"
-											       placeholder="971509670043"
+												   placeholder="971509670043"
 											>
 										</label>
 									</div>
@@ -204,23 +204,23 @@ $redirect_to = core_home_url( '/account?tab=account' );
 														</span>
 													<span class="dropdown-arrow">
 															<img src="<?php echo THEME_URL; ?>/assets/img/arrow-down.svg"
-															     width="16" height="16"
-															     alt="vector arrow">
+																 width="16" height="16"
+																 alt="vector arrow">
 														</span>
 												</button>
 												<div class="dropdown-content">
 													<div class="dropdown-inner">
 														<?php foreach ( $agencies_posts as $agency ) { ?>
 															<button type="button" class="dropdown-option"
-															        data-value="<?php echo esc_attr( $agency->ID ); ?>">
-																<?php echo esc_html( $agency->post_title ); ?>
+																	data-value="<?php echo esc_attr( $agency['ID'] ); ?>">
+																<?php echo esc_html( $agency['post_title'] ); ?>
 															</button>
 														<?php } ?>
 													</div>
 												</div>
 											</div>
 											<input type="hidden" name="agency_id"
-											       value="0">
+												   value="0">
 										</div>
 									</div>
 								</fieldset>

@@ -39,14 +39,8 @@ if ( ! empty( $post ) && 'reset-password' === $post->post_name ) {
 }
 
 if ( ! is_user_logged_in() ) {
-	$agencies_posts = get_posts(
-		array(
-			'post_type'      => 'agency',
-			'posts_per_page' => 10,
-		)
-	);
-
-	$user_roles = get_existing_user_roles();
+	$agencies_posts = get_agencies();
+	$user_roles     = get_existing_user_roles();
 
 	get_component_template(
 		'account/login-form',
@@ -112,12 +106,7 @@ if ( isset( $_GET['action'] ) && in_array( $_GET['action'], array( 'add_property
 	return;
 }
 
-$agencies_posts = get_posts(
-	array(
-		'post_type'      => 'agency',
-		'posts_per_page' => 10,
-	)
-);
+$agencies_posts = get_agencies();
 
 if ( $estate_user->is_broker() || $estate_user->is_admin() ) {
 	get_component_template(

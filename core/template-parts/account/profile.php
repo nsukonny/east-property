@@ -353,8 +353,8 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 													<div class="dropdown-inner">
 														<?php foreach ( $agencies_posts as $agency ) { ?>
 															<button type="button" class="dropdown-option"
-																	data-value="<?php echo esc_attr( $agency->ID ); ?>">
-																<?php echo esc_html( $agency->post_title ); ?>
+																	data-value="<?php echo esc_attr( $agency['ID'] ); ?>">
+																<?php echo esc_html( $agency['post_title'] ); ?>
 															</button>
 														<?php } ?>
 													</div>
