@@ -18,8 +18,9 @@ function get_properties( int $limit = - 1, bool $skip_filters = false, array $ar
 	$request_params = $_REQUEST['location'] ?? '';
 	$request_params .= $_REQUEST['available'] ?? '';
 	$request_params .= $args['developer'] ?? $_REQUEST['developer'] ?? '';
+	$request_params .= wp_json_encode( $args );
 	$cache_key      = 'properties_' . $current_language . '_'
-	                  . md5( (string) $limit . (string) $skip_filters . (string) $current_page . wp_json_encode( $args ) . $request_params );
+	                  . md5( (string) $limit . (string) $skip_filters . (string) $current_page . $request_params );
 
 	static $memo = array();
 	if ( isset( $memo[ $cache_key ] ) ) {
@@ -58,6 +59,74 @@ function get_properties( int $limit = - 1, bool $skip_filters = false, array $ar
 }
 
 /**
+ * Titles of every published project
+ *
+ * @return array
+ */
+function get_properties_names(): array {
+	$current_language = core_get_current_language();
+	$cache_key        = 'properties_names_' . $current_language;
+
+	static $memo = array();
+	if ( isset( $memo[ $cache_key ] ) ) {
+		return $memo[ $cache_key ];
+	}
+
+	$names = wp_cache_get( $cache_key, 'properties' );
+	if ( false === $names ) {
+		$names = core_query_properties_names( $current_language );
+
+		wp_cache_set( $cache_key, $names, 'properties', DAY_IN_SECONDS );
+	}
+
+	$memo[ $cache_key ] = $names;
+
+	return $names;
+}
+
+/**
+ * The project titles, uncached
+ *
+ * Split out of get_properties_names() the same way the listing is, so the cache
+ * can rebuild it after the response.
+ *
+ * @param string $language Polylang slug; empty counts every language.
+ *
+ * @return array
+ */
+function core_query_properties_names( string $language = '' ): array {
+	global $wpdb;
+
+	$params = array( 'property', 'publish' );
+
+	$language_join  = '';
+	$language_where = '';
+	if ( '' !== $language ) {
+		$language_join  = "INNER JOIN {$wpdb->term_relationships} AS pll_language_relation
+				ON pll_language_relation.object_id = p.ID
+			INNER JOIN {$wpdb->term_taxonomy} AS pll_language_taxonomy
+				ON pll_language_taxonomy.term_taxonomy_id = pll_language_relation.term_taxonomy_id
+				AND pll_language_taxonomy.taxonomy = 'language'
+			INNER JOIN {$wpdb->terms} AS pll_language
+				ON pll_language.term_id = pll_language_taxonomy.term_id";
+		$language_where = 'AND pll_language.slug = %s';
+		$params[]       = $language;
+	}
+
+	$sql = "SELECT 
+    			p.ID,
+    			p.post_title
+			FROM {$wpdb->posts} AS p
+			{$language_join}
+			WHERE p.post_type = %s
+			  AND p.post_status = %s
+			  {$language_where}
+			ORDER BY p.post_title ASC";
+
+	return $wpdb->get_results( $wpdb->prepare( $sql, $params ), ARRAY_A ) ?: array();
+}
+
+/**
  * The properties listing for the current filters, uncached.
  *
  * Split out of get_properties() so the cache can rebuild it after the response;
@@ -86,8 +155,13 @@ function core_query_properties(
 	$offset = ( $current_page - 1 ) * $limit;
 
 	$joins  = array();
-	$where  = array( 'p.post_type = %s', 'p.post_status = %s' );
-	$params = array( 'property', 'publish' );
+	$where  = array( 'p.post_type = %s' );
+	$params = array( 'property' );
+
+	if ( empty( $args['draft'] ) ) {
+		$where[]  = 'p.post_status = %s';
+		$params[] = 'publish';
+	}
 
 	if ( ! empty( $_REQUEST['available'] ) && 'all' !== $_REQUEST['available'] ) {
 		if ( 'available_immediately' === $_REQUEST['available'] ) {
@@ -145,13 +219,10 @@ function core_query_properties(
 		$params[] = $location;
 	}
 
-	//JUST properties with units
-	if ( ! $skip_filters ) {
-		$joins[] = "
-			INNER JOIN {$wpdb->postmeta} AS pm_units_count
+	$joins[] = "INNER JOIN {$wpdb->postmeta} AS pm_units_count
 				ON pm_units_count.post_id = p.ID
-				AND pm_units_count.meta_key = 'units_count'
-		";
+				AND pm_units_count.meta_key = 'units_count'";
+	if ( ! $skip_filters ) {
 		$where[] = "CAST(pm_units_count.meta_value AS UNSIGNED) > 0";
 	}
 
@@ -237,7 +308,7 @@ function core_query_properties(
 		SELECT 
 			p.ID,
 			p.post_title,
-			p.post_author,
+			p.post_author AS author_id,
 			t_location.term_id AS location_term_id,
 			t_location.name AS location_name,
 			pm_label_delivery.meta_value AS delivery_date,

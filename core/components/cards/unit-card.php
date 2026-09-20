@@ -15,7 +15,7 @@ if ( empty( $unit ) ) {
 
 $template = $args['template'] ?? 'unit-card';
 
-$is_author = 0 !== $unit['author_id'] && $unit['author_id'] === get_current_user_id();
+$is_author = 0 !== $unit['author_id'] && (int) $unit['author_id'] === get_current_user_id();
 $is_draft  = 'draft' === $unit['post_status'];
 
 get_component_template(

@@ -66,6 +66,7 @@ function get_units( $listing_type = '', int $limit = 25, $args = array() ): arra
 		$listing_type = sanitize_text_field( wp_unslash( $_REQUEST['listing_type'] ) );
 	}
 	$request_params .= $listing_type ?? '';
+	$request_params .= wp_json_encode( $args );
 	$cache_key      = md5( 'units_' . $current_language . '_' . (string) $limit . (string) $current_page . $request_params );
 
 	static $memo = array();
@@ -120,8 +121,13 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 	//TODO for more optimization we can split it by two queries, one for just ids and second for loading all data for this 20
 
 	$joins  = array( "LEFT JOIN {$wpdb->postmeta} AS pm_property ON pm_property.post_id = u.ID AND pm_property.meta_key = 'property'" );
-	$where  = array( 'u.post_type = %s', 'u.post_status = %s' );
-	$params = array( 'unit', 'publish' );
+	$where  = array( 'u.post_type = %s' );
+	$params = array( 'unit' );
+
+	if ( empty( $args['draft'] ) ) {
+		$where[]  = 'u.post_status = %s';
+		$params[] = 'publish';
+	}
 
 	$joins[] = "LEFT JOIN {$wpdb->posts} AS p_property ON p_property.ID = CAST(pm_property.meta_value AS UNSIGNED)";
 
@@ -297,6 +303,25 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 		$params[] = (int) $args['property_id'];
 	}
 
+	if ( ! empty( $args['author_id'] ) ) {
+		$author_id = (int) $args['author_id'];
+		if ( $author_id > 0 ) {
+			$where[]  = 'u.post_author = %d';
+			$params[] = $author_id;
+		}
+	}
+
+	if ( ! empty( $args['unit_ids'] ) ) {
+		$unit_ids = array_values( array_unique( array_filter( array_map( 'intval', (array) $args['unit_ids'] ) ) ) );
+
+		if ( empty( $unit_ids ) ) {
+			$where[] = '1 = 0';
+		} else {
+			$where[] = 'u.ID IN (' . implode( ',', array_fill( 0, count( $unit_ids ), '%d' ) ) . ')';
+			$params  = array_merge( $params, $unit_ids );
+		}
+	}
+
 	$join_sql  = implode( "\n", $joins );
 	$where_sql = implode( "\nAND ", $where );
 	$sql       = "
@@ -344,8 +369,7 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 		$params[] = (int) $offset;
 	}
 
-	$query = $wpdb->prepare( $sql, $params );
-
+	$query       = $wpdb->prepare( $sql, $params );
 	$units_posts = $wpdb->get_results( $query, ARRAY_A );
 
 	return array(

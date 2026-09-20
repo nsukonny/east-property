@@ -127,7 +127,6 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 							<?php } ?>
 
 							<?php
-							$limit = $posts_per_page;
 							foreach ( $user_units['items'] as $unit ) {
 								get_template_part(
 									'core/components/cards/unit-card',
@@ -137,18 +136,13 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 										'template' => 'unit-card',
 									)
 								);
-
-								-- $limit;
-								if ( $limit <= 0 ) {
-									break;
-								}
 							}
 
 							get_template_part(
 								'core/components/common/pagination',
 								null,
 								array(
-									'total_items'    => $user_units['total'] ?? count( $user_units ),
+									'total_items'    => $user_units['total'] ?? count( $user_units['items'] ),
 									'items_per_page' => $posts_per_page,
 								)
 							);

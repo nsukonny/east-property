@@ -14,7 +14,7 @@ $template = $args['template'] ?? 'large-card';
 
 $price     = $property['specifications']['min_price'] ?? null;
 $labels    = \Entities\Property::build_labels( $property );
-$is_author = ! empty( $property['post_author'] ) && 0 !== $property['post_author'] && (int) $property['post_author'] === get_current_user_id();
+$is_author = ! empty( $property['author_id'] ) && 0 !== $property['author_id'] && (int) $property['author_id'] === get_current_user_id();
 
 get_component_template(
 	'cards/' . $template,

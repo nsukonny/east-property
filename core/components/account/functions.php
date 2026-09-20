@@ -132,47 +132,6 @@ function core_get_unit_type_choices(): array {
 }
 
 /**
- * Get units created by current user.
- *
- * @param int $limit Items per page.
- *
- * @return array
- */
-function core_get_current_user_units( int $limit = PROPERTIES_PER_PAGE ): array {
-	if ( ! is_user_logged_in() ) {
-		return array(
-			'items' => array(),
-			'total' => 0,
-		);
-	}
-
-	$current_page = pagination_get_current_page();
-	$current_page = $current_page > 0 ? $current_page : 1;
-
-	$query = new WP_Query(
-		array(
-			'post_type'      => 'unit',
-			'post_status'    => array( 'publish', 'draft', 'pending', 'future', 'private' ),
-			'posts_per_page' => $limit,
-			'paged'          => $current_page,
-			'author'         => get_current_user_id(),
-			'orderby'        => 'date',
-			'order'          => 'DESC',
-		)
-	);
-
-	$items = array();
-	foreach ( $query->posts as $unit_post ) {
-		$items[] = new Unit( $unit_post );
-	}
-
-	return array(
-		'items' => $items,
-		'total' => (int) $query->found_posts,
-	);
-}
-
-/**
  * Get favorite units
  *
  * @param int $limit Items per page.
@@ -187,9 +146,6 @@ function core_get_current_user_favorite_units( int $limit = PROPERTIES_PER_PAGE 
 		);
 	}
 
-	$current_page = pagination_get_current_page();
-	$current_page = $current_page > 0 ? $current_page : 1;
-
 	$favorite_unit_ids = get_user_meta( get_current_user_id(), 'favorite_units', true );
 	if ( empty( $favorite_unit_ids ) ) {
 		return array(
@@ -198,17 +154,14 @@ function core_get_current_user_favorite_units( int $limit = PROPERTIES_PER_PAGE 
 		);
 	}
 
-	$items = array();
-	foreach ( $favorite_unit_ids as $unit_id ) {
-		$unit = new Unit( $unit_id );
-		if ( $unit->exists() ) {
-			$items[] = $unit;
-		}
-	}
-
-	return array(
-		'items' => $items,
-		'total' => (int) count( $items ),
+	return get_units(
+		'',
+		$limit,
+		array(
+			'unit_ids'       => array_values( $favorite_unit_ids ),
+			'specifications' => true,
+			'galleries'      => true,
+		)
 	);
 }
 
