@@ -227,18 +227,17 @@ final class Property {
 		}
 
 		$units = $this->get_units();
-		if ( empty( $units ) ) {
+		if ( empty( $units['items'] ) ) {
 			$this->middle_price = 0;
 
 			return $this->middle_price;
 		}
 
 		$price = 0;
-		foreach ( $units as $unit ) {
-			$price += $unit->get_price();
+		foreach ( $units['items'] as $unit ) {
+			$price += $unit['price'];
 		}
-
-		$this->middle_price = round( $price / count( $units ) );
+		$this->middle_price = round( $price / (int) $units['total'] );
 
 		return $this->middle_price;
 	}
@@ -278,34 +277,14 @@ final class Property {
 	 * @return array
 	 */
 	public function get_units(): array {
-		if ( ! empty( $this->units ) ) {
-			return $this->units;
-		}
-
-		$units = get_posts(
+		return get_units(
+			'',
+			100,
 			array(
-				'post_type'      => 'unit',
-				'posts_per_page' => - 1,
-				'meta_query'     => array(
-					array(
-						'key'     => 'property',
-						'value'   => $this->linked_property_ids(),
-						'compare' => 'IN',
-					),
-				),
+				'property_id' => $this->get_id(),
+				'galleries'   => true,
 			)
 		);
-
-		if ( empty( $units ) ) {
-			return array();
-		}
-
-		$this->units = array();
-		foreach ( $units as $unit ) {
-			$this->units[] = new Unit( $unit );
-		}
-
-		return $this->units;
 	}
 
 	/**
@@ -485,39 +464,39 @@ final class Property {
 		$units         = $this->get_units();
 		$grouped_units = array();
 
-		foreach ( $units as $unit ) {
-			$beds = $unit->get_beds();
+		foreach ( $units['items'] as $unit ) {
+			$beds = $unit['bedrooms'];
 			if ( ! isset( $grouped_units[ $beds ] ) ) {
 				$grouped_units[ $beds ] = array(
 					'beds'      => $beds,
-					'min_baths' => $unit->get_baths(),
-					'max_baths' => $unit->get_baths(),
-					'min_area'  => $unit->get_area(),
-					'max_area'  => $unit->get_area(),
-					'price'     => $unit->get_price(),
+					'min_baths' => $unit['bathrooms'],
+					'max_baths' => $unit['bathrooms'],
+					'min_area'  => $unit['area_size'],
+					'max_area'  => $unit['area_size'],
+					'price'     => $unit['price'],
 					'units'     => array(),
 				);
 			}
 			$grouped_units[ $beds ]['units'][] = $unit;
 
-			if ( $grouped_units[ $beds ]['min_baths'] > $unit->get_baths() ) {
-				$grouped_units[ $beds ]['min_baths'] = $unit->get_baths();
+			if ( $grouped_units[ $beds ]['min_baths'] > $unit['bathrooms'] ) {
+				$grouped_units[ $beds ]['min_baths'] = $unit['bathrooms'];
 			}
 
-			if ( $grouped_units[ $beds ]['max_baths'] < $unit->get_baths() ) {
-				$grouped_units[ $beds ]['max_baths'] = $unit->get_baths();
+			if ( $grouped_units[ $beds ]['max_baths'] < $unit['bathrooms'] ) {
+				$grouped_units[ $beds ]['max_baths'] = $unit['bathrooms'];
 			}
 
-			if ( $grouped_units[ $beds ]['min_area'] > $unit->get_area() ) {
-				$grouped_units[ $beds ]['min_area'] = $unit->get_area();
+			if ( $grouped_units[ $beds ]['min_area'] > $unit['area_size'] ) {
+				$grouped_units[ $beds ]['min_area'] = $unit['area_size'];
 			}
 
-			if ( $grouped_units[ $beds ]['max_area'] < $unit->get_area() ) {
-				$grouped_units[ $beds ]['max_area'] = $unit->get_area();
+			if ( $grouped_units[ $beds ]['max_area'] < $unit['area_size'] ) {
+				$grouped_units[ $beds ]['max_area'] = $unit['area_size'];
 			}
 
-			if ( $grouped_units[ $beds ]['price'] > $unit->get_price() ) {
-				$grouped_units[ $beds ]['price'] = $unit->get_price();
+			if ( $grouped_units[ $beds ]['price'] > $unit['price'] ) {
+				$grouped_units[ $beds ]['price'] = $unit['price'];
 			}
 		}
 

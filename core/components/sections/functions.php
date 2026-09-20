@@ -77,8 +77,6 @@ function get_projects_count_by_locations( $locations_ids ): array {
  * @return array
  */
 function get_units_count_by_bedrooms( string $listing_type = '' ): array {
-	global $wpdb;
-
 	$current_language = '';
 	if ( function_exists( 'pll_current_language' ) ) {
 		$current_language = (string) pll_current_language( 'slug' );
@@ -88,48 +86,50 @@ function get_units_count_by_bedrooms( string $listing_type = '' ): array {
 		}
 	}
 
-	$transient_key = 'units_count_by_bedrooms_' . md5( $listing_type . '|' . $current_language );
+	$cache_key = md5( 'units_count_by_bedrooms_' . $listing_type . $current_language );
 
-	return core_cache_remember(
-		$transient_key,
-		static function () use ( $listing_type, $current_language ) {
-			global $wpdb;
+	$cached = wp_cache_get( $cache_key, 'core' );
+	if ( false !== $cached ) {
+		return $cached;
+	}
 
-			$joins  = array(
-				"INNER JOIN {$wpdb->postmeta} AS pm_beds
+	global $wpdb;
+
+	$joins  = array(
+		"INNER JOIN {$wpdb->postmeta} AS pm_beds
 					ON pm_beds.post_id = u.ID
 					AND pm_beds.meta_key = 'bedrooms'",
-			);
-			$where  = array( 'u.post_type = %s', 'u.post_status = %s' );
-			$params = array( 'unit', 'publish' );
+	);
+	$where  = array( 'u.post_type = %s', 'u.post_status = %s' );
+	$params = array( 'unit', 'publish' );
 
-			if ( ! empty( $listing_type ) && 'all' !== $listing_type ) {
-				$joins[]  = "
+	if ( ! empty( $listing_type ) && 'all' !== $listing_type ) {
+		$joins[]  = "
 					INNER JOIN {$wpdb->postmeta} AS pm_listing_type
 						ON pm_listing_type.post_id = u.ID
 						AND pm_listing_type.meta_key = 'listing_type'
 				";
-				$where[]  = 'pm_listing_type.meta_value = %s';
-				$params[] = sanitize_text_field( wp_unslash( $listing_type ) );
-			}
+		$where[]  = 'pm_listing_type.meta_value = %s';
+		$params[] = sanitize_text_field( wp_unslash( $listing_type ) );
+	}
 
-			// Add polylang support.
-			if ( '' !== $current_language ) {
-				$joins[]  = "INNER JOIN {$wpdb->term_relationships} AS pll_language_relation
+	// Add polylang support.
+	if ( '' !== $current_language ) {
+		$joins[]  = "INNER JOIN {$wpdb->term_relationships} AS pll_language_relation
 		    					ON pll_language_relation.object_id = u.ID";
-				$joins[]  = "INNER JOIN {$wpdb->term_taxonomy} AS pll_language_taxonomy
+		$joins[]  = "INNER JOIN {$wpdb->term_taxonomy} AS pll_language_taxonomy
 								ON pll_language_taxonomy.term_taxonomy_id =
 								   pll_language_relation.term_taxonomy_id
 								AND pll_language_taxonomy.taxonomy = 'language'";
-				$joins[]  = "INNER JOIN {$wpdb->terms} AS pll_language
+		$joins[]  = "INNER JOIN {$wpdb->terms} AS pll_language
 								ON pll_language.term_id = pll_language_taxonomy.term_id";
-				$where[]  = 'pll_language.slug = %s';
-				$params[] = $current_language;
-			}
+		$where[]  = 'pll_language.slug = %s';
+		$params[] = $current_language;
+	}
 
-			$join_sql  = implode( "\n", $joins );
-			$where_sql = implode( "\nAND ", $where );
-			$sql       = "
+	$join_sql  = implode( "\n", $joins );
+	$where_sql = implode( "\nAND ", $where );
+	$sql       = "
 				SELECT
 					pm_beds.meta_value AS bedrooms,
 					COUNT(DISTINCT u.ID) AS count
@@ -140,18 +140,13 @@ function get_units_count_by_bedrooms( string $listing_type = '' ): array {
 				ORDER BY CAST(pm_beds.meta_value AS UNSIGNED)
 			";
 
-			$results     = $wpdb->get_results( $wpdb->prepare( $sql, $params ), ARRAY_A );
-			$units_count = array();
-			foreach ( (array) $results as $row ) {
-				$units_count[ (int) $row['bedrooms'] ] = (int) $row['count'];
-			}
+	$results     = $wpdb->get_results( $wpdb->prepare( $sql, $params ), ARRAY_A );
+	$units_count = array();
+	foreach ( (array) $results as $row ) {
+		$units_count[ (int) $row['bedrooms'] ] = (int) $row['count'];
+	}
 
-			return $units_count;
-		},
-		HOUR_IN_SECONDS,
-		array(
-			'respect_dev' => true,
-			'keep_empty'  => true,
-		)
-	);
+	wp_cache_set( $cache_key, $units_count, 'core', DAY_IN_SECONDS );
+
+	return $units_count;
 }

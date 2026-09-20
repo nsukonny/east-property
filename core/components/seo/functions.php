@@ -453,8 +453,8 @@ function core_paginated_listing( string $template ): ?array {
 			$developer  = new Developer( get_queried_object_id() );
 			$properties = $developer->get_properties();
 			$listing    = array(
-				'items'    => array_slice( $properties, ( $page - 1 ) * $per_page, $per_page ),
-				'total'    => count( $properties ),
+				'items'    => $properties['items'] ?? array(),
+				'total'    => (int) ( $properties['total'] ?? 0 ),
 				'per_page' => $per_page,
 			);
 			break;

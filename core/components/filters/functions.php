@@ -1030,7 +1030,7 @@ function get_map_properties_json( array $properties, bool $skip_empty = false ):
 	$properties_json = array();
 
 	foreach ( $properties as $property ) {
-		$is_empty        = $skip_empty && 0 <= $property['units_count'];
+		$is_empty        = $skip_empty && 0 >= (int) $property['units_count'];
 		$is_empty_coords = empty( $property['latitude'] ) || empty( $property['longitude'] );
 		if ( $is_empty || $is_empty_coords ) {
 			continue;

@@ -61,7 +61,11 @@ if ( ! is_user_logged_in() ) {
 
 $estate_user = new Estate_User( $current_user );
 if ( isset( $_GET['action'] ) && in_array( $_GET['action'], array( 'add_unit', 'edit_unit' ) ) ) {
-	$properties = get_properties( 5000, true );
+	$properties = get_properties( 5000, true, array(
+		'author_id'      => get_current_user_id(),
+		'specifications' => true,
+		'galleries'      => true,
+	) );
 	if ( ! empty( $properties['items'] ) ) {
 		$properties = $properties['items'];
 	}

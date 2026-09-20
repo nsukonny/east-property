@@ -49,6 +49,18 @@ while ( have_posts() ) {
 	$latitude             = $property?->get_latitude();
 	$longitude            = $property?->get_longitude();
 	$payment_plans        = $property?->get_payment_plans() ?? array();
+
+	$all_property_units = get_units(
+		'',
+		100,
+		array(
+			'property_id' => $property?->get_id(),
+			'galleries'   => true,
+		)
+	);
+
+	shuffle( $all_property_units['items'] );
+	$featured_units = array_slice( $all_property_units['items'], 0, 4 );
 	?>
 	<section class="single-items">
 		<div class="container">
@@ -318,7 +330,6 @@ while ( have_posts() ) {
 					<?php } ?>
 
 					<?php
-					$featured_units = $property?->get_random_units( 3 );
 					if ( ! empty( $featured_units ) ) {
 						$all_units_link = core_home_url( '/off-plan' );
 						get_component_template(

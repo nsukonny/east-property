@@ -387,8 +387,9 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 												<input type="text"
 													   id="whatsapp_<?php echo esc_attr( $language_slug ); ?>"
 													   name="whatsapp[<?php echo esc_attr( $language_slug ); ?>]"
-													   value="<?php echo esc_attr( $user_entity->get_whatsapp( $language_slug,
+													   value="<?php echo esc_attr( $user_entity->get_whatsapp(
 														   '',
+														   $language_slug,
 														   false ) ); ?>"
 													   placeholder="971509670043">
 											</label>

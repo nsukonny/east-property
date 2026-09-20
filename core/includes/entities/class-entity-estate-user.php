@@ -158,7 +158,7 @@ final class Estate_User {
 	 *
 	 * @return string
 	 */
-	public function get_whatsapp( string $language = '', string $text = '', bool $is_link = true ): string {
+	public function get_whatsapp( string $text = '', string $language = '', bool $is_link = true ): string {
 		if ( empty( $language ) && function_exists( 'pll_current_language' ) ) {
 			$language = pll_current_language();
 		}

@@ -17,7 +17,7 @@ function get_properties( int $limit = - 1, bool $skip_filters = false, array $ar
 
 	$request_params = $_REQUEST['location'] ?? '';
 	$request_params .= $_REQUEST['available'] ?? '';
-	$request_params .= $_REQUEST['developer'] ?? '';
+	$request_params .= $args['developer'] ?? $_REQUEST['developer'] ?? '';
 	$cache_key      = 'properties_' . $current_language . '_'
 	                  . md5( (string) $limit . (string) $skip_filters . (string) $current_page . wp_json_encode( $args ) . $request_params );
 
@@ -177,14 +177,16 @@ function core_query_properties(
 		}
 	}
 
-	if ( ! empty( $_REQUEST['developer'] ) && 'all' !== $_REQUEST['developer'] ) {
-		$developer_filter = (int) sanitize_text_field( wp_unslash( $_REQUEST['developer'] ) );
+	$developer = $args['developer'] ?? $_REQUEST['developer'] ?? '';
+	if ( ! empty( $developer ) && 'all' !== $developer ) {
+		$developer_filter = (int) sanitize_text_field( wp_unslash( $developer ) );
 		if ( ! $skip_filters && $developer_filter > 0 ) {
-			$joins[]  = "
+			$joins[] = "
 				INNER JOIN {$wpdb->postmeta} AS pm_developer
 					ON pm_developer.post_id = p.ID
-					AND pm_developer.meta_key = 'developer'
+					AND pm_developer.meta_key = 'developer_rel'
 			";
+
 			$where[]  = 'CAST(pm_developer.meta_value AS UNSIGNED) = %d';
 			$params[] = $developer_filter;
 		}
@@ -336,15 +338,15 @@ function ajax_get_map_property(): void {
 
 	$units          = array();
 	$property_units = $property->get_units();
-	if ( ! empty( $property_units ) ) {
-		foreach ( $property_units as $unit ) {
+	if ( ! empty( $property_units['items'] ) ) {
+		foreach ( $property_units['items'] as $unit ) {
 			$units[] = array(
-				'id'    => $unit->get_id(),
-				'price' => $unit->get_price_html(),
-				'image' => $unit->get_gallery()[0]['sizes']['medium'] ?? '',
-				'beds'  => $unit->get_beds(),
-				'area'  => $unit->get_area(),
-				'url'   => $unit->get_url(),
+				'id'    => $unit['ID'],
+				'price' => get_price_html( $unit['price'] ),
+				'image' => $unit['gallery'][0]['sizes']['medium'] ?? '',
+				'beds'  => $unit['bedrooms'],
+				'area'  => $unit['area_size'],
+				'url'   => $unit['url'],
 			);
 		}
 	}
@@ -391,111 +393,79 @@ add_action( 'wp_ajax_nopriv_get_map_property', 'ajax_get_map_property' );
 function get_properties_by_count_of_units(): array {
 	global $wpdb;
 
-	// Polylang держит язык в таксономии `language`, а функция работает сырым
-	// SQL — плагин её не фильтрует, и язык приходится добавлять руками. Без
-	// этого счётчик складывал языки: у проекта #921 значилось 28 юнитов, хотя
-	// это 27 английских плюс один русский.
-	$language = function_exists( 'pll_current_language' )
-		? (string) pll_current_language( 'slug' )
-		: '';
+	$current_language = core_get_current_language();
 
-	// Ключ кэша обязан включать язык. Иначе первый прогретый язык отдавался бы
-	// второму, и подмена была бы молчаливой — тот же приём уже применён для
-	// units_count_by_bedrooms_ в core_flush_listing_caches().
-	$cache_key = 'properties_by_count_of_units' . ( '' === $language ? '' : '_' . $language );
+	$cache_key = md5( 'properties_by_count_of_units' . $current_language );
 
-	$results = core_cache_remember(
-		$cache_key,
-		static function () use ( $language ) {
-			global $wpdb;
+	static $memo = array();
+	if ( isset( $memo[ $cache_key ] ) ) {
+		return $memo[ $cache_key ];
+	}
 
-			$language_join = '';
-			$params        = array();
+	$properties = wp_cache_get( $cache_key, 'properties' );
+	if ( false !== $properties ) {
+		$memo[ $cache_key ] = $properties;
 
-			if ( '' !== $language ) {
-				$language_join = "
+		return $properties;
+	}
+
+	$params = array();
+
+	$joins = "
 				JOIN {$wpdb->term_relationships} tr ON tr.object_id = u.ID
 				JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id = tr.term_taxonomy_id AND tt.taxonomy = 'language'
 				JOIN {$wpdb->terms} t ON t.term_id = tt.term_id AND t.slug = %s
 			";
 
-				$params[] = $language;
-			}
+	$params[] = $current_language;
 
-			// Соединения внутренние, а не LEFT: считаем только существующие юниты
-			// нужного языка, и HAVING остаётся как страховка на случай, если кто-то
-			// вернёт LEFT обратно.
-			$query = "
-			SELECT p.ID, COUNT(u.ID) as units_count
+	$joins .= "
+		LEFT JOIN {$wpdb->postmeta} AS pm_latitude
+			ON pm_latitude.post_id = p.ID
+			   AND pm_latitude.meta_key = 'latitude'
+		LEFT JOIN {$wpdb->postmeta} AS pm_longitude
+			ON pm_longitude.post_id = p.ID
+			   AND pm_longitude.meta_key = 'longitude'
+	";
+
+	$query = "
+			SELECT 
+			    p.ID, 
+			    COUNT(u.ID) as units_count,
+				p.post_title,
+				pm_latitude.meta_value AS latitude,
+				pm_longitude.meta_value AS longitude
 			FROM {$wpdb->posts} p
 				JOIN {$wpdb->postmeta} pm ON pm.meta_value = p.ID AND pm.meta_key = 'property'
 				JOIN {$wpdb->posts} u ON u.ID = pm.post_id AND u.post_type = 'unit' AND u.post_status = 'publish'
-				{$language_join}
+				{$joins}
 			WHERE p.post_type = 'property' AND p.post_status = 'publish'
 			GROUP BY p.ID
 			HAVING units_count > 0
 			ORDER BY units_count DESC
 		";
 
-			if ( ! empty( $params ) ) {
-				$query = $wpdb->prepare( $query, $params );
-			}
+	if ( ! empty( $params ) ) {
+		$query = $wpdb->prepare( $query, $params );
+	}
 
-			$results = $wpdb->get_results( $query, ARRAY_A );
+	$results = $wpdb->get_results( $query, ARRAY_A );
 
-			return $results;
-		},
-		HOUR_IN_SECONDS,
-		array( 'keep_empty' => true )
+	_prime_post_caches(
+		array_column( $results, 'ID' ),
+		false,
+		false
 	);
 
-	if ( empty( $results ) ) {
-		return array();
+	foreach ( $results as $key => $row ) {
+		$results[ $key ]['url'] = get_the_permalink( $row['ID'] );
 	}
 
-	// Юнит ссылается на проект того языка, на котором его заводили: измерено —
-	// 64 русских юнита указывают на английский проект и только один на русский.
-	// Поэтому после подсчёта проект переводится на текущий язык, иначе русская
-	// главная выводила бы английские карточки с русскими счётчиками.
-	$counts = array();
+	wp_cache_set( $cache_key, $results, 'properties' );
 
-	_prime_post_caches( array_map( 'intval', wp_list_pluck( $results, 'ID' ) ), true, false );
+	$memo[ $cache_key ] = $results;
 
-	foreach ( $results as $result ) {
-		$property_id = (int) $result['ID'];
-
-		if ( '' !== $language && function_exists( 'pll_get_post' ) ) {
-			$translated = (int) pll_get_post( $property_id, $language );
-
-			// Перевода нет — лучше пропустить проект, чем показать его на
-			// чужом языке.
-			if ( 0 === $translated ) {
-				continue;
-			}
-
-			$property_id = $translated;
-		}
-
-		// Складываем, а не перезаписываем: если часть юнитов указывает на
-		// английский проект, а часть на его русский перевод, после перевода
-		// обе группы сходятся в одну запись.
-		$counts[ $property_id ] = ( $counts[ $property_id ] ?? 0 ) + (int) $result['units_count'];
-	}
-
-	// Слияние могло нарушить порядок, а функция обещает сортировку по числу
-	// юнитов.
-	arsort( $counts );
-
-	_prime_post_caches( array_keys( $counts ), true, false );
-
-	$properties = array();
-	foreach ( $counts as $property_id => $units_count ) {
-		$property = new \Entities\Property( $property_id );
-		$property->set_units_count( $units_count );
-		$properties[] = $property;
-	}
-
-	return $properties;
+	return $results;
 }
 
 /**

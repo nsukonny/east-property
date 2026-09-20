@@ -36,7 +36,7 @@ get_component_template(
 		'amenities' => Unit::build_amenities( $unit ),
 		'edit_link' => $is_author ? core_home_url( '/account?action=edit_unit&id=' . $unit['ID'] ) : '',
 		'is_can_boost' => $is_author && ! $is_draft,
-		'is_favorite' => Unit::is_favorite( $unit['ID'] ),
+		'is_favorite' => Unit::is_favorite( (int) $unit['ID'] ),
 		'broker' => ! empty( $unit['author_id'] ) ? new \Entities\Estate_User( $unit['author_id'] ) : null,
 	)
 );

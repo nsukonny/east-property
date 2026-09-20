@@ -75,13 +75,12 @@ function get_units( $listing_type = '', int $limit = 25, $args = array() ): arra
 
 	$units = wp_cache_get( $cache_key, 'units' );
 	if ( false !== $units ) {
-		$units['items']     = core_mark_favorite_units( $units['items'] ?? array() );
 		$memo[ $cache_key ] = $units;
 
 		return $units;
 	}
 
-	$units = core_query_units( $listing_type, $limit, $current_page, $current_language );
+	$units = core_query_units( $listing_type, $limit, $current_page, $current_language, $args );
 
 	$property_ids = wp_list_pluck( $units['items'], 'property_id' );
 	$unit_ids     = wp_list_pluck( $units['items'], 'ID' );
@@ -102,31 +101,9 @@ function get_units( $listing_type = '', int $limit = 25, $args = array() ): arra
 
 	wp_cache_set( $cache_key, $units, 'units', DAY_IN_SECONDS );
 
-	$units['items']     = core_mark_favorite_units( $units['items'] );
 	$memo[ $cache_key ] = $units;
 
 	return $units;
-}
-
-/**
- * Mark the rows the current user keeps in favorites
- *
- * Stays outside the cached payload: the listing is shared by every visitor,
- * while the flag belongs to one of them.
- *
- * @return array
- */
-function core_mark_favorite_units( array $items ): array {
-	$favorites = is_user_logged_in()
-		? get_user_meta( get_current_user_id(), 'favorite_units', true )
-		: array();
-	$favorites = is_array( $favorites ) ? array_map( 'intval', $favorites ) : array();
-
-	foreach ( $items as $key => $item ) {
-		$items[ $key ]['is_favorite'] = in_array( (int) ( $item['ID'] ?? 0 ), $favorites, true );
-	}
-
-	return $items;
 }
 
 /**
@@ -137,13 +114,8 @@ function core_mark_favorite_units( array $items ): array {
  *
  * @return array
  */
-function core_query_units( $listing_type, $limit, $current_page, $current_language ): array {
+function core_query_units( $listing_type, $limit, $current_page, $current_language, $args ): array {
 	global $wpdb;
-
-	if ( 0 > $limit ) {
-		$limit = PROPERTIES_PER_PAGE;
-	}
-	$offset = ( $current_page - 1 ) * $limit;
 
 	//TODO for more optimization we can split it by two queries, one for just ids and second for loading all data for this 20
 
@@ -309,7 +281,6 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 
 	//add polylang support
 	if ( function_exists( 'pll_current_language' ) ) {
-		$lang    = pll_current_language();
 		$joins[] = "INNER JOIN {$wpdb->term_relationships} AS pll_language_relation
     					ON pll_language_relation.object_id = u.ID";
 		$joins[] = "INNER JOIN {$wpdb->term_taxonomy} AS pll_language_taxonomy
@@ -318,7 +289,12 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 						AND pll_language_taxonomy.taxonomy = 'language'";
 		$joins[] = "INNER JOIN {$wpdb->terms} AS pll_language
 						ON pll_language.term_id = pll_language_taxonomy.term_id
-						AND pll_language.slug = '{$lang}'";
+						AND pll_language.slug = '{$current_language}'";
+	}
+
+	if ( ! empty( $args['property_id'] ) ) {
+		$where[]  = 'CAST(pm_property.meta_value AS UNSIGNED) = %d';
+		$params[] = (int) $args['property_id'];
 	}
 
 	$join_sql  = implode( "\n", $joins );
@@ -358,10 +334,15 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 		{$join_sql}
 		WHERE {$where_sql}
 		ORDER BY pm_boost_score.meta_value DESC
-		LIMIT %d OFFSET %d
 	";
-	$params[]  = (int) $limit;
-	$params[]  = (int) $offset;
+
+	if ( 0 < $limit ) {
+		$sql .= " LIMIT %d OFFSET %d";
+
+		$offset   = ( $current_page - 1 ) * $limit;
+		$params[] = (int) $limit;
+		$params[] = (int) $offset;
+	}
 
 	$query = $wpdb->prepare( $sql, $params );
 

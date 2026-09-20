@@ -9,20 +9,8 @@ $property    = $args['property'] ?? array();
 $property_id = $property['ID'] ?? '';
 $is_single   = 'single' === $mode;
 
-/*
- * Accepts false, 'false' and everything in between: callers pass a boolean while
- * the old default here was the string 'false', and the script only ever treated
- * the literal 'false' as off — so a sidebar switched off in PHP stayed on.
- */
 $show_sidebar = filter_var( $args['show_sidebar'] ?? false, FILTER_VALIDATE_BOOLEAN );
-
-/*
- * Falls back on an empty list, not only on a missing one: the component wrapper
- * always forwards a 'properties' key and hands over an empty array when the
- * caller passed none, so the null coalescing fallback never fired and a single
- * project's map was built from nothing.
- */
-$properties = $args['properties'] ?? array();
+$properties   = $args['properties'] ?? array();
 
 if ( empty( $properties['items'] ) && $property ) {
 	$properties = array( 'items' => array( $property ) );

@@ -154,8 +154,9 @@ $languages      = get_all_languages();
 												<input type="text"
 													   id="whatsapp_<?php echo esc_attr( $language_slug ); ?>"
 													   name="whatsapp[<?php echo esc_attr( $language_slug ); ?>]"
-													   value="<?php echo esc_attr( $client->get_whatsapp( $language_slug,
+													   value="<?php echo esc_attr( $client->get_whatsapp(
 														   '',
+														   $language_slug,
 														   false ) ); ?>"
 													   placeholder="971509670043">
 											</label>
