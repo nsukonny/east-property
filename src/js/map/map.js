@@ -5,7 +5,7 @@ import {Navigation} from 'swiper/modules';
 import {MAP_CONFIG} from './config';
 import {renderBuildingCard} from './html';
 
-const {__} = window.wp.i18n;
+const {__, sprintf} = window.wp.i18n;
 
 /**
  * Start one map.
@@ -605,12 +605,15 @@ export class PropertyMap {
 
 				const element = document.createElement('div');
 				element.className = 'map-marker map-marker--cluster';
-				element.innerHTML = `<span>${units || count}</span>`;
+				// Без подмены на count: раньше кластер с нулевой суммой показывал
+				// число проектов, и число в метке молча меняло смысл.
+				element.innerHTML = `<span>${units}</span>`;
 
 				return new AdvancedMarkerElement({
 					position,
 					content: element,
-					title: `${count} ${__('projects on the map', 'east-property')}`,
+					/* translators: 1: number of projects in the cluster, 2: number of units in them. */
+					title: sprintf( __( '%1$d projects · %2$d units', 'east-property' ), count, units ),
 					// Кластер должен лежать выше одиночных булавок: без этого
 					// булавка с теми же координатами перекрывает его и по группе
 					// невозможно щёлкнуть.

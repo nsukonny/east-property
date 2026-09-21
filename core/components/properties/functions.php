@@ -625,6 +625,7 @@ function ajax_get_map_property(): void {
 
 	$units          = array();
 	$property_units = $property->get_units();
+	$units_total    = (int) ( $property_units['total'] ?? 0 );
 	if ( ! empty( $property_units['items'] ) ) {
 		foreach ( $property_units['items'] as $unit ) {
 			$units[] = array(
@@ -652,7 +653,7 @@ function ajax_get_map_property(): void {
 			'title'           => $property->get_title(),
 			'location'        => $property->get_location()->name ?? '',
 			'gallery'         => $prop_images,
-			'units_available' => count( $units ),
+			'units_available' => $units_total,
 			'price_from'      => $property->get_price_html(),
 			'units'           => $units,
 			'developer_name'  => $property->get_developer()?->get_title() ?? '',

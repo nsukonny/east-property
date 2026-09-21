@@ -49,12 +49,12 @@ msgid "Go to properties"
 msgstr "Перейти к объектам"
 
 #: core/components/account/functions.php:125
-#: core/components/filters/functions.php:688
+#: core/components/filters/functions.php:690
 msgid "Apartments"
 msgstr "Квартиры"
 
 #: core/components/account/functions.php:126
-#: core/components/filters/functions.php:704
+#: core/components/filters/functions.php:706
 msgid "Villas"
 msgstr "Виллы"
 
@@ -67,12 +67,12 @@ msgid "Penthouses"
 msgstr "Пентхаусы"
 
 #: core/components/account/functions.php:129
-#: core/components/filters/functions.php:696
+#: core/components/filters/functions.php:698
 msgid "Houses"
 msgstr "Дома"
 
 #: core/components/account/functions.php:130
-#: core/components/filters/functions.php:712
+#: core/components/filters/functions.php:714
 msgid "Offices"
 msgstr "Офисы"
 
@@ -381,19 +381,19 @@ msgid "Mailer"
 msgstr "Почтовая рассылка"
 
 #: core/components/filters/functions.php:252
-#: core/components/filters/functions.php:821
-#: core/template-parts/filters/search-tabs.php:155
+#: core/components/filters/functions.php:823
+#: core/template-parts/filters/search-tabs.php:157
 msgid "Any Developers"
 msgstr "Любые застройщики"
 
 #: core/components/filters/functions.php:269
-#: core/components/filters/functions.php:624
-#: core/components/filters/functions.php:641
+#: core/components/filters/functions.php:626
+#: core/components/filters/functions.php:643
 msgid "Available"
 msgstr "Доступно"
 
 #: core/components/filters/functions.php:273
-#: core/components/filters/functions.php:628
+#: core/components/filters/functions.php:630
 msgid "In Construction"
 msgstr "Строится"
 
@@ -402,7 +402,7 @@ msgid "All Years"
 msgstr "Все годы"
 
 #: core/components/filters/functions.php:293
-#: core/components/filters/functions.php:637
+#: core/components/filters/functions.php:639
 #: core/includes/registers/post-types/locations.php:10
 #: core/template-parts/account/edit-property.php:188
 #: core/template-parts/filters/result-filters.php:59
@@ -424,23 +424,23 @@ msgid "Completion Year After"
 msgstr "Год сдачи ЖК"
 
 #: core/components/filters/functions.php:302
-#: core/components/filters/functions.php:645
+#: core/components/filters/functions.php:647
 msgid "Price (AED)"
 msgstr "Цена (AED)"
 
 #: core/components/filters/functions.php:309
-#: core/components/filters/functions.php:652
+#: core/components/filters/functions.php:654
 #: core/includes/entities/class-entity-property.php:630
 msgid "Property Type"
 msgstr "Тип объекта"
 
 #: core/components/filters/functions.php:318
-#: core/components/filters/functions.php:661
+#: core/components/filters/functions.php:663
 #: core/includes/registers/post-types/developers.php:11
 #: core/includes/registers/post-types/developers.php:37
 #: core/template-parts/account/edit-property.php:125
 #: core/template-parts/filters/result-filters.php:262
-#: core/template-parts/filters/search-tabs.php:153
+#: core/template-parts/filters/search-tabs.php:155
 #: src/js/map/html.js:58
 msgid "Developer"
 msgstr "Застройщик"
@@ -455,14 +455,14 @@ msgstr "Площадь"
 msgid "Available immediately"
 msgstr "Готовые проекты"
 
-#: core/components/filters/functions.php:344
+#: core/components/filters/functions.php:345
 #: core/template-parts/account/edit-unit.php:268
-#: core/template-parts/filters/search-tabs.php:68
+#: core/template-parts/filters/search-tabs.php:70
 msgid "Bedrooms"
 msgstr "Количество спален"
 
-#: core/components/filters/functions.php:348
-#: core/template-parts/filters/search-tabs.php:132
+#: core/components/filters/functions.php:349
+#: core/template-parts/filters/search-tabs.php:134
 msgid "District"
 msgstr "Район"
 
@@ -470,7 +470,7 @@ msgstr "Район"
 msgid "In construction"
 msgstr "На этапе строительства"
 
-#: core/components/filters/functions.php:378
+#: core/components/filters/functions.php:380
 #: core/components/units/units-by-beds.php:78
 #: core/includes/entities/class-entity-property.php:109
 #: core/includes/entities/class-entity-property.php:115
@@ -487,7 +487,7 @@ msgstr "На этапе строительства"
 msgid "Beds"
 msgstr "Спальни"
 
-#: core/components/filters/functions.php:382
+#: core/components/filters/functions.php:384
 #: core/includes/entities/class-entity-property.php:113
 #: core/includes/entities/class-entity-property.php:120
 #: core/includes/entities/class-entity-unit.php:204
@@ -498,7 +498,7 @@ msgstr "Спальни"
 msgid "Studio"
 msgstr "Студия"
 
-#: core/components/filters/functions.php:431
+#: core/components/filters/functions.php:433
 #: core/includes/entities/class-entity-property.php:127
 #: core/includes/entities/class-entity-property.php:131
 #: core/includes/entities/class-entity-unit.php:217
@@ -507,35 +507,35 @@ msgstr "Студия"
 msgid "Baths"
 msgstr "Ванных"
 
-#: core/components/filters/functions.php:620
+#: core/components/filters/functions.php:622
 msgid "Any year"
 msgstr "Любой год"
 
-#: core/components/filters/functions.php:680
+#: core/components/filters/functions.php:682
 msgid "Any"
 msgstr "Любой"
 
-#: core/components/filters/functions.php:867
-#: core/template-parts/filters/search-tabs.php:134
+#: core/components/filters/functions.php:869
+#: core/template-parts/filters/search-tabs.php:136
 msgid "Any Locations"
 msgstr "Любые локации"
 
-#: core/components/filters/functions.php:1002
-#: core/template-parts/search-results/properties-list.php:70
+#: core/components/filters/functions.php:1004
+#: core/template-parts/search-results/properties-list.php:71
 #: core/template-parts/search-results/tabs.php:63
 #: core/template-parts/search-results/units-list.php:64
 msgid "Items not found"
 msgstr "Элементы не найдены"
 
-#: core/components/filters/functions.php:1013
-#: core/components/filters/functions.php:1117
+#: core/components/filters/functions.php:1015
+#: core/components/filters/functions.php:1119
 msgid "%s property found"
 msgid_plural "%s properties found"
 msgstr[0] "%s объект найден"
 msgstr[1] "%s объекта найдено"
 msgstr[2] "%s объектов найдено"
 
-#: core/components/filters/functions.php:1105
+#: core/components/filters/functions.php:1107
 msgid "Properties not found"
 msgstr "Объекты не найдены"
 
@@ -939,7 +939,7 @@ msgid "Secondary"
 msgstr "Вторичное"
 
 #: core/components/units/functions.php:21
-#: core/template-parts/filters/search-tabs.php:55
+#: core/template-parts/filters/search-tabs.php:57
 msgid "Distress"
 msgstr "Дистресс"
 
@@ -999,7 +999,7 @@ msgstr "Теперь вы можете воспользоваться всеми
 msgid "Email Verified"
 msgstr "Email подтвержден"
 
-#: core/components/properties/functions.php:368
+#: core/components/properties/functions.php:584
 #: core/includes/entities/class-entity-property.php:536
 #: core/includes/entities/class-entity-property.php:603
 #: core/includes/entities/class-entity-unit.php:373
@@ -1007,7 +1007,7 @@ msgstr "Email подтвержден"
 msgid "Ready"
 msgstr "Сдан"
 
-#: core/components/properties/functions.php:373
+#: core/components/properties/functions.php:589
 #: core/includes/entities/class-entity-property.php:542
 #: core/includes/entities/class-entity-unit.php:379
 #: core/includes/entities/class-entity-unit.php:447
@@ -2056,8 +2056,8 @@ msgstr "Если это были не вы, проигнорируйте это 
 
 #: core/template-parts/filters/result-filters.php:55
 #: core/template-parts/filters/result-filters.php:258
-#: core/template-parts/filters/search-tabs.php:130
-#: core/template-parts/filters/search-tabs.php:151
+#: core/template-parts/filters/search-tabs.php:132
+#: core/template-parts/filters/search-tabs.php:153
 #: core/template-parts/ui/dropdown.php:50
 msgid "Search..."
 msgstr "Поиск..."
@@ -2072,13 +2072,13 @@ msgstr "Макс. цена"
 
 #: core/template-parts/filters/result-filters.php:142
 #: core/template-parts/filters/result-filters.php:206
-#: core/template-parts/filters/search-tabs.php:111
+#: core/template-parts/filters/search-tabs.php:113
 msgid "Cancel"
 msgstr "Отмена"
 
 #: core/template-parts/filters/result-filters.php:145
 #: core/template-parts/filters/result-filters.php:209
-#: core/template-parts/filters/search-tabs.php:114
+#: core/template-parts/filters/search-tabs.php:116
 msgid "Apply"
 msgstr "Применить"
 
@@ -2091,32 +2091,32 @@ msgstr "Все"
 msgid "Max Area"
 msgstr "Макс. площадь"
 
-#: core/template-parts/filters/search-tabs.php:136
-#: core/template-parts/filters/search-tabs.php:157
+#: core/template-parts/filters/search-tabs.php:138
+#: core/template-parts/filters/search-tabs.php:159
 msgid "Dropdown arrow"
 msgstr "Стрелка выпадающего списка"
 
-#: core/template-parts/filters/search-tabs.php:170
+#: core/template-parts/filters/search-tabs.php:172
 msgid "Search"
 msgstr "Поиск"
 
-#: core/template-parts/filters/search-tabs.php:184
+#: core/template-parts/filters/search-tabs.php:183
 msgid "Distress deals are sold below market price"
 msgstr "Дистресс-объекты продаются ниже рынка"
 
-#: core/template-parts/filters/search-tabs.php:187
+#: core/template-parts/filters/search-tabs.php:186
 msgid "Owners who need a fast exit, verified by us and limited in number. These listings are not published openly — we send them out on request."
 msgstr "Собственники, которым нужен быстрый выход. Мы проверяем такие объекты, их немного, и в открытых листингах они не публикуются — присылаем по запросу."
 
-#: core/template-parts/filters/search-tabs.php:193
+#: core/template-parts/filters/search-tabs.php:192
 msgid "Explore distress deals"
 msgstr "Найти дистресс"
 
-#: core/template-parts/filters/search-tabs.php:196
+#: core/template-parts/filters/search-tabs.php:195
 msgid "Sell my property"
 msgstr "Быстрая продажа недвижимости"
 
-#: core/template-parts/filters/search-tabs.php:200
+#: core/template-parts/filters/search-tabs.php:199
 msgid "One short call: we send the current list and check your property against buyer demand."
 msgstr "Один короткий звонок: пришлём актуальный список и сверим ваш объект со спросом покупателей."
 
@@ -2152,7 +2152,7 @@ msgstr "Обычно отвечаем в течение 5–10 минут в р�
 msgid "Your information is kept strictly confidential"
 msgstr "Ваша информация хранится в строгой конфиденциальности"
 
-#: core/template-parts/properties/map.php:73
+#: core/template-parts/properties/map.php:78
 msgid "Explore Project"
 msgstr "Смотреть проект"
 
@@ -2202,13 +2202,13 @@ msgstr "Открыть страницу объекта"
 msgid "Explore a wide selection of properties across Dubai. From modern apartments and family villas to premium off-plan opportunities  in the city’s most sought-after communities. Compare prices, locations, and layouts in one place and find the property that matches your goals and budget."
 msgstr "Ознакомьтесь с широким выбором объектов недвижимости по всему Дубаю. От современных квартир и семейных вилл до элитных объектов на стадии строительства в самых востребованных районах города. Сравните цены, местоположение и планировки в одном месте и найдите объект, который соответствует вашим целям и бюджету."
 
-#: core/template-parts/search-results/properties-list.php:22
+#: core/template-parts/search-results/properties-list.php:23
 #: core/template-parts/search-results/tabs.php:16
 #: core/template-parts/search-results/units-list.php:20
 msgid "List view"
 msgstr "Список"
 
-#: core/template-parts/search-results/properties-list.php:26
+#: core/template-parts/search-results/properties-list.php:27
 #: core/template-parts/search-results/tabs.php:20
 msgid "Map view"
 msgstr "Карта"
@@ -2812,11 +2812,6 @@ msgstr "ванна"
 msgid "Selected location"
 msgstr "Выбранная точка"
 
-#: src/js/map/map.js:613
-#, fuzzy
-msgid "projects on the map"
-msgstr "проектов найдено"
-
 #: template-parts/sections/index/distress.php:16
 msgid "Distress deals in Dubai"
 msgstr "Дистресс-предложения в Дубае"
@@ -2870,7 +2865,12 @@ msgctxt "search tab"
 msgid "Available"
 msgstr "Готовые"
 
-#: core/components/filters/functions.php:355
+#: core/components/filters/functions.php:356
 msgctxt "search tab"
 msgid "In construction"
 msgstr "Строится"
+
+#. translators: 1: number of projects in the cluster, 2: number of units in them.
+#: src/js/map/map.js:616
+msgid "%1$d projects · %2$d units"
+msgstr "%1$d проектов · %2$d юнитов"
