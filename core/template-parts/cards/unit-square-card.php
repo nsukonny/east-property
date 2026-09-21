@@ -28,13 +28,13 @@ $card_classes = 'property-card' . ( ! empty( $original_price ) ? ' is-distress' 
 
 if ( ! empty( $amenities ) ) {
 	foreach ( $amenities as $am_key => $amenity ) {
-		if ( '0 ' . __( 'Beds' , 'east-property' ) === $amenity['value'] ) {
-			$amenities[ $am_key ]['value'] = __( 'Studio' , 'east-property' );
+		if ( '0 ' . __( 'Beds', 'east-property' ) === $amenity['value'] ) {
+			$amenities[ $am_key ]['value'] = __( 'Studio', 'east-property' );
 		}
 	}
 }
 ?>
-<a href="<?php echo esc_url( $url ); ?>" class="<?php echo esc_attr( $card_classes ); ?>">
+<a href="<?php echo esc_url( $url ); ?>" class="<?php echo esc_attr( $card_classes ); ?>" target="_blank">
 	<div class="property-card-img">
 		<?php if ( ! empty( $labels[0] ) ) { ?>
 			<span class="label <?php echo esc_attr( strtolower( $labels[0]['color'] ) ); ?>"><?php echo esc_html( $labels[0]['name'] ); ?></span>
@@ -48,11 +48,11 @@ if ( ! empty( $amenities ) ) {
 				<div class="discount">Discount:<span><?php echo esc_html( $discount ); ?>%</span></div>
 			<?php } ?>
 		</div>
-		
+
 		<?php if ( ! empty( $original_price ) ) { ?>
 			<span class="original-price">
 			<?php
-			esc_html_e( 'Original Price:' , 'east-property' );
+			esc_html_e( 'Original Price:', 'east-property' );
 			echo '&nbsp;' . esc_html( $original_price );
 			?>
 		</span>
@@ -67,7 +67,7 @@ if ( ! empty( $amenities ) ) {
 				<?php foreach ( $amenities as $amenity ) { ?>
 					<div class="property-card-item">
 						<img src="<?php echo esc_url( $amenity['icon'] ); ?>" width="16" height="16"
-						     alt="<?php echo esc_html( $amenity['value'] ); ?>">
+							 alt="<?php echo esc_html( $amenity['value'] ); ?>">
 						<span><?php echo esc_html( $amenity['value'] ); ?></span>
 					</div>
 				<?php } ?>

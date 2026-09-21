@@ -21,6 +21,56 @@
             "selected": 0
         },
         {
+            "key": "field_be5655c5bc62f",
+            "label": "Заглушка No Image",
+            "name": "no_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Подставляется вместо галереи, когда у объекта нет ни одного изображения.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
+            "key": "field_8966d9dba9af4",
+            "label": "Заглушка No Avatar",
+            "name": "no_avatar",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Подставляется вместо аватара, когда у пользователя нет своего изображения.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
             "key": "field_694d27d658f10",
             "label": "Главная",
             "name": "",
@@ -118,5 +168,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1780672428
+    "modified": 1789640963
 }

@@ -115,11 +115,13 @@
 
 	.result-option {
 		width: 100%;
+		height: 40px;
+		flex: 0 0 auto;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		gap: 12px;
-		padding: 12px 8px;
+		padding: 0 8px;
 		border: none;
 		background: transparent;
 		cursor: pointer;
@@ -127,6 +129,17 @@
 		text-align: left;
 
 		@include p.t-text;
+
+		@media(min-width: v.$md) {
+			height: 44px;
+		}
+
+		span {
+			min-width: 0;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
 
 		@include g.hover {
 			background-color: v.$c-grey-95;
@@ -139,6 +152,7 @@
 		.result-option-check {
 			width: 16px;
 			height: 16px;
+			flex-shrink: 0;
 			opacity: 0;
 			transition: opacity v.$tr;
 		}

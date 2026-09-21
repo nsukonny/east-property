@@ -49,6 +49,18 @@ while ( have_posts() ) {
 	$latitude             = $property?->get_latitude();
 	$longitude            = $property?->get_longitude();
 	$payment_plans        = $property?->get_payment_plans() ?? array();
+
+	$all_property_units = get_units(
+		'',
+		100,
+		array(
+			'property_id' => $property?->get_id(),
+			'galleries'   => true,
+		)
+	);
+
+	shuffle( $all_property_units['items'] );
+	$featured_units = array_slice( $all_property_units['items'], 0, 4 );
 	?>
 	<section class="single-items">
 		<div class="container">
@@ -80,13 +92,13 @@ while ( have_posts() ) {
 								<?php esc_html_e( 'Share', 'east-property' ); ?>
 							</a>
 
-							<button class="button sm toggle-favorite <?php echo $unit->is_favorite() ? 'orange green' : 'gray'; ?>"
+							<button class="button sm toggle-favorite <?php echo Unit::is_favorite( $unit->get_id() ) ? 'orange green' : 'gray'; ?>"
 									data-unit-id="<?php echo $unit->get_id(); ?>">
 								<img src="<?php echo esc_url( THEME_URL . '/assets/img/bookmark.svg' ); ?>"
 									 width="16" height="16" alt="<?php esc_html_e( 'Save', 'east-property' ); ?>">
 								<span>
 									<?php
-									if ( $unit->is_favorite() ) {
+									if ( Unit::is_favorite( $unit->get_id() ) ) {
 										esc_html_e( 'Saved', 'east-property' );
 									} else {
 										esc_html_e( 'Save', 'east-property' );
@@ -318,7 +330,6 @@ while ( have_posts() ) {
 					<?php } ?>
 
 					<?php
-					$featured_units = $property?->get_random_units( 3 );
 					if ( ! empty( $featured_units ) ) {
 						$all_units_link = core_home_url( '/off-plan' );
 						get_component_template(
@@ -372,7 +383,11 @@ while ( have_posts() ) {
 							get_template_part( 'core/components/properties/map',
 								null,
 								array(
-									'property'     => $property,
+									'property'     => array(
+										'ID'        => $property->get_id(),
+										'latitude'  => $latitude,
+										'longitude' => $longitude,
+									),
 									'show_sidebar' => false,
 									'mode'         => 'single',
 									'class'        => 'full-width',

@@ -301,7 +301,13 @@ const updatePropertiesList = () => {
 				contentList.innerHTML = response.data.properties;
 				if (mapInstances.length) {
 					mapInstances.forEach(instance => {
-						instance.propertyMap.updateProperties(response.data.map_properties);
+						// The map starts only once it is scrolled to, so until then
+						// the answer waits on the element and is picked up at start.
+						if (instance.propertyMap) {
+							instance.propertyMap.updateProperties(response.data.map_properties);
+						} else {
+							instance.pendingProperties = response.data.map_properties;
+						}
 					});
 				}
 				h2Block.innerHTML = response.data.properties_found;

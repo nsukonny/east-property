@@ -30,51 +30,16 @@ final class Developer {
 			return $this->properties;
 		}
 
-		$property_posts = get_posts(
+		$this->properties = get_properties(
+			20,
+			false,
 			array(
-				'post_type'      => 'property',
-				'posts_per_page' => - 1,
-				'post_status'    => 'publish',
-				'meta_query'     => array(
-					array(
-						'key'     => 'developer_rel',
-						'value'   => $this->get_id(),
-						'compare' => '=',
-					),
-				),
+				'developer' => $this->get_id(),
+				'specifications' => true,
+				'galleries' => true,
 			)
 		);
-
-		$this->properties = array();
-		foreach ( $property_posts as $property_post ) {
-			$this->properties[] = new \Entities\Property( $property_post );
-		}
 
 		return $this->properties;
-	}
-
-	/**
-	 * Get projects count
-	 *
-	 * @return int
-	 */
-	public function get_properties_count(): int {
-		$properties = get_posts(
-			array(
-				'post_type'      => 'property',
-				'posts_per_page' => - 1,
-				'post_status'    => 'publish',
-				'fields'         => 'ids',
-				'meta_query'     => array(
-					array(
-						'key'     => 'developer_rel',
-						'value'   => $this->get_id(),
-						'compare' => '=',
-					),
-				),
-			)
-		);
-
-		return count( $properties );
 	}
 }

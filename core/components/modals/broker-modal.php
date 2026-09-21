@@ -14,7 +14,7 @@ $whatsapp_text = __( 'Hello, I am interested in property', 'east-property' );
 if ( isset( $unit ) ) {
 	$whatsapp_text .= ' - ' . $unit->get_url();
 }
-$whats_app_link = $broker?->get_whatsapp( '', $whatsapp_text ) ?: WHATS_APP_LINK;
+$whats_app_link = $broker?->get_whatsapp( $whatsapp_text ) ?: WHATS_APP_LINK;
 $phone          = $broker?->get_phone( '', true ) ?: PROJECT_PHONE;
 ?>
 <div class="modal-wrapper broker-modal" data-modal-id="broker-modal">

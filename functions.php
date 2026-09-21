@@ -101,7 +101,6 @@ add_action( 'after_setup_theme', function (): void {
 	add_theme_support( 'post-thumbnails' );
 } );
 
-add_image_size( 'product-thumb', 143, 171, true );
 add_image_size( 'featured-card', 740, 480, true );
 add_image_size( 'unit-card', 500, 394, true );
 

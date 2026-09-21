@@ -7,12 +7,79 @@ import {renderBuildingCard} from './html';
 
 const {__} = window.wp.i18n;
 
-document.addEventListener('DOMContentLoaded', () => {
-	const mapInstances = document.querySelectorAll('.js-map-instance');
-	mapInstances.forEach(instance => {
-		instance.propertyMap = new PropertyMap(instance);
+/**
+ * Start one map.
+ *
+ * @param {Element} instance Component root.
+ *
+ * @return {void}
+ */
+const startMap = (instance) => {
+	if (instance.propertyMap) return;
+
+	instance.propertyMap = new PropertyMap(instance);
+};
+
+/**
+ * Start the maps of the page only when they are about to be looked at.
+ *
+ * Every `new google.maps.Map()` is a billed map load, and the map sits about
+ * two thirds down the document on both the home page and a project page, so
+ * starting them all on DOMContentLoaded charged for every visitor and every
+ * crawler that never scrolled that far.
+ *
+ * A map inside a closed modal cannot be watched the same way: the wrapper is
+ * hidden with visibility and still covers the whole viewport, so the observer
+ * would fire immediately. Those wait for a click on the control that opens the
+ * modal they live in.
+ *
+ * @return {void}
+ */
+const deferMaps = () => {
+	const instances = document.querySelectorAll('.js-map-instance');
+	if (!instances.length) return;
+
+	const supported = 'IntersectionObserver' in window;
+	const observer = supported
+		? new IntersectionObserver((entries, watcher) => {
+			entries.forEach(entry => {
+				if (!entry.isIntersecting) return;
+
+				watcher.unobserve(entry.target);
+				startMap(entry.target);
+			});
+		}, {rootMargin: MAP_CONFIG.LAZY_ROOT_MARGIN})
+		: null;
+
+	instances.forEach(instance => {
+		const modal = instance.closest('.modal-wrapper');
+
+		if (modal) {
+			const modalId = modal.getAttribute('data-modal-id');
+
+			const onOpen = (event) => {
+				if (!event.target.closest('[data-modal-open="' + modalId + '"]')) return;
+
+				document.removeEventListener('click', onOpen);
+				// After the click has been dispatched, so the modal is already
+				// open and the container has its size when the map measures it.
+				setTimeout(() => startMap(instance), 0);
+			};
+
+			document.addEventListener('click', onOpen);
+
+			return;
+		}
+
+		if (observer) {
+			observer.observe(instance);
+		} else {
+			startMap(instance);
+		}
 	});
-});
+};
+
+document.addEventListener('DOMContentLoaded', deferMaps);
 
 document.addEventListener('click', (event) => {
 	const button = event.target.closest('[data-tab-button]');
@@ -100,12 +167,15 @@ export class PropertyMap {
 		try {
 			const {Map} = await importLibrary('maps');
 			const {AdvancedMarkerElement} = await importLibrary('marker');
-			const {PlaceAutocompleteElement} = await importLibrary('places');
 
 			this.AdvancedMarkerElement = AdvancedMarkerElement;
 
-			if (filterPropertiesJson) {
-				await this.loadProperties(filterPropertiesJson);
+			// A filter may answer before the map starts, and then the fresh list
+			// waits on the root element instead of being lost to the inline one.
+			const properties = this.root.pendingProperties ?? filterPropertiesJson;
+
+			if (properties) {
+				await this.loadProperties(typeof properties === 'string' ? JSON.parse(properties) : properties);
 			}
 
 			// если сингл мод -- уточняем точку по жсон, когда она там есть
@@ -135,6 +205,8 @@ export class PropertyMap {
 			if (this.mode === 'single') {
 				this.renderSingleMarker(AdvancedMarkerElement);
 			} else if (this.mode === 'select') {
+				const {PlaceAutocompleteElement} = await importLibrary('places');
+
 				this.initPointSelection(
 					AdvancedMarkerElement,
 					PlaceAutocompleteElement

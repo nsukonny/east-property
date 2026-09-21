@@ -23,7 +23,7 @@ $whatsapp_share_text = 'https://wa.me/?text=' . rawurlencode( sprintf(
 	) );
 
 $property_units = $property->get_units();
-$featured_units = ! empty( $property_units ) ? array_slice( $property_units, 0, 6 ) : array();
+$featured_units = ! empty( $property_units['items'] ) ? array_slice( $property_units['items'], 0, 6 ) : array();
 $payment_plans  = $property->get_payment_plans();
 $location       = $property?->get_location();
 

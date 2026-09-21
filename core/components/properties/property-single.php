@@ -32,7 +32,7 @@ $whatsapp_share_text = 'https://wa.me/?text=' . $raw_url_encode_text;
 $whatsapp_link       = WHATS_APP_LINK . '?text=' . $raw_url_encode_text;
 
 $property_units = $property->get_units();
-$featured_units = ! empty( $property_units ) ? array_slice( $property_units, 0, 6 ) : array();
+$featured_units = ! empty( $property_units['items'] ) ? array_slice( $property_units['items'], 0, 6 ) : array();
 $payment_plans  = $property->get_payment_plans();
 $all_units_link = get_permalink( $property->get_id() ) . '?units=all';
 

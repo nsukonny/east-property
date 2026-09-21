@@ -5,6 +5,8 @@
  * @var Entities\Unit $unit
  */
 
+use Entities\Property;
+
 $unit = $args['unit'] ?? null;
 if ( null !== $unit && ! $unit->exists() ) {
 	$unit = null;
@@ -35,15 +37,15 @@ $listing_type   = core_sanitize_listing_type( $unit ? $unit->get_listing_type() 
 $is_distress    = 'distress' === $listing_type;
 $original_price = $unit && $is_distress ? $unit->get_original_price() : '';
 
-$selected_property = $properties[0] ?? null;
 if ( ! empty( $unit_property_id ) ) {
 	foreach ( $properties as $property ) {
-		if ( $property->get_id() === $unit_property_id ) {
-			$selected_property = $property;
+		if ( $property['ID'] === $unit_property_id ) {
+			$selected_property = new Property( $property['ID'] );
 			break;
 		}
 	}
 }
+$selected_property = $selected_property ?? new Property( $properties[0]['ID'] );
 
 $errors           = $unit ? $unit->get_approve_errors() : '';
 $languages        = get_all_languages();
@@ -68,8 +70,8 @@ $current_language = pll_current_language();
 			?>
 			<h1><?php echo esc_html( $h1 ); ?></h1>
 			<form class="submit-unit-form" autocomplete="off"
-			      action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="POST"
-			      enctype="multipart/form-data">
+				  action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="POST"
+				  enctype="multipart/form-data">
 				<input type="hidden" name="action" value="create_unit">
 				<?php wp_nonce_field( 'account_create_unit_nonce' ); ?>
 
@@ -78,7 +80,7 @@ $current_language = pll_current_language();
 					foreach ( $translations as $lang => $translation ) {
 						?>
 						<input type="hidden" name="<?php echo esc_attr( $lang ); ?>[unit_id]"
-						       value="<?php echo esc_attr( $translation->get_id() ); ?>">
+							   value="<?php echo esc_attr( $translation->get_id() ); ?>">
 						<?php
 					}
 				}
@@ -95,7 +97,7 @@ $current_language = pll_current_language();
 									   class="button sm <?php echo esc_attr( $current_class ); ?>"
 									>
 										<img src="<?php echo esc_url( THEME_URL . '/assets/img/lang/' . $language['slug'] . '.png' ) ?>"
-										     alt="<?php echo esc_html( $language['name'] ); ?>"/>
+											 alt="<?php echo esc_html( $language['name'] ); ?>"/>
 										<span><?php echo esc_html( $language['name'] ); ?></span>
 									</a>
 								<?php } ?>
@@ -124,11 +126,11 @@ $current_language = pll_current_language();
 										<span class="required">*</span>
 										<?php esc_html_e( 'Title', 'east-property' ); ?>
 										<input type="text" id="s-text_<?php echo esc_attr( $language['slug'] ); ?>"
-										       name="<?php echo esc_attr( $language['slug'] . '[unit_title]' ); ?>"
-										       value="<?php echo esc_html( $unit_title ); ?>"
-										       placeholder="<?php esc_html_e( 'City Walk 4BR Apartment on 2 floor',
+											   name="<?php echo esc_attr( $language['slug'] . '[unit_title]' ); ?>"
+											   value="<?php echo esc_html( $unit_title ); ?>"
+											   placeholder="<?php esc_html_e( 'City Walk 4BR Apartment on 2 floor',
 												   'east-property' ); ?>"
-										       required>
+											   required>
 									</label>
 								</div>
 								<div class="inputs-group">
@@ -157,12 +159,12 @@ $current_language = pll_current_language();
 													<span class="required">*</span>
 													<?php esc_html_e( 'Price, AED', 'east-property' ); ?>
 													<input type="number"
-													       id="s-price_<?php echo esc_attr( $language['slug'] ); ?>"
-													       name="<?php echo esc_attr( $language['slug'] . '[price]' ); ?>"
-													       min="0" required
-													       value="<?php echo esc_attr( $price ); ?>"
-													       placeholder="440000"
-													       data-lang-sync="price"
+														   id="s-price_<?php echo esc_attr( $language['slug'] ); ?>"
+														   name="<?php echo esc_attr( $language['slug'] . '[price]' ); ?>"
+														   min="0" required
+														   value="<?php echo esc_attr( $price ); ?>"
+														   placeholder="440000"
+														   data-lang-sync="price"
 													/>
 												</label>
 											</div>
@@ -171,26 +173,26 @@ $current_language = pll_current_language();
 													<span class="required">*</span>
 													<?php esc_html_e( 'Area (sqft)', 'east-property' ); ?>
 													<input type="number"
-													       id="s-sqrt_<?php echo esc_attr( $language['slug'] ); ?>"
-													       name="<?php echo esc_attr( $language['slug'] . '[area]' ); ?>"
-													       min="200"
-													       step="0.01"
-													       placeholder="210"
-													       value="<?php echo esc_attr( $area ); ?>"
-													       data-lang-sync="area"
-													       required>
+														   id="s-sqrt_<?php echo esc_attr( $language['slug'] ); ?>"
+														   name="<?php echo esc_attr( $language['slug'] . '[area]' ); ?>"
+														   min="200"
+														   step="0.01"
+														   placeholder="210"
+														   value="<?php echo esc_attr( $area ); ?>"
+														   data-lang-sync="area"
+														   required>
 												</label>
 											</div>
 										</div>
 										<span class="sqrt-value"
-										      data-sqrt-value><?php esc_html_e( 'Price per square foot:',
+											  data-sqrt-value><?php esc_html_e( 'Price per square foot:',
 												'east-property' ); ?>
 										<span></span>
 									</span>
 									</div>
 								</div>
 								<div class="inputs-wrapper<?php echo $is_distress ? '' : ' hidden'; ?>"
-								     data-distress-fields>
+									 data-distress-fields>
 									<div class="inputs-box">
 										<div class="inputs-group">
 											<div class="input-group">
@@ -198,18 +200,18 @@ $current_language = pll_current_language();
 													<span class="required">*</span>
 													<?php esc_html_e( 'Original price, AED', 'east-property' ); ?>
 													<input type="number"
-													       id="s-original-price_<?php echo esc_attr( $language['slug'] ); ?>"
-													       name="<?php echo esc_attr( $language['slug'] . '[original_price]' ); ?>"
-													       min="0"
-													       value="<?php echo esc_attr( $original_price ); ?>"
-													       placeholder="520000"
-													       data-lang-sync="original_price"
+														   id="s-original-price_<?php echo esc_attr( $language['slug'] ); ?>"
+														   name="<?php echo esc_attr( $language['slug'] . '[original_price]' ); ?>"
+														   min="0"
+														   value="<?php echo esc_attr( $original_price ); ?>"
+														   placeholder="520000"
+														   data-lang-sync="original_price"
 													/>
 												</label>
 											</div>
 										</div>
 										<span class="sqrt-value"
-										      data-discount-value><?php esc_html_e( 'Discount:',
+											  data-discount-value><?php esc_html_e( 'Discount:',
 												'east-property' ); ?>
 										<span></span>
 									</span>
@@ -220,7 +222,7 @@ $current_language = pll_current_language();
 										<?php
 										$properties_items = array();
 										foreach ( $properties as $property ) {
-											$properties_items[ $property->get_id() ] = $property->get_title();
+											$properties_items[ $property['ID'] ] = $property['post_title'];
 										}
 
 										get_component_template(
@@ -271,17 +273,17 @@ $current_language = pll_current_language();
 												$active_class = (int) $option['value'] === $beds ? 'active' : '';
 												?>
 												<button type="button"
-												        class="beds-baths-btn <?php echo esc_attr( $active_class ); ?>"
-												        data-beds="<?php echo esc_attr( $option['value'] ); ?>">
+														class="beds-baths-btn <?php echo esc_attr( $active_class ); ?>"
+														data-beds="<?php echo esc_attr( $option['value'] ); ?>">
 													<?php echo esc_html( $option['label'] ); ?>
 												</button>
 											<?php } ?>
 										</div>
 										<input type="hidden"
-										       name="<?php echo esc_attr( $language['slug'] . '[bedrooms]' ); ?>"
-										       value="<?php echo esc_attr( $beds ); ?>"
-										       data-lang-sync="beds"
-										       data-required>
+											   name="<?php echo esc_attr( $language['slug'] . '[bedrooms]' ); ?>"
+											   value="<?php echo esc_attr( $beds ); ?>"
+											   data-lang-sync="beds"
+											   data-required>
 									</div>
 									<div class="submit-buttons-wrapper">
 									<span class="dropdown-label">
@@ -294,17 +296,17 @@ $current_language = pll_current_language();
 												$active_class = (int) $option['value'] === $baths ? 'active' : '';
 												?>
 												<button type="button"
-												        class="beds-baths-btn <?php echo esc_attr( $active_class ); ?>"
-												        data-beds="<?php echo esc_attr( $option['value'] ); ?>">
+														class="beds-baths-btn <?php echo esc_attr( $active_class ); ?>"
+														data-beds="<?php echo esc_attr( $option['value'] ); ?>">
 													<?php echo esc_html( $option['label'] ); ?>
 												</button>
 											<?php } ?>
 										</div>
 										<input type="hidden"
-										       name="<?php echo esc_attr( $language['slug'] . '[bathrooms]' ); ?>"
-										       value="<?php echo esc_attr( $baths ); ?>"
-										       data-lang-sync="baths"
-										       data-required>
+											   name="<?php echo esc_attr( $language['slug'] . '[bathrooms]' ); ?>"
+											   value="<?php echo esc_attr( $baths ); ?>"
+											   data-lang-sync="baths"
+											   data-required>
 									</div>
 								</div>
 								<div class="input-group">
@@ -363,7 +365,7 @@ $current_language = pll_current_language();
 
 								<button class="button green orange xl" type="submit">
 									<img src="<?php echo esc_url( THEME_URL ); ?>/assets/img/rect.svg'" width="16"
-									     height="16" alt="">
+										 height="16" alt="">
 									<?php if ( $unit ) { ?>
 										<?php esc_html_e( 'Update Unit', 'east-property' ); ?>
 									<?php } else { ?>
@@ -406,8 +408,8 @@ $current_language = pll_current_language();
 					<div class="submit-unit-right">
 						<div class="uploader">
 							<input type="hidden" name="user_thumbnails_ids"
-							       value="<?php echo esc_html( $user_thumbnail_ids ); ?>"
-							       id="user-thumbnail-ids">
+								   value="<?php echo esc_html( $user_thumbnail_ids ); ?>"
+								   id="user-thumbnail-ids">
 							<div class="uploader-user" id="uploader-user">
 								<div class="uploader-header" id="user-header">
 									<h2><?php esc_html_e( 'Pictures', 'east-property' ); ?></h2>
@@ -417,7 +419,7 @@ $current_language = pll_current_language();
 								</div>
 								<div class="uploader-dropzone" id="uploader-dropzone">
 									<input type="file" class="filepond" name="filepond" multiple
-									       data-max-file-size="10MB" data-max-files="50">
+										   data-max-file-size="10MB" data-max-files="50">
 								</div>
 								<div class="uploader-grid" id="user-grid">
 									<!-- Сюда будут рендерится загруженные фото юзера. Не удалять -->
@@ -452,10 +454,10 @@ $current_language = pll_current_language();
 											) ? 'is-selected' : '';
 											?>
 											<div class="uploader-item <?php echo esc_attr( $selected_class ); ?>"
-											     data-id="<?php echo esc_attr( $property_image['ID'] ); ?>"
-											     data-url="<?php echo esc_url( $property_image['sizes']['large'] ); ?>">
+												 data-id="<?php echo esc_attr( $property_image['ID'] ); ?>"
+												 data-url="<?php echo esc_url( $property_image['sizes']['large'] ); ?>">
 												<img src="<?php echo esc_url( $property_image['sizes']['thumbnail'] ); ?>"
-												     alt="<?php esc_html_e( 'Property image', 'east-property' ); ?>">
+													 alt="<?php esc_html_e( 'Property image', 'east-property' ); ?>">
 											</div>
 											<?php
 										}

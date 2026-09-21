@@ -2,37 +2,31 @@
 /**
  * Property card component
  *
- * @var \Entities\Property $property
+ * @var array $property
  */
 
 $property = $args['property'] ?? null;
-if ( $property === null || ! $property->exists() ) {
+if ( $property === null ) {
 	return;
 }
 
 $template = $args['template'] ?? 'large-card';
 
-$title          = $property->get_title();
-$price          = $property->get_price_html();
-$pure_price     = $property->get_price();
-$location       = $property->get_location()?->name;
-$gallery        = $property->get_gallery();
-$labels         = $property->get_labels();
-$url            = $property->get_url();
-$is_author      = 0 !== $property->get_author_id() && $property->get_author_id() === get_current_user_id();
-$specifications = $property->get_specifications();
+$price     = $property['specifications']['min_price'] ?? null;
+$labels    = \Entities\Property::build_labels( $property );
+$is_author = ! empty( $property['author_id'] ) && 0 !== $property['author_id'] && (int) $property['author_id'] === get_current_user_id();
 
 get_component_template(
 	'cards/' . $template,
 	array(
-		'url'            => $url,
+		'url'            => get_permalink( $property['ID'] ),
 		'labels'         => $labels,
-		'price'          => $price,
-		'pure_price'     => $pure_price,
-		'gallery'        => $gallery,
-		'title'          => $title,
-		'location'       => $location,
-		'edit_link'      => $is_author ? core_home_url( '/account?action=edit_property&id=' . $property->get_id() ) : '',
-		'specifications' => $specifications,
+		'price'          => get_price_html( $price ),
+		'pure_price'     => $price,
+		'gallery'        => $property['gallery'] ?? array(),
+		'title'          => $property['post_title'] ?? '',
+		'location'       => $property['location_name'] ?? '',
+		'edit_link'      => $is_author ? core_home_url( '/account?action=edit_property&id=' . $property['ID'] ) : '',
+		'specifications' => $property['specifications'] ?? array(),
 	)
 );

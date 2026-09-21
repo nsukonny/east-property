@@ -3,6 +3,7 @@
  * Al functionality for units. Search, filters, etc.
  */
 
+use Entities\Estate_User;
 use Entities\Unit;
 
 /**
@@ -39,50 +40,71 @@ function core_sanitize_listing_type( string $listing_type ): string {
  *
  * @return array
  */
-function get_units( $listing_type = '', $limit = 25 ): array {
-	global $wpdb;
+function get_units( $listing_type = '', int $limit = 25, $args = array() ): array {
+	$current_language = core_get_current_language();
+	$current_page     = pagination_get_current_page() ?? 1;
 
-	$current_language = 'en';
-	if ( function_exists( 'pll_current_language' ) ) {
-		$current_language = (string) pll_current_language( 'slug' );
-	}
-
-	$current_page = pagination_get_current_page() ?? 1;
-	$filters_hash = build_filters_hash(
-		$_REQUEST,
-		array(
-			'limit'        => $limit,
-			'page'         => $current_page,
-			'language'     => $current_language,
-			'listing_type' => $listing_type,
+	$request_params = implode(
+		'',
+		array_map(
+			fn( $key ) => $_REQUEST[ $key ] ?? '',
+			array(
+				'location',
+				'available',
+				'developer',
+				'area',
+				'beds',
+				'property_type',
+				'min_price',
+				'max_price',
+				'sort',
+			)
 		)
 	);
 
-	/*
-	 * The listing is asked for twice per request: once by the pagination guard
-	 * that has to know before any output whether the page exists, once by the
-	 * template. The hash already encodes every input, so one answer serves both.
-	 */
+	if ( ! empty( $_REQUEST['listing_type'] ) ) {
+		$listing_type = sanitize_text_field( wp_unslash( $_REQUEST['listing_type'] ) );
+	}
+	$request_params .= $listing_type ?? '';
+	$request_params .= wp_json_encode( $args );
+	$cache_key      = md5( 'units_' . $current_language . '_' . (string) $limit . (string) $current_page . $request_params );
+
 	static $memo = array();
-	if ( isset( $memo[ $filters_hash ] ) ) {
-		return $memo[ $filters_hash ];
+	if ( isset( $memo[ $cache_key ] ) ) {
+		return $memo[ $cache_key ];
 	}
 
-	$memo[ $filters_hash ] = core_cache_remember(
-		'units_' . $filters_hash,
-		static function () use ( $listing_type, $limit, $current_page, $current_language ) {
-			return core_query_units( $listing_type, $limit, $current_page, $current_language );
-		},
-		DAY_IN_SECONDS,
-		array(
-			'respect_dev' => true,
-			'keep_empty'  => true,
-		)
-	);
+	$units = wp_cache_get( $cache_key, 'units' );
+	if ( false !== $units ) {
+		$memo[ $cache_key ] = $units;
 
-	core_prime_listing( $memo[ $filters_hash ]['items'] ?? array() );
+		return $units;
+	}
 
-	return $memo[ $filters_hash ];
+	$units = core_query_units( $listing_type, $limit, $current_page, $current_language, $args );
+
+	$property_ids = wp_list_pluck( $units['items'], 'property_id' );
+	$unit_ids     = wp_list_pluck( $units['items'], 'ID' );
+	_prime_post_caches( array_unique( array_merge( $property_ids, $unit_ids ) ), false, false );
+
+	foreach ( $units['items'] as $item_key => $item ) {
+		$units['items'][ $item_key ]['property_url'] = get_permalink( $item['property_id'] );
+		$units['items'][ $item_key ]['url']          = get_permalink( $item['ID'] );
+	}
+
+	if ( ! empty( $args['galleries'] ) ) {
+		$galleries = Unit::get_galleries( array_column( $units['items'], 'ID' ) );
+
+		foreach ( $units['items'] as $key => $item ) {
+			$units['items'][ $key ]['gallery'] = $galleries[ $item['ID'] ] ?? array();
+		}
+	}
+
+	wp_cache_set( $cache_key, $units, 'units', DAY_IN_SECONDS );
+
+	$memo[ $cache_key ] = $units;
+
+	return $units;
 }
 
 /**
@@ -93,17 +115,21 @@ function get_units( $listing_type = '', $limit = 25 ): array {
  *
  * @return array
  */
-function core_query_units( $listing_type, $limit, $current_page, $current_language ): array {
+function core_query_units( $listing_type, $limit, $current_page, $current_language, $args ): array {
 	global $wpdb;
 
-	if ( 0 > $limit ) {
-		$limit = PROPERTIES_PER_PAGE;
-	}
-	$offset = ( $current_page - 1 ) * $limit;
+	//TODO for more optimization we can split it by two queries, one for just ids and second for loading all data for this 20
 
 	$joins  = array( "LEFT JOIN {$wpdb->postmeta} AS pm_property ON pm_property.post_id = u.ID AND pm_property.meta_key = 'property'" );
-	$where  = array( 'u.post_type = %s', 'u.post_status = %s' );
-	$params = array( 'unit', 'publish' );
+	$where  = array( 'u.post_type = %s' );
+	$params = array( 'unit' );
+
+	if ( empty( $args['draft'] ) ) {
+		$where[]  = 'u.post_status = %s';
+		$params[] = 'publish';
+	}
+
+	$joins[] = "LEFT JOIN {$wpdb->posts} AS p_property ON p_property.ID = CAST(pm_property.meta_value AS UNSIGNED)";
 
 	if ( ! empty( $_REQUEST['listing_type'] ) ) {
 		$listing_type = sanitize_text_field( wp_unslash( $_REQUEST['listing_type'] ) );
@@ -119,23 +145,25 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 		$params[] = sanitize_text_field( wp_unslash( $listing_type ) );
 	}
 
-	if ( ! empty( $_REQUEST['area'] ) && ( 'all' !== $_REQUEST['area'] ) ) {
-		$joins[]  = "
-			INNER JOIN {$wpdb->postmeta} AS pm_area
+	$joins[] = "
+			LEFT JOIN {$wpdb->postmeta} AS pm_beds
+				ON pm_beds.post_id = u.ID
+				AND pm_beds.meta_key = 'bedrooms'
+			LEFT JOIN {$wpdb->postmeta} AS pm_baths
+				ON pm_baths.post_id = u.ID
+				AND pm_baths.meta_key = 'bathrooms'
+			LEFT JOIN {$wpdb->postmeta} AS pm_area
 				ON pm_area.post_id = u.ID
 				AND pm_area.meta_key = 'area_size'
 		";
-		$where[]  = 'pm_delivery_date.meta_value <= %d';
+
+	if ( ! empty( $_REQUEST['area'] ) && ( 'all' !== $_REQUEST['area'] ) ) {
+		$where[]  = 'pm_area.meta_value <= %d';
 		$params[] = (int) sanitize_text_field( $_REQUEST['area'] );
 	}
 
 	if ( ! empty( $_REQUEST['beds'] ) ) {
 		$beds    = explode( ',', sanitize_text_field( $_REQUEST['beds'] ) );
-		$joins[] = "
-			INNER JOIN {$wpdb->postmeta} AS pm_beds
-				ON pm_beds.post_id = u.ID
-				AND pm_beds.meta_key = 'bedrooms'
-		";
 		$where[] = 'pm_beds.meta_value IN (' . implode( ',', array_fill( 0, count( $beds ), '%d' ) ) . ')';
 		$params  = array_merge( $params, array_map( 'intval', $beds ) );
 	}
@@ -196,44 +224,69 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 	$filter_max_price = ! empty( $_REQUEST['max_price'] )
 		? (int) sanitize_text_field( wp_unslash( $_REQUEST['max_price'] ) )
 		: null;
-	if ( null !== $filter_min_price || null !== $filter_max_price ) {
-		$joins[] = "
-			INNER JOIN {$wpdb->postmeta} AS pm_price
+	$joins[]          = "
+			LEFT JOIN {$wpdb->postmeta} AS pm_price
 				ON pm_price.post_id = u.ID
 				AND pm_price.meta_key = 'price'
+			LEFT JOIN {$wpdb->postmeta} AS pm_original_price
+				ON pm_original_price.post_id = u.ID
+				AND pm_original_price.meta_key = 'original_price'
+			LEFT JOIN {$wpdb->postmeta} AS pm_discount
+				ON pm_discount.post_id = u.ID
+				AND pm_discount.meta_key = 'discount'
 		";
-		if ( null !== $filter_min_price ) {
-			$where[]  = 'CAST(pm_price.meta_value AS UNSIGNED) >= %d';
-			$params[] = $filter_min_price;
-		}
-		if ( null !== $filter_max_price ) {
-			$where[]  = 'CAST(pm_price.meta_value AS UNSIGNED) <= %d';
-			$params[] = $filter_max_price;
-		}
+	if ( null !== $filter_min_price ) {
+		$where[]  = 'CAST(pm_price.meta_value AS UNSIGNED) >= %d';
+		$params[] = $filter_min_price;
+	}
+	if ( null !== $filter_max_price ) {
+		$where[]  = 'CAST(pm_price.meta_value AS UNSIGNED) <= %d';
+		$params[] = $filter_max_price;
 	}
 
+	$joins[] = "
+				LEFT JOIN {$wpdb->postmeta} AS pm_developer
+					ON pm_developer.post_id = CAST(pm_property.meta_value AS UNSIGNED)
+					AND pm_developer.meta_key = 'developer_rel'
+				LEFT JOIN {$wpdb->posts} AS p_developer
+					ON p_developer.ID = CAST(pm_developer.meta_value AS UNSIGNED)
+			";
 	if ( ! empty( $_REQUEST['developer'] ) && 'all' !== $_REQUEST['developer'] ) {
 		$developer_filter = (int) sanitize_text_field( wp_unslash( $_REQUEST['developer'] ) );
 		if ( $developer_filter > 0 ) {
-			$joins[]  = "
-				INNER JOIN {$wpdb->postmeta} AS pm_developer
-					ON pm_developer.post_id = CAST(pm_property.meta_value AS UNSIGNED)
-					AND pm_developer.meta_key = 'developer_rel'
-			";
 			$where[]  = 'CAST(pm_developer.meta_value AS UNSIGNED) = %d';
 			$params[] = $developer_filter;
 		}
 	}
 
 	$joins[] = "
+			LEFT JOIN {$wpdb->users} AS u_broker
+				ON u_broker.ID = u.post_author
+		";
+	$joins[] = "
 			LEFT JOIN {$wpdb->postmeta} AS pm_boost_score
 				ON pm_boost_score.post_id = u.ID
 				AND pm_boost_score.meta_key = 'boost_score'
 		";
 
+	$joins[] = "
+			LEFT JOIN {$wpdb->postmeta} AS pm_label_delivery
+				ON pm_label_delivery.post_id = p_property.ID
+				AND pm_label_delivery.meta_key = 'delivery_date'
+			LEFT JOIN {$wpdb->postmeta} AS pm_label_popular
+				ON pm_label_popular.post_id = p_property.ID
+				AND pm_label_popular.meta_key = 'is_popular'
+			LEFT JOIN {$wpdb->postmeta} AS pm_label_premium
+				ON pm_label_premium.post_id = p_property.ID
+				AND pm_label_premium.meta_key = 'is_premium_developer'
+			LEFT JOIN {$wpdb->postmeta} AS pm_wait_user_actions
+				ON pm_wait_user_actions.post_id = u.ID
+				AND pm_wait_user_actions.meta_key = 'is_wait_user_actions'
+			LEFT JOIN {$wpdb->users} AS broker_user ON broker_user.ID = u_broker.ID
+		";
+
 	//add polylang support
 	if ( function_exists( 'pll_current_language' ) ) {
-		$lang    = pll_current_language();
 		$joins[] = "INNER JOIN {$wpdb->term_relationships} AS pll_language_relation
     					ON pll_language_relation.object_id = u.ID";
 		$joins[] = "INNER JOIN {$wpdb->term_taxonomy} AS pll_language_taxonomy
@@ -242,7 +295,31 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 						AND pll_language_taxonomy.taxonomy = 'language'";
 		$joins[] = "INNER JOIN {$wpdb->terms} AS pll_language
 						ON pll_language.term_id = pll_language_taxonomy.term_id
-						AND pll_language.slug = '{$lang}'";
+						AND pll_language.slug = '{$current_language}'";
+	}
+
+	if ( ! empty( $args['property_id'] ) ) {
+		$where[]  = 'CAST(pm_property.meta_value AS UNSIGNED) = %d';
+		$params[] = (int) $args['property_id'];
+	}
+
+	if ( ! empty( $args['author_id'] ) ) {
+		$author_id = (int) $args['author_id'];
+		if ( $author_id > 0 ) {
+			$where[]  = 'u.post_author = %d';
+			$params[] = $author_id;
+		}
+	}
+
+	if ( ! empty( $args['unit_ids'] ) ) {
+		$unit_ids = array_values( array_unique( array_filter( array_map( 'intval', (array) $args['unit_ids'] ) ) ) );
+
+		if ( empty( $unit_ids ) ) {
+			$where[] = '1 = 0';
+		} else {
+			$where[] = 'u.ID IN (' . implode( ',', array_fill( 0, count( $unit_ids ), '%d' ) ) . ')';
+			$params  = array_merge( $params, $unit_ids );
+		}
 	}
 
 	$join_sql  = implode( "\n", $joins );
@@ -250,40 +327,55 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 	$sql       = "
 		SELECT 
 			u.ID,
+			u.post_title AS title,
+			u.post_status,
+			u.post_author AS author_id,
+			
+			broker_user.display_name AS broker_name,
+			
+			p_property.ID AS property_id,
+			p_property.post_title AS property_name,
+			pm_label_delivery.meta_value AS delivery_date,
+			pm_label_popular.meta_value AS is_popular,
+			pm_label_premium.meta_value AS is_premium_developer,
+			
+			p_developer.ID AS developer_id,
+			p_developer.post_title AS developer_name,
+			
+			u_broker.ID AS broker_id,
+			u_broker.display_name AS broker_name,
+			
+			pm_beds.meta_value AS bedrooms,
+			pm_baths.meta_value AS bathrooms,
+			pm_area.meta_value AS area_size,
+			pm_price.meta_value AS price,
+			pm_original_price.meta_value AS original_price,
+			pm_discount.meta_value AS discount,
+			pm_boost_score.meta_value AS boost_score,
+			pm_wait_user_actions.meta_value AS is_wait_user_actions,
+			
 			COUNT(*) OVER() AS total_count
 		FROM {$wpdb->posts} AS u
 		{$join_sql}
 		WHERE {$where_sql}
 		ORDER BY pm_boost_score.meta_value DESC
-		LIMIT %d OFFSET %d
 	";
-	$params[]  = (int) $limit;
-	$params[]  = (int) $offset;
+
+	if ( 0 < $limit ) {
+		$sql .= " LIMIT %d OFFSET %d";
+
+		$offset   = ( $current_page - 1 ) * $limit;
+		$params[] = (int) $limit;
+		$params[] = (int) $offset;
+	}
 
 	$query       = $wpdb->prepare( $sql, $params );
-	$units_posts = $wpdb->get_results( $query );
+	$units_posts = $wpdb->get_results( $query, ARRAY_A );
 
-	if ( empty( $units_posts ) ) {
-		$units = array(
-			'items' => array(),
-			'total' => 0,
-		);
-		return $units;
-	}
-	$total = ! empty( $units_posts[0]->total_count ) ? (int) $units_posts[0]->total_count : 0;
-
-	$units_entities = array();
-	foreach ( $units_posts as $post ) {
-		unset( $post->total_count );
-		$units_entities[] = new Unit( $post->ID );
-	}
-
-	$units = array(
-		'items' => $units_entities,
-		'total' => $total,
+	return array(
+		'items' => $units_posts ?: array(),
+		'total' => ! empty( $units_posts[0]['total_count'] ) ? (int) $units_posts[0]['total_count'] : 0,
 	);
-
-	return $units;
 }
 
 /**

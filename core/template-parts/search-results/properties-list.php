@@ -18,16 +18,16 @@ $card_template = $args['card_template'] ?? 'large-card';
 		<div class="result-tabs-wrapper">
 			<div class="result-tabs-buttons" role="tablist">
 				<button class="result-tab-button active" type="button" id="result-tabs-list-tab" data-tab-button
-				        data-tab="list" role="tab" aria-selected="true" aria-controls="result-tabs-list-panel">
+						data-tab="list" role="tab" aria-selected="true" aria-controls="result-tabs-list-panel">
 					<?php _e( 'List view', 'east-property' ); ?>
 				</button>
 				<button class="result-tab-button" type="button" id="result-tabs-map-tab" data-tab-button data-tab="map"
-				        role="tab" aria-selected="false" tabindex="-1" aria-controls="result-tabs-map-panel">
+						role="tab" aria-selected="false" tabindex="-1" aria-controls="result-tabs-map-panel">
 					<?php _e( 'Map view', 'east-property' ); ?>
 				</button>
 			</div>
 			<div class="result-tabs-content active" id="result-tabs-list-panel" data-tab-panel data-tab="list"
-			     role="tabpanel" aria-labelledby="result-tabs-list-tab">
+				 role="tabpanel" aria-labelledby="result-tabs-list-tab">
 				<div class="content-title">
 					<?php get_template_part( 'core/components/common/breadcrumbs' ); ?>
 					<div class="title-top">
@@ -73,7 +73,7 @@ $card_template = $args['card_template'] ?? 'large-card';
 				</div>
 			</div>
 			<div class="result-tabs-content" id="result-tabs-map-panel" data-tab-panel data-tab="map" role="tabpanel"
-			     aria-labelledby="result-tabs-map-tab">
+				 aria-labelledby="result-tabs-map-tab">
 				<div class="result-tabs-content-inner">
 					<?php
 					get_template_part( 'core/components/properties/map',

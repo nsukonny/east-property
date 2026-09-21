@@ -231,15 +231,6 @@ $description = get_the_content();
 							<?php if ( ! empty( $location->description ) ) { ?>
 								<p class="location-summary">
 									<?php echo esc_html( wp_trim_words( $location->description, 45, '…' ) ); ?>
-									<a href="<?php echo esc_url( get_term_link( $location ) ); ?>">
-										<?php
-										printf(
-										/* translators: %s: district name. */
-											esc_html__( 'More about %s', 'east-property' ),
-											esc_html( $location->name )
-										);
-										?>
-									</a>
 								</p>
 							<?php } ?>
 							<?php
@@ -247,7 +238,11 @@ $description = get_the_content();
 								'core/components/properties/map',
 								null,
 								array(
-									'property'     => new \Entities\Property( get_the_ID() ),
+									'property'     => array(
+										'ID'        => get_the_ID(),
+										'latitude'  => $latitude,
+										'longitude' => $longitude,
+									),
 									'show_sidebar' => false,
 									'mode'         => 'single',
 									'class'        => 'full-width',

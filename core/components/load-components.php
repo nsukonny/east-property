@@ -5,6 +5,7 @@ require THEME_PATH . '/core/components/security/functions.php';
 require THEME_PATH . '/core/components/security/comments.php';
 require THEME_PATH . '/core/components/seo/functions.php';
 require THEME_PATH . '/core/components/account/functions.php';
+require THEME_PATH . '/core/components/agencies/functions.php';
 require THEME_PATH . '/core/components/properties/functions.php';
 require THEME_PATH . '/core/components/units/functions.php';
 require THEME_PATH . '/core/components/filters/functions.php';

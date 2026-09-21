@@ -7,12 +7,7 @@ if ( is_user_logged_in() ) {
 	return;
 }
 
-$agencies_posts = get_posts(
-	array(
-		'post_type'      => 'agency',
-		'posts_per_page' => 10,
-	)
-);
+$agencies_posts = get_agencies();
 
 $user_roles = get_existing_user_roles();
 
@@ -141,8 +136,8 @@ $redirect_to = core_home_url( '/account' );
 									<div class="dropdown-inner">
 										<?php foreach ( $agencies_posts as $agency ) { ?>
 											<button type="button" class="dropdown-option"
-											        data-value="<?php echo esc_attr( $agency->ID ); ?>">
-												<?php echo esc_html( $agency->post_title ); ?>
+											        data-value="<?php echo esc_attr( $agency['ID'] ); ?>">
+												<?php echo esc_html( $agency['post_title'] ); ?>
 											</button>
 										<?php } ?>
 									</div>
