@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "2026-09-09 11:49+0300",
+    "translation-revision-date": "2026-09-19 19:45+0300",
     "generator": "WP-CLI\/2.11.0",
     "source": "assets\/js\/main.js",
     "domain": "messages",
@@ -38,10 +38,10 @@
                 "Unit"
             ],
             "beds": [
-                "\u043a\u0440\u043e\u0432\u0430\u0442\u0435\u0439"
+                "\u0441\u043f\u0430\u043b\u0435\u043d"
             ],
             "bed": [
-                "\u043a\u0440\u043e\u0432\u0430\u0442\u044c"
+                "\u0441\u043f\u0430\u043b\u044c\u043d\u044f"
             ],
             "baths": [
                 "\u0432\u0430\u043d\u043d"

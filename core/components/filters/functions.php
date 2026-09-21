@@ -265,7 +265,7 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 		$delivery_dates = array_merge(
 			array(
 				array(
-					'value' => 'available_immediately',
+					'value' => date( 'Y' ),
 					'label' => __( 'Available', 'east-property' ),
 				),
 				array(
@@ -337,8 +337,8 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 
 	$search_tabs_data['categories'] = array(
 		array(
-			'slug'     => 'available_immediately',
-			'label'    => __( 'Available immediately', 'east-property' ),
+			'slug'     => date( 'Y' ),
+			'label'    => _x( 'Available', 'search tab', 'east-property' ),
 			'defaults' => array(
 				'beds'     => array(
 					'label'   => __( 'Bedrooms', 'east-property' ),
@@ -352,7 +352,7 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 		),
 		array(
 			'slug'     => 'in_construction',
-			'label'    => __( 'In construction', 'east-property' ),
+			'label'    => _x( 'In construction', 'search tab', 'east-property' ),
 			'defaults' => array(
 				'beds'  => get_filter_beds_options(),
 				'price' => $price_max,
@@ -620,7 +620,7 @@ function get_properties_search_tabs_data(): array {
 				'label' => __( 'Any year', 'east-property' ),
 			),
 			array(
-				'value' => 'available_immediately',
+				'value' => date( 'Y' ),
 				'label' => __( 'Available', 'east-property' ),
 			),
 			array(
