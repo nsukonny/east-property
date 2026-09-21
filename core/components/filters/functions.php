@@ -337,9 +337,10 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 
 	$search_tabs_data['categories'] = array(
 		array(
-			'slug'     => date( 'Y' ),
-			'label'    => _x( 'Available', 'search tab', 'east-property' ),
-			'defaults' => array(
+			'slug'       => date( 'Y' ),
+			'label'      => _x( 'Available', 'search tab', 'east-property' ),
+			'action_url' => core_home_url( 'off-plan/' ),
+			'defaults'   => array(
 				'beds'     => array(
 					'label'   => __( 'Bedrooms', 'east-property' ),
 					'options' => get_filter_beds_options(),
@@ -351,9 +352,10 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 			),
 		),
 		array(
-			'slug'     => 'in_construction',
-			'label'    => _x( 'In construction', 'search tab', 'east-property' ),
-			'defaults' => array(
+			'slug'       => date( 'Y' ),
+			'label'      => _x( 'In construction', 'search tab', 'east-property' ),
+			'action_url' => core_home_url( 'secondary/' ),
+			'defaults'   => array(
 				'beds'  => get_filter_beds_options(),
 				'price' => $price_max,
 			),
