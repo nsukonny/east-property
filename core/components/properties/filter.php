@@ -25,6 +25,7 @@ get_component_template( 'search-results/filters',
 get_component_template( 'search-results/properties-list',
 	array(
 		'h2'            => $properties['total'] . ' ' . __( 'projects found', 'east-property' ),
+		'map_properties' => get_map_properties(),
 		'card_template' => $card_template,
 		'properties'    => $properties,
 	)

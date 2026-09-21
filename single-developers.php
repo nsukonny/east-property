@@ -40,6 +40,7 @@ while ( have_posts() ) {
 		array(
 			'h2'            => $developer->get_title() . ': <span>' . $properties['total'] . ' ' . __( 'projects found',
 					'east-property' ) . '</span>',
+			'map_properties' => get_map_properties( array( 'developer' => $developer->get_id() ) ),
 			'description'   => get_the_content(),
 			'card_template' => 'large-card',
 			'properties'    => $properties,

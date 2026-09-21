@@ -12,6 +12,7 @@ $description   = $args['description'] ?? __( 'Explore a wide selection of proper
 	'east-property' );
 $properties    = $args['properties'] ?? '';
 $card_template = $args['card_template'] ?? 'large-card';
+$map_properties = $args['map_properties'] ?? null;
 ?>
 <section class="result-tabs" data-tabs>
 	<div class="container">
@@ -79,9 +80,10 @@ $card_template = $args['card_template'] ?? 'large-card';
 					get_template_part( 'core/components/properties/map',
 						null,
 						array(
-							'properties'   => $properties,
-							'show_sidebar' => true,
-							'class'        => 'full-width',
+							'properties'     => $properties,
+							'map_properties' => $map_properties,
+							'show_sidebar'   => true,
+							'class'          => 'full-width',
 						)
 					);
 					?>

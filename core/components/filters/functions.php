@@ -1010,7 +1010,7 @@ function ajax_get_property(): void {
 	wp_send_json_success(
 		array(
 			'properties'       => $properties_html,
-			'map_properties'   => get_map_properties_json( $properties['items'] ?? array(), true ),
+			'map_properties'   => get_map_properties_json( get_map_properties(), true ),
 			'properties_found' => sprintf(
 				_n( '%s property found', '%s properties found', $total_found, 'east-property' ),
 				$total_found
