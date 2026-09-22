@@ -261,20 +261,23 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 		rsort( $delivery_dates );
 	}
 
-	if ( $is_all ) {
-		$delivery_dates = array_merge(
+	if ( ! $is_off_plan ) {
+		$ready_options = array(
 			array(
-				array(
-					'value' => date( 'Y' ),
-					'label' => __( 'Available', 'east-property' ),
-				),
-				array(
-					'value' => 'in_construction',
-					'label' => __( 'In Construction', 'east-property' ),
-				),
+				'value' => 'ready',
+				/* translators: option of the delivery date filter, projects already handed over. */
+				'label' => _x( 'Ready', 'delivery filter', 'east-property' ),
 			),
-			$delivery_dates
 		);
+
+		if ( $is_all ) {
+			$ready_options[] = array(
+				'value' => 'in_construction',
+				'label' => __( 'In Construction', 'east-property' ),
+			);
+		}
+
+		$delivery_dates = array_merge( $ready_options, $delivery_dates );
 	}
 
 	$delivery_dates = array_merge(
@@ -622,8 +625,8 @@ function get_properties_search_tabs_data(): array {
 				'label' => __( 'Any year', 'east-property' ),
 			),
 			array(
-				'value' => date( 'Y' ),
-				'label' => __( 'Available', 'east-property' ),
+				'value' => 'ready',
+				'label' => _x( 'Ready', 'delivery filter', 'east-property' ),
 			),
 			array(
 				'value' => 'in_construction',

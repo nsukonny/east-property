@@ -377,7 +377,7 @@ function core_query_properties(
 	}
 
 	if ( ! empty( $_REQUEST['available'] ) && 'all' !== $_REQUEST['available'] ) {
-		if ( 'available_immediately' === $_REQUEST['available'] ) {
+		if ( 'ready' === $_REQUEST['available'] ) {
 			$date_to   = date( 'Ymd' );
 			$date_from = '20000101';
 		} elseif ( 'in_construction' === $_REQUEST['available'] ) {

@@ -174,12 +174,16 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 	}
 
 	if ( ! empty( $_REQUEST['available'] ) && 'all' !== $_REQUEST['available'] ) {
-		if ( 'off-plan' === $_REQUEST['listing_type'] ) {
-			$year    = sanitize_text_field( wp_unslash( $_REQUEST['available'] ) );
-			$date_to = date( 'Ymd', strtotime( $year . '1231' ) );
+		$available = sanitize_text_field( wp_unslash( $_REQUEST['available'] ) );
+
+		if ( 'ready' === $available ) {
+			$date_to = date( 'Ymd' );
+		} elseif ( 'in_construction' === $available ) {
+			$date_from = date( 'Ymd' );
+		} elseif ( 'off-plan' === ( $_REQUEST['listing_type'] ?? '' ) ) {
+			$date_to = date( 'Ymd', strtotime( $available . '1231' ) );
 		} else {
-			$year      = sanitize_text_field( wp_unslash( $_REQUEST['available'] ) );
-			$date_from = date( 'Ymd', strtotime( $year . '0101' ) );
+			$date_from = date( 'Ymd', strtotime( $available . '0101' ) );
 		}
 
 		$joins[] = "
