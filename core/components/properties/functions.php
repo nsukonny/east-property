@@ -130,6 +130,35 @@ function core_query_properties_names( string $language = '' ): array {
 }
 
 /**
+ * Translated label of a property type or ownership choice
+ *
+ * @param string $value Stored choice key.
+ *
+ * @return string
+ */
+function core_property_choice_label( string $value ): string {
+	$labels = array(
+		'apartment'  => __( 'Apartment', 'east-property' ),
+		'villa'      => __( 'Villa', 'east-property' ),
+		'townhouse'  => __( 'Townhouse', 'east-property' ),
+		'penthouse'  => __( 'Penthouse', 'east-property' ),
+		'house'      => __( 'House', 'east-property' ),
+		'office'     => __( 'Office', 'east-property' ),
+		'freehold'   => __( 'Freehold', 'east-property' ),
+		'leasehold'  => __( 'Leasehold', 'east-property' ),
+		'commonhold' => __( 'Commonhold', 'east-property' ),
+		'strata'     => __( 'Strata', 'east-property' ),
+		'usufruct'   => __( 'Usufruct', 'east-property' ),
+		'joint'      => __( 'Joint Ownership', 'east-property' ),
+		'fractional' => __( 'Fractional Ownership', 'east-property' ),
+	);
+
+	$key = strtolower( trim( $value ) );
+
+	return $labels[ $key ] ?? $value;
+}
+
+/**
  * Every property matching the current filters, shaped for the map
  *
  * The map tab has no pagination, so it gets the whole matching set instead of
@@ -413,7 +442,7 @@ function core_query_properties(
 	if ( ! $skip_filters && ! $is_map ) {
 		$where[] = "CAST(pm_units_count.meta_value AS UNSIGNED) > 0";
 	}
-	
+
 	$filter_min_price = is_numeric( $_REQUEST['min_price'] ?? null )
 		? (int) sanitize_text_field( wp_unslash( $_REQUEST['min_price'] ) )
 		: null;

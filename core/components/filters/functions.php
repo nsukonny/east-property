@@ -310,7 +310,7 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 			'options' => array(
 				array(
 					'value' => 'all',
-					'label' => 'Any',
+					'label' => __( 'Any', 'east-property' ),
 				),
 			),
 		),
@@ -330,7 +330,7 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 		foreach ( $all_units_types['choices'] as $choice_value => $choice_label ) {
 			$search_tabs_data['filters']['property_type']['options'][] = array(
 				'value' => (string) $choice_value,
-				'label' => (string) $choice_label,
+				'label' => core_property_choice_label( (string) $choice_value ),
 			);
 		}
 	}
@@ -655,7 +655,7 @@ function get_properties_search_tabs_data(): array {
 			'options' => array(
 				array(
 					'value' => 'all',
-					'label' => 'Any',
+					'label' => __( 'Any', 'east-property' ),
 				),
 			),
 		),
@@ -671,7 +671,7 @@ function get_properties_search_tabs_data(): array {
 		foreach ( $all_units_types['choices'] as $choice_value => $choice_label ) {
 			$search_tabs_data['filters']['property_type']['options'][] = array(
 				'value' => (string) $choice_value,
-				'label' => (string) $choice_label,
+				'label' => core_property_choice_label( (string) $choice_value ),
 			);
 		}
 	}

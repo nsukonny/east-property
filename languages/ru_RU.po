@@ -411,7 +411,7 @@ msgstr "Все годы"
 #: core/template-parts/properties/property-units-list.php:28
 #: single-unit.php:284
 #: single-unit.php:381
-#: src/js/map/map.js:278
+#: src/js/map/map.js:276
 msgid "Location"
 msgstr "Локация"
 
@@ -439,7 +439,7 @@ msgstr "Тип объекта"
 #: core/includes/registers/post-types/developers.php:11
 #: core/includes/registers/post-types/developers.php:37
 #: core/template-parts/account/edit-property.php:125
-#: core/template-parts/filters/result-filters.php:262
+#: core/template-parts/filters/result-filters.php:266
 #: core/template-parts/filters/search-tabs.php:155
 #: src/js/map/html.js:58
 msgid "Developer"
@@ -480,7 +480,7 @@ msgstr "На этапе строительства"
 #: core/template-parts/cards/map-sidebar.php:78
 #: core/template-parts/cards/unit-card.php:32
 #: core/template-parts/cards/unit-square-card.php:31
-#: core/template-parts/filters/result-filters.php:158
+#: core/template-parts/filters/result-filters.php:162
 #: src/js/common/beds-baths.js:11
 #: src/js/map/html.js:62
 #: src/js/map/html.js:63
@@ -608,7 +608,7 @@ msgstr " ваше объявление получит более высокий 
 #: core/template-parts/account/edit-unit.php:235
 #: core/template-parts/account/edit-unit.php:253
 #: core/template-parts/account/login-form.php:202
-#: core/template-parts/filters/result-filters.php:163
+#: core/template-parts/filters/result-filters.php:167
 #: core/template-parts/ui/dropdown.php:12
 #: src/js/common/beds-baths.js:19
 #: src/js/filters.js:24
@@ -999,7 +999,7 @@ msgstr "Теперь вы можете воспользоваться всеми
 msgid "Email Verified"
 msgstr "Email подтвержден"
 
-#: core/components/properties/functions.php:584
+#: core/components/properties/functions.php:620
 #: core/includes/entities/class-entity-property.php:536
 #: core/includes/entities/class-entity-property.php:603
 #: core/includes/entities/class-entity-unit.php:373
@@ -1007,7 +1007,7 @@ msgstr "Email подтвержден"
 msgid "Ready"
 msgstr "Сдан"
 
-#: core/components/properties/functions.php:589
+#: core/components/properties/functions.php:625
 #: core/includes/entities/class-entity-property.php:542
 #: core/includes/entities/class-entity-unit.php:379
 #: core/includes/entities/class-entity-unit.php:447
@@ -1685,7 +1685,7 @@ msgid "+ Add new project"
 msgstr "+ Добавить новый проект"
 
 #: core/template-parts/account/edit-unit.php:252
-#: core/template-parts/filters/result-filters.php:235
+#: core/template-parts/filters/result-filters.php:239
 msgid "Property type"
 msgstr "Тип объекта"
 
@@ -2055,39 +2055,39 @@ msgid "If this was not you, please ignore this message or contact us."
 msgstr "Если это были не вы, проигнорируйте это сообщение или свяжитесь с нами."
 
 #: core/template-parts/filters/result-filters.php:55
-#: core/template-parts/filters/result-filters.php:258
+#: core/template-parts/filters/result-filters.php:262
 #: core/template-parts/filters/search-tabs.php:132
 #: core/template-parts/filters/search-tabs.php:153
 #: core/template-parts/ui/dropdown.php:50
 msgid "Search..."
 msgstr "Поиск..."
 
-#: core/template-parts/filters/result-filters.php:120
+#: core/template-parts/filters/result-filters.php:124
 msgid "Min price"
 msgstr "Мин. цена"
 
-#: core/template-parts/filters/result-filters.php:130
+#: core/template-parts/filters/result-filters.php:134
 msgid "Max price"
 msgstr "Макс. цена"
 
-#: core/template-parts/filters/result-filters.php:142
-#: core/template-parts/filters/result-filters.php:206
+#: core/template-parts/filters/result-filters.php:146
+#: core/template-parts/filters/result-filters.php:210
 #: core/template-parts/filters/search-tabs.php:113
 msgid "Cancel"
 msgstr "Отмена"
 
-#: core/template-parts/filters/result-filters.php:145
-#: core/template-parts/filters/result-filters.php:209
+#: core/template-parts/filters/result-filters.php:149
+#: core/template-parts/filters/result-filters.php:213
 #: core/template-parts/filters/search-tabs.php:116
 msgid "Apply"
 msgstr "Применить"
 
-#: core/template-parts/filters/result-filters.php:267
-#: core/template-parts/filters/result-filters.php:287
+#: core/template-parts/filters/result-filters.php:271
+#: core/template-parts/filters/result-filters.php:291
 msgid "All"
 msgstr "Все"
 
-#: core/template-parts/filters/result-filters.php:282
+#: core/template-parts/filters/result-filters.php:286
 msgid "Max Area"
 msgstr "Макс. площадь"
 
@@ -2808,7 +2808,7 @@ msgstr "ванн"
 msgid "bath"
 msgstr "ванна"
 
-#: src/js/map/map.js:420
+#: src/js/map/map.js:418
 msgid "Selected location"
 msgstr "Выбранная точка"
 
@@ -2871,6 +2871,58 @@ msgid "In construction"
 msgstr "Строится"
 
 #. translators: 1: number of projects in the cluster, 2: number of units in them.
-#: src/js/map/map.js:616
+#: src/js/map/map.js:608
 msgid "%1$d projects · %2$d units"
 msgstr "%1$d проектов · %2$d юнитов"
+
+#: core/components/properties/functions.php:145
+msgid "Apartment"
+msgstr "Квартира"
+
+#: core/components/properties/functions.php:146
+msgid "Villa"
+msgstr "Вилла"
+
+#: core/components/properties/functions.php:147
+msgid "Townhouse"
+msgstr "Таунхаус"
+
+#: core/components/properties/functions.php:148
+msgid "Penthouse"
+msgstr "Пентхаус"
+
+#: core/components/properties/functions.php:149
+msgid "House"
+msgstr "Дом"
+
+#: core/components/properties/functions.php:150
+msgid "Office"
+msgstr "Офис"
+
+#: core/components/properties/functions.php:151
+msgid "Freehold"
+msgstr "Фрихолд"
+
+#: core/components/properties/functions.php:152
+msgid "Leasehold"
+msgstr "Лизхолд"
+
+#: core/components/properties/functions.php:153
+msgid "Commonhold"
+msgstr "Общая собственность"
+
+#: core/components/properties/functions.php:154
+msgid "Strata"
+msgstr "Страта"
+
+#: core/components/properties/functions.php:155
+msgid "Usufruct"
+msgstr "Узуфрукт"
+
+#: core/components/properties/functions.php:156
+msgid "Joint Ownership"
+msgstr "Совместная собственность"
+
+#: core/components/properties/functions.php:157
+msgid "Fractional Ownership"
+msgstr "Долевая собственность"
