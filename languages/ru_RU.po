@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-22T11:30:57+00:00\n"
-"PO-Revision-Date: 2026-09-22 14:31+0300\n"
+"POT-Creation-Date: 2026-09-22T14:15:01+00:00\n"
+"PO-Revision-Date: 2026-09-22 17:16+0300\n"
 "Language: ru\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "X-Generator: Poedit 3.9\n"
@@ -230,7 +230,6 @@ msgstr "Принять"
 
 #: core/components/common/functions.php:20
 #: core/includes/registers/post-types/properties.php:10
-#: core/template-parts/sections/explore.php:34
 msgid "Properties"
 msgstr "Объектов"
 
@@ -1745,6 +1744,7 @@ msgid "Discount:"
 msgstr "Скидка:"
 
 #: core/template-parts/account/edit-unit.php:232
+#: core/template-parts/sections/explore.php:27
 msgid "Project"
 msgstr "Проект"
 
@@ -2291,6 +2291,10 @@ msgstr "Aliquam lacinia diam quis lacus euismod"
 msgid "Browse a wide selection of apartments in Dubai. From smart studios to spacious family residences and premium off-plan units in top locations. Compare prices, layouts, and communities in one place and find the apartment that fits your lifestyle, goals, and budget."
 msgstr "Ознакомьтесь с широким выбором квартир в Дубае. От стильных студий до просторных семейных квартир и элитных объектов на стадии строительства в лучших районах. Сравните цены, планировки и жилые комплексы в одном месте и найдите квартиру, которая соответствует вашему образу жизни, целям и бюджету."
 
+#: core/template-parts/sections/explore.php:27
+msgid "Projects"
+msgstr "Проектов"
+
 #: core/template-parts/ui/dropdown.php:41
 msgid "Arrow down"
 msgstr "Стрелка вниз"
@@ -2301,7 +2305,7 @@ msgstr "Загрузка деталей проекта..."
 
 #: core/template-parts/ui/tooltip.php:10
 msgid "More info"
-msgstr ""
+msgstr "Читать далее"
 
 #: core/template-parts/units/featured.php:13
 msgid "See all properties"

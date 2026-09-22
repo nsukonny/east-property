@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-22T11:31:37+00:00\n"
+"POT-Creation-Date: 2026-09-22T14:16:38+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: east-property\n"
@@ -228,7 +228,6 @@ msgstr ""
 
 #: core/components/common/functions.php:20
 #: core/includes/registers/post-types/properties.php:10
-#: core/template-parts/sections/explore.php:34
 msgid "Properties"
 msgstr ""
 
@@ -1727,6 +1726,7 @@ msgid "Discount:"
 msgstr ""
 
 #: core/template-parts/account/edit-unit.php:232
+#: core/template-parts/sections/explore.php:27
 msgid "Project"
 msgstr ""
 
@@ -2270,6 +2270,10 @@ msgstr ""
 
 #: core/template-parts/search-results/units-list.php:8
 msgid "Browse a wide selection of apartments in Dubai. From smart studios to spacious family residences and premium off-plan units in top locations. Compare prices, layouts, and communities in one place and find the apartment that fits your lifestyle, goals, and budget."
+msgstr ""
+
+#: core/template-parts/sections/explore.php:27
+msgid "Projects"
 msgstr ""
 
 #: core/template-parts/ui/dropdown.php:41
