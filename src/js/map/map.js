@@ -61,8 +61,6 @@ const deferMaps = () => {
 				if (!event.target.closest('[data-modal-open="' + modalId + '"]')) return;
 
 				document.removeEventListener('click', onOpen);
-				// After the click has been dispatched, so the modal is already
-				// open and the container has its size when the map measures it.
 				setTimeout(() => startMap(instance), 0);
 			};
 
@@ -577,11 +575,6 @@ export class PropertyMap {
 
 		this.clusterer = new MarkerClusterer({
 			map: this.map,
-			// The default algorithm clusters the whole world on every zoom and, past
-			// maxZoom, puts every marker on the map: about a thousand HTML markers on
-			// the homepage at zoom 16, most of them off screen. The viewport variant
-			// groups the same way and shows the same individual markers past
-			// maxZoom, only for the visible area plus a margin.
 			algorithm: new SuperClusterViewportAlgorithm({
 				radius: MAP_CONFIG.CLUSTER_RADIUS,
 				maxZoom: MAP_CONFIG.CLUSTER_MAX_ZOOM,
@@ -592,14 +585,7 @@ export class PropertyMap {
 
 		return this.clusterer;
 	}
-
-	/**
-	 * Внешний вид кластера.
-	 *
-	 * В одиночной булавке стоит число доступных квартир, поэтому и в кластере
-	 * показываем их сумму, а не количество слипшихся булавок: покупателю важно,
-	 * сколько предложений внутри, а не сколько проектов оказалось рядом.
-	 */
+	
 	createClusterRenderer(AdvancedMarkerElement) {
 		return {
 			render: ({count, position, markers}) => {
@@ -619,7 +605,7 @@ export class PropertyMap {
 					position,
 					content: element,
 					/* translators: 1: number of projects in the cluster, 2: number of units in them. */
-					title: sprintf( __( '%1$d projects · %2$d units', 'east-property' ), count, units ),
+					title: sprintf(__('%1$d projects · %2$d units', 'east-property'), count, units),
 					// Кластер должен лежать выше одиночных булавок: без этого
 					// булавка с теми же координатами перекрывает его и по группе
 					// невозможно щёлкнуть.

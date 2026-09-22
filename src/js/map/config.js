@@ -8,16 +8,8 @@ export const MAP_CONFIG = {
 	DATA_URL: '/data/properties.json',
 	DEFAULT_CENTER: {lat: 25.2048, lng: 55.2708},
 	DEFAULT_ZOOM: 11,
-	// Радиус группировки в пикселях экрана: булавки, оказавшиеся ближе этого
-	// расстояния друг к другу, сливаются в один кластер. В пикселях, а не в
-	// метрах, поэтому на любом зуме карта выглядит одинаково плотной.
 	CLUSTER_RADIUS: 70,
-	// Зум, выше которого группировка выключается и каждый объект показывается
-	// отдельно. В Дубае проекты стоят плотно, поэтому порог поднят: раньше
-	// него кластеры полезны, дальше — только мешают выбирать конкретный дом.
 	CLUSTER_MAX_ZOOM: 15,
-	// Markers and clusters are laid out for the visible area plus this many
-	// pixels on each side, so a short pan shows them before the map settles.
 	CLUSTER_VIEWPORT_PADDING: 200,
 };
 
