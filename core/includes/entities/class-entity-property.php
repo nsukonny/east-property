@@ -628,7 +628,7 @@ final class Property {
 		if ( ! empty( $property_type[0] ) ) {
 			$information[] = array(
 				'label' => __( 'Property Type', 'east-property' ),
-				'value' => (string) $property_type[0],
+				'value' => core_property_choice_label( (string) $property_type[0] ),
 			);
 		}
 
@@ -644,7 +644,7 @@ final class Property {
 		if ( ! empty( $ownership_type ) ) {
 			$information[] = array(
 				'label' => __( 'Ownership Type', 'east-property' ),
-				'value' => (string) $ownership_type,
+				'value' => core_property_choice_label( (string) $ownership_type ),
 			);
 		}
 

@@ -40,7 +40,7 @@ $is_show_baths = $search_by['baths'] ?? false;
 		foreach ( $default_filters as $filter_key => $filter_value ) {
 			?>
 			<input type="hidden" name="<?php echo esc_attr( $filter_key ); ?>"
-			       value="<?php echo esc_attr( $filter_value ); ?>">
+				   value="<?php echo esc_attr( $filter_value ); ?>">
 			<?php
 		}
 
@@ -48,21 +48,21 @@ $is_show_baths = $search_by['baths'] ?? false;
 			$selected_location = ! empty( $_GET['location'] ) ? sanitize_text_field( $_GET['location'] ) : 'all';
 			?>
 			<button class="result-filter" type="button" data-filter="location"
-			        data-selected-value="<?php echo esc_attr( $selected_location ); ?>">
+					data-selected-value="<?php echo esc_attr( $selected_location ); ?>">
 				<label for="location-input-search" class="result-filter-search">
 					<input type="text" class="dropdown-search-input"
-					       id="location-input-search"
-					       placeholder="<?php esc_html_e( 'Search...' , 'east-property' ); ?>">
+						   id="location-input-search"
+						   placeholder="<?php esc_html_e( 'Search...', 'east-property' ); ?>">
 				</label>
 				<span class="result-filter-top">
 					<span class="result-title">
-						<?php _e( 'Location' , 'east-property' ); ?>
+						<?php _e( 'Location', 'east-property' ); ?>
 					</span>
 				</span>
 				<span class="result-filter-bottom">
 					<span class="result-value">
 						<img src="<?php echo THEME_URL; ?>/assets/img/arrow-down.svg" width="16" height="16"
-						     alt="Dropdown arrow">
+							 alt="Dropdown arrow">
 					</span>
 				</span>
 				<span class="result-dropdown"></span>
@@ -74,7 +74,7 @@ $is_show_baths = $search_by['baths'] ?? false;
 			$selected_available_year = ! empty( $_GET['available'] ) ? sanitize_text_field( $_GET['available'] ) : 'all';
 			?>
 			<button class="result-filter" type="button" data-filter="available"
-			        data-selected-value="<?php echo esc_attr( $selected_available_year ); ?>">
+					data-selected-value="<?php echo esc_attr( $selected_available_year ); ?>">
 				<span class="result-filter-top">
 					<span class="result-title">
 						<?php echo esc_html( $search_tabs_data['filters']['available']['label'] ); ?>
@@ -83,7 +83,7 @@ $is_show_baths = $search_by['baths'] ?? false;
 				<span class="result-filter-bottom">
 					<span class="result-value">
 						<img src="<?php echo THEME_URL; ?>/assets/img/arrow-down.svg" width="16" height="16"
-						     alt="Dropdown arrow">
+							 alt="Dropdown arrow">
 					</span>
 				</span>
 				<span class="result-dropdown"></span>
@@ -93,8 +93,12 @@ $is_show_baths = $search_by['baths'] ?? false;
 		<?php
 		if ( $search_by['price'] ?? false ) {
 			$filter_price_label = $search_tabs_data['filters']['price']['label'] ?? '';
-			$filter_price_min   = $_GET['min_price'] ?? $search_tabs_data['filters']['price']['options']['min'];
-			$filter_price_max   = $_GET['max_price'] ?? $search_tabs_data['filters']['price']['options']['max'];
+			$filter_price_min   = is_numeric( $_GET['min_price'] ?? null )
+				? (float) $_GET['min_price']
+				: $search_tabs_data['filters']['price']['options']['min'];
+			$filter_price_max   = is_numeric( $_GET['max_price'] ?? null )
+				? (float) $_GET['max_price']
+				: $search_tabs_data['filters']['price']['options']['max'];
 			?>
 			<div class="result-filter-wrapper" data-filter-field-type="min_max">
 				<button class="result-filter" type="button" data-filter="min_max_price">
@@ -109,7 +113,7 @@ $is_show_baths = $search_by['baths'] ?? false;
 								<?php echo number_format( floor( $filter_price_min ) ) . ' - ' . number_format( floor( $filter_price_max ) ); ?>
 							</span>
 							<img src="<?php echo THEME_URL; ?>/assets/img/arrow-down.svg" width="16" height="16"
-							     alt="Dropdown arrow">
+								 alt="Dropdown arrow">
 						</span>
 					</span>
 				</button>
@@ -117,32 +121,32 @@ $is_show_baths = $search_by['baths'] ?? false;
 					<div class="min-max-content">
 						<fieldset>
 							<label class="input-label">
-								<?php esc_html_e( 'Min price' , 'east-property' ); ?>
+								<?php esc_html_e( 'Min price', 'east-property' ); ?>
 								<input type="text" name="min_price" class="input field_min"
-								       placeholder="<?php echo esc_attr( $filter_price_min ); ?>"
-								       value="<?php echo esc_attr( $filter_price_min ); ?>"
-								       min="<?php echo esc_attr( $filter_price_min ); ?>"
-								       inputmode="numeric"
+									   placeholder="<?php echo esc_attr( $filter_price_min ); ?>"
+									   value="<?php echo esc_attr( $filter_price_min ); ?>"
+									   min="<?php echo esc_attr( $filter_price_min ); ?>"
+									   inputmode="numeric"
 								>
 							</label>
 							<span class="separator">-</span>
 							<label class="input-label">
-								<?php esc_html_e( 'Max price' , 'east-property' ); ?>
+								<?php esc_html_e( 'Max price', 'east-property' ); ?>
 								<input type="text" name="max_price" class="input field_max"
-								       placeholder="<?php echo esc_attr( $filter_price_max ); ?>"
-								       value="<?php echo esc_attr( $filter_price_max ); ?>"
-								       max="<?php echo esc_attr( $filter_price_max ); ?>"
-								       inputmode="numeric"
+									   placeholder="<?php echo esc_attr( $filter_price_max ); ?>"
+									   value="<?php echo esc_attr( $filter_price_max ); ?>"
+									   max="<?php echo esc_attr( $filter_price_max ); ?>"
+									   inputmode="numeric"
 								>
 							</label>
 						</fieldset>
 
 						<div class="min-max-actions">
 							<button class="button gray sm min-max-cancel" type="button">
-								<span><?php _e( 'Cancel' , 'east-property' ); ?></span>
+								<span><?php _e( 'Cancel', 'east-property' ); ?></span>
 							</button>
-							<button class=" button green orange sm min-max-apply" type="button">
-								<span><?php _e( 'Apply' , 'east-property' ); ?></span>
+							<button class="button green orange sm min-max-apply" type="button">
+								<span><?php _e( 'Apply', 'east-property' ); ?></span>
 							</button>
 						</div>
 					</div>
@@ -155,14 +159,14 @@ $is_show_baths = $search_by['baths'] ?? false;
 				<button class="result-filter" type="button" data-filter="beds_baths">
 					<span class="result-filter-top">
 						<span class="result-title">
-							<?php _e( 'Beds' , 'east-property' ); ?>
+							<?php _e( 'Beds', 'east-property' ); ?>
 						</span>
 					</span>
 					<span class="result-filter-bottom">
 						<span class="result-value">
-							<span data-result-beds-baths-text><?php _e( 'Select' , 'east-property' ); ?></span>
+							<span data-result-beds-baths-text><?php _e( 'Select', 'east-property' ); ?></span>
 							<img src="<?php echo THEME_URL; ?>/assets/img/arrow-down.svg" width="16" height="16"
-							     alt="Dropdown arrow">
+								 alt="Dropdown arrow">
 						</span>
 					</span>
 				</button>
@@ -178,8 +182,8 @@ $is_show_baths = $search_by['baths'] ?? false;
 										$class = ( ! empty( $bed['active'] ) && true === $bed['active'] ) ? ' active' : '';
 										?>
 										<button type="button"
-										        class="beds-baths-btn<?php echo esc_attr( $class ); ?>"
-										        data-beds="<?php echo esc_attr( $bed['value'] ); ?>"><?php echo esc_attr( $bed['label'] ); ?></button>
+												class="beds-baths-btn<?php echo esc_attr( $class ); ?>"
+												data-beds="<?php echo esc_attr( $bed['value'] ); ?>"><?php echo esc_attr( $bed['label'] ); ?></button>
 									<?php } ?>
 								</div>
 							</div>
@@ -194,8 +198,8 @@ $is_show_baths = $search_by['baths'] ?? false;
 										$class = ! empty( $bath['active'] ) && true === $bath['active'] ? ' active' : '';
 										?>
 										<button type="button"
-										        class="beds-baths-btn<?php echo esc_attr( $class ); ?>"
-										        data-baths="<?php echo esc_attr( $bath['value'] ); ?>"><?php echo esc_attr( $bath['label'] ); ?></button>
+												class="beds-baths-btn<?php echo esc_attr( $class ); ?>"
+												data-baths="<?php echo esc_attr( $bath['value'] ); ?>"><?php echo esc_attr( $bath['label'] ); ?></button>
 									<?php } ?>
 								</div>
 							</div>
@@ -203,10 +207,10 @@ $is_show_baths = $search_by['baths'] ?? false;
 
 						<div class="beds-baths-actions">
 							<button class="button gray sm beds-baths-cancel" type="button">
-								<span><?php _e( 'Cancel' , 'east-property' ); ?></span>
+								<span><?php _e( 'Cancel', 'east-property' ); ?></span>
 							</button>
 							<button class="button green orange sm beds-baths-apply" type="button">
-								<span><?php _e( 'Apply' , 'east-property' ); ?></span>
+								<span><?php _e( 'Apply', 'east-property' ); ?></span>
 							</button>
 						</div>
 					</div>
@@ -232,14 +236,14 @@ $is_show_baths = $search_by['baths'] ?? false;
 			<button class="result-filter" type="button" data-filter="property_type">
 				<span class="result-filter-top">
 					<span class="result-title">
-						<?php _e( 'Property type' , 'east-property' ); ?>
+						<?php _e( 'Property type', 'east-property' ); ?>
 					</span>
 				</span>
 				<span class="result-filter-bottom">
 						<span class="result-value">
 							<?php echo esc_html( $property_type ); ?>
 							<img src="<?php echo THEME_URL; ?>/assets/img/arrow-down.svg" width="16" height="16"
-							     alt="Dropdown arrow">
+								 alt="Dropdown arrow">
 						</span>
 				</span>
 				<span class="result-dropdown"></span>
@@ -251,22 +255,22 @@ $is_show_baths = $search_by['baths'] ?? false;
 			$selected_developer = ! empty( $_GET['developer'] ) ? sanitize_text_field( $_GET['developer'] ) : 'all';
 			?>
 			<button class="result-filter color" type="button" data-filter="developer"
-			        data-selected-value="<?php echo esc_attr( $selected_developer ); ?>">
+					data-selected-value="<?php echo esc_attr( $selected_developer ); ?>">
 				<label for="developer-input-search" class="result-filter-search">
 					<input type="text" class="dropdown-search-input"
-					       id="developer-input-search"
-					       placeholder="<?php esc_html_e( 'Search...' , 'east-property' ); ?>">
+						   id="developer-input-search"
+						   placeholder="<?php esc_html_e( 'Search...', 'east-property' ); ?>">
 				</label>
 				<span class="result-filter-top">
 					<span class="result-title">
-						<?php _e( 'Developer' , 'east-property' ); ?>
+						<?php _e( 'Developer', 'east-property' ); ?>
 					</span>
 				</span>
 				<span class="result-filter-bottom">
 					<span class="result-value">
-						<?php _e( 'All' , 'east-property' ); ?>
+						<?php _e( 'All', 'east-property' ); ?>
 						<img src="<?php echo THEME_URL; ?>/assets/img/arrow-down.svg" width="16" height="16"
-						     alt="Dropdown arrow">
+							 alt="Dropdown arrow">
 					</span>
 				</span>
 				<span class="result-dropdown">
@@ -279,14 +283,14 @@ $is_show_baths = $search_by['baths'] ?? false;
 			<button class="result-filter color" type="button" data-filter="area">
 				<span class="result-filter-top">
 					<span class="result-title">
-						<?php _e( 'Max Area' , 'east-property' ); ?>
+						<?php _e( 'Max Area', 'east-property' ); ?>
 					</span>
 				</span>
 				<span class="result-filter-bottom">
 					<span class="result-value">
-						<?php _e( 'All' , 'east-property' ); ?>
+						<?php _e( 'All', 'east-property' ); ?>
 						<img src="<?php echo THEME_URL; ?>/assets/img/arrow-down.svg" width="16" height="16"
-						     alt="Dropdown arrow">
+							 alt="Dropdown arrow">
 					</span>
 				</span>
 				<span class="result-dropdown"></span>

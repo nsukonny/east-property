@@ -18,6 +18,9 @@ function get_properties( int $limit = - 1, bool $skip_filters = false, array $ar
 	$request_params = $_REQUEST['location'] ?? '';
 	$request_params .= $_REQUEST['available'] ?? '';
 	$request_params .= $args['developer'] ?? $_REQUEST['developer'] ?? '';
+	$request_params .= $_REQUEST['property_type'] ?? '';
+	$request_params .= $_REQUEST['min_price'] ?? '';
+	$request_params .= $_REQUEST['max_price'] ?? '';
 	$request_params .= wp_json_encode( $args );
 	$cache_key      = 'properties_' . $current_language . '_'
 	                  . md5( (string) $limit . (string) $skip_filters . (string) $current_page . $request_params );
@@ -127,6 +130,214 @@ function core_query_properties_names( string $language = '' ): array {
 }
 
 /**
+ * Translated label of a property type or ownership choice
+ *
+ * @param string $value Stored choice key.
+ *
+ * @return string
+ */
+function core_property_choice_label( string $value ): string {
+	$labels = array(
+		'apartment'  => __( 'Apartment', 'east-property' ),
+		'villa'      => __( 'Villa', 'east-property' ),
+		'townhouse'  => __( 'Townhouse', 'east-property' ),
+		'penthouse'  => __( 'Penthouse', 'east-property' ),
+		'house'      => __( 'House', 'east-property' ),
+		'office'     => __( 'Office', 'east-property' ),
+		'freehold'   => __( 'Freehold', 'east-property' ),
+		'leasehold'  => __( 'Leasehold', 'east-property' ),
+		'commonhold' => __( 'Commonhold', 'east-property' ),
+		'strata'     => __( 'Strata', 'east-property' ),
+		'usufruct'   => __( 'Usufruct', 'east-property' ),
+		'joint'      => __( 'Joint Ownership', 'east-property' ),
+		'fractional' => __( 'Fractional Ownership', 'east-property' ),
+	);
+
+	$key = strtolower( trim( $value ) );
+
+	return $labels[ $key ] ?? $value;
+}
+
+/**
+ * Every property matching the current filters, shaped for the map
+ *
+ * The map tab has no pagination, so it gets the whole matching set instead of
+ * the page the listing shows. Unit counts are counted from the units: the
+ * units_count meta counts every row pointing at a project whatever its post
+ * status or language, which is why a marker showed two units while the list
+ * beside it showed one.
+ *
+ * @return array
+ */
+function get_map_properties( array $args = array() ): array {
+	$current_language = core_get_current_language();
+
+	/*
+	 * Every request parameter core_query_properties() filters by goes into the
+	 * key, otherwise two different filters would share one cached map.
+	 */
+	$filter_params = implode(
+		'|',
+		array_map(
+			static fn( $key ) => (string) ( $_REQUEST[ $key ] ?? '' ),
+			array( 'location', 'available', 'developer', 'property_type', 'min_price', 'max_price', 'property_id' )
+		)
+	);
+
+	$cache_key = 'map_properties_' . $current_language . '_' . md5( wp_json_encode( $args ) . $filter_params );
+
+	static $memo = array();
+	if ( isset( $memo[ $cache_key ] ) ) {
+		return $memo[ $cache_key ];
+	}
+
+	$properties = wp_cache_get( $cache_key, 'properties' );
+	if ( false === $properties ) {
+		$properties = core_query_map_properties( $current_language, $args );
+
+		wp_cache_set( $cache_key, $properties, 'properties', HOUR_IN_SECONDS );
+	}
+
+	$memo[ $cache_key ] = $properties;
+
+	return $properties;
+}
+
+/**
+ * The map dataset, uncached
+ *
+ * @param string $language Polylang slug.
+ * @param array $args Same extra filters get_properties() takes, developer among them.
+ *
+ * @return array
+ */
+function core_query_map_properties( string $language, array $args = array() ): array {
+	$args['for_map'] = true;
+
+	$properties = core_query_properties( 0, false, 1, $language, $args );
+	$items      = $properties['items'] ?? array();
+
+	if ( empty( $items ) ) {
+		return array();
+	}
+
+	/*
+	 * Units of both languages carry the id of the original project, so a
+	 * translated project is referenced by none of them. Counts are collected
+	 * across the whole translation group, the same way Property::get_units()
+	 * looks units up.
+	 */
+	$groups = array();
+	foreach ( $items as $item ) {
+		$property_id            = (int) $item['ID'];
+		$groups[ $property_id ] = core_property_linked_ids( $property_id );
+	}
+
+	$counts = core_property_unit_counts( array_merge( ...array_values( $groups ) ), $language );
+
+	foreach ( $items as $key => $item ) {
+		$count = 0;
+		foreach ( $groups[ (int) $item['ID'] ] as $linked_id ) {
+			$count += $counts[ $linked_id ] ?? 0;
+		}
+
+		if ( 0 === $count ) {
+			unset( $items[ $key ] );
+
+			continue;
+		}
+
+		$items[ $key ]['units_count'] = $count;
+	}
+
+	return array_values( $items );
+}
+
+/**
+ * A project together with its translations
+ *
+ * Mirrors Property::linked_property_ids(), which is private to the entity.
+ *
+ * @param int $property_id Project id.
+ *
+ * @return array
+ */
+function core_property_linked_ids( int $property_id ): array {
+	$ids = array( $property_id );
+
+	if ( function_exists( 'pll_get_post_translations' ) ) {
+		foreach ( pll_get_post_translations( $property_id ) as $translation ) {
+			$ids[] = (int) $translation;
+		}
+	}
+
+	return array_values( array_unique( array_filter( $ids ) ) );
+}
+
+/**
+ * Published units per project, counted from the units themselves
+ *
+ * One aggregate for the whole page of projects instead of a count per project.
+ *
+ * @param array $property_ids Project ids.
+ * @param string $language Polylang slug; empty counts every language.
+ *
+ * @return array Count per project id.
+ */
+function core_property_unit_counts( array $property_ids, string $language = '' ): array {
+	global $wpdb;
+
+	$property_ids = array_values( array_unique( array_filter( array_map( 'intval', $property_ids ) ) ) );
+
+	if ( empty( $property_ids ) ) {
+		return array();
+	}
+
+	$params = array( 'unit', 'publish' );
+
+	$language_join = '';
+	if ( '' !== $language ) {
+		$language_join = "INNER JOIN {$wpdb->term_relationships} AS pll_language_relation
+				ON pll_language_relation.object_id = u.ID
+			INNER JOIN {$wpdb->term_taxonomy} AS pll_language_taxonomy
+				ON pll_language_taxonomy.term_taxonomy_id = pll_language_relation.term_taxonomy_id
+				AND pll_language_taxonomy.taxonomy = 'language'
+			INNER JOIN {$wpdb->terms} AS pll_language
+				ON pll_language.term_id = pll_language_taxonomy.term_id
+				AND pll_language.slug = %s";
+		$params[]      = $language;
+	}
+
+	$params[]     = 'property';
+	$placeholders = implode( ',', array_fill( 0, count( $property_ids ), '%d' ) );
+	$params       = array_merge( $params, $property_ids );
+
+	$rows = $wpdb->get_results(
+		$wpdb->prepare(
+			"SELECT CAST(pm.meta_value AS UNSIGNED) AS property_id, COUNT(*) AS units_count
+			FROM {$wpdb->postmeta} AS pm
+			INNER JOIN {$wpdb->posts} AS u
+				ON u.ID = pm.post_id
+				AND u.post_type = %s
+				AND u.post_status = %s
+			{$language_join}
+			WHERE pm.meta_key = %s
+			  AND CAST(pm.meta_value AS UNSIGNED) IN ({$placeholders})
+			GROUP BY property_id",
+			$params
+		),
+		ARRAY_A
+	);
+
+	$counts = array();
+	foreach ( (array) $rows as $row ) {
+		$counts[ (int) $row['property_id'] ] = (int) $row['units_count'];
+	}
+
+	return $counts;
+}
+
+/**
  * The properties listing for the current filters, uncached.
  *
  * Split out of get_properties() so the cache can rebuild it after the response;
@@ -149,6 +360,8 @@ function core_query_properties(
 ): array {
 	global $wpdb;
 
+	$is_map = ! empty( $args['for_map'] );
+
 	if ( 0 > $limit ) {
 		$limit = PROPERTIES_PER_PAGE;
 	}
@@ -164,7 +377,7 @@ function core_query_properties(
 	}
 
 	if ( ! empty( $_REQUEST['available'] ) && 'all' !== $_REQUEST['available'] ) {
-		if ( 'available_immediately' === $_REQUEST['available'] ) {
+		if ( 'ready' === $_REQUEST['available'] ) {
 			$date_to   = date( 'Ymd' );
 			$date_from = '20000101';
 		} elseif ( 'in_construction' === $_REQUEST['available'] ) {
@@ -222,14 +435,18 @@ function core_query_properties(
 	$joins[] = "INNER JOIN {$wpdb->postmeta} AS pm_units_count
 				ON pm_units_count.post_id = p.ID
 				AND pm_units_count.meta_key = 'units_count'";
-	if ( ! $skip_filters ) {
+	/*
+	 * The map counts units itself, so it skips this gate: units_count counts
+	 * every row pointing at the project, whatever the post status or language.
+	 */
+	if ( ! $skip_filters && ! $is_map ) {
 		$where[] = "CAST(pm_units_count.meta_value AS UNSIGNED) > 0";
 	}
 
-	$filter_min_price = ! empty( $_REQUEST['min_price'] )
+	$filter_min_price = is_numeric( $_REQUEST['min_price'] ?? null )
 		? (int) sanitize_text_field( wp_unslash( $_REQUEST['min_price'] ) )
 		: null;
-	$filter_max_price = ! empty( $_REQUEST['max_price'] )
+	$filter_max_price = is_numeric( $_REQUEST['max_price'] ?? null )
 		? (int) sanitize_text_field( wp_unslash( $_REQUEST['max_price'] ) )
 		: null;
 	if ( ! $skip_filters && ( null !== $filter_min_price || null !== $filter_max_price ) ) {
@@ -281,6 +498,12 @@ function core_query_properties(
 			AND pm_longitude.meta_key = 'longitude'
 	";
 
+	// A marker without coordinates is dropped anyway, so it never leaves the database.
+	if ( $is_map ) {
+		$where[] = "pm_latitude.meta_value <> ''";
+		$where[] = "pm_longitude.meta_value <> ''";
+	}
+
 	//add polylang support
 	if ( function_exists( 'pll_current_language' ) ) {
 		$joins[] = "INNER JOIN {$wpdb->term_relationships} AS pll_language_relation
@@ -304,8 +527,17 @@ function core_query_properties(
 
 	$join_sql  = implode( "\n", $joins );
 	$where_sql = implode( "\nAND ", $where );
-	$sql       = "
-		SELECT 
+	/*
+	 * The map draws markers only and is not paginated: it takes four columns
+	 * and the whole matching set instead of one page of full rows.
+	 */
+	$select    = $is_map
+		? "
+			p.ID,
+			p.post_title,
+			pm_latitude.meta_value AS latitude,
+			pm_longitude.meta_value AS longitude"
+		: "
 			p.ID,
 			p.post_title,
 			p.post_author AS author_id,
@@ -317,34 +549,50 @@ function core_query_properties(
 			pm_latitude.meta_value AS latitude,
 			pm_longitude.meta_value AS longitude,
 			pm_units_count.meta_value AS units_count,
-			COUNT(*) OVER() AS total_count
+			COUNT(*) OVER() AS total_count";
+	$limit_sql = $is_map ? '' : 'LIMIT %d OFFSET %d';
+	$sql       = "
+		SELECT {$select}
 		FROM {$wpdb->posts} AS p
 		{$join_sql}
 		WHERE {$where_sql}
 		GROUP BY p.ID
 		ORDER BY p.post_title ASC
-		LIMIT %d OFFSET %d
+		{$limit_sql}
 	";
-	$params[]  = $limit;
-	$params[]  = $offset;
+
+	if ( ! $is_map ) {
+		$params[] = $limit;
+		$params[] = $offset;
+	}
 
 	$query            = $wpdb->prepare( $sql, $params );
 	$properties_posts = $wpdb->get_results( $query, ARRAY_A );
 
+	/*
+	 * Terms are primed for the map only: permalinks go through Polylang, which
+	 * reads the language term of every post, and hundreds of markers turn that
+	 * into thousands of term queries.
+	 */
 	_prime_post_caches(
 		array_column( $properties_posts, 'ID' ),
-		false,
+		$is_map,
 		false
 	);
 
 	foreach ( $properties_posts as $key => $row ) {
-		$properties_posts[ $key ]['labels'] = core_property_labels( $row );
-		$properties_posts[ $key ]['url']    = get_the_permalink( $row['ID'] );
+		if ( ! $is_map ) {
+			$properties_posts[ $key ]['labels'] = core_property_labels( $row );
+		}
+
+		$properties_posts[ $key ]['url'] = get_the_permalink( $row['ID'] );
 	}
 
 	return array(
 		'items' => $properties_posts,
-		'total' => ! empty( $properties_posts[0]['total_count'] ) ? (int) $properties_posts[0]['total_count'] : 0,
+		'total' => $is_map
+			? count( $properties_posts )
+			: ( ! empty( $properties_posts[0]['total_count'] ) ? (int) $properties_posts[0]['total_count'] : 0 ),
 	);
 }
 
@@ -409,6 +657,7 @@ function ajax_get_map_property(): void {
 
 	$units          = array();
 	$property_units = $property->get_units();
+	$units_total    = (int) ( $property_units['total'] ?? 0 );
 	if ( ! empty( $property_units['items'] ) ) {
 		foreach ( $property_units['items'] as $unit ) {
 			$units[] = array(
@@ -436,7 +685,7 @@ function ajax_get_map_property(): void {
 			'title'           => $property->get_title(),
 			'location'        => $property->get_location()->name ?? '',
 			'gallery'         => $prop_images,
-			'units_available' => count( $units ),
+			'units_available' => $units_total,
 			'price_from'      => $property->get_price_html(),
 			'units'           => $units,
 			'developer_name'  => $property->get_developer()?->get_title() ?? '',

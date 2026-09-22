@@ -44,7 +44,7 @@ const initSearchTabs = async () => {
 
 	containers.forEach((container) => {
 		const tabs = Array.from(container.querySelectorAll('[data-search-tab]'))
-		const typeField = container.querySelector('[data-search-type]')
+		const filtersForm = container.querySelector('form')
 		const developerText = container.querySelector('[data-search-developer-text]')
 		const locationText = container.querySelector('[data-search-location-text]')
 		const developerValue = container.querySelector('[data-search-developer-value]')
@@ -54,7 +54,7 @@ const initSearchTabs = async () => {
 		const distressPanel = container.querySelector('[data-search-distress-panel]')
 		const selectors = Array.from(container.querySelectorAll('[data-search-selector]'))
 
-		if (!tabs.length || !typeField || !locationText || !developerText || !locationValue || !developerValue || !panel) return
+		if (!tabs.length || !locationText || !developerText || !locationValue || !developerValue || !panel) return
 
 		const filterBindings = {
 			location: {
@@ -183,13 +183,11 @@ const initSearchTabs = async () => {
 		renderDropdown('location')
 
 		const activeTab = tabs.find((t) => t.classList.contains('is-active'))
-		const initialType = activeTab?.dataset?.type ?? typeField.value
-
+		const initialType = activeTab?.dataset?.type ?? ''
 		if (typeof initialType === 'string' && initialType) {
 			togglePanels(initialType)
 
 			if (initialType !== DISTRESS_TAB) {
-				typeField.value = initialType
 				applyCategoryDefaults(initialType)
 			}
 		}
@@ -252,7 +250,7 @@ const initSearchTabs = async () => {
 				if (type === DISTRESS_TAB) return
 
 				panel.setAttribute('aria-labelledby', tab.id)
-				typeField.value = type
+				filtersForm.setAttribute('action', tab.dataset.actionurl)
 				applyCategoryDefaults(type)
 			})
 		})

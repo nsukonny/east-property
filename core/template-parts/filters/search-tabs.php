@@ -44,7 +44,9 @@ $beds  = $search_tabs_data['filters']['beds'];
 						aria-controls="search-tabs-panel"
 						aria-selected="<?php echo 0 === $category_key ? 'true' : 'false'; ?>"
 						tabindex="<?php echo 0 === $category_key ? '0' : '-1'; ?>" data-search-tab
-						data-type="<?php echo esc_attr( $category['slug'] ); ?>">
+						data-type="<?php echo esc_attr( $category['slug'] ); ?>"
+						data-actionurl="<?php echo esc_url( $category['action_url'] ); ?>"
+				>
 					<?php echo esc_html( $category['label'] ); ?>
 				</button>
 			<?php } ?>
@@ -171,12 +173,9 @@ $beds  = $search_tabs_data['filters']['beds'];
 			</button>
 		</div>
 
-		<input type="hidden" name="available" value="all" data-search-type>
-		<input type="hidden" name="property_type" value="all" data-search-type>
 		<input type="hidden" name="location" value="all" data-search-location-value>
 		<input type="hidden" name="developer" value="all" data-search-developer-value>
 		<input type="hidden" name="beds" value="" data-search-beds-value>
-		<input type="hidden" name="baths" value="" data-search-baths-value>
 	</form>
 	<div class="tabs-panel distress-panel" id="search-tabs-distress-panel" role="tabpanel"
 		 aria-labelledby="search-tabs-tab-distress" data-search-distress-panel hidden>

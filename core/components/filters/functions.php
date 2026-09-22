@@ -261,20 +261,23 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 		rsort( $delivery_dates );
 	}
 
-	if ( $is_all ) {
-		$delivery_dates = array_merge(
+	if ( ! $is_off_plan ) {
+		$ready_options = array(
 			array(
-				array(
-					'value' => date( 'Y' ),
-					'label' => __( 'Available', 'east-property' ),
-				),
-				array(
-					'value' => 'in_construction',
-					'label' => __( 'In Construction', 'east-property' ),
-				),
+				'value' => 'ready',
+				/* translators: option of the delivery date filter, projects already handed over. */
+				'label' => _x( 'Ready', 'delivery filter', 'east-property' ),
 			),
-			$delivery_dates
 		);
+
+		if ( $is_all ) {
+			$ready_options[] = array(
+				'value' => 'in_construction',
+				'label' => __( 'In Construction', 'east-property' ),
+			);
+		}
+
+		$delivery_dates = array_merge( $ready_options, $delivery_dates );
 	}
 
 	$delivery_dates = array_merge(
@@ -310,7 +313,7 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 			'options' => array(
 				array(
 					'value' => 'all',
-					'label' => 'Any',
+					'label' => __( 'Any', 'east-property' ),
 				),
 			),
 		),
@@ -330,16 +333,17 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 		foreach ( $all_units_types['choices'] as $choice_value => $choice_label ) {
 			$search_tabs_data['filters']['property_type']['options'][] = array(
 				'value' => (string) $choice_value,
-				'label' => (string) $choice_label,
+				'label' => core_property_choice_label( (string) $choice_value ),
 			);
 		}
 	}
 
 	$search_tabs_data['categories'] = array(
 		array(
-			'slug'     => date( 'Y' ),
-			'label'    => _x( 'Available', 'search tab', 'east-property' ),
-			'defaults' => array(
+			'slug'       => date( 'Y' ),
+			'label'      => _x( 'Available', 'search tab', 'east-property' ),
+			'action_url' => core_home_url( 'secondary/' ),
+			'defaults'   => array(
 				'beds'     => array(
 					'label'   => __( 'Bedrooms', 'east-property' ),
 					'options' => get_filter_beds_options(),
@@ -351,9 +355,10 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 			),
 		),
 		array(
-			'slug'     => 'in_construction',
-			'label'    => _x( 'In construction', 'search tab', 'east-property' ),
-			'defaults' => array(
+			'slug'       => date( 'Y' ),
+			'label'      => _x( 'In construction', 'search tab', 'east-property' ),
+			'action_url' => core_home_url( 'off-plan/' ),
+			'defaults'   => array(
 				'beds'  => get_filter_beds_options(),
 				'price' => $price_max,
 			),
@@ -620,8 +625,8 @@ function get_properties_search_tabs_data(): array {
 				'label' => __( 'Any year', 'east-property' ),
 			),
 			array(
-				'value' => date( 'Y' ),
-				'label' => __( 'Available', 'east-property' ),
+				'value' => 'ready',
+				'label' => _x( 'Ready', 'delivery filter', 'east-property' ),
 			),
 			array(
 				'value' => 'in_construction',
@@ -653,7 +658,7 @@ function get_properties_search_tabs_data(): array {
 			'options' => array(
 				array(
 					'value' => 'all',
-					'label' => 'Any',
+					'label' => __( 'Any', 'east-property' ),
 				),
 			),
 		),
@@ -669,7 +674,7 @@ function get_properties_search_tabs_data(): array {
 		foreach ( $all_units_types['choices'] as $choice_value => $choice_label ) {
 			$search_tabs_data['filters']['property_type']['options'][] = array(
 				'value' => (string) $choice_value,
-				'label' => (string) $choice_label,
+				'label' => core_property_choice_label( (string) $choice_value ),
 			);
 		}
 	}
@@ -1008,7 +1013,7 @@ function ajax_get_property(): void {
 	wp_send_json_success(
 		array(
 			'properties'       => $properties_html,
-			'map_properties'   => get_map_properties_json( $properties['items'] ?? array(), true ),
+			'map_properties'   => get_map_properties_json( get_map_properties(), true ),
 			'properties_found' => sprintf(
 				_n( '%s property found', '%s properties found', $total_found, 'east-property' ),
 				$total_found

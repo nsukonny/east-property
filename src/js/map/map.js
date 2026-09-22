@@ -1,11 +1,11 @@
 import {importLibrary} from '@googlemaps/js-api-loader';
-import {MarkerClusterer} from '@googlemaps/markerclusterer';
+import {MarkerClusterer, SuperClusterViewportAlgorithm} from '@googlemaps/markerclusterer';
 import Swiper from 'swiper';
 import {Navigation} from 'swiper/modules';
 import {MAP_CONFIG} from './config';
 import {renderBuildingCard} from './html';
 
-const {__} = window.wp.i18n;
+const {__, sprintf} = window.wp.i18n;
 
 /**
  * Start one map.
@@ -61,8 +61,6 @@ const deferMaps = () => {
 				if (!event.target.closest('[data-modal-open="' + modalId + '"]')) return;
 
 				document.removeEventListener('click', onOpen);
-				// After the click has been dispatched, so the modal is already
-				// open and the container has its size when the map measures it.
 				setTimeout(() => startMap(instance), 0);
 			};
 
@@ -577,23 +575,17 @@ export class PropertyMap {
 
 		this.clusterer = new MarkerClusterer({
 			map: this.map,
-			algorithmOptions: {
+			algorithm: new SuperClusterViewportAlgorithm({
 				radius: MAP_CONFIG.CLUSTER_RADIUS,
 				maxZoom: MAP_CONFIG.CLUSTER_MAX_ZOOM,
-			},
+				viewportPadding: MAP_CONFIG.CLUSTER_VIEWPORT_PADDING,
+			}),
 			renderer: this.createClusterRenderer(AdvancedMarkerElement),
 		});
 
 		return this.clusterer;
 	}
-
-	/**
-	 * Внешний вид кластера.
-	 *
-	 * В одиночной булавке стоит число доступных квартир, поэтому и в кластере
-	 * показываем их сумму, а не количество слипшихся булавок: покупателю важно,
-	 * сколько предложений внутри, а не сколько проектов оказалось рядом.
-	 */
+	
 	createClusterRenderer(AdvancedMarkerElement) {
 		return {
 			render: ({count, position, markers}) => {
@@ -605,12 +597,15 @@ export class PropertyMap {
 
 				const element = document.createElement('div');
 				element.className = 'map-marker map-marker--cluster';
-				element.innerHTML = `<span>${units || count}</span>`;
+				// Без подмены на count: раньше кластер с нулевой суммой показывал
+				// число проектов, и число в метке молча меняло смысл.
+				element.innerHTML = `<span>${units}</span>`;
 
 				return new AdvancedMarkerElement({
 					position,
 					content: element,
-					title: `${count} ${__('projects on the map', 'east-property')}`,
+					/* translators: 1: number of projects in the cluster, 2: number of units in them. */
+					title: sprintf(__('%1$d projects · %2$d units', 'east-property'), count, units),
 					// Кластер должен лежать выше одиночных булавок: без этого
 					// булавка с теми же координатами перекрывает его и по группе
 					// невозможно щёлкнуть.

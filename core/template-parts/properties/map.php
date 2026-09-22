@@ -19,7 +19,12 @@ if ( empty( $properties['items'] ) && $property ) {
 $class             = $args['class'] ?? '';
 $search_by_address = $args['search_by_address'] ?? false;
 
-$map_properties = get_map_properties_json( $properties['items'] ?? array(), ! $is_single );
+/*
+ * The listing hands over its own page of projects, the map tab hands over the
+ * whole matching set: the map has no pagination of its own.
+ */
+$map_items      = $args['map_properties'] ?? ( $properties['items'] ?? array() );
+$map_properties = get_map_properties_json( $map_items, ! $is_single );
 
 $latitude  = $property['latitude'] ?? '';
 $longitude = $property['longitude'] ?? '';

@@ -6,6 +6,7 @@
 $mode              = $args['mode'] ?? ''; //'single' for single property
 $property          = $args['property'] ?? '';
 $properties        = $args['properties'] ?? array();
+$map_properties    = $args['map_properties'] ?? null;
 $show_sidebar      = $args['show_sidebar'] ?? 'false';
 $class             = $args['class'] ?? '';
 $search_by_address = $args['search_by_address'] ?? false;
@@ -15,6 +16,7 @@ get_component_template( 'properties/map',
 		'mode'              => $mode,
 		'property'          => $property,
 		'properties'        => $properties,
+		'map_properties'    => $map_properties,
 		'show_sidebar'      => $show_sidebar,
 		'class'             => $class,
 		'search_by_address' => $search_by_address,

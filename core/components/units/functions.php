@@ -162,19 +162,28 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 		$params[] = (int) sanitize_text_field( $_REQUEST['area'] );
 	}
 
-	if ( ! empty( $_REQUEST['beds'] ) ) {
-		$beds    = explode( ',', sanitize_text_field( $_REQUEST['beds'] ) );
+	if ( isset( $_REQUEST['beds'] ) && '' !== $_REQUEST['beds'] ) {
+		$beds = array_values(
+			array_unique(
+				array_map( 'intval', explode( ',', sanitize_text_field( wp_unslash( $_REQUEST['beds'] ) ) ) )
+			)
+		);
+
 		$where[] = 'pm_beds.meta_value IN (' . implode( ',', array_fill( 0, count( $beds ), '%d' ) ) . ')';
-		$params  = array_merge( $params, array_map( 'intval', $beds ) );
+		$params  = array_merge( $params, $beds );
 	}
 
 	if ( ! empty( $_REQUEST['available'] ) && 'all' !== $_REQUEST['available'] ) {
-		if ( 'off-plan' === $_REQUEST['listing_type'] ) {
-			$year    = sanitize_text_field( wp_unslash( $_REQUEST['available'] ) );
-			$date_to = date( 'Ymd', strtotime( $year . '1231' ) );
+		$available = sanitize_text_field( wp_unslash( $_REQUEST['available'] ) );
+
+		if ( 'ready' === $available ) {
+			$date_to = date( 'Ymd' );
+		} elseif ( 'in_construction' === $available ) {
+			$date_from = date( 'Ymd' );
+		} elseif ( 'off-plan' === ( $_REQUEST['listing_type'] ?? '' ) ) {
+			$date_to = date( 'Ymd', strtotime( $available . '1231' ) );
 		} else {
-			$year      = sanitize_text_field( wp_unslash( $_REQUEST['available'] ) );
-			$date_from = date( 'Ymd', strtotime( $year . '0101' ) );
+			$date_from = date( 'Ymd', strtotime( $available . '0101' ) );
 		}
 
 		$joins[] = "
@@ -218,10 +227,10 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 		$params[] = sanitize_title( wp_unslash( $_REQUEST['location'] ) );
 	}
 
-	$filter_min_price = ! empty( $_REQUEST['min_price'] )
+	$filter_min_price = is_numeric( $_REQUEST['min_price'] ?? null )
 		? (int) sanitize_text_field( wp_unslash( $_REQUEST['min_price'] ) )
 		: null;
-	$filter_max_price = ! empty( $_REQUEST['max_price'] )
+	$filter_max_price = is_numeric( $_REQUEST['max_price'] ?? null )
 		? (int) sanitize_text_field( wp_unslash( $_REQUEST['max_price'] ) )
 		: null;
 	$joins[]          = "
@@ -421,39 +430,83 @@ add_action(
 );
 
 /**
- * Get count of units with handover date less than current date
+ * Count of published units whose project is handed over inside the dates
  *
- * @param string $date_from
- * @param string $date_to
+ * @param string $date_from Lower bound of the delivery date, Y-m-d.
+ * @param string $date_to Upper bound of the delivery date, Y-m-d.
  *
  * @return int
  */
 function get_count_of_units_by_date( $date_from = '2000-01-01', $date_to = '2050-01-01' ): int {
+	$current_language = core_get_current_language();
+	$cache_key        = md5( 'units_count_by_date_' . $current_language . '_' . $date_from . '_' . $date_to );
+
+	static $memo = array();
+	if ( isset( $memo[ $cache_key ] ) ) {
+		return $memo[ $cache_key ];
+	}
+
+	$count = wp_cache_get( $cache_key, 'units' );
+	if ( false === $count ) {
+		$count = core_query_count_of_units_by_date( $date_from, $date_to, $current_language );
+
+		wp_cache_set( $cache_key, $count, 'units', DAY_IN_SECONDS );
+	}
+
+	$memo[ $cache_key ] = (int) $count;
+
+	return $memo[ $cache_key ];
+}
+
+/**
+ * The count itself, uncached
+ *
+ * @param string $date_from Lower bound of the delivery date, Y-m-d.
+ * @param string $date_to Upper bound of the delivery date, Y-m-d.
+ * @param string $language Polylang slug; empty counts every language.
+ *
+ * @return int
+ */
+function core_query_count_of_units_by_date( string $date_from, string $date_to, string $language = '' ): int {
 	global $wpdb;
 
+	$params = array( 'unit', 'publish', $date_from, $date_to );
+
+	/*
+	 * The language condition sits in WHERE rather than in ON: from the ON clause
+	 * its placeholder would reach prepare() before the others and the parameters
+	 * would go out of order.
+	 */
+	$language_join  = '';
+	$language_where = '';
+	if ( '' !== $language ) {
+		$language_join  = "INNER JOIN {$wpdb->term_relationships} AS pll_language_relation
+				ON pll_language_relation.object_id = u.ID
+			INNER JOIN {$wpdb->term_taxonomy} AS pll_language_taxonomy
+				ON pll_language_taxonomy.term_taxonomy_id = pll_language_relation.term_taxonomy_id
+				AND pll_language_taxonomy.taxonomy = 'language'
+			INNER JOIN {$wpdb->terms} AS pll_language
+				ON pll_language.term_id = pll_language_taxonomy.term_id";
+		$language_where = 'AND pll_language.slug = %s';
+		$params[]       = $language;
+	}
+
 	$sql = "
-		SELECT COUNT(DISTINCT u.ID) AS total_count
+		SELECT COUNT(DISTINCT u.ID)
 		FROM {$wpdb->posts} AS u
-		    LEFT JOIN {$wpdb->postmeta} AS pm_property 
-		        ON pm_property.post_id = u.ID AND pm_property.meta_key = 'property'
+		LEFT JOIN {$wpdb->postmeta} AS pm_property
+			ON pm_property.post_id = u.ID
+			AND pm_property.meta_key = 'property'
 		INNER JOIN {$wpdb->postmeta} AS pm_delivery_date
-				ON pm_delivery_date.post_id = CAST(pm_property.meta_value AS UNSIGNED)
-				AND pm_delivery_date.meta_key = 'delivery_date'
+			ON pm_delivery_date.post_id = CAST(pm_property.meta_value AS UNSIGNED)
+			AND pm_delivery_date.meta_key = 'delivery_date'
+		{$language_join}
 		WHERE u.post_type = %s
-			  AND u.post_status = %s
-			  AND pm_delivery_date.meta_value >= %s
-			  AND pm_delivery_date.meta_value <= %s
+		  AND u.post_status = %s
+		  AND pm_delivery_date.meta_value >= %s
+		  AND pm_delivery_date.meta_value <= %s
+		  {$language_where}
 	";
 
-	$params = array(
-		'unit',
-		'publish',
-		$date_from,
-		$date_to,
-	);
-
-	$query       = $wpdb->prepare( $sql, $params );
-	$units_count = $wpdb->get_results( $query );
-
-	return $units_count[0]->total_count ? (int) $units_count[0]->total_count : 0;
+	return (int) $wpdb->get_var( $wpdb->prepare( $sql, $params ) );
 }

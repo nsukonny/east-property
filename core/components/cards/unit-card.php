@@ -15,7 +15,7 @@ if ( empty( $unit ) ) {
 
 $template = $args['template'] ?? 'unit-card';
 
-$is_author = 0 !== $unit['author_id'] && (int) $unit['author_id'] === get_current_user_id();
+$is_author = 0 !== (int) $unit['author_id'] && (int) $unit['author_id'] === get_current_user_id();
 $is_draft  = 'draft' === $unit['post_status'];
 
 get_component_template(
@@ -37,6 +37,6 @@ get_component_template(
 		'edit_link' => $is_author ? core_home_url( '/account?action=edit_unit&id=' . $unit['ID'] ) : '',
 		'is_can_boost' => $is_author && ! $is_draft,
 		'is_favorite' => Unit::is_favorite( (int) $unit['ID'] ),
-		'broker' => ! empty( $unit['author_id'] ) ? new \Entities\Estate_User( $unit['author_id'] ) : null,
+		'broker' => ! empty( $unit['author_id'] ) ? new \Entities\Estate_User( (int) $unit['author_id'] ) : null,
 	)
 );

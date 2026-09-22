@@ -26,7 +26,9 @@ foreach ( $locations as $key => $location ) {
 		'title' => $location->name,
 		'href'  => core_home_url( '/projects/?location=' . $location->slug ),
 		'count' => $projects_count[ $location->term_id ] ?? 0,
-		'image' => THEME_URL . '/assets/img/loc_' . $i . '.png', //TODO Move image from uploads
+		'image' => THEME_URL . '/assets/img/loc_' . $i . '.png',
+		'label' => ( 1 < ( $projects_count[ $location->term_id ] ?? 0 ) ) ? __( 'Projects',
+			'east-property' ) : __( 'Project', 'east-property' ),
 	);
 	$i ++;
 }

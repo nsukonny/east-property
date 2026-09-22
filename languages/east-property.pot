@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-21T08:33:53+00:00\n"
+"POT-Creation-Date: 2026-09-22T14:16:38+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: east-property\n"
@@ -49,12 +49,12 @@ msgid "Go to properties"
 msgstr ""
 
 #: core/components/account/functions.php:125
-#: core/components/filters/functions.php:688
+#: core/components/filters/functions.php:693
 msgid "Apartments"
 msgstr ""
 
 #: core/components/account/functions.php:126
-#: core/components/filters/functions.php:704
+#: core/components/filters/functions.php:709
 msgid "Villas"
 msgstr ""
 
@@ -67,12 +67,12 @@ msgid "Penthouses"
 msgstr ""
 
 #: core/components/account/functions.php:129
-#: core/components/filters/functions.php:696
+#: core/components/filters/functions.php:701
 msgid "Houses"
 msgstr ""
 
 #: core/components/account/functions.php:130
-#: core/components/filters/functions.php:712
+#: core/components/filters/functions.php:717
 msgid "Offices"
 msgstr ""
 
@@ -228,7 +228,6 @@ msgstr ""
 
 #: core/components/common/functions.php:20
 #: core/includes/registers/post-types/properties.php:10
-#: core/template-parts/sections/explore.php:34
 msgid "Properties"
 msgstr ""
 
@@ -387,28 +386,29 @@ msgid "Mailer"
 msgstr ""
 
 #: core/components/filters/functions.php:252
-#: core/components/filters/functions.php:821
-#: core/template-parts/filters/search-tabs.php:155
+#: core/components/filters/functions.php:826
+#: core/template-parts/filters/search-tabs.php:157
 msgid "Any Developers"
 msgstr ""
 
+#. translators: option of the delivery date filter, projects already handed over.
 #: core/components/filters/functions.php:269
-#: core/components/filters/functions.php:624
-#: core/components/filters/functions.php:641
-msgid "Available"
+#: core/components/filters/functions.php:629
+msgctxt "delivery filter"
+msgid "Ready"
 msgstr ""
 
-#: core/components/filters/functions.php:273
-#: core/components/filters/functions.php:628
+#: core/components/filters/functions.php:276
+#: core/components/filters/functions.php:633
 msgid "In Construction"
 msgstr ""
 
-#: core/components/filters/functions.php:284
+#: core/components/filters/functions.php:287
 msgid "All Years"
 msgstr ""
 
-#: core/components/filters/functions.php:293
-#: core/components/filters/functions.php:637
+#: core/components/filters/functions.php:296
+#: core/components/filters/functions.php:642
 #: core/includes/registers/post-types/locations.php:10
 #: core/template-parts/account/edit-property.php:188
 #: core/template-parts/filters/result-filters.php:59
@@ -417,68 +417,74 @@ msgstr ""
 #: core/template-parts/properties/property-units-list.php:28
 #: single-unit.php:284
 #: single-unit.php:381
-#: src/js/map/map.js:278
+#: src/js/map/map.js:276
 msgid "Location"
 msgstr ""
 
-#: core/components/filters/functions.php:297
+#: core/components/filters/functions.php:300
 msgid "Handover Year Before"
 msgstr ""
 
-#: core/components/filters/functions.php:298
+#: core/components/filters/functions.php:301
 msgid "Completion Year After"
 msgstr ""
 
-#: core/components/filters/functions.php:302
-#: core/components/filters/functions.php:645
+#: core/components/filters/functions.php:305
+#: core/components/filters/functions.php:650
 msgid "Price (AED)"
 msgstr ""
 
-#: core/components/filters/functions.php:309
-#: core/components/filters/functions.php:652
+#: core/components/filters/functions.php:312
+#: core/components/filters/functions.php:657
 #: core/includes/entities/class-entity-property.php:630
 msgid "Property Type"
 msgstr ""
 
-#: core/components/filters/functions.php:318
+#: core/components/filters/functions.php:316
 #: core/components/filters/functions.php:661
+#: core/components/filters/functions.php:685
+msgid "Any"
+msgstr ""
+
+#: core/components/filters/functions.php:321
+#: core/components/filters/functions.php:666
 #: core/includes/registers/post-types/developers.php:11
 #: core/includes/registers/post-types/developers.php:37
 #: core/template-parts/account/edit-property.php:125
-#: core/template-parts/filters/result-filters.php:262
-#: core/template-parts/filters/search-tabs.php:153
+#: core/template-parts/filters/result-filters.php:266
+#: core/template-parts/filters/search-tabs.php:155
 #: src/js/map/html.js:58
 msgid "Developer"
 msgstr ""
 
-#: core/components/filters/functions.php:322
+#: core/components/filters/functions.php:325
 #: core/template-parts/cards/map-sidebar.php:85
 #: src/js/map/html.js:66
 msgid "Area"
 msgstr ""
 
-#: core/components/filters/functions.php:341
+#: core/components/filters/functions.php:344
 msgctxt "search tab"
 msgid "Available"
 msgstr ""
 
-#: core/components/filters/functions.php:344
+#: core/components/filters/functions.php:348
 #: core/template-parts/account/edit-unit.php:268
-#: core/template-parts/filters/search-tabs.php:68
+#: core/template-parts/filters/search-tabs.php:70
 msgid "Bedrooms"
 msgstr ""
 
-#: core/components/filters/functions.php:348
-#: core/template-parts/filters/search-tabs.php:132
+#: core/components/filters/functions.php:352
+#: core/template-parts/filters/search-tabs.php:134
 msgid "District"
 msgstr ""
 
-#: core/components/filters/functions.php:355
+#: core/components/filters/functions.php:359
 msgctxt "search tab"
 msgid "In construction"
 msgstr ""
 
-#: core/components/filters/functions.php:378
+#: core/components/filters/functions.php:383
 #: core/components/units/units-by-beds.php:78
 #: core/includes/entities/class-entity-property.php:109
 #: core/includes/entities/class-entity-property.php:115
@@ -488,14 +494,14 @@ msgstr ""
 #: core/template-parts/cards/map-sidebar.php:78
 #: core/template-parts/cards/unit-card.php:32
 #: core/template-parts/cards/unit-square-card.php:31
-#: core/template-parts/filters/result-filters.php:158
+#: core/template-parts/filters/result-filters.php:162
 #: src/js/common/beds-baths.js:11
 #: src/js/map/html.js:62
 #: src/js/map/html.js:63
 msgid "Beds"
 msgstr ""
 
-#: core/components/filters/functions.php:382
+#: core/components/filters/functions.php:387
 #: core/includes/entities/class-entity-property.php:113
 #: core/includes/entities/class-entity-property.php:120
 #: core/includes/entities/class-entity-unit.php:204
@@ -506,7 +512,7 @@ msgstr ""
 msgid "Studio"
 msgstr ""
 
-#: core/components/filters/functions.php:431
+#: core/components/filters/functions.php:436
 #: core/includes/entities/class-entity-property.php:127
 #: core/includes/entities/class-entity-property.php:131
 #: core/includes/entities/class-entity-unit.php:217
@@ -515,34 +521,34 @@ msgstr ""
 msgid "Baths"
 msgstr ""
 
-#: core/components/filters/functions.php:620
+#: core/components/filters/functions.php:625
 msgid "Any year"
 msgstr ""
 
-#: core/components/filters/functions.php:680
-msgid "Any"
+#: core/components/filters/functions.php:646
+msgid "Available"
 msgstr ""
 
-#: core/components/filters/functions.php:867
-#: core/template-parts/filters/search-tabs.php:134
+#: core/components/filters/functions.php:872
+#: core/template-parts/filters/search-tabs.php:136
 msgid "Any Locations"
 msgstr ""
 
-#: core/components/filters/functions.php:1002
-#: core/template-parts/search-results/properties-list.php:70
+#: core/components/filters/functions.php:1007
+#: core/template-parts/search-results/properties-list.php:71
 #: core/template-parts/search-results/tabs.php:63
 #: core/template-parts/search-results/units-list.php:64
 msgid "Items not found"
 msgstr ""
 
-#: core/components/filters/functions.php:1013
-#: core/components/filters/functions.php:1117
+#: core/components/filters/functions.php:1018
+#: core/components/filters/functions.php:1122
 msgid "%s property found"
 msgid_plural "%s properties found"
 msgstr[0] ""
 msgstr[1] ""
 
-#: core/components/filters/functions.php:1105
+#: core/components/filters/functions.php:1110
 msgid "Properties not found"
 msgstr ""
 
@@ -605,7 +611,7 @@ msgstr ""
 #: core/template-parts/account/edit-unit.php:235
 #: core/template-parts/account/edit-unit.php:253
 #: core/template-parts/account/login-form.php:202
-#: core/template-parts/filters/result-filters.php:163
+#: core/template-parts/filters/result-filters.php:167
 #: core/template-parts/ui/dropdown.php:12
 #: src/js/common/beds-baths.js:19
 #: src/js/filters.js:24
@@ -852,7 +858,59 @@ msgstr ""
 msgid "projects found"
 msgstr ""
 
-#: core/components/properties/functions.php:368
+#: core/components/properties/functions.php:141
+msgid "Apartment"
+msgstr ""
+
+#: core/components/properties/functions.php:142
+msgid "Villa"
+msgstr ""
+
+#: core/components/properties/functions.php:143
+msgid "Townhouse"
+msgstr ""
+
+#: core/components/properties/functions.php:144
+msgid "Penthouse"
+msgstr ""
+
+#: core/components/properties/functions.php:145
+msgid "House"
+msgstr ""
+
+#: core/components/properties/functions.php:146
+msgid "Office"
+msgstr ""
+
+#: core/components/properties/functions.php:147
+msgid "Freehold"
+msgstr ""
+
+#: core/components/properties/functions.php:148
+msgid "Leasehold"
+msgstr ""
+
+#: core/components/properties/functions.php:149
+msgid "Commonhold"
+msgstr ""
+
+#: core/components/properties/functions.php:150
+msgid "Strata"
+msgstr ""
+
+#: core/components/properties/functions.php:151
+msgid "Usufruct"
+msgstr ""
+
+#: core/components/properties/functions.php:152
+msgid "Joint Ownership"
+msgstr ""
+
+#: core/components/properties/functions.php:153
+msgid "Fractional Ownership"
+msgstr ""
+
+#: core/components/properties/functions.php:616
 #: core/includes/entities/class-entity-property.php:536
 #: core/includes/entities/class-entity-property.php:603
 #: core/includes/entities/class-entity-unit.php:373
@@ -860,7 +918,7 @@ msgstr ""
 msgid "Ready"
 msgstr ""
 
-#: core/components/properties/functions.php:373
+#: core/components/properties/functions.php:621
 #: core/includes/entities/class-entity-property.php:542
 #: core/includes/entities/class-entity-unit.php:379
 #: core/includes/entities/class-entity-unit.php:447
@@ -956,7 +1014,7 @@ msgid "Secondary"
 msgstr ""
 
 #: core/components/units/functions.php:21
-#: core/template-parts/filters/search-tabs.php:55
+#: core/template-parts/filters/search-tabs.php:57
 msgid "Distress"
 msgstr ""
 
@@ -1668,6 +1726,7 @@ msgid "Discount:"
 msgstr ""
 
 #: core/template-parts/account/edit-unit.php:232
+#: core/template-parts/sections/explore.php:27
 msgid "Project"
 msgstr ""
 
@@ -1677,7 +1736,7 @@ msgid "+ Add new project"
 msgstr ""
 
 #: core/template-parts/account/edit-unit.php:252
-#: core/template-parts/filters/result-filters.php:235
+#: core/template-parts/filters/result-filters.php:239
 msgid "Property type"
 msgstr ""
 
@@ -1978,7 +2037,7 @@ msgid "Dubai, United Arab Emirates."
 msgstr ""
 
 #: core/template-parts/common/footer.php:22
-msgid "Live Support?"
+msgid "Live Support"
 msgstr ""
 
 #: core/template-parts/common/footer.php:35
@@ -2047,68 +2106,68 @@ msgid "If this was not you, please ignore this message or contact us."
 msgstr ""
 
 #: core/template-parts/filters/result-filters.php:55
-#: core/template-parts/filters/result-filters.php:258
-#: core/template-parts/filters/search-tabs.php:130
-#: core/template-parts/filters/search-tabs.php:151
+#: core/template-parts/filters/result-filters.php:262
+#: core/template-parts/filters/search-tabs.php:132
+#: core/template-parts/filters/search-tabs.php:153
 #: core/template-parts/ui/dropdown.php:50
 msgid "Search..."
 msgstr ""
 
-#: core/template-parts/filters/result-filters.php:120
+#: core/template-parts/filters/result-filters.php:124
 msgid "Min price"
 msgstr ""
 
-#: core/template-parts/filters/result-filters.php:130
+#: core/template-parts/filters/result-filters.php:134
 msgid "Max price"
 msgstr ""
 
-#: core/template-parts/filters/result-filters.php:142
-#: core/template-parts/filters/result-filters.php:206
-#: core/template-parts/filters/search-tabs.php:111
+#: core/template-parts/filters/result-filters.php:146
+#: core/template-parts/filters/result-filters.php:210
+#: core/template-parts/filters/search-tabs.php:113
 msgid "Cancel"
 msgstr ""
 
-#: core/template-parts/filters/result-filters.php:145
-#: core/template-parts/filters/result-filters.php:209
-#: core/template-parts/filters/search-tabs.php:114
+#: core/template-parts/filters/result-filters.php:149
+#: core/template-parts/filters/result-filters.php:213
+#: core/template-parts/filters/search-tabs.php:116
 msgid "Apply"
 msgstr ""
 
-#: core/template-parts/filters/result-filters.php:267
-#: core/template-parts/filters/result-filters.php:287
+#: core/template-parts/filters/result-filters.php:271
+#: core/template-parts/filters/result-filters.php:291
 msgid "All"
 msgstr ""
 
-#: core/template-parts/filters/result-filters.php:282
+#: core/template-parts/filters/result-filters.php:286
 msgid "Max Area"
 msgstr ""
 
-#: core/template-parts/filters/search-tabs.php:136
-#: core/template-parts/filters/search-tabs.php:157
+#: core/template-parts/filters/search-tabs.php:138
+#: core/template-parts/filters/search-tabs.php:159
 msgid "Dropdown arrow"
 msgstr ""
 
-#: core/template-parts/filters/search-tabs.php:170
+#: core/template-parts/filters/search-tabs.php:172
 msgid "Search"
 msgstr ""
 
-#: core/template-parts/filters/search-tabs.php:184
+#: core/template-parts/filters/search-tabs.php:183
 msgid "Distress deals are sold below market price"
 msgstr ""
 
-#: core/template-parts/filters/search-tabs.php:187
+#: core/template-parts/filters/search-tabs.php:186
 msgid "Owners who need a fast exit, verified by us and limited in number. These listings are not published openly — we send them out on request."
 msgstr ""
 
-#: core/template-parts/filters/search-tabs.php:193
+#: core/template-parts/filters/search-tabs.php:192
 msgid "Explore distress deals"
 msgstr ""
 
-#: core/template-parts/filters/search-tabs.php:196
+#: core/template-parts/filters/search-tabs.php:195
 msgid "Sell my property"
 msgstr ""
 
-#: core/template-parts/filters/search-tabs.php:200
+#: core/template-parts/filters/search-tabs.php:199
 msgid "One short call: we send the current list and check your property against buyer demand."
 msgstr ""
 
@@ -2144,7 +2203,7 @@ msgstr ""
 msgid "Your information is kept strictly confidential"
 msgstr ""
 
-#: core/template-parts/properties/map.php:73
+#: core/template-parts/properties/map.php:78
 msgid "Explore Project"
 msgstr ""
 
@@ -2194,13 +2253,13 @@ msgstr ""
 msgid "Explore a wide selection of properties across Dubai. From modern apartments and family villas to premium off-plan opportunities  in the city’s most sought-after communities. Compare prices, locations, and layouts in one place and find the property that matches your goals and budget."
 msgstr ""
 
-#: core/template-parts/search-results/properties-list.php:22
+#: core/template-parts/search-results/properties-list.php:23
 #: core/template-parts/search-results/tabs.php:16
 #: core/template-parts/search-results/units-list.php:20
 msgid "List view"
 msgstr ""
 
-#: core/template-parts/search-results/properties-list.php:26
+#: core/template-parts/search-results/properties-list.php:27
 #: core/template-parts/search-results/tabs.php:20
 msgid "Map view"
 msgstr ""
@@ -2211,6 +2270,10 @@ msgstr ""
 
 #: core/template-parts/search-results/units-list.php:8
 msgid "Browse a wide selection of apartments in Dubai. From smart studios to spacious family residences and premium off-plan units in top locations. Compare prices, layouts, and communities in one place and find the apartment that fits your lifestyle, goals, and budget."
+msgstr ""
+
+#: core/template-parts/sections/explore.php:27
+msgid "Projects"
 msgstr ""
 
 #: core/template-parts/ui/dropdown.php:41
@@ -2843,10 +2906,11 @@ msgstr ""
 msgid "bath"
 msgstr ""
 
-#: src/js/map/map.js:420
+#: src/js/map/map.js:418
 msgid "Selected location"
 msgstr ""
 
-#: src/js/map/map.js:613
-msgid "projects on the map"
+#. translators: 1: number of projects in the cluster, 2: number of units in them.
+#: src/js/map/map.js:608
+msgid "%1$d projects · %2$d units"
 msgstr ""
