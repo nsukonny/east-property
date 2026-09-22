@@ -16,6 +16,9 @@ export const MAP_CONFIG = {
 	// отдельно. В Дубае проекты стоят плотно, поэтому порог поднят: раньше
 	// него кластеры полезны, дальше — только мешают выбирать конкретный дом.
 	CLUSTER_MAX_ZOOM: 15,
+	// Markers and clusters are laid out for the visible area plus this many
+	// pixels on each side, so a short pan shows them before the map settles.
+	CLUSTER_VIEWPORT_PADDING: 200,
 };
 
 setOptions({

@@ -1,5 +1,5 @@
 import {importLibrary} from '@googlemaps/js-api-loader';
-import {MarkerClusterer} from '@googlemaps/markerclusterer';
+import {MarkerClusterer, SuperClusterViewportAlgorithm} from '@googlemaps/markerclusterer';
 import Swiper from 'swiper';
 import {Navigation} from 'swiper/modules';
 import {MAP_CONFIG} from './config';
@@ -577,10 +577,16 @@ export class PropertyMap {
 
 		this.clusterer = new MarkerClusterer({
 			map: this.map,
-			algorithmOptions: {
+			// The default algorithm clusters the whole world on every zoom and, past
+			// maxZoom, puts every marker on the map: about a thousand HTML markers on
+			// the homepage at zoom 16, most of them off screen. The viewport variant
+			// groups the same way and shows the same individual markers past
+			// maxZoom, only for the visible area plus a margin.
+			algorithm: new SuperClusterViewportAlgorithm({
 				radius: MAP_CONFIG.CLUSTER_RADIUS,
 				maxZoom: MAP_CONFIG.CLUSTER_MAX_ZOOM,
-			},
+				viewportPadding: MAP_CONFIG.CLUSTER_VIEWPORT_PADDING,
+			}),
 			renderer: this.createClusterRenderer(AdvancedMarkerElement),
 		});
 
