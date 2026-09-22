@@ -162,10 +162,15 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 		$params[] = (int) sanitize_text_field( $_REQUEST['area'] );
 	}
 
-	if ( ! empty( $_REQUEST['beds'] ) ) {
-		$beds    = explode( ',', sanitize_text_field( $_REQUEST['beds'] ) );
+	if ( isset( $_REQUEST['beds'] ) && '' !== $_REQUEST['beds'] ) {
+		$beds = array_values(
+			array_unique(
+				array_map( 'intval', explode( ',', sanitize_text_field( wp_unslash( $_REQUEST['beds'] ) ) ) )
+			)
+		);
+
 		$where[] = 'pm_beds.meta_value IN (' . implode( ',', array_fill( 0, count( $beds ), '%d' ) ) . ')';
-		$params  = array_merge( $params, array_map( 'intval', $beds ) );
+		$params  = array_merge( $params, $beds );
 	}
 
 	if ( ! empty( $_REQUEST['available'] ) && 'all' !== $_REQUEST['available'] ) {
@@ -218,10 +223,10 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 		$params[] = sanitize_title( wp_unslash( $_REQUEST['location'] ) );
 	}
 
-	$filter_min_price = ! empty( $_REQUEST['min_price'] )
+	$filter_min_price = is_numeric( $_REQUEST['min_price'] ?? null )
 		? (int) sanitize_text_field( wp_unslash( $_REQUEST['min_price'] ) )
 		: null;
-	$filter_max_price = ! empty( $_REQUEST['max_price'] )
+	$filter_max_price = is_numeric( $_REQUEST['max_price'] ?? null )
 		? (int) sanitize_text_field( wp_unslash( $_REQUEST['max_price'] ) )
 		: null;
 	$joins[]          = "

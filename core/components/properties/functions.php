@@ -18,6 +18,9 @@ function get_properties( int $limit = - 1, bool $skip_filters = false, array $ar
 	$request_params = $_REQUEST['location'] ?? '';
 	$request_params .= $_REQUEST['available'] ?? '';
 	$request_params .= $args['developer'] ?? $_REQUEST['developer'] ?? '';
+	$request_params .= $_REQUEST['property_type'] ?? '';
+	$request_params .= $_REQUEST['min_price'] ?? '';
+	$request_params .= $_REQUEST['max_price'] ?? '';
 	$request_params .= wp_json_encode( $args );
 	$cache_key      = 'properties_' . $current_language . '_'
 	                  . md5( (string) $limit . (string) $skip_filters . (string) $current_page . $request_params );
@@ -410,11 +413,11 @@ function core_query_properties(
 	if ( ! $skip_filters && ! $is_map ) {
 		$where[] = "CAST(pm_units_count.meta_value AS UNSIGNED) > 0";
 	}
-
-	$filter_min_price = ! empty( $_REQUEST['min_price'] )
+	
+	$filter_min_price = is_numeric( $_REQUEST['min_price'] ?? null )
 		? (int) sanitize_text_field( wp_unslash( $_REQUEST['min_price'] ) )
 		: null;
-	$filter_max_price = ! empty( $_REQUEST['max_price'] )
+	$filter_max_price = is_numeric( $_REQUEST['max_price'] ?? null )
 		? (int) sanitize_text_field( wp_unslash( $_REQUEST['max_price'] ) )
 		: null;
 	if ( ! $skip_filters && ( null !== $filter_min_price || null !== $filter_max_price ) ) {
