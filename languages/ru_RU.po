@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-11T12:07:43+00:00\n"
-"PO-Revision-Date: 2026-09-19 19:45+0300\n"
+"POT-Creation-Date: 2026-09-22T11:30:57+00:00\n"
+"PO-Revision-Date: 2026-09-22 14:31+0300\n"
 "Language: ru\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "X-Generator: Poedit 3.9\n"
@@ -49,12 +49,12 @@ msgid "Go to properties"
 msgstr "Перейти к объектам"
 
 #: core/components/account/functions.php:125
-#: core/components/filters/functions.php:699
+#: core/components/filters/functions.php:693
 msgid "Apartments"
 msgstr "Квартиры"
 
 #: core/components/account/functions.php:126
-#: core/components/filters/functions.php:715
+#: core/components/filters/functions.php:709
 msgid "Villas"
 msgstr "Виллы"
 
@@ -67,12 +67,12 @@ msgid "Penthouses"
 msgstr "Пентхаусы"
 
 #: core/components/account/functions.php:129
-#: core/components/filters/functions.php:707
+#: core/components/filters/functions.php:701
 msgid "Houses"
 msgstr "Дома"
 
 #: core/components/account/functions.php:130
-#: core/components/filters/functions.php:723
+#: core/components/filters/functions.php:717
 msgid "Offices"
 msgstr "Офисы"
 
@@ -376,31 +376,43 @@ msgstr "Ваш адрес электронной почты"
 msgid "Subscribe"
 msgstr "Подписаться"
 
+#: core/components/components-functions.php:203
+#: core/components/units/units-by-beds.php:21
+#: core/includes/entities/class-entity-property.php:253
+#: core/includes/entities/class-entity-unit.php:176
+#: core/includes/entities/class-entity-unit.php:191
+#: template-parts/sections/single/dropdowns.php:20
+msgid "AED"
+msgstr "AED"
+
 #: core/components/email/functions.php:4
 msgid "Mailer"
 msgstr "Почтовая рассылка"
 
 #: core/components/filters/functions.php:252
-#: core/components/filters/functions.php:832
+#: core/components/filters/functions.php:826
 #: core/template-parts/filters/search-tabs.php:157
 msgid "Any Developers"
 msgstr "Любые застройщики"
 
-#: core/components/filters/functions.php:652
-msgid "Available"
-msgstr "Доступно"
+#. translators: option of the delivery date filter, projects already handed over.
+#: core/components/filters/functions.php:269
+#: core/components/filters/functions.php:629
+msgctxt "delivery filter"
+msgid "Ready"
+msgstr "Готовые"
 
-#: core/components/filters/functions.php:281
-#: core/components/filters/functions.php:639
+#: core/components/filters/functions.php:276
+#: core/components/filters/functions.php:633
 msgid "In Construction"
 msgstr "Строится"
 
-#: core/components/filters/functions.php:292
+#: core/components/filters/functions.php:287
 msgid "All Years"
 msgstr "Все годы"
 
-#: core/components/filters/functions.php:301
-#: core/components/filters/functions.php:648
+#: core/components/filters/functions.php:296
+#: core/components/filters/functions.php:642
 #: core/includes/registers/post-types/locations.php:10
 #: core/template-parts/account/edit-property.php:188
 #: core/template-parts/filters/result-filters.php:59
@@ -413,27 +425,33 @@ msgstr "Все годы"
 msgid "Location"
 msgstr "Локация"
 
-#: core/components/filters/functions.php:305
+#: core/components/filters/functions.php:300
 msgid "Handover Year Before"
 msgstr "Год сдачи до"
 
-#: core/components/filters/functions.php:306
+#: core/components/filters/functions.php:301
 msgid "Completion Year After"
 msgstr "Год сдачи ЖК"
 
-#: core/components/filters/functions.php:310
-#: core/components/filters/functions.php:656
+#: core/components/filters/functions.php:305
+#: core/components/filters/functions.php:650
 msgid "Price (AED)"
 msgstr "Цена (AED)"
 
-#: core/components/filters/functions.php:317
-#: core/components/filters/functions.php:663
+#: core/components/filters/functions.php:312
+#: core/components/filters/functions.php:657
 #: core/includes/entities/class-entity-property.php:630
 msgid "Property Type"
 msgstr "Тип объекта"
 
-#: core/components/filters/functions.php:326
-#: core/components/filters/functions.php:672
+#: core/components/filters/functions.php:316
+#: core/components/filters/functions.php:661
+#: core/components/filters/functions.php:685
+msgid "Any"
+msgstr "Любой"
+
+#: core/components/filters/functions.php:321
+#: core/components/filters/functions.php:666
 #: core/includes/registers/post-types/developers.php:11
 #: core/includes/registers/post-types/developers.php:37
 #: core/template-parts/account/edit-property.php:125
@@ -443,32 +461,34 @@ msgstr "Тип объекта"
 msgid "Developer"
 msgstr "Застройщик"
 
-#: core/components/filters/functions.php:330
+#: core/components/filters/functions.php:325
 #: core/template-parts/cards/map-sidebar.php:85
 #: src/js/map/html.js:66
 msgid "Area"
 msgstr "Площадь"
 
-#: template-parts/sections/index/hero.php:32
-msgid "Available immediately"
-msgstr "Готовые проекты"
+#: core/components/filters/functions.php:344
+msgctxt "search tab"
+msgid "Available"
+msgstr "Готовые"
 
-#: core/components/filters/functions.php:353
+#: core/components/filters/functions.php:348
 #: core/template-parts/account/edit-unit.php:268
 #: core/template-parts/filters/search-tabs.php:70
 msgid "Bedrooms"
 msgstr "Количество спален"
 
-#: core/components/filters/functions.php:357
+#: core/components/filters/functions.php:352
 #: core/template-parts/filters/search-tabs.php:134
 msgid "District"
 msgstr "Район"
 
-#: template-parts/sections/index/hero.php:40
+#: core/components/filters/functions.php:359
+msgctxt "search tab"
 msgid "In construction"
-msgstr "На этапе строительства"
+msgstr "Строится"
 
-#: core/components/filters/functions.php:388
+#: core/components/filters/functions.php:383
 #: core/components/units/units-by-beds.php:78
 #: core/includes/entities/class-entity-property.php:109
 #: core/includes/entities/class-entity-property.php:115
@@ -485,7 +505,7 @@ msgstr "На этапе строительства"
 msgid "Beds"
 msgstr "Спальни"
 
-#: core/components/filters/functions.php:392
+#: core/components/filters/functions.php:387
 #: core/includes/entities/class-entity-property.php:113
 #: core/includes/entities/class-entity-property.php:120
 #: core/includes/entities/class-entity-unit.php:204
@@ -496,7 +516,7 @@ msgstr "Спальни"
 msgid "Studio"
 msgstr "Студия"
 
-#: core/components/filters/functions.php:441
+#: core/components/filters/functions.php:436
 #: core/includes/entities/class-entity-property.php:127
 #: core/includes/entities/class-entity-property.php:131
 #: core/includes/entities/class-entity-unit.php:217
@@ -505,37 +525,35 @@ msgstr "Студия"
 msgid "Baths"
 msgstr "Ванных"
 
-#: core/components/filters/functions.php:630
+#: core/components/filters/functions.php:625
 msgid "Any year"
 msgstr "Любой год"
 
-#: core/components/filters/functions.php:321
-#: core/components/filters/functions.php:667
-#: core/components/filters/functions.php:691
-msgid "Any"
-msgstr "Любой"
+#: core/components/filters/functions.php:646
+msgid "Available"
+msgstr "Доступно"
 
-#: core/components/filters/functions.php:878
+#: core/components/filters/functions.php:872
 #: core/template-parts/filters/search-tabs.php:136
 msgid "Any Locations"
 msgstr "Любые локации"
 
-#: core/components/filters/functions.php:1013
+#: core/components/filters/functions.php:1007
 #: core/template-parts/search-results/properties-list.php:71
 #: core/template-parts/search-results/tabs.php:63
 #: core/template-parts/search-results/units-list.php:64
 msgid "Items not found"
 msgstr "Элементы не найдены"
 
-#: core/components/filters/functions.php:1024
-#: core/components/filters/functions.php:1128
+#: core/components/filters/functions.php:1018
+#: core/components/filters/functions.php:1122
 msgid "%s property found"
 msgid_plural "%s properties found"
 msgstr[0] "%s объект найден"
 msgstr[1] "%s объекта найдено"
 msgstr[2] "%s объектов найдено"
 
-#: core/components/filters/functions.php:1116
+#: core/components/filters/functions.php:1110
 msgid "Properties not found"
 msgstr "Объекты не найдены"
 
@@ -858,6 +876,73 @@ msgstr "Купить недвижимость в ОАЭ"
 msgid "projects found"
 msgstr "проектов найдено"
 
+#: core/components/properties/functions.php:141
+msgid "Apartment"
+msgstr "Квартира"
+
+#: core/components/properties/functions.php:142
+msgid "Villa"
+msgstr "Вилла"
+
+#: core/components/properties/functions.php:143
+msgid "Townhouse"
+msgstr "Таунхаус"
+
+#: core/components/properties/functions.php:144
+msgid "Penthouse"
+msgstr "Пентхаус"
+
+#: core/components/properties/functions.php:145
+msgid "House"
+msgstr "Дом"
+
+#: core/components/properties/functions.php:146
+msgid "Office"
+msgstr "Офис"
+
+#: core/components/properties/functions.php:147
+msgid "Freehold"
+msgstr "Фрихолд"
+
+#: core/components/properties/functions.php:148
+msgid "Leasehold"
+msgstr "Лизхолд"
+
+#: core/components/properties/functions.php:149
+msgid "Commonhold"
+msgstr "Общая собственность"
+
+#: core/components/properties/functions.php:150
+msgid "Strata"
+msgstr "Страта"
+
+#: core/components/properties/functions.php:151
+msgid "Usufruct"
+msgstr "Узуфрукт"
+
+#: core/components/properties/functions.php:152
+msgid "Joint Ownership"
+msgstr "Совместная собственность"
+
+#: core/components/properties/functions.php:153
+msgid "Fractional Ownership"
+msgstr "Долевая собственность"
+
+#: core/components/properties/functions.php:616
+#: core/includes/entities/class-entity-property.php:536
+#: core/includes/entities/class-entity-property.php:603
+#: core/includes/entities/class-entity-unit.php:373
+#: core/includes/entities/class-entity-unit.php:441
+msgid "Ready"
+msgstr "Сдан"
+
+#: core/components/properties/functions.php:621
+#: core/includes/entities/class-entity-property.php:542
+#: core/includes/entities/class-entity-unit.php:379
+#: core/includes/entities/class-entity-unit.php:447
+msgid "Handover:"
+msgstr "Сдача:"
+
 #: core/components/properties/property-single.php:59
 msgid "Show all properties in this project"
 msgstr "Показать все объекты в этом проекте"
@@ -892,6 +977,14 @@ msgstr "Быстрые подборки для вас в ОАЭ"
 #: core/includes/registers/post-types/properties.php:31
 msgid "All Properties"
 msgstr "Все объекты"
+
+#: core/components/sections/explore-by-districts.php:38
+msgid "Explore projects by district"
+msgstr "Подберите проекты по району"
+
+#: core/components/sections/explore-by-districts.php:41
+msgid "All Projects"
+msgstr "Все проекты"
 
 #: core/components/security/functions.php:15
 msgid "Sorry, you are not allowed to access this resource."
@@ -947,15 +1040,6 @@ msgstr "Дистресс"
 msgid "Pricing"
 msgstr "Цены"
 
-#: core/components/components-functions.php:203
-#: core/components/units/units-by-beds.php:21
-#: core/includes/entities/class-entity-property.php:253
-#: core/includes/entities/class-entity-unit.php:176
-#: core/includes/entities/class-entity-unit.php:191
-#: template-parts/sections/single/dropdowns.php:20
-msgid "AED"
-msgstr "AED"
-
 #: core/components/units/units-by-beds.php:36
 #: template-parts/sections/single/dropdowns.php:32
 #: template-parts/sections/single/dropdowns.php:61
@@ -998,21 +1082,6 @@ msgstr "Теперь вы можете воспользоваться всеми
 #: core/includes/entities/class-entity-estate-user.php:277
 msgid "Email Verified"
 msgstr "Email подтвержден"
-
-#: core/components/properties/functions.php:616
-#: core/includes/entities/class-entity-property.php:536
-#: core/includes/entities/class-entity-property.php:603
-#: core/includes/entities/class-entity-unit.php:373
-#: core/includes/entities/class-entity-unit.php:441
-msgid "Ready"
-msgstr "Сдан"
-
-#: core/components/properties/functions.php:621
-#: core/includes/entities/class-entity-property.php:542
-#: core/includes/entities/class-entity-unit.php:379
-#: core/includes/entities/class-entity-unit.php:447
-msgid "Handover:"
-msgstr "Сдача:"
 
 #: core/includes/entities/class-entity-property.php:606
 #: core/template-parts/account/edit-property.php:224
@@ -1986,7 +2055,8 @@ msgid "Dubai, United Arab Emirates."
 msgstr "Дубай, Объединенные Арабские Эмираты."
 
 #: core/template-parts/common/footer.php:22
-msgid "Live Support?"
+#, fuzzy
+msgid "Live Support"
 msgstr "Поддержка"
 
 #: core/template-parts/common/footer.php:35
@@ -2427,6 +2497,54 @@ msgstr "Почему East Property"
 msgid "About img"
 msgstr "Изображение о компании"
 
+#: template-parts/sections/index/distress.php:16
+msgid "Distress deals in Dubai"
+msgstr "Дистресс-предложения в Дубае"
+
+#: template-parts/sections/index/distress.php:20
+msgid "DISTRESS DEALS"
+msgstr "ДИСТРЕСС-ПРЕДЛОЖЕНИЯ"
+
+#: template-parts/sections/index/distress.php:21
+msgid "Own Dubai for Less"
+msgstr "Дубай — за меньшие деньги"
+
+#: template-parts/sections/index/distress.php:22
+msgid "Premium properties from motivated sellers at below-market prices."
+msgstr "Премиальные объекты от собственников, которым нужен быстрый выход, по ценам ниже рынка."
+
+#: template-parts/sections/index/distress.php:23
+msgid "Limited opportunities. The best deals move fast."
+msgstr "Предложений немного. Лучшие уходят быстро."
+
+#: template-parts/sections/index/distress.php:25
+msgid "Explore Distress Deals"
+msgstr "Смотреть дистресс-предложения"
+
+#: template-parts/sections/index/distress.php:31
+msgid "Your Dubai Home. For Less."
+msgstr "Ваш дом в Дубае. Дешевле."
+
+#: template-parts/sections/index/distress.php:32
+msgid "Exclusive properties at below-market prices."
+msgstr "Эксклюзивные объекты по ценам ниже рынка."
+
+#: template-parts/sections/index/distress.php:33
+msgid "Move fast — the best deals don’t wait."
+msgstr "Решайте быстро — лучшие предложения не ждут."
+
+#: template-parts/sections/index/distress.php:35
+msgid "View Deals"
+msgstr "Смотреть предложения"
+
+#: template-parts/sections/index/hero.php:32
+msgid "Available immediately"
+msgstr "Готовые проекты"
+
+#: template-parts/sections/index/hero.php:40
+msgid "In construction"
+msgstr "На этапе строительства"
+
 #: template-parts/sections/index/map.php:8
 msgid "Dubai map"
 msgstr "Карта Дубая"
@@ -2812,124 +2930,7 @@ msgstr "ванна"
 msgid "Selected location"
 msgstr "Выбранная точка"
 
-#: template-parts/sections/index/distress.php:16
-msgid "Distress deals in Dubai"
-msgstr "Дистресс-предложения в Дубае"
-
-#: template-parts/sections/index/distress.php:20
-msgid "DISTRESS DEALS"
-msgstr "ДИСТРЕСС-ПРЕДЛОЖЕНИЯ"
-
-#: template-parts/sections/index/distress.php:21
-msgid "Own Dubai for Less"
-msgstr "Дубай — за меньшие деньги"
-
-#: template-parts/sections/index/distress.php:22
-msgid "Premium properties from motivated sellers at below-market prices."
-msgstr "Премиальные объекты от собственников, которым нужен быстрый выход, по ценам ниже рынка."
-
-#: template-parts/sections/index/distress.php:23
-msgid "Limited opportunities. The best deals move fast."
-msgstr "Предложений немного. Лучшие уходят быстро."
-
-#: template-parts/sections/index/distress.php:25
-msgid "Explore Distress Deals"
-msgstr "Смотреть дистресс-предложения"
-
-#: template-parts/sections/index/distress.php:31
-msgid "Your Dubai Home. For Less."
-msgstr "Ваш дом в Дубае. Дешевле."
-
-#: template-parts/sections/index/distress.php:32
-msgid "Exclusive properties at below-market prices."
-msgstr "Эксклюзивные объекты по ценам ниже рынка."
-
-#: template-parts/sections/index/distress.php:33
-msgid "Move fast — the best deals don’t wait."
-msgstr "Решайте быстро — лучшие предложения не ждут."
-
-#: template-parts/sections/index/distress.php:35
-msgid "View Deals"
-msgstr "Смотреть предложения"
-
-#: core/components/sections/explore-by-districts.php:38
-msgid "Explore projects by district"
-msgstr "Подберите проекты по району"
-
-#: core/components/sections/explore-by-districts.php:41
-msgid "All Projects"
-msgstr "Все проекты"
-
-#: core/components/filters/functions.php:349
-msgctxt "search tab"
-msgid "Available"
-msgstr "Готовые"
-
-#: core/components/filters/functions.php:364
-msgctxt "search tab"
-msgid "In construction"
-msgstr "Строится"
-
 #. translators: 1: number of projects in the cluster, 2: number of units in them.
 #: src/js/map/map.js:608
 msgid "%1$d projects · %2$d units"
 msgstr "%1$d проектов · %2$d юнитов"
-
-#: core/components/properties/functions.php:141
-msgid "Apartment"
-msgstr "Квартира"
-
-#: core/components/properties/functions.php:142
-msgid "Villa"
-msgstr "Вилла"
-
-#: core/components/properties/functions.php:143
-msgid "Townhouse"
-msgstr "Таунхаус"
-
-#: core/components/properties/functions.php:144
-msgid "Penthouse"
-msgstr "Пентхаус"
-
-#: core/components/properties/functions.php:145
-msgid "House"
-msgstr "Дом"
-
-#: core/components/properties/functions.php:146
-msgid "Office"
-msgstr "Офис"
-
-#: core/components/properties/functions.php:147
-msgid "Freehold"
-msgstr "Фрихолд"
-
-#: core/components/properties/functions.php:148
-msgid "Leasehold"
-msgstr "Лизхолд"
-
-#: core/components/properties/functions.php:149
-msgid "Commonhold"
-msgstr "Общая собственность"
-
-#: core/components/properties/functions.php:150
-msgid "Strata"
-msgstr "Страта"
-
-#: core/components/properties/functions.php:151
-msgid "Usufruct"
-msgstr "Узуфрукт"
-
-#: core/components/properties/functions.php:152
-msgid "Joint Ownership"
-msgstr "Совместная собственность"
-
-#: core/components/properties/functions.php:153
-msgid "Fractional Ownership"
-msgstr "Долевая собственность"
-
-#. translators: option of the delivery date filter, projects already handed over.
-#: core/components/filters/functions.php:274
-#: core/components/filters/functions.php:635
-msgctxt "delivery filter"
-msgid "Ready"
-msgstr "Готовые"

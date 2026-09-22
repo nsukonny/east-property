@@ -6,7 +6,7 @@
 					<?php get_template_part( 'core/components/common/subscribe-form/subscribe-form' ); ?>
 					<a class="footer-logo" href="/">
 						<img class="footer-logo" src="<?php echo THEME_URL; ?>/assets/img/logo.svg" width="132"
-						     height="50" alt="Vector logotype">
+							 height="50" alt="Vector logotype">
 					</a>
 					<div class="footer-block">
 						<span>
@@ -19,7 +19,7 @@
 						</address>
 					</div>
 					<div class="footer-block">
-						<span><?php esc_html_e( 'Live Support?', 'east-property' ); ?></span>
+						<span><?php esc_html_e( 'Live Support', 'east-property' ); ?></span>
 						<a href="mailto:support@eastproperty.com">
 							support@eastproperty.com
 						</a>
