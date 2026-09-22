@@ -115,11 +115,9 @@
 
 	.result-option {
 		width: 100%;
-		flex: 0 0 auto;
-		display: flex;
+		display: block;
 		align-items: center;
 		justify-content: space-between;
-		gap: 12px;
 		padding: 8px;
 		border: none;
 		background: transparent;
