@@ -98,7 +98,7 @@ function core_unit_filter_ranges( string $post_type, string $language, string $l
 }
 
 /**
- * Developers of the projects the listing actually contains.
+ * Published developers whose projects hold at least one published unit.
  *
  * @param string $post_type Post type holding the units.
  * @param string $language Polylang slug.
@@ -109,17 +109,48 @@ function core_unit_filter_ranges( string $post_type, string $language, string $l
 function core_unit_filter_developers( string $post_type, string $language, string $listing_type ): array {
 	global $wpdb;
 
-	$source = core_unit_filter_source( $language, $listing_type );
+	$source      = core_unit_filter_source( $language, $listing_type );
+	$language_id = '' === $language ? 0 : core_language_term_taxonomy_id( $language );
+	$select      = 'd.ID, d.post_title';
+	$translation = '';
+	$group_by    = '';
+	$params      = array();
+
+	if ( 0 !== $language_id ) {
+		$select      = 'COALESCE( MAX( d_lang.ID ), d.ID ) AS ID, COALESCE( MAX( d_lang.post_title ), d.post_title ) AS post_title';
+		$translation = "
+			LEFT JOIN {$wpdb->term_relationships} tr_g ON tr_g.object_id = d.ID
+			LEFT JOIN {$wpdb->term_taxonomy} tt_g
+				ON tt_g.term_taxonomy_id = tr_g.term_taxonomy_id AND tt_g.taxonomy = 'post_translations'
+			LEFT JOIN {$wpdb->term_relationships} tr_s
+				ON tr_s.term_taxonomy_id = tt_g.term_taxonomy_id
+			LEFT JOIN {$wpdb->term_relationships} tr_dl
+				ON tr_dl.object_id = tr_s.object_id AND tr_dl.term_taxonomy_id = %d
+			LEFT JOIN {$wpdb->posts} d_lang
+				ON d_lang.ID = tr_dl.object_id AND d_lang.post_type = 'developers' AND d_lang.post_status = 'publish'
+		";
+		$group_by    = 'GROUP BY d.ID';
+		$params[]    = $language_id;
+	}
 
 	$sql = "
-		SELECT DISTINCT d.ID, d.post_title
-		{$source['sql']}
-			JOIN {$wpdb->postmeta} pm_dev ON pm_dev.post_id = p.ID AND pm_dev.meta_key = 'developer_rel'
-			JOIN {$wpdb->posts} d ON d.ID = pm_dev.meta_value AND d.post_type = 'developers'
-		WHERE u.post_type = %s AND u.post_status = 'publish'
+		SELECT {$select}
+		FROM {$wpdb->posts} d
+		{$translation}
+		WHERE d.post_type = 'developers' AND d.post_status = 'publish'
+			AND EXISTS (
+				SELECT 1
+				{$source['sql']}
+					JOIN {$wpdb->postmeta} pm_dev
+						ON pm_dev.post_id = p.ID AND pm_dev.meta_key = 'developer_rel'
+						AND pm_dev.meta_value = CAST( d.ID AS CHAR )
+				WHERE u.post_type = %s AND u.post_status = 'publish'
+					AND pm_own.meta_value <> ''
+			)
+		{$group_by}
 	";
 
-	$params = array_merge( $source['params'], array( $post_type ) );
+	$params = array_merge( $params, $source['params'], array( $post_type ) );
 	$rows   = $wpdb->get_results( $wpdb->prepare( $sql, $params ) );
 
 	$developers = array();
@@ -163,6 +194,7 @@ function core_unit_filter_delivery_years( string $post_type, string $language, s
 				ON pm_date.post_id = p.ID AND pm_date.meta_key = 'delivery_date' AND pm_date.meta_value <> ''
 		WHERE u.post_type = %s AND u.post_status = 'publish'
 		HAVING delivery_year IS NOT NULL
+		ORDER BY delivery_year ASC
 	";
 
 	$params = array_merge( $source['params'], array( $post_type ) );
@@ -178,7 +210,7 @@ function core_unit_filter_delivery_years( string $post_type, string $language, s
  */
 function get_search_tabs_data( string $post_type = 'property', string $listing_type = 'off-plan' ): array {
 	$language  = core_get_current_language();
-	$cache_key = 'search_tabs_data_' . md5( (string) $post_type . (string) $listing_type . (string) $language );
+	$cache_key = 'search_tabs_data_' . md5( (string) $post_type . (string) $listing_type . (string) $language . date( 'Y' ) );
 
 	static $memo = array();
 	if ( isset( $memo[ $cache_key ] ) ) {
@@ -228,12 +260,11 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 	$is_all         = 'all' === $listing_type;
 	$is_off_plan    = 'off-plan' === $listing_type;
 	$delivery_dates = array();
-
-	foreach ( core_unit_filter_delivery_years( $post_type, $language, $listing_type ) as $year ) {
+	$delivery_years = core_unit_filter_delivery_years( $post_type, $language, $listing_type );
+	foreach ( $delivery_years as $year ) {
 		$keep = ( $is_off_plan && $year > $current_year )
-		        || 'secondary' === $listing_type
-		        || 'distress' === $listing_type
-		        || ( $is_all && $year >= $current_year );
+		        || ( ( $is_all || 'secondary' === $listing_type || 'distress' === $listing_type )
+		             && $year >= $current_year );
 
 		if ( $keep && ! isset( $delivery_dates[ $year ] ) ) {
 			$delivery_dates[ $year ] = array(
@@ -254,12 +285,6 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 		),
 		$developers
 	);
-
-	if ( $is_off_plan ) {
-		sort( $delivery_dates );
-	} else {
-		rsort( $delivery_dates );
-	}
 
 	if ( ! $is_off_plan ) {
 		$ready_options = array(

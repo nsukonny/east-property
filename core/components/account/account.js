@@ -255,10 +255,12 @@ const initAddToFavorites = () => {
 				if (response.success) {
 					if (response.data.is_favorite) {
 						button.classList.add('green', 'orange');
-						button.classList.remove('gray');
+						button.classList.remove('gray', 'is-pop');
+						void button.offsetWidth;
+						button.classList.add('is-pop');
 					} else {
 						button.classList.add('gray');
-						button.classList.remove('green', 'orange');
+						button.classList.remove('green', 'orange', 'is-pop');
 					}
 
 					if (textSpan) {

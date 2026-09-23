@@ -263,8 +263,18 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 	if ( ! empty( $_REQUEST['developer'] ) && 'all' !== $_REQUEST['developer'] ) {
 		$developer_filter = (int) sanitize_text_field( wp_unslash( $_REQUEST['developer'] ) );
 		if ( $developer_filter > 0 ) {
-			$where[]  = 'CAST(pm_developer.meta_value AS UNSIGNED) = %d';
-			$params[] = $developer_filter;
+			$developer_ids = array( $developer_filter );
+
+			if ( function_exists( 'pll_get_post_translations' ) ) {
+				foreach ( pll_get_post_translations( $developer_filter ) as $translation ) {
+					$developer_ids[] = (int) $translation;
+				}
+			}
+
+			$developer_ids = array_values( array_unique( array_filter( $developer_ids ) ) );
+			$where[]       = 'CAST(pm_developer.meta_value AS UNSIGNED) IN ('
+			                 . implode( ',', array_fill( 0, count( $developer_ids ), '%d' ) ) . ')';
+			$params        = array_merge( $params, $developer_ids );
 		}
 	}
 
