@@ -803,7 +803,7 @@ function get_range_steps( $min = 0, $max = 0, $steps_count = 6, $is_price = fals
 }
 
 /**
- * Get list of posts with post_type developer
+ * Get list of developers with at least one project shown in the projects listing
  */
 function get_developers_list(): array {
 	global $wpdb;
@@ -837,8 +837,11 @@ function get_developers_list(): array {
 				FROM {$wpdb->postmeta} pm
 					JOIN {$wpdb->posts} p
 						ON p.ID = pm.post_id AND p.post_type = 'property' AND p.post_status = 'publish'
+					JOIN {$wpdb->postmeta} pm_units
+						ON pm_units.post_id = p.ID AND pm_units.meta_key = 'units_count'
 					{$language_property}
 				WHERE pm.meta_key = 'developer_rel' AND pm.meta_value = CAST( d.ID AS CHAR )
+					AND CAST( pm_units.meta_value AS UNSIGNED ) > 0
 			)
 		ORDER BY d.post_title ASC
 	";
