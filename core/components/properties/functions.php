@@ -618,8 +618,7 @@ function core_property_labels( array $row ): array {
 			);
 		} else {
 			$labels[] = array(
-				'name'  => __( 'Handover:', 'east-property' ) . ' ' . date_i18n( get_option( 'date_format' ),
-						strtotime( $delivery_date ) ),
+				'name'  => __( 'Handover:', 'east-property' ) . ' ' . get_handover_date( $delivery_date ),
 				'color' => 'orange',
 			);
 		}

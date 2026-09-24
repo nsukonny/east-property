@@ -100,7 +100,7 @@ $is_show_baths = $search_by['baths'] ?? false;
 				? (float) $_GET['max_price']
 				: $search_tabs_data['filters']['price']['options']['max'];
 			?>
-			<div class="result-filter-wrapper" data-filter-field-type="min_max">
+			<div class="result-filter-wrapper min-max-price" data-filter-field-type="min_max">
 				<button class="result-filter" type="button" data-filter="min_max_price">
 					<span class="result-filter-top">
 						<span class="result-title">
@@ -117,7 +117,7 @@ $is_show_baths = $search_by['baths'] ?? false;
 						</span>
 					</span>
 				</button>
-				<div class="min-max-dropdown fixed" data-result-dropdown="min_max_price" hidden>
+				<div class="min-max-dropdown" data-result-dropdown="min_max_price" hidden>
 					<div class="min-max-content">
 						<fieldset>
 							<label class="input-label">
@@ -155,7 +155,7 @@ $is_show_baths = $search_by['baths'] ?? false;
 		<?php } ?>
 
 		<?php if ( $is_show_beds || $is_show_baths ) { ?>
-			<div class="result-filter-wrapper">
+			<div class="result-filter-wrapper beds-baths">
 				<button class="result-filter" type="button" data-filter="beds_baths">
 					<span class="result-filter-top">
 						<span class="result-title">
@@ -170,7 +170,7 @@ $is_show_baths = $search_by['baths'] ?? false;
 						</span>
 					</span>
 				</button>
-				<div class="beds-baths-dropdown fixed" data-result-dropdown="beds_baths" hidden>
+				<div class="beds-baths-dropdown" data-result-dropdown="beds_baths" hidden>
 					<div class="beds-baths-content">
 						<?php if ( $is_show_beds && ! empty( $beds['options'] ) ) { ?>
 							<div class="beds-baths-section">

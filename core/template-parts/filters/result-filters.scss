@@ -26,7 +26,7 @@
 }
 
 .min-max-dropdown {
-	width: 352px;
+	width: 337px;
 	position: absolute;
 	top: calc(100% + 8px);
 	left: 50%;
@@ -37,7 +37,7 @@
 	border-radius: 16px;
 	background-color: #FFFFFF;
 	overflow: hidden;
-	box-shadow: 0px 1px 4px 0px rgb(24 26 32 / 50%);
+	box-shadow: 0 1px 4px 0 rgb(24 26 32 / 50%);
 
 	&[hidden] {
 		display: none;
@@ -46,11 +46,20 @@
 	&.fixed {
 		position: fixed;
 		top: 25%;
+	}
 
-		@media(min-width: 768px) {
-			position: absolute;
-			top: calc(100% + 8px);
-		}
+	@media(min-width: 768px) {
+		position: absolute;
+		top: calc(100% + 8px);
+	}
+
+	@media(max-width: 480px) {
+		left: 0;
+		transform: translateX(0);
+	}
+
+	@media(max-width: 320px) {
+		width: 100%;
 	}
 }
 
@@ -147,7 +156,7 @@
 
 .tab-dropdown {
 	scrollbar-width: thin;
-	overflow: auto;      /* shows scrollbar only when content overflows */
+	overflow: auto; /* shows scrollbar only when content overflows */
 	max-height: 300px;
 
 	&::-webkit-scrollbar {

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: East Property 1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/east-property\n"
 "POT-Creation-Date: 2026-09-22T14:15:01+00:00\n"
-"PO-Revision-Date: 2026-09-23 12:39+0300\n"
+"PO-Revision-Date: 2026-09-23 16:13+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -48,12 +48,12 @@ msgid "Go to properties"
 msgstr "Перейти к объектам"
 
 #: core/components/account/functions.php:125
-#: core/components/filters/functions.php:693
+#: core/components/filters/functions.php:718
 msgid "Apartments"
 msgstr "Квартиры"
 
 #: core/components/account/functions.php:126
-#: core/components/filters/functions.php:709
+#: core/components/filters/functions.php:734
 msgid "Villas"
 msgstr "Виллы"
 
@@ -66,12 +66,12 @@ msgid "Penthouses"
 msgstr "Пентхаусы"
 
 #: core/components/account/functions.php:129
-#: core/components/filters/functions.php:701
+#: core/components/filters/functions.php:726
 msgid "Houses"
 msgstr "Дома"
 
 #: core/components/account/functions.php:130
-#: core/components/filters/functions.php:717
+#: core/components/filters/functions.php:742
 msgid "Offices"
 msgstr "Офисы"
 
@@ -228,13 +228,17 @@ msgid "Accept"
 msgstr "Принять"
 
 #: core/components/common/functions.php:20
+#: core/components/sections/explore-by-beds.php:15
+#: core/components/sections/explore-by-beds.php:23
+#: core/components/sections/explore-by-beds.php:32
+#: core/components/sections/explore-by-beds.php:42
 #: core/includes/registers/post-types/properties.php:10
 msgid "Properties"
 msgstr "Объектов"
 
 #: core/components/common/functions.php:33
 msgid "Off Plan Properties"
-msgstr "Объекты на этапе строительства"
+msgstr "Новостройки"
 
 #: core/components/common/functions.php:38
 msgid "Secondary Listings"
@@ -387,30 +391,30 @@ msgstr "AED"
 msgid "Mailer"
 msgstr "Почтовая рассылка"
 
-#: core/components/filters/functions.php:252
-#: core/components/filters/functions.php:826
+#: core/components/filters/functions.php:283
+#: core/components/filters/functions.php:851
 #: core/template-parts/filters/search-tabs.php:157
 msgid "Any Developers"
 msgstr "Любые застройщики"
 
 #. translators: option of the delivery date filter, projects already handed over.
-#: core/components/filters/functions.php:269
-#: core/components/filters/functions.php:629
+#: core/components/filters/functions.php:294
+#: core/components/filters/functions.php:654
 msgctxt "delivery filter"
 msgid "Ready"
 msgstr "Готовые"
 
-#: core/components/filters/functions.php:276
-#: core/components/filters/functions.php:633
+#: core/components/filters/functions.php:301
+#: core/components/filters/functions.php:658
 msgid "In Construction"
 msgstr "Строится"
 
-#: core/components/filters/functions.php:287
+#: core/components/filters/functions.php:312
 msgid "All Years"
 msgstr "Все годы"
 
-#: core/components/filters/functions.php:296
-#: core/components/filters/functions.php:642
+#: core/components/filters/functions.php:321
+#: core/components/filters/functions.php:667
 #: core/includes/registers/post-types/locations.php:10
 #: core/template-parts/account/edit-property.php:188
 #: core/template-parts/filters/result-filters.php:59
@@ -421,33 +425,33 @@ msgstr "Все годы"
 msgid "Location"
 msgstr "Локация"
 
-#: core/components/filters/functions.php:300
+#: core/components/filters/functions.php:325
 msgid "Handover Year Before"
 msgstr "Год сдачи до"
 
-#: core/components/filters/functions.php:301
+#: core/components/filters/functions.php:326
 msgid "Completion Year After"
 msgstr "Год сдачи ЖК после"
 
-#: core/components/filters/functions.php:305
-#: core/components/filters/functions.php:650
+#: core/components/filters/functions.php:330
+#: core/components/filters/functions.php:675
 msgid "Price (AED)"
 msgstr "Цена (AED)"
 
-#: core/components/filters/functions.php:312
-#: core/components/filters/functions.php:657
-#: core/includes/entities/class-entity-property.php:630
+#: core/components/filters/functions.php:337
+#: core/components/filters/functions.php:682
+#: core/includes/entities/class-entity-property.php:632
 msgid "Property Type"
 msgstr "Тип объекта"
 
-#: core/components/filters/functions.php:316
-#: core/components/filters/functions.php:661
-#: core/components/filters/functions.php:685
+#: core/components/filters/functions.php:341
+#: core/components/filters/functions.php:686
+#: core/components/filters/functions.php:710
 msgid "Any"
 msgstr "Любой"
 
-#: core/components/filters/functions.php:321
-#: core/components/filters/functions.php:666
+#: core/components/filters/functions.php:346
+#: core/components/filters/functions.php:691
 #: core/includes/registers/post-types/developers.php:11
 #: core/includes/registers/post-types/developers.php:37
 #: core/template-parts/account/edit-property.php:125
@@ -456,33 +460,33 @@ msgstr "Любой"
 msgid "Developer"
 msgstr "Застройщик"
 
-#: core/components/filters/functions.php:325
+#: core/components/filters/functions.php:350
 #: core/template-parts/cards/map-sidebar.php:85 src/js/map/html.js:66
 msgid "Area"
 msgstr "Площадь"
 
-#: core/components/filters/functions.php:344
+#: core/components/filters/functions.php:369
 msgctxt "search tab"
 msgid "Available"
 msgstr "Готовые"
 
-#: core/components/filters/functions.php:348
+#: core/components/filters/functions.php:373
 #: core/template-parts/account/edit-unit.php:268
 #: core/template-parts/filters/search-tabs.php:70
 msgid "Bedrooms"
 msgstr "Количество спален"
 
-#: core/components/filters/functions.php:352
+#: core/components/filters/functions.php:377
 #: core/template-parts/filters/search-tabs.php:134
 msgid "District"
 msgstr "Район"
 
-#: core/components/filters/functions.php:359
+#: core/components/filters/functions.php:384
 msgctxt "search tab"
 msgid "In construction"
 msgstr "Строится"
 
-#: core/components/filters/functions.php:383
+#: core/components/filters/functions.php:408
 #: core/components/units/units-by-beds.php:78
 #: core/includes/entities/class-entity-property.php:109
 #: core/includes/entities/class-entity-property.php:115
@@ -497,7 +501,7 @@ msgstr "Строится"
 msgid "Beds"
 msgstr "Спальни"
 
-#: core/components/filters/functions.php:387
+#: core/components/filters/functions.php:412
 #: core/includes/entities/class-entity-property.php:113
 #: core/includes/entities/class-entity-property.php:120
 #: core/includes/entities/class-entity-unit.php:204
@@ -508,7 +512,7 @@ msgstr "Спальни"
 msgid "Studio"
 msgstr "Студия"
 
-#: core/components/filters/functions.php:436
+#: core/components/filters/functions.php:461
 #: core/includes/entities/class-entity-property.php:127
 #: core/includes/entities/class-entity-property.php:131
 #: core/includes/entities/class-entity-unit.php:217
@@ -517,35 +521,35 @@ msgstr "Студия"
 msgid "Baths"
 msgstr "Ванных"
 
-#: core/components/filters/functions.php:625
+#: core/components/filters/functions.php:650
 msgid "Any year"
 msgstr "Любой год"
 
-#: core/components/filters/functions.php:646
+#: core/components/filters/functions.php:671
 msgid "Available"
 msgstr "Доступно"
 
-#: core/components/filters/functions.php:872
+#: core/components/filters/functions.php:897
 #: core/template-parts/filters/search-tabs.php:136
 msgid "Any Locations"
 msgstr "Любые локации"
 
-#: core/components/filters/functions.php:1007
+#: core/components/filters/functions.php:1032
 #: core/template-parts/search-results/properties-list.php:71
 #: core/template-parts/search-results/tabs.php:63
 #: core/template-parts/search-results/units-list.php:64
 msgid "Items not found"
 msgstr "Элементы не найдены"
 
-#: core/components/filters/functions.php:1018
-#: core/components/filters/functions.php:1122
+#: core/components/filters/functions.php:1043
+#: core/components/filters/functions.php:1147
 msgid "%s property found"
 msgid_plural "%s properties found"
 msgstr[0] "%s объект найден"
 msgstr[1] "%s объекта найдено"
 msgstr[2] "%s объектов найдено"
 
-#: core/components/filters/functions.php:1110
+#: core/components/filters/functions.php:1135
 msgid "Properties not found"
 msgstr "Объекты не найдены"
 
@@ -918,15 +922,15 @@ msgid "Fractional Ownership"
 msgstr "Долевая собственность"
 
 #: core/components/properties/functions.php:616
-#: core/includes/entities/class-entity-property.php:536
-#: core/includes/entities/class-entity-property.php:603
+#: core/includes/entities/class-entity-property.php:538
+#: core/includes/entities/class-entity-property.php:605
 #: core/includes/entities/class-entity-unit.php:373
 #: core/includes/entities/class-entity-unit.php:441
 msgid "Ready"
 msgstr "Сдан"
 
 #: core/components/properties/functions.php:621
-#: core/includes/entities/class-entity-property.php:542
+#: core/includes/entities/class-entity-property.php:544
 #: core/includes/entities/class-entity-unit.php:379
 #: core/includes/entities/class-entity-unit.php:447
 msgid "Handover:"
@@ -936,42 +940,42 @@ msgstr "Сдача:"
 msgid "Show all properties in this project"
 msgstr "Показать все объекты в этом проекте"
 
-#: core/components/sections/explore-by-beds.php:10
+#: core/components/sections/explore-by-beds.php:11
 msgid "Studio or 1 bedroom"
 msgstr "Студия или 1 спальня"
 
-#: core/components/sections/explore-by-beds.php:17
+#: core/components/sections/explore-by-beds.php:19
 msgid "2 bedrooms"
 msgstr "2 спальни"
 
-#: core/components/sections/explore-by-beds.php:24
+#: core/components/sections/explore-by-beds.php:28
 msgid "3 bedrooms"
 msgstr "3 спальни"
 
-#: core/components/sections/explore-by-beds.php:31
+#: core/components/sections/explore-by-beds.php:38
 msgid "3+ bedrooms"
 msgstr "3+ спальни"
 
-#: core/components/sections/explore-by-beds.php:41
+#: core/components/sections/explore-by-beds.php:49
 msgid "Explore properties by number of bedrooms"
 msgstr "Подберите объекты по количеству спален"
 
-#: core/components/sections/explore-by-beds.php:42
-#: core/components/sections/explore-by-districts.php:39
+#: core/components/sections/explore-by-beds.php:50
+#: core/components/sections/explore-by-districts.php:41
 msgid "Quick picks for you in UAE"
 msgstr "Быстрые подборки для вас в ОАЭ"
 
-#: core/components/sections/explore-by-beds.php:44
+#: core/components/sections/explore-by-beds.php:52
 #: core/includes/registers/post-types/properties.php:15
 #: core/includes/registers/post-types/properties.php:31
 msgid "All Properties"
 msgstr "Все объекты"
 
-#: core/components/sections/explore-by-districts.php:38
+#: core/components/sections/explore-by-districts.php:40
 msgid "Explore projects by district"
 msgstr "Подберите проекты по району"
 
-#: core/components/sections/explore-by-districts.php:41
+#: core/components/sections/explore-by-districts.php:43
 msgid "All Projects"
 msgstr "Все проекты"
 
@@ -1071,24 +1075,24 @@ msgstr "Теперь вы можете воспользоваться всеми
 msgid "Email Verified"
 msgstr "Email подтвержден"
 
-#: core/includes/entities/class-entity-property.php:606
+#: core/includes/entities/class-entity-property.php:608
 #: core/template-parts/account/edit-property.php:224
 msgid "Handover Date"
 msgstr "Дата сдачи"
 
-#: core/includes/entities/class-entity-property.php:614
+#: core/includes/entities/class-entity-property.php:616
 msgid "Construction Started"
 msgstr "Строительство начато"
 
-#: core/includes/entities/class-entity-property.php:622
+#: core/includes/entities/class-entity-property.php:624
 msgid "Number of Buildings"
 msgstr "Количество зданий"
 
-#: core/includes/entities/class-entity-property.php:638
+#: core/includes/entities/class-entity-property.php:640
 msgid "Government Fee"
 msgstr "Государственный сбор"
 
-#: core/includes/entities/class-entity-property.php:646
+#: core/includes/entities/class-entity-property.php:648
 msgid "Ownership Type"
 msgstr "Тип владения"
 
@@ -1097,11 +1101,13 @@ msgstr "Тип владения"
 msgid "1 Bath"
 msgstr "1 ванная"
 
+#: core/includes/entities/class-entity-property.php:553
 #: core/includes/entities/class-entity-unit.php:388
 #: core/includes/entities/class-entity-unit.php:455
 msgid "Popular"
 msgstr "Популярное"
 
+#: core/includes/entities/class-entity-property.php:561
 #: core/includes/entities/class-entity-unit.php:396
 #: core/includes/entities/class-entity-unit.php:462
 msgid "Premium Developer"
@@ -1402,6 +1408,10 @@ msgctxt "Post Type Singular Name"
 msgid "Property"
 msgstr "Объект"
 
+#: core/components/sections/explore-by-beds.php:15
+#: core/components/sections/explore-by-beds.php:23
+#: core/components/sections/explore-by-beds.php:32
+#: core/components/sections/explore-by-beds.php:42
 #: core/includes/registers/post-types/properties.php:11
 #: core/includes/registers/post-types/properties.php:34
 msgid "Property"
@@ -1729,8 +1739,8 @@ msgstr "Оригинальная цена, AED"
 msgid "Discount:"
 msgstr "Скидка:"
 
+#: core/components/sections/explore-by-districts.php:31
 #: core/template-parts/account/edit-unit.php:232
-#: core/template-parts/sections/explore.php:27
 msgid "Project"
 msgstr "Проект"
 
@@ -2271,7 +2281,7 @@ msgstr "Aliquam lacinia diam quis lacus euismod"
 msgid "Browse a wide selection of apartments in Dubai. From smart studios to spacious family residences and premium off-plan units in top locations. Compare prices, layouts, and communities in one place and find the apartment that fits your lifestyle, goals, and budget."
 msgstr "Ознакомьтесь с широким выбором квартир в Дубае. От стильных студий до просторных семейных квартир и элитных объектов на стадии строительства в лучших районах. Сравните цены, планировки и жилые комплексы в одном месте и найдите квартиру, которая соответствует вашему образу жизни, целям и бюджету."
 
-#: core/template-parts/sections/explore.php:27
+#: core/components/sections/explore-by-districts.php:30
 msgid "Projects"
 msgstr "Проектов"
 
@@ -2915,3 +2925,29 @@ msgstr "Выбранная точка"
 #: src/js/map/map.js:608
 msgid "%1$d projects · %2$d units"
 msgstr "%1$d проектов · %2$d юнитов"
+
+#: core/components/components-functions.php:220
+msgctxt "handover quarter"
+msgid "Q1"
+msgstr "I квартал"
+
+#: core/components/components-functions.php:221
+msgctxt "handover quarter"
+msgid "Q2"
+msgstr "II квартал"
+
+#: core/components/components-functions.php:222
+msgctxt "handover quarter"
+msgid "Q3"
+msgstr "III квартал"
+
+#: core/components/components-functions.php:223
+msgctxt "handover quarter"
+msgid "Q4"
+msgstr "IV квартал"
+
+#. translators: 1: quarter, 2: year.
+#: core/components/components-functions.php:228
+msgctxt "handover date"
+msgid "%1$s %2$d"
+msgstr "%1$s %2$d"

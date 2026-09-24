@@ -186,7 +186,7 @@ final class Property {
 		}
 
 		if ( $in_date_format ) {
-			return date_i18n( get_option( 'date_format' ), strtotime( $date ) );
+			return get_handover_date( $date );
 		}
 
 		return $date;
@@ -525,6 +525,8 @@ final class Property {
 	/**
 	 * Get property labels
 	 *
+	 * @param array $property
+	 *
 	 * @return array
 	 */
 	public static function build_labels( array $property = array() ): array {
@@ -537,7 +539,7 @@ final class Property {
 					'color' => 'black',
 				);
 			} else {
-				$formatted_delivery_date = date_i18n( get_option( 'date_format' ), strtotime( $delivery_date ) );
+				$formatted_delivery_date = get_handover_date( $delivery_date );
 				$labels[]                = array(
 					'name'  => __( 'Handover:', 'east-property' ) . ' ' . $formatted_delivery_date,
 					'color' => 'orange',
@@ -548,7 +550,7 @@ final class Property {
 		$is_popular = $property['is_popular'] ?? null;
 		if ( ! empty( $is_popular ) ) {
 			$labels[] = array(
-				'name'  => 'Popular',
+				'name'  => __( 'Popular', 'east-property' ),
 				'color' => 'red',
 			);
 		}
@@ -556,7 +558,7 @@ final class Property {
 		$is_premium_developer = $property['is_premium_developer'] ?? null;
 		if ( ! empty( $is_premium_developer ) ) {
 			$labels[] = array(
-				'name'  => 'Premium Developer',
+				'name'  => __( 'Premium Developer', 'east-property' ),
 				'color' => 'black',
 			);
 		}

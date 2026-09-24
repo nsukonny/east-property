@@ -442,7 +442,7 @@ final class Unit {
 					'color' => 'grey',
 				);
 			} else {
-				$formatted_delivery_date = date_i18n( get_option( 'date_format' ), strtotime( $delivery_date ) );
+				$formatted_delivery_date = get_handover_date( $delivery_date );
 				$labels[]                = array(
 					'name'  => __( 'Handover:', 'east-property' ) . ' ' . $formatted_delivery_date,
 					'color' => 'grey',

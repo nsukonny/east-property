@@ -49,16 +49,18 @@ const initSwiperThumbs = () => {
     });
 };
 
-export const initSingleSwiper = () => {
-    new Swiper('.single-swiper', {
-        modules: [Navigation],
-        slidesPerView: 1,
-        spaceBetween: 16,
-        loop: true,
-        navigation: {
-            nextEl: '.swiper-next',
-            prevEl: '.swiper-prev',
-        }
+export const initSingleSwiper = (container = document) => {
+    container.querySelectorAll('.single-swiper:not(.swiper-initialized)').forEach((el) => {
+        new Swiper(el, {
+            modules: [Navigation],
+            slidesPerView: 1,
+            spaceBetween: 16,
+            loop: true,
+            navigation: {
+                nextEl: el.querySelector('.swiper-next'),
+                prevEl: el.querySelector('.swiper-prev'),
+            }
+        });
     });
 };
 

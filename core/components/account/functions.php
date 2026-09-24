@@ -1593,7 +1593,7 @@ function ajax_verify_distress(): void {
 	$property      = new Property( absint( $_REQUEST['property_id'] ?? 0 ) );
 	$delivery_date = $property && $property->exists() ? date(
 		'Y-m-d',
-		strtotime( $property->get_delivery_date() )
+		strtotime( $property->get_delivery_date( false ) )
 	) : null;
 
 	$units_rows[] = array(
