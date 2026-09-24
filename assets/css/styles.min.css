@@ -3199,6 +3199,14 @@ form .custom-checkbox span {
     width: 71%;
   }
 }
+.large-card-images-left.empty-gallery {
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .large-card-images-left.empty-gallery {
+    width: 100%;
+  }
+}
 .large-card-images-left img {
   width: 100%;
   height: 100%;

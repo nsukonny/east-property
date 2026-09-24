@@ -28,14 +28,14 @@ $amenities = \Entities\Property::build_amenities( $specifications );
 	<div class="large-card-inner">
 		<div class="large-card-left">
 			<div class="large-card-images">
-				<div class="large-card-images-left">
+				<div class="large-card-images-left <?php if ( empty( $gallery ) ) { ?>empty-gallery<?php } ?>">
 					<?php if ( ! empty( $first_image ) ) { ?>
 						<img src="<?php echo esc_url( $first_image['sizes']['large'] ); ?>" alt="Image">
 					<?php } ?>
 				</div>
 
-				<div class="large-card-images-right">
-					<?php if ( ! empty( $gallery ) ) { ?>
+				<?php if ( ! empty( $gallery ) ) { ?>
+					<div class="large-card-images-right">
 						<?php
 						$limit = 3;
 						foreach ( $gallery as $image ) {
@@ -46,8 +46,8 @@ $amenities = \Entities\Property::build_amenities( $specifications );
 							?>
 							<img src="<?php echo esc_url( $image['sizes']['medium'] ); ?>" alt="Image">
 						<?php } ?>
-					<?php } ?>
-				</div>
+					</div>
+				<?php } ?>
 			</div>
 		</div>
 		<div class="large-card-right">
