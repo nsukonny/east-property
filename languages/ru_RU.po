@@ -2,21 +2,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: East Property 1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/east-property\n"
+"POT-Creation-Date: 2026-09-22T14:15:01+00:00\n"
+"PO-Revision-Date: 2026-09-23 12:39+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-22T14:15:01+00:00\n"
-"PO-Revision-Date: 2026-09-22 17:16+0300\n"
-"Language: ru\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "X-Generator: Poedit 3.9\n"
 "X-Domain: east-property\n"
 
 #. Theme Name of the theme
-#: style.css
-#: page-news.php:39
+#: style.css page-news.php:39
 msgid "East Property"
 msgstr "East Property"
 
@@ -418,9 +417,7 @@ msgstr "Все годы"
 #: core/template-parts/properties/property-single.php:111
 #: core/template-parts/properties/property-single.php:220
 #: core/template-parts/properties/property-units-list.php:28
-#: single-unit.php:284
-#: single-unit.php:381
-#: src/js/map/map.js:276
+#: single-unit.php:284 single-unit.php:381 src/js/map/map.js:276
 msgid "Location"
 msgstr "Локация"
 
@@ -430,7 +427,7 @@ msgstr "Год сдачи до"
 
 #: core/components/filters/functions.php:301
 msgid "Completion Year After"
-msgstr "Год сдачи ЖК"
+msgstr "Год сдачи ЖК после"
 
 #: core/components/filters/functions.php:305
 #: core/components/filters/functions.php:650
@@ -455,14 +452,12 @@ msgstr "Любой"
 #: core/includes/registers/post-types/developers.php:37
 #: core/template-parts/account/edit-property.php:125
 #: core/template-parts/filters/result-filters.php:266
-#: core/template-parts/filters/search-tabs.php:155
-#: src/js/map/html.js:58
+#: core/template-parts/filters/search-tabs.php:155 src/js/map/html.js:58
 msgid "Developer"
 msgstr "Застройщик"
 
 #: core/components/filters/functions.php:325
-#: core/template-parts/cards/map-sidebar.php:85
-#: src/js/map/html.js:66
+#: core/template-parts/cards/map-sidebar.php:85 src/js/map/html.js:66
 msgid "Area"
 msgstr "Площадь"
 
@@ -498,9 +493,7 @@ msgstr "Строится"
 #: core/template-parts/cards/unit-card.php:32
 #: core/template-parts/cards/unit-square-card.php:31
 #: core/template-parts/filters/result-filters.php:162
-#: src/js/common/beds-baths.js:11
-#: src/js/map/html.js:62
-#: src/js/map/html.js:63
+#: src/js/common/beds-baths.js:11 src/js/map/html.js:62 src/js/map/html.js:63
 msgid "Beds"
 msgstr "Спальни"
 
@@ -626,8 +619,7 @@ msgstr " ваше объявление получит более высокий 
 #: core/template-parts/account/edit-unit.php:253
 #: core/template-parts/account/login-form.php:202
 #: core/template-parts/filters/result-filters.php:167
-#: core/template-parts/ui/dropdown.php:12
-#: src/js/common/beds-baths.js:19
+#: core/template-parts/ui/dropdown.php:12 src/js/common/beds-baths.js:19
 #: src/js/filters.js:24
 msgid "Select"
 msgstr "Выбрать"
@@ -642,8 +634,7 @@ msgstr "Здравствуйте, меня интересует объект"
 
 #: core/components/modals/broker-modal.php:25
 #: core/template-parts/cards/unit-card.php:183
-#: core/template-parts/common/contact-panel.php:66
-#: single-unit.php:163
+#: core/template-parts/common/contact-panel.php:66 single-unit.php:163
 msgid "Contact broker"
 msgstr "Связаться с брокером"
 
@@ -870,8 +861,7 @@ msgstr "Забыли пароль?"
 msgid "Buy properties in UAE"
 msgstr "Купить недвижимость в ОАЭ"
 
-#: core/components/properties/filter.php:27
-#: single-developers.php:41
+#: core/components/properties/filter.php:27 single-developers.php:41
 msgid "projects found"
 msgstr "проектов найдено"
 
@@ -1054,8 +1044,7 @@ msgstr "Спальня"
 #: core/includes/entities/class-entity-unit.php:524
 #: core/template-parts/cards/map-sidebar.php:86
 #: template-parts/sections/single/dropdowns.php:40
-#: template-parts/sections/single/dropdowns.php:75
-#: src/js/map/html.js:67
+#: template-parts/sections/single/dropdowns.php:75 src/js/map/html.js:67
 msgid "sqft"
 msgstr "кв. фут"
 
@@ -1560,8 +1549,7 @@ msgid "Units"
 msgstr "Лоты"
 
 #: core/includes/registers/post-types/units.php:13
-#: core/includes/registers/post-types/units.php:36
-#: src/js/map/html.js:53
+#: core/includes/registers/post-types/units.php:36 src/js/map/html.js:53
 msgid "Unit"
 msgstr "Unit"
 
@@ -1680,8 +1668,7 @@ msgstr "Описание"
 msgid "Update project"
 msgstr "Обновить объект"
 
-#: core/template-parts/account/edit-property.php:312
-#: single-unit.php:98
+#: core/template-parts/account/edit-property.php:312 single-unit.php:98
 #: single-unit.php:104
 msgid "Save"
 msgstr "Сохранить"
@@ -1738,8 +1725,7 @@ msgstr "Цена за квадратный фут:"
 msgid "Original price, AED"
 msgstr "Оригинальная цена, AED"
 
-#: core/template-parts/account/edit-unit.php:214
-#: single-unit.php:80
+#: core/template-parts/account/edit-unit.php:214 single-unit.php:80
 msgid "Discount:"
 msgstr "Скидка:"
 
@@ -2226,10 +2212,8 @@ msgstr "Ваша информация хранится в строгой кон�
 msgid "Explore Project"
 msgstr "Смотреть проект"
 
-#: core/template-parts/properties/property-single.php:56
-#: single-unit.php:91
-#: single-unit.php:92
-#: single.php:81
+#: core/template-parts/properties/property-single.php:56 single-unit.php:91
+#: single-unit.php:92 single.php:81
 msgid "Share"
 msgstr "Поделиться"
 
@@ -2239,8 +2223,7 @@ msgstr "Поделиться"
 msgid "Property information"
 msgstr "Информация об объекте"
 
-#: core/template-parts/properties/property-single.php:143
-#: single-unit.php:371
+#: core/template-parts/properties/property-single.php:143 single-unit.php:371
 msgid "View developer"
 msgstr "Открыть застройщика"
 
@@ -2248,19 +2231,16 @@ msgstr "Открыть застройщика"
 msgid "properties available in this project"
 msgstr "объектов доступно в этом проекте"
 
-#: core/template-parts/properties/property-single.php:161
-#: single-unit.php:341
+#: core/template-parts/properties/property-single.php:161 single-unit.php:341
 #: template-parts/sections/mortgage-calculator/matched-units.php:30
 msgid "All properties"
 msgstr "Все объекты"
 
-#: core/template-parts/properties/property-single.php:186
-#: single-unit.php:199
+#: core/template-parts/properties/property-single.php:186 single-unit.php:199
 msgid "Payment plan"
 msgstr "План оплаты"
 
-#: core/template-parts/properties/property-single.php:200
-#: single-unit.php:323
+#: core/template-parts/properties/property-single.php:200 single-unit.php:323
 msgid "Amenities"
 msgstr "Удобства"
 
@@ -2327,8 +2307,7 @@ msgstr "Футер | Подборка"
 msgid "Footer | Quick Links"
 msgstr "Футер | Быстрые ссылки"
 
-#: functions.php:90
-#: functions.php:91
+#: functions.php:90 functions.php:91
 msgid "Настройки"
 msgstr "Настройки"
 
@@ -2362,8 +2341,7 @@ msgstr "Узнать точные условия по вашей сделке?"
 msgid "News Listing Page"
 msgstr "Страница списка объектов"
 
-#: page-news.php:20
-#: single.php:36
+#: page-news.php:20 single.php:36
 msgid "News"
 msgstr "Новости"
 
@@ -2450,8 +2428,7 @@ msgstr "рассрочка"
 msgid "On handover"
 msgstr "При сдаче"
 
-#: single-unit.php:249
-#: single-unit.php:252
+#: single-unit.php:249 single-unit.php:252
 msgid "Floor plan"
 msgstr "Планировка"
 
