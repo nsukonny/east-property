@@ -509,6 +509,36 @@ function core_language_term_taxonomy_id( string $slug ): int {
 }
 
 /**
+ * WHERE condition keeping a post in the given language, or in another one when its translation group has none in it.
+ *
+ * @param string $alias Alias of the posts table; the query must join its language term as `pll_language`.
+ * @param string $language Polylang slug.
+ *
+ * @return array{sql: string, params: array}
+ */
+function core_language_fallback_where( string $alias, string $language ): array {
+	global $wpdb;
+
+	$alias = preg_replace( '/\W/', '', $alias );
+	$sql   = "( pll_language.slug = %s OR NOT EXISTS (
+		SELECT 1
+		FROM {$wpdb->term_relationships} tr_group
+			JOIN {$wpdb->term_taxonomy} tt_group
+				ON tt_group.term_taxonomy_id = tr_group.term_taxonomy_id AND tt_group.taxonomy = 'post_translations'
+			JOIN {$wpdb->term_relationships} tr_sibling ON tr_sibling.term_taxonomy_id = tt_group.term_taxonomy_id
+			JOIN {$wpdb->posts} sibling ON sibling.ID = tr_sibling.object_id AND sibling.post_status <> 'trash'
+			JOIN {$wpdb->term_relationships} tr_sibling_language
+				ON tr_sibling_language.object_id = sibling.ID AND tr_sibling_language.term_taxonomy_id = %d
+		WHERE tr_group.object_id = {$alias}.ID
+	) )";
+
+	return array(
+		'sql'    => $sql,
+		'params' => array( $language, core_language_term_taxonomy_id( $language ) ),
+	);
+}
+
+/**
  * Lowest and highest project price across the listing.
  *
  * A project's price is the average price of its units, the same

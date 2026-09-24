@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-23T12:14:15+00:00\n"
+"POT-Creation-Date: 2026-09-24T16:33:51+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: east-property\n"
@@ -76,135 +76,140 @@ msgstr ""
 msgid "Offices"
 msgstr ""
 
-#: core/components/account/functions.php:607
+#: core/components/account/functions.php:530
+msgid "Unit title is required."
+msgstr ""
+
+#: core/components/account/functions.php:623
 msgid "A distress listing needs an original price higher than the asking price."
 msgstr ""
 
-#: core/components/account/functions.php:649
+#: core/components/account/functions.php:665
 msgid "Unit not found."
 msgstr ""
 
-#: core/components/account/functions.php:724
+#: core/components/account/functions.php:740
+#: core/components/account/functions.php:878
 msgid "Property title is required."
 msgstr ""
 
-#: core/components/account/functions.php:725
+#: core/components/account/functions.php:741
 msgid "Property description is required."
 msgstr ""
 
-#: core/components/account/functions.php:735
+#: core/components/account/functions.php:751
 msgid "Latitude is required."
 msgstr ""
 
-#: core/components/account/functions.php:736
+#: core/components/account/functions.php:752
 msgid "Longitude is required."
 msgstr ""
 
-#: core/components/account/functions.php:737
+#: core/components/account/functions.php:753
 msgid "Please select a valid location."
 msgstr ""
 
-#: core/components/account/functions.php:738
+#: core/components/account/functions.php:754
 msgid "Please select a valid ownership type."
 msgstr ""
 
-#: core/components/account/functions.php:739
+#: core/components/account/functions.php:755
 msgid "Please select a valid property type."
 msgstr ""
 
-#: core/components/account/functions.php:780
-#: core/components/account/functions.php:1024
-#: core/components/account/functions.php:1284
+#: core/components/account/functions.php:796
+#: core/components/account/functions.php:1051
+#: core/components/account/functions.php:1311
 msgid "Property not found."
 msgstr ""
 
-#: core/components/account/functions.php:838
+#: core/components/account/functions.php:854
 msgid "Please sign in to add a property."
 msgstr ""
 
-#: core/components/account/functions.php:843
+#: core/components/account/functions.php:859
 msgid "Your account does not have permission to add property."
 msgstr ""
 
-#: core/components/account/functions.php:849
+#: core/components/account/functions.php:865
 msgid "Security check failed. Please try again."
 msgstr ""
 
-#: core/components/account/functions.php:1019
-#: core/components/account/functions.php:1279
-#: core/components/account/functions.php:1371
+#: core/components/account/functions.php:1046
+#: core/components/account/functions.php:1306
+#: core/components/account/functions.php:1398
 msgid "Property ID is required."
 msgstr ""
 
-#: core/components/account/functions.php:1037
+#: core/components/account/functions.php:1064
 #: core/template-parts/account/edit-unit.php:460
 msgid "Property image"
 msgstr ""
 
-#: core/components/account/functions.php:1293
+#: core/components/account/functions.php:1320
 msgid "Not enough boost points for boost plan."
 msgstr ""
 
-#: core/components/account/functions.php:1296
+#: core/components/account/functions.php:1323
 msgid "Property boosted successfully."
 msgstr ""
 
-#: core/components/account/functions.php:1313
+#: core/components/account/functions.php:1340
 msgid "Broker not found."
 msgstr ""
 
-#: core/components/account/functions.php:1357
+#: core/components/account/functions.php:1384
 #: core/includes/registers/user-roles/client.php:7
 msgid "Client"
 msgstr ""
 
-#: core/components/account/functions.php:1358
+#: core/components/account/functions.php:1385
 #: core/includes/registers/user-roles/broker.php:18
 msgid "Broker"
 msgstr ""
 
-#: core/components/account/functions.php:1376
+#: core/components/account/functions.php:1403
 msgid "YOu are not authenticated."
 msgstr ""
 
-#: core/components/account/functions.php:1420
+#: core/components/account/functions.php:1447
 msgid "Hello "
 msgstr ""
 
-#: core/components/account/functions.php:1422
+#: core/components/account/functions.php:1449
 msgid "Thank you for registering with"
 msgstr ""
 
-#: core/components/account/functions.php:1424
+#: core/components/account/functions.php:1451
 msgid "To complete your registration and activate your account, please verify your email address by clicking the link below:"
 msgstr ""
 
-#: core/components/account/functions.php:1427
+#: core/components/account/functions.php:1454
 msgid "Verify email address"
 msgstr ""
 
-#: core/components/account/functions.php:1429
+#: core/components/account/functions.php:1456
 #: core/components/modals/functions.php:37
 msgid "or copy and paste the following link into your browser:"
 msgstr ""
 
-#: core/components/account/functions.php:1441
+#: core/components/account/functions.php:1468
 msgid "Verify your email address"
 msgstr ""
 
-#: core/components/account/functions.php:1457
+#: core/components/account/functions.php:1484
 msgid "Sign in to save this property to your favorites."
 msgstr ""
 
-#: core/components/account/functions.php:1478
+#: core/components/account/functions.php:1505
 msgid "You must be logged in."
 msgstr ""
 
-#: core/components/account/functions.php:1483
+#: core/components/account/functions.php:1510
 msgid "Verification email resent. Check your email."
 msgstr ""
 
-#: core/components/account/functions.php:1623
+#: core/components/account/functions.php:1650
 msgid "This property is not a distress deal. Below Market Score : "
 msgstr ""
 
@@ -416,7 +421,7 @@ msgid "Mailer"
 msgstr ""
 
 #: core/components/filters/functions.php:283
-#: core/components/filters/functions.php:851
+#: core/components/filters/functions.php:854
 #: core/template-parts/filters/search-tabs.php:157
 msgid "Any Developers"
 msgstr ""
@@ -559,26 +564,26 @@ msgstr ""
 msgid "Available"
 msgstr ""
 
-#: core/components/filters/functions.php:897
+#: core/components/filters/functions.php:900
 #: core/template-parts/filters/search-tabs.php:136
 msgid "Any Locations"
 msgstr ""
 
-#: core/components/filters/functions.php:1032
+#: core/components/filters/functions.php:1035
 #: core/template-parts/search-results/properties-list.php:71
 #: core/template-parts/search-results/tabs.php:63
 #: core/template-parts/search-results/units-list.php:64
 msgid "Items not found"
 msgstr ""
 
-#: core/components/filters/functions.php:1043
-#: core/components/filters/functions.php:1147
+#: core/components/filters/functions.php:1046
+#: core/components/filters/functions.php:1150
 msgid "%s property found"
 msgid_plural "%s properties found"
 msgstr[0] ""
 msgstr[1] ""
 
-#: core/components/filters/functions.php:1135
+#: core/components/filters/functions.php:1138
 msgid "Properties not found"
 msgstr ""
 
@@ -644,7 +649,7 @@ msgstr ""
 #: core/template-parts/filters/result-filters.php:167
 #: core/template-parts/ui/dropdown.php:12
 #: src/js/common/beds-baths.js:19
-#: src/js/filters.js:24
+#: src/js/filters.js:26
 msgid "Select"
 msgstr ""
 
@@ -2009,13 +2014,13 @@ msgstr ""
 #: core/template-parts/cards/unit-card.php:55
 #: core/template-parts/common/pagination.php:28
 #: core/template-parts/common/pagination.php:62
-#: core/template-parts/sliders/unit-thumbs-slider.php:58
+#: core/template-parts/sliders/unit-thumbs-slider.php:60
 #: template-parts/sections/single/thumbs-slider.php:17
 msgid "Prev"
 msgstr ""
 
 #: core/template-parts/cards/unit-card.php:59
-#: core/template-parts/sliders/unit-thumbs-slider.php:63
+#: core/template-parts/sliders/unit-thumbs-slider.php:65
 #: template-parts/sections/single/thumbs-slider.php:19
 msgid "Next"
 msgstr ""
@@ -2926,19 +2931,19 @@ msgstr ""
 msgid "Why DDA"
 msgstr ""
 
-#: src/js/filters.js:16
+#: src/js/filters.js:18
 msgid "beds"
 msgstr ""
 
-#: src/js/filters.js:16
+#: src/js/filters.js:18
 msgid "bed"
 msgstr ""
 
-#: src/js/filters.js:21
+#: src/js/filters.js:23
 msgid "baths"
 msgstr ""
 
-#: src/js/filters.js:21
+#: src/js/filters.js:23
 msgid "bath"
 msgstr ""
 

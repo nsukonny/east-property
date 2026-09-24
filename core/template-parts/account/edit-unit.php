@@ -50,6 +50,9 @@ $selected_property = $selected_property ?? new Property( $properties[0]['ID'] );
 $errors           = $unit ? $unit->get_approve_errors() : '';
 $languages        = get_all_languages();
 $current_language = pll_current_language();
+if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) ) {
+	$current_language = (string) array_key_first( $translations );
+}
 ?>
 <section class="submit-unit">
 	<div class="container">

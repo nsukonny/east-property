@@ -479,6 +479,18 @@ function core_sync_translation_slugs( array $translations ): void {
 }
 
 /**
+ * Whether a language tab of the account forms was filled in: a tab without a title is skipped.
+ *
+ * @param string $slug Language slug, the key of the submitted fields.
+ * @param string $title_key Name of the title field in that language.
+ *
+ * @return bool
+ */
+function core_is_translation_filled( string $slug, string $title_key ): bool {
+	return '' !== trim( sanitize_text_field( wp_unslash( $_POST[ $slug ][ $title_key ] ?? '' ) ) );
+}
+
+/**
  * Handle frontend unit creation.
  *
  * @return void
@@ -509,14 +521,18 @@ function account_create_unit(): void {
 
 	$final_image_selection_json = $_POST['final_image_selection'] ?? '';
 
-	$languages         = get_all_languages();
+	$languages = array_filter(
+		get_all_languages(),
+		static fn( $language ) => core_is_translation_filled( $language['slug'], 'unit_title' )
+	);
+
+	if ( empty( $languages ) ) {
+		core_account_redirect( 'add_unit', array( __( 'Unit title is required.', 'east-property' ) ) );
+	}
+
 	$errors            = array();
 	$unit_translations = array();
 	foreach ( $languages as $language ) {
-		if ( empty( $_POST[ $language['slug'] ] ) ) {
-			continue;
-		}
-
 		$unit_id = update_unit_translation( $language, $_POST[ $language['slug'] ] );
 		if ( is_wp_error( $unit_id ) ) {
 			core_account_redirect( 'add_unit', array( $unit_id->get_error_message() ) );
@@ -680,8 +696,7 @@ function update_unit_translation( mixed $language, array $unit_data ): int|WP_Er
 		return $unit_id;
 	}
 
-	$property_translations = pll_get_post_translations( $property_id );
-	if ( isset( $property_translations[ $language['slug'] ] ) ) {
+	if ( $property_id > 0 ) {
 		update_field( 'property', $property_id, $unit_id );
 	}
 
@@ -851,6 +866,17 @@ function core_handle_account_create_property(): void {
 
 	$languages     = get_all_languages();
 	$name_language = 1 < count( $languages );
+	$languages     = array_filter(
+		$languages,
+		static fn( $language ) => core_is_translation_filled( $language['slug'], 'title' )
+	);
+
+	if ( empty( $languages ) ) {
+		show_notify_error(
+			'account?action=add_property',
+			array( __( 'Property title is required.', 'east-property' ) )
+		);
+	}
 
 	// Validate every language before writing anything, so a mistake in one tab
 	// does not leave half of the translations saved.
