@@ -8097,6 +8097,12 @@ main ul:not([class]), .content ul:not([class]) {
     width: 100%;
   }
 }
+.single-items .unit-gallery-desktop.count-2 .unit-gallery-side .unit-gallery-item {
+  height: 100%;
+}
+.single-items .unit-gallery-desktop.count-3 .unit-gallery-side .unit-gallery-item {
+  flex-basis: 100%;
+}
 .single-items .unit-gallery-main {
   flex: 1 1 50%;
   height: 100%;
