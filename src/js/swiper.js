@@ -49,20 +49,47 @@ const initSwiperThumbs = () => {
     });
 };
 
-export const initSingleSwiper = () => {
-    new Swiper('.single-swiper', {
-        modules: [Navigation],
-        slidesPerView: 1,
-        spaceBetween: 16,
-        loop: true,
-        navigation: {
-            nextEl: '.swiper-next',
-            prevEl: '.swiper-prev',
-        }
+export const initSingleSwiper = (container = document) => {
+    container.querySelectorAll('.single-swiper:not(.swiper-initialized)').forEach((el) => {
+        new Swiper(el, {
+            modules: [Navigation],
+            slidesPerView: 1,
+            spaceBetween: 16,
+            loop: true,
+            navigation: {
+                nextEl: el.querySelector('.swiper-next'),
+                prevEl: el.querySelector('.swiper-prev'),
+            }
+        });
     });
 };
 
 export const initGallerySlider = () => {
+    document.addEventListener('click', (e) => {
+        const trigger = e.target.closest('[data-modal-open="gallery-modal"][data-gallery-index]');
+        const gallery = trigger && document.querySelector('[data-modal-id="gallery-modal"] .gallery-swiper')?.swiper;
+
+        if (gallery) {
+            gallery.slideTo(Number(trigger.dataset.galleryIndex) || 0, 0);
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        const gallery = document.querySelector('.modal-wrapper-active[data-modal-id="gallery-modal"] .gallery-swiper')?.swiper;
+
+        if (!gallery || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) {
+            return;
+        }
+
+        if ('ArrowLeft' === e.key) {
+            e.preventDefault();
+            gallery.slidePrev();
+        } else if ('ArrowRight' === e.key) {
+            e.preventDefault();
+            gallery.slideNext();
+        }
+    });
+
     return new Swiper('.gallery-swiper', {
         modules: [Navigation, Pagination],
         slidesPerView: 1,

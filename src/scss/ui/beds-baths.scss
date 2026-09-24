@@ -13,7 +13,7 @@
 	border-radius: v.$br16;
 	background-color: v.$c-white;
 	overflow: hidden;
-	box-shadow: v.$shadow-1;
+	box-shadow: 0 1px 4px 0 rgba(24, 26, 32, 0.5);
 
 	&[hidden] {
 		display: none;
@@ -54,7 +54,7 @@
 	align-items: center;
 	gap: 10px;
 	flex-wrap: wrap;
-	
+
 	.beds-baths-btn {
 		display: flex;
 		align-items: center;

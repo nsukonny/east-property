@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-22T14:16:38+00:00\n"
+"POT-Creation-Date: 2026-09-24T16:33:51+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: east-property\n"
@@ -49,12 +49,12 @@ msgid "Go to properties"
 msgstr ""
 
 #: core/components/account/functions.php:125
-#: core/components/filters/functions.php:693
+#: core/components/filters/functions.php:718
 msgid "Apartments"
 msgstr ""
 
 #: core/components/account/functions.php:126
-#: core/components/filters/functions.php:709
+#: core/components/filters/functions.php:734
 msgid "Villas"
 msgstr ""
 
@@ -67,144 +67,149 @@ msgid "Penthouses"
 msgstr ""
 
 #: core/components/account/functions.php:129
-#: core/components/filters/functions.php:701
+#: core/components/filters/functions.php:726
 msgid "Houses"
 msgstr ""
 
 #: core/components/account/functions.php:130
-#: core/components/filters/functions.php:717
+#: core/components/filters/functions.php:742
 msgid "Offices"
 msgstr ""
 
-#: core/components/account/functions.php:607
+#: core/components/account/functions.php:530
+msgid "Unit title is required."
+msgstr ""
+
+#: core/components/account/functions.php:623
 msgid "A distress listing needs an original price higher than the asking price."
 msgstr ""
 
-#: core/components/account/functions.php:649
+#: core/components/account/functions.php:665
 msgid "Unit not found."
 msgstr ""
 
-#: core/components/account/functions.php:724
+#: core/components/account/functions.php:740
+#: core/components/account/functions.php:878
 msgid "Property title is required."
 msgstr ""
 
-#: core/components/account/functions.php:725
+#: core/components/account/functions.php:741
 msgid "Property description is required."
 msgstr ""
 
-#: core/components/account/functions.php:735
+#: core/components/account/functions.php:751
 msgid "Latitude is required."
 msgstr ""
 
-#: core/components/account/functions.php:736
+#: core/components/account/functions.php:752
 msgid "Longitude is required."
 msgstr ""
 
-#: core/components/account/functions.php:737
+#: core/components/account/functions.php:753
 msgid "Please select a valid location."
 msgstr ""
 
-#: core/components/account/functions.php:738
+#: core/components/account/functions.php:754
 msgid "Please select a valid ownership type."
 msgstr ""
 
-#: core/components/account/functions.php:739
+#: core/components/account/functions.php:755
 msgid "Please select a valid property type."
 msgstr ""
 
-#: core/components/account/functions.php:780
-#: core/components/account/functions.php:1024
-#: core/components/account/functions.php:1284
+#: core/components/account/functions.php:796
+#: core/components/account/functions.php:1051
+#: core/components/account/functions.php:1311
 msgid "Property not found."
 msgstr ""
 
-#: core/components/account/functions.php:838
+#: core/components/account/functions.php:854
 msgid "Please sign in to add a property."
 msgstr ""
 
-#: core/components/account/functions.php:843
+#: core/components/account/functions.php:859
 msgid "Your account does not have permission to add property."
 msgstr ""
 
-#: core/components/account/functions.php:849
+#: core/components/account/functions.php:865
 msgid "Security check failed. Please try again."
 msgstr ""
 
-#: core/components/account/functions.php:1019
-#: core/components/account/functions.php:1279
-#: core/components/account/functions.php:1371
+#: core/components/account/functions.php:1046
+#: core/components/account/functions.php:1306
+#: core/components/account/functions.php:1398
 msgid "Property ID is required."
 msgstr ""
 
-#: core/components/account/functions.php:1037
+#: core/components/account/functions.php:1064
 #: core/template-parts/account/edit-unit.php:460
 msgid "Property image"
 msgstr ""
 
-#: core/components/account/functions.php:1293
+#: core/components/account/functions.php:1320
 msgid "Not enough boost points for boost plan."
 msgstr ""
 
-#: core/components/account/functions.php:1296
+#: core/components/account/functions.php:1323
 msgid "Property boosted successfully."
 msgstr ""
 
-#: core/components/account/functions.php:1313
+#: core/components/account/functions.php:1340
 msgid "Broker not found."
 msgstr ""
 
-#: core/components/account/functions.php:1357
+#: core/components/account/functions.php:1384
 #: core/includes/registers/user-roles/client.php:7
 msgid "Client"
 msgstr ""
 
-#: core/components/account/functions.php:1358
+#: core/components/account/functions.php:1385
 #: core/includes/registers/user-roles/broker.php:18
 msgid "Broker"
 msgstr ""
 
-#: core/components/account/functions.php:1376
+#: core/components/account/functions.php:1403
 msgid "YOu are not authenticated."
 msgstr ""
 
-#: core/components/account/functions.php:1420
+#: core/components/account/functions.php:1447
 msgid "Hello "
 msgstr ""
 
-#: core/components/account/functions.php:1422
+#: core/components/account/functions.php:1449
 msgid "Thank you for registering with"
 msgstr ""
 
-#: core/components/account/functions.php:1424
+#: core/components/account/functions.php:1451
 msgid "To complete your registration and activate your account, please verify your email address by clicking the link below:"
 msgstr ""
 
-#: core/components/account/functions.php:1427
+#: core/components/account/functions.php:1454
 msgid "Verify email address"
 msgstr ""
 
-#: core/components/account/functions.php:1429
+#: core/components/account/functions.php:1456
 #: core/components/modals/functions.php:37
 msgid "or copy and paste the following link into your browser:"
 msgstr ""
 
-#: core/components/account/functions.php:1441
+#: core/components/account/functions.php:1468
 msgid "Verify your email address"
 msgstr ""
 
-#: core/components/account/functions.php:1457
+#: core/components/account/functions.php:1484
 msgid "Sign in to save this property to your favorites."
 msgstr ""
 
-#: core/components/account/functions.php:1478
+#: core/components/account/functions.php:1505
 msgid "You must be logged in."
 msgstr ""
 
-#: core/components/account/functions.php:1483
+#: core/components/account/functions.php:1510
 msgid "Verification email resent. Check your email."
 msgstr ""
 
-#: core/components/account/functions.php:1623
+#: core/components/account/functions.php:1650
 msgid "This property is not a distress deal. Below Market Score : "
 msgstr ""
 
@@ -227,6 +232,10 @@ msgid "Accept"
 msgstr ""
 
 #: core/components/common/functions.php:20
+#: core/components/sections/explore-by-beds.php:15
+#: core/components/sections/explore-by-beds.php:23
+#: core/components/sections/explore-by-beds.php:32
+#: core/components/sections/explore-by-beds.php:42
 #: core/includes/registers/post-types/properties.php:10
 msgid "Properties"
 msgstr ""
@@ -381,34 +390,60 @@ msgstr ""
 msgid "AED"
 msgstr ""
 
+#: core/components/components-functions.php:220
+msgctxt "handover quarter"
+msgid "Q1"
+msgstr ""
+
+#: core/components/components-functions.php:221
+msgctxt "handover quarter"
+msgid "Q2"
+msgstr ""
+
+#: core/components/components-functions.php:222
+msgctxt "handover quarter"
+msgid "Q3"
+msgstr ""
+
+#: core/components/components-functions.php:223
+msgctxt "handover quarter"
+msgid "Q4"
+msgstr ""
+
+#. translators: 1: quarter, 2: year.
+#: core/components/components-functions.php:228
+msgctxt "handover date"
+msgid "%1$s %2$d"
+msgstr ""
+
 #: core/components/email/functions.php:4
 msgid "Mailer"
 msgstr ""
 
-#: core/components/filters/functions.php:252
-#: core/components/filters/functions.php:826
+#: core/components/filters/functions.php:283
+#: core/components/filters/functions.php:854
 #: core/template-parts/filters/search-tabs.php:157
 msgid "Any Developers"
 msgstr ""
 
 #. translators: option of the delivery date filter, projects already handed over.
-#: core/components/filters/functions.php:269
-#: core/components/filters/functions.php:629
+#: core/components/filters/functions.php:294
+#: core/components/filters/functions.php:654
 msgctxt "delivery filter"
 msgid "Ready"
 msgstr ""
 
-#: core/components/filters/functions.php:276
-#: core/components/filters/functions.php:633
+#: core/components/filters/functions.php:301
+#: core/components/filters/functions.php:658
 msgid "In Construction"
 msgstr ""
 
-#: core/components/filters/functions.php:287
+#: core/components/filters/functions.php:312
 msgid "All Years"
 msgstr ""
 
-#: core/components/filters/functions.php:296
-#: core/components/filters/functions.php:642
+#: core/components/filters/functions.php:321
+#: core/components/filters/functions.php:667
 #: core/includes/registers/post-types/locations.php:10
 #: core/template-parts/account/edit-property.php:188
 #: core/template-parts/filters/result-filters.php:59
@@ -421,33 +456,33 @@ msgstr ""
 msgid "Location"
 msgstr ""
 
-#: core/components/filters/functions.php:300
+#: core/components/filters/functions.php:325
 msgid "Handover Year Before"
 msgstr ""
 
-#: core/components/filters/functions.php:301
+#: core/components/filters/functions.php:326
 msgid "Completion Year After"
 msgstr ""
 
-#: core/components/filters/functions.php:305
-#: core/components/filters/functions.php:650
+#: core/components/filters/functions.php:330
+#: core/components/filters/functions.php:675
 msgid "Price (AED)"
 msgstr ""
 
-#: core/components/filters/functions.php:312
-#: core/components/filters/functions.php:657
-#: core/includes/entities/class-entity-property.php:630
+#: core/components/filters/functions.php:337
+#: core/components/filters/functions.php:682
+#: core/includes/entities/class-entity-property.php:632
 msgid "Property Type"
 msgstr ""
 
-#: core/components/filters/functions.php:316
-#: core/components/filters/functions.php:661
-#: core/components/filters/functions.php:685
+#: core/components/filters/functions.php:341
+#: core/components/filters/functions.php:686
+#: core/components/filters/functions.php:710
 msgid "Any"
 msgstr ""
 
-#: core/components/filters/functions.php:321
-#: core/components/filters/functions.php:666
+#: core/components/filters/functions.php:346
+#: core/components/filters/functions.php:691
 #: core/includes/registers/post-types/developers.php:11
 #: core/includes/registers/post-types/developers.php:37
 #: core/template-parts/account/edit-property.php:125
@@ -457,34 +492,34 @@ msgstr ""
 msgid "Developer"
 msgstr ""
 
-#: core/components/filters/functions.php:325
+#: core/components/filters/functions.php:350
 #: core/template-parts/cards/map-sidebar.php:85
 #: src/js/map/html.js:66
 msgid "Area"
 msgstr ""
 
-#: core/components/filters/functions.php:344
+#: core/components/filters/functions.php:369
 msgctxt "search tab"
 msgid "Available"
 msgstr ""
 
-#: core/components/filters/functions.php:348
+#: core/components/filters/functions.php:373
 #: core/template-parts/account/edit-unit.php:268
 #: core/template-parts/filters/search-tabs.php:70
 msgid "Bedrooms"
 msgstr ""
 
-#: core/components/filters/functions.php:352
+#: core/components/filters/functions.php:377
 #: core/template-parts/filters/search-tabs.php:134
 msgid "District"
 msgstr ""
 
-#: core/components/filters/functions.php:359
+#: core/components/filters/functions.php:384
 msgctxt "search tab"
 msgid "In construction"
 msgstr ""
 
-#: core/components/filters/functions.php:383
+#: core/components/filters/functions.php:408
 #: core/components/units/units-by-beds.php:78
 #: core/includes/entities/class-entity-property.php:109
 #: core/includes/entities/class-entity-property.php:115
@@ -501,7 +536,7 @@ msgstr ""
 msgid "Beds"
 msgstr ""
 
-#: core/components/filters/functions.php:387
+#: core/components/filters/functions.php:412
 #: core/includes/entities/class-entity-property.php:113
 #: core/includes/entities/class-entity-property.php:120
 #: core/includes/entities/class-entity-unit.php:204
@@ -512,7 +547,7 @@ msgstr ""
 msgid "Studio"
 msgstr ""
 
-#: core/components/filters/functions.php:436
+#: core/components/filters/functions.php:461
 #: core/includes/entities/class-entity-property.php:127
 #: core/includes/entities/class-entity-property.php:131
 #: core/includes/entities/class-entity-unit.php:217
@@ -521,34 +556,34 @@ msgstr ""
 msgid "Baths"
 msgstr ""
 
-#: core/components/filters/functions.php:625
+#: core/components/filters/functions.php:650
 msgid "Any year"
 msgstr ""
 
-#: core/components/filters/functions.php:646
+#: core/components/filters/functions.php:671
 msgid "Available"
 msgstr ""
 
-#: core/components/filters/functions.php:872
+#: core/components/filters/functions.php:900
 #: core/template-parts/filters/search-tabs.php:136
 msgid "Any Locations"
 msgstr ""
 
-#: core/components/filters/functions.php:1007
+#: core/components/filters/functions.php:1035
 #: core/template-parts/search-results/properties-list.php:71
 #: core/template-parts/search-results/tabs.php:63
 #: core/template-parts/search-results/units-list.php:64
 msgid "Items not found"
 msgstr ""
 
-#: core/components/filters/functions.php:1018
-#: core/components/filters/functions.php:1122
+#: core/components/filters/functions.php:1046
+#: core/components/filters/functions.php:1150
 msgid "%s property found"
 msgid_plural "%s properties found"
 msgstr[0] ""
 msgstr[1] ""
 
-#: core/components/filters/functions.php:1110
+#: core/components/filters/functions.php:1138
 msgid "Properties not found"
 msgstr ""
 
@@ -614,7 +649,7 @@ msgstr ""
 #: core/template-parts/filters/result-filters.php:167
 #: core/template-parts/ui/dropdown.php:12
 #: src/js/common/beds-baths.js:19
-#: src/js/filters.js:24
+#: src/js/filters.js:26
 msgid "Select"
 msgstr ""
 
@@ -911,15 +946,15 @@ msgid "Fractional Ownership"
 msgstr ""
 
 #: core/components/properties/functions.php:616
-#: core/includes/entities/class-entity-property.php:536
-#: core/includes/entities/class-entity-property.php:603
+#: core/includes/entities/class-entity-property.php:538
+#: core/includes/entities/class-entity-property.php:605
 #: core/includes/entities/class-entity-unit.php:373
 #: core/includes/entities/class-entity-unit.php:441
 msgid "Ready"
 msgstr ""
 
 #: core/components/properties/functions.php:621
-#: core/includes/entities/class-entity-property.php:542
+#: core/includes/entities/class-entity-property.php:544
 #: core/includes/entities/class-entity-unit.php:379
 #: core/includes/entities/class-entity-unit.php:447
 msgid "Handover:"
@@ -929,42 +964,60 @@ msgstr ""
 msgid "Show all properties in this project"
 msgstr ""
 
-#: core/components/sections/explore-by-beds.php:10
+#: core/components/sections/explore-by-beds.php:11
 msgid "Studio or 1 bedroom"
 msgstr ""
 
-#: core/components/sections/explore-by-beds.php:17
+#: core/components/sections/explore-by-beds.php:15
+#: core/components/sections/explore-by-beds.php:23
+#: core/components/sections/explore-by-beds.php:32
+#: core/components/sections/explore-by-beds.php:42
+#: core/includes/registers/post-types/properties.php:11
+#: core/includes/registers/post-types/properties.php:34
+msgid "Property"
+msgstr ""
+
+#: core/components/sections/explore-by-beds.php:19
 msgid "2 bedrooms"
 msgstr ""
 
-#: core/components/sections/explore-by-beds.php:24
+#: core/components/sections/explore-by-beds.php:28
 msgid "3 bedrooms"
 msgstr ""
 
-#: core/components/sections/explore-by-beds.php:31
+#: core/components/sections/explore-by-beds.php:38
 msgid "3+ bedrooms"
 msgstr ""
 
-#: core/components/sections/explore-by-beds.php:41
+#: core/components/sections/explore-by-beds.php:49
 msgid "Explore properties by number of bedrooms"
 msgstr ""
 
-#: core/components/sections/explore-by-beds.php:42
-#: core/components/sections/explore-by-districts.php:39
+#: core/components/sections/explore-by-beds.php:50
+#: core/components/sections/explore-by-districts.php:41
 msgid "Quick picks for you in UAE"
 msgstr ""
 
-#: core/components/sections/explore-by-beds.php:44
+#: core/components/sections/explore-by-beds.php:52
 #: core/includes/registers/post-types/properties.php:15
 #: core/includes/registers/post-types/properties.php:31
 msgid "All Properties"
 msgstr ""
 
-#: core/components/sections/explore-by-districts.php:38
+#: core/components/sections/explore-by-districts.php:30
+msgid "Projects"
+msgstr ""
+
+#: core/components/sections/explore-by-districts.php:31
+#: core/template-parts/account/edit-unit.php:232
+msgid "Project"
+msgstr ""
+
+#: core/components/sections/explore-by-districts.php:40
 msgid "Explore projects by district"
 msgstr ""
 
-#: core/components/sections/explore-by-districts.php:41
+#: core/components/sections/explore-by-districts.php:43
 msgid "All Projects"
 msgstr ""
 
@@ -1065,40 +1118,42 @@ msgstr ""
 msgid "Email Verified"
 msgstr ""
 
-#: core/includes/entities/class-entity-property.php:606
+#: core/includes/entities/class-entity-property.php:553
+#: core/includes/entities/class-entity-unit.php:388
+#: core/includes/entities/class-entity-unit.php:455
+msgid "Popular"
+msgstr ""
+
+#: core/includes/entities/class-entity-property.php:561
+#: core/includes/entities/class-entity-unit.php:396
+#: core/includes/entities/class-entity-unit.php:462
+msgid "Premium Developer"
+msgstr ""
+
+#: core/includes/entities/class-entity-property.php:608
 #: core/template-parts/account/edit-property.php:224
 msgid "Handover Date"
 msgstr ""
 
-#: core/includes/entities/class-entity-property.php:614
+#: core/includes/entities/class-entity-property.php:616
 msgid "Construction Started"
 msgstr ""
 
-#: core/includes/entities/class-entity-property.php:622
+#: core/includes/entities/class-entity-property.php:624
 msgid "Number of Buildings"
 msgstr ""
 
-#: core/includes/entities/class-entity-property.php:638
+#: core/includes/entities/class-entity-property.php:640
 msgid "Government Fee"
 msgstr ""
 
-#: core/includes/entities/class-entity-property.php:646
+#: core/includes/entities/class-entity-property.php:648
 msgid "Ownership Type"
 msgstr ""
 
 #: core/includes/entities/class-entity-unit.php:217
 #: core/includes/entities/class-entity-unit.php:515
 msgid "1 Bath"
-msgstr ""
-
-#: core/includes/entities/class-entity-unit.php:388
-#: core/includes/entities/class-entity-unit.php:455
-msgid "Popular"
-msgstr ""
-
-#: core/includes/entities/class-entity-unit.php:396
-#: core/includes/entities/class-entity-unit.php:462
-msgid "Premium Developer"
 msgstr ""
 
 #: core/includes/entities/class-entity-unit.php:403
@@ -1393,11 +1448,6 @@ msgstr ""
 
 #: core/includes/registers/post-types/properties.php:9
 msgctxt "Post Type Singular Name"
-msgid "Property"
-msgstr ""
-
-#: core/includes/registers/post-types/properties.php:11
-#: core/includes/registers/post-types/properties.php:34
 msgid "Property"
 msgstr ""
 
@@ -1725,11 +1775,6 @@ msgstr ""
 msgid "Discount:"
 msgstr ""
 
-#: core/template-parts/account/edit-unit.php:232
-#: core/template-parts/sections/explore.php:27
-msgid "Project"
-msgstr ""
-
 #: core/template-parts/account/edit-unit.php:233
 #: core/template-parts/account/profile.php:179
 msgid "+ Add new project"
@@ -1969,13 +2014,13 @@ msgstr ""
 #: core/template-parts/cards/unit-card.php:55
 #: core/template-parts/common/pagination.php:28
 #: core/template-parts/common/pagination.php:62
-#: core/template-parts/sliders/unit-thumbs-slider.php:58
+#: core/template-parts/sliders/unit-thumbs-slider.php:60
 #: template-parts/sections/single/thumbs-slider.php:17
 msgid "Prev"
 msgstr ""
 
 #: core/template-parts/cards/unit-card.php:59
-#: core/template-parts/sliders/unit-thumbs-slider.php:63
+#: core/template-parts/sliders/unit-thumbs-slider.php:65
 #: template-parts/sections/single/thumbs-slider.php:19
 msgid "Next"
 msgstr ""
@@ -2270,10 +2315,6 @@ msgstr ""
 
 #: core/template-parts/search-results/units-list.php:8
 msgid "Browse a wide selection of apartments in Dubai. From smart studios to spacious family residences and premium off-plan units in top locations. Compare prices, layouts, and communities in one place and find the apartment that fits your lifestyle, goals, and budget."
-msgstr ""
-
-#: core/template-parts/sections/explore.php:27
-msgid "Projects"
 msgstr ""
 
 #: core/template-parts/ui/dropdown.php:41
@@ -2890,19 +2931,19 @@ msgstr ""
 msgid "Why DDA"
 msgstr ""
 
-#: src/js/filters.js:16
+#: src/js/filters.js:18
 msgid "beds"
 msgstr ""
 
-#: src/js/filters.js:16
+#: src/js/filters.js:18
 msgid "bed"
 msgstr ""
 
-#: src/js/filters.js:21
+#: src/js/filters.js:23
 msgid "baths"
 msgstr ""
 
-#: src/js/filters.js:21
+#: src/js/filters.js:23
 msgid "bath"
 msgstr ""
 

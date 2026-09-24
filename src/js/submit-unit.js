@@ -183,6 +183,64 @@ const isDescriptionTooShort = (editorId) => {
 };
 
 /**
+ * @param {HTMLFieldSetElement} fieldset Fieldset of one language.
+ *
+ * @return {boolean} Whether the title of that language is filled in.
+ */
+const isLangFilled = (fieldset) =>
+	'' !== (fieldset.querySelector('input[name$="[unit_title]"], input[name$="[title]"]')?.value.trim() ?? '');
+
+/**
+ * Validate only the languages whose title is filled in; with no title at all
+ * the title of the shown language stays required.
+ *
+ * @param {HTMLFormElement} form Submit form.
+ */
+const syncLangRequirements = (form) => {
+	const fieldsets = Array.from(form.querySelectorAll('fieldset[data-show-on-lang]'));
+	const anyFilled = fieldsets.some(isLangFilled);
+	const shown = fieldsets.find(fieldset => !fieldset.classList.contains('hidden')) || fieldsets[0];
+
+	fieldsets.forEach(fieldset => {
+		const isFilled = isLangFilled(fieldset);
+
+		fieldset.querySelectorAll('[required], [data-required]').forEach(el => {
+			if (!el.dataset.langRequired) {
+				el.dataset.langRequired = el.hasAttribute('required') ? 'native' : 'custom';
+			}
+		});
+
+		fieldset.querySelectorAll('[data-lang-required]').forEach(el => {
+			const isTitle = /\[(unit_)?title]$/.test(el.name);
+			const isRequired = isFilled || (!anyFilled && fieldset === shown && isTitle);
+
+			if ('native' === el.dataset.langRequired) {
+				el.required = isRequired;
+			} else {
+				el.toggleAttribute('data-required', isRequired);
+			}
+
+			if (!isRequired) {
+				el.closest('.submit-buttons-wrapper, .checkbox-buttons-wrapper, .input-wrapper')
+					?.classList.remove('error-field');
+			}
+		});
+	});
+};
+
+/**
+ * @param {HTMLFormElement} form Submit form.
+ * @param {string} editorId TinyMCE instance id, s-desc_{language}.
+ *
+ * @return {boolean} Whether the language of that editor is being submitted.
+ */
+const isEditorLangFilled = (form, editorId) => {
+	const fieldset = form.querySelector(`fieldset[data-show-on-lang="${editorId.replace('s-desc_', '')}"]`);
+
+	return !fieldset || isLangFilled(fieldset);
+};
+
+/**
  * Flag the language tabs whose own fieldset is still incomplete, so the broker
  * can see that a hidden tab is holding the submit back.
  *
@@ -206,7 +264,7 @@ const initLangValidation = () => {
 
 		if (incomplete) return true;
 
-		return isDescriptionTooShort(`s-desc_${slug}`);
+		return isLangFilled(fieldset) && isDescriptionTooShort(`s-desc_${slug}`);
 	};
 
 	return () => {
@@ -223,8 +281,11 @@ const initFormValidation = () => {
 	const refreshLangErrors = initLangValidation();
 	let submitAttempted = false;
 
+	syncLangRequirements(form);
+
 	const markSubmitAttempted = () => {
 		submitAttempted = true;
+		syncLangRequirements(form);
 		refreshLangErrors?.();
 	};
 
@@ -240,11 +301,14 @@ const initFormValidation = () => {
 	// form is incomplete by definition and would open all red.
 	['input', 'change'].forEach(eventName => {
 		form.addEventListener(eventName, () => {
+			syncLangRequirements(form);
 			if (submitAttempted) refreshLangErrors?.();
 		});
 	});
 
 	form.addEventListener('submit', (e) => {
+		syncLangRequirements(form);
+
 		const requiredElements = form.querySelectorAll('[required], [data-required]');
 		let errors = 0;
 
@@ -292,7 +356,7 @@ const initFormValidation = () => {
 				?.querySelector('.wp-editor-container');
 			if (!wrapper) return;
 
-			if (isDescriptionTooShort(editorId)) {
+			if (isEditorLangFilled(form, editorId) && isDescriptionTooShort(editorId)) {
 				wrapper.classList.add('error-field');
 				errors++;
 			} else {

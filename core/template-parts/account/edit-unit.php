@@ -50,6 +50,9 @@ $selected_property = $selected_property ?? new Property( $properties[0]['ID'] );
 $errors           = $unit ? $unit->get_approve_errors() : '';
 $languages        = get_all_languages();
 $current_language = pll_current_language();
+if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) ) {
+	$current_language = (string) array_key_first( $translations );
+}
 ?>
 <section class="submit-unit">
 	<div class="container">
@@ -175,8 +178,8 @@ $current_language = pll_current_language();
 													<input type="number"
 														   id="s-sqrt_<?php echo esc_attr( $language['slug'] ); ?>"
 														   name="<?php echo esc_attr( $language['slug'] . '[area]' ); ?>"
-														   min="200"
-														   step="0.01"
+														   min="50"
+														   step="1"
 														   placeholder="210"
 														   value="<?php echo esc_attr( $area ); ?>"
 														   data-lang-sync="area"

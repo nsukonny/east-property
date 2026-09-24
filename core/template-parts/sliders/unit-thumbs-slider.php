@@ -12,9 +12,10 @@ $main_image              = $gallery[0];
 $next_four_images        = 1 < count( $gallery ) ? array_slice( $gallery, 1, 4 ) : array();
 $last_gallery_key        = array_key_last( $next_four_images );
 $additional_images_count = count( $gallery ) - 5;
+$tiles_count             = min( count( $gallery ), 5 );
 ?>
 	<div class="unit-gallery">
-		<div class="unit-gallery-desktop">
+		<div class="unit-gallery-desktop count-<?php echo esc_attr( $tiles_count ); ?>">
 			<div class="unit-gallery-main">
 				<?php if ( ! empty( $main_image ) ) { ?>
 					<div class="unit-gallery-item big" data-gallery-index="0" data-modal-open="gallery-modal">
@@ -26,7 +27,8 @@ $additional_images_count = count( $gallery ) - 5;
 			<?php if ( ! empty( $next_four_images ) ) { ?>
 				<div class="unit-gallery-side">
 					<?php foreach ( $next_four_images as $image_key => $image ) { ?>
-						<div class="unit-gallery-item" data-gallery-index="1" data-modal-open="gallery-modal">
+						<div class="unit-gallery-item" data-gallery-index="<?php echo esc_attr( $image_key + 1 ); ?>"
+							 data-modal-open="gallery-modal">
 							<img src="<?php echo esc_url( $image['sizes']['large'] ); ?>"
 								 alt="<?php echo esc_attr( $image['alt'] ); ?>">
 							<?php if ( $image_key === $last_gallery_key && 0 < $additional_images_count ) { ?>

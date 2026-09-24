@@ -24,7 +24,6 @@ body:has(.news-single-page),
 	line-height: 38px;
 	font-weight: v.$fw-900;
 	color: v.$c-black;
-	max-width: 700px;
 	word-break: break-word;
 	margin-bottom: 24px;
 
@@ -41,7 +40,6 @@ body:has(.news-single-page),
 
 .news-single-excerpt {
 	width: 100%;
-	max-width: 616px;
 	margin-bottom: 24px;
 
 	p {
@@ -275,7 +273,6 @@ body:has(.news-single-page),
 
 .news-single-body {
 	width: 100%;
-	max-width: 638px;
 	margin-right: auto;
 
 	@media (min-width: v.$lg) {

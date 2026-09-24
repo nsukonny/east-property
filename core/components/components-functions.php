@@ -202,3 +202,30 @@ function core_after_response( callable $callback ): void {
 function get_price_html( $price ): string {
 	return sprintf( '%s %s', __( 'AED', 'east-property' ), number_format( (float) $price, 0, '.', ',' ) );
 }
+
+/**
+ * Get date for display in handover labels, as a quarter and a year
+ *
+ * @param $delivery_date
+ *
+ * @return string
+ */
+function get_handover_date( $delivery_date ): string {
+	$timestamp = $delivery_date ? strtotime( (string) $delivery_date ) : false;
+	if ( false === $timestamp ) {
+		return '';
+	}
+
+	$quarters = array(
+		1 => _x( 'Q1', 'handover quarter', 'east-property' ),
+		2 => _x( 'Q2', 'handover quarter', 'east-property' ),
+		3 => _x( 'Q3', 'handover quarter', 'east-property' ),
+		4 => _x( 'Q4', 'handover quarter', 'east-property' ),
+	);
+	$quarter  = intdiv( (int) wp_date( 'n', $timestamp ) - 1, 3 ) + 1;
+
+	/* translators: 1: quarter, 2: year. */
+	$format = _x( '%1$s %2$d', 'handover date', 'east-property' );
+
+	return sprintf( $format, $quarters[ $quarter ], (int) wp_date( 'Y', $timestamp ) );
+}

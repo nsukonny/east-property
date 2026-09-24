@@ -1,3 +1,5 @@
+import {initSingleSwiper} from './swiper.js';
+
 const {__, _n, _x, sprintf} = window.wp.i18n;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -80,15 +82,8 @@ const initSearchResultsFilters = async () => {
 
 			const text = document.createElement('span')
 			text.textContent = opt.label
-
-			const check = document.createElement('img')
-			check.className = 'result-option-check'
-			check.src = '/wp-content/themes/east-property/assets/img/check.svg'
-			check.width = 16
-			check.height = 16
-			check.alt = 'Selected'
-
-			optBtn.append(text, check)
+			
+			optBtn.append(text)
 			dropdown.append(optBtn)
 		})
 		dropdown.hidden = true
@@ -298,7 +293,9 @@ const updatePropertiesList = () => {
 		.then(response => response.json())
 		.then(response => {
 			if (response.success) {
+				contentList.querySelectorAll('.swiper-initialized').forEach(el => el.swiper?.destroy(true, false));
 				contentList.innerHTML = response.data.properties;
+				initSingleSwiper(contentList);
 				if (mapInstances.length) {
 					mapInstances.forEach(instance => {
 						// The map starts only once it is scrolled to, so until then
