@@ -854,9 +854,6 @@ function get_developers_list(): array {
 		$params = array( $language_id, $language_id );
 	}
 
-	// CAST keeps the comparison between strings so the meta_key_value index
-	// still applies; comparing the text column to a number makes MySQL scan
-	// every row of postmeta once per developer.
 	$sql = "
 		SELECT d.ID, d.post_title
 		FROM {$wpdb->posts} d

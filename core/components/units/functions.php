@@ -74,7 +74,8 @@ function get_units( $listing_type = '', int $limit = 25, $args = array() ): arra
 		return $memo[ $cache_key ];
 	}
 
-	$units = wp_cache_get( $cache_key, 'units' );
+	$is_cached = empty( $args['no_cache'] );
+	$units     = $is_cached ? wp_cache_get( $cache_key, 'units' ) : false;
 	if ( false !== $units ) {
 		$memo[ $cache_key ] = $units;
 
@@ -100,7 +101,9 @@ function get_units( $listing_type = '', int $limit = 25, $args = array() ): arra
 		}
 	}
 
-	wp_cache_set( $cache_key, $units, 'units', DAY_IN_SECONDS );
+	if ( $is_cached ) {
+		wp_cache_set( $cache_key, $units, 'units', DAY_IN_SECONDS );
+	}
 
 	$memo[ $cache_key ] = $units;
 
