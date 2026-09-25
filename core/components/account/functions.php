@@ -161,6 +161,7 @@ function core_get_current_user_favorite_units( int $limit = PROPERTIES_PER_PAGE 
 			'unit_ids'       => array_values( $favorite_unit_ids ),
 			'specifications' => true,
 			'galleries'      => true,
+			'no_cache'       => true,
 		)
 	);
 }

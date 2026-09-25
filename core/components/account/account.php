@@ -111,6 +111,7 @@ if ( $estate_user->is_broker() || $estate_user->is_admin() ) {
 					'author_id' => get_current_user_id(),
 					'galleries' => true,
 					'draft'     => true,
+					'no_cache'  => true,
 				)
 			),
 			'user_properties' => get_properties(
@@ -121,6 +122,7 @@ if ( $estate_user->is_broker() || $estate_user->is_admin() ) {
 					'specifications' => true,
 					'galleries'      => true,
 					'draft'          => true,
+					'no_cache'       => true,
 				)
 			),
 			'favourites'      => core_get_current_user_favorite_units(),

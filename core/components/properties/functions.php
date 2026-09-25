@@ -30,7 +30,8 @@ function get_properties( int $limit = - 1, bool $skip_filters = false, array $ar
 		return $memo[ $cache_key ];
 	}
 
-	$properties = wp_cache_get( $cache_key, 'properties' );
+	$is_cached  = empty( $args['no_cache'] );
+	$properties = $is_cached ? wp_cache_get( $cache_key, 'properties' ) : false;
 	if ( false !== $properties ) {
 		$memo[ $cache_key ] = $properties;
 
@@ -55,7 +56,9 @@ function get_properties( int $limit = - 1, bool $skip_filters = false, array $ar
 		}
 	}
 
-	wp_cache_set( $cache_key, $properties, 'properties', DAY_IN_SECONDS );
+	if ( $is_cached ) {
+		wp_cache_set( $cache_key, $properties, 'properties', DAY_IN_SECONDS );
+	}
 	$memo[ $cache_key ] = $properties;
 
 	return $properties;
