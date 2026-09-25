@@ -109,12 +109,30 @@ function core_unit_filter_ranges( string $post_type, string $language, string $l
 function core_unit_filter_developers( string $post_type, string $language, string $listing_type ): array {
 	global $wpdb;
 
-	$source      = core_unit_filter_source( $language, $listing_type );
 	$language_id = '' === $language ? 0 : core_language_term_taxonomy_id( $language );
+	$filters     = '';
 	$select      = 'd.ID, d.post_title';
 	$translation = '';
 	$group_by    = '';
 	$params      = array();
+
+	if ( array_key_exists( $listing_type, core_get_listing_type_choices() ) ) {
+		$filters  .= "
+			JOIN {$wpdb->postmeta} pm_type
+				ON pm_type.post_id = u.ID AND pm_type.meta_key = 'listing_type' AND pm_type.meta_value = %s
+		";
+		$params[] = $listing_type;
+	}
+
+	if ( 0 !== $language_id ) {
+		$filters  .= "
+			JOIN {$wpdb->term_relationships} tr_l
+				ON tr_l.object_id = u.ID AND tr_l.term_taxonomy_id = %d
+		";
+		$params[] = $language_id;
+	}
+
+	$params[] = $post_type;
 
 	if ( 0 !== $language_id ) {
 		$select      = 'COALESCE( MAX( d_lang.ID ), d.ID ) AS ID, COALESCE( MAX( d_lang.post_title ), d.post_title ) AS post_title';
@@ -135,23 +153,25 @@ function core_unit_filter_developers( string $post_type, string $language, strin
 
 	$sql = "
 		SELECT {$select}
-		FROM {$wpdb->posts} d
-		{$translation}
-		WHERE d.post_type = 'developers' AND d.post_status = 'publish'
-			AND EXISTS (
-				SELECT 1
-				{$source['sql']}
-					JOIN {$wpdb->postmeta} pm_dev
-						ON pm_dev.post_id = p.ID AND pm_dev.meta_key = 'developer_rel'
-						AND pm_dev.meta_value = CAST( d.ID AS CHAR )
-				WHERE u.post_type = %s AND u.post_status = 'publish'
-					AND pm_own.meta_value <> ''
-			)
+		FROM (
+			SELECT DISTINCT pm_dev.meta_value AS developer_id
+			FROM {$wpdb->posts} u
+				JOIN {$wpdb->postmeta} pm_own
+					ON pm_own.post_id = u.ID AND pm_own.meta_key = 'property' AND pm_own.meta_value <> ''
+				JOIN {$wpdb->posts} p
+					ON p.ID = pm_own.meta_value AND p.post_type = 'property' AND p.post_status = 'publish'
+				JOIN {$wpdb->postmeta} pm_dev
+					ON pm_dev.post_id = p.ID AND pm_dev.meta_key = 'developer_rel'
+				{$filters}
+			WHERE u.post_type = %s AND u.post_status = 'publish'
+		) refs
+			JOIN {$wpdb->posts} d
+				ON d.ID = refs.developer_id AND d.post_type = 'developers' AND d.post_status = 'publish'
+			{$translation}
 		{$group_by}
 	";
 
-	$params = array_merge( $params, $source['params'], array( $post_type ) );
-	$rows   = $wpdb->get_results( $wpdb->prepare( $sql, $params ) );
+	$rows = $wpdb->get_results( $wpdb->prepare( $sql, $params ) );
 
 	$developers = array();
 	foreach ( (array) $rows as $row ) {
