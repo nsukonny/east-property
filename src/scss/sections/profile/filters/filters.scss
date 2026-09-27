@@ -1,0 +1,39 @@
+@use '../../../vars/vars' as v;
+
+.account-filters {
+	width: 100%;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 12px;
+	margin-bottom: 24px;
+
+	@media (min-width: v.$md) {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	@media (min-width: v.$xl) {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.account-filters-search input {
+		height: 50px;
+		appearance: none;
+	}
+
+	.dropdown {
+		margin-top: 0;
+	}
+
+	.dropdown-button {
+		align-items: center;
+	}
+
+	.dropdown-inner {
+		overflow-y: auto;
+	}
+
+	&-reset {
+		align-self: center;
+		justify-self: start;
+	}
+}

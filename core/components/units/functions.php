@@ -148,6 +148,16 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 		$params[] = sanitize_text_field( wp_unslash( $listing_type ) );
 	}
 
+	if ( ! empty( $args['unit_type'] ) ) {
+		$joins[]  = "
+			INNER JOIN {$wpdb->postmeta} AS pm_unit_type
+				ON pm_unit_type.post_id = u.ID
+				AND pm_unit_type.meta_key = 'unit_type'
+		";
+		$where[]  = 'pm_unit_type.meta_value = %s';
+		$params[] = (string) $args['unit_type'];
+	}
+
 	$joins[] = "
 			LEFT JOIN {$wpdb->postmeta} AS pm_beds
 				ON pm_beds.post_id = u.ID
@@ -165,10 +175,12 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 		$params[] = (int) sanitize_text_field( $_REQUEST['area'] );
 	}
 
-	if ( isset( $_REQUEST['beds'] ) && '' !== $_REQUEST['beds'] ) {
+	$beds_filter = $args['beds'] ?? $_REQUEST['beds'] ?? '';
+	$beds_filter = is_scalar( $beds_filter ) ? (string) $beds_filter : '';
+	if ( '' !== $beds_filter ) {
 		$beds = array_values(
 			array_unique(
-				array_map( 'intval', explode( ',', sanitize_text_field( wp_unslash( $_REQUEST['beds'] ) ) ) )
+				array_map( 'intval', explode( ',', sanitize_text_field( wp_unslash( $beds_filter ) ) ) )
 			)
 		);
 
@@ -216,7 +228,9 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 		$params[] = sanitize_text_field( wp_unslash( $_REQUEST['property_type'] ) );
 	}
 
-	if ( ! empty( $_REQUEST['location'] ) && 'all' !== $_REQUEST['location'] ) {
+	$location_filter = $args['location'] ?? $_REQUEST['location'] ?? '';
+	$location_filter = is_scalar( $location_filter ) ? (string) $location_filter : '';
+	if ( '' !== $location_filter && 'all' !== $location_filter ) {
 		$joins[]  = "
 			INNER JOIN {$wpdb->term_relationships} AS tr_location
 				ON tr_location.object_id = u.ID
@@ -227,7 +241,7 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 				ON t_location.term_id = tt_location.term_id
 		";
 		$where[]  = 't_location.slug = %s';
-		$params[] = sanitize_title( wp_unslash( $_REQUEST['location'] ) );
+		$params[] = sanitize_title( wp_unslash( $location_filter ) );
 	}
 
 	$filter_min_price = is_numeric( $_REQUEST['min_price'] ?? null )
@@ -342,6 +356,20 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 			$where[] = 'u.ID IN (' . implode( ',', array_fill( 0, count( $unit_ids ), '%d' ) ) . ')';
 			$params  = array_merge( $params, $unit_ids );
 		}
+	}
+
+	if ( ! empty( $args['search'] ) ) {
+		$search   = 'u.post_title LIKE %s OR p_property.post_title LIKE %s';
+		$like     = '%' . $wpdb->esc_like( (string) $args['search'] ) . '%';
+		$params[] = $like;
+		$params[] = $like;
+
+		if ( ctype_digit( (string) $args['search'] ) ) {
+			$search  .= ' OR u.ID = %d';
+			$params[] = (int) $args['search'];
+		}
+
+		$where[] = '( ' . $search . ' )';
 	}
 
 	$join_sql  = implode( "\n", $joins );

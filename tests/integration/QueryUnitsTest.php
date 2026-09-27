@@ -438,6 +438,59 @@ class QueryUnitsTest extends TestCase {
 	}
 
 	/**
+	 * The account filters arrive as arguments: they narrow a broker's list and win over request parameters of the same name.
+	 */
+	public function test_account_arguments_narrow_a_broker_list() {
+		$broker = self::factory()->user->create();
+		$marina = $this->create_location( 'dubai-marina' );
+		$jvc    = $this->create_location( 'jumeirah-village-circle' );
+		$base   = array(
+			'author'       => $broker,
+			'status'       => 'draft',
+			'listing_type' => 'secondary',
+			'bedrooms'     => 2,
+			'unit_type'    => 'villa',
+			'locations'    => array( $marina ),
+		);
+		$target = $this->create_unit(
+			array_merge(
+				$base,
+				array(
+					'title'    => 'Sea view villa',
+					'property' => $this->create_property( array( 'title' => 'Marina Heights' ) ),
+				)
+			)
+		);
+
+		$this->create_unit( array_merge( $base, array( 'unit_type' => 'apartment' ) ) );
+		$this->create_unit( array_merge( $base, array( 'bedrooms' => 3 ) ) );
+		$this->create_unit( array_merge( $base, array( 'locations' => array( $jvc ) ) ) );
+		$this->create_unit( array_merge( $base, array( 'author' => self::factory()->user->create() ) ) );
+
+		$_REQUEST['location'] = $jvc;
+
+		$filters = array(
+			'author_id' => $broker,
+			'draft'     => true,
+			'location'  => $marina,
+			'beds'      => '2',
+			'unit_type' => 'villa',
+		);
+
+		$this->assertSame( array( $target ), $this->listed( 'secondary', $filters ) );
+
+		$_REQUEST = array();
+
+		foreach ( array( 'sea view', 'Marina Heights', (string) $target ) as $search ) {
+			$this->assertSame(
+				array( $target ),
+				$this->listed( '', array( 'author_id' => $broker, 'draft' => true, 'search' => $search ) ),
+				"Search by \"{$search}\"."
+			);
+		}
+	}
+
+	/**
 	 * Unit IDs of the whole listing, in listing order.
 	 *
 	 * @param string $listing_type Listing type argument.

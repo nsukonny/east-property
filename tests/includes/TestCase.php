@@ -22,6 +22,7 @@ abstract class TestCase extends WP_UnitTestCase {
 		'bedrooms'     => 'field_694ea5b34ae21',
 		'area_size'    => 'field_694ea5d04ae23',
 		'boost_score'  => 'field_69fdf42ff3d70',
+		'unit_type'    => 'field_694ea57c4ae1f',
 	);
 
 	/**
@@ -95,7 +96,7 @@ abstract class TestCase extends WP_UnitTestCase {
 	 * Create a unit.
 	 *
 	 * @param array $args Post arguments as in create_developer() plus `author`, `property`, `listing_type`, `price`,
-	 *                    `bedrooms`, `area_size`, `boost_score` and `locations` (location slugs).
+	 *                    `bedrooms`, `area_size`, `boost_score`, `unit_type` and `locations` (location slugs).
 	 *
 	 * @return int Unit ID.
 	 */

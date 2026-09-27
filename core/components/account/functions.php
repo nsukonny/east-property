@@ -132,6 +132,224 @@ function core_get_unit_type_choices(): array {
 }
 
 /**
+ * Filters of an account list from the query string, under the `unit_` or `project_` prefix.
+ *
+ * @param string $list unit or project.
+ *
+ * @return array<string, string> Values by filter; empty when a filter is not set or not allowed.
+ */
+function core_get_account_list_filters( string $list ): array {
+	$read = static function ( string $name, array $allowed = array() ) use ( $list ): string {
+		$value = trim( sanitize_text_field( wp_unslash( $_GET[ $list . '_' . $name ] ?? '' ) ) );
+
+		if ( array() !== $allowed ) {
+			return in_array( $value, array_map( 'strval', $allowed ), true ) ? $value : '';
+		}
+
+		return 'all' === $value ? '' : mb_substr( $value, 0, 100 );
+	};
+
+	if ( 'project' === $list ) {
+		$developer = absint( $read( 'developer' ) );
+
+		return array(
+			'search'    => $read( 'search' ),
+			'location'  => sanitize_title( $read( 'location' ) ),
+			'developer' => 0 < $developer ? (string) $developer : '',
+		);
+	}
+
+	return array(
+		'search'       => $read( 'search' ),
+		'listing_type' => $read( 'listing_type', array_keys( core_get_listing_type_choices() ) ),
+		'location'     => sanitize_title( $read( 'location' ) ),
+		'beds'         => $read( 'beds', wp_list_pluck( get_filter_beds_options()['options'], 'value' ) ),
+		'type'         => $read( 'type', array_keys( core_get_unit_type_choices() ) ),
+	);
+}
+
+/**
+ * Query string of the filters set on an account list.
+ *
+ * @param string $list    unit or project.
+ * @param array  $filters Filters from core_get_account_list_filters().
+ *
+ * @return array<string, string>
+ */
+function core_get_account_filters_query( string $list, array $filters ): array {
+	$query = array();
+
+	foreach ( array_filter( $filters, 'strlen' ) as $name => $value ) {
+		$query[ $list . '_' . $name ] = $value;
+	}
+
+	return $query;
+}
+
+/**
+ * Locations of a broker's units or projects in one language, with the number of posts in each.
+ *
+ * Joined from the broker's own posts, so the cost follows their inventory rather than every location on the site.
+ *
+ * @param string $post_type unit or property.
+ * @param int    $author_id Broker ID.
+ * @param string $language  Polylang slug, empty for every language.
+ *
+ * @return array<string, string> Labels by location slug, sorted by name.
+ */
+function core_query_account_locations( string $post_type, int $author_id, string $language ): array {
+	global $wpdb;
+
+	$language_id   = '' === $language ? 0 : core_language_term_taxonomy_id( $language );
+	$language_join = '';
+	$params        = array();
+
+	if ( 0 !== $language_id ) {
+		$language_join = "JOIN {$wpdb->term_relationships} tr_l ON tr_l.object_id = p.ID AND tr_l.term_taxonomy_id = %d";
+		$params[]      = $language_id;
+	}
+
+	$params[] = $post_type;
+	$params[] = $author_id;
+
+	$rows = $wpdb->get_results(
+		$wpdb->prepare(
+			"SELECT STRAIGHT_JOIN t.slug, MIN( t.name ) AS name, COUNT( DISTINCT p.ID ) AS posts
+			FROM {$wpdb->posts} p
+				{$language_join}
+				JOIN {$wpdb->term_relationships} tr ON tr.object_id = p.ID
+				JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id = tr.term_taxonomy_id AND tt.taxonomy = 'location'
+				JOIN {$wpdb->terms} t ON t.term_id = tt.term_id
+			WHERE p.post_type = %s AND p.post_author = %d
+			GROUP BY t.slug
+			ORDER BY name",
+			$params
+		)
+	);
+
+	$locations = array();
+	foreach ( (array) $rows as $row ) {
+		$locations[ $row->slug ] = html_entity_decode( $row->name, ENT_QUOTES | ENT_HTML5, 'UTF-8' ) . ' (' . (int) $row->posts . ')';
+	}
+
+	return $locations;
+}
+
+/**
+ * Developers of a broker's projects in one language, with the number of projects of each.
+ *
+ * Joined from the broker's own projects, so the cost follows their inventory rather than every developer relation on the site.
+ *
+ * @param int    $author_id Broker ID.
+ * @param string $language  Polylang slug, empty for every language.
+ *
+ * @return array<int, string> Labels by developer ID, sorted by name.
+ */
+function core_query_account_developers( int $author_id, string $language ): array {
+	global $wpdb;
+
+	$language_id   = '' === $language ? 0 : core_language_term_taxonomy_id( $language );
+	$language_join = '';
+	$params        = array();
+
+	if ( 0 !== $language_id ) {
+		$language_join = "JOIN {$wpdb->term_relationships} tr_l ON tr_l.object_id = p.ID AND tr_l.term_taxonomy_id = %d";
+		$params[]      = $language_id;
+	}
+
+	$params[] = $author_id;
+
+	$rows = $wpdb->get_results(
+		$wpdb->prepare(
+			"SELECT STRAIGHT_JOIN d.ID, d.post_title, COUNT(*) AS posts
+			FROM {$wpdb->posts} p
+				{$language_join}
+				JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID AND pm.meta_key = 'developer_rel'
+				JOIN {$wpdb->posts} d ON d.ID = CAST( pm.meta_value AS UNSIGNED ) AND d.post_type = 'developers'
+			WHERE p.post_type = 'property' AND p.post_author = %d
+			GROUP BY d.ID, d.post_title
+			ORDER BY d.post_title",
+			$params
+		)
+	);
+
+	$developers = array();
+	foreach ( (array) $rows as $row ) {
+		$developers[ (int) $row->ID ] = html_entity_decode( $row->post_title, ENT_QUOTES | ENT_HTML5, 'UTF-8' ) . ' (' . (int) $row->posts . ')';
+	}
+
+	return $developers;
+}
+
+/**
+ * Arguments of the account/list-filters template for one account list.
+ *
+ * Choices use `all` for "any": the dropdown script falls back to the option text when a value is empty.
+ *
+ * @param string $list    unit or project.
+ * @param array  $filters Filters from core_get_account_list_filters().
+ * @param array  $options Labels by value under `locations`, and `developers` for projects.
+ * @param array  $keep    Query string of the other list's filters, carried over on submit.
+ *
+ * @return array
+ */
+function core_get_account_filters_form( string $list, array $filters, array $options, array $keep ): array {
+	$tab      = 'project' === $list ? 'projects' : 'units';
+	$location = array( 'all' => __( 'Any Locations', 'east-property' ) ) + ( $options['locations'] ?? array() );
+
+	if ( 'project' === $list ) {
+		$fields = array(
+			'location'  => $location,
+			'developer' => array( 'all' => __( 'Any Developers', 'east-property' ) ) + ( $options['developers'] ?? array() ),
+		);
+	} else {
+		$beds = array( 'all' => __( 'Any bedrooms', 'east-property' ) );
+		foreach ( get_filter_beds_options()['options'] as $option ) {
+			$beds[ $option['value'] ] = 'studio' === $option['value']
+				? $option['label']
+				/* translators: %s: number of bedrooms, "7+" for the last option. */
+				: sprintf( _n( '%s bedroom', '%s bedrooms', (int) $option['value'], 'east-property' ), $option['label'] );
+		}
+
+		$types = array( 'all' => __( 'All unit types', 'east-property' ) );
+		foreach ( array_keys( core_get_unit_type_choices() ) as $type ) {
+			$types[ $type ] = core_property_choice_label( (string) $type );
+		}
+
+		$fields = array(
+			'listing_type' => array( 'all' => __( 'All listing types', 'east-property' ) ) + core_get_listing_type_choices(),
+			'location'     => $location,
+			'beds'         => $beds,
+			'type'         => $types,
+		);
+	}
+
+	$form = array(
+		'tab'       => $tab,
+		'search'    => array(
+			'name'        => $list . '_search',
+			'value'       => $filters['search'] ?? '',
+			'placeholder' => 'project' === $list ? __( 'Name or ID', 'east-property' ) : __( 'Name, project or ID', 'east-property' ),
+		),
+		'fields'    => array(),
+		'keep'      => $keep,
+		'reset_url' => array() === core_get_account_filters_query( $list, $filters )
+			? ''
+			: add_query_arg( array_merge( array( 'tab' => $tab ), $keep ), core_home_url( '/account/' ) ),
+	);
+
+	foreach ( $fields as $name => $items ) {
+		$form['fields'][] = array(
+			'name'  => $list . '_' . $name,
+			'value' => '' === ( $filters[ $name ] ?? '' ) ? 'all' : $filters[ $name ],
+			'items' => $items,
+		);
+	}
+
+	return $form;
+}
+
+/**
  * Get favorite units
  *
  * @param int $limit Items per page.
@@ -1024,11 +1242,15 @@ add_action( 'init', 'account_update_profile' );
  * @return void
  */
 function core_register_account_pagination_rewrite(): void {
-	add_rewrite_rule(
-		'^account/page-([0-9]+)/?$',
-		'index.php?pagename=account&cur_page=$matches[1]',
-		'top'
-	);
+	foreach ( core_language_url_prefixes() as $prefix ) {
+		$lang = '' === $prefix ? '' : '&lang=' . rtrim( $prefix, '/' );
+
+		add_rewrite_rule(
+			'^' . $prefix . 'account/page-([0-9]+)/?$',
+			'index.php?pagename=account&cur_page=$matches[1]' . $lang,
+			'top'
+		);
+	}
 }
 
 add_action( 'init', 'core_register_account_pagination_rewrite' );

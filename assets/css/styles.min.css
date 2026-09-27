@@ -7716,6 +7716,43 @@ main ul:not([class]), .content ul:not([class]) {
   margin-bottom: 20px;
 }
 
+.account-filters {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+@media (min-width: 768px) {
+  .account-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1200px) {
+  .account-filters {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.account-filters .account-filters-search input {
+  height: 50px;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+.account-filters .dropdown {
+  margin-top: 0;
+}
+.account-filters .dropdown-button {
+  align-items: center;
+}
+.account-filters .dropdown-inner {
+  overflow-y: auto;
+}
+.account-filters-reset {
+  align-self: center;
+  justify-self: start;
+}
+
 .dropdown.info-dropdown {
   background-color: #F7F7F7;
   padding: 8px;
