@@ -8,7 +8,6 @@ get_header( null, array( 'color' => 'white' ) );
 
 $paged      = pagination_get_current_page();
 $news_query = core_get_news( array( 'paged' => $paged ) );
-$has_more   = ( $paged < $news_query->max_num_pages );
 ?>
 
 <main class="news-archive-page">
@@ -50,17 +49,16 @@ $has_more   = ( $paged < $news_query->max_num_pages );
 			<?php endif; ?>
 		</div>
 
-		<?php if ( $has_more ) : ?>
-			<div class="news-archive-more">
-				<button type="button"
-				        class="button gray sm full-width news-load-more-btn"
-				        id="news-load-more"
-				        data-next-page="<?php echo esc_attr( $paged + 1 ); ?>"
-				        data-total-pages="<?php echo esc_attr( $news_query->max_num_pages ); ?>">
-					<?php _e( 'Show older news', 'east-property' ); ?>
-				</button>
-			</div>
-		<?php endif; ?>
+		<?php
+		get_template_part(
+			'core/components/common/pagination',
+			null,
+			array(
+				'total_items'    => (int) $news_query->found_posts,
+				'items_per_page' => NEWS_PER_PAGE,
+			)
+		);
+		?>
 	</div>
 </main>
 

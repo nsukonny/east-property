@@ -44,25 +44,6 @@ body:has(.news-archive-page),
 	}
 }
 
-.news-archive-more {
-	display: flex;
-	justify-content: center;
-	width: 100%;
-
-	.news-load-more-btn {
-		width: 100%;
-		justify-content: center;
-		padding: 12px 24px;
-		font-weight: v.$fw-600 !important;
-		background-color: v.$c-grey-97;
-
-		&:disabled {
-			opacity: 0.6;
-			cursor: not-allowed;
-		}
-	}
-}
-
 .news-empty {
 	grid-column: 1 / -1;
 	display: flex;

@@ -1,6 +1,6 @@
 <?php
 /**
- * News module helper functions, optimized queries, caching, and AJAX handlers
+ * News module helper functions, optimized queries and permalinks
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -75,104 +75,6 @@ function core_get_other_news( int $exclude_id = 0, int $count = 3 ): WP_Query {
 
 	return $query;
 }
-
-/**
- * AJAX handler for loading more news with caching
- */
-function ajax_load_more_news(): void {
-	$page = isset( $_POST['page'] ) ? max( 1, (int) $_POST['page'] ) : 1;
-
-	$cache_key = core_news_cache_key( $page );
-	$cached    = wp_cache_get( $cache_key, 'east_news' );
-
-	if ( false !== $cached ) {
-		wp_send_json_success( $cached );
-	}
-
-	$query = core_get_news( array(
-		'paged' => $page,
-	) );
-
-	if ( ! $query->have_posts() ) {
-		$response = array(
-			'html'        => '',
-			'has_more'    => false,
-			'total_pages' => $query->max_num_pages,
-			'page'        => $page,
-		);
-		wp_cache_set( $cache_key, $response, 'east_news', 3600 );
-		wp_send_json_success( $response );
-	}
-
-	ob_start();
-	while ( $query->have_posts() ) {
-		$query->the_post();
-		get_template_part( 'template-parts/cards/news-card', null, array(
-			'post_id' => get_the_ID(),
-		) );
-	}
-	wp_reset_postdata();
-	$html = ob_get_clean();
-
-	$has_more = ( $page < $query->max_num_pages );
-
-	$response = array(
-		'html'        => $html,
-		'has_more'    => $has_more,
-		'next_page'   => $page + 1,
-		'total_pages' => $query->max_num_pages,
-		'page'        => $page,
-	);
-
-	wp_cache_set( $cache_key, $response, 'east_news', 3600 );
-
-	wp_send_json_success( $response );
-}
-
-add_action( 'wp_ajax_load_more_news', 'ajax_load_more_news' );
-add_action( 'wp_ajax_nopriv_load_more_news', 'ajax_load_more_news' );
-
-/**
- * Invalidate news cache on post save/delete
- *
- * @param int $post_id
- */
-function core_invalidate_news_cache( int $post_id ): void {
-	if ( 'post' !== get_post_type( $post_id ) ) {
-		return;
-	}
-
-	/*
-	 * wp_cache_flush_group() calls $wp_object_cache->flush_group() with no guard
-	 * of its own, and a drop-in that does not implement the method turns that
-	 * into a fatal — W3TC on production replaces the object cache. Bumping a
-	 * version that the keys carry retires the group on any backend.
-	 */
-	update_option( 'core_news_cache_version', core_get_news_cache_version() + 1, false );
-}
-
-/**
- * Current generation of the news cache.
- *
- * @return int
- */
-function core_get_news_cache_version(): int {
-	return max( 1, (int) get_option( 'core_news_cache_version', 1 ) );
-}
-
-/**
- * Cache key for one page of the news feed.
- *
- * @param int $page Page number.
- *
- * @return string
- */
-function core_news_cache_key( int $page ): string {
-	return 'news_ajax_page_' . $page . '_v' . core_get_news_cache_version();
-}
-
-add_action( 'save_post', 'core_invalidate_news_cache' );
-add_action( 'deleted_post', 'core_invalidate_news_cache' );
 
 /**
  * Custom permalink for posts to be /news/%postname%/

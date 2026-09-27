@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-	initNewsLoadMore()
 	initNewsShare()
 })
 
@@ -28,54 +27,6 @@ const copyTextToClipboard = async (text) => {
 	}
 	document.body.removeChild(textArea)
 	return success
-}
-
-const initNewsLoadMore = () => {
-	const loadMoreBtn = document.getElementById('news-load-more')
-	const newsGrid = document.getElementById('news-grid')
-
-	if (!loadMoreBtn || !newsGrid) return
-
-	loadMoreBtn.addEventListener('click', async () => {
-		const nextPage = parseInt(loadMoreBtn.dataset.nextPage, 10) || 1
-		const totalPages = parseInt(loadMoreBtn.dataset.totalPages, 10) || 1
-		const initialText = loadMoreBtn.innerText
-
-		loadMoreBtn.disabled = true
-		loadMoreBtn.innerText = 'Loading...'
-
-		try {
-			const ajaxUrl = typeof ajax_object !== 'undefined' ? ajax_object.ajax_url : '/wp-admin/admin-ajax.php'
-			const formData = new FormData()
-			formData.append('action', 'load_more_news')
-			formData.append('page', nextPage)
-
-			const response = await fetch(ajaxUrl, {
-				method: 'POST',
-				body: formData,
-			})
-
-			const result = await response.json()
-
-			if (result.success && result.data.html) {
-				newsGrid.insertAdjacentHTML('beforeend', result.data.html)
-
-				if (result.data.has_more && result.data.next_page <= totalPages) {
-					loadMoreBtn.dataset.nextPage = result.data.next_page
-					loadMoreBtn.disabled = false
-					loadMoreBtn.innerText = initialText
-				} else {
-					loadMoreBtn.closest('.news-archive-more')?.remove()
-				}
-			} else {
-				loadMoreBtn.closest('.news-archive-more')?.remove()
-			}
-		} catch (error) {
-			console.error('Error loading news:', error)
-			loadMoreBtn.disabled = false
-			loadMoreBtn.innerText = initialText
-		}
-	})
 }
 
 const initNewsShare = () => {

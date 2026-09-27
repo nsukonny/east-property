@@ -12,6 +12,7 @@ require THEME_PATH . '/core/components/filters/functions.php';
 require THEME_PATH . '/core/components/common/functions.php';
 require THEME_PATH . '/core/components/common/notifications/functions.php';
 require THEME_PATH . '/core/components/common/subscribe-form/functions.php';
+require THEME_PATH . '/core/components/news/functions.php';
 require THEME_PATH . '/core/components/sections/functions.php';
 require THEME_PATH . '/core/components/modals/functions.php';
 require THEME_PATH . '/core/components/email/functions.php';

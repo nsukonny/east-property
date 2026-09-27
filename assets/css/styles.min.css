@@ -9875,23 +9875,6 @@ body:has(.news-archive-page),
   }
 }
 
-.news-archive-more {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-.news-archive-more .news-load-more-btn {
-  width: 100%;
-  justify-content: center;
-  padding: 12px 24px;
-  font-weight: 600 !important;
-  background-color: #F7F7F7;
-}
-.news-archive-more .news-load-more-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
 .news-empty {
   grid-column: 1/-1;
   display: flex;
