@@ -49,18 +49,6 @@ while ( have_posts() ) {
 	$latitude             = $property?->get_latitude();
 	$longitude            = $property?->get_longitude();
 	$payment_plans        = $property?->get_payment_plans() ?? array();
-
-	$all_property_units = get_units(
-		'',
-		100,
-		array(
-			'property_id' => $property?->get_id(),
-			'galleries'   => true,
-		)
-	);
-
-	shuffle( $all_property_units['items'] );
-	$featured_units = array_slice( $all_property_units['items'], 0, 4 );
 	?>
 	<section class="single-items">
 		<div class="container">
@@ -330,22 +318,14 @@ while ( have_posts() ) {
 					<?php } ?>
 
 					<?php
-					if ( ! empty( $featured_units ) ) {
-						$all_units_link = core_home_url( '/off-plan' );
-						get_component_template(
-							'units/featured',
-							array(
-								'h2'            => __( 'More properties like this', 'east-property' ),
-								'href'          => $all_units_link,
-								'show_all_link' => $all_units_link,
-								'link_text'     => __( 'All properties', 'east-property' ),
-								'units'         => $featured_units,
-								'card_template' => 'unit-square-card',
-								'before'        => '',
-								'after'         => '',
-							)
-						);
-					}
+					get_template_part(
+						'core/components/units/similar',
+						null,
+						array(
+							'property_id' => $property?->get_id(),
+							'unit_id'     => $unit->get_id(),
+						)
+					);
 					?>
 
 					<?php
@@ -403,5 +383,13 @@ while ( have_posts() ) {
 	</section>
 	<?php
 }
-get_footer();
+get_footer(
+	null,
+	array(
+		'modals' => array(
+			'image-modal',
+			'broker-modal',
+		),
+	)
+);
 

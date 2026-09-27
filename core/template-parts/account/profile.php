@@ -11,6 +11,10 @@ $agencies_posts  = $args['agencies_posts'] ?? array();
 $user_units      = $args['user_units'] ?? array();
 $favourites      = $args['favourites'] ?? array();
 $user_properties = $args['user_properties'] ?? array();
+$unit_filters    = $args['unit_filters'] ?? array();
+$project_filters = $args['project_filters'] ?? array();
+$unit_query      = core_get_account_filters_query( 'unit', $unit_filters );
+$project_query   = core_get_account_filters_query( 'project', $project_filters );
 
 $user_entity = new Estate_User( $current_user );
 
@@ -94,6 +98,13 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 				</div>
 				<div class="content-list">
 					<?php
+					if ( $broker->is_verified() && ( ! empty( $user_units['items'] ) || ! empty( $unit_query ) ) ) {
+						get_component_template(
+							'account/list-filters',
+							core_get_account_filters_form( 'unit', $unit_filters, $args['unit_filter_options'] ?? array(), $project_query )
+						);
+					}
+
 					if ( ! $broker->is_verified() ) {
 						get_component_template( 'account/email-verification' );
 					} elseif ( ! empty( $user_units['items'] ) ) {
@@ -148,6 +159,8 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 							);
 							?>
 						</div>
+					<?php } elseif ( ! empty( $unit_query ) ) { ?>
+						<p><?php esc_html_e( 'No units match the filters.', 'east-property' ); ?></p>
 					<?php } else { ?>
 						<p><?php esc_html_e( 'You have not added any units yet.', 'east-property' ); ?></p>
 					<?php } ?>
@@ -186,6 +199,13 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 				</div>
 				<div class="content-list">
 					<?php
+					if ( $broker->is_verified() && ( ! empty( $user_properties['items'] ) || ! empty( $project_query ) ) ) {
+						get_component_template(
+							'account/list-filters',
+							core_get_account_filters_form( 'project', $project_filters, $args['project_filter_options'] ?? array(), $unit_query )
+						);
+					}
+
 					if ( ! $broker->is_verified() ) {
 						get_component_template( 'account/email-verification' );
 					} elseif ( ! empty( $user_properties['items'] ) ) {
@@ -221,6 +241,8 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 								?>
 							</div>
 						</div>
+					<?php } elseif ( ! empty( $project_query ) ) { ?>
+						<p><?php esc_html_e( 'No projects match the filters.', 'east-property' ); ?></p>
 					<?php } else { ?>
 						<p><?php esc_html_e( 'You have not added any units yet.', 'east-property' ); ?></p>
 					<?php } ?>

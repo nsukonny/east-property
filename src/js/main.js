@@ -11,6 +11,7 @@ import './dropdowns.js';
 import './submit-unit';
 import './uploader';
 import './news.js';
+import './account-filters.js';
 import {initMortgageCalculator} from './mortgage-calculator/index.js';
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -429,8 +429,10 @@ function core_query_properties(
 			LEFT JOIN {$wpdb->terms} AS t_location
 				ON t_location.term_id = tt_location.term_id
 		";
-	if ( ! empty( $_REQUEST['location'] ) && 'all' !== $_REQUEST['location'] ) {
-		$location = sanitize_title( wp_unslash( $_REQUEST['location'] ) );
+	$location_filter = $args['location'] ?? $_REQUEST['location'] ?? '';
+	$location_filter = is_scalar( $location_filter ) ? (string) $location_filter : '';
+	if ( '' !== $location_filter && 'all' !== $location_filter ) {
+		$location = sanitize_title( wp_unslash( $location_filter ) );
 		$where[]  = 't_location.slug = %s';
 		$params[] = $location;
 	}
@@ -471,7 +473,7 @@ function core_query_properties(
 	$developer = $args['developer'] ?? $_REQUEST['developer'] ?? '';
 	if ( ! empty( $developer ) && 'all' !== $developer ) {
 		$developer_filter = (int) sanitize_text_field( wp_unslash( $developer ) );
-		if ( ! $skip_filters && $developer_filter > 0 ) {
+		if ( ( ! $skip_filters || isset( $args['developer'] ) ) && $developer_filter > 0 ) {
 			$joins[] = "
 				INNER JOIN {$wpdb->postmeta} AS pm_developer
 					ON pm_developer.post_id = p.ID
@@ -526,6 +528,18 @@ function core_query_properties(
 			$where[]  = 'p.post_author = %d';
 			$params[] = $author_id;
 		}
+	}
+
+	if ( ! empty( $args['search'] ) ) {
+		$search   = 'p.post_title LIKE %s';
+		$params[] = '%' . $wpdb->esc_like( (string) $args['search'] ) . '%';
+
+		if ( ctype_digit( (string) $args['search'] ) ) {
+			$search  .= ' OR p.ID = %d';
+			$params[] = (int) $args['search'];
+		}
+
+		$where[] = '( ' . $search . ' )';
 	}
 
 	$join_sql  = implode( "\n", $joins );

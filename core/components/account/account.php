@@ -100,32 +100,64 @@ if ( isset( $_GET['action'] ) && in_array( $_GET['action'], array( 'add_property
 $agencies_posts = get_agencies();
 
 if ( $estate_user->is_broker() || $estate_user->is_admin() ) {
+	$unit_filters    = core_get_account_list_filters( 'unit' );
+	$project_filters = core_get_account_list_filters( 'project' );
+	$language        = core_get_current_language();
+
 	get_component_template(
 		'account/profile',
 		array(
-			'agencies_posts'  => $agencies_posts,
-			'user_units'      => get_units(
-				'',
+			'agencies_posts'         => $agencies_posts,
+			'user_units'             => get_units(
+				$unit_filters['listing_type'],
 				20,
-				array(
-					'author_id' => get_current_user_id(),
-					'galleries' => true,
-					'draft'     => true,
-					'no_cache'  => true,
+				array_merge(
+					array(
+						'author_id' => get_current_user_id(),
+						'galleries' => true,
+						'draft'     => true,
+						'no_cache'  => true,
+					),
+					array_filter(
+						array(
+							'search'    => $unit_filters['search'],
+							'location'  => $unit_filters['location'],
+							'beds'      => $unit_filters['beds'],
+							'unit_type' => $unit_filters['type'],
+						)
+					)
 				)
 			),
-			'user_properties' => get_properties(
+			'user_properties'        => get_properties(
 				20,
 				true,
-				array(
-					'author_id'      => get_current_user_id(),
-					'specifications' => true,
-					'galleries'      => true,
-					'draft'          => true,
-					'no_cache'       => true,
+				array_merge(
+					array(
+						'author_id'      => get_current_user_id(),
+						'specifications' => true,
+						'galleries'      => true,
+						'draft'          => true,
+						'no_cache'       => true,
+					),
+					array_filter(
+						array(
+							'search'    => $project_filters['search'],
+							'location'  => $project_filters['location'],
+							'developer' => $project_filters['developer'],
+						)
+					)
 				)
 			),
-			'favourites'      => core_get_current_user_favorite_units(),
+			'favourites'             => core_get_current_user_favorite_units(),
+			'unit_filters'           => $unit_filters,
+			'project_filters'        => $project_filters,
+			'unit_filter_options'    => array(
+				'locations' => core_query_account_locations( 'unit', get_current_user_id(), $language ),
+			),
+			'project_filter_options' => array(
+				'locations'  => core_query_account_locations( 'property', get_current_user_id(), $language ),
+				'developers' => core_query_account_developers( get_current_user_id(), $language ),
+			),
 		)
 	);
 

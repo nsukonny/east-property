@@ -34,4 +34,11 @@ get_template_part(
 
 get_template_part( 'template-parts/sections/index/about' );
 
-get_footer();
+get_footer(
+	null,
+	array(
+		'modals' => array(
+			'broker-modal',
+		),
+	)
+);

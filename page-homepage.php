@@ -37,5 +37,12 @@ if ( 404 === get_query_var( 'pagename' ) || is_404() ) {
 		?>
 	</main>
 <?php
-get_footer();
+get_footer(
+	null,
+	array(
+		'modals' => array(
+			'contact-manager-modal',
+		),
+	)
+);
 

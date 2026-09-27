@@ -3,16 +3,17 @@
 use Entities\Estate_User;
 
 if ( ! empty( $post ) && 'unit' === $post->post_type ) {
-	$unit   = new \Entities\Unit( $post->ID );
-	$broker = $unit->get_broker();
+	$unit     = new \Entities\Unit( $post->ID );
+	$unit_url = $unit->get_url();
+	$broker   = $unit->get_broker();
 } else {
 	$broker_wp_user = Estate_User::get_default_broker();
 	$broker         = new Estate_User( $broker_wp_user );
 }
 
 $whatsapp_text = __( 'Hello, I am interested in property', 'east-property' );
-if ( isset( $unit ) ) {
-	$whatsapp_text .= ' - ' . $unit->get_url();
+if ( isset( $unit_url ) ) {
+	$whatsapp_text .= ' - ' . $unit_url;
 }
 $whats_app_link = $broker?->get_whatsapp( $whatsapp_text ) ?: WHATS_APP_LINK;
 $phone          = $broker?->get_phone( '', true ) ?: PROJECT_PHONE;
