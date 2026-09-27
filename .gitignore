@@ -8,3 +8,6 @@ assets/js/main.min.js.map
 ../.env.example
 !../.env.example
 core/vendor
+/vendor
+/phpunit.xml
+/.phpunit.result.cache

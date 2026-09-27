@@ -1,0 +1,19 @@
+{
+	"name": "nsukonny/east-property",
+	"description": "East Property theme: development and test tooling.",
+	"type": "wordpress-theme",
+	"license": "proprietary",
+	"require-dev": {
+		"phpunit/phpunit": "^9.6",
+		"wp-phpunit/wp-phpunit": "7.1.*",
+		"yoast/phpunit-polyfills": "^4.0"
+	},
+	"config": {
+		"process-timeout": 0,
+		"sort-packages": true
+	},
+	"scripts": {
+		"lint": "find . -type f -name '*.php' -not -path './vendor/*' -not -path './node_modules/*' -not -path './core/vendor/*' -print0 | xargs -0 -n1 -P4 php -d display_errors=stderr -l > /dev/null",
+		"test": "phpunit"
+	}
+}
