@@ -32,4 +32,11 @@ get_template_part(
 	)
 );
 
-get_footer();
+get_footer(
+	null,
+	array(
+		'modals' => array(
+			'broker-modal',
+		),
+	)
+);

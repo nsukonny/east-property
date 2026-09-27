@@ -403,5 +403,13 @@ while ( have_posts() ) {
 	</section>
 	<?php
 }
-get_footer();
+get_footer(
+	null,
+	array(
+		'modals' => array(
+			'image-modal',
+			'broker-modal',
+		),
+	)
+);
 

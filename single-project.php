@@ -36,4 +36,13 @@ while ( have_posts() ) {
 	}
 }
 
-get_footer();
+get_footer(
+	null,
+	array(
+		'modals' => array(
+			'image-modal',
+			'broker-modal',
+			'boost-modal',
+		),
+	)
+);
