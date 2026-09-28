@@ -38,7 +38,7 @@ while ( have_posts() ) {
 	$floor_plan        = $unit->get_floor_plan();
 	$broker            = $unit->get_broker();
 	$desc              = $unit->get_description_full();
-	$is_have_amenities = ! empty( $desc ) && stripos( $desc, 'amenities' ) !== false;
+	$is_have_amenities = ! empty( $desc ) && stripos( $desc, __( 'amenities', 'east-property' ) ) !== false;
 
 	$location             = $property?->get_location();
 	$down_payment_group   = $property?->get_down_payment_group();
