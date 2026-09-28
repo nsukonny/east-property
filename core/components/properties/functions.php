@@ -420,7 +420,7 @@ function core_query_properties(
 		$params[]      = $property_type;
 	}
 
-	$joins[] = "
+	$joins[]         = "
 			LEFT JOIN {$wpdb->term_relationships} AS tr_location
 				ON tr_location.object_id = p.ID
 			LEFT JOIN {$wpdb->term_taxonomy} AS tt_location
@@ -535,7 +535,7 @@ function core_query_properties(
 		$params[] = '%' . $wpdb->esc_like( (string) $args['search'] ) . '%';
 
 		if ( ctype_digit( (string) $args['search'] ) ) {
-			$search  .= ' OR p.ID = %d';
+			$search   .= ' OR p.ID = %d';
 			$params[] = (int) $args['search'];
 		}
 
@@ -690,6 +690,10 @@ function ajax_get_map_property(): void {
 	$prop_images = array();
 	$gallery     = $property->get_gallery();
 	foreach ( $gallery as $image ) {
+		if ( str_contains( $image['sizes']['large'], 'no-image' ) ) {
+			continue;
+		}
+
 		$prop_images[] = ( ! empty( $image['sizes']['large'] ) ) ? $image['sizes']['large'] : $image['url'];
 	}
 
