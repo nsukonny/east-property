@@ -124,6 +124,7 @@ if ( $estate_user->is_broker() || $estate_user->is_admin() ) {
 							'location'  => $unit_filters['location'],
 							'beds'      => $unit_filters['beds'],
 							'unit_type' => $unit_filters['type'],
+							'status'    => $unit_filters['status'],
 						)
 					)
 				)
@@ -144,6 +145,7 @@ if ( $estate_user->is_broker() || $estate_user->is_admin() ) {
 							'search'    => $project_filters['search'],
 							'location'  => $project_filters['location'],
 							'developer' => $project_filters['developer'],
+							'status'    => $project_filters['status'],
 						)
 					)
 				)

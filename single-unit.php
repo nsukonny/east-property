@@ -34,16 +34,17 @@ while ( have_posts() ) {
 			get_permalink( $unit->get_id() )
 		) );
 
-	$amenities  = $unit->get_amenities();
-	$floor_plan = $unit->get_floor_plan();
-	$broker     = $unit->get_broker();
-	$desc       = $unit->get_description_full();
+	$amenities         = $unit->get_amenities();
+	$floor_plan        = $unit->get_floor_plan();
+	$broker            = $unit->get_broker();
+	$desc              = $unit->get_description_full();
+	$is_have_amenities = ! empty( $desc ) && stripos( $desc, __( 'amenities', 'east-property' ) ) !== false;
 
 	$location             = $property?->get_location();
 	$down_payment_group   = $property?->get_down_payment_group();
 	$delivery_date        = $property?->get_delivery_date();
 	$property_information = $property?->get_key_information();
-	$property_amenities   = $property?->get_amenities() ?? array();
+	$property_amenities   = ( $property && ! $is_have_amenities ) ? $property?->get_amenities() : array();
 	$building_name        = $property?->get_title();
 	$floors               = $property?->get_floors();
 	$latitude             = $property?->get_latitude();

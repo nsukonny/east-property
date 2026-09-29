@@ -503,6 +503,68 @@ function get_filter_baths_options(): array {
 }
 
 /**
+ * Whether the request narrows a filter the results bar shows.
+ *
+ * @param array $search_by        Filters the bar shows.
+ * @param array $search_tabs_data Result of get_search_tabs_data().
+ *
+ * @return bool
+ */
+function core_has_active_result_filters( array $search_by, array $search_tabs_data ): bool {
+	$params = array(
+		'location'      => 'location',
+		'available'     => 'available',
+		'property_type' => 'property_type',
+		'developer'     => 'developer',
+		'max_area'      => 'area',
+		'beds'          => 'beds',
+		'baths'         => 'baths',
+	);
+
+	foreach ( $params as $flag => $param ) {
+		$value = $_GET[ $param ] ?? '';
+
+		if ( empty( $search_by[ $flag ] ) || ! is_scalar( $value ) ) {
+			continue;
+		}
+
+		if ( ! in_array( sanitize_text_field( wp_unslash( (string) $value ) ), array( '', 'all' ), true ) ) {
+			return true;
+		}
+	}
+
+	if ( empty( $search_by['price'] ) ) {
+		return false;
+	}
+
+	$range = $search_tabs_data['filters']['price']['options'] ?? array();
+
+	foreach ( array( 'min_price' => 'min', 'max_price' => 'max' ) as $param => $bound ) {
+		$value = $_GET[ $param ] ?? null;
+
+		if ( is_numeric( $value ) && isset( $range[ $bound ] ) && round( (float) $value ) !== round( (float) $range[ $bound ] ) ) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/**
+ * Listing address without filters and pagination, keeping the project the page is opened for.
+ *
+ * @return string Root-relative URL.
+ */
+function core_result_filters_reset_url(): string {
+	$path = (string) wp_parse_url( (string) wp_unslash( $_SERVER['REQUEST_URI'] ?? '/' ), PHP_URL_PATH );
+	$path = (string) preg_replace( array( '~/page[-/]\d+/?$~i', '~/{2,}~' ), '/', '' === $path ? '/' : $path );
+
+	$property_id = is_scalar( $_GET['property_id'] ?? null ) ? absint( $_GET['property_id'] ) : 0;
+
+	return 0 < $property_id ? add_query_arg( 'property_id', $property_id, $path ) : $path;
+}
+
+/**
  * term_taxonomy_id of a Polylang language.
  *
  * Joining `term_relationships` to `term_taxonomy` and `terms` inside an

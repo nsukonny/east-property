@@ -3373,6 +3373,13 @@ form .custom-checkbox span {
     line-height: 18px;
   }
 }
+.large-card-info-bottom-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
 .large-card-info-items {
   display: flex;
   flex-wrap: wrap;
@@ -4867,6 +4874,13 @@ body.resize-transitions-disabled * {
     font-size: 14px;
     line-height: 18px;
   }
+}
+.results-filters-items .results-filters-reset {
+  align-self: center;
+  padding: 6px 8px;
+}
+.results-filters-items .results-filters-reset[hidden] {
+  display: none;
 }
 .results-filters-items .result-dropdown {
   max-height: 300px;

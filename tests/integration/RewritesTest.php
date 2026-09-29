@@ -1,6 +1,6 @@
 <?php
 /**
- * Regression tests of the public unit URLs.
+ * Regression tests of the public unit, projects list and district URLs.
  */
 
 namespace EastProperty\Tests\Integration;
@@ -9,7 +9,7 @@ use EastProperty\Tests\StoppedResponse;
 use EastProperty\Tests\TestCase;
 
 /**
- * /property/{project}/{unit}/ in both languages: what resolves, what redirects and what answers 404.
+ * /property/{project}/{unit}/, the projects list and the district pages in both languages: what resolves, what redirects and what answers 404.
  *
  * Requests go through WP::main() and the template_redirect handlers; a handler that would send a status or a redirect and exit is stopped and read instead.
  */
@@ -132,6 +132,65 @@ class RewritesTest extends TestCase {
 
 		$this->assertSame( $orphan, get_queried_object_id() );
 		$this->assertSame( 200, $response->status );
+	}
+
+	/**
+	 * A district URL resolves the district and the page it names, under /ru/ as without a prefix.
+	 */
+	public function test_district_urls_resolve_the_district_in_both_languages() {
+		$location = get_term_by( 'slug', $this->create_location( 'dubai-marina' ), 'location' );
+		$requests = array(
+			array( 'en', '/areas/dubai-marina/', 1 ),
+			array( 'en', '/projects/dubai-marina/', 1 ),
+			array( 'en', '/projects/dubai-marina/page-2/', 2 ),
+			array( 'ru', '/ru/areas/dubai-marina/', 1 ),
+			array( 'ru', '/ru/projects/dubai-marina/', 1 ),
+			array( 'ru', '/ru/projects/dubai-marina/page-2/', 2 ),
+		);
+
+		foreach ( $requests as list( $language, $path, $page ) ) {
+			$response = $this->request( $language, $path );
+
+			$this->assertTrue( is_tax( 'location' ), $path );
+			$this->assertSame( $location->term_id, get_queried_object_id(), $path );
+			$this->assertSame( $page, pagination_get_current_page(), $path );
+			$this->assertSame( 200, $response->status, $path );
+		}
+	}
+
+	/**
+	 * Page two of the projects list resolves the projects page of the requested language.
+	 */
+	public function test_projects_list_page_two_resolves_the_page_of_the_language() {
+		if ( ! isset( PLL()->share_post_slug ) ) {
+			$this->markTestSkipped( 'Translations share the projects page slug only with Polylang Pro.' );
+		}
+
+		$pages = array();
+
+		foreach ( array( 'en', 'ru' ) as $language ) {
+			$this->switch_language( $language );
+
+			$pages[ $language ] = self::factory()->post->create( array( 'post_type' => 'page' ) );
+
+			pll_set_post_language( $pages[ $language ], $language );
+			wp_update_post(
+				array(
+					'ID'        => $pages[ $language ],
+					'post_name' => 'projects',
+				)
+			);
+		}
+
+		$this->link_translations( $pages );
+
+		foreach ( array( 'en' => '/projects/page-2/', 'ru' => '/ru/projects/page-2/' ) as $language => $path ) {
+			$response = $this->request( $language, $path );
+
+			$this->assertSame( $pages[ $language ], get_queried_object_id(), $path );
+			$this->assertSame( 2, pagination_get_current_page(), $path );
+			$this->assertSame( 200, $response->status, $path );
+		}
 	}
 
 	/**

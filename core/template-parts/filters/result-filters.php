@@ -17,6 +17,8 @@ $baths         = $search_tabs_data['filters']['baths'] ?? null;
 $beds          = $search_tabs_data['filters']['beds'] ?? null;
 $is_show_beds  = $search_by['beds'] ?? false;
 $is_show_baths = $search_by['baths'] ?? false;
+$reset_url     = core_result_filters_reset_url();
+$is_filtered   = 'true' === ( $_GET['filtered'] ?? '' ) || core_has_active_result_filters( $search_by, $search_tabs_data );
 
 //TODO Need to rebuild this search to normal dropdowns
 ?>
@@ -296,6 +298,11 @@ $is_show_baths = $search_by['baths'] ?? false;
 				<span class="result-dropdown"></span>
 			</button>
 		<?php } ?>
+
+		<a class="button link sm results-filters-reset" href="<?php echo esc_url( $reset_url ); ?>"
+		   data-results-filters-reset<?php echo $is_filtered ? '' : ' hidden'; ?>>
+			<?php esc_html_e( 'Reset filters', 'east-property' ); ?>
+		</a>
 	</div>
 	<?php
 	//TODO hide for MVP

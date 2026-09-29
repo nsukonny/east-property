@@ -194,6 +194,14 @@
 
 				@include l.t-label;
 			}
+
+			&-group {
+				display: flex;
+				align-items: center;
+				gap: 4px;
+				flex-direction: row;
+				flex-wrap: wrap;
+			}
 		}
 
 		&-items {

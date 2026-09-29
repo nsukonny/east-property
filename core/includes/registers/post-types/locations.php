@@ -33,28 +33,32 @@ add_action( 'init', static function () {
 }, 5 );
 
 /**
- * Add opening location on projects page with pagination
+ * Add opening location on projects page with pagination, in every language
  *
  * Old URL Example http://eastproperty.local/properties/business-bay/
  */
 add_action( 'init', static function () {
-	add_rewrite_rule(
-		'^areas/(?!page-[0-9]+/?$)([^/]+)/?$',
-		'index.php?location=$matches[1]',
-		'top'
-	);
+	foreach ( core_language_url_prefixes() as $prefix ) {
+		$lang = '' === $prefix ? '' : '&lang=' . rtrim( $prefix, '/' );
 
-	add_rewrite_rule(
-		'^projects/(?!page-[0-9]+/?$)([^/]+)/?$',
-		'index.php?location=$matches[1]',
-		'top'
-	);
+		add_rewrite_rule(
+			'^' . $prefix . 'areas/(?!page-[0-9]+/?$)([^/]+)/?$',
+			'index.php?location=$matches[1]' . $lang,
+			'top'
+		);
 
-	add_rewrite_rule(
-		'^projects/(?!page-[0-9]+/?$)([^/]+)/page-([0-9]+)/?$',
-		'index.php?location=$matches[1]&cur_page=$matches[2]',
-		'top'
-	);
+		add_rewrite_rule(
+			'^' . $prefix . 'projects/(?!page-[0-9]+/?$)([^/]+)/?$',
+			'index.php?location=$matches[1]' . $lang,
+			'top'
+		);
+
+		add_rewrite_rule(
+			'^' . $prefix . 'projects/(?!page-[0-9]+/?$)([^/]+)/page-([0-9]+)/?$',
+			'index.php?location=$matches[1]&cur_page=$matches[2]' . $lang,
+			'top'
+		);
+	}
 
 	//Support old URL
 	add_rewrite_rule(

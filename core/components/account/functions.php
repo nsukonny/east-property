@@ -132,6 +132,19 @@ function core_get_unit_type_choices(): array {
 }
 
 /**
+ * Statuses an account list can be filtered by, named after the labels on the cards.
+ *
+ * @return array<string, string>
+ */
+function core_get_account_status_choices(): array {
+	return array(
+		'error'    => __( 'Contains an error', 'east-property' ),
+		'promoted' => __( 'Promoted', 'east-property' ),
+		'waiting'  => __( 'Waiting for approval', 'east-property' ),
+	);
+}
+
+/**
  * Filters of an account list from the query string, under the `unit_` or `project_` prefix.
  *
  * @param string $list unit or project.
@@ -156,6 +169,7 @@ function core_get_account_list_filters( string $list ): array {
 			'search'    => $read( 'search' ),
 			'location'  => sanitize_title( $read( 'location' ) ),
 			'developer' => 0 < $developer ? (string) $developer : '',
+			'status'    => $read( 'status', array_keys( core_get_account_status_choices() ) ),
 		);
 	}
 
@@ -165,6 +179,7 @@ function core_get_account_list_filters( string $list ): array {
 		'location'     => sanitize_title( $read( 'location' ) ),
 		'beds'         => $read( 'beds', wp_list_pluck( get_filter_beds_options()['options'], 'value' ) ),
 		'type'         => $read( 'type', array_keys( core_get_unit_type_choices() ) ),
+		'status'       => $read( 'status', array_keys( core_get_account_status_choices() ) ),
 	);
 }
 
@@ -296,11 +311,13 @@ function core_query_account_developers( int $author_id, string $language ): arra
 function core_get_account_filters_form( string $list, array $filters, array $options, array $keep ): array {
 	$tab      = 'project' === $list ? 'projects' : 'units';
 	$location = array( 'all' => __( 'Any Locations', 'east-property' ) ) + ( $options['locations'] ?? array() );
+	$status   = array( 'all' => __( 'All', 'east-property' ) ) + core_get_account_status_choices();
 
 	if ( 'project' === $list ) {
 		$fields = array(
 			'location'  => $location,
 			'developer' => array( 'all' => __( 'Any Developers', 'east-property' ) ) + ( $options['developers'] ?? array() ),
+			'status'    => $status,
 		);
 	} else {
 		$beds = array( 'all' => __( 'Any bedrooms', 'east-property' ) );
@@ -321,6 +338,7 @@ function core_get_account_filters_form( string $list, array $filters, array $opt
 			'location'     => $location,
 			'beds'         => $beds,
 			'type'         => $types,
+			'status'       => $status,
 		);
 	}
 
