@@ -420,6 +420,31 @@ function core_query_properties(
 		$params[]      = $property_type;
 	}
 
+	$status = (string) ( $args['status'] ?? '' );
+
+	if ( 'waiting' === $status ) {
+		$where[]  = 'p.post_status = %s';
+		$params[] = 'draft';
+	}
+
+	if ( 'promoted' === $status ) {
+		$joins[] = "
+			INNER JOIN {$wpdb->postmeta} AS pm_status
+				ON pm_status.post_id = p.ID
+				AND pm_status.meta_key = 'boost_score'
+		";
+		$where[] = 'CAST(pm_status.meta_value AS SIGNED) > 0';
+	}
+
+	if ( 'error' === $status ) {
+		$joins[] = "
+			INNER JOIN {$wpdb->postmeta} AS pm_status
+				ON pm_status.post_id = p.ID
+				AND pm_status.meta_key = 'is_wait_user_actions'
+		";
+		$where[] = 'CAST(pm_status.meta_value AS SIGNED) = 1';
+	}
+
 	$joins[]         = "
 			LEFT JOIN {$wpdb->term_relationships} AS tr_location
 				ON tr_location.object_id = p.ID

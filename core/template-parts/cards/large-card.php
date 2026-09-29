@@ -112,23 +112,28 @@ $amenities = \Entities\Property::build_amenities( $specifications );
 					<div class="large-card-info-bottom">
 						<p><?php echo esc_html( $location ); ?></p>
 
-						<?php
-						if ( ! empty( $edit_link ) || true === $is_can_boost ) {
-							if ( ! empty( $edit_link ) ) {
-								?>
-								<a href="<?php echo esc_url( $edit_link ); ?>"
-								   class="button gray sm edit-property-link">
-									<img src="<?php echo esc_url( THEME_URL . '/assets/img/edit.svg' ); ?>"
-										 alt="<?php esc_html_e( 'Edit', 'east-property' ); ?>">
-									<?php esc_html_e( 'Edit property', 'east-property' ); ?>
-								</a>
-								<?php
+						<div class="large-card-info-bottom-group">
+							<?php
+							if ( ! empty( $edit_link ) || true === $is_can_boost ) {
+								if ( ! empty( $edit_link ) ) {
+									?>
+									<a href="<?php echo esc_url( $edit_link ); ?>"
+									   class="button gray sm edit-property-link">
+										<img src="<?php echo esc_url( THEME_URL . '/assets/img/edit.svg' ); ?>"
+											 alt="<?php esc_html_e( 'Edit', 'east-property' ); ?>">
+										<?php esc_html_e( 'Edit property', 'east-property' ); ?>
+									</a>
+									<?php
+								}
 							}
-						} elseif ( ! empty( $url ) ) { ?>
-							<a href="<?php echo esc_url( $url ); ?>" class="button gray sm property-details-lnk">
-								<?php esc_html_e( 'View details', 'east-property' ); ?>
-							</a>
-						<?php } ?>
+
+							if ( ! empty( $url ) ) { ?>
+								<a href="<?php echo esc_url( $url ); ?>" class="button gray sm property-details-lnk"
+								   target="_blank">
+									<?php esc_html_e( 'View details', 'east-property' ); ?>
+								</a>
+							<?php } ?>
+						</div>
 					</div>
 				</div>
 			</div>
