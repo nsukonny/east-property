@@ -4868,6 +4868,13 @@ body.resize-transitions-disabled * {
     line-height: 18px;
   }
 }
+.results-filters-items .results-filters-reset {
+  align-self: center;
+  padding: 6px 8px;
+}
+.results-filters-items .results-filters-reset[hidden] {
+  display: none;
+}
 .results-filters-items .result-dropdown {
   max-height: 300px;
   position: absolute;

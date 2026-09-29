@@ -262,6 +262,7 @@ const updatePropertiesList = () => {
 	}
 
 	resultTabs.classList.add('preloader');
+	filterItem.querySelector('[data-results-filters-reset]')?.removeAttribute('hidden');
 
 	formData.append('action', action.value ?? 'get_properties');
 	formData.append('_ajax_nonce', ajax_object._ajax_nonce);

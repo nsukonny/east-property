@@ -134,6 +134,15 @@
 		}
 	}
 
+	.results-filters-reset {
+		align-self: center;
+		padding: 6px 8px;
+
+		&[hidden] {
+			display: none;
+		}
+	}
+
 	.result-dropdown {
 		max-height: 300px;
 		position: absolute;

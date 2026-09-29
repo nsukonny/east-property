@@ -92,7 +92,7 @@ add_action(
 );
 
 /**
- * Add support pagination for projects list page
+ * Add support pagination for projects list page, in every language
  *
  * old url example http://eastproperty.local/properties/dubailand-residence-complex/samana-ivy-gardens/
  */
@@ -105,11 +105,15 @@ add_action(
 			'top'
 		);
 
-		add_rewrite_rule(
-			'^projects/page-([0-9]+)/?$',
-			'index.php?pagename=projects&cur_page=$matches[1]',
-			'top'
-		);
+		foreach ( core_language_url_prefixes() as $prefix ) {
+			$lang = '' === $prefix ? '' : '&lang=' . rtrim( $prefix, '/' );
+
+			add_rewrite_rule(
+				'^' . $prefix . 'projects/page-([0-9]+)/?$',
+				'index.php?pagename=projects&cur_page=$matches[1]' . $lang,
+				'top'
+			);
+		}
 
 		//support old properties pages
 		add_rewrite_rule(

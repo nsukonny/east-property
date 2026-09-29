@@ -42,7 +42,8 @@ abstract class TestCase extends WP_UnitTestCase {
 	public function set_up() {
 		parent::set_up();
 
-		$_REQUEST = array();
+		$_REQUEST               = array();
+		$_SERVER['REQUEST_URI'] = '';
 		$this->switch_language( 'en' );
 	}
 
@@ -52,7 +53,8 @@ abstract class TestCase extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function tear_down() {
-		$_REQUEST = array();
+		$_REQUEST               = array();
+		$_SERVER['REQUEST_URI'] = '';
 		$this->switch_language( 'en' );
 
 		parent::tear_down();
