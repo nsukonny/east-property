@@ -565,6 +565,69 @@ function core_result_filters_reset_url(): string {
 }
 
 /**
+ * Sort orders of the unit and project listings, by value of the `sort` argument.
+ *
+ * Only the enabled ones are offered and accepted; the others are ready to switch on.
+ *
+ * @return array<string, array{label: string, enabled: bool}>
+ */
+function core_get_listing_sorts(): array {
+	return array(
+		'price_desc'   => array(
+			'label'   => __( 'Price: high to low', 'east-property' ),
+			'enabled' => true,
+		),
+		'price_asc'    => array(
+			'label'   => __( 'Price: low to high', 'east-property' ),
+			'enabled' => true,
+		),
+		'newest'       => array(
+			'label'   => __( 'Newest first', 'east-property' ),
+			'enabled' => true,
+		),
+		'oldest'       => array(
+			'label'   => __( 'Oldest first', 'east-property' ),
+			'enabled' => true,
+		),
+		'handover_asc' => array(
+			'label'   => __( 'Handover: soonest first', 'east-property' ),
+			'enabled' => false,
+		),
+	);
+}
+
+/**
+ * Labels of the sort orders on offer, the default order first under an empty key.
+ *
+ * @return array<string, string>
+ */
+function core_get_listing_sort_choices(): array {
+	$choices = array( '' => _x( 'Recommended', 'listing sort', 'east-property' ) );
+
+	foreach ( core_get_listing_sorts() as $value => $sort ) {
+		if ( $sort['enabled'] ) {
+			$choices[ $value ] = $sort['label'];
+		}
+	}
+
+	return $choices;
+}
+
+/**
+ * Sort order of a listing: the given value, else the `sort` request argument, when it is on offer.
+ *
+ * @param mixed $value Requested order, null to read the request.
+ *
+ * @return string Empty for the default order.
+ */
+function core_get_listing_sort( $value = null ): string {
+	$value = $value ?? ( $_REQUEST['sort'] ?? '' );
+	$value = is_scalar( $value ) ? sanitize_key( (string) $value ) : '';
+
+	return '' !== $value && isset( core_get_listing_sort_choices()[ $value ] ) ? $value : '';
+}
+
+/**
  * term_taxonomy_id of a Polylang language.
  *
  * Joining `term_relationships` to `term_taxonomy` and `terms` inside an

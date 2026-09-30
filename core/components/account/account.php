@@ -98,6 +98,7 @@ if ( isset( $_GET['action'] ) && in_array( $_GET['action'], array( 'add_property
 }
 
 $agencies_posts = get_agencies();
+$favourite_sort = core_get_listing_sort( wp_unslash( $_GET['favourite_sort'] ?? '' ) );
 
 if ( $estate_user->is_broker() || $estate_user->is_admin() ) {
 	$unit_filters    = core_get_account_list_filters( 'unit' );
@@ -125,6 +126,7 @@ if ( $estate_user->is_broker() || $estate_user->is_admin() ) {
 							'beds'      => $unit_filters['beds'],
 							'unit_type' => $unit_filters['type'],
 							'status'    => $unit_filters['status'],
+							'sort'      => $unit_filters['sort'],
 						)
 					)
 				)
@@ -146,11 +148,13 @@ if ( $estate_user->is_broker() || $estate_user->is_admin() ) {
 							'location'  => $project_filters['location'],
 							'developer' => $project_filters['developer'],
 							'status'    => $project_filters['status'],
+							'sort'      => $project_filters['sort'],
 						)
 					)
 				)
 			),
-			'favourites'             => core_get_current_user_favorite_units(),
+			'favourites'             => core_get_current_user_favorite_units( PROPERTIES_PER_PAGE, $favourite_sort ),
+			'favourite_sort'         => $favourite_sort,
 			'unit_filters'           => $unit_filters,
 			'project_filters'        => $project_filters,
 			'unit_filter_options'    => array(
@@ -170,6 +174,7 @@ $user_favorite_units = get_user_meta( $current_user->ID, 'favorite_units', true 
 get_component_template(
 	'account/profile-client',
 	array(
-		'favourites' => core_get_current_user_favorite_units(),
+		'favourites'     => core_get_current_user_favorite_units( PROPERTIES_PER_PAGE, $favourite_sort ),
+		'favourite_sort' => $favourite_sort,
 	)
 );

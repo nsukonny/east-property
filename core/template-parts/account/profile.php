@@ -15,6 +15,7 @@ $unit_filters    = $args['unit_filters'] ?? array();
 $project_filters = $args['project_filters'] ?? array();
 $unit_query      = core_get_account_filters_query( 'unit', $unit_filters );
 $project_query   = core_get_account_filters_query( 'project', $project_filters );
+$favourite_sort  = $args['favourite_sort'] ?? '';
 
 $user_entity = new Estate_User( $current_user );
 
@@ -88,6 +89,17 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 							);
 							?>
 						</h2>
+						<?php
+						if ( $broker->is_verified() && ( ! empty( $user_units['items'] ) || ! empty( $unit_query ) ) ) {
+							get_component_template(
+								'search-results/sort',
+								array(
+									'param' => 'unit_sort',
+									'value' => $unit_filters['sort'] ?? '',
+								)
+							);
+						}
+						?>
 						<?php if ( $broker->is_verified() ) { ?>
 							<a class="button green orange sm"
 							   href="<?php echo esc_url( core_home_url( '/account?action=add_unit' ) ); ?>">
@@ -183,6 +195,16 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 							?>
 						</h2>
 						<?php
+						if ( $broker->is_verified() && ( ! empty( $user_properties['items'] ) || ! empty( $project_query ) ) ) {
+							get_component_template(
+								'search-results/sort',
+								array(
+									'param' => 'project_sort',
+									'value' => $project_filters['sort'] ?? '',
+								)
+							);
+						}
+
 						if ( $broker->is_verified() ) {
 							get_template_part(
 								'core/components/ui/button',
@@ -260,6 +282,17 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 								(<?php echo esc_attr( $favourites['total'] ); ?>)
 							<?php } ?>
 						</h2>
+						<?php
+						if ( $broker->is_verified() && ! empty( $favourites['items'] ) ) {
+							get_component_template(
+								'search-results/sort',
+								array(
+									'param' => 'favourite_sort',
+									'value' => $favourite_sort,
+								)
+							);
+						}
+						?>
 					</div>
 				</div>
 				<div class="content-list">

@@ -170,6 +170,7 @@ function core_get_account_list_filters( string $list ): array {
 			'location'  => sanitize_title( $read( 'location' ) ),
 			'developer' => 0 < $developer ? (string) $developer : '',
 			'status'    => $read( 'status', array_keys( core_get_account_status_choices() ) ),
+			'sort'      => core_get_listing_sort( $read( 'sort' ) ),
 		);
 	}
 
@@ -180,6 +181,7 @@ function core_get_account_list_filters( string $list ): array {
 		'beds'         => $read( 'beds', wp_list_pluck( get_filter_beds_options()['options'], 'value' ) ),
 		'type'         => $read( 'type', array_keys( core_get_unit_type_choices() ) ),
 		'status'       => $read( 'status', array_keys( core_get_account_status_choices() ) ),
+		'sort'         => core_get_listing_sort( $read( 'sort' ) ),
 	);
 }
 
@@ -351,6 +353,10 @@ function core_get_account_filters_form( string $list, array $filters, array $opt
 		),
 		'fields'    => array(),
 		'keep'      => $keep,
+		'sort'      => array(
+			'name'  => $list . '_sort',
+			'value' => $filters['sort'] ?? '',
+		),
 		'reset_url' => array() === core_get_account_filters_query( $list, $filters )
 			? ''
 			: add_query_arg( array_merge( array( 'tab' => $tab ), $keep ), core_home_url( '/account/' ) ),
@@ -370,11 +376,12 @@ function core_get_account_filters_form( string $list, array $filters, array $opt
 /**
  * Get favorite units
  *
- * @param int $limit Items per page.
+ * @param int    $limit Items per page.
+ * @param string $sort  Sort order from core_get_listing_sort(), empty for the default one.
  *
  * @return array
  */
-function core_get_current_user_favorite_units( int $limit = PROPERTIES_PER_PAGE ): array {
+function core_get_current_user_favorite_units( int $limit = PROPERTIES_PER_PAGE, string $sort = '' ): array {
 	if ( ! is_user_logged_in() ) {
 		return array(
 			'items' => array(),
@@ -398,6 +405,7 @@ function core_get_current_user_favorite_units( int $limit = PROPERTIES_PER_PAGE 
 			'specifications' => true,
 			'galleries'      => true,
 			'no_cache'       => true,
+			'sort'           => $sort,
 		)
 	);
 }

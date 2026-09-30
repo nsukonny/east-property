@@ -9,6 +9,7 @@ use Entities\Estate_User;
 global $current_user;
 
 $favourites = $args['favourites'] ?? array();
+$favourite_sort = $args['favourite_sort'] ?? '';
 
 $client      = new Estate_User( $current_user );
 $user_avatar = get_field( 'avatar', 'user_' . $current_user->ID );
@@ -53,6 +54,17 @@ $languages      = get_all_languages();
 								(<?php echo esc_attr( $favourites['total'] ); ?>)
 							<?php } ?>
 						</h2>
+						<?php
+						if ( $client->is_verified() && ! empty( $favourites['items'] ) ) {
+							get_component_template(
+								'search-results/sort',
+								array(
+									'param' => 'favourite_sort',
+									'value' => $favourite_sort,
+								)
+							);
+						}
+						?>
 					</div>
 				</div>
 				<div class="content-list">
