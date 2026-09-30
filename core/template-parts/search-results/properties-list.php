@@ -3,15 +3,15 @@
  * Search results tabs section
  */
 
-$h2            = $args['h2'] ?? '';
-$description   = $args['description'] ?? __( 'Explore a wide selection of properties across Dubai. '
-                                             . 'From modern apartments and family villas to premium off-plan opportunities '
-                                             . ' in the city’s most sought-after communities. Compare prices, '
-                                             . 'locations, and layouts in one place and find the property that matches '
-                                             . 'your goals and budget.',
+$h2             = $args['h2'] ?? '';
+$description    = $args['description'] ?? __( 'Explore a wide selection of properties across Dubai. '
+                                              . 'From modern apartments and family villas to premium off-plan opportunities '
+                                              . ' in the city’s most sought-after communities. Compare prices, '
+                                              . 'locations, and layouts in one place and find the property that matches '
+                                              . 'your goals and budget.',
 	'east-property' );
-$properties    = $args['properties'] ?? '';
-$card_template = $args['card_template'] ?? 'large-card';
+$properties     = $args['properties'] ?? '';
+$card_template  = $args['card_template'] ?? 'large-card';
 $map_properties = $args['map_properties'] ?? null;
 ?>
 <section class="result-tabs" data-tabs>
@@ -33,15 +33,7 @@ $map_properties = $args['map_properties'] ?? null;
 					<?php get_template_part( 'core/components/common/breadcrumbs' ); ?>
 					<div class="title-top">
 						<h2><?php echo wp_kses_post( $h2 ); ?></h2>
-						<?php
-						//TODO Hidden for MVP
-						/*
-						<button class="sort">
-							Show expensive first
-							<img src="<?php echo THEME_URL; ?>/assets/img/arrow-down.svg" width="16" height="16" alt="Arrow down">
-						</button>
-						*/
-						?>
+						<?php get_component_template( 'search-results/sort' ); ?>
 					</div>
 					<p><?php echo esc_html( $description ); ?></p>
 				</div>

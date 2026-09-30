@@ -8,12 +8,16 @@ $search    = $args['search'] ?? array();
 $fields    = $args['fields'] ?? array();
 $keep      = $args['keep'] ?? array();
 $reset_url = $args['reset_url'] ?? '';
+$sort      = $args['sort'] ?? array();
 ?>
 <form class="account-filters" method="get" action="<?php echo esc_url( core_home_url( '/account/' ) ); ?>"
       data-account-filters>
 	<input type="hidden" name="tab" value="<?php echo esc_attr( $tab ); ?>">
 	<?php foreach ( $keep as $name => $value ) { ?>
 		<input type="hidden" name="<?php echo esc_attr( $name ); ?>" value="<?php echo esc_attr( $value ); ?>">
+	<?php } ?>
+	<?php if ( ! empty( $sort['value'] ) ) { ?>
+		<input type="hidden" name="<?php echo esc_attr( $sort['name'] ); ?>" value="<?php echo esc_attr( $sort['value'] ); ?>">
 	<?php } ?>
 
 	<label class="account-filters-search">

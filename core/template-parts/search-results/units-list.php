@@ -26,15 +26,7 @@ $card_template = $args['card_template'] ?? 'large-card';
 					<?php get_template_part( 'core/components/common/breadcrumbs' ); ?>
 					<div class="title-top">
 						<h2><?php echo esc_html( $h2 ); ?></h2>
-						<?php
-						//TODO Hidden for MVP
-						/*
-						<button class="sort">
-							Show expensive first
-							<img src="<?php echo THEME_URL; ?>/assets/img/arrow-down.svg" width="16" height="16" alt="Arrow down">
-						</button>
-						*/
-						?>
+						<?php get_component_template( 'search-results/sort' ); ?>
 					</div>
 					<p><?php echo wp_kses_post( $description ); ?></p>
 				</div>

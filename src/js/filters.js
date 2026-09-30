@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	'use strict'
 	void initSearchResultsFilters()
 	initPropertiesFilters()
+	initListingSort()
 })
 
 const getBedsBathsText = (selectedBeds, selectedBaths) => {
@@ -248,6 +249,60 @@ const initPropertiesFilters = () => {
 	});
 }
 
+/**
+ * Sort dropdowns: reload the list in the chosen order, through the filters when the page has them and the order sits in `sort`.
+ */
+const initListingSort = () => {
+	document.querySelectorAll('[data-sort]').forEach((sort) => {
+		const toggle = sort.querySelector('[data-sort-toggle]')
+		const list = sort.querySelector('[data-sort-options]')
+		const label = sort.querySelector('[data-sort-label]')
+		const param = sort.dataset.sortParam || 'sort'
+
+		const close = () => {
+			list.hidden = true
+			toggle.setAttribute('aria-expanded', 'false')
+		}
+
+		toggle.addEventListener('click', () => {
+			list.hidden = !list.hidden
+			toggle.setAttribute('aria-expanded', String(!list.hidden))
+		})
+
+		list.addEventListener('click', (e) => {
+			const option = e.target.closest('[data-value]')
+			if (!option) return
+
+			close()
+			if (option.dataset.value === sort.dataset.value) return
+
+			sort.dataset.value = option.dataset.value
+			label.textContent = option.textContent.trim()
+			list.querySelectorAll('[data-value]').forEach((item) => {
+				item.classList.toggle('is-selected', item === option)
+				item.setAttribute('aria-selected', String(item === option))
+			})
+
+			if ('sort' === param && document.querySelector('.results-filters-items')) {
+				updatePropertiesList()
+				return
+			}
+
+			const url = new URL(removePaginationFromUrl() + window.location.search)
+			option.dataset.value ? url.searchParams.set(param, option.dataset.value) : url.searchParams.delete(param)
+			window.location.href = url.toString()
+		})
+
+		document.addEventListener('click', (e) => {
+			if (!sort.contains(e.target)) close()
+		})
+
+		document.addEventListener('keydown', (e) => {
+			if ('Escape' === e.key) close()
+		})
+	})
+}
+
 const updatePropertiesList = () => {
 	const filterItem = document.querySelector('.results-filters-items');
 	let filterButtons = filterItem.querySelectorAll('button.result-filter'), formData = new FormData(),
@@ -282,6 +337,11 @@ const updatePropertiesList = () => {
 			formData.append(input.name, value);
 		}
 	});
+
+	const sort = document.querySelector('[data-sort][data-sort-param="sort"]')?.dataset.value
+	if (sort) {
+		formData.append('sort', sort)
+	}
 
 	let urlWithFilters = getUrlWithFilters(formData);
 	formData.append('current_href', urlWithFilters);

@@ -86,7 +86,10 @@ function get_units( $listing_type = '', int $limit = 25, $args = array() ): arra
 
 	$property_ids = wp_list_pluck( $units['items'], 'property_id' );
 	$unit_ids     = wp_list_pluck( $units['items'], 'ID' );
-	_prime_post_caches( array_unique( array_merge( $property_ids, $unit_ids ) ), false, false );
+	$merged_ids   = array_unique( array_merge( $property_ids, $unit_ids ) );
+	$merged_ids   = array_values( array_filter( $merged_ids, fn( $value ) => $value !== '' && $value !== null ) );
+
+	_prime_post_caches( $merged_ids, false, false );
 
 	foreach ( $units['items'] as $item_key => $item ) {
 		$units['items'][ $item_key ]['property_url'] = get_permalink( $item['property_id'] );
@@ -390,13 +393,21 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 		$params[] = $like;
 
 		if ( ctype_digit( (string) $args['search'] ) ) {
-			$search  .= ' OR u.ID = %d';
+			$search   .= ' OR u.ID = %d';
 			$params[] = (int) $args['search'];
 		}
 
 		$where[] = '( ' . $search . ' )';
 	}
 
+	$orders    = array(
+		'price_desc'   => 'COALESCE(CAST(pm_price.meta_value AS UNSIGNED), 0) = 0, CAST(pm_price.meta_value AS UNSIGNED) DESC, u.ID DESC',
+		'price_asc'    => 'COALESCE(CAST(pm_price.meta_value AS UNSIGNED), 0) = 0, CAST(pm_price.meta_value AS UNSIGNED) ASC, u.ID DESC',
+		'newest'       => 'u.post_date DESC, u.ID DESC',
+		'oldest'       => 'u.post_date ASC, u.ID ASC',
+		'handover_asc' => "COALESCE(pm_label_delivery.meta_value, '') = '', pm_label_delivery.meta_value ASC, u.ID DESC",
+	);
+	$order_sql = $orders[ core_get_listing_sort( $args['sort'] ?? null ) ] ?? 'pm_boost_score.meta_value DESC';
 	$join_sql  = implode( "\n", $joins );
 	$where_sql = implode( "\nAND ", $where );
 	$sql       = "
@@ -433,7 +444,7 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 		FROM {$wpdb->posts} AS u
 		{$join_sql}
 		WHERE {$where_sql}
-		ORDER BY pm_boost_score.meta_value DESC
+		ORDER BY {$order_sql}
 	";
 
 	if ( 0 < $limit ) {

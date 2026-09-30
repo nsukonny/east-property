@@ -22,7 +22,7 @@ final class Property {
 	protected static $specifications = array();
 
 	/**
-	 * Get specifications by included units
+	 * Get specifications by included units, collected across each project's translation group.
 	 *
 	 * @param array $property_ids
 	 *
@@ -49,6 +49,13 @@ final class Property {
 
 		global $wpdb;
 
+		$groups = array();
+		foreach ( $property_ids as $property_id ) {
+			$groups[ (int) $property_id ] = core_property_linked_ids( (int) $property_id );
+		}
+
+		$linked_ids = array_values( array_unique( array_merge( ...array_values( $groups ) ) ) );
+
 		$sql = "SELECT
 					CAST(property_meta.meta_value AS UNSIGNED) AS property_id,
 					MAX(CASE WHEN unit_meta.meta_key = 'bedrooms' THEN CAST(unit_meta.meta_value AS UNSIGNED) END) AS max_beds,
@@ -70,22 +77,33 @@ final class Property {
 										   AND unit_meta.meta_key IN ('bedrooms', 'bathrooms', 'area_size', 'price')
 					WHERE unit.post_type = 'unit'
 					  AND unit.post_status = 'publish'
-					  AND property_meta.meta_value IN (" . implode( ',', array_map( 'intval', $property_ids ) ) . ")
-				
+					  AND property_meta.meta_value IN (" . implode( ',', array_map( 'intval', $linked_ids ) ) . ")
+
 					GROUP BY CAST(property_meta.meta_value AS UNSIGNED);";
 
-		$all_properties_specifications = $wpdb->get_results( $sql, ARRAY_A );
+		$by_linked_id = array_column( $wpdb->get_results( $sql, ARRAY_A ), null, 'property_id' );
 
-		foreach ( $all_properties_specifications as $specification ) {
-			$property_id                          = (int) $specification['property_id'];
+		$pick = static function ( array $rows, string $column, string $aggregate ) {
+			$values = array_filter( array_column( $rows, $column ), static fn( $value ): bool => null !== $value );
+
+			return array() === $values ? null : $aggregate( $values );
+		};
+
+		foreach ( $groups as $property_id => $ids ) {
+			$rows = array_values( array_intersect_key( $by_linked_id, array_flip( $ids ) ) );
+
+			if ( array() === $rows ) {
+				continue;
+			}
+
 			self::$specifications[ $property_id ] = array(
-				'min_beds'  => (int) $specification['min_beds'],
-				'max_beds'  => (int) $specification['max_beds'],
-				'min_baths' => (int) $specification['min_baths'],
-				'max_baths' => (int) $specification['max_baths'],
-				'min_area'  => (float) $specification['min_area'],
-				'max_area'  => (float) $specification['max_area'],
-				'min_price' => (int) $specification['min_price'],
+				'min_beds'  => (int) $pick( $rows, 'min_beds', 'min' ),
+				'max_beds'  => (int) $pick( $rows, 'max_beds', 'max' ),
+				'min_baths' => (int) $pick( $rows, 'min_baths', 'min' ),
+				'max_baths' => (int) $pick( $rows, 'max_baths', 'max' ),
+				'min_area'  => (float) $pick( $rows, 'min_area', 'min' ),
+				'max_area'  => (float) $pick( $rows, 'max_area', 'max' ),
+				'min_price' => (int) $pick( $rows, 'min_price', 'min' ),
 			);
 			$specifications[ $property_id ]       = self::$specifications[ $property_id ];
 		}

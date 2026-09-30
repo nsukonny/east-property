@@ -21,6 +21,7 @@ function get_properties( int $limit = - 1, bool $skip_filters = false, array $ar
 	$request_params .= $_REQUEST['property_type'] ?? '';
 	$request_params .= $_REQUEST['min_price'] ?? '';
 	$request_params .= $_REQUEST['max_price'] ?? '';
+	$request_params .= core_get_listing_sort( $args['sort'] ?? null );
 	$request_params .= wp_json_encode( $args );
 	$cache_key      = 'properties_' . $current_language . '_'
 	                  . md5( (string) $limit . (string) $skip_filters . (string) $current_page . $request_params );
@@ -567,6 +568,48 @@ function core_query_properties(
 		$where[] = '( ' . $search . ' )';
 	}
 
+	$sort = $is_map ? '' : core_get_listing_sort( $args['sort'] ?? null );
+
+	if ( 'price_desc' === $sort || 'price_asc' === $sort ) {
+		$joins[] = "
+			LEFT JOIN (
+				SELECT COALESCE(sort_sibling.object_id, sort_prices.property_id) AS project_id,
+					MIN(sort_prices.min_price) AS min_price
+				FROM (
+					SELECT CAST(pm_sort_property.meta_value AS UNSIGNED) AS property_id,
+						MIN(NULLIF(CAST(pm_sort_price.meta_value AS UNSIGNED), 0)) AS min_price
+					FROM {$wpdb->posts} AS sort_unit
+					INNER JOIN {$wpdb->postmeta} AS pm_sort_property
+						ON pm_sort_property.post_id = sort_unit.ID
+						AND pm_sort_property.meta_key = 'property'
+					INNER JOIN {$wpdb->postmeta} AS pm_sort_price
+						ON pm_sort_price.post_id = sort_unit.ID
+						AND pm_sort_price.meta_key = 'price'
+					WHERE sort_unit.post_type = 'unit'
+						AND sort_unit.post_status = 'publish'
+					GROUP BY property_id
+				) AS sort_prices
+				LEFT JOIN (
+					{$wpdb->term_relationships} AS sort_group
+					INNER JOIN {$wpdb->term_taxonomy} AS sort_group_taxonomy
+						ON sort_group_taxonomy.term_taxonomy_id = sort_group.term_taxonomy_id
+						AND sort_group_taxonomy.taxonomy = 'post_translations'
+				) ON sort_group.object_id = sort_prices.property_id
+				LEFT JOIN {$wpdb->term_relationships} AS sort_sibling
+					ON sort_sibling.term_taxonomy_id = sort_group.term_taxonomy_id
+				GROUP BY COALESCE(sort_sibling.object_id, sort_prices.property_id)
+			) AS sort_price ON sort_price.project_id = p.ID
+		";
+	}
+
+	$orders    = array(
+		'price_desc'   => 'MIN(sort_price.min_price) IS NULL, MIN(sort_price.min_price) DESC, p.ID DESC',
+		'price_asc'    => 'MIN(sort_price.min_price) IS NULL, MIN(sort_price.min_price) ASC, p.ID DESC',
+		'newest'       => 'p.post_date DESC, p.ID DESC',
+		'oldest'       => 'p.post_date ASC, p.ID ASC',
+		'handover_asc' => "COALESCE(MIN(pm_label_delivery.meta_value), '') = '', MIN(pm_label_delivery.meta_value) ASC, p.ID DESC",
+	);
+	$order_sql = $orders[ $sort ] ?? 'p.post_title ASC';
 	$join_sql  = implode( "\n", $joins );
 	$where_sql = implode( "\nAND ", $where );
 	/*
@@ -599,7 +642,7 @@ function core_query_properties(
 		{$join_sql}
 		WHERE {$where_sql}
 		GROUP BY p.ID
-		ORDER BY p.post_title ASC
+		ORDER BY {$order_sql}
 		{$limit_sql}
 	";
 
