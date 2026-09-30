@@ -34,6 +34,7 @@ final class CLI {
 		WP_CLI::add_command( 'tools import-properties', array( __CLASS__, 'import_properties' ) );
 		WP_CLI::add_command( 'tools import-distress-units', array( __CLASS__, 'import_distress_units' ) );
 		WP_CLI::add_command( 'tools flag-untranslated', array( __CLASS__, 'flag_untranslated' ) );
+		WP_CLI::add_command( 'tools warm-cache', array( __CLASS__, 'warm_cache' ) );
 	}
 
 	/**
@@ -88,7 +89,8 @@ final class CLI {
 		$dry_run      = (bool) Utils\get_flag_value( $assoc_args, 'dry-run', false );
 		$remove_stale = (bool) Utils\get_flag_value( $assoc_args, 'remove-stale', false );
 		$types        = array_filter(
-			array_map( 'trim', explode( ',', (string) Utils\get_flag_value( $assoc_args, 'post-type', 'property,unit' ) ) )
+			array_map( 'trim',
+				explode( ',', (string) Utils\get_flag_value( $assoc_args, 'post-type', 'property,unit' ) ) )
 		);
 
 		if ( ! function_exists( 'pll_get_post_language' ) ) {
@@ -113,7 +115,7 @@ final class CLI {
 				array(
 					'post_type'        => $type,
 					'post_status'      => 'any',
-					'posts_per_page'   => -1,
+					'posts_per_page'   => - 1,
 					'fields'           => 'ids',
 					'lang'             => '',
 					'suppress_filters' => true,
@@ -125,24 +127,24 @@ final class CLI {
 					continue;
 				}
 
-				++$totals['examined'];
+				++ $totals['examined'];
 
 				$verdict = self::translation_verdict( (int) $id );
 
 				if ( 'no_pair' === $verdict ) {
-					++$totals['no_pair'];
+					++ $totals['no_pair'];
 					continue;
 				}
 
 				if ( 'no_text' === $verdict ) {
-					++$totals['no_text'];
+					++ $totals['no_text'];
 					continue;
 				}
 
 				$flagged = (bool) get_post_meta( $id, Distress_Units_Importer::NEED_TRANSLATE_META, true );
 
 				if ( 'placeholder' === $verdict && ! $flagged ) {
-					++$totals['added'];
+					++ $totals['added'];
 
 					if ( ! $dry_run ) {
 						self::set_translation_flag( (int) $id );
@@ -152,18 +154,18 @@ final class CLI {
 				}
 
 				if ( 'translated' === $verdict && $flagged ) {
-					++$totals['stale'];
+					++ $totals['stale'];
 
 					if ( $remove_stale && ! $dry_run ) {
 						delete_post_meta( $id, Distress_Units_Importer::NEED_TRANSLATE_META );
-						++$totals['removed'];
+						++ $totals['removed'];
 					}
 
 					continue;
 				}
 
 				if ( 'unclear' === $verdict ) {
-					++$totals['unclear'];
+					++ $totals['unclear'];
 
 					if ( count( $unclear ) < 10 ) {
 						$unclear[] = sprintf( '#%d %s', $id, get_the_title( $id ) );
@@ -172,14 +174,16 @@ final class CLI {
 					continue;
 				}
 
-				++$totals['correct'];
+				++ $totals['correct'];
 			}
 		}
 
 		WP_CLI::log( sprintf( 'Типы:                 %s', implode( ', ', $types ) ) );
 		WP_CLI::log( sprintf( 'RU-записей осмотрено: %d', $totals['examined'] ) );
 		WP_CLI::log( sprintf( 'Флаг уже верен:       %d', $totals['correct'] ) );
-		WP_CLI::log( sprintf( 'Флага не хватало:     %d%s', $totals['added'], $dry_run ? ' (не записано)' : ' — добавлен' ) );
+		WP_CLI::log( sprintf( 'Флага не хватало:     %d%s',
+			$totals['added'],
+			$dry_run ? ' (не записано)' : ' — добавлен' ) );
 		WP_CLI::log(
 			sprintf(
 				'Флаг устарел:         %d%s',
@@ -418,7 +422,9 @@ final class CLI {
 		);
 
 		if ( ! empty( $preview['new_projects'] ) ) {
-			WP_CLI::log( sprintf( 'Projects to create as %s: %d', $project_status, count( $preview['new_projects'] ) ) );
+			WP_CLI::log( sprintf( 'Projects to create as %s: %d',
+				$project_status,
+				count( $preview['new_projects'] ) ) );
 			foreach ( array_slice( $preview['new_projects'], 0, 15, true ) as $slug => $title ) {
 				WP_CLI::log( sprintf( '  %-46s %s', $slug, $title ) );
 			}
@@ -551,8 +557,8 @@ final class CLI {
 	 * after the old site's theme and database are gone, which is the point of
 	 * retiring it.
 	 *
-	 * @param string $path      Where to write.
-	 * @param array  $redirects Old path => new url.
+	 * @param string $path Where to write.
+	 * @param array $redirects Old path => new url.
 	 *
 	 * @return void
 	 */
@@ -596,16 +602,18 @@ final class CLI {
 	private static function report_units_result( array $report ): void {
 		$rows = array();
 
-		foreach ( array(
-			'created'          => 'Units создано',
-			'created_ru'       => 'Русских версий создано (need_translate = 1)',
-			'projects_created' => 'Проектов-заготовок создано',
-			'media_fetched'    => 'Файлов галереи скачано',
-			'media_reused'     => 'Файлов переиспользовано без закачки',
-			'terms_assigned'   => 'Привязок location',
-			'skipped_existing' => 'Уже было на сайте, пропущено',
-			'failed'           => 'Не удалось',
-		) as $key => $label ) {
+		foreach (
+			array(
+				'created'          => 'Units создано',
+				'created_ru'       => 'Русских версий создано (need_translate = 1)',
+				'projects_created' => 'Проектов-заготовок создано',
+				'media_fetched'    => 'Файлов галереи скачано',
+				'media_reused'     => 'Файлов переиспользовано без закачки',
+				'terms_assigned'   => 'Привязок location',
+				'skipped_existing' => 'Уже было на сайте, пропущено',
+				'failed'           => 'Не удалось',
+			) as $key => $label
+		) {
 			$rows[] = array(
 				'what'  => $label,
 				'count' => (int) ( $report[ $key ] ?? 0 ),
@@ -638,7 +646,7 @@ final class CLI {
 				}
 
 				WP_CLI::warning( sprintf( '%s: %s', $id, $message ) );
-				++$shown;
+				++ $shown;
 			}
 		}
 
@@ -744,7 +752,7 @@ final class CLI {
 	 *     # Keep them out of sight until reviewed.
 	 *     $ wp tools import-properties --status=draft
 	 *
-	 * @param array $args       Positional arguments, none are used.
+	 * @param array $args Positional arguments, none are used.
 	 * @param array $assoc_args Options described above.
 	 *
 	 * @return void
@@ -843,6 +851,129 @@ final class CLI {
 	}
 
 	/**
+	 * Warm the caches of the most visited pages: the home page of every language, the pages it links to and, with --log, the most requested ones.
+	 *
+	 * Run by scripts/auto-deploy.sh after every deploy.
+	 *
+	 * ## OPTIONS
+	 *
+	 * [--limit=<number>]
+	 * : Warm at most this many pages.
+	 * ---
+	 * default: 150
+	 * ---
+	 *
+	 * [--concurrency=<number>]
+	 * : Requests in flight at once.
+	 * ---
+	 * default: 3
+	 * ---
+	 *
+	 * [--log=<path>]
+	 * : Access log in the combined format. Its most requested pages are warmed right after the home pages.
+	 *
+	 * [--top=<number>]
+	 * : Pages to take from the log.
+	 * ---
+	 * default: 50
+	 * ---
+	 *
+	 * [--dry-run]
+	 * : List the pages and request nothing.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp tools warm-cache --dry-run
+	 *     wp tools warm-cache
+	 *     wp tools warm-cache --log=/var/log/nginx/access.log --top=100
+	 *
+	 * @param array $args Positional arguments, unused.
+	 * @param array $assoc_args Flags.
+	 *
+	 * @return void
+	 */
+	public static function warm_cache( array $args, array $assoc_args ): void {
+		$limit       = max( 1, (int) Utils\get_flag_value( $assoc_args, 'limit', 150 ) );
+		$concurrency = max( 1, min( 10, (int) Utils\get_flag_value( $assoc_args, 'concurrency', 3 ) ) );
+		$log         = (string) Utils\get_flag_value( $assoc_args, 'log', '' );
+
+		$top     = max( 0, (int) Utils\get_flag_value( $assoc_args, 'top', 50 ) );
+		$dry_run = (bool) Utils\get_flag_value( $assoc_args, 'dry-run', false );
+
+		$warmer = new Cache_Warmer();
+		$pages  = $warmer->collect( $limit, $log, $top );
+
+		WP_CLI::log( sprintf( 'Сайт: %s', home_url( '/' ) ) );
+		WP_CLI::log( sprintf( 'Страниц к прогреву: %d, из них из журнала: %d',
+			count( $pages['urls'] ),
+			$pages['from_log'] ) );
+
+		foreach ( $pages['warnings'] as $warning ) {
+			WP_CLI::warning( $warning );
+		}
+
+		if ( $dry_run ) {
+			foreach ( $pages['urls'] as $url ) {
+				WP_CLI::log( '  ' . $url );
+			}
+
+			WP_CLI::success( 'dry-run: ничего не запрошено' );
+
+			return;
+		}
+
+		$results = array();
+		$started = microtime( true );
+
+		$warmer->warm(
+			$pages['urls'],
+			$concurrency,
+			static function ( string $url, int $status, float $seconds, string $error ) use ( &$results ): void {
+				$results[] = array(
+					'url'     => $url,
+					'status'  => $status,
+					'seconds' => $seconds,
+				);
+
+				if ( 200 !== $status || $seconds > 5 ) {
+					WP_CLI::log( sprintf( '  %s %5.1f с  %s%s',
+						0 === $status ? 'ERR' : $status,
+						$seconds,
+						$url,
+						'' === $error ? '' : ' — ' . $error ) );
+				}
+			}
+		);
+
+		$times = array_column( $results, 'seconds' );
+		sort( $times );
+
+		$statuses = array_count_values( array_map( static fn( array $result ): string => (string) $result['status'],
+			$results ) );
+		ksort( $statuses );
+
+		WP_CLI::log(
+			sprintf(
+				'Ответы: %s; медиана %.1f с, p90 %.1f с, максимум %.1f с',
+				implode( ', ',
+					array_map( static fn(
+						string $status,
+						int $count
+					): string => ( '0' === $status ? 'ошибка' : $status ) . ' × ' . $count,
+						array_keys( $statuses ),
+						$statuses ) ),
+				$times[ (int) floor( count( $times ) / 2 ) ] ?? 0,
+				$times[ (int) floor( count( $times ) * 0.9 ) ] ?? 0,
+				end( $times ) ?: 0
+			)
+		);
+
+		WP_CLI::success( sprintf( 'прогрето %d страниц за %d с',
+			$statuses['200'] ?? 0,
+			(int) round( microtime( true ) - $started ) ) );
+	}
+
+	/**
 	 * Clear everything that would otherwise keep serving the old catalogue.
 	 *
 	 * The order is deliberate. Rewrite rules go first, so any page rebuilt after
@@ -933,15 +1064,17 @@ final class CLI {
 	private static function report_result( array $report ): void {
 		$rows = array();
 
-		foreach ( array(
-			'created'             => 'Created',
-			'translated'          => 'Russian version added to an existing project',
-			'placeholder_ru'      => 'Russian copied from English (need_translate = 1)',
-			'skipped'             => 'Already on site, nothing to add',
-			'failed'              => 'Failed',
-			'without_developer'   => 'Created without a developer',
-			'without_coordinates' => 'Created without coordinates',
-		) as $key => $label ) {
+		foreach (
+			array(
+				'created'             => 'Created',
+				'translated'          => 'Russian version added to an existing project',
+				'placeholder_ru'      => 'Russian copied from English (need_translate = 1)',
+				'skipped'             => 'Already on site, nothing to add',
+				'failed'              => 'Failed',
+				'without_developer'   => 'Created without a developer',
+				'without_coordinates' => 'Created without coordinates',
+			) as $key => $label
+		) {
 			$rows[] = array(
 				'what'  => $label,
 				'count' => (int) ( $report[ $key ] ?? 0 ),

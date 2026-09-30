@@ -25,6 +25,7 @@ require_once get_stylesheet_directory() . '/core/includes/tools/class-tool-prope
 require_once get_stylesheet_directory() . '/core/includes/tools/class-tool-distress-units-importer.php';
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
+	require_once get_stylesheet_directory() . '/core/includes/tools/class-tool-cache-warmer.php';
 	require_once get_stylesheet_directory() . '/core/includes/tools/class-tool-cli.php';
 	Tools\CLI::register();
 }

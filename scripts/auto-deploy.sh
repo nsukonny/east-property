@@ -107,6 +107,12 @@ reset_transients() {
   log "Permalinks rules have been flushed"
 }
 
+warm_cache() {
+	log "Warming the cache of the most visited pages"
+	wp --path="$WP_ROOT" tools warm-cache --allow-root \
+		|| log "Cache warm-up failed, the deploy itself is complete"
+}
+
 update_theme_repo() {
 	log "Updating theme repo to $DEPLOY_BRANCH"
 
@@ -179,6 +185,7 @@ main() {
 	log "Building assets"
 	npm run build
 	log "Deploy completed"
+	warm_cache
 }
 
 main
