@@ -107,6 +107,12 @@ reset_transients() {
   log "Permalinks rules have been flushed"
 }
 
+flush_object_cache() {
+	log "Flushing the object cache"
+	wp --path="$WP_ROOT" cache flush --allow-root \
+		|| log "Object cache flush failed, cached pages stay until they expire"
+}
+
 warm_cache() {
 	log "Warming the cache of the most visited pages"
 	wp --path="$WP_ROOT" tools warm-cache --allow-root \
@@ -185,6 +191,7 @@ main() {
 	log "Building assets"
 	npm run build
 	log "Deploy completed"
+	flush_object_cache
 	warm_cache
 }
 
