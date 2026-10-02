@@ -1063,6 +1063,7 @@ function get_locations( string $listing_type = '' ): array {
 	$cache_key = core_generate_cache_key(
 		'locations',
 		'locations_listings',
+		array(),
 		array(
 			'listing_type' => $listing_type,
 			'language'     => $language,
