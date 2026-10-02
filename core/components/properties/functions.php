@@ -15,6 +15,7 @@ function get_properties( int $limit = - 1, bool $skip_filters = false, array $ar
 	$args['current_language'] = core_get_current_language();
 	$args['current_page']     = pagination_get_current_page() ?? 1;
 	$args['skip_filters']     = $skip_filters;
+	$args['limit']            = $limit;
 
 	$cache_key = core_generate_cache_key(
 		'properties',

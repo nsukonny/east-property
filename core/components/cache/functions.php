@@ -16,14 +16,17 @@ function core_generate_cache_key(
 	array $approved_request_vars,
 	array $args = array()
 ): string {
-	$request_params = implode(
-		'',
-		array_map(
-			fn( $key ) => $_REQUEST[ $key ] ?? '',
-			$approved_request_vars
-		)
-	);
+	$request_params = '';
+	if ( ! empty( $approved_request_vars ) ) {
+		foreach ( $approved_request_vars as $value ) {
+			if ( empty( $_REQUEST[ $value ] ) ) {
+				continue;
+			}
 
+			$request_params .= $value . '=' . $_REQUEST[ $value ];
+		}
+	}
+	
 	$request_params .= wp_json_encode( $args );
 	$request_params .= wp_cache_get_last_changed( $group );
 
