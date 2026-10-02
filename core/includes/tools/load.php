@@ -19,6 +19,12 @@
  * wp tools import-distress-units --author=daria
  * wp tools import-distress-units --redirects=/root/distress-301.map
  * wp tools import-distress-units --no-russian              # без русских версий
+ *
+ * Usage of the floor cleanup of unit titles and slugs (old URLs answer 301):
+ *
+ * wp tools strip-unit-floors --dry-run --report=/tmp/unit-floors-plan.csv
+ * wp tools strip-unit-floors --limit=10
+ * wp tools strip-unit-floors --yes --report=/tmp/unit-floors.csv
  */
 
 require_once get_stylesheet_directory() . '/core/includes/tools/class-tool-property-importer.php';
@@ -26,6 +32,7 @@ require_once get_stylesheet_directory() . '/core/includes/tools/class-tool-distr
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	require_once get_stylesheet_directory() . '/core/includes/tools/class-tool-cache-warmer.php';
+	require_once get_stylesheet_directory() . '/core/includes/tools/class-tool-unit-floor-cleaner.php';
 	require_once get_stylesheet_directory() . '/core/includes/tools/class-tool-cli.php';
 	Tools\CLI::register();
 }

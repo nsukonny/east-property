@@ -118,6 +118,10 @@ function core_get_current_language(): string {
 		$current_language = pll_current_language();
 	}
 
+	if ( '' === $current_language && function_exists( 'pll_default_language' ) ) {
+		$current_language = (string) pll_default_language( 'slug' );
+	}
+
 	return $current_language;
 }
 

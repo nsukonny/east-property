@@ -230,7 +230,16 @@ function core_unit_filter_delivery_years( string $post_type, string $language, s
  */
 function get_search_tabs_data( string $post_type = 'property', string $listing_type = 'off-plan' ): array {
 	$language  = core_get_current_language();
-	$cache_key = 'search_tabs_data_' . md5( (string) $post_type . (string) $listing_type . (string) $language . date( 'Y' ) );
+	$cache_key = core_generate_cache_key(
+		'search_tabs_data',
+		'units_listings',
+		array(),
+		array(
+			'post_type'    => $post_type,
+			'listing_type' => $listing_type,
+			'language'     => $language,
+		)
+	);
 
 	static $memo = array();
 	if ( isset( $memo[ $cache_key ] ) ) {
@@ -240,9 +249,10 @@ function get_search_tabs_data( string $post_type = 'property', string $listing_t
 	$search_tabs_data = wp_cache_get( $cache_key, 'search_tabs_data' );
 	if ( false === $search_tabs_data ) {
 		$search_tabs_data = core_build_search_tabs_data( $post_type, $language, $listing_type );
+
+		wp_cache_set( $cache_key, $search_tabs_data, 'search_tabs_data', DAY_IN_SECONDS );
 	}
 
-	wp_cache_set( $cache_key, $search_tabs_data, 'search_tabs_data', DAY_IN_SECONDS );
 	$memo[ $cache_key ] = $search_tabs_data;
 
 	return $search_tabs_data;
@@ -505,7 +515,7 @@ function get_filter_baths_options(): array {
 /**
  * Whether the request narrows a filter the results bar shows.
  *
- * @param array $search_by        Filters the bar shows.
+ * @param array $search_by Filters the bar shows.
  * @param array $search_tabs_data Result of get_search_tabs_data().
  *
  * @return bool
@@ -1050,7 +1060,15 @@ function get_locations( string $listing_type = '' ): array {
 		: '';
 
 	$language  = core_get_current_language();
-	$cache_key = md5( 'locations_' . $language . '_' . $listing_type );
+	$cache_key = core_generate_cache_key(
+		'locations',
+		'locations_listings',
+		array(),
+		array(
+			'listing_type' => $listing_type,
+			'language'     => $language,
+		),
+	);
 
 	static $memo = array();
 	if ( ! isset( $memo[ $cache_key ] ) ) {

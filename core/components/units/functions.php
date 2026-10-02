@@ -34,40 +34,37 @@ function core_sanitize_listing_type( string $listing_type ): string {
 }
 
 /**
- * Get list of units by filters if they is set
+ * Get a listing of units by filters
  *
+ * @param string $listing_type
  * @param int $limit
+ * @param array $args
  *
  * @return array
  */
 function get_units( $listing_type = '', int $limit = 25, $args = array() ): array {
-	$current_language = core_get_current_language();
-	$current_page     = pagination_get_current_page() ?? 1;
+	$args['current_language'] = core_get_current_language();
+	$args['current_page']     = pagination_get_current_page() ?? 1;
+	$args['limit']            = $limit;
+	$args['listing_type']     = $listing_type;
 
-	$request_params = implode(
-		'',
-		array_map(
-			fn( $key ) => $_REQUEST[ $key ] ?? '',
-			array(
-				'location',
-				'available',
-				'developer',
-				'area',
-				'beds',
-				'property_type',
-				'min_price',
-				'max_price',
-				'sort',
-			)
-		)
+	$cache_key = core_generate_cache_key(
+		'units',
+		'units_listings',
+		array(
+			'location',
+			'available',
+			'developer',
+			'area',
+			'beds',
+			'property_type',
+			'min_price',
+			'max_price',
+			'sort',
+			'listing_type',
+		),
+		$args
 	);
-
-	if ( ! empty( $_REQUEST['listing_type'] ) ) {
-		$listing_type = sanitize_text_field( wp_unslash( $_REQUEST['listing_type'] ) );
-	}
-	$request_params .= $listing_type ?? '';
-	$request_params .= wp_json_encode( $args );
-	$cache_key      = md5( 'units_' . $current_language . '_' . (string) $limit . (string) $current_page . $request_params );
 
 	static $memo = array();
 	if ( isset( $memo[ $cache_key ] ) ) {
@@ -82,7 +79,7 @@ function get_units( $listing_type = '', int $limit = 25, $args = array() ): arra
 		return $units;
 	}
 
-	$units = core_query_units( $listing_type, $limit, $current_page, $current_language, $args );
+	$units = core_query_units( $listing_type, $args );
 
 	$property_ids = wp_list_pluck( $units['items'], 'property_id' );
 	$unit_ids     = wp_list_pluck( $units['items'], 'ID' );
@@ -121,7 +118,7 @@ function get_units( $listing_type = '', int $limit = 25, $args = array() ): arra
  *
  * @return array
  */
-function core_query_units( $listing_type, $limit, $current_page, $current_language, $args ): array {
+function core_query_units( $listing_type, $args ): array {
 	global $wpdb;
 
 	//TODO for more optimization we can split it by two queries, one for just ids and second for loading all data for this 20
@@ -133,6 +130,9 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 	if ( empty( $args['draft'] ) ) {
 		$where[]  = 'u.post_status = %s';
 		$params[] = 'publish';
+	} else {
+		$where[]  = 'u.post_status <> %s';
+		$params[] = 'archived';
 	}
 
 	$joins[] = "LEFT JOIN {$wpdb->posts} AS p_property ON p_property.ID = CAST(pm_property.meta_value AS UNSIGNED)";
@@ -359,7 +359,7 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 						AND pll_language_taxonomy.taxonomy = 'language'";
 		$joins[] = "INNER JOIN {$wpdb->terms} AS pll_language
 						ON pll_language.term_id = pll_language_taxonomy.term_id
-						AND pll_language.slug = '{$current_language}'";
+						AND pll_language.slug = '{$args['current_language']}'";
 	}
 
 	if ( ! empty( $args['property_id'] ) ) {
@@ -447,11 +447,11 @@ function core_query_units( $listing_type, $limit, $current_page, $current_langua
 		ORDER BY {$order_sql}
 	";
 
-	if ( 0 < $limit ) {
+	if ( 0 < $args['limit'] ) {
 		$sql .= " LIMIT %d OFFSET %d";
 
-		$offset   = ( $current_page - 1 ) * $limit;
-		$params[] = (int) $limit;
+		$offset   = ( $args['current_page'] - 1 ) * $args['limit'];
+		$params[] = (int) $args['limit'];
 		$params[] = (int) $offset;
 	}
 
@@ -516,7 +516,16 @@ add_action(
  */
 function get_count_of_units_by_date( $date_from = '2000-01-01', $date_to = '2050-01-01' ): int {
 	$current_language = core_get_current_language();
-	$cache_key        = md5( 'units_count_by_date_' . $current_language . '_' . $date_from . '_' . $date_to );
+	$cache_key        = core_generate_cache_key(
+		'units_count_by_date',
+		'units_listings',
+		array(),
+		array(
+			'current_language' => $current_language,
+			'date_from'        => $date_from,
+			'date_to'          => $date_to,
+		)
+	);
 
 	static $memo = array();
 	if ( isset( $memo[ $cache_key ] ) ) {

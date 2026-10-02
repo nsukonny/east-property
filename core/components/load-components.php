@@ -1,6 +1,7 @@
 <?php
 
 require THEME_PATH . '/core/components/components-functions.php';
+require THEME_PATH . '/core/components/cache/functions.php';
 require THEME_PATH . '/core/components/security/functions.php';
 require THEME_PATH . '/core/components/security/comments.php';
 require THEME_PATH . '/core/components/seo/functions.php';

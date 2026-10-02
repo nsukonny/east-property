@@ -70,6 +70,26 @@ function register_units_post_type(): void {
 add_action( 'init', 'register_units_post_type', 0 );
 
 /**
+ * Register Post Status: Archived. The unit leaves every listing, its page stays public.
+ */
+function register_unit_archived_status(): void {
+	register_post_status(
+		'archived',
+		array(
+			'label'       => __( 'Archived', 'east-property' ),
+			'public'      => true,
+			'label_count' => _n_noop(
+				'Archived <span class="count">(%s)</span>',
+				'Archived <span class="count">(%s)</span>',
+				'east-property'
+			),
+		)
+	);
+}
+
+add_action( 'init', 'register_unit_archived_status', 0 );
+
+/**
  * Slug of the project a unit belongs to. A deleted project counts as none.
  *
  * @param Unit $unit Unit to look at.
@@ -208,7 +228,7 @@ add_action( 'template_redirect', static function () {
 		return;
 	}
 
-	if ( is_preview() || 'publish' !== $unit_post->post_status ) {
+	if ( is_preview() || ! in_array( $unit_post->post_status, array( 'publish', 'archived' ), true ) ) {
 		return;
 	}
 

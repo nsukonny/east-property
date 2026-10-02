@@ -12,19 +12,26 @@
  * @return array
  */
 function get_properties( int $limit = - 1, bool $skip_filters = false, array $args = array() ): array {
-	$current_language = core_get_current_language();
-	$current_page     = pagination_get_current_page() ?? 1;
+	$args['current_language'] = core_get_current_language();
+	$args['current_page']     = pagination_get_current_page() ?? 1;
+	$args['skip_filters']     = $skip_filters;
+	$args['limit']            = $limit;
 
-	$request_params = $_REQUEST['location'] ?? '';
-	$request_params .= $_REQUEST['available'] ?? '';
-	$request_params .= $args['developer'] ?? $_REQUEST['developer'] ?? '';
-	$request_params .= $_REQUEST['property_type'] ?? '';
-	$request_params .= $_REQUEST['min_price'] ?? '';
-	$request_params .= $_REQUEST['max_price'] ?? '';
-	$request_params .= core_get_listing_sort( $args['sort'] ?? null );
-	$request_params .= wp_json_encode( $args );
-	$cache_key      = 'properties_' . $current_language . '_'
-	                  . md5( (string) $limit . (string) $skip_filters . (string) $current_page . $request_params );
+	$cache_key = core_generate_cache_key(
+		'properties',
+		'properties_listings',
+		array(
+			'location',
+			'available',
+			'developer',
+			'property_type',
+			'min_price',
+			'max_price',
+			'galleries',
+			'sort',
+		),
+		$args
+	);
 
 	static $memo = array();
 	if ( isset( $memo[ $cache_key ] ) ) {
@@ -39,7 +46,7 @@ function get_properties( int $limit = - 1, bool $skip_filters = false, array $ar
 		return $properties;
 	}
 
-	$properties = core_query_properties( $limit, $skip_filters, $current_page, $current_language, $args );
+	$properties = core_query_properties( $limit, $skip_filters, $args );
 
 	if ( ! empty( $args['specifications'] ) ) {
 		$specifications = \Entities\Property::get_specifications( array_column( $properties['items'], 'ID' ) );
@@ -174,21 +181,23 @@ function core_property_choice_label( string $value ): string {
  * @return array
  */
 function get_map_properties( array $args = array() ): array {
-	$current_language = core_get_current_language();
+	$args['current_language'] = core_get_current_language();
 
-	/*
-	 * Every request parameter core_query_properties() filters by goes into the
-	 * key, otherwise two different filters would share one cached map.
-	 */
-	$filter_params = implode(
-		'|',
-		array_map(
-			static fn( $key ) => (string) ( $_REQUEST[ $key ] ?? '' ),
-			array( 'location', 'available', 'developer', 'property_type', 'min_price', 'max_price', 'property_id' )
-		)
+	$cache_key = core_generate_cache_key(
+		'map_properties',
+		'properties_listings',
+		array(
+			'location',
+			'available',
+			'developer',
+			'property_type',
+			'min_price',
+			'max_price',
+			'sort',
+			'property_id',
+		),
+		$args
 	);
-
-	$cache_key = 'map_properties_' . $current_language . '_' . md5( wp_json_encode( $args ) . $filter_params );
 
 	static $memo = array();
 	if ( isset( $memo[ $cache_key ] ) ) {
@@ -197,9 +206,9 @@ function get_map_properties( array $args = array() ): array {
 
 	$properties = wp_cache_get( $cache_key, 'properties' );
 	if ( false === $properties ) {
-		$properties = core_query_map_properties( $current_language, $args );
+		$properties = core_query_map_properties( $args );
 
-		wp_cache_set( $cache_key, $properties, 'properties', HOUR_IN_SECONDS );
+		wp_cache_set( $cache_key, $properties, 'properties', DAY_IN_SECONDS );
 	}
 
 	$memo[ $cache_key ] = $properties;
@@ -215,10 +224,10 @@ function get_map_properties( array $args = array() ): array {
  *
  * @return array
  */
-function core_query_map_properties( string $language, array $args = array() ): array {
+function core_query_map_properties( array $args = array() ): array {
 	$args['for_map'] = true;
 
-	$properties = core_query_properties( 0, false, 1, $language, $args );
+	$properties = core_query_properties( 0, false, $args );
 	$items      = $properties['items'] ?? array();
 
 	if ( empty( $items ) ) {
@@ -237,7 +246,7 @@ function core_query_map_properties( string $language, array $args = array() ): a
 		$groups[ $property_id ] = core_property_linked_ids( $property_id );
 	}
 
-	$counts = core_property_unit_counts( array_merge( ...array_values( $groups ) ), $language );
+	$counts = core_property_unit_counts( array_merge( ...array_values( $groups ) ), $args['current_language'] );
 
 	foreach ( $items as $key => $item ) {
 		$count = 0;
@@ -349,8 +358,6 @@ function core_property_unit_counts( array $property_ids, string $language = '' )
  *
  * @param int $limit
  * @param bool $skip_filters
- * @param int $current_page
- * @param string $current_language
  * @param array $args
  *
  * @return array
@@ -358,8 +365,6 @@ function core_property_unit_counts( array $property_ids, string $language = '' )
 function core_query_properties(
 	int $limit,
 	bool $skip_filters,
-	int $current_page,
-	string $current_language,
 	array $args = array()
 ): array {
 	global $wpdb;
@@ -369,7 +374,7 @@ function core_query_properties(
 	if ( 0 > $limit ) {
 		$limit = PROPERTIES_PER_PAGE;
 	}
-	$offset = ( $current_page - 1 ) * $limit;
+	$offset = ( ( $args['current_page'] ?? 1 ) - 1 ) * $limit;
 
 	$joins  = array();
 	$where  = array( 'p.post_type = %s' );
@@ -545,7 +550,7 @@ function core_query_properties(
 						AND pll_language_taxonomy.taxonomy = 'language'";
 		$joins[] = "INNER JOIN {$wpdb->terms} AS pll_language
 						ON pll_language.term_id = pll_language_taxonomy.term_id
-						AND pll_language.slug = '{$current_language}'";
+						AND pll_language.slug = '{$args['current_language']}'";
 	}
 
 	if ( ! empty( $args['author_id'] ) ) {
@@ -803,7 +808,14 @@ function get_properties_by_count_of_units(): array {
 
 	$current_language = core_get_current_language();
 
-	$cache_key = md5( 'properties_by_count_of_units' . $current_language );
+	$cache_key = core_generate_cache_key(
+		'properties_by_count_of_units',
+		'units_listings',
+		array(),
+		array(
+			'current_language' => $current_language,
+		)
+	);
 
 	static $memo = array();
 	if ( isset( $memo[ $cache_key ] ) ) {
@@ -869,7 +881,7 @@ function get_properties_by_count_of_units(): array {
 		$results[ $key ]['url'] = get_the_permalink( $row['ID'] );
 	}
 
-	wp_cache_set( $cache_key, $results, 'properties' );
+	wp_cache_set( $cache_key, $results, 'properties', DAY_IN_SECONDS );
 
 	$memo[ $cache_key ] = $results;
 

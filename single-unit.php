@@ -15,24 +15,26 @@ while ( have_posts() ) {
 		continue;
 	}
 
-	if ( 'publish' !== $unit->get_status() ) {
+	if ( ! in_array( $unit->get_status(), array( 'publish', 'archived' ), true ) ) {
 		wp_safe_redirect( core_home_url( '/404' ) );
 	}
+
+	$is_archived = $unit->is_archived();
 
 	$property = $unit->get_property();
 	if ( null !== $property && ! $property->exists() ) {
 		$property = null;
 	}
 
-	$gallery             = $unit->get_gallery();
-	$developer           = $unit->get_developer();
-	$whatsapp_share_text = 'https://wa.me/?text=' . rawurlencode( sprintf(
-			'%s | %s | %s View %s',
-			$unit->get_title(),
-			$property?->get_location()?->name ?? '',
-			$unit->get_price_html(),
-			get_permalink( $unit->get_id() )
-		) );
+	$gallery       = $unit->get_gallery();
+	$developer     = $unit->get_developer();
+	$share_details = array( $unit->get_title(), $property?->get_location()?->name ?? '' );
+	if ( ! $is_archived ) {
+		$share_details[] = $unit->get_price_html();
+	}
+	$whatsapp_share_text = 'https://wa.me/?text=' . rawurlencode(
+			implode( ' | ', $share_details ) . ' View ' . get_permalink( $unit->get_id() )
+		);
 
 	$amenities         = $unit->get_amenities();
 	$floor_plan        = $unit->get_floor_plan();
@@ -63,8 +65,18 @@ while ( have_posts() ) {
 							<div class="h2"><?php echo esc_attr( __( 'Apartment by',
 										'east-property' ) . ' ' . $property->get_title() ); ?></div>
 						<?php } ?>
-						<h1><?php echo esc_html( $unit->get_price_html() ); ?></h1>
-						<?php if ( $unit->has_discount() ) { ?>
+						<?php if ( $is_archived ) { ?>
+							<div class="single-items-top-labels">
+								<div class="label black">
+									<span><?php echo esc_html( mb_strtoupper( __( 'Archived',
+											'east-property' ) ) ); ?></span>
+								</div>
+							</div>
+						<?php } else { ?>
+							<div class="unit_price"><?php echo esc_html( $unit->get_price_html() ); ?></div>
+						<?php } ?>
+
+						<?php if ( ! $is_archived && $unit->has_discount() ) { ?>
 							<div class="discount">
 								<?php esc_html_e( 'Discount:', 'east-property' ); ?>
 								<span><?php echo esc_html( $unit->get_discount() ); ?>%</span>
@@ -177,7 +189,7 @@ while ( have_posts() ) {
 				?>
 				<div class="single-info">
 					<div class="single-info-block">
-						<h3><?php echo esc_html( $unit->get_title() ); ?></h3>
+						<h1><?php echo esc_html( $unit->get_title() ); ?></h1>
 						<div class="texts">
 							<p><?php echo apply_filters( 'the_content', $desc ); ?></p>
 						</div>

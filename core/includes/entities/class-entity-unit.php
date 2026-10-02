@@ -556,6 +556,15 @@ final class Unit {
 	}
 
 	/**
+	 * Check this unit is archived: off every listing, its page still public
+	 *
+	 * @return bool
+	 */
+	public function is_archived(): bool {
+		return 'archived' === $this->get_status();
+	}
+
+	/**
 	 * Check this unit has a valid discount off the original price
 	 *
 	 * @return bool
@@ -688,9 +697,9 @@ final class Unit {
 		}
 
 		$area = $this->get_area();
-		if ( empty( $area ) || 200 > $area ) {
+		if ( empty( $area ) || 50 > $area ) {
 			$errors_messages .= '- ' . __(
-					'Area should not be empty and must bigger than 200 sqft',
+					'Area should not be empty and must bigger than 50 sqft',
 					'east-property'
 				) . '<br>';
 		}
@@ -702,14 +711,6 @@ final class Unit {
 					'east-property'
 				) . '<br>';
 		}
-
-		$title = $this->get_title();
-//		if ( empty( $title ) || 20 > strlen( $title ) ) {
-//			$errors_messages .= '- ' . __(
-//					'Title should not be empty and must bigger than 20 characters',
-//					'east-property'
-//				) . '<br>';
-//		}
 
 		if ( ! empty( $errors_messages ) ) {
 			update_post_meta( $this->id, 'auto_approve_errors', $errors_messages );
@@ -744,5 +745,54 @@ final class Unit {
 		);
 		delete_post_meta( $this->id, 'auto_approve_errors' );
 		delete_post_meta( $this->id, 'is_wait_user_actions' );
+
+		wp_cache_set_last_changed( 'units_listings' );
+	}
+
+	/**
+	 * Delete the unit in every language: a published version goes to the archive
+	 * and keeps its page, an unpublished one is deleted for good, an archived one stays
+	 *
+	 * @return bool
+	 */
+	public function delete(): bool {
+		$translations = $this->get_translations();
+
+		foreach ( $translations as $key => $unit ) {
+			if ( in_array( $unit->get_status(), array( 'publish', 'archived' ), true ) ) {
+				continue;
+			}
+
+			unset( $translations[ $key ] );
+			if ( ! wp_delete_post( $unit->get_id(), true ) ) {
+				return false;
+			}
+		}
+
+		if ( empty( $translations ) ) {
+			return true;
+		}
+
+		foreach ( $translations as $unit ) {
+			if ( 'publish' !== $unit->get_status() ) {
+				continue;
+			}
+
+			$result = wp_update_post(
+				array(
+					'ID'          => $unit->get_id(),
+					'post_status' => 'archived',
+				),
+				true
+			);
+
+			if ( is_wp_error( $result ) ) {
+				return false;
+			}
+		}
+
+		$this->post = get_post( $this->id );
+
+		return true;
 	}
 }

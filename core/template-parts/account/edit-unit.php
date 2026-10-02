@@ -39,7 +39,7 @@ $original_price = $unit && $is_distress ? $unit->get_original_price() : '';
 
 if ( ! empty( $unit_property_id ) ) {
 	foreach ( $properties as $property ) {
-		if ( $property['ID'] === $unit_property_id ) {
+		if ( (int) $property['ID'] === (int) $unit_property_id ) {
 			$selected_property = new Property( $property['ID'] );
 			break;
 		}

@@ -35,6 +35,7 @@ final class CLI {
 		WP_CLI::add_command( 'tools import-distress-units', array( __CLASS__, 'import_distress_units' ) );
 		WP_CLI::add_command( 'tools flag-untranslated', array( __CLASS__, 'flag_untranslated' ) );
 		WP_CLI::add_command( 'tools warm-cache', array( __CLASS__, 'warm_cache' ) );
+		WP_CLI::add_command( 'tools strip-unit-floors', array( __CLASS__, 'strip_unit_floors' ) );
 	}
 
 	/**
@@ -971,6 +972,251 @@ final class CLI {
 		WP_CLI::success( sprintf( 'прогрето %d страниц за %d с',
 			$statuses['200'] ?? 0,
 			(int) round( microtime( true ) - $started ) ) );
+	}
+
+	/**
+	 * Remove the floor from unit titles and slugs: "Unit 1706 on 17 floor" becomes "Unit 1706".
+	 *
+	 * Every old URL of a unit with a public page keeps answering with a 301 to the
+	 * new one; a translation that shared the old slug gets the same new one.
+	 *
+	 * ## OPTIONS
+	 *
+	 * [--dry-run]
+	 * : Show what would change and write nothing.
+	 *
+	 * [--limit=<number>]
+	 * : Stop after this many units. Zero means all of them.
+	 * ---
+	 * default: 0
+	 * ---
+	 *
+	 * [--report=<path>]
+	 * : Write every change to this CSV file, old and new URL included.
+	 *
+	 * [--yes]
+	 * : Do not ask for confirmation.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp tools strip-unit-floors --dry-run --report=/tmp/unit-floors-plan.csv
+	 *     wp tools strip-unit-floors --limit=10
+	 *     wp tools strip-unit-floors --yes --report=/tmp/unit-floors.csv
+	 *
+	 * @param array $args       Positional arguments, unused.
+	 * @param array $assoc_args Flags.
+	 *
+	 * @return void
+	 */
+	public static function strip_unit_floors( array $args, array $assoc_args ): void {
+		$dry_run = (bool) Utils\get_flag_value( $assoc_args, 'dry-run', false );
+		$limit   = (int) Utils\get_flag_value( $assoc_args, 'limit', 0 );
+		$report  = (string) Utils\get_flag_value( $assoc_args, 'report', '' );
+
+		$cleaner = new Unit_Floor_Cleaner();
+		$plan    = $cleaner->plan( $limit );
+		$items   = $plan['items'];
+
+		self::print_floor_plan( $plan, $cleaner->leftovers( $plan ) );
+
+		if ( empty( $items ) ) {
+			WP_CLI::success( 'этажа нет ни в заголовках, ни в слагах — менять нечего' );
+
+			return;
+		}
+
+		if ( '' !== $report ) {
+			foreach ( $items as $index => $item ) {
+				$items[ $index ]['old_url'] = (string) get_permalink( $item['id'] );
+			}
+		}
+
+		if ( $dry_run ) {
+			if ( '' !== $report ) {
+				self::write_floor_report( $report, $items );
+			}
+
+			WP_CLI::success( 'dry-run завершён, ничего не записано' );
+
+			return;
+		}
+
+		WP_CLI::confirm( sprintf( 'Переписать %d юнитов?', count( $items ) ), $assoc_args );
+
+		$bar   = Utils\make_progress_bar( 'Rewriting', count( $items ) );
+		$items = $cleaner->apply(
+			$items,
+			static function () use ( $bar ): void {
+				$bar->tick();
+			}
+		);
+		$bar->finish();
+
+		if ( '' !== $report ) {
+			self::write_floor_report( $report, $items );
+		}
+
+		wp_cache_flush();
+
+		if ( function_exists( 'w3tc_flush_all' ) ) {
+			w3tc_flush_all();
+		}
+
+		$failed    = array_filter( $items, static fn( array $item ): bool => isset( $item['error'] ) );
+		$drifted   = array_filter( $items, static fn( array $item ): bool => ! isset( $item['error'] ) && ( $item['saved_title'] !== $item['new_title'] || $item['saved_slug'] !== $item['new_slug'] ) );
+		$lost      = array_filter( $items, static fn( array $item ): bool => false === ( $item['redirect'] ?? null ) );
+		$redirects = count( array_filter( $items, static fn( array $item ): bool => true === ( $item['redirect'] ?? null ) ) );
+
+		foreach ( array_slice( $failed, 0, 20 ) as $item ) {
+			WP_CLI::warning( sprintf( '#%d не сохранён: %s', $item['id'], $item['error'] ) );
+		}
+
+		foreach ( array_slice( $drifted, 0, 20 ) as $item ) {
+			WP_CLI::warning( sprintf( '#%d сохранён не так, как планировалось: «%s» %s', $item['id'], $item['saved_title'], $item['saved_slug'] ) );
+		}
+
+		foreach ( array_slice( $lost, 0, 20 ) as $item ) {
+			WP_CLI::warning( sprintf( '#%d: старый слаг %s не попал в _wp_old_slug, 301 не будет', $item['id'], $item['old_slug'] ) );
+		}
+
+		WP_CLI::log( 'Object cache сброшен.' );
+
+		$message = sprintf(
+			'переписано %d из %d юнитов, 301 со старого адреса у %d',
+			count( $items ) - count( $failed ),
+			count( $items ),
+			$redirects
+		);
+
+		if ( $failed || $drifted || $lost ) {
+			WP_CLI::error( $message . sprintf( '; ошибок %d, расхождений %d, без редиректа %d', count( $failed ), count( $drifted ), count( $lost ) ) );
+		}
+
+		WP_CLI::success( $message );
+	}
+
+	/**
+	 * Print what strip-unit-floors is about to change.
+	 *
+	 * @param array   $plan      Result of Unit_Floor_Cleaner::plan().
+	 * @param array[] $leftovers Units that still mention a floor afterwards.
+	 *
+	 * @return void
+	 */
+	private static function print_floor_plan( array $plan, array $leftovers ): void {
+		$items = $plan['items'];
+
+		$titles   = count( array_filter( $items, static fn( array $item ): bool => $item['new_title'] !== $item['old_title'] ) );
+		$slugs    = count( array_filter( $items, static fn( array $item ): bool => $item['new_slug'] !== $item['old_slug'] ) );
+		$follows  = count( array_filter( $items, static fn( array $item ): bool => $item['follows'] > 0 ) );
+		$suffixed = count( array_filter( $items, static fn( array $item ): bool => ! empty( $item['suffixed'] ) ) );
+
+		$groups = array();
+		foreach ( $items as $item ) {
+			$key            = ( '' === $item['lang'] ? '-' : $item['lang'] ) . '/' . $item['status'];
+			$groups[ $key ] = ( $groups[ $key ] ?? 0 ) + 1;
+		}
+		ksort( $groups );
+
+		WP_CLI::log( sprintf( 'Юнитов с этажом в заголовке или слаге: %d', $plan['checked'] ) );
+		WP_CLI::log( sprintf( 'К изменению:          %d (заголовков %d, слагов %d)', count( $items ), $titles, $slugs ) );
+		WP_CLI::log(
+			sprintf(
+				'  язык/статус:        %s',
+				implode( ', ', array_map( static fn( string $key, int $count ): string => $key . ' ' . $count, array_keys( $groups ), $groups ) )
+			)
+		);
+		WP_CLI::log( sprintf( 'Слаг как у английской версии: %d', $follows ) );
+		WP_CLI::log( sprintf( 'Слаг с суффиксом -N (чистый занят живым юнитом или чужим редиректом): %d', $suffixed ) );
+
+		WP_CLI::log( '' );
+		WP_CLI::log( 'Что вырезается из заголовков (по всем найденным, цифры как N):' );
+		foreach ( $plan['fragments'] as $fragment => $count ) {
+			WP_CLI::log( sprintf( '  %5d  %s', $count, $fragment ) );
+		}
+
+		WP_CLI::log( 'Что вырезается из слагов:' );
+		foreach ( $plan['slug_fragments'] as $fragment => $count ) {
+			WP_CLI::log( sprintf( '  %5d  %s', $count, $fragment ) );
+		}
+
+		if ( ! empty( $items ) ) {
+			WP_CLI::log( '' );
+			WP_CLI::log( 'Первые 10:' );
+			Utils\format_items(
+				'table',
+				array_map(
+					static fn( array $item ): array => array(
+						'id'    => $item['id'],
+						'lang'  => $item['lang'],
+						'title' => $item['old_title'] . ' → ' . $item['new_title'],
+						'slug'  => $item['new_slug'],
+					),
+					array_slice( $items, 0, 10 )
+				),
+				array( 'id', 'lang', 'title', 'slug' )
+			);
+		}
+
+		if ( empty( $leftovers ) ) {
+			WP_CLI::log( 'После замены этаж не упоминается ни у одного юнита.' );
+
+			return;
+		}
+
+		WP_CLI::warning( sprintf( 'правила не распознали этаж у %d юнитов — они останутся как есть:', count( $leftovers ) ) );
+		foreach ( array_slice( $leftovers, 0, 50 ) as $leftover ) {
+			WP_CLI::log( sprintf( '  #%d %s | %s', $leftover['id'], $leftover['title'], $leftover['slug'] ) );
+		}
+	}
+
+	/**
+	 * Write the strip-unit-floors changes to a CSV file.
+	 *
+	 * @param string  $path  Where to write.
+	 * @param array[] $items Planned or applied items.
+	 *
+	 * @return void
+	 */
+	private static function write_floor_report( string $path, array $items ): void {
+		$handle = fopen( $path, 'w' );
+
+		if ( false === $handle ) {
+			WP_CLI::warning( sprintf( 'не удалось записать отчёт %s', $path ) );
+
+			return;
+		}
+
+		fputcsv( $handle, array( 'id', 'lang', 'status', 'old_title', 'new_title', 'old_slug', 'new_slug', 'old_url', 'new_url', 'redirect', 'error' ), ',', '"', '' );
+
+		foreach ( $items as $item ) {
+			$old_url = $item['old_url'] ?? '';
+			$new_url = $item['url'] ?? (string) preg_replace( '~/' . preg_quote( $item['old_slug'], '~' ) . '/$~', '/' . $item['new_slug'] . '/', $old_url );
+
+			fputcsv(
+				$handle,
+				array(
+					$item['id'],
+					$item['lang'],
+					$item['status'],
+					$item['old_title'],
+					$item['saved_title'] ?? $item['new_title'],
+					$item['old_slug'],
+					$item['saved_slug'] ?? $item['new_slug'],
+					$old_url,
+					$new_url,
+					null === ( $item['redirect'] ?? null ) ? '' : ( $item['redirect'] ? 'yes' : 'no' ),
+					$item['error'] ?? '',
+				),
+				',',
+				'"',
+				''
+			);
+		}
+
+		fclose( $handle );
+
+		WP_CLI::log( sprintf( 'Отчёт: %s (%d строк)', $path, count( $items ) ) );
 	}
 
 	/**

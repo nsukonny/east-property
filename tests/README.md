@@ -147,8 +147,8 @@ Found while writing the suite, not pinned by a test:
 7. `core_query_units()` orders by `pm_boost_score.meta_value` as a string with no tie
    breaker. Most units have no score, so the order within a page, and across pages, is
    up to the database: a unit can repeat or disappear between pages.
-8. `core_query_units()` puts `$current_language` into the SQL unescaped. Today it comes
-   from Polylang, not from the request.
+8. `core_query_units()` puts `$args['current_language']` into the SQL unescaped. Today
+   `get_units()` fills it from Polylang, not from the request.
 9. A page past the end reports `total = 0`, not the listing total.
 10. The `7+` bedrooms option matches exactly 7 bedrooms.
 11. The handover filter reads "before" or "after" from `$_REQUEST['listing_type']`, not
