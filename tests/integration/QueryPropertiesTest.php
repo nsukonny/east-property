@@ -42,19 +42,28 @@ class QueryPropertiesTest extends TestCase {
 		}
 
 		$filters = array(
-			'author_id' => $broker,
-			'draft'     => true,
-			'location'  => $marina,
-			'developer' => (string) $developer,
+			'author_id'        => $broker,
+			'draft'            => true,
+			'location'         => $marina,
+			'developer'        => (string) $developer,
+			'current_language' => 'en',
 		);
 
 		$this->assertSame( array( $projects['heights'], $projects['park'] ), $this->listed( $filters ) );
 		$this->assertSame( array( $projects['heights'] ), $this->listed( $filters + array( 'search' => 'heights' ) ) );
-		$this->assertSame( array( $projects['heights'] ), $this->listed( array( 'author_id' => $broker, 'draft' => true, 'search' => (string) $projects['heights'] ) ) );
+		$this->assertSame( array( $projects['heights'] ),
+			$this->listed( array(
+				'author_id'        => $broker,
+				'draft'            => true,
+				'search'           => (string) $projects['heights'],
+				'current_language' => 'en',
+			) ) );
 
 		$_REQUEST['developer'] = (string) $developer;
 
-		$this->assertCount( 4, $this->listed( array( 'author_id' => $broker, 'draft' => true ) ), 'Request filters stay skipped.' );
+		$this->assertCount( 4,
+			$this->listed( array( 'author_id' => $broker, 'draft' => true, 'current_language' => 'en' ) ),
+			'Request filters stay skipped.' );
 	}
 
 	/**
@@ -65,6 +74,6 @@ class QueryPropertiesTest extends TestCase {
 	 * @return int[]
 	 */
 	private function listed( array $args ): array {
-		return $this->ids_of( core_query_properties( 20, true, 1, 'en', $args ) );
+		return $this->ids_of( core_query_properties( 20, true, $args ) );
 	}
 }

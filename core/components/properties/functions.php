@@ -226,7 +226,7 @@ function get_map_properties( array $args = array() ): array {
 function core_query_map_properties( array $args = array() ): array {
 	$args['for_map'] = true;
 
-	$properties = core_query_properties( 0, false, 1, $args );
+	$properties = core_query_properties( 0, false, $args );
 	$items      = $properties['items'] ?? array();
 
 	if ( empty( $items ) ) {

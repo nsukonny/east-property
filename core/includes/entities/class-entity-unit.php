@@ -556,6 +556,15 @@ final class Unit {
 	}
 
 	/**
+	 * Check this unit is archived: off every listing, its page still public
+	 *
+	 * @return bool
+	 */
+	public function is_archived(): bool {
+		return 'archived' === $this->get_status();
+	}
+
+	/**
 	 * Check this unit has a valid discount off the original price
 	 *
 	 * @return bool
@@ -738,5 +747,30 @@ final class Unit {
 		delete_post_meta( $this->id, 'is_wait_user_actions' );
 
 		wp_cache_set_last_changed( 'units_listings' );
+	}
+
+	/**
+	 * Archive the unit in every language instead of deleting it
+	 *
+	 * @return bool
+	 */
+	public function delete(): bool {
+		foreach ( $this->get_translations() as $unit ) {
+			$result = wp_update_post(
+				array(
+					'ID'          => $unit->get_id(),
+					'post_status' => 'archived',
+				),
+				true
+			);
+
+			if ( is_wp_error( $result ) ) {
+				return false;
+			}
+		}
+
+		$this->post = get_post( $this->id );
+
+		return true;
 	}
 }

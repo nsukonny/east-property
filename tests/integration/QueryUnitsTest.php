@@ -274,9 +274,9 @@ class QueryUnitsTest extends TestCase {
 			);
 		}
 
-		$first = core_query_units( 'secondary', 2, 1, 'en', array() );
-		$last  = core_query_units( 'secondary', 2, 3, 'en', array() );
-		$past  = core_query_units( 'secondary', 2, 4, 'en', array() );
+		$first = core_query_units( 'secondary', self::query_args( array(), 'en', 2, 1 ) );
+		$last  = core_query_units( 'secondary', self::query_args( array(), 'en', 2, 3 ) );
+		$past  = core_query_units( 'secondary', self::query_args( array(), 'en', 2, 4 ) );
 
 		$this->assertSame( array( $units[0], $units[1] ), $this->ids_of( $first ) );
 		$this->assertSame( 5, $first['total'] );
@@ -306,7 +306,7 @@ class QueryUnitsTest extends TestCase {
 			)
 		);
 
-		$rows = core_query_units( 'secondary', 0, 1, 'en', array() )['items'];
+		$rows = core_query_units( 'secondary', self::query_args() )['items'];
 
 		$this->assertSame( array( $orphan, $in_bare ), $this->ids_of( array( 'items' => $rows ) ) );
 		$this->assertNull( $rows[0]['property_id'] );
@@ -337,7 +337,7 @@ class QueryUnitsTest extends TestCase {
 			)
 		);
 
-		$rows = core_query_units( 'secondary', 0, 1, 'en', array() )['items'];
+		$rows = core_query_units( 'secondary', self::query_args() )['items'];
 
 		$this->assertSame( array( $unit ), $this->ids_of( array( 'items' => $rows ) ) );
 		$this->assertSame( (string) $project, $rows[0]['property_id'] );
@@ -388,7 +388,7 @@ class QueryUnitsTest extends TestCase {
 		$_REQUEST['location']  = $marina;
 		$_REQUEST['developer'] = (string) $developer_ru;
 
-		$result = core_query_units( 'secondary', 0, 1, 'en', array() );
+		$result = core_query_units( 'secondary', self::query_args() );
 		$ids    = wp_list_pluck( $result['items'], 'ID' );
 
 		$this->assertSame( 2, $result['total'] );
@@ -500,7 +500,28 @@ class QueryUnitsTest extends TestCase {
 	 * @return int[]
 	 */
 	private function listed( string $listing_type, array $args = array(), string $language = 'en' ): array {
-		return $this->ids_of( core_query_units( $listing_type, 0, 1, $language, $args ) );
+		return $this->ids_of( core_query_units( $listing_type, self::query_args( $args, $language ) ) );
+	}
+
+	/**
+	 * Arguments of core_query_units() with the language, page and limit get_units() puts in them.
+	 *
+	 * @param array  $args     Extra arguments.
+	 * @param string $language Language slug.
+	 * @param int    $limit    Units per page, zero for the whole listing.
+	 * @param int    $page     Page number.
+	 *
+	 * @return array
+	 */
+	private static function query_args( array $args = array(), string $language = 'en', int $limit = 0, int $page = 1 ): array {
+		return array_merge(
+			$args,
+			array(
+				'current_language' => $language,
+				'current_page'     => $page,
+				'limit'            => $limit,
+			)
+		);
 	}
 
 	/**

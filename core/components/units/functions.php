@@ -129,6 +129,9 @@ function core_query_units( $listing_type, $args ): array {
 	if ( empty( $args['draft'] ) ) {
 		$where[]  = 'u.post_status = %s';
 		$params[] = 'publish';
+	} else {
+		$where[]  = 'u.post_status <> %s';
+		$params[] = 'archived';
 	}
 
 	$joins[] = "LEFT JOIN {$wpdb->posts} AS p_property ON p_property.ID = CAST(pm_property.meta_value AS UNSIGNED)";

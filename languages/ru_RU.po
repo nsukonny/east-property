@@ -3051,3 +3051,15 @@ msgstr ""
 #: core/components/filters/functions.php:589
 msgid "Oldest first"
 msgstr "Сначала старые"
+
+#: core/includes/registers/post-types/units.php:79
+#: single-unit.php:72
+msgid "Archived"
+msgstr "В архиве"
+
+#: core/includes/registers/post-types/units.php:82
+msgid "Archived <span class=\"count\">(%s)</span>"
+msgid_plural "Archived <span class=\"count\">(%s)</span>"
+msgstr[0] "В архиве <span class=\"count\">(%s)</span>"
+msgstr[1] "В архиве <span class=\"count\">(%s)</span>"
+msgstr[2] "В архиве <span class=\"count\">(%s)</span>"
