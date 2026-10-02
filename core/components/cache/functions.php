@@ -19,14 +19,14 @@ function core_generate_cache_key(
 	$request_params = '';
 	if ( ! empty( $approved_request_vars ) ) {
 		foreach ( $approved_request_vars as $value ) {
-			if ( empty( $_REQUEST[ $value ] ) ) {
+			if ( ! isset( $_REQUEST[ $value ] ) || ( empty( $_REQUEST[ $value ] ) && 0 !== (int) $_REQUEST[ $value ] ) ) {
 				continue;
 			}
 
 			$request_params .= $value . '=' . $_REQUEST[ $value ];
 		}
 	}
-	
+
 	$request_params .= wp_json_encode( $args );
 	$request_params .= wp_cache_get_last_changed( $group );
 
