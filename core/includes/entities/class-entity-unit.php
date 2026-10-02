@@ -703,14 +703,6 @@ final class Unit {
 				) . '<br>';
 		}
 
-		$title = $this->get_title();
-//		if ( empty( $title ) || 20 > strlen( $title ) ) {
-//			$errors_messages .= '- ' . __(
-//					'Title should not be empty and must bigger than 20 characters',
-//					'east-property'
-//				) . '<br>';
-//		}
-
 		if ( ! empty( $errors_messages ) ) {
 			update_post_meta( $this->id, 'auto_approve_errors', $errors_messages );
 			update_post_meta( $this->id, 'is_wait_user_actions', 1 );
@@ -744,5 +736,7 @@ final class Unit {
 		);
 		delete_post_meta( $this->id, 'auto_approve_errors' );
 		delete_post_meta( $this->id, 'is_wait_user_actions' );
+
+		wp_cache_set_last_changed( 'units_listings' );
 	}
 }

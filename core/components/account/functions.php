@@ -188,8 +188,8 @@ function core_get_account_list_filters( string $list ): array {
 /**
  * Query string of the filters set on an account list.
  *
- * @param string $list    unit or project.
- * @param array  $filters Filters from core_get_account_list_filters().
+ * @param string $list unit or project.
+ * @param array $filters Filters from core_get_account_list_filters().
  *
  * @return array<string, string>
  */
@@ -209,8 +209,8 @@ function core_get_account_filters_query( string $list, array $filters ): array {
  * Joined from the broker's own posts, so the cost follows their inventory rather than every location on the site.
  *
  * @param string $post_type unit or property.
- * @param int    $author_id Broker ID.
- * @param string $language  Polylang slug, empty for every language.
+ * @param int $author_id Broker ID.
+ * @param string $language Polylang slug, empty for every language.
  *
  * @return array<string, string> Labels by location slug, sorted by name.
  */
@@ -246,7 +246,9 @@ function core_query_account_locations( string $post_type, int $author_id, string
 
 	$locations = array();
 	foreach ( (array) $rows as $row ) {
-		$locations[ $row->slug ] = html_entity_decode( $row->name, ENT_QUOTES | ENT_HTML5, 'UTF-8' ) . ' (' . (int) $row->posts . ')';
+		$locations[ $row->slug ] = html_entity_decode( $row->name,
+				ENT_QUOTES | ENT_HTML5,
+				'UTF-8' ) . ' (' . (int) $row->posts . ')';
 	}
 
 	return $locations;
@@ -257,8 +259,8 @@ function core_query_account_locations( string $post_type, int $author_id, string
  *
  * Joined from the broker's own projects, so the cost follows their inventory rather than every developer relation on the site.
  *
- * @param int    $author_id Broker ID.
- * @param string $language  Polylang slug, empty for every language.
+ * @param int $author_id Broker ID.
+ * @param string $language Polylang slug, empty for every language.
  *
  * @return array<int, string> Labels by developer ID, sorted by name.
  */
@@ -292,7 +294,9 @@ function core_query_account_developers( int $author_id, string $language ): arra
 
 	$developers = array();
 	foreach ( (array) $rows as $row ) {
-		$developers[ (int) $row->ID ] = html_entity_decode( $row->post_title, ENT_QUOTES | ENT_HTML5, 'UTF-8' ) . ' (' . (int) $row->posts . ')';
+		$developers[ (int) $row->ID ] = html_entity_decode( $row->post_title,
+				ENT_QUOTES | ENT_HTML5,
+				'UTF-8' ) . ' (' . (int) $row->posts . ')';
 	}
 
 	return $developers;
@@ -303,10 +307,10 @@ function core_query_account_developers( int $author_id, string $language ): arra
  *
  * Choices use `all` for "any": the dropdown script falls back to the option text when a value is empty.
  *
- * @param string $list    unit or project.
- * @param array  $filters Filters from core_get_account_list_filters().
- * @param array  $options Labels by value under `locations`, and `developers` for projects.
- * @param array  $keep    Query string of the other list's filters, carried over on submit.
+ * @param string $list unit or project.
+ * @param array $filters Filters from core_get_account_list_filters().
+ * @param array $options Labels by value under `locations`, and `developers` for projects.
+ * @param array $keep Query string of the other list's filters, carried over on submit.
  *
  * @return array
  */
@@ -318,7 +322,10 @@ function core_get_account_filters_form( string $list, array $filters, array $opt
 	if ( 'project' === $list ) {
 		$fields = array(
 			'location'  => $location,
-			'developer' => array( 'all' => __( 'Any Developers', 'east-property' ) ) + ( $options['developers'] ?? array() ),
+			'developer' => array(
+							   'all' => __( 'Any Developers',
+								   'east-property' ),
+						   ) + ( $options['developers'] ?? array() ),
 			'status'    => $status,
 		);
 	} else {
@@ -327,7 +334,8 @@ function core_get_account_filters_form( string $list, array $filters, array $opt
 			$beds[ $option['value'] ] = 'studio' === $option['value']
 				? $option['label']
 				/* translators: %s: number of bedrooms, "7+" for the last option. */
-				: sprintf( _n( '%s bedroom', '%s bedrooms', (int) $option['value'], 'east-property' ), $option['label'] );
+				: sprintf( _n( '%s bedroom', '%s bedrooms', (int) $option['value'], 'east-property' ),
+					$option['label'] );
 		}
 
 		$types = array( 'all' => __( 'All unit types', 'east-property' ) );
@@ -336,7 +344,10 @@ function core_get_account_filters_form( string $list, array $filters, array $opt
 		}
 
 		$fields = array(
-			'listing_type' => array( 'all' => __( 'All listing types', 'east-property' ) ) + core_get_listing_type_choices(),
+			'listing_type' => array(
+								  'all' => __( 'All listing types',
+									  'east-property' ),
+							  ) + core_get_listing_type_choices(),
 			'location'     => $location,
 			'beds'         => $beds,
 			'type'         => $types,
@@ -349,7 +360,8 @@ function core_get_account_filters_form( string $list, array $filters, array $opt
 		'search'    => array(
 			'name'        => $list . '_search',
 			'value'       => $filters['search'] ?? '',
-			'placeholder' => 'project' === $list ? __( 'Name or ID', 'east-property' ) : __( 'Name, project or ID', 'east-property' ),
+			'placeholder' => 'project' === $list ? __( 'Name or ID', 'east-property' ) : __( 'Name, project or ID',
+				'east-property' ),
 		),
 		'fields'    => array(),
 		'keep'      => $keep,
@@ -376,8 +388,8 @@ function core_get_account_filters_form( string $list, array $filters, array $opt
 /**
  * Get favorite units
  *
- * @param int    $limit Items per page.
- * @param string $sort  Sort order from core_get_listing_sort(), empty for the default one.
+ * @param int $limit Items per page.
+ * @param string $sort Sort order from core_get_listing_sort(), empty for the default one.
  *
  * @return array
  */
@@ -775,7 +787,6 @@ function account_create_unit(): void {
 		core_account_redirect( 'add_unit', array( __( 'Unit title is required.', 'east-property' ) ) );
 	}
 
-	$errors            = array();
 	$unit_translations = array();
 	foreach ( $languages as $language ) {
 		$unit_id = update_unit_translation( $language, $_POST[ $language['slug'] ] );
@@ -834,6 +845,7 @@ function account_create_unit(): void {
 	}
 
 	core_sync_translation_slugs( $unit_translations );
+	wp_cache_set_last_changed( 'units_listings' );
 
 	show_notify_success( 'account', 'property_added' );
 }
@@ -1143,7 +1155,6 @@ function core_handle_account_create_property(): void {
 
 	$final_image_selection_json = $_POST['final_image_selection'] ?? '';
 	$property_translations      = array();
-	$location_id                = 0;
 
 	foreach ( $languages as $language ) {
 		if ( empty( $_POST[ $language['slug'] ] ) ) {
@@ -1193,6 +1204,7 @@ function core_handle_account_create_property(): void {
 	}
 
 	core_sync_translation_slugs( $property_translations );
+	wp_cache_set_last_changed( 'properties_listings' );
 
 	show_notify_success( 'account?tab=projects', 'property_added' );
 }
@@ -1568,6 +1580,8 @@ function ajax_boost_property(): void {
 		wp_send_json_error( array( 'message' => __( 'Not enough boost points for boost plan.', 'east-property' ) ) );
 	}
 
+	wp_cache_set_last_changed( 'units_listings' );
+
 	wp_send_json_success( array( 'message' => __( 'Property boosted successfully.', 'east-property' ) ) );
 }
 
@@ -1614,6 +1628,7 @@ function delete_unit(): void {
 	}
 
 	if ( $unit->delete() ) {
+		wp_cache_set_last_changed( 'units_listings' );
 		show_notify_success( 'account', 'unit_deleted' );
 	}
 

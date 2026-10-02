@@ -19,7 +19,16 @@ function get_projects_count_by_locations( $locations_ids ): array {
 
 	$where_in = $locations_ids ? implode( ',', array_map( 'intval', $locations_ids ) ) : '0';
 
-	$cache_key      = md5( 'projects_count_by_locations_' . $language . $where_in );
+	$cache_key = core_generate_cache_key(
+		'projects_count_by_locations',
+		'properties_listings',
+		array(),
+		array(
+			'current_language' => $language,
+			'where_in'         => $where_in,
+		)
+	);
+
 	$projects_count = wp_cache_get( $cache_key, 'core' );
 	if ( false !== $projects_count ) {
 		return $projects_count;
@@ -77,16 +86,17 @@ function get_projects_count_by_locations( $locations_ids ): array {
  * @return array
  */
 function get_units_count_by_bedrooms( string $listing_type = '' ): array {
-	$current_language = '';
-	if ( function_exists( 'pll_current_language' ) ) {
-		$current_language = (string) pll_current_language( 'slug' );
+	$current_language = core_get_current_language();
 
-		if ( '' === $current_language && function_exists( 'pll_default_language' ) ) {
-			$current_language = (string) pll_default_language( 'slug' );
-		}
-	}
-
-	$cache_key = md5( 'units_count_by_bedrooms_' . $listing_type . $current_language );
+	$cache_key = core_generate_cache_key(
+		'units_count_by_bedrooms',
+		'units_listings',
+		array(),
+		array(
+			'listing_type'     => $listing_type,
+			'current_language' => $current_language,
+		)
+	);
 
 	$cached = wp_cache_get( $cache_key, 'core' );
 	if ( false !== $cached ) {
