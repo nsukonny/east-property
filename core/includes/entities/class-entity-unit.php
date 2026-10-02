@@ -750,12 +750,34 @@ final class Unit {
 	}
 
 	/**
-	 * Archive the unit in every language instead of deleting it
+	 * Delete the unit in every language: a published version goes to the archive
+	 * and keeps its page, an unpublished one is deleted for good, an archived one stays
 	 *
 	 * @return bool
 	 */
 	public function delete(): bool {
-		foreach ( $this->get_translations() as $unit ) {
+		$translations = $this->get_translations();
+
+		foreach ( $translations as $key => $unit ) {
+			if ( in_array( $unit->get_status(), array( 'publish', 'archived' ), true ) ) {
+				continue;
+			}
+
+			unset( $translations[ $key ] );
+			if ( ! wp_delete_post( $unit->get_id(), true ) ) {
+				return false;
+			}
+		}
+
+		if ( empty( $translations ) ) {
+			return true;
+		}
+
+		foreach ( $translations as $unit ) {
+			if ( 'publish' !== $unit->get_status() ) {
+				continue;
+			}
+
 			$result = wp_update_post(
 				array(
 					'ID'          => $unit->get_id(),
