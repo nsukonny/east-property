@@ -33,8 +33,8 @@ while ( have_posts() ) {
 		$share_details[] = $unit->get_price_html();
 	}
 	$whatsapp_share_text = 'https://wa.me/?text=' . rawurlencode(
-		implode( ' | ', $share_details ) . ' View ' . get_permalink( $unit->get_id() )
-	);
+			implode( ' | ', $share_details ) . ' View ' . get_permalink( $unit->get_id() )
+		);
 
 	$amenities         = $unit->get_amenities();
 	$floor_plan        = $unit->get_floor_plan();
@@ -66,15 +66,16 @@ while ( have_posts() ) {
 										'east-property' ) . ' ' . $property->get_title() ); ?></div>
 						<?php } ?>
 						<?php if ( $is_archived ) { ?>
-							<h1><?php echo esc_html( $unit->get_title() ); ?></h1>
 							<div class="single-items-top-labels">
 								<div class="label black">
-									<span><?php echo esc_html( mb_strtoupper( __( 'Archived', 'east-property' ) ) ); ?></span>
+									<span><?php echo esc_html( mb_strtoupper( __( 'Archived',
+											'east-property' ) ) ); ?></span>
 								</div>
 							</div>
 						<?php } else { ?>
-							<h1><?php echo esc_html( $unit->get_price_html() ); ?></h1>
+							<div class="unit_price"><?php echo esc_html( $unit->get_price_html() ); ?></div>
 						<?php } ?>
+
 						<?php if ( ! $is_archived && $unit->has_discount() ) { ?>
 							<div class="discount">
 								<?php esc_html_e( 'Discount:', 'east-property' ); ?>
@@ -188,7 +189,7 @@ while ( have_posts() ) {
 				?>
 				<div class="single-info">
 					<div class="single-info-block">
-						<h3><?php echo esc_html( $unit->get_title() ); ?></h3>
+						<h1><?php echo esc_html( $unit->get_title() ); ?></h1>
 						<div class="texts">
 							<p><?php echo apply_filters( 'the_content', $desc ); ?></p>
 						</div>

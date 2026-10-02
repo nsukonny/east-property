@@ -1058,7 +1058,9 @@
   font-style: normal;
   font-display: swap;
 }
-.h2, .news-content h2, .news-other-title, .mortgage-offplan-title, .mortgage-why-title, .mortgage-faq-title, .mortgage-entry-title, .calc-result-label, .mortgage-hero-title, .result-tabs .content-title .title-top h2, .single-items-top-left h1, .single-items-top-left h2, .single-items .single-step span, .single-items .single-info-block h3, .single-items .broker-name, .profile-tabs .content-title .title-top h2, .privacy-wrapper h1, .privacy-wrapper h2, .privacy-wrapper h3, .hero-left h1, .hero-item span, .distress-banner .distress-banner-content h2, .about-info h2, .submit-unit-wrapper h1, .map-marker span, .top-title-info h2, .signin-modal .modal-title h3, .quote-modal .modal-title h3, .forgot-modal .modal-title h3, .desc-modal .modal-title h3, .create-modal .modal-title h3, .broker-modal .modal-title h3, .header nav.header-nav .header-menu-list li a, .unit-title span, .unit-card-top-title .unit-card-price, .property-card-info h3, .large-card-top-title .large-card-price, .building-card-info h3, .dropdowns-wrapper h3, .dropdown-title, .gallery-modal .modal .gallery-modal-counter, h1, .h1, h2, h3, .h3,
+.h2, .news-content h2, .news-other-title, .mortgage-offplan-title, .mortgage-why-title, .mortgage-faq-title, .mortgage-entry-title, .calc-result-label, .mortgage-hero-title, .result-tabs .content-title .title-top h2, .single-items-top-left h1,
+.single-items-top-left .unit_price, .single-items-top-left h2, .single-items .single-step span, .single-items .single-info-block h1,
+.single-items .single-info-block h3, .single-items .broker-name, .profile-tabs .content-title .title-top h2, .privacy-wrapper h1, .privacy-wrapper h2, .privacy-wrapper h3, .hero-left h1, .hero-item span, .distress-banner .distress-banner-content h2, .about-info h2, .submit-unit-wrapper h1, .map-marker span, .top-title-info h2, .signin-modal .modal-title h3, .quote-modal .modal-title h3, .forgot-modal .modal-title h3, .desc-modal .modal-title h3, .create-modal .modal-title h3, .broker-modal .modal-title h3, .header nav.header-nav .header-menu-list li a, .unit-title span, .unit-card-top-title .unit-card-price, .property-card-info h3, .large-card-top-title .large-card-price, .building-card-info h3, .dropdowns-wrapper h3, .dropdown-title, .gallery-modal .modal .gallery-modal-counter, h1, .h1, h2, h3, .h3,
 h4, .h4, h5, .h5, h6, .h6 {
   font-family: "Exo 2", sans-serif;
   margin: 0;
@@ -8004,8 +8006,15 @@ main ul:not([class]), .content ul:not([class]) {
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
+  max-width: calc(100% - 340px);
 }
-.single-items-top-left h1 {
+@media (max-width: 768px) {
+  .single-items-top-left {
+    max-width: 100%;
+  }
+}
+.single-items-top-left h1,
+.single-items-top-left .unit_price {
   color: #111;
   font-weight: 900;
   font-size: 40px;
@@ -8013,7 +8022,8 @@ main ul:not([class]), .content ul:not([class]) {
   color: #111;
 }
 @media (min-width: 768px) {
-  .single-items-top-left h1 {
+  .single-items-top-left h1,
+  .single-items-top-left .unit_price {
     font-size: 50px;
     line-height: 58px;
   }
@@ -8095,6 +8105,7 @@ main ul:not([class]), .content ul:not([class]) {
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
+  max-width: 340px;
 }
 .single-items .swiper-slide {
   height: 100%;
@@ -8363,6 +8374,7 @@ main ul:not([class]), .content ul:not([class]) {
   align-items: flex-start;
   gap: 10px;
 }
+.single-items .single-info-block h1,
 .single-items .single-info-block h3 {
   color: #111;
   font-weight: 800;
@@ -8370,6 +8382,7 @@ main ul:not([class]), .content ul:not([class]) {
   line-height: 28px;
 }
 @media (min-width: 768px) {
+  .single-items .single-info-block h1,
   .single-items .single-info-block h3 {
     font-size: 24px;
     line-height: 32px;

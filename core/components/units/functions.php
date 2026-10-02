@@ -46,6 +46,7 @@ function get_units( $listing_type = '', int $limit = 25, $args = array() ): arra
 	$args['current_language'] = core_get_current_language();
 	$args['current_page']     = pagination_get_current_page() ?? 1;
 	$args['limit']            = $limit;
+	$args['listing_type']     = $listing_type;
 
 	$cache_key = core_generate_cache_key(
 		'units',
