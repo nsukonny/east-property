@@ -697,9 +697,9 @@ final class Unit {
 		}
 
 		$area = $this->get_area();
-		if ( empty( $area ) || 200 > $area ) {
+		if ( empty( $area ) || 50 > $area ) {
 			$errors_messages .= '- ' . __(
-					'Area should not be empty and must bigger than 200 sqft',
+					'Area should not be empty and must bigger than 50 sqft',
 					'east-property'
 				) . '<br>';
 		}
