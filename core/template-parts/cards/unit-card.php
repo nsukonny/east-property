@@ -21,7 +21,7 @@ $developer_name = $args['developer_name'] ?? '';
 $edit_link      = $args['edit_link'] ?? '';
 $is_can_boost   = $args['is_can_boost'] ?? false;
 $is_favorite    = $args['is_favorite'] ?? false;
-$broker         = $args['broker'] ?? '';
+$broker         = $args['broker'] ?? null;
 
 if ( empty( $title ) || empty( $price ) || empty( $gallery ) ) {
 	return;
