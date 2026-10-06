@@ -39,9 +39,6 @@ while ( have_posts() ) {
 	$amenities         = $unit->get_amenities();
 	$floor_plan        = $unit->get_floor_plan();
 	$broker            = $unit->get_broker();
-	$whatsapp_text     = __( 'Hello, I am interested in property -', 'east-property' ) . ' ' . $unit->get_url();
-	$whats_app_link    = $broker?->get_whatsapp( $whatsapp_text ) ?: WHATS_APP_LINK;
-	$broker_phone      = $broker?->get_phone( '', true ) ?: PROJECT_PHONE;
 	$desc              = $unit->get_description_full();
 	$is_have_amenities = ! empty( $desc ) && stripos( $desc, __( 'amenities', 'east-property' ) ) !== false;
 
@@ -159,15 +156,16 @@ while ( have_posts() ) {
 									<?php } ?>
 								</div>
 								<div class="broker-bottom">
-									<button class="button orange sm"
-											data-modal-open="broker-modal"
-											data-property-id="<?php echo esc_attr( $unit->get_id() ); ?>"
-											data-property-title="<?php echo esc_attr( $unit->get_title() ); ?>"
-											data-broker-phone="tel:<?php echo esc_attr( $broker->get_phone() ); ?>"
-											data-broker-whatsapp="<?php echo esc_url( $whats_app_link ); ?>"
-									>
-										<?php _e( 'Contact broker', 'east-property' ); ?>
-									</button>
+									<?php
+									get_template_part( 'core/components/ui/button',
+										null,
+										array(
+											'class' => 'orange sm',
+											'text'  => __( 'Contact broker', 'east-property' ),
+											'modal' => 'broker-modal',
+										)
+									);
+									?>
 									<p>
 										<?php _e( 'Get in touch with broker using email, phone or WhatsApp. It’s free and does not
                                                                         require any commitment from your side',
