@@ -177,6 +177,8 @@ if ( ! empty( $amenities ) ) {
 									?>
 									<button class="button orange sm"
 											data-modal-open="broker-modal"
+											data-property-id="<?php echo esc_attr( $unit_id ); ?>"
+											data-property-title="<?php echo esc_attr( $title ); ?>"
 											data-broker-phone="tel:<?php echo $broker->get_phone(); ?>"
 											data-broker-whatsapp="<?php echo esc_url( $whats_app_link ) ?>"
 									>
