@@ -75,7 +75,7 @@ function add_open_ai() {
 	<?php
 }
 
-if ( defined( 'WP_ENVIRONMENT_TYPE' ) && 'production' === WP_ENVIRONMENT_TYPE ) {
+if ( 'production' === wp_get_environment_type() ) {
 	add_action( 'wp_head', 'add_google_analytics' );
 	add_action( 'wp_head', 'add_yandex_metrica' );
 	add_action( 'wp_head', 'add_open_ai' );

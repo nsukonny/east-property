@@ -8,7 +8,7 @@ use Entities\Unit;
 
 define( 'THEME_PATH', get_template_directory() );
 define( 'THEME_URL', get_template_directory_uri() );
-$is_dev = defined( 'WP_ENVIRONMENT_TYPE' ) && 'local' === WP_ENVIRONMENT_TYPE;
+$is_dev = 'local' === wp_get_environment_type();
 $is_dev = isset( $_GET['reset'] ) && '1' === $_GET['reset'] ? true : $is_dev;
 $is_dev = isset( $_GET['w3tc_note'] ) ? true : $is_dev;
 define( 'IS_DEV', $is_dev );
