@@ -75,8 +75,62 @@ function add_open_ai() {
 	<?php
 }
 
+/**
+ * LinkedIn Insight Tag with the campaign conversions
+ *
+ * Printed in the footer so the queueing stub exists before any conversion fires.
+ *
+ * @return void
+ */
+function add_linkedin_insight_tag() {
+	?>
+	<!-- LinkedIn Insight Tag -->
+	<script type="text/javascript">
+		_linkedin_partner_id = "11010401";
+		window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+		window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+	</script>
+	<script type="text/javascript">
+		(function (l) {
+			if (!l) {
+				window.lintrk = function (a, b) {
+					window.lintrk.q.push([a, b])
+				};
+				window.lintrk.q = []
+			}
+			var s = document.getElementsByTagName("script")[0];
+			var b = document.createElement("script");
+			b.type = "text/javascript";
+			b.async = true;
+			b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+			s.parentNode.insertBefore(b, s);
+		})(window.lintrk);
+	</script>
+	<noscript>
+		<img height="1" width="1" style="display:none;" alt=""
+			 src="https://px.ads.linkedin.com/collect/?pid=11010401&amp;fmt=gif"/>
+	</noscript>
+	<script type="text/javascript">
+		document.addEventListener('click', function (event) {
+			var target = event.target;
+			if (!target || !target.closest || !target.closest('a[href*="wa.me"], a[href*="whatsapp.com"]')) {
+				return;
+			}
+
+			window.lintrk('track', {conversion_id: 31618489});
+		});
+
+		document.addEventListener('request_a_callback', function () {
+			window.lintrk('track', {conversion_id: 31618481});
+		});
+	</script>
+	<!-- /LinkedIn Insight Tag -->
+	<?php
+}
+
 if ( 'production' === wp_get_environment_type() ) {
 	add_action( 'wp_head', 'add_google_analytics' );
 	add_action( 'wp_head', 'add_yandex_metrica' );
 	add_action( 'wp_head', 'add_open_ai' );
+	add_action( 'wp_footer', 'add_linkedin_insight_tag' );
 }

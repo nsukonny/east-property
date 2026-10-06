@@ -35,6 +35,25 @@ function get_all_languages(): array {
 }
 
 /**
+ * Carry the campaign parameters of the current request over to a URL.
+ *
+ * @param string $url
+ *
+ * @return string
+ */
+function core_carry_campaign_params( string $url ): string {
+	$params = array();
+
+	foreach ( array( 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid', 'li_fat_id' ) as $key ) {
+		if ( ! empty( $_GET[ $key ] ) && is_string( $_GET[ $key ] ) ) {
+			$params[ $key ] = sanitize_text_field( wp_unslash( $_GET[ $key ] ) );
+		}
+	}
+
+	return empty( $params ) ? $url : add_query_arg( $params, $url );
+}
+
+/**
  * Language switcher entries for the page being rendered.
  *
  * The language home page is handed back by pll_the_languages() for every language the
@@ -68,7 +87,7 @@ function core_get_language_switcher(): array {
 		$entries[] = array(
 			'slug'           => $slug,
 			'locale'         => (string) ( $language['locale'] ?? $slug ),
-			'url'            => $url,
+			'url'            => core_carry_campaign_params( $url ),
 			'is_translation' => $is_translation,
 			'label'          => 'ru' === $slug ? 'РУ' : strtoupper( $slug ),
 		);
