@@ -170,21 +170,21 @@ if ( ! empty( $amenities ) ) {
 									<?php require THEME_PATH . '/assets/img/bookmark.svg'; ?>
 								</button>
 
-								<?php if ( ! empty( $broker ) ) {
-									$whatsapp_text  = __( 'Hello, I am interested in property -',
-											'east-property' ) . ' ' . $url;
-									$whats_app_link = $broker->get_whatsapp( $whatsapp_text ) ?: WHATS_APP_LINK;
-									?>
-									<button class="button orange sm"
-											data-modal-open="broker-modal"
-											data-property-id="<?php echo esc_attr( $unit_id ); ?>"
-											data-property-title="<?php echo esc_attr( $title ); ?>"
-											data-broker-phone="tel:<?php echo $broker->get_phone(); ?>"
-											data-broker-whatsapp="<?php echo esc_url( $whats_app_link ) ?>"
-									>
-										<?php _e( 'Contact broker', 'east-property' ); ?>
-									</button>
-								<?php } ?>
+								<?php
+								$whatsapp_text  = __( 'Hello, I am interested in property -',
+										'east-property' ) . ' ' . $url;
+								$whats_app_link = $broker?->get_whatsapp( $whatsapp_text ) ?: WHATS_APP_LINK;
+								$broker_phone   = $broker?->get_phone( '', true ) ?: PROJECT_PHONE;
+								?>
+								<button class="button orange sm"
+										data-modal-open="broker-modal"
+										data-property-id="<?php echo esc_attr( $unit_id ); ?>"
+										data-property-title="<?php echo esc_attr( $title ); ?>"
+										data-broker-phone="tel:<?php echo esc_attr( $broker_phone ); ?>"
+										data-broker-whatsapp="<?php echo esc_url( $whats_app_link ) ?>"
+								>
+									<?php _e( 'Contact broker', 'east-property' ); ?>
+								</button>
 							<?php } ?>
 						</div>
 					</div>
