@@ -163,7 +163,7 @@ while ( have_posts() ) {
 											data-modal-open="broker-modal"
 											data-property-id="<?php echo esc_attr( $unit->get_id() ); ?>"
 											data-property-title="<?php echo esc_attr( $unit->get_title() ); ?>"
-											data-broker-phone="tel:<?php echo esc_attr( $broker->get_phone() ); ?>"
+											data-broker-phone="tel:<?php echo esc_attr( $broker_phone ); ?>"
 											data-broker-whatsapp="<?php echo esc_url( $whats_app_link ); ?>"
 									>
 										<?php _e( 'Contact broker', 'east-property' ); ?>
