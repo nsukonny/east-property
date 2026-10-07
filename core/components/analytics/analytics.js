@@ -1,12 +1,29 @@
 /**
  * Google Analytics events
  */
+
+/**
+ * Section of the site the current page belongs to
+ *
+ * @return {string}
+ */
+const getPageType = () => {
+	const segments = window.location.pathname.split('/').filter(Boolean);
+	const languages = window.ajax_object?.languages || [];
+
+	if (languages.includes(segments[0])) {
+		segments.shift();
+	}
+
+	return segments[0] || 'home';
+};
+
 document.addEventListener('click', function (event) {
 	if (typeof window.gtag !== 'function') {
 		return;
 	}
 
-	const pageType = window.location.href.split('/')[3];
+	const pageType = getPageType();
 
 	const brokerModalBtn = event.target.closest('button[data-modal-open="broker-modal"]');
 	if (brokerModalBtn) {
@@ -45,4 +62,32 @@ document.addEventListener('click', function (event) {
 			property_name: brokerModal?.dataset.propertyTitle || ''
 		});
 	}
+
+	const sellModalBtn = event.target.closest('button[data-modal-open="contact-manager-modal"]');
+	if (sellModalBtn) {
+		window.gtag('event', 'opened_sell_my_distress_modal', {
+			page_type: pageType,
+			contact_type: 'contact_manager_modal'
+		});
+	}
+
+	const sellWhatsAppLink = event.target.closest('.modal-wrapper[data-modal-id="contact-manager-modal"] .ccm-btn-primary');
+	if (sellWhatsAppLink) {
+		window.gtag('event', 'sell_my_distress_whatsapp', {
+			page_type: pageType,
+			contact_type: 'whatsapp'
+		});
+	}
+});
+
+document.addEventListener('subscribe_form_success', function () {
+	if (typeof window.gtag !== 'function') {
+		return;
+	}
+
+	window.gtag('event', 'subscribe_newsletter', {
+		page_type: getPageType(),
+		contact_type: 'newsletter',
+		form_name: 'subscribe_form'
+	});
 });

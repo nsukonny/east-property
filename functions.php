@@ -71,6 +71,7 @@ function add_theme_styles(): void {
 		array(
 			'ajax_url'    => admin_url( 'admin-ajax.php' ),
 			'_ajax_nonce' => wp_create_nonce( 'get_filtered_properties' ),
+			'languages'   => function_exists( 'pll_languages_list' ) ? pll_languages_list() : array(),
 		)
 	);
 
