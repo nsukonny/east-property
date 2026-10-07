@@ -1,6 +1,6 @@
 <?php
 /**
- * Sitemap and indexing rules.
+ * Sitemap, indexing and social preview rules.
  *
  * The XML sitemap is produced by Yoast SEO. Everything here narrows it down to
  * URLs that actually resolve and keeps generation cheap enough that a cold
@@ -878,3 +878,69 @@ function core_unindexable_host_robots_txt( $output ): string {
 
 // Yoast rebuilds robots.txt from scratch at 99999, so this has to come after.
 add_filter( 'robots_txt', 'core_unindexable_host_robots_txt', 100000 );
+
+/**
+ * Attachment id of the first gallery image on a unit or project page.
+ *
+ * Neither post type carries a featured image, so Yoast has nothing to offer the
+ * social networks on its own.
+ *
+ * @return int
+ */
+function core_social_gallery_image_id(): int {
+	static $image_id = null;
+
+	if ( null !== $image_id ) {
+		return $image_id;
+	}
+
+	$image_id = 0;
+
+	if ( is_singular( array( 'unit', 'property' ) ) ) {
+		$post_id = get_queried_object_id();
+		$entity  = 'unit' === get_post_type( $post_id )
+			? new Entities\Unit( $post_id )
+			: new Entities\Property( $post_id );
+
+		$gallery_ids = $entity->get_gallery_ids();
+		$image_id    = (int) ( reset( $gallery_ids ) ?: 0 );
+	}
+
+	return $image_id;
+}
+
+/**
+ * Open Graph image for units and projects.
+ *
+ * @param Yoast\WP\SEO\Values\Open_Graph\Images $image_container
+ *
+ * @return void
+ */
+function core_opengraph_gallery_image( $image_container ): void {
+	$image_id = core_social_gallery_image_id();
+
+	if ( ! empty( $image_id ) ) {
+		$image_container->add_image_by_id( $image_id );
+	}
+}
+
+add_filter( 'wpseo_add_opengraph_images', 'core_opengraph_gallery_image' );
+
+/**
+ * Twitter card image for units and projects.
+ *
+ * @param string $image
+ *
+ * @return string
+ */
+function core_twitter_gallery_image( string $image ): string {
+	if ( ! empty( $image ) ) {
+		return $image;
+	}
+
+	$image_id = core_social_gallery_image_id();
+
+	return ! empty( $image_id ) ? (string) wp_get_attachment_image_url( $image_id, 'full' ) : $image;
+}
+
+add_filter( 'wpseo_twitter_image', 'core_twitter_gallery_image' );
