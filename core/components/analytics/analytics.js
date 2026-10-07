@@ -80,19 +80,14 @@ document.addEventListener('click', function (event) {
 	}
 });
 
-document.addEventListener('submit', function (event) {
+document.addEventListener('subscribe_form_success', function () {
 	if (typeof window.gtag !== 'function') {
 		return;
 	}
 
-	const pageType = getPageType();
-
-	const subscribeForm = event.target.closest('form[name="subscribe_form"]');
-	if (subscribeForm) {
-		window.gtag('event', 'subscribe_newsletter', {
-			page_type: pageType,
-			contact_type: 'newsletter',
-			form_name: 'subscribe_form'
-		});
-	}
+	window.gtag('event', 'subscribe_newsletter', {
+		page_type: getPageType(),
+		contact_type: 'newsletter',
+		form_name: 'subscribe_form'
+	});
 });

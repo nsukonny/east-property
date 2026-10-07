@@ -39,6 +39,10 @@ const initSubscriptionForm = () => {
 		})
 			.then(response => response.json())
 			.then(response => {
+				if (response.success) {
+					document.dispatchEvent(new Event('subscribe_form_success'));
+				}
+
 				setTimeout(() => {
 					if (response.success) {
 						window.showNotification(response.data.message, 'success');
