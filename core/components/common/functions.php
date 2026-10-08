@@ -89,31 +89,48 @@ function pagination_get_current_page(): int {
 }
 
 /**
- * Add custom JS configs to global scripts
+ * Read a setting from the project .env
  *
- * @return void
+ * The file is loaded once per request, so this also works under WP-CLI, where
+ * no wp_head runs.
+ *
+ * @param string $key
+ * @param string $fallback
+ *
+ * @return string
  */
-function custom_head_scripts(): void {
+function core_env( string $key, string $fallback = '' ): string {
 	static $loaded = false;
 
 	if ( ! $loaded ) {
-		$autoload = dirname( dirname( dirname( THEME_PATH ) ) ) . '/vendor/autoload.php';
+		$root     = dirname( THEME_PATH, 3 );
+		$autoload = $root . '/vendor/autoload.php';
+
 		if ( file_exists( $autoload ) ) {
 			require_once $autoload;
 		}
 
 		if ( class_exists( \Dotenv\Dotenv::class ) ) {
-			$dotenv = \Dotenv\Dotenv::createImmutable( dirname( dirname( dirname( THEME_PATH ) ) ) );
-			$dotenv->safeLoad();
+			\Dotenv\Dotenv::createImmutable( $root )->safeLoad();
 		}
 
 		$loaded = true;
 	}
+
+	return isset( $_ENV[ $key ] ) ? (string) $_ENV[ $key ] : $fallback;
+}
+
+/**
+ * Add custom JS configs to global scripts
+ *
+ * @return void
+ */
+function custom_head_scripts(): void {
 	?>
 	<script>
 		window.MAP_CONFIG = {
-			apiKey: '<?php echo $_ENV['GOOGLE_MAPS_KEY'] ?? ''; ?>',
-			mapId: '<?php echo $_ENV['GOOGLE_MAPS_MAP_ID'] ?? ''; ?>',
+			apiKey: '<?php echo core_env( 'GOOGLE_MAPS_KEY' ); ?>',
+			mapId: '<?php echo core_env( 'GOOGLE_MAPS_MAP_ID' ); ?>',
 		};
 	</script>
 	<?php

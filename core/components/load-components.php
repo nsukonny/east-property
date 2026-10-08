@@ -9,6 +9,7 @@ require THEME_PATH . '/core/components/account/functions.php';
 require THEME_PATH . '/core/components/agencies/functions.php';
 require THEME_PATH . '/core/components/properties/functions.php';
 require THEME_PATH . '/core/components/units/functions.php';
+require THEME_PATH . '/core/components/locations/functions.php';
 require THEME_PATH . '/core/components/filters/functions.php';
 require THEME_PATH . '/core/components/common/functions.php';
 require THEME_PATH . '/core/components/common/notifications/functions.php';

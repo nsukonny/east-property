@@ -41,18 +41,18 @@ $switcher    = function_exists( 'core_get_language_switcher' ) ? core_get_langua
 		);
 		?>
 
-		<?php if ( ! empty( $switcher ) ) : ?>
+		<?php if ( count( (array) $switcher ) > 1 ) : ?>
 			<div class="header-nav-languages mobile">
-				<ul class="language-switcher">
-					<?php foreach ( $switcher as $language ) { ?>
-						<a lang="<?php echo esc_attr( $language['locale'] ); ?>"
-						   hreflang="<?php echo esc_attr( $language['locale'] ); ?>"
-						   href="<?php echo esc_url( $language['url'] ); ?>">
-							<?php require THEME_PATH . '/assets/img/lang/earth.svg'; ?>
-							<span><?php echo esc_html( $language['label'] ); ?></span>
-						</a>
-					<?php } ?>
-				</ul>
+				<?php
+				get_template_part(
+					'core/template-parts/common/language-switcher',
+					null,
+					array(
+						'switcher' => $switcher,
+						'modifier' => 'mobile',
+					)
+				);
+				?>
 			</div>
 		<?php endif; ?>
 

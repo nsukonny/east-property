@@ -17,18 +17,16 @@ $switcher    = core_get_language_switcher();
 			</a>
 			<?php get_template_part( 'core/components/common/nav' ); ?>
 			<div class="header-actions">
-				<?php if ( ! empty( $switcher ) ) : ?>
-					<ul class="language-switcher">
-						<?php foreach ( $switcher as $language ) { ?>
-							<a lang="<?php echo esc_attr( $language['locale'] ); ?>"
-							   hreflang="<?php echo esc_attr( $language['locale'] ); ?>"
-							   href="<?php echo esc_url( $language['url'] ); ?>">
-								<?php require THEME_PATH . '/assets/img/lang/earth.svg'; ?>
-								<span><?php echo esc_html( $language['label'] ); ?></span>
-							</a>
-						<?php } ?>
-					</ul>
-				<?php endif; ?>
+				<?php
+				get_template_part(
+					'core/template-parts/common/language-switcher',
+					null,
+					array(
+						'switcher' => $switcher,
+						'modifier' => 'desktop',
+					)
+				);
+				?>
 
 				<?php if ( ! is_user_logged_in() ) { ?>
 					<button class="header-signin" type="button" data-modal-open="signin-modal">

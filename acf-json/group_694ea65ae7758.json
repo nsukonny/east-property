@@ -541,7 +541,7 @@
         },
         {
             "key": "field_6990c0b94aab8",
-            "label": "Payment Plans (copy)",
+            "label": "Payment Plans",
             "name": "payment_plans",
             "aria-label": "",
             "type": "repeater",
@@ -553,10 +553,11 @@
                 "class": "",
                 "id": ""
             },
-            "collapsed": "",
+            "layout": "block",
+            "pagination": 0,
             "min": 0,
             "max": 0,
-            "layout": "block",
+            "collapsed": "",
             "button_label": "Add Row",
             "rows_per_page": 20,
             "sub_fields": [
@@ -1156,5 +1157,5 @@
     "allow_ai_access": false,
     "ai_description": "",
     "pll_display_field_instructions": 1,
-    "modified": 1786992269
+    "modified": 1791442606
 }

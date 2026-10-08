@@ -17,21 +17,3 @@
 		position: fixed;
 	}
 }
-
-.language-switcher {
-	.current-lang {
-		display: none;
-	}
-
-	a {
-		display: flex;
-		align-items: center;
-		margin-right: 12px;
-
-		span {
-			color: #111;
-			font-size: 14px;
-			line-height: 18px;
-		}
-	}
-}
