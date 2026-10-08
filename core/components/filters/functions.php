@@ -1038,9 +1038,11 @@ function get_developers_list(): array {
 	);
 
 	foreach ( (array) $rows as $row ) {
+		$title = (string) apply_filters( 'the_title', $row->post_title, (int) $row->ID );
+
 		$results[] = array(
 			'value' => (string) (int) $row->ID,
-			'label' => (string) apply_filters( 'the_title', $row->post_title, (int) $row->ID ),
+			'label' => html_entity_decode( $title, ENT_QUOTES | ENT_HTML5, 'UTF-8' ),
 		);
 	}
 
