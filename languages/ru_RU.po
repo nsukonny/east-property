@@ -643,43 +643,43 @@ msgstr "Выбрать"
 msgid "Boost"
 msgstr "Продвинуть"
 
-#: core/components/modals/broker-modal.php:14
+#: core/components/modals/broker-modal.php:24
 msgid "Hello, I am interested in property"
 msgstr "Здравствуйте, меня интересует объект"
 
-#: core/components/modals/broker-modal.php:26
-#: core/template-parts/cards/unit-card.php:186
+#: core/components/modals/broker-modal.php:34
+#: core/template-parts/cards/unit-card.php:185
 #: core/template-parts/common/contact-panel.php:66
 #: single-unit.php:169
 msgid "Contact broker"
 msgstr "Связаться с брокером"
 
-#: core/components/modals/broker-modal.php:34
+#: core/components/modals/broker-modal.php:42
 #: core/components/modals/quote-modal.php:44
 msgid "You can get more information about the available properties, special deals and prices."
 msgstr "Вы можете получить дополнительную информацию о доступных объектах недвижимости, специальных предложениях и ценах."
 
-#: core/components/modals/broker-modal.php:40
+#: core/components/modals/broker-modal.php:48
 msgid "We work directly with brokers"
 msgstr "Мы работаем напрямую с брокерами"
 
-#: core/components/modals/broker-modal.php:45
+#: core/components/modals/broker-modal.php:53
 #: core/components/modals/quote-modal.php:54
 #: template-parts/sections/index/about.php:20
 msgid "We facilitate the entire process for you"
 msgstr "Мы сопровождаем весь процесс для вас"
 
-#: core/components/modals/broker-modal.php:50
+#: core/components/modals/broker-modal.php:58
 #: core/components/modals/quote-modal.php:59
 #: template-parts/sections/index/about.php:25
 msgid "We don’t add anything on top of the price"
 msgstr "Мы ничего не добавляем к цене сверху"
 
-#: core/components/modals/broker-modal.php:61
+#: core/components/modals/broker-modal.php:69
 msgid "Phone"
 msgstr "Телефон"
 
-#: core/components/modals/broker-modal.php:70
+#: core/components/modals/broker-modal.php:78
 msgid "WhatsApp"
 msgstr "WhatsApp"
 
@@ -1077,15 +1077,15 @@ msgstr "Планировка лота с %s спальнями"
 msgid "from"
 msgstr "от"
 
-#: core/includes/entities/class-entity-estate-user.php:268
+#: core/includes/entities/class-entity-estate-user.php:265
 msgid "Your email address has been successfully verified."
 msgstr "Ваш адрес электронной почты успешно подтвержден."
 
-#: core/includes/entities/class-entity-estate-user.php:269
+#: core/includes/entities/class-entity-estate-user.php:266
 msgid "You can now enjoy all the features of your account and start using our services."
 msgstr "Теперь вы можете воспользоваться всеми возможностями своей учетной записи и начать пользоваться нашими услугами."
 
-#: core/includes/entities/class-entity-estate-user.php:277
+#: core/includes/entities/class-entity-estate-user.php:274
 msgid "Email Verified"
 msgstr "Email подтвержден"
 
@@ -2023,11 +2023,6 @@ msgstr "Апартаменты в "
 msgid "Boost property"
 msgstr "Продвинуть объект"
 
-#: core/template-parts/cards/unit-card.php:174
-#: single-unit.php:42
-msgid "Hello, I am interested in property -"
-msgstr "Здравствуйте, меня интересует объект -"
-
 #: core/template-parts/cards/unit-square-card.php:55
 msgid "Original Price:"
 msgstr "Исходная цена:"
@@ -2224,15 +2219,15 @@ msgstr "WhatsApp — самый быстрый ответ"
 msgid "Best for urgent questions, pricing, and quick consultation."
 msgstr "Лучше всего подходит для срочных вопросов, цен и быстрой консультации."
 
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:46
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:49
 msgid "Open WhatsApp"
 msgstr "Открыть WhatsApp"
 
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:52
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:55
 msgid "We usually reply within 5–10 minutes during working hours."
 msgstr "Обычно отвечаем в течение 5–10 минут в рабочее время."
 
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:63
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:66
 msgid "Your information is kept strictly confidential"
 msgstr "Ваша информация хранится в строгой конфиденциальности"
 
@@ -3077,3 +3072,22 @@ msgstr "Площадь не должна быть пустой и должна �
 #: core/template-parts/common/language-switcher.php:38
 msgid "Change language"
 msgstr "Сменить язык"
+
+#. translators: 1: project name, 2: developer name, 3: project URL.
+#: core/components/properties/functions.php:965
+msgid "Hello! I am interested in the %1$s project by %2$s. Could you tell me more about it? %3$s"
+msgstr "Здравствуйте! Меня интересует проект %1$s от %2$s. Расскажите, пожалуйста, о нём подробнее. %3$s"
+
+#. translators: 1: project name, 2: project URL.
+#: core/components/properties/functions.php:975
+msgid "Hello! I am interested in the %1$s project. Could you tell me more about it? %2$s"
+msgstr "Здравствуйте! Меня интересует проект %1$s. Расскажите, пожалуйста, о нём подробнее. %2$s"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:42
+msgid "Hello! I would like a quick consultation about a distress sale of my property."
+msgstr "Здравствуйте! Хочу получить быструю консультацию по срочной продаже моей недвижимости."
+
+#. translators: 1: unit name, 2: unit URL.
+#: core/components/units/functions.php:618
+msgid "Hello! I am interested in %1$s. Could you tell me more about it? %2$s"
+msgstr "Здравствуйте! Меня интересует %1$s. Расскажите, пожалуйста, подробнее. %2$s"

@@ -38,7 +38,10 @@
                         </div>
                     </div>
                     <a
-                            href="<?php echo WHATS_APP_LINK; ?>"
+                            href="<?php echo WHATS_APP_LINK . '?text=' . rawurlencode(
+								__( 'Hello! I would like a quick consultation about a distress sale of my property.',
+									'east-property' )
+							); ?>"
                             target="_blank"
                             rel="noopener noreferrer"
                             class="ccm-btn ccm-btn-primary"

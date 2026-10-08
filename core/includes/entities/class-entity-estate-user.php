@@ -185,15 +185,12 @@ final class Estate_User {
 		}
 
 		$whatsapp_number = preg_replace( '/\D+/', '', $whatsapp_number );
-		if ( empty( $whatsapp_number ) ) {
-			return WHATS_APP_LINK;
-		}
-
-		$whats_app_link = 'https://wa.me/';
-		$whats_app_link .= str_replace( ' ', '', $whatsapp_number );
+		$whats_app_link  = '' !== (string) $whatsapp_number
+			? 'https://wa.me/' . str_replace( ' ', '', $whatsapp_number )
+			: WHATS_APP_LINK;
 
 		if ( ! empty( $text ) ) {
-			$whats_app_link .= '?text=' . $text;
+			$whats_app_link .= '?text=' . rawurlencode( $text );
 		}
 
 		return $whats_app_link;

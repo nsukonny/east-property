@@ -940,3 +940,40 @@ add_action(
 		auto_update_properties();
 	}
 );
+
+/**
+ * WhatsApp enquiry a visitor sends about a project.
+ *
+ * Carries a greeting and a question: the button used to send the listing line
+ * meant for sharing, so the broker received a bare set of facts.
+ *
+ * @param Entities\Property $property
+ *
+ * @return string
+ */
+function core_property_enquiry_text( Entities\Property $property ): string {
+	$decode    = static function ( string $value ): string {
+		return html_entity_decode( $value, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+	};
+	$title     = $decode( $property->get_title() );
+	$developer = $property->get_developer();
+	$url       = (string) get_permalink( $property->get_id() );
+
+	if ( null !== $developer && '' !== trim( $developer->get_title() ) ) {
+		return sprintf(
+		/* translators: 1: project name, 2: developer name, 3: project URL. */
+			__( 'Hello! I am interested in the %1$s project by %2$s. Could you tell me more about it? %3$s',
+				'east-property' ),
+			$title,
+			$decode( $developer->get_title() ),
+			$url
+		);
+	}
+
+	return sprintf(
+	/* translators: 1: project name, 2: project URL. */
+		__( 'Hello! I am interested in the %1$s project. Could you tell me more about it? %2$s', 'east-property' ),
+		$title,
+		$url
+	);
+}

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-08T13:31:35+00:00\n"
+"POT-Creation-Date: 2026-10-08T13:55:45+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: east-property\n"
@@ -745,43 +745,43 @@ msgstr ""
 msgid "Boost"
 msgstr ""
 
-#: core/components/modals/broker-modal.php:14
+#: core/components/modals/broker-modal.php:24
 msgid "Hello, I am interested in property"
 msgstr ""
 
-#: core/components/modals/broker-modal.php:26
-#: core/template-parts/cards/unit-card.php:186
+#: core/components/modals/broker-modal.php:34
+#: core/template-parts/cards/unit-card.php:185
 #: core/template-parts/common/contact-panel.php:66
 #: single-unit.php:169
 msgid "Contact broker"
 msgstr ""
 
-#: core/components/modals/broker-modal.php:34
+#: core/components/modals/broker-modal.php:42
 #: core/components/modals/quote-modal.php:44
 msgid "You can get more information about the available properties, special deals and prices."
 msgstr ""
 
-#: core/components/modals/broker-modal.php:40
+#: core/components/modals/broker-modal.php:48
 msgid "We work directly with brokers"
 msgstr ""
 
-#: core/components/modals/broker-modal.php:45
+#: core/components/modals/broker-modal.php:53
 #: core/components/modals/quote-modal.php:54
 #: template-parts/sections/index/about.php:20
 msgid "We facilitate the entire process for you"
 msgstr ""
 
-#: core/components/modals/broker-modal.php:50
+#: core/components/modals/broker-modal.php:58
 #: core/components/modals/quote-modal.php:59
 #: template-parts/sections/index/about.php:25
 msgid "We don’t add anything on top of the price"
 msgstr ""
 
-#: core/components/modals/broker-modal.php:61
+#: core/components/modals/broker-modal.php:69
 msgid "Phone"
 msgstr ""
 
-#: core/components/modals/broker-modal.php:70
+#: core/components/modals/broker-modal.php:78
 msgid "WhatsApp"
 msgstr ""
 
@@ -1048,6 +1048,16 @@ msgstr ""
 msgid "Handover:"
 msgstr ""
 
+#. translators: 1: project name, 2: developer name, 3: project URL.
+#: core/components/properties/functions.php:965
+msgid "Hello! I am interested in the %1$s project by %2$s. Could you tell me more about it? %3$s"
+msgstr ""
+
+#. translators: 1: project name, 2: project URL.
+#: core/components/properties/functions.php:975
+msgid "Hello! I am interested in the %1$s project. Could you tell me more about it? %2$s"
+msgstr ""
+
 #: core/components/properties/property-single.php:59
 msgid "Show all properties in this project"
 msgstr ""
@@ -1159,6 +1169,11 @@ msgstr ""
 msgid "Distress"
 msgstr ""
 
+#. translators: 1: unit name, 2: unit URL.
+#: core/components/units/functions.php:618
+msgid "Hello! I am interested in %1$s. Could you tell me more about it? %2$s"
+msgstr ""
+
 #: core/components/units/similar.php:61
 msgid "More properties like this"
 msgstr ""
@@ -1204,15 +1219,15 @@ msgstr ""
 msgid "from"
 msgstr ""
 
-#: core/includes/entities/class-entity-estate-user.php:268
+#: core/includes/entities/class-entity-estate-user.php:265
 msgid "Your email address has been successfully verified."
 msgstr ""
 
-#: core/includes/entities/class-entity-estate-user.php:269
+#: core/includes/entities/class-entity-estate-user.php:266
 msgid "You can now enjoy all the features of your account and start using our services."
 msgstr ""
 
-#: core/includes/entities/class-entity-estate-user.php:277
+#: core/includes/entities/class-entity-estate-user.php:274
 msgid "Email Verified"
 msgstr ""
 
@@ -2144,11 +2159,6 @@ msgstr ""
 msgid "Boost property"
 msgstr ""
 
-#: core/template-parts/cards/unit-card.php:174
-#: single-unit.php:42
-msgid "Hello, I am interested in property -"
-msgstr ""
-
 #: core/template-parts/cards/unit-square-card.php:55
 msgid "Original Price:"
 msgstr ""
@@ -2342,15 +2352,19 @@ msgstr ""
 msgid "Best for urgent questions, pricing, and quick consultation."
 msgstr ""
 
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:46
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:42
+msgid "Hello! I would like a quick consultation about a distress sale of my property."
+msgstr ""
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:49
 msgid "Open WhatsApp"
 msgstr ""
 
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:52
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:55
 msgid "We usually reply within 5–10 minutes during working hours."
 msgstr ""
 
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:63
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:66
 msgid "Your information is kept strictly confidential"
 msgstr ""
 

@@ -171,8 +171,7 @@ if ( ! empty( $amenities ) ) {
 								</button>
 
 								<?php
-								$whatsapp_text  = __( 'Hello, I am interested in property -',
-										'east-property' ) . ' ' . $url;
+								$whatsapp_text  = core_unit_enquiry_text( $title, $url );
 								$whats_app_link = $broker?->get_whatsapp( $whatsapp_text ) ?: WHATS_APP_LINK;
 								$broker_phone   = $broker?->get_phone( '', true ) ?: PROJECT_PHONE;
 								?>

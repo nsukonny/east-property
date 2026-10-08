@@ -756,43 +756,43 @@ msgstr "Auswählen"
 msgid "Boost"
 msgstr "Boost"
 
-#: core/components/modals/broker-modal.php:14
+#: core/components/modals/broker-modal.php:24
 msgid "Hello, I am interested in property"
 msgstr "Hallo, ich interessiere mich für Immobilien"
 
-#: core/components/modals/broker-modal.php:26
-#: core/template-parts/cards/unit-card.php:186
+#: core/components/modals/broker-modal.php:34
+#: core/template-parts/cards/unit-card.php:185
 #: core/template-parts/common/contact-panel.php:66
 #: single-unit.php:169
 msgid "Contact broker"
 msgstr "Makler kontaktieren"
 
-#: core/components/modals/broker-modal.php:34
+#: core/components/modals/broker-modal.php:42
 #: core/components/modals/quote-modal.php:44
 msgid "You can get more information about the available properties, special deals and prices."
 msgstr "Hier finden Sie weitere Informationen zu den verfügbaren Immobilien, Sonderangeboten und Preisen."
 
-#: core/components/modals/broker-modal.php:40
+#: core/components/modals/broker-modal.php:48
 msgid "We work directly with brokers"
 msgstr "Wir arbeiten direkt mit Maklern zusammen"
 
-#: core/components/modals/broker-modal.php:45
+#: core/components/modals/broker-modal.php:53
 #: core/components/modals/quote-modal.php:54
 #: template-parts/sections/index/about.php:20
 msgid "We facilitate the entire process for you"
 msgstr "Wir übernehmen für Sie die gesamte Abwicklung"
 
-#: core/components/modals/broker-modal.php:50
+#: core/components/modals/broker-modal.php:58
 #: core/components/modals/quote-modal.php:59
 #: template-parts/sections/index/about.php:25
 msgid "We don’t add anything on top of the price"
 msgstr "Wir berechnen keine zusätzlichen Kosten."
 
-#: core/components/modals/broker-modal.php:61
+#: core/components/modals/broker-modal.php:69
 msgid "Phone"
 msgstr "Telefon"
 
-#: core/components/modals/broker-modal.php:70
+#: core/components/modals/broker-modal.php:78
 msgid "WhatsApp"
 msgstr "WhatsApp"
 
@@ -1217,15 +1217,15 @@ msgstr "Grundriss für die %s-Bett-Einheit"
 msgid "from"
 msgstr "aus"
 
-#: core/includes/entities/class-entity-estate-user.php:268
+#: core/includes/entities/class-entity-estate-user.php:265
 msgid "Your email address has been successfully verified."
 msgstr "Ihre E-Mail-Adresse wurde erfolgreich verifiziert."
 
-#: core/includes/entities/class-entity-estate-user.php:269
+#: core/includes/entities/class-entity-estate-user.php:266
 msgid "You can now enjoy all the features of your account and start using our services."
 msgstr "Sie können nun alle Funktionen Ihres Kontos nutzen und mit der Nutzung unserer Dienste beginnen."
 
-#: core/includes/entities/class-entity-estate-user.php:277
+#: core/includes/entities/class-entity-estate-user.php:274
 msgid "Email Verified"
 msgstr "E-Mail-Adresse bestätigt"
 
@@ -2157,11 +2157,6 @@ msgstr "Wohnung von "
 msgid "Boost property"
 msgstr "Boost-Eigenschaft"
 
-#: core/template-parts/cards/unit-card.php:174
-#: single-unit.php:42
-msgid "Hello, I am interested in property -"
-msgstr "Hallo, ich interessiere mich für Immobilien –"
-
 #: core/template-parts/cards/unit-square-card.php:55
 msgid "Original Price:"
 msgstr "Ursprünglicher Preis:"
@@ -2355,15 +2350,15 @@ msgstr "WhatsApp – schnellste Antwort"
 msgid "Best for urgent questions, pricing, and quick consultation."
 msgstr "Ideal für dringende Fragen, Preisauskünfte und eine schnelle Beratung."
 
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:46
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:49
 msgid "Open WhatsApp"
 msgstr "WhatsApp öffnen"
 
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:52
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:55
 msgid "We usually reply within 5–10 minutes during working hours."
 msgstr "Während der Geschäftszeiten antworten wir in der Regel innerhalb von 5 bis 10 Minuten."
 
-#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:63
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:66
 msgid "Your information is kept strictly confidential"
 msgstr "Ihre Daten werden streng vertraulich behandelt."
 
@@ -3066,3 +3061,22 @@ msgstr "Ausgewählter Standort"
 #: src/js/map/map.js:608
 msgid "%1$d projects · %2$d units"
 msgstr "%1$d Projekte · %2$d Einheiten"
+
+#. translators: 1: project name, 2: developer name, 3: project URL.
+#: core/components/properties/functions.php:965
+msgid "Hello! I am interested in the %1$s project by %2$s. Could you tell me more about it? %3$s"
+msgstr "Hallo! Ich interessiere mich für das %1$s-Projekt von %2$s. Könnten Sie mir mehr darüber erzählen? %3$s"
+
+#. translators: 1: project name, 2: project URL.
+#: core/components/properties/functions.php:975
+msgid "Hello! I am interested in the %1$s project. Could you tell me more about it? %2$s"
+msgstr "Hallo! Ich interessiere mich für das %1$s-Projekt. Könnten Sie mir mehr darüber erzählen? %2$s"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:42
+msgid "Hello! I would like a quick consultation about a distress sale of my property."
+msgstr "Hallo! Ich hätte gerne eine kurze Beratung bezüglich eines Notverkaufs meiner Immobilie."
+
+#. translators: 1: unit name, 2: unit URL.
+#: core/components/units/functions.php:618
+msgid "Hello! I am interested in %1$s. Could you tell me more about it? %2$s"
+msgstr "Hallo! Ich interessiere mich für %1$s. Könnten Sie mir mehr darüber erzählen? %2$s"
