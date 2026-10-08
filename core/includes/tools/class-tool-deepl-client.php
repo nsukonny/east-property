@@ -42,13 +42,19 @@ final class DeepL_Client {
 	private ?array $cache = null;
 
 	/**
-	 * Polylang slug to DeepL target language.
-	 *
-	 * DeepL has deprecated a bare EN as a target and wants a variant.
+	 * Target codes the API accepts, read from /v2/languages on 08.10.2026.
 	 */
-	private const TARGETS = array(
+	private const TARGETS = 'AF AN AR AS AY AZ BA BE BG BN BR BS CA CS CY DA DE DE-CH DE-DE EL EN-GB EN-US EO ES'
+		. ' ES-419 ES-ES ET EU FA FI FR FR-CA FR-FR GA GL GN GU HA HE HI HR HT HU HY ID IG IS IT JA JV KA KK KO'
+		. ' KY LA LB LN LT LV MG MI MK ML MN MR MS MT MY NB NE NL OC OM PA PL PS PT-BR PT-PT QU RO RU SA SK SL SQ'
+		. ' SR ST SU SV SW TA TE TG TH TK TL TN TR TS TT UK UR UZ VI WO XH YI ZH ZH-HANS ZH-HANT ZU';
+
+	/**
+	 * Languages whose bare code the API does not accept as a target.
+	 */
+	private const TARGET_VARIANTS = array(
 		'en' => 'EN-GB',
-		'ru' => 'RU',
+		'pt' => 'PT-PT',
 	);
 
 	/**
@@ -84,7 +90,15 @@ final class DeepL_Client {
 	 * @return string Empty when DeepL has no counterpart.
 	 */
 	public static function target_language( string $slug ): string {
-		return self::TARGETS[ strtolower( $slug ) ] ?? '';
+		$slug = strtolower( $slug );
+
+		if ( isset( self::TARGET_VARIANTS[ $slug ] ) ) {
+			return self::TARGET_VARIANTS[ $slug ];
+		}
+
+		$code = strtoupper( $slug );
+
+		return in_array( $code, explode( ' ', self::TARGETS ), true ) ? $code : '';
 	}
 
 	/**

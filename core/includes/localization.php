@@ -63,6 +63,9 @@ function core_carry_campaign_params( string $url ): string {
  * nearest section that does exist in that language where it does not, and is
  * dropped from the switcher when even that has nothing to offer.
  *
+ * The language being read is listed too, marked is_current: the dropdown shows
+ * it as the selected option instead of hiding it.
+ *
  * @return array
  */
 function core_get_language_switcher(): array {
@@ -71,10 +74,11 @@ function core_get_language_switcher(): array {
 
 	foreach ( get_all_languages() as $language ) {
 		$slug = (string) ( $language['slug'] ?? '' );
-		if ( '' === $slug || $slug === $current ) {
+		if ( '' === $slug ) {
 			continue;
 		}
 
+		$is_current     = $slug === $current;
 		$is_translation = empty( $language['no_translation'] );
 		$url            = $is_translation
 			? (string) ( $language['url'] ?? '' )
@@ -87,8 +91,10 @@ function core_get_language_switcher(): array {
 		$entries[] = array(
 			'slug'           => $slug,
 			'locale'         => (string) ( $language['locale'] ?? $slug ),
+			'name'           => (string) ( $language['name'] ?? strtoupper( $slug ) ),
 			'url'            => core_carry_campaign_params( $url ),
 			'is_translation' => $is_translation,
+			'is_current'     => $is_current,
 			'label'          => 'ru' === $slug ? 'РУ' : strtoupper( $slug ),
 		);
 	}

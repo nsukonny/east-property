@@ -38,6 +38,204 @@ final class CLI {
 		WP_CLI::add_command( 'tools strip-unit-floors', array( __CLASS__, 'strip_unit_floors' ) );
 		WP_CLI::add_command( 'tools translate-units', array( __CLASS__, 'translate_units' ) );
 		WP_CLI::add_command( 'tools translate-locations', array( __CLASS__, 'translate_locations' ) );
+		WP_CLI::add_command( 'tools clone-language', array( __CLASS__, 'clone_language' ) );
+	}
+
+	/**
+	 * Copy units and projects into a language added in Polylang.
+	 *
+	 * Every translation group gains one copy, made from its default-language
+	 * post and carrying its text, flagged need_translate so translate-units
+	 * fills it afterwards. Re-running only picks up what is still missing.
+	 *
+	 * ## OPTIONS
+	 *
+	 * --locale=<locale>
+	 * : Locale or slug of the language to open, for example de_DE or de.
+	 *
+	 * [--post-type=<types>]
+	 * : Comma-separated types to copy.
+	 * ---
+	 * default: unit,property
+	 * ---
+	 *
+	 * [--status=<statuses>]
+	 * : Comma-separated statuses to copy from.
+	 * ---
+	 * default: publish
+	 * ---
+	 *
+	 * [--copy-status=<status>]
+	 * : Status to give the copies. The source status when left out.
+	 *
+	 * [--limit=<number>]
+	 * : How many posts to copy.
+	 * ---
+	 * default: 50
+	 * ---
+	 *
+	 * [--offset=<number>]
+	 * : Candidates to pass over first.
+	 *
+	 * [--post-id=<id>]
+	 * : Copy this post alone.
+	 *
+	 * [--dry-run]
+	 * : Report the plan and write nothing.
+	 *
+	 * [--yes]
+	 * : Do not ask before writing.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp tools clone-language --locale=de_DE --dry-run
+	 *     wp tools clone-language --locale=de_DE --limit=50
+	 *     wp tools clone-language --locale=de_DE --post-type=property --yes
+	 *     wp tools clone-language --locale=de_DE --post-id=12345
+	 *
+	 * @param array $args Positional arguments, unused.
+	 * @param array $assoc_args Flags.
+	 *
+	 * @return void
+	 */
+	public static function clone_language( array $args, array $assoc_args ): void {
+		$dry_run = (bool) Utils\get_flag_value( $assoc_args, 'dry-run', false );
+		$post_id = (int) Utils\get_flag_value( $assoc_args, 'post-id', 0 );
+		$limit   = max( 1, (int) Utils\get_flag_value( $assoc_args, 'limit', 50 ) );
+		$offset  = max( 0, (int) Utils\get_flag_value( $assoc_args, 'offset', 0 ) );
+		$wanted  = (string) Utils\get_flag_value( $assoc_args, 'locale', '' );
+		$copy_as = (string) Utils\get_flag_value( $assoc_args, 'copy-status', '' );
+
+		if ( ! function_exists( 'pll_languages_list' ) ) {
+			WP_CLI::error( 'Polylang не активен — языки взять негде' );
+		}
+
+		if ( '' === trim( $wanted ) ) {
+			WP_CLI::error(
+				sprintf( 'нужен --locale, известные языки: %s',
+					implode( ', ', Language_Cloner::known_languages() ) )
+			);
+		}
+
+		$language = Language_Cloner::language( $wanted );
+
+		if ( '' === $language ) {
+			WP_CLI::error(
+				sprintf( 'Polylang не знает «%s». Сначала добавьте язык в Polylang. Известные: %s',
+					$wanted, implode( ', ', Language_Cloner::known_languages() ) )
+			);
+		}
+
+		if ( $language === Language_Cloner::default_language() ) {
+			WP_CLI::error( sprintf( '«%s» — язык по умолчанию, копировать его в себя нечего', $language ) );
+		}
+
+		$types = array_filter(
+			array_map(
+				'trim',
+				explode( ',', (string) Utils\get_flag_value( $assoc_args, 'post-type', implode( ',', Language_Cloner::POST_TYPES ) ) )
+			)
+		);
+
+		$unknown = array_diff( $types, Language_Cloner::POST_TYPES );
+
+		if ( ! empty( $unknown ) ) {
+			WP_CLI::error(
+				sprintf( 'копии не делаются для %s, доступны: %s',
+					implode( ', ', $unknown ), implode( ', ', Language_Cloner::POST_TYPES ) )
+			);
+		}
+
+		$statuses = array_filter(
+			array_map( 'trim', explode( ',', (string) Utils\get_flag_value( $assoc_args, 'status', 'publish' ) ) )
+		);
+
+		$cloner = new Language_Cloner();
+		$ids    = $post_id > 0
+			? array( $post_id )
+			: $cloner->find( $language, $types, $statuses, $limit, $offset );
+
+		if ( empty( $ids ) ) {
+			WP_CLI::success( sprintf( 'на %s копировать нечего — всё уже есть', strtoupper( $language ) ) );
+
+			return;
+		}
+
+		$total = count( $ids );
+
+		if ( ! $dry_run ) {
+			WP_CLI::confirm(
+				sprintf( 'Создать %d записей на языке %s?', $total, strtoupper( $language ) ),
+				$assoc_args
+			);
+		}
+
+		$totals = array(
+			'ready'   => 0,
+			'created' => 0,
+			'skipped' => 0,
+			'failed'  => 0,
+		);
+
+		foreach ( array_values( $ids ) as $index => $id ) {
+			$plan = $cloner->plan( (int) $id, $language );
+
+			if ( is_wp_error( $plan ) ) {
+				++ $totals['skipped'];
+				WP_CLI::warning( sprintf( '[%d/%d] пропущен: %s', $index + 1, $total, $plan->get_error_message() ) );
+
+				continue;
+			}
+
+			WP_CLI::log(
+				sprintf( '[%d/%d] %s #%d "%s" — группа: %s',
+					$index + 1, $total, $plan['type'], $plan['id'],
+					mb_substr( $plan['title'], 0, 48 ),
+					implode( ', ', array_keys( $plan['group'] ) ) ?: 'одиночная' )
+			);
+
+			if ( $dry_run ) {
+				++ $totals['ready'];
+				WP_CLI::log( sprintf( '        [DRY RUN] копия на %s не создана', strtoupper( $language ) ) );
+
+				continue;
+			}
+
+			$copy = $cloner->clone_post( (int) $id, $language, $copy_as );
+
+			if ( is_wp_error( $copy ) ) {
+				++ $totals['failed'];
+				WP_CLI::warning( sprintf( '        ошибка: %s', $copy->get_error_message() ) );
+
+				continue;
+			}
+
+			++ $totals['created'];
+			WP_CLI::log( sprintf( '        создана #%d, помечена need_translate', $copy ) );
+		}
+
+		WP_CLI::log( '' );
+
+		if ( $dry_run ) {
+			WP_CLI::log( sprintf( 'К созданию: %d', $totals['ready'] ) );
+		} else {
+			WP_CLI::log( sprintf( 'Создано: %d', $totals['created'] ) );
+			WP_CLI::log( sprintf( 'Ошибок:  %d', $totals['failed'] ) );
+		}
+
+		WP_CLI::log( sprintf( 'Пропущено: %d', $totals['skipped'] ) );
+
+		if ( $totals['failed'] > 0 ) {
+			WP_CLI::warning( 'Часть копий не создана — команду можно запустить повторно' );
+
+			return;
+		}
+
+		if ( ! $dry_run && $totals['created'] > 0 ) {
+			WP_CLI::log( sprintf( 'Дальше: wp tools translate-units --language=%s --limit=…', $language ) );
+		}
+
+		WP_CLI::success( $dry_run ? 'Проверка закончена, ничего не записано' : 'Готово' );
 	}
 
 	/**

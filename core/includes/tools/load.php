@@ -39,6 +39,13 @@
  * wp tools translate-locations --limit=10 --dry-run
  * wp tools translate-locations --language=ru --limit=10
  * wp tools translate-locations --term-id=141 --force
+ *
+ * Usage of opening a language added in Polylang (copies carry the source text
+ * and are flagged need_translate for translate-units):
+ *
+ * wp tools clone-language --locale=de_DE --dry-run
+ * wp tools clone-language --locale=de_DE --limit=50
+ * wp tools clone-language --locale=de_DE --post-type=property --yes
  */
 
 require_once get_stylesheet_directory() . '/core/includes/tools/class-tool-property-importer.php';
@@ -46,6 +53,7 @@ require_once get_stylesheet_directory() . '/core/includes/tools/class-tool-distr
 require_once get_stylesheet_directory() . '/core/includes/tools/class-tool-deepl-client.php';
 require_once get_stylesheet_directory() . '/core/includes/tools/class-tool-unit-translator.php';
 require_once get_stylesheet_directory() . '/core/includes/tools/class-tool-location-translator.php';
+require_once get_stylesheet_directory() . '/core/includes/tools/class-tool-language-cloner.php';
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	require_once get_stylesheet_directory() . '/core/includes/tools/class-tool-cache-warmer.php';

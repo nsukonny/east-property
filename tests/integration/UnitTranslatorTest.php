@@ -263,12 +263,19 @@ class UnitTranslatorTest extends TestCase {
 	}
 
 	/**
-	 * DeepL has no target for a language the project does not run.
+	 * A language added in Polylang needs no code change to become translatable.
+	 *
+	 * The bare code is used when the API accepts it; EN and PT it does not, so
+	 * those carry a variant. Anything outside the list is reported as missing.
 	 */
-	public function test_language_without_a_deepl_target_is_reported_as_unsupported() {
+	public function test_deepl_target_is_derived_from_the_language_slug() {
 		$this->assertSame( 'RU', DeepL_Client::target_language( 'ru' ) );
+		$this->assertSame( 'DE', DeepL_Client::target_language( 'de' ) );
+		$this->assertSame( 'AR', DeepL_Client::target_language( 'ar' ) );
 		$this->assertSame( 'EN-GB', DeepL_Client::target_language( 'en' ) );
-		$this->assertSame( '', DeepL_Client::target_language( 'ar' ) );
+		$this->assertSame( 'PT-PT', DeepL_Client::target_language( 'pt' ) );
+		$this->assertSame( '', DeepL_Client::target_language( 'zz' ) );
+		$this->assertSame( '', DeepL_Client::target_language( '' ) );
 	}
 
 	/**

@@ -1,5 +1,6 @@
 import './common/common';
 import './common/tabs';
+import './common/language-switcher.js';
 // Components && Sections js
 import './search-tabs.js';
 import './header-menu.js';
