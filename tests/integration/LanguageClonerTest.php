@@ -138,7 +138,19 @@ class LanguageClonerTest extends TestCase {
 		$this->assertSame( $source->post_content, $clone->post_content );
 		$this->assertSame( $source->post_excerpt, $clone->post_excerpt );
 		$this->assertSame( $source->post_status, $clone->post_status );
-		$this->assertSame( 'studio-in-marina', $clone->post_name );
+
+		// Слаг берётся от источника, а не от заголовка: иначе кириллический
+		// заголовок превратился бы в процентную кодировку в адресе.
+		$this->assertStringStartsWith( $source->post_name, $clone->post_name );
+
+		// Один слаг на все языки даёт модуль share-slug, он только в Polylang
+		// Pro, который стоит на проде. Без него WordPress разводит переводы
+		// суффиксом, и это не ошибка копии: CI гоняет набор на бесплатной
+		// версии. Проверка та же, что в RewritesTest.
+		if ( isset( PLL()->share_post_slug ) ) {
+			$this->assertSame( $source->post_name, $clone->post_name );
+		}
+
 		$this->assertSame( 'ru', pll_get_post_language( $copy, 'slug' ) );
 		$this->assertSame( $copy, (int) pll_get_post( $unit, 'ru' ) );
 		$this->assertSame( $unit, (int) pll_get_post( $copy, 'en' ) );
