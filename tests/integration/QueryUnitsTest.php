@@ -439,6 +439,11 @@ class QueryUnitsTest extends TestCase {
 
 	/**
 	 * The account filters arrive as arguments: they narrow a broker's list and win over request parameters of the same name.
+	 *
+	 * Every unit here is given a title without digits on purpose. A search of
+	 * only digits matches the unit id and still runs its LIKE over the titles,
+	 * and the post factory names what it creates "Post title 0000025" — so a
+	 * generated title would answer the search by id of a different unit.
 	 */
 	public function test_account_arguments_narrow_a_broker_list() {
 		$broker = self::factory()->user->create();
@@ -462,10 +467,30 @@ class QueryUnitsTest extends TestCase {
 			)
 		);
 
-		$this->create_unit( array_merge( $base, array( 'unit_type' => 'apartment' ) ) );
-		$this->create_unit( array_merge( $base, array( 'bedrooms' => 3 ) ) );
-		$this->create_unit( array_merge( $base, array( 'locations' => array( $jvc ) ) ) );
-		$this->create_unit( array_merge( $base, array( 'author' => self::factory()->user->create() ) ) );
+		$this->create_unit(
+			array_merge( $base, array(
+				'title'     => 'Apartment with a balcony',
+				'unit_type' => 'apartment',
+			) )
+		);
+		$this->create_unit(
+			array_merge( $base, array(
+				'title'    => 'Villa with three bedrooms',
+				'bedrooms' => 3,
+			) )
+		);
+		$this->create_unit(
+			array_merge( $base, array(
+				'title'     => 'Villa in the circle',
+				'locations' => array( $jvc ),
+			) )
+		);
+		$this->create_unit(
+			array_merge( $base, array(
+				'title'  => 'Villa of another broker',
+				'author' => self::factory()->user->create(),
+			) )
+		);
 
 		$_REQUEST['location'] = $jvc;
 
