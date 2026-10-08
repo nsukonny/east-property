@@ -5,6 +5,35 @@
 .lang-switch {
 	position: relative;
 
+	// Пока скрипт не отметил переключатель готовым, показываем ряд ссылок:
+	// панель, которую нечем открыть, оставила бы посетителя без языков.
+	&:not(.is-ready) {
+		.lang-switch-toggle {
+			display: none;
+		}
+
+		.lang-switch-list {
+			position: static;
+			display: flex;
+			align-items: center;
+			gap: 4px;
+			min-width: 0;
+			padding: 0;
+			border-radius: 0;
+			background: transparent;
+			box-shadow: none;
+		}
+
+		.lang-switch-name,
+		.lang-switch-check {
+			display: none;
+		}
+
+		.lang-switch-option {
+			padding: 6px 8px;
+		}
+	}
+
 	&.desktop {
 		display: none;
 

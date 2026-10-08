@@ -1,8 +1,10 @@
 /**
  * Language dropdown in the header and in the mobile menu.
  *
- * Options are plain links, so the switcher still works with no JavaScript: the
- * list is only hidden, and this adds the opening, closing and keyboard moves.
+ * The markup ships with the list open and the toggle hidden, so the languages
+ * are reachable as plain links when this never runs. Collapsing into a dropdown
+ * is the enhancement: it happens here, and only for switchers that have both a
+ * toggle and a list.
  */
 const LANG_SWITCH = '[data-lang-switch]';
 
@@ -64,6 +66,34 @@ const moveFocus = (root, step) => {
 
 	options[(at + step + options.length) % options.length].focus();
 };
+
+/**
+ * Turn a plain list of links into a collapsed dropdown.
+ *
+ * @param {Element} root
+ *
+ * @return {void}
+ */
+const enhance = (root) => {
+	const toggle = root.querySelector('.lang-switch-toggle');
+	const list = root.querySelector('.lang-switch-list');
+
+	if (!toggle || !list || root.classList.contains('is-ready')) return;
+
+	root.classList.add('is-ready');
+	toggle.setAttribute('aria-expanded', 'false');
+	list.hidden = true;
+};
+
+/**
+ * Enhance every switcher on the page.
+ *
+ * @return {void}
+ */
+const enhanceAll = () => document.querySelectorAll(LANG_SWITCH).forEach(enhance);
+
+enhanceAll();
+document.addEventListener('DOMContentLoaded', enhanceAll);
 
 document.addEventListener('click', (event) => {
 	const target = event.target;

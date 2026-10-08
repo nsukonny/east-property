@@ -2,8 +2,12 @@
 /**
  * Language switcher as a dropdown.
  *
- * The language being read is the first option and carries the selected state,
- * so the list always shows where the visitor stands.
+ * The language being read carries the selected state, so the list always shows
+ * where the visitor stands.
+ *
+ * The list is open and the toggle hidden until the script marks the switcher
+ * ready: with no JavaScript, a failed bundle or a broken run the languages stay
+ * reachable as a plain row of links instead of a panel nothing can open.
  *
  * @var array $args Expects `switcher` from core_get_language_switcher().
  */
@@ -38,7 +42,7 @@ if ( empty( $current ) ) {
 			 width="16" height="16" alt="" aria-hidden="true">
 	</button>
 
-	<ul class="lang-switch-list" hidden>
+	<ul class="lang-switch-list">
 		<?php foreach ( $switcher as $entry ) { ?>
 			<?php $selected = ! empty( $entry['is_current'] ); ?>
 			<li class="lang-switch-item">
