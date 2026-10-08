@@ -630,15 +630,15 @@ class UnitTranslatorTest extends TestCase {
 	/**
 	 * A string translated once is not sent again.
 	 */
-	public function test_repeated_strings_are_served_from_the_cache() {
-		$calls  = 0;
-		$filter = static function ( $pre, $args ) use ( &$calls ) {
-			++ $calls;
-
-			$sent         = json_decode( (string) ( $args['body'] ?? '' ), true );
+	public function test_repeated_field_values_are_served_from_the_cache() {
+		$sent   = array();
+		$filter = static function ( $pre, $args ) use ( &$sent ) {
+			$body         = json_decode( (string) ( $args['body'] ?? '' ), true );
+			$texts        = (array) ( $body['text'] ?? array() );
+			$sent[]       = $texts;
 			$translations = array();
 
-			foreach ( (array) ( $sent['text'] ?? array() ) as $text ) {
+			foreach ( $texts as $text ) {
 				$translations[] = array( 'text' => '[T] ' . $text );
 			}
 
@@ -657,15 +657,92 @@ class UnitTranslatorTest extends TestCase {
 		$second = $this->create_flagged_project_with_fields( array( 'slug' => 'marina-heights-two-ru' ) );
 
 		$this->translator()->translate( $first );
-		$after_first = $calls;
+		$after_first = count( $sent );
 
 		$this->translator()->translate( $second );
 
 		remove_filter( 'pre_http_request', $filter, 10 );
 
-		$this->assertGreaterThan( 0, $after_first );
-		$this->assertSame( $after_first, $calls, 'второй объект с теми же строками не должен давать новых запросов' );
+		$second_texts = array_merge( ...array_slice( $sent, $after_first ) );
+
+		// Значения полей повторяются между объектами и приходят из кэша.
+		$this->assertContains( 'Shared Pool', array_merge( ...array_slice( $sent, 0, $after_first ) ) );
+		$this->assertNotContains( 'Shared Pool', $second_texts );
+		$this->assertNotContains( 'Payment Plan 1', $second_texts );
 		$this->assertSame( '[T] Payment Plan 1', (string) get_post_meta( $second, 'payment_plans_0_name', true ) );
+
+		// Текст самого объекта в кэш не попадает, иначе опция росла бы на
+		// каждой записи: его отправляют заново.
+		$this->assertContains( 'Studio in Marina', $second_texts );
+		$this->assertLessThan( $after_first, count( $sent ) - $after_first );
+	}
+
+	/**
+	 * A chunk paid for before a later one failed is kept.
+	 *
+	 * More than fifty strings go out in several requests. Losing the ones that
+	 * already came back would mean paying DeepL for them again on the next run.
+	 */
+	public function test_successful_chunk_survives_a_later_failure() {
+		delete_option( 'ep_deepl_cache' );
+
+		$lines = array();
+
+		for ( $i = 0; $i < 60; $i++ ) {
+			$lines[] = sprintf( 'Amenity number %s', wp_hash( (string) $i ) );
+		}
+
+		$project = $this->create_flagged_post( 'property', array( 'slug' => 'marina-heights-ru' ) );
+
+		update_post_meta( $project, 'amenities', implode( "\n", $lines ) );
+
+		$calls  = 0;
+		$filter = static function ( $pre, $args ) use ( &$calls ) {
+			++ $calls;
+
+			if ( $calls > 1 ) {
+				return array(
+					'response' => array(
+						'code'    => 456,
+						'message' => 'Error',
+					),
+					'body'     => '{"message":"Quota Exceeded"}',
+				);
+			}
+
+			$body         = json_decode( (string) ( $args['body'] ?? '' ), true );
+			$translations = array();
+
+			foreach ( (array) ( $body['text'] ?? array() ) as $text ) {
+				$translations[] = array( 'text' => '[T] ' . $text );
+			}
+
+			return array(
+				'response' => array(
+					'code'    => 200,
+					'message' => 'OK',
+				),
+				'body'     => wp_json_encode( array( 'translations' => $translations ) ),
+			);
+		};
+
+		add_filter( 'pre_http_request', $filter, 10, 2 );
+
+		$result = $this->translator()->translate( $project );
+
+		remove_filter( 'pre_http_request', $filter, 10 );
+
+		$this->assertWPError( $result );
+		$this->assertGreaterThan( 1, $calls );
+
+		$cache = (array) get_option( 'ep_deepl_cache', array() );
+
+		$this->assertNotEmpty( $cache, 'первая порция уже оплачена и должна остаться в кэше' );
+		$this->assertContains( '[T] ' . $lines[0], array_values( $cache ) );
+
+		// Запись не состоялась: перевод неполный.
+		$this->assertSame( implode( "\n", $lines ), (string) get_post_meta( $project, 'amenities', true ) );
+		$this->assertSame( '1', (string) get_post_meta( $project, Distress_Units_Importer::NEED_TRANSLATE_META, true ) );
 	}
 
 	/**

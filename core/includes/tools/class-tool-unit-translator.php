@@ -344,6 +344,11 @@ final class Unit_Translator {
 	 * Every string is translated before anything is written, so a failing call
 	 * leaves the post exactly as it was, flag included.
 	 *
+	 * The strings go in three portions: the repeating field values, which are
+	 * the only ones worth caching, then the post's own text, plain and with
+	 * markup. Once the field values are in the cache that portion costs no
+	 * request at all, so a run settles at two calls per post.
+	 *
 	 * @param int  $post_id
 	 * @param bool $force Accept a post that carries no flag.
 	 *
@@ -367,17 +372,33 @@ final class Unit_Translator {
 			self::HTML_FIELDS
 		);
 
-		$html  = array_intersect_key( $plan['strings'], array_flip( $html_keys ) );
-		$plain = array_diff_key( $plan['strings'], $html );
+		$markup = array_intersect_key( $plan['strings'], array_flip( $html_keys ) );
+		$prose  = array_diff_key(
+			array_filter(
+				$plan['strings'],
+				static function ( $value, $key ): bool {
+					return str_starts_with( (string) $key, 'post:' );
+				},
+				ARRAY_FILTER_USE_BOTH
+			),
+			$markup
+		);
+		$fields = array_diff_key( $plan['strings'], $markup, $prose );
 
 		$translated = array();
 
-		foreach ( array( array( $plain, false ), array( $html, true ) ) as $portion ) {
+		$portions = array(
+			array( $fields, false, true ),
+			array( $prose, false, false ),
+			array( $markup, true, false ),
+		);
+
+		foreach ( $portions as $portion ) {
 			if ( empty( $portion[0] ) ) {
 				continue;
 			}
 
-			$result = $this->client->translate( $portion[0], $plan['target'], $portion[1] );
+			$result = $this->client->translate( $portion[0], $plan['target'], $portion[1], $portion[2] );
 
 			if ( is_wp_error( $result ) ) {
 				return $result;

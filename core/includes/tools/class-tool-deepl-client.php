@@ -108,13 +108,22 @@ final class DeepL_Client {
 	 * strings without a single letter are handed back untouched: the project
 	 * data is full of values like "10%" repeated thousands of times.
 	 *
-	 * @param array  $texts  Strings keyed by caller; the keys come back on the result.
-	 * @param string $target DeepL target language.
-	 * @param bool   $html   Whether the strings carry markup.
+	 * Only strings the caller marks reusable go through the cache. A title or a
+	 * description belongs to one post and would never be asked for again, so
+	 * keeping it would grow the stored option with every post translated and
+	 * make every later write rewrite all of it.
+	 *
+	 * A chunk that came back before a later one failed is already paid for, so
+	 * the cache is written on the way out of an error too.
+	 *
+	 * @param array  $texts    Strings keyed by caller; the keys come back on the result.
+	 * @param string $target   DeepL target language.
+	 * @param bool   $html     Whether the strings carry markup.
+	 * @param bool   $reusable Whether these strings repeat across records.
 	 *
 	 * @return array|WP_Error Translations under the original keys.
 	 */
-	public function translate( array $texts, string $target, bool $html = false ) {
+	public function translate( array $texts, string $target, bool $html = false, bool $reusable = true ) {
 		$result  = array();
 		$pending = array();
 
@@ -130,7 +139,7 @@ final class DeepL_Client {
 				continue;
 			}
 
-			$cached = $this->cached( $target, $text );
+			$cached = $reusable ? $this->cached( $target, $text ) : null;
 
 			if ( null !== $cached ) {
 				$result[ $key ] = $cached;
@@ -154,13 +163,20 @@ final class DeepL_Client {
 			$answer = $this->request( $chunk, $target, $html );
 
 			if ( is_wp_error( $answer ) ) {
+				if ( $added ) {
+					$this->flush_cache();
+				}
+
 				return $answer;
 			}
 
 			foreach ( $answer as $key => $text ) {
 				$result[ $key ] = $text;
-				$this->remember( $target, $pending[ $key ], $text );
-				$added = true;
+
+				if ( $reusable ) {
+					$this->remember( $target, $pending[ $key ], $text );
+					$added = true;
+				}
 			}
 		}
 
