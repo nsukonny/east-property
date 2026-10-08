@@ -1,0 +1,60 @@
+{
+    "translation-revision-date": "",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "assets\/js\/main.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "de",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Location": [
+                "Standort"
+            ],
+            "Developer": [
+                "Bautr\u00e4ger"
+            ],
+            "Area": [
+                "Fl\u00e4che"
+            ],
+            "Beds": [
+                "Betten"
+            ],
+            "Studio": [
+                "Studio"
+            ],
+            "Select": [
+                "Ausw\u00e4hlen"
+            ],
+            "Bed": [
+                "Bett"
+            ],
+            "sqft": [
+                "sqft"
+            ],
+            "Unit": [
+                "Einheit"
+            ],
+            "beds": [
+                "Betten"
+            ],
+            "bed": [
+                "Bett"
+            ],
+            "baths": [
+                "B\u00e4der"
+            ],
+            "bath": [
+                "Bad"
+            ],
+            "Selected location": [
+                "Ausgew\u00e4hlter Standort"
+            ],
+            "%1$d projects \u00b7 %2$d units": [
+                "%1$d Projekte \u00b7 %2$d Einheiten"
+            ]
+        }
+    }
+}
