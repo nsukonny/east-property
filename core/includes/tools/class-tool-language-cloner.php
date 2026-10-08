@@ -29,6 +29,19 @@ final class Language_Cloner {
 	private const BATCH = 200;
 
 	/**
+	 * Types a copy may be made of, dependencies of the walked ones included.
+	 */
+	private const CLONE_TYPES = array( 'unit', 'property', 'developers' );
+
+	/**
+	 * SCF post_object fields pointing at another post, by owning type.
+	 */
+	private const LINKED_META = array(
+		'unit'     => array( 'property' => 'property' ),
+		'property' => array( 'developer_rel' => 'developers' ),
+	);
+
+	/**
 	 * Meta WordPress and the editor own, which a copy must not carry.
 	 */
 	private const SKIP_META = array(
@@ -199,11 +212,11 @@ final class Language_Cloner {
 			return new WP_Error( 'clone_missing', sprintf( 'записи #%d не существует', $post_id ) );
 		}
 
-		if ( ! in_array( $post->post_type, self::POST_TYPES, true ) ) {
+		if ( ! in_array( $post->post_type, self::CLONE_TYPES, true ) ) {
 			return new WP_Error(
 				'clone_type',
 				sprintf( '#%d — это %s, копии делаются для %s', $post_id, $post->post_type,
-					implode( ' и ', self::POST_TYPES ) )
+					implode( ' и ', self::CLONE_TYPES ) )
 			);
 		}
 
@@ -244,7 +257,98 @@ final class Language_Cloner {
 			'status'   => (string) $post->post_status,
 			'language' => $language,
 			'group'    => pll_get_post_translations( $post_id ),
+			'links'    => self::links_plan( $post_id, $language ),
 		);
+	}
+
+	/**
+	 * Posts a post links to through its SCF post_object fields.
+	 *
+	 * Read from the meta rather than through get_field(), which goes to
+	 * WP_Query and comes back empty whenever Polylang narrows the query to a
+	 * language the linked post is not in.
+	 *
+	 * @param int $post_id
+	 *
+	 * @return int[] Meta key to linked post id; empty when nothing is linked.
+	 */
+	private static function links_of( int $post_id ): array {
+		$fields = self::LINKED_META[ (string) get_post_type( $post_id ) ] ?? array();
+		$links  = array();
+
+		foreach ( $fields as $meta_key => $post_type ) {
+			$linked = (int) get_post_meta( $post_id, $meta_key, true );
+
+			if ( $post_type === get_post_type( $linked ) ) {
+				$links[ $meta_key ] = $linked;
+			}
+		}
+
+		return $links;
+	}
+
+	/**
+	 * What every link of a post resolves to in a language, without writing.
+	 *
+	 * A link the language has none of brings its own links along, so a dry run
+	 * names the whole chain a copy would create.
+	 *
+	 * @param int    $post_id
+	 * @param string $language Target language slug.
+	 * @param int[]  $seen     Ids already described, guarding against a cycle.
+	 *
+	 * @return array[] Keys meta, type, source, translated.
+	 */
+	private static function links_plan( int $post_id, string $language, array $seen = array() ): array {
+		$plan   = array();
+		$seen[] = $post_id;
+
+		foreach ( self::links_of( $post_id ) as $meta_key => $linked ) {
+			$translated = (int) pll_get_post( $linked, $language );
+
+			$plan[] = array(
+				'owner'      => $post_id,
+				'meta'       => $meta_key,
+				'type'       => (string) get_post_type( $linked ),
+				'source'     => $linked,
+				'translated' => $translated,
+			);
+
+			if ( 0 === $translated && ! in_array( $linked, $seen, true ) ) {
+				$plan = array_merge( $plan, self::links_plan( $linked, $language, $seen ) );
+			}
+		}
+
+		return $plan;
+	}
+
+	/**
+	 * Ids a copy must point at, cloning what the language has none of.
+	 *
+	 * @param int    $post_id  Post being copied.
+	 * @param string $language Target language slug.
+	 * @param string $status   Status to give a post created here.
+	 *
+	 * @return array|WP_Error Meta key to id in the target language.
+	 */
+	private function links_for_copy( int $post_id, string $language, string $status ) {
+		$links = array();
+
+		foreach ( self::links_of( $post_id ) as $meta_key => $linked ) {
+			$translated = (int) pll_get_post( $linked, $language );
+
+			if ( 0 === $translated ) {
+				$translated = $this->clone_post( $linked, $language, $status );
+
+				if ( is_wp_error( $translated ) ) {
+					return $translated;
+				}
+			}
+
+			$links[ $meta_key ] = (int) $translated;
+		}
+
+		return $links;
 	}
 
 	/**
@@ -254,7 +358,8 @@ final class Language_Cloner {
 	 * synchronisation would otherwise push the copy's values back over the
 	 * source and spread need_translate across the whole group. The slug is set
 	 * only after the group is linked, because wp_unique_post_slug() would
-	 * otherwise read the source as a clash and append -2.
+	 * otherwise read the source as a clash and append -2. Links to other posts
+	 * are repointed at the target language, cloning what it has none of.
 	 *
 	 * @param int    $post_id
 	 * @param string $language Target language slug.
@@ -267,6 +372,12 @@ final class Language_Cloner {
 
 		if ( is_wp_error( $plan ) ) {
 			return $plan;
+		}
+
+		$links = $this->links_for_copy( $post_id, $language, $status );
+
+		if ( is_wp_error( $links ) ) {
+			return $links;
 		}
 
 		global $wp_filter;
@@ -310,6 +421,10 @@ final class Language_Cloner {
 
 			self::copy_metas( $post_id, $copy_id );
 			self::copy_terms( $post_id, $copy_id );
+
+			foreach ( $links as $meta_key => $linked ) {
+				update_post_meta( $copy_id, $meta_key, $linked );
+			}
 
 			update_post_meta( $copy_id, Distress_Units_Importer::NEED_TRANSLATE_META, 1 );
 

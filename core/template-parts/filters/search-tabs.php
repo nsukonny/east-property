@@ -20,6 +20,13 @@ $price          = $search_tabs_data['filters']['price']['options'][ $price_last_
 
 $baths = $search_tabs_data['filters']['baths'] ?? array();
 $beds  = $search_tabs_data['filters']['beds'];
+
+$active_tab    = $is_show_tabs ? (string) ( $search_tabs_data['categories'][0]['slug'] ?? '' ) : '';
+$active_action = $is_show_tabs ? (string) ( $search_tabs_data['categories'][0]['action_url'] ?? '' ) : '';
+
+if ( '' !== $active_action ) {
+	$form_action = $active_action;
+}
 ?>
 <script>
 	const searchTabsData =
@@ -61,7 +68,8 @@ $beds  = $search_tabs_data['filters']['beds'];
 	<?php } ?>
 	<form action="<?php echo esc_url( $form_action ); ?>" class="tabs-panel" method="get"
 		  data-search-panel>
-		<div class="tabs-fields" role="tabpanel" id="search-tabs-panel" aria-labelledby="search-tabs-tab-all">
+		<div class="tabs-fields" role="tabpanel" id="search-tabs-panel"
+			<?php echo '' !== $active_tab ? ' aria-labelledby="search-tabs-tab-' . esc_attr( $active_tab ) . '"' : ''; ?>>
 
 			<?php if ( ! empty( $baths['options'] ) || ! empty( $beds['options'] ) ) { ?>
 				<div class="tab-field">

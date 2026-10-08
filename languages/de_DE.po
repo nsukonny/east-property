@@ -45,7 +45,7 @@ msgstr "Seite nicht gefunden"
 
 #: 404.php:13
 msgid "Go to properties"
-msgstr "Zu den Immobilien wechseln"
+msgstr "Zu den Immobilien"
 
 #: core/components/account/functions.php:125
 #: core/components/filters/functions.php:903
@@ -86,7 +86,7 @@ msgstr "Enthält einen Fehler"
 #: core/includes/entities/class-entity-unit.php:469
 #: core/template-parts/account/profile.php:145
 msgid "Promoted"
-msgstr "Befördert"
+msgstr "Hervorgehoben"
 
 #: core/components/account/functions.php:143
 #: core/includes/entities/class-entity-unit.php:412
@@ -142,7 +142,7 @@ msgstr "Name, Projekt oder ID"
 
 #: core/components/account/functions.php:787
 msgid "Unit title is required."
-msgstr "Der Titel der Lerneinheit ist erforderlich."
+msgstr "Der Titel der Einheit ist erforderlich."
 
 #: core/components/account/functions.php:880
 msgid "A distress listing needs an original price higher than the asking price."
@@ -291,7 +291,7 @@ msgstr ""
 
 #: core/components/common/cookies/cookies.php:17
 msgid "Decline"
-msgstr "Rückgang"
+msgstr "Ablehnen"
 
 #: core/components/common/cookies/cookies.php:20
 msgid "Accept"
@@ -312,7 +312,7 @@ msgstr "Immobilien ab Plan"
 
 #: core/components/common/functions.php:38
 msgid "Secondary Listings"
-msgstr "Sekundäre Notierungen"
+msgstr "Angebote aus dem Wiederverkauf"
 
 #: core/components/common/functions.php:43
 msgid "Distress Deals"
@@ -459,7 +459,7 @@ msgstr "AED"
 #: core/components/components-functions.php:224
 msgctxt "handover quarter"
 msgid "Q1"
-msgstr "Frage 1"
+msgstr "Q1"
 
 #: core/components/components-functions.php:225
 msgctxt "handover quarter"
@@ -491,7 +491,7 @@ msgstr "Mailer"
 #: core/components/filters/functions.php:839
 msgctxt "delivery filter"
 msgid "Ready"
-msgstr "Bereit"
+msgstr "Bezugsfertig"
 
 #: core/components/filters/functions.php:331
 #: core/components/filters/functions.php:843
@@ -500,7 +500,7 @@ msgstr "Im Bau"
 
 #: core/components/filters/functions.php:342
 msgid "All Years"
-msgstr "Alle Jahrgänge"
+msgstr "Alle Jahre"
 
 #: core/components/filters/functions.php:351
 #: core/components/filters/functions.php:852
@@ -518,11 +518,11 @@ msgstr "Standort"
 
 #: core/components/filters/functions.php:355
 msgid "Handover Year Before"
-msgstr "Übergabe im Vorjahr"
+msgstr "Übergabe bis"
 
 #: core/components/filters/functions.php:356
 msgid "Completion Year After"
-msgstr "Abschlussjahr danach"
+msgstr "Fertigstellung ab"
 
 #: core/components/filters/functions.php:360
 #: core/components/filters/functions.php:860
@@ -577,7 +577,7 @@ msgstr "Bezirk"
 #: core/components/filters/functions.php:414
 msgctxt "search tab"
 msgid "In construction"
-msgstr "Im Bauwesen"
+msgstr "Im Bau"
 
 #: core/components/filters/functions.php:438
 #: core/components/units/units-by-beds.php:78
@@ -634,7 +634,7 @@ msgstr "Älteste zuerst"
 
 #: core/components/filters/functions.php:603
 msgid "Handover: soonest first"
-msgstr "Übergabe: so bald wie möglich"
+msgstr "Übergabe: früheste zuerst"
 
 #: core/components/filters/functions.php:615
 msgctxt "listing sort"
@@ -679,7 +679,7 @@ msgstr "Wird auf Seiten in dieser Sprache angezeigt. Bleibt das Feld leer, wird 
 #: core/components/modals/boost-info-modal.php:11
 #: core/components/modals/boost-modal.php:10
 msgid "Boost your property"
-msgstr "Steigern Sie den Wert Ihrer Immobilie"
+msgstr "Bewerben Sie Ihre Immobilie"
 
 #: core/components/modals/boost-info-modal.php:20
 msgid ""
@@ -1020,7 +1020,7 @@ msgstr "Büro"
 
 #: core/components/properties/functions.php:158
 msgid "Freehold"
-msgstr "Eigentumsrecht"
+msgstr "Volleigentum"
 
 #: core/components/properties/functions.php:159
 msgid "Leasehold"
@@ -1052,7 +1052,7 @@ msgstr "Teileigentum"
 #: core/includes/entities/class-entity-unit.php:373
 #: core/includes/entities/class-entity-unit.php:441
 msgid "Ready"
-msgstr "Bereit"
+msgstr "Bezugsfertig"
 
 #: core/components/properties/functions.php:711
 #: core/includes/entities/class-entity-property.php:562
@@ -1097,7 +1097,7 @@ msgstr "Immobilien nach Anzahl der Schlafzimmer suchen"
 #: core/components/sections/explore-by-beds.php:50
 #: core/components/sections/explore-by-districts.php:41
 msgid "Quick picks for you in UAE"
-msgstr "Schnelle Tipps für dich in den Vereinigten Arabischen Emiraten"
+msgstr "Schnelle Empfehlungen für Sie in den VAE"
 
 #: core/components/sections/explore-by-beds.php:52
 #: core/includes/registers/post-types/properties.php:15
@@ -1137,11 +1137,11 @@ msgstr "Ausgewählte neue Projekte in den Vereinigten Arabischen Emiraten"
 
 #: core/components/units/featured.php:23
 msgid "DISTRESS PROPERTIES"
-msgstr "NOTVERKÄUFE von Immobilien"
+msgstr "IMMOBILIEN IM NOTVERKAUF"
 
 #: core/components/units/featured.php:24
 msgid "Don’t wait till it’s late"
-msgstr "Warte nicht, bis es zu spät ist"
+msgstr "Warten Sie nicht, bis es zu spät ist"
 
 #: core/components/units/featured.php:25
 msgid "Be first to explore new off-plan launches — early access, new prices, and direct WhatsApp contact."
@@ -1161,16 +1161,16 @@ msgstr "gefundene Immobilien"
 
 #: core/components/units/functions.php:19
 msgid "Off-plan"
-msgstr "Vom Plan weg"
+msgstr "Ab Plan"
 
 #: core/components/units/functions.php:20
 msgid "Secondary"
-msgstr "Sekundär"
+msgstr "Wiederverkauf"
 
 #: core/components/units/functions.php:21
 #: core/template-parts/filters/search-tabs.php:57
 msgid "Distress"
-msgstr "Notlage"
+msgstr "Notverkauf"
 
 #: core/components/units/similar.php:61
 msgid "More properties like this"
@@ -1209,13 +1209,13 @@ msgstr "sqft"
 #: core/components/units/units-by-beds.php:56
 #: core/components/units/units-by-beds.php:60
 msgid "Floor plan for %s bed unit"
-msgstr "Grundriss für die %s-Bett-Einheit"
+msgstr "Grundriss für Einheit mit %s Schlafzimmern"
 
 #: core/components/units/units-by-beds.php:85
 #: core/template-parts/cards/large-card.php:59
 #: template-parts/sections/single/dropdowns.php:45
 msgid "from"
-msgstr "aus"
+msgstr "ab"
 
 #: core/includes/entities/class-entity-estate-user.php:265
 msgid "Your email address has been successfully verified."
@@ -1239,7 +1239,7 @@ msgstr "Beliebt"
 #: core/includes/entities/class-entity-unit.php:396
 #: core/includes/entities/class-entity-unit.php:462
 msgid "Premium Developer"
-msgstr "Premium-Entwickler"
+msgstr "Premium-Bauträger"
 
 #: core/includes/entities/class-entity-property.php:626
 #: core/template-parts/account/edit-property.php:227
@@ -1311,7 +1311,7 @@ msgstr "Agenturmerkmale"
 
 #: core/includes/registers/post-types/agencies.php:13
 msgid "Parent Agency:"
-msgstr "Übergeordnete Behörde:"
+msgstr "Übergeordnete Agentur:"
 
 #: core/includes/registers/post-types/agencies.php:14
 msgid "All Agencies"
@@ -1339,7 +1339,7 @@ msgstr "Agentur bearbeiten"
 
 #: core/includes/registers/post-types/agencies.php:19
 msgid "Update Agency"
-msgstr "Agentur „Update“"
+msgstr "Agentur aktualisieren"
 
 #: core/includes/registers/post-types/agencies.php:20
 msgid "View Agency"
@@ -1351,7 +1351,7 @@ msgstr "Agenturen anzeigen"
 
 #: core/includes/registers/post-types/agencies.php:22
 msgid "Search Agency"
-msgstr "Suchagentur"
+msgstr "Agentur suchen"
 
 #: core/includes/registers/post-types/agencies.php:23
 #: core/includes/registers/post-types/developers.php:24
@@ -1391,7 +1391,7 @@ msgstr "Titelbild festlegen"
 #: core/includes/registers/post-types/subscribers.php:28
 #: core/includes/registers/post-types/units.php:30
 msgid "Remove featured image"
-msgstr "Beitragsbild entfernen"
+msgstr "Titelbild entfernen"
 
 #: core/includes/registers/post-types/agencies.php:28
 #: core/includes/registers/post-types/developers.php:29
@@ -1419,7 +1419,7 @@ msgstr "Navigation durch die Liste der Agenturen"
 
 #: core/includes/registers/post-types/agencies.php:33
 msgid "Filter agencies list"
-msgstr "Liste der Filteragenturen"
+msgstr "Agenturliste filtern"
 
 #: core/includes/registers/post-types/agencies.php:37
 #: core/includes/registers/post-types/developers.php:38
@@ -1453,7 +1453,7 @@ msgstr "Bauträger-Merkmale"
 
 #: core/includes/registers/post-types/developers.php:14
 msgid "Parent Developer:"
-msgstr "Entwickler der übergeordneten Klasse:"
+msgstr "Übergeordneter Bauträger:"
 
 #: core/includes/registers/post-types/developers.php:15
 msgid "All Developers"
@@ -1473,7 +1473,7 @@ msgstr "Bauträger bearbeiten"
 
 #: core/includes/registers/post-types/developers.php:20
 msgid "Update Developer"
-msgstr "Bauträger-Update"
+msgstr "Bauträger aktualisieren"
 
 #: core/includes/registers/post-types/developers.php:21
 msgid "View Developer"
@@ -1489,7 +1489,7 @@ msgstr "Bauträger suchen"
 
 #: core/includes/registers/post-types/developers.php:30
 msgid "Add into developer"
-msgstr "In den Bauträger hinzufügen"
+msgstr "Zu diesem Bauträger hinzufügen"
 
 #: core/includes/registers/post-types/developers.php:31
 msgid "Uploaded to this developer"
@@ -1505,7 +1505,7 @@ msgstr "Navigation durch die Liste der Bauträger"
 
 #: core/includes/registers/post-types/developers.php:34
 msgid "Filter developers list"
-msgstr "Liste der Filter-Bauträger"
+msgstr "Bauträgerliste filtern"
 
 #: core/includes/registers/post-types/locations.php:9
 #: core/includes/registers/post-types/locations.php:17
@@ -1552,7 +1552,7 @@ msgstr "Immobilienarchiv"
 
 #: core/includes/registers/post-types/properties.php:13
 msgid "Property Attributes"
-msgstr "Eigenschaften"
+msgstr "Immobilien-Merkmale"
 
 #: core/includes/registers/post-types/properties.php:14
 msgid "Parent Property:"
@@ -1568,7 +1568,7 @@ msgstr "Neue Immobilie"
 
 #: core/includes/registers/post-types/properties.php:19
 msgid "Edit Property"
-msgstr "Eigenschaft bearbeiten"
+msgstr "Immobilie bearbeiten"
 
 #: core/includes/registers/post-types/properties.php:20
 msgid "Update Property"
@@ -1580,7 +1580,7 @@ msgstr "Immobilie ansehen"
 
 #: core/includes/registers/post-types/properties.php:22
 msgid "View Properties"
-msgstr "Eigenschaften von Immobilien anzeigen"
+msgstr "Immobilien anzeigen"
 
 #: core/includes/registers/post-types/properties.php:23
 msgid "Search Property"
@@ -1619,7 +1619,7 @@ msgstr "Abonnentenmerkmale"
 
 #: core/includes/registers/post-types/subscribers.php:14
 msgid "Parent Subscriber:"
-msgstr "Elternteil (Abonnent):"
+msgstr "Übergeordneter Abonnent:"
 
 #: core/includes/registers/post-types/subscribers.php:15
 msgid "All Subscribers"
@@ -1703,7 +1703,7 @@ msgstr "Einheitsattribute"
 
 #: core/includes/registers/post-types/units.php:16
 msgid "Parent Unit:"
-msgstr "Eltern-Einheit:"
+msgstr "Übergeordnete Einheit:"
 
 #: core/includes/registers/post-types/units.php:17
 #: core/includes/registers/post-types/units.php:33
@@ -1737,7 +1737,7 @@ msgstr "Einheiten anzeigen"
 
 #: core/includes/registers/post-types/units.php:25
 msgid "Search Unit"
-msgstr "Suchfunktion"
+msgstr "Einheit suchen"
 
 #: core/includes/registers/post-types/units.php:32
 msgid "Units insighted by this author"
@@ -1764,7 +1764,7 @@ msgstr "Neues Projekt für Immobilien hinzufügen"
 
 #: core/template-parts/account/edit-property.php:23
 msgid "Edit property project"
-msgstr "Eigenschaftsprojekt bearbeiten"
+msgstr "Immobilienprojekt bearbeiten"
 
 #: core/template-parts/account/edit-property.php:24
 msgid "Add property project"
@@ -1806,7 +1806,7 @@ msgstr "Das Projekt ist bereits abgeschlossen / Fertig"
 
 #: core/template-parts/account/edit-property.php:259
 msgid "Contain Property Types "
-msgstr "Enthaltene Datentypen für Immobilien "
+msgstr "Enthaltene Objektarten "
 
 #: core/template-parts/account/edit-property.php:285
 #: core/template-parts/account/edit-unit.php:319
@@ -1836,7 +1836,7 @@ msgstr "Dateien durchsuchen"
 
 #: core/template-parts/account/edit-unit.php:22
 msgid "Edit property:"
-msgstr "Eigenschaft bearbeiten:"
+msgstr "Immobilie bearbeiten:"
 
 #: core/template-parts/account/edit-unit.php:22
 msgid "Add new property"
@@ -1897,7 +1897,7 @@ msgstr "Badezimmer"
 
 #: core/template-parts/account/edit-unit.php:348
 msgid "Delete Property"
-msgstr "Eigenschaft löschen"
+msgstr "Immobilie löschen"
 
 #: core/template-parts/account/edit-unit.php:351
 msgid "Are you sure to delete this property?"
@@ -2018,7 +2018,7 @@ msgstr "Avatar"
 
 #: core/template-parts/account/profile.php:37
 msgid "+ Add new distress"
-msgstr "+ Neues Problem hinzufügen"
+msgstr "+ Neuen Notverkauf hinzufügen"
 
 #: core/template-parts/account/profile.php:37
 msgid "+ Add new property"
@@ -2026,7 +2026,7 @@ msgstr "+ Neue Immobilie hinzufügen"
 
 #: core/template-parts/account/profile.php:39
 msgid "My distress"
-msgstr "Meine Not"
+msgstr "Meine Notverkäufe"
 
 #: core/template-parts/account/profile.php:39
 msgid "My properties"
@@ -2038,7 +2038,7 @@ msgstr "Meine Projekte"
 
 #: core/template-parts/account/profile.php:85
 msgid "My distress (%d)"
-msgstr "Meine Not (%d)"
+msgstr "Meine Notverkäufe (%d)"
 
 #: core/template-parts/account/profile.php:85
 msgid "My properties (%d)"
@@ -2046,7 +2046,7 @@ msgstr "Meine Immobilien (%d)"
 
 #: core/template-parts/account/profile.php:129
 msgid "Gold Star"
-msgstr "Goldsterne"
+msgstr "Goldstern"
 
 #: core/template-parts/account/profile.php:132
 msgid "Boost your property to get it sold faster"
@@ -2128,7 +2128,7 @@ msgstr "Wohnungen zum Verkauf"
 
 #: core/template-parts/cards/map-sidebar.php:64
 msgid "Unit image"
-msgstr "Produktbild"
+msgstr "Bild der Einheit"
 
 #: core/template-parts/cards/unit-card.php:55
 #: core/template-parts/common/pagination.php:28
@@ -2155,7 +2155,7 @@ msgstr "Wohnung von "
 
 #: core/template-parts/cards/unit-card.php:162
 msgid "Boost property"
-msgstr "Boost-Eigenschaft"
+msgstr "Immobilie bewerben"
 
 #: core/template-parts/cards/unit-square-card.php:55
 msgid "Original Price:"
@@ -2206,7 +2206,7 @@ msgstr "Beliebte Suchanfragen"
 
 #: core/template-parts/common/footer.php:54
 msgid "Discovery"
-msgstr "Entdeckung"
+msgstr "Entdecken"
 
 #: core/template-parts/common/footer.php:74
 msgid "Quick Links"
@@ -2295,7 +2295,7 @@ msgstr "Abbrechen"
 #: core/template-parts/filters/result-filters.php:215
 #: core/template-parts/filters/search-tabs.php:116
 msgid "Apply"
-msgstr "Bewerben"
+msgstr "Anwenden"
 
 #: core/template-parts/filters/result-filters.php:288
 msgid "Max Area"
@@ -2382,7 +2382,7 @@ msgstr "Informationen zur Immobilie"
 #: core/template-parts/properties/property-single.php:143
 #: single-unit.php:366
 msgid "View developer"
-msgstr "Entwickler anzeigen"
+msgstr "Bauträger anzeigen"
 
 #: core/template-parts/properties/property-single.php:157
 msgid "properties available in this project"
@@ -2451,7 +2451,7 @@ msgstr "Fußzeile | Beliebte Suchanfragen"
 
 #: functions.php:35
 msgid "Footer | Discovery"
-msgstr "Fußzeile | Entdeckung"
+msgstr "Fußzeile | Entdecken"
 
 #: functions.php:36
 msgid "Footer | Quick Links"
@@ -2674,7 +2674,7 @@ msgstr "Sofort verfügbar"
 
 #: template-parts/sections/index/hero.php:40
 msgid "In construction"
-msgstr "Im Bauwesen"
+msgstr "Im Bau"
 
 #: template-parts/sections/index/map.php:8
 msgid "Dubai map"
@@ -2794,7 +2794,7 @@ msgstr "Gezahlte Zinsen"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:231
 msgid "Principal"
-msgstr "Schulleiter"
+msgstr "Tilgungsanteil"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:237
 msgid "Interest over term"
@@ -2975,7 +2975,7 @@ msgstr "Eine Hypothek für im Bau befindliche Immobilien wird verfügbar, sobald
 
 #: template-parts/sections/mortgage-calculator/off-plan.php:35
 msgid "50% complete"
-msgstr "Zu 50 % abgeschlossen"
+msgstr "50 %"
 
 #: template-parts/sections/mortgage-calculator/off-plan.php:40
 msgid "Before that stage, buyers use the developer’s payment plan."

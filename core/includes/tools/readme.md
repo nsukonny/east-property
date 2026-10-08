@@ -20,7 +20,7 @@ wp option delete ep_deepl_cache --allow-root
 перевод из английской версии
 
 ```bash
-wp tools translate-locations --limit=10 --dry-run --allow-root
+wp tools translate-locations --limit=10 --allow-root
 wp tools translate-locations --language=ru --limit=10 --allow-root
 wp tools translate-locations --term-id=141 --force --allow-root
 ```
@@ -35,6 +35,11 @@ wp tools clone-language --locale=de_DE --post-type=property --yes --allow-root
 wp tools clone-language --locale=de --post-type=unit --yes --allow-root
 wp tools clone-language --locale=de_DE --post-id=12345 --allow-root
 ```
+
+Связи переносятся на новый язык: юнит привязывается к property этого языка,
+property — к developers через `developer_rel`. Чего на языке ещё нет, создаётся
+тем же прогоном, поэтому `--post-type=unit` может завести и property, и
+developers. `--dry-run` перечисляет всю цепочку.
 
 после запускаем `wp tools translate-units`
 

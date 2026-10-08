@@ -306,15 +306,14 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 
 	$delivery_dates = array_values( $delivery_dates );
 
-	$developers = array_merge(
+	$any_developer = array(
 		array(
-			array(
-				'value' => 'all',
-				'label' => __( 'Any Developers', 'east-property' ),
-			),
+			'value' => 'all',
+			'label' => __( 'Any Developers', 'east-property' ),
 		),
-		$developers
 	);
+
+	$developers = array_merge( $any_developer, $developers );
 
 	if ( ! $is_off_plan ) {
 		$ready_options = array(
@@ -395,9 +394,13 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 
 	$search_tabs_data['categories'] = array(
 		array(
-			'slug'       => date( 'Y' ),
+			'slug'       => 'secondary',
 			'label'      => _x( 'Available', 'search tab', 'east-property' ),
 			'action_url' => core_home_url( 'secondary/' ),
+			'developers' => array_merge(
+				$any_developer,
+				core_unit_filter_developers( $post_type, $language, 'secondary' )
+			),
 			'defaults'   => array(
 				'beds'     => array(
 					'label'   => __( 'Bedrooms', 'east-property' ),
@@ -410,9 +413,13 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 			),
 		),
 		array(
-			'slug'       => date( 'Y' ),
+			'slug'       => 'off-plan',
 			'label'      => _x( 'In construction', 'search tab', 'east-property' ),
 			'action_url' => core_home_url( 'off-plan/' ),
+			'developers' => array_merge(
+				$any_developer,
+				core_unit_filter_developers( $post_type, $language, 'off-plan' )
+			),
 			'defaults'   => array(
 				'beds'  => get_filter_beds_options(),
 				'price' => $price_max,

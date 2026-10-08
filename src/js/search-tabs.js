@@ -67,9 +67,11 @@ const initSearchTabs = async () => {
 			},
 		}
 
+		const activeOptions = {}
+
 		const getOptionLabel = (filterKey, value) => {
-			const filter = searchData?.filters?.[filterKey]
-			const option = filter?.options?.find((opt) => opt?.value === value)
+			const list = activeOptions[filterKey] ?? searchData?.filters?.[filterKey]?.options
+			const option = list?.find((opt) => opt?.value === value)
 			return option?.label ?? value
 		}
 
@@ -127,14 +129,15 @@ const initSearchTabs = async () => {
 			if (dropdown) dropdown.hidden = false
 		}
 
-		const renderDropdown = (filterKey) => {
+		const renderDropdown = (filterKey, options) => {
 			const dropdown = container.querySelector(`[data-search-dropdown="${filterKey}"]`)
-			const filter = searchData?.filters?.[filterKey]
+			const list = options ?? searchData?.filters?.[filterKey]?.options
 
-			if (!dropdown || !filter?.options?.length) return
+			if (!dropdown || !list?.length) return
 
+			activeOptions[filterKey] = list
 			dropdown.replaceChildren()
-			filter.options.forEach((opt) => {
+			list.forEach((opt) => {
 				const btn = document.createElement('button')
 				btn.type = 'button'
 				btn.className = 'tab-option'
@@ -171,7 +174,15 @@ const initSearchTabs = async () => {
 
 		const applyCategoryDefaults = (type) => {
 			const category = searchData?.categories?.find((c) => c?.slug === type)
-			const defaults = category?.defaults
+
+			if (!category) return
+
+			if (Array.isArray(category.developers) && category.developers.length) {
+				renderDropdown('developer', category.developers)
+				setFilterValue('developer', 'all')
+			}
+
+			const defaults = category.defaults
 
 			if (!defaults) return
 
