@@ -10,6 +10,12 @@ wp tools translate-units --post-id=33067 --allow-root   # тип определ�
 wp tools translate-units --limit=5 --language=ru --allow-root
 ```
 
+Сбросить кэш deepl
+
+```bash
+wp option delete ep_deepl_cache --allow-root
+```
+
 Перевод локаций. Переводы описаний находятся в мета description_<slug>, берется список тех у которых пусто и создается
 перевод из английской версии
 
