@@ -197,7 +197,10 @@ class LanguageClonerTest extends TestCase {
 		$this->assertSame( '1500000', (string) get_post_meta( $copy, 'price', true ) );
 		$this->assertSame( '2', (string) get_post_meta( $copy, 'bedrooms', true ) );
 		$this->assertSame( 'off-plan', (string) get_post_meta( $copy, 'listing_type', true ) );
-		$this->assertSame( (string) $project, (string) get_post_meta( $copy, 'property', true ) );
+		$project_ru = (int) pll_get_post( $project, 'ru' );
+
+		$this->assertGreaterThan( 0, $project_ru );
+		$this->assertSame( (string) $project_ru, (string) get_post_meta( $copy, 'property', true ) );
 
 		// Ключи полей ACF нужны копии, служебные метки редактора — нет.
 		$this->assertNotSame( '', (string) get_post_meta( $copy, '_price', true ) );

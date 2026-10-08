@@ -47,6 +47,9 @@ final class CLI {
 	 * Every translation group gains one copy, made from its default-language
 	 * post and carrying its text, flagged need_translate so translate-units
 	 * fills it afterwards. Re-running only picks up what is still missing.
+	 * Links to other posts are repointed at the new language: a unit to the
+	 * project, a project to the developer, and what the language has none of is
+	 * cloned first.
 	 *
 	 * ## OPTIONS
 	 *
@@ -173,6 +176,7 @@ final class CLI {
 		$totals = array(
 			'ready'   => 0,
 			'created' => 0,
+			'linked'  => 0,
 			'skipped' => 0,
 			'failed'  => 0,
 		);
@@ -194,8 +198,26 @@ final class CLI {
 					implode( ', ', array_keys( $plan['group'] ) ) ?: 'одиночная' )
 			);
 
+			$links = (array) ( $plan['links'] ?? array() );
+			$extra = 0;
+
+			foreach ( $links as $link ) {
+				$needed = 0 === (int) $link['translated'];
+				$extra += $needed ? 1 : 0;
+
+				WP_CLI::log(
+					$needed
+						? sprintf( '        %s #%d на %s будет создан и привязан через %s',
+							$link['type'], $link['source'], strtoupper( $language ), $link['meta'] )
+						: sprintf( '        %s на %s уже есть — #%d (%s)',
+							$link['type'], strtoupper( $language ), $link['translated'], $link['meta'] )
+				);
+			}
+
 			if ( $dry_run ) {
 				++ $totals['ready'];
+				$totals['linked'] += $extra;
+
 				WP_CLI::log( sprintf( '        [DRY RUN] копия на %s не создана', strtoupper( $language ) ) );
 
 				continue;
@@ -211,7 +233,23 @@ final class CLI {
 			}
 
 			++ $totals['created'];
-			WP_CLI::log( sprintf( '        создана #%d, помечена need_translate', $copy ) );
+			$totals['linked'] += $extra;
+
+			$pointers = array();
+
+			foreach ( $links as $link ) {
+				if ( (int) $link['owner'] !== (int) $plan['id'] ) {
+					continue;
+				}
+
+				$pointers[] = sprintf( '%s #%s', $link['meta'],
+					get_post_meta( (int) $copy, (string) $link['meta'], true ) ?: '—' );
+			}
+
+			WP_CLI::log(
+				sprintf( '        создана #%d, помечена need_translate%s',
+					$copy, $pointers ? ', ' . implode( ', ', $pointers ) : '' )
+			);
 		}
 
 		WP_CLI::log( '' );
@@ -221,6 +259,10 @@ final class CLI {
 		} else {
 			WP_CLI::log( sprintf( 'Создано: %d', $totals['created'] ) );
 			WP_CLI::log( sprintf( 'Ошибок:  %d', $totals['failed'] ) );
+		}
+
+		if ( $totals['linked'] > 0 ) {
+			WP_CLI::log( sprintf( 'Связанных записей заодно: %d', $totals['linked'] ) );
 		}
 
 		WP_CLI::log( sprintf( 'Пропущено: %d', $totals['skipped'] ) );
