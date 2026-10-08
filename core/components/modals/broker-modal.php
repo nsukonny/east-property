@@ -2,18 +2,26 @@
 
 use Entities\Estate_User;
 
+$whatsapp_text = '';
+
 if ( ! empty( $post ) && 'unit' === $post->post_type ) {
-	$unit     = new \Entities\Unit( $post->ID );
-	$unit_url = $unit->get_url();
-	$broker   = $unit->get_broker();
+	$unit   = new \Entities\Unit( $post->ID );
+	$broker = $unit->get_broker();
+
+	if ( function_exists( 'core_unit_enquiry_text' ) ) {
+		$whatsapp_text = core_unit_enquiry_text( $unit->get_title(), $unit->get_url() );
+	}
 } else {
 	$broker_wp_user = Estate_User::get_default_broker();
 	$broker         = new Estate_User( $broker_wp_user );
+
+	if ( ! empty( $post ) && 'property' === $post->post_type && function_exists( 'core_property_enquiry_text' ) ) {
+		$whatsapp_text = core_property_enquiry_text( new \Entities\Property( $post->ID ) );
+	}
 }
 
-$whatsapp_text = __( 'Hello, I am interested in property', 'east-property' );
-if ( isset( $unit_url ) ) {
-	$whatsapp_text .= ' - ' . $unit_url;
+if ( '' === $whatsapp_text ) {
+	$whatsapp_text = __( 'Hello, I am interested in property', 'east-property' );
 }
 $whats_app_link = $broker?->get_whatsapp( $whatsapp_text ) ?: WHATS_APP_LINK;
 $phone          = $broker?->get_phone( '', true ) ?: PROJECT_PHONE;

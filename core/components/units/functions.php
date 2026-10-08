@@ -596,3 +596,27 @@ function core_query_count_of_units_by_date( string $date_from, string $date_to, 
 
 	return (int) $wpdb->get_var( $wpdb->prepare( $sql, $params ) );
 }
+
+/**
+ * WhatsApp enquiry a visitor sends about a unit.
+ *
+ * The project is deliberately left out: unit titles already carry it, and the
+ * link settles which unit it is. Trailing punctuation is trimmed, because the
+ * titles end with a full stop and it collided with the sentence around them.
+ *
+ * @param string $title Unit name.
+ * @param string $url   Unit page.
+ *
+ * @return string
+ */
+function core_unit_enquiry_text( string $title, string $url ): string {
+	$title = trim( html_entity_decode( $title, ENT_QUOTES | ENT_HTML5, 'UTF-8' ) );
+	$title = rtrim( $title, " \t\n.,;:" );
+
+	return sprintf(
+	/* translators: 1: unit name, 2: unit URL. */
+		__( 'Hello! I am interested in %1$s. Could you tell me more about it? %2$s', 'east-property' ),
+		$title,
+		$url
+	);
+}

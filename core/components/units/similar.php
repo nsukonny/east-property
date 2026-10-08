@@ -7,7 +7,8 @@ $property_id = $args['property_id'] ?? null;
 $unit_id     = $args['unit_id'] ?? null;
 
 if ( empty( $property_id ) ) {
-	$random_unit_id = get_posts(
+	// Polylang сужает выборку до текущего языка, и там юнитов может не быть вовсе.
+	$random_unit_id = (int) ( get_posts(
 		array(
 			'post_type'      => 'unit',
 			'posts_per_page' => 1,
@@ -15,11 +16,13 @@ if ( empty( $property_id ) ) {
 			'post_status'    => 'publish',
 			'orderby'        => 'rand',
 		)
-	)[0];
+	)[0] ?? 0 );
 
-	$unit        = new Entities\Unit( $random_unit_id );
-	$property    = $unit->get_property();
-	$property_id = $property?->get_id();
+	if ( $random_unit_id > 0 ) {
+		$unit        = new Entities\Unit( $random_unit_id );
+		$property    = $unit->get_property();
+		$property_id = $property?->get_id();
+	}
 }
 
 if ( empty( $property_id ) ) {

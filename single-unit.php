@@ -39,7 +39,7 @@ while ( have_posts() ) {
 	$amenities         = $unit->get_amenities();
 	$floor_plan        = $unit->get_floor_plan();
 	$broker            = $unit->get_broker();
-	$whatsapp_text     = __( 'Hello, I am interested in property -', 'east-property' ) . ' ' . $unit->get_url();
+	$whatsapp_text     = core_unit_enquiry_text( $unit->get_title(), $unit->get_url() );
 	$whats_app_link    = $broker?->get_whatsapp( $whatsapp_text ) ?: WHATS_APP_LINK;
 	$broker_phone      = $broker?->get_phone( '', true ) ?: PROJECT_PHONE;
 	$desc              = $unit->get_description_full();

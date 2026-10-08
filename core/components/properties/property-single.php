@@ -29,7 +29,7 @@ $raw_url_encode_text = rawurlencode( sprintf(
 	get_permalink( $property->get_id() ) ) );
 
 $whatsapp_share_text = 'https://wa.me/?text=' . $raw_url_encode_text;
-$whatsapp_link       = WHATS_APP_LINK . '?text=' . $raw_url_encode_text;
+$whatsapp_link       = WHATS_APP_LINK . '?text=' . rawurlencode( core_property_enquiry_text( $property ) );
 
 $property_units = $property->get_units();
 $featured_units = ! empty( $property_units['items'] ) ? array_slice( $property_units['items'], 0, 6 ) : array();
