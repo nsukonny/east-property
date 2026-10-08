@@ -36,6 +36,348 @@ final class CLI {
 		WP_CLI::add_command( 'tools flag-untranslated', array( __CLASS__, 'flag_untranslated' ) );
 		WP_CLI::add_command( 'tools warm-cache', array( __CLASS__, 'warm_cache' ) );
 		WP_CLI::add_command( 'tools strip-unit-floors', array( __CLASS__, 'strip_unit_floors' ) );
+		WP_CLI::add_command( 'tools translate-units', array( __CLASS__, 'translate_units' ) );
+		WP_CLI::add_command( 'tools translate-locations', array( __CLASS__, 'translate_locations' ) );
+	}
+
+	/**
+	 * Fill the per-language description of locations from the default language.
+	 *
+	 * The taxonomy is not translated by Polylang, so every language keeps its
+	 * own description in term meta next to the term's own field.
+	 *
+	 * ## OPTIONS
+	 *
+	 * [--language=<slug>]
+	 * : Language to fill. Every extra language when left out.
+	 *
+	 * [--limit=<number>]
+	 * : How many locations to take per language. Ignored with --term-id.
+	 * ---
+	 * default: 20
+	 * ---
+	 *
+	 * [--offset=<number>]
+	 * : Locations to pass over first.
+	 *
+	 * [--term-id=<id>]
+	 * : Work on this location alone.
+	 *
+	 * [--dry-run]
+	 * : Report the plan, send nothing to DeepL and write nothing.
+	 *
+	 * [--force]
+	 * : Overwrite a description that is already there. Needs --term-id.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp tools translate-locations --limit=10 --dry-run
+	 *     wp tools translate-locations --language=ru --limit=10
+	 *     wp tools translate-locations --term-id=141 --force
+	 *
+	 * @param array $args Positional arguments, unused.
+	 * @param array $assoc_args Flags.
+	 *
+	 * @return void
+	 */
+	public static function translate_locations( array $args, array $assoc_args ): void {
+		$dry_run  = (bool) Utils\get_flag_value( $assoc_args, 'dry-run', false );
+		$force    = (bool) Utils\get_flag_value( $assoc_args, 'force', false );
+		$term_id  = (int) Utils\get_flag_value( $assoc_args, 'term-id', 0 );
+		$limit    = max( 1, (int) Utils\get_flag_value( $assoc_args, 'limit', 20 ) );
+		$offset   = max( 0, (int) Utils\get_flag_value( $assoc_args, 'offset', 0 ) );
+		$language = (string) Utils\get_flag_value( $assoc_args, 'language', '' );
+
+		if ( $force && $term_id <= 0 ) {
+			WP_CLI::error( '--force требует --term-id, иначе перезапишутся все описания' );
+		}
+
+		$languages = Location_Translator::languages();
+
+		if ( empty( $languages ) ) {
+			WP_CLI::error( 'кроме языка по умолчанию языков нет — заполнять нечего' );
+		}
+
+		if ( '' !== $language ) {
+			if ( ! in_array( $language, $languages, true ) ) {
+				WP_CLI::error(
+					sprintf( 'язык «%s» не из списка: %s', $language, implode( ', ', $languages ) )
+				);
+			}
+
+			$languages = array( $language );
+		}
+
+		$translator = new Location_Translator();
+
+		if ( ! $dry_run && ! $translator->ready() ) {
+			WP_CLI::error( 'DEEPL_API_KEY не задан в .env — переводить нечем' );
+		}
+
+		$totals = array(
+			'ready'   => 0,
+			'filled'  => 0,
+			'skipped' => 0,
+			'failed'  => 0,
+			'chars'   => 0,
+		);
+
+		foreach ( $languages as $slug ) {
+			$ids = $term_id > 0
+				? array( $term_id )
+				: $translator->find( $slug, $limit, $offset, $force );
+
+			if ( empty( $ids ) ) {
+				WP_CLI::log( sprintf( '%s: заполнять нечего', strtoupper( $slug ) ) );
+
+				continue;
+			}
+
+			$total = count( $ids );
+
+			foreach ( array_values( $ids ) as $index => $id ) {
+				$plan = $translator->plan( (int) $id, $slug, $force );
+
+				if ( is_wp_error( $plan ) ) {
+					++ $totals['skipped'];
+					WP_CLI::warning( sprintf( '%s [%d/%d] пропущен: %s', strtoupper( $slug ), $index + 1, $total,
+						$plan->get_error_message() ) );
+
+					continue;
+				}
+
+				WP_CLI::log(
+					sprintf( '%s [%d/%d] %s — %d символов исходника',
+						strtoupper( $slug ), $index + 1, $total, $plan['name'], mb_strlen( $plan['source'] ) )
+				);
+
+				if ( $dry_run ) {
+					++ $totals['ready'];
+					WP_CLI::log( '        [DRY RUN] запрос не отправлен, ничего не записано' );
+
+					continue;
+				}
+
+				$written = $translator->translate( (int) $id, $slug, $force );
+
+				if ( is_wp_error( $written ) ) {
+					++ $totals['failed'];
+					WP_CLI::warning( sprintf( '        ошибка: %s — описание не изменено', $written->get_error_message() ) );
+
+					continue;
+				}
+
+				++ $totals['filled'];
+				$totals['chars'] += (int) $written;
+				WP_CLI::log( sprintf( '        записано %d символов', $written ) );
+
+				if ( $index + 1 < $total ) {
+					usleep( 200000 );
+				}
+			}
+		}
+
+		WP_CLI::log( '' );
+
+		if ( $dry_run ) {
+			WP_CLI::log( sprintf( 'К заполнению: %d', $totals['ready'] ) );
+		} else {
+			WP_CLI::log( sprintf( 'Заполнено: %d (%s символов)', $totals['filled'], number_format( $totals['chars'] ) ) );
+			WP_CLI::log( sprintf( 'Ошибок:    %d', $totals['failed'] ) );
+		}
+
+		WP_CLI::log( sprintf( 'Пропущено: %d', $totals['skipped'] ) );
+
+		if ( $totals['failed'] > 0 ) {
+			WP_CLI::warning( 'Часть описаний не заполнена — команду можно запустить повторно' );
+
+			return;
+		}
+
+		WP_CLI::success( $dry_run ? 'Проверка закончена, ничего не записано' : 'Готово' );
+	}
+
+	/**
+	 * Fill units and projects flagged need_translate with DeepL output.
+	 *
+	 * The flag sits on posts an importer created by copying the other language,
+	 * so the target is the post's own Polylang language. Posts already in the
+	 * default language are skipped, flag untouched: their text is the source.
+	 * Nothing is written until every field of a post came back translated.
+	 *
+	 * ## OPTIONS
+	 *
+	 * [--post-type=<types>]
+	 * : Comma-separated types to walk.
+	 * ---
+	 * default: unit,property
+	 * ---
+	 *
+	 * [--limit=<number>]
+	 * : How many flagged posts to take. Ignored with --post-id.
+	 * ---
+	 * default: 20
+	 * ---
+	 *
+	 * [--offset=<number>]
+	 * : Flagged posts to pass over first.
+	 *
+	 * [--post-id=<id>]
+	 * : Work on this unit alone, flagged or not.
+	 *
+	 * [--language=<slug>]
+	 * : Only units in this Polylang language.
+	 *
+	 * [--dry-run]
+	 * : Report the plan, send nothing to DeepL and write nothing.
+	 *
+	 * [--force]
+	 * : Kept for older scripts; --post-id already skips the flag check.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp tools translate-units --limit=10 --dry-run
+	 *     wp tools translate-units --limit=10
+	 *     wp tools translate-units --post-id=12345
+	 *     wp tools translate-units --post-id=12345 --force
+	 *     wp tools translate-units --limit=5 --language=ru
+	 *     wp tools translate-units --post-type=property --limit=5 --dry-run
+	 *
+	 * @param array $args Positional arguments, unused.
+	 * @param array $assoc_args Flags.
+	 *
+	 * @return void
+	 */
+	public static function translate_units( array $args, array $assoc_args ): void {
+		$dry_run  = (bool) Utils\get_flag_value( $assoc_args, 'dry-run', false );
+		$force    = (bool) Utils\get_flag_value( $assoc_args, 'force', false );
+		$post_id  = (int) Utils\get_flag_value( $assoc_args, 'post-id', 0 );
+		$limit    = max( 1, (int) Utils\get_flag_value( $assoc_args, 'limit', 20 ) );
+		$offset   = max( 0, (int) Utils\get_flag_value( $assoc_args, 'offset', 0 ) );
+		$language = (string) Utils\get_flag_value( $assoc_args, 'language', '' );
+		$types    = array_filter(
+			array_map(
+				'trim',
+				explode( ',', (string) Utils\get_flag_value( $assoc_args, 'post-type', implode( ',', Unit_Translator::POST_TYPES ) ) )
+			)
+		);
+
+		$unknown = array_diff( $types, Unit_Translator::POST_TYPES );
+
+		if ( ! empty( $unknown ) ) {
+			WP_CLI::error(
+				sprintf( 'перевод не поддержан для %s, доступны: %s',
+					implode( ', ', $unknown ), implode( ', ', Unit_Translator::POST_TYPES ) )
+			);
+		}
+
+		if ( $force && $post_id <= 0 ) {
+			WP_CLI::error( '--force требует --post-id, иначе под перевод уйдёт весь каталог' );
+		}
+
+		// Названный юнит переводим независимо от флага.
+		$force = $force || $post_id > 0;
+
+		if ( ! function_exists( 'pll_get_post_language' ) ) {
+			WP_CLI::error( 'Polylang не активен — язык поста определить нечем' );
+		}
+
+		$translator = new Unit_Translator();
+
+		if ( ! $dry_run && ! $translator->ready() ) {
+			WP_CLI::error( 'DEEPL_API_KEY не задан в .env — переводить нечем' );
+		}
+
+		$ids = $post_id > 0
+			? array( $post_id )
+			: $translator->find( $limit, $offset, $language, $types );
+
+		if ( empty( $ids ) ) {
+			WP_CLI::success( 'Записей с флагом need_translate не нашлось' );
+
+			return;
+		}
+
+		$totals = array(
+			'processed' => 0,
+			'ready'     => 0,
+			'saved'     => 0,
+			'skipped'   => 0,
+			'failed'    => 0,
+		);
+
+		$total = count( $ids );
+
+		foreach ( array_values( $ids ) as $index => $id ) {
+			++ $totals['processed'];
+
+			WP_CLI::log( sprintf( '[%d/%d] %s #%d', $index + 1, $total, get_post_type( $id ) ?: 'post', $id ) );
+
+			$plan = $translator->plan( (int) $id, $force );
+
+			if ( is_wp_error( $plan ) ) {
+				++ $totals['skipped'];
+				WP_CLI::warning( sprintf( 'пропущен: %s', $plan->get_error_message() ) );
+
+				continue;
+			}
+
+			if ( empty( $plan['strings'] ) ) {
+				++ $totals['skipped'];
+				WP_CLI::warning( sprintf( 'пропущен: у #%d нет текста для перевода', $id ) );
+
+				continue;
+			}
+
+			WP_CLI::log( sprintf( '        язык: %s, цель DeepL: %s', $plan['language'], $plan['target'] ) );
+			WP_CLI::log( sprintf( '        поля: %s', implode( ', ', $plan['summary'] ) ) );
+			WP_CLI::log( sprintf( '        строк на перевод: %d', count( $plan['strings'] ) ) );
+
+			if ( $dry_run ) {
+				++ $totals['ready'];
+				WP_CLI::log( '        [DRY RUN] запрос не отправлен, ничего не записано' );
+
+				continue;
+			}
+
+			$saved = $translator->translate( (int) $id, $force );
+
+			if ( is_wp_error( $saved ) ) {
+				++ $totals['failed'];
+				WP_CLI::warning(
+					sprintf( 'ошибка: %s — #%d не изменён, флаг оставлен', $saved->get_error_message(), $id )
+				);
+
+				continue;
+			}
+
+			++ $totals['saved'];
+			WP_CLI::log( sprintf( '        сохранено: %s, флаг снят', implode( ', ', $saved ) ) );
+
+			if ( $index + 1 < $total ) {
+				usleep( 200000 );
+			}
+		}
+
+		WP_CLI::log( '' );
+		WP_CLI::log( sprintf( 'Обработано: %d', $totals['processed'] ) );
+
+		if ( $dry_run ) {
+			WP_CLI::log( sprintf( 'К переводу: %d', $totals['ready'] ) );
+		} else {
+			WP_CLI::log( sprintf( 'Переведено: %d', $totals['saved'] ) );
+			WP_CLI::log( sprintf( 'Ошибок:     %d', $totals['failed'] ) );
+		}
+
+		WP_CLI::log( sprintf( 'Пропущено:  %d', $totals['skipped'] ) );
+
+		if ( $totals['failed'] > 0 ) {
+			WP_CLI::warning( 'Флаг у неудачных юнитов остался — команду можно запустить повторно' );
+
+			return;
+		}
+
+		WP_CLI::success( $dry_run ? 'Проверка закончена, ничего не записано' : 'Готово' );
 	}
 
 	/**

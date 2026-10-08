@@ -228,9 +228,10 @@ $description = get_the_content();
 							 * would put the same content on thousands of pages.
 							 */
 							?>
-							<?php if ( ! empty( $location->description ) ) { ?>
+							<?php $location_description = core_location_description( $location ); ?>
+							<?php if ( '' !== trim( $location_description ) ) { ?>
 								<p class="location-summary">
-									<?php echo esc_html( wp_trim_words( $location->description, 45, '…' ) ); ?>
+									<?php echo esc_html( wp_trim_words( $location_description, 45, '…' ) ); ?>
 								</p>
 							<?php } ?>
 							<?php
