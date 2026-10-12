@@ -8,7 +8,8 @@
 namespace Tools;
 
 /**
- * Rewrites "Unit 1706 on 17 floor" to "Unit 1706" and the slug to match.
+ * Rewrites "Unit 1706 on 17 floor" to "Unit 1706" and the slug to match. Only
+ * the numbered form is touched; "high floor" and the like stay in place.
  *
  * Every old URL keeps answering with a 301: the old slug goes to _wp_old_slug,
  * which wp_old_slug_redirect() reads and core_old_slug_redirect_language() keeps
@@ -18,22 +19,10 @@ namespace Tools;
 final class Unit_Floor_Cleaner {
 
 	/**
-	 * Floor level spelled out: "high", "mid/high", "ground".
+	 * Numbered floor only: "on 11 floor". Every other mention of a floor —
+	 * "high floor", "on G floor", the Russian "этаж" — is left alone.
 	 */
-	private const LEVEL = '(?:ground|mezzanine|podium|mid|middle|low|lower|high|higher|top|upper)(?:\s*/\s*(?:mid|middle|low|high|top))?';
-
-	/**
-	 * What may stand between the preposition and "floor": "17", "4th", "P2", "G", a level.
-	 */
-	private const TOKEN = '(?:\d+(?:st|nd|rd|th)?|[a-z]{1,2}\d{1,2}|g|gf|lg|ug|m|' . self::LEVEL . ')';
-
-	/**
-	 * Floor phrases in English and Russian titles.
-	 */
-	private const PHRASE = '(?:(?:on|in|at|в|на)\s+(?:the\s+|a\s+)?(?:' . self::TOKEN . '[\s-]*)?floors?'
-		. '|' . self::LEVEL . '[\s-]+floors?'
-		. '|(?:на\s+)?(?:высок|средн|низк|верхн|последн)\p{L}*\s+этаж\p{L}*'
-		. '|(?:на\s+)?\d+(?:-?\p{L}{1,2})?\s+этаж\p{L}*)';
+	private const PHRASE = '(?:on[\s-]+\d+[\s-]+floors?)';
 
 	/**
 	 * Separators around a phrase: comma, dashes, pipe.
@@ -46,14 +35,10 @@ final class Unit_Floor_Cleaner {
 	private const TITLE_PATTERN = '~(?<lead>^|' . self::SEPARATOR . '|\s+)(?<phrase>' . self::PHRASE . ')(?![\p{L}\d])(?!-\p{L})(?<trail>' . self::SEPARATOR . '|\s+|$)~iu';
 
 	/**
-	 * Floor level inside a slug.
+	 * Numbered floor segment of a slug, with the numeric suffix WordPress
+	 * appended after it.
 	 */
-	private const SLUG_LEVEL = '(?:ground|mezzanine|podium|mid|middle|low|lower|high|higher|top|upper)(?:-(?:mid|middle|low|high|top))?';
-
-	/**
-	 * Floor segment of a slug, with the numeric suffix WordPress appended after it.
-	 */
-	private const SLUG_PATTERN = '~(?:^|-)(?:(?:on|in|at)-(?:the-|a-)?(?:(?:\d+(?:st|nd|rd|th)?|[a-z]{1,2}\d{1,2}|g|gf|lg|ug|m|' . self::SLUG_LEVEL . ')-)?floors?|' . self::SLUG_LEVEL . '-floors?)(?:-\d{1,2}$)?(?=-|$)~';
+	private const SLUG_PATTERN = '~(?:^|-)on-\d+-floors?(?:-\d{1,2}$)?(?=-|$)~';
 
 	/**
 	 * Statuses whose slug WordPress keeps unique.
@@ -233,7 +218,7 @@ final class Unit_Floor_Cleaner {
 	}
 
 	/**
-	 * Units that still mention a floor once the plan is applied.
+	 * Units that still carry a numbered floor once the plan is applied.
 	 *
 	 * @param array $plan Result of plan().
 	 *
@@ -247,7 +232,7 @@ final class Unit_Floor_Cleaner {
 			$title = $planned[ (int) $row->ID ]['new_title'] ?? (string) $row->post_title;
 			$slug  = $planned[ (int) $row->ID ]['new_slug'] ?? (string) $row->post_name;
 
-			if ( preg_match( '~floor|этаж~iu', $title . ' ' . $slug ) ) {
+			if ( preg_match( '~on[\s-]+\d+[\s-]+floors?~i', $title . ' ' . $slug ) ) {
 				$leftovers[] = array(
 					'id'    => (int) $row->ID,
 					'title' => $title,
@@ -449,7 +434,7 @@ final class Unit_Floor_Cleaner {
 	}
 
 	/**
-	 * Units whose title or slug mentions a floor.
+	 * Units whose title or slug mentions a floor at all, narrowed by the rules.
 	 *
 	 * @return object[] ID, post_title, post_name, post_status, post_parent.
 	 */
@@ -461,7 +446,7 @@ final class Unit_Floor_Cleaner {
 			FROM {$wpdb->posts}
 			WHERE post_type = 'unit'
 				AND post_status NOT IN ( 'trash', 'auto-draft', 'inherit' )
-				AND ( post_title LIKE '%floor%' OR post_title LIKE '%этаж%' OR post_name LIKE '%floor%' )
+				AND ( post_title LIKE '%floor%' OR post_name LIKE '%floor%' )
 			ORDER BY ID"
 		);
 	}

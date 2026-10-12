@@ -182,6 +182,11 @@ const initSearchTabs = async () => {
 				setFilterValue('developer', 'all')
 			}
 
+			if (Array.isArray(category.locations) && category.locations.length) {
+				renderDropdown('location', category.locations)
+				setFilterValue('location', 'all')
+			}
+
 			const defaults = category.defaults
 
 			if (!defaults) return

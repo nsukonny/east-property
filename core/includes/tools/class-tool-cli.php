@@ -57,7 +57,7 @@ final class CLI {
 	 * : Locale or slug of the language to open, for example de_DE or de.
 	 *
 	 * [--post-type=<types>]
-	 * : Comma-separated types to copy.
+	 * : Comma-separated types to copy: unit, property, page.
 	 * ---
 	 * default: unit,property
 	 * ---
@@ -94,6 +94,7 @@ final class CLI {
 	 *     wp tools clone-language --locale=de_DE --dry-run
 	 *     wp tools clone-language --locale=de_DE --limit=50
 	 *     wp tools clone-language --locale=de_DE --post-type=property --yes
+	 *     wp tools clone-language --locale=de_DE --post-type=page --yes
 	 *     wp tools clone-language --locale=de_DE --post-id=12345
 	 *
 	 * @param array $args Positional arguments, unused.
@@ -136,7 +137,7 @@ final class CLI {
 		$types = array_filter(
 			array_map(
 				'trim',
-				explode( ',', (string) Utils\get_flag_value( $assoc_args, 'post-type', implode( ',', Language_Cloner::POST_TYPES ) ) )
+				explode( ',', (string) Utils\get_flag_value( $assoc_args, 'post-type', implode( ',', Language_Cloner::DEFAULT_POST_TYPES ) ) )
 			)
 		);
 
@@ -438,7 +439,7 @@ final class CLI {
 	}
 
 	/**
-	 * Fill units and projects flagged need_translate with DeepL output.
+	 * Fill units, projects and news posts flagged need_translate with DeepL output.
 	 *
 	 * The flag sits on posts an importer created by copying the other language,
 	 * so the target is the post's own Polylang language. Posts already in the
@@ -448,9 +449,9 @@ final class CLI {
 	 * ## OPTIONS
 	 *
 	 * [--post-type=<types>]
-	 * : Comma-separated types to walk.
+	 * : Comma-separated types to walk: unit, property, post.
 	 * ---
-	 * default: unit,property
+	 * default: unit,property,post
 	 * ---
 	 *
 	 * [--limit=<number>]
@@ -482,6 +483,7 @@ final class CLI {
 	 *     wp tools translate-units --post-id=12345 --force
 	 *     wp tools translate-units --limit=5 --language=ru
 	 *     wp tools translate-units --post-type=property --limit=5 --dry-run
+	 *     wp tools translate-units --post-type=post --language=de --limit=5
 	 *
 	 * @param array $args Positional arguments, unused.
 	 * @param array $assoc_args Flags.

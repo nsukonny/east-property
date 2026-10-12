@@ -1,6 +1,6 @@
 <?php
 /**
- * Machine translation of units and projects flagged for it.
+ * Machine translation of units, projects and news posts flagged for it.
  *
  * @package east-property
  */
@@ -18,7 +18,7 @@ final class Unit_Translator {
 	/**
 	 * Post types the flag is used on.
 	 */
-	public const POST_TYPES = array( 'unit', 'property' );
+	public const POST_TYPES = array( 'unit', 'property', 'post' );
 
 	/**
 	 * Post fields carrying the copy, in the order they are reported.
@@ -211,7 +211,7 @@ final class Unit_Translator {
 			return new WP_Error(
 				'unit_type',
 				sprintf( '#%d — это %s, перевод поддержан для %s', $post_id, $post->post_type,
-					implode( ' и ', self::POST_TYPES ) )
+					implode( ', ', self::POST_TYPES ) )
 			);
 		}
 

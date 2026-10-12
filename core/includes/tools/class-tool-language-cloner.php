@@ -21,7 +21,15 @@ final class Language_Cloner {
 	/**
 	 * Post types a language can be opened for.
 	 */
-	public const POST_TYPES = array( 'unit', 'property' );
+	public const POST_TYPES = array( 'unit', 'property', 'page', 'post' );
+
+	/**
+	 * Types a run walks when none are named.
+	 *
+	 * Pages are left out: a listing page is opened on purpose, by --post-type
+	 * or --post-id, not swept along with the catalogue.
+	 */
+	public const DEFAULT_POST_TYPES = array( 'unit', 'property' );
 
 	/**
 	 * How many ids are read from the database at a time.
@@ -31,7 +39,7 @@ final class Language_Cloner {
 	/**
 	 * Types a copy may be made of, dependencies of the walked ones included.
 	 */
-	private const CLONE_TYPES = array( 'unit', 'property', 'developers' );
+	private const CLONE_TYPES = array( 'unit', 'property', 'page', 'post', 'developers' );
 
 	/**
 	 * SCF post_object fields pointing at another post, by owning type.
@@ -136,7 +144,7 @@ final class Language_Cloner {
 		int $limit,
 		int $offset = 0
 	): array {
-		$post_types = array_values( array_intersect( $post_types ?: self::POST_TYPES, self::POST_TYPES ) );
+		$post_types = array_values( array_intersect( $post_types ?: self::DEFAULT_POST_TYPES, self::POST_TYPES ) );
 
 		if ( empty( $post_types ) || '' === $language ) {
 			return array();
@@ -323,6 +331,30 @@ final class Language_Cloner {
 	}
 
 	/**
+	 * Parent a copy must hang under, cloning it when the language has none.
+	 *
+	 * A page keeps its place in the tree, otherwise the copy climbs to the root
+	 * and its address loses the parent segment.
+	 *
+	 * @param int    $post_id  Post being copied.
+	 * @param string $language Target language slug.
+	 * @param string $status   Status to give a post created here.
+	 *
+	 * @return int|WP_Error Zero for a post with no parent.
+	 */
+	private function parent_for_copy( int $post_id, string $language, string $status ) {
+		$parent = (int) ( get_post( $post_id )->post_parent ?? 0 );
+
+		if ( 0 === $parent || ! in_array( (string) get_post_type( $parent ), self::CLONE_TYPES, true ) ) {
+			return 0;
+		}
+
+		$translated = (int) pll_get_post( $parent, $language );
+
+		return 0 < $translated ? $translated : $this->clone_post( $parent, $language, $status );
+	}
+
+	/**
 	 * Ids a copy must point at, cloning what the language has none of.
 	 *
 	 * @param int    $post_id  Post being copied.
@@ -380,6 +412,12 @@ final class Language_Cloner {
 			return $links;
 		}
 
+		$parent = $this->parent_for_copy( $post_id, $language, $status );
+
+		if ( is_wp_error( $parent ) ) {
+			return $parent;
+		}
+
 		global $wp_filter;
 
 		$source  = get_post( $post_id );
@@ -404,6 +442,7 @@ final class Language_Cloner {
 					'post_content'   => $source->post_content,
 					'post_excerpt'   => $source->post_excerpt,
 					'post_author'    => $source->post_author,
+					'post_parent'    => $parent,
 					'post_date'      => $source->post_date,
 					'post_date_gmt'  => $source->post_date_gmt,
 					'menu_order'     => $source->menu_order,
@@ -420,7 +459,7 @@ final class Language_Cloner {
 			pll_set_post_language( $copy_id, $language );
 
 			self::copy_metas( $post_id, $copy_id );
-			self::copy_terms( $post_id, $copy_id );
+			self::copy_terms( $post_id, $copy_id, $language );
 
 			foreach ( $links as $meta_key => $linked ) {
 				update_post_meta( $copy_id, $meta_key, $linked );
@@ -499,7 +538,7 @@ final class Language_Cloner {
 	 *
 	 * @return void
 	 */
-	private static function copy_terms( int $from, int $to ): void {
+	private static function copy_terms( int $from, int $to, string $language ): void {
 		$post = get_post( $from );
 
 		if ( ! $post instanceof WP_Post ) {
@@ -517,7 +556,58 @@ final class Language_Cloner {
 				continue;
 			}
 
-			wp_set_object_terms( $to, array_map( 'intval', $terms ), $taxonomy );
+			$terms = array_map( 'intval', $terms );
+
+			if ( self::is_translated_taxonomy( $taxonomy ) ) {
+				$terms = self::terms_in_language( $terms, $language );
+			}
+
+			if ( empty( $terms ) ) {
+				continue;
+			}
+
+			wp_set_object_terms( $to, $terms, $taxonomy );
 		}
+	}
+
+	/**
+	 * Whether Polylang keeps a term of this taxonomy per language.
+	 *
+	 * @param string $taxonomy
+	 *
+	 * @return bool
+	 */
+	private static function is_translated_taxonomy( string $taxonomy ): bool {
+		return function_exists( 'pll_is_translated_taxonomy' )
+			&& (bool) pll_is_translated_taxonomy( $taxonomy );
+	}
+
+	/**
+	 * The same terms in a language, dropping the ones it has no version of.
+	 *
+	 * A term of a translated taxonomy belongs to one language, so carrying the
+	 * source term over would file a German post under an English category.
+	 *
+	 * @param int[]  $terms
+	 * @param string $language Target language slug.
+	 *
+	 * @return int[]
+	 */
+	private static function terms_in_language( array $terms, string $language ): array {
+		if ( ! function_exists( 'pll_get_term' ) ) {
+			return $terms;
+		}
+
+		$translated = array();
+
+		foreach ( $terms as $term_id ) {
+			$in_language = (int) pll_get_term( $term_id, $language );
+
+			if ( 0 < $in_language ) {
+				$translated[] = $in_language;
+			}
+		}
+
+		return $translated;
 	}
 }

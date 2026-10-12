@@ -4,7 +4,7 @@
 			<div class="footer-inner">
 				<div class="footer-info">
 					<?php get_template_part( 'core/components/common/subscribe-form/subscribe-form' ); ?>
-					<a class="footer-logo" href="/">
+					<a class="footer-logo" href="<?php echo esc_url( core_home_url() ); ?>">
 						<img class="footer-logo" src="<?php echo THEME_URL; ?>/assets/img/logo.svg" width="132"
 							 height="50" alt="Vector logotype">
 					</a>

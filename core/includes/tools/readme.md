@@ -1,14 +1,21 @@
 ## Переводы
 
-Переводим при помощи Deepl все unit и property у которых указан need_translate
+Переводим при помощи Deepl все unit, property и новости (post) у которых указан need_translate
+--dry-run - скрыть вывод в консоль
 
 ```bash
-wp tools translate-units --post-type=unit --limit=10 --dry-run --allow-root 
-wp tools translate-units --post-type=property --limit=10 --dry-run --allow-root 
-wp tools translate-units --limit=10 --allow-root        # оба типа, unit и property
+wp tools translate-units --post-type=unit --limit=10000 --language=de --allow-root 
+wp tools translate-units --post-type=property --limit=10 --language=ru --allow-root 
+wp tools translate-units --post-type=post --limit=10 --language=de --allow-root   # новости
+wp tools translate-units --limit=10 --language=de --allow-root        # все три типа
 wp tools translate-units --post-id=33067 --allow-root   # тип определяется сам
 wp tools translate-units --limit=5 --language=ru --allow-root
 ```
+
+У новостей переводятся заголовок, анонс и текст. Блочная разметка Гутенберга
+сохраняется: служебные комментарии `<!-- wp:… -->` на время запроса подменяются
+заглушками, потому что с `tag_handling=html` DeepL отклоняет строку с четырьмя и
+более HTML-комментариями.
 
 Сбросить кэш deepl
 
@@ -30,7 +37,7 @@ wp tools translate-locations --term-id=141 --force --allow-root
 
 ```bash
 wp tools clone-language --locale=de_DE --dry-run --allow-root
-wp tools clone-language --locale=de --limit=50 --allow-root
+wp tools clone-language --locale=de --post-type=unit --limit=5 --allow-root
 wp tools clone-language --locale=de_DE --post-type=property --yes --allow-root
 wp tools clone-language --locale=de --post-type=unit --yes --allow-root
 wp tools clone-language --locale=de_DE --post-id=12345 --allow-root
@@ -40,6 +47,16 @@ wp tools clone-language --locale=de_DE --post-id=12345 --allow-root
 property — к developers через `developer_rel`. Чего на языке ещё нет, создаётся
 тем же прогоном, поэтому `--post-type=unit` может завести и property, и
 developers. `--dry-run` перечисляет всю цепочку.
+
+Страницы и новости берутся только по явному `--post-type=page,post` или
+`--post-id`, в обход по умолчанию не попадают. Без перевода страницы листинга Polylang уводит
+`/<язык>/projects/` редиректом на английскую версию, и ссылки с главной
+перестают работать:
+
+```bash
+wp tools clone-language --locale=de_DE --post-type=page --dry-run --allow-root
+wp tools clone-language --locale=de_DE --post-id=170 --yes --allow-root
+```
 
 после запускаем `wp tools translate-units`
 
