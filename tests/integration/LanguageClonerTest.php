@@ -89,7 +89,7 @@ class LanguageClonerTest extends TestCase {
 	 */
 	public function test_refusals() {
 		$unit    = $this->create_unit( array( 'slug' => 'lonely-unit' ) );
-		$article = self::factory()->post->create( array( 'post_type' => 'post' ) );
+		$agency = self::factory()->post->create( array( 'post_type' => 'agency' ) );
 		$russian = $this->create_unit(
 			array(
 				'slug'     => 'russian-unit',
@@ -98,7 +98,7 @@ class LanguageClonerTest extends TestCase {
 		);
 
 		$this->assertSame( 'clone_missing', $this->cloner()->plan( 99999999, 'ru' )->get_error_code() );
-		$this->assertSame( 'clone_type', $this->cloner()->plan( $article, 'ru' )->get_error_code() );
+		$this->assertSame( 'clone_type', $this->cloner()->plan( $agency, 'ru' )->get_error_code() );
 		$this->assertSame( 'clone_language', $this->cloner()->plan( $unit, 'de' )->get_error_code() );
 		$this->assertSame( 'clone_same_language', $this->cloner()->plan( $russian, 'ru' )->get_error_code() );
 

@@ -21,7 +21,7 @@ final class Language_Cloner {
 	/**
 	 * Post types a language can be opened for.
 	 */
-	public const POST_TYPES = array( 'unit', 'property', 'page' );
+	public const POST_TYPES = array( 'unit', 'property', 'page', 'post' );
 
 	/**
 	 * Types a run walks when none are named.
@@ -39,7 +39,7 @@ final class Language_Cloner {
 	/**
 	 * Types a copy may be made of, dependencies of the walked ones included.
 	 */
-	private const CLONE_TYPES = array( 'unit', 'property', 'page', 'developers' );
+	private const CLONE_TYPES = array( 'unit', 'property', 'page', 'post', 'developers' );
 
 	/**
 	 * SCF post_object fields pointing at another post, by owning type.
@@ -459,7 +459,7 @@ final class Language_Cloner {
 			pll_set_post_language( $copy_id, $language );
 
 			self::copy_metas( $post_id, $copy_id );
-			self::copy_terms( $post_id, $copy_id );
+			self::copy_terms( $post_id, $copy_id, $language );
 
 			foreach ( $links as $meta_key => $linked ) {
 				update_post_meta( $copy_id, $meta_key, $linked );
@@ -538,7 +538,7 @@ final class Language_Cloner {
 	 *
 	 * @return void
 	 */
-	private static function copy_terms( int $from, int $to ): void {
+	private static function copy_terms( int $from, int $to, string $language ): void {
 		$post = get_post( $from );
 
 		if ( ! $post instanceof WP_Post ) {
@@ -556,7 +556,58 @@ final class Language_Cloner {
 				continue;
 			}
 
-			wp_set_object_terms( $to, array_map( 'intval', $terms ), $taxonomy );
+			$terms = array_map( 'intval', $terms );
+
+			if ( self::is_translated_taxonomy( $taxonomy ) ) {
+				$terms = self::terms_in_language( $terms, $language );
+			}
+
+			if ( empty( $terms ) ) {
+				continue;
+			}
+
+			wp_set_object_terms( $to, $terms, $taxonomy );
 		}
+	}
+
+	/**
+	 * Whether Polylang keeps a term of this taxonomy per language.
+	 *
+	 * @param string $taxonomy
+	 *
+	 * @return bool
+	 */
+	private static function is_translated_taxonomy( string $taxonomy ): bool {
+		return function_exists( 'pll_is_translated_taxonomy' )
+			&& (bool) pll_is_translated_taxonomy( $taxonomy );
+	}
+
+	/**
+	 * The same terms in a language, dropping the ones it has no version of.
+	 *
+	 * A term of a translated taxonomy belongs to one language, so carrying the
+	 * source term over would file a German post under an English category.
+	 *
+	 * @param int[]  $terms
+	 * @param string $language Target language slug.
+	 *
+	 * @return int[]
+	 */
+	private static function terms_in_language( array $terms, string $language ): array {
+		if ( ! function_exists( 'pll_get_term' ) ) {
+			return $terms;
+		}
+
+		$translated = array();
+
+		foreach ( $terms as $term_id ) {
+			$in_language = (int) pll_get_term( $term_id, $language );
+
+			if ( 0 < $in_language ) {
+				$translated[] = $in_language;
+			}
+		}
+
+		return $translated;
 	}
 }

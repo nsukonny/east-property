@@ -253,9 +253,9 @@ class UnitTranslatorTest extends TestCase {
 	 * Anything that is not an existing unit is refused by its own error code.
 	 */
 	public function test_other_post_types_and_missing_posts_are_refused() {
-		$article = self::factory()->post->create( array( 'post_type' => 'post' ) );
+		$page = self::factory()->post->create( array( 'post_type' => 'page' ) );
 
-		$wrong_type = $this->translator()->plan( $article, true );
+		$wrong_type = $this->translator()->plan( $page, true );
 		$missing    = $this->translator()->plan( 99999999, true );
 
 		$this->assertSame( 'unit_type', $wrong_type->get_error_code() );

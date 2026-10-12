@@ -25,6 +25,11 @@ final class DeepL_Client {
 	private const CHUNK = 50;
 
 	/**
+	 * Element standing in for an HTML comment while DeepL works.
+	 */
+	private const MARKER_TAG = 'x-deepl-c';
+
+	/**
 	 * Option holding translations already paid for.
 	 */
 	private const CACHE_OPTION = 'ep_deepl_cache';
@@ -200,7 +205,15 @@ final class DeepL_Client {
 	 * @return array|WP_Error
 	 */
 	private function request( array $texts, string $target, bool $html ) {
-		$keys = array_keys( $texts );
+		$keys    = array_keys( $texts );
+		$comments = array();
+
+		if ( $html ) {
+			foreach ( $texts as $key => $text ) {
+				$texts[ $key ] = self::mask_comments( (string) $text, $comments[ $key ] );
+			}
+		}
+
 		$body = array(
 			'target_lang' => $target,
 			'text'        => array_values( array_map( 'strval', $texts ) ),
@@ -260,10 +273,77 @@ final class DeepL_Client {
 				);
 			}
 
-			$result[ $keys[ $index ] ] = $text;
+			$key = $keys[ $index ];
+
+			if ( isset( $comments[ $key ] ) && ! empty( $comments[ $key ] ) ) {
+				$text = self::unmask_comments( $text, $comments[ $key ] );
+
+				if ( null === $text ) {
+					return new WP_Error(
+						'deepl_markers',
+						sprintf( 'DeepL потерял служебные метки поля %s', $key )
+					);
+				}
+			}
+
+			$result[ $key ] = $text;
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Replace HTML comments with placeholder elements.
+	 *
+	 * With tag_handling=html DeepL rejects a string holding four comments or
+	 * more — «text without parent» — and WordPress block markup carries two per
+	 * block, so any post of two blocks would fail. The comments also hold block
+	 * attributes the editor parses, and must come back byte for byte.
+	 *
+	 * @param string $text
+	 * @param array  $comments Filled with the comments taken out, by index.
+	 *
+	 * @return string
+	 */
+	private static function mask_comments( string $text, ?array &$comments ): string {
+		$comments = array();
+		$index    = 0;
+
+		return (string) preg_replace_callback(
+			'~<!--[\s\S]*?-->~',
+			static function ( array $match ) use ( &$comments, &$index ): string {
+				$comments[ $index ] = $match[0];
+
+				return sprintf( '<%1$s i="%2$d"></%1$s>', self::MARKER_TAG, $index++ );
+			},
+			$text
+		);
+	}
+
+	/**
+	 * Put the comments back where the placeholders stand.
+	 *
+	 * @param string $text
+	 * @param array  $comments Comments taken out by mask_comments().
+	 *
+	 * @return string|null Null when a placeholder did not come back.
+	 */
+	private static function unmask_comments( string $text, array $comments ): ?string {
+		$seen    = array();
+		$pattern = sprintf( '~<%1$s i="(\d+)"\s*></%1$s>~', self::MARKER_TAG );
+
+		$text = (string) preg_replace_callback(
+			$pattern,
+			static function ( array $match ) use ( $comments, &$seen ): string {
+				$index          = (int) $match[1];
+				$seen[ $index ] = true;
+
+				return (string) ( $comments[ $index ] ?? '' );
+			},
+			$text
+		);
+
+		return count( $seen ) === count( $comments ) ? $text : null;
 	}
 
 	/**
