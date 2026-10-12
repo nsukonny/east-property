@@ -22,7 +22,7 @@ $switcher    = function_exists( 'core_get_language_switcher' ) ? core_get_langua
 <nav id="header-nav" class="header-nav">
 	<div class="header-nav-drawer">
 		<div class="header-nav-header mobile">
-			<a href="/" class="header-nav-logo">
+			<a href="<?php echo esc_url( core_home_url() ); ?>" class="header-nav-logo">
 				<img src="<?php echo THEME_URL; ?>/assets/img/logo.svg" width="120" height="45" alt="East Property">
 			</a>
 			<button class="header-nav-close" type="button" aria-label="<?php _e( 'Close menu', 'east-property' ); ?>">

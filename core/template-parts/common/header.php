@@ -11,7 +11,7 @@ $switcher    = core_get_language_switcher();
 <header class="header <?php echo esc_attr( $color ); ?>">
 	<div class="container">
 		<div class="header-wrapper">
-			<a href="/" class="header-logo">
+			<a href="<?php echo esc_url( core_home_url() ); ?>" class="header-logo">
 				<img src="<?php echo THEME_URL; ?>/assets/img/logo.svg" width="132" height="50"
 				     alt="<?php esc_html_e( 'Vector logotype', 'east-property' ); ?>">
 			</a>

@@ -401,6 +401,7 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 				$any_developer,
 				core_unit_filter_developers( $post_type, $language, 'secondary' )
 			),
+			'locations'  => get_locations( 'secondary' ),
 			'defaults'   => array(
 				'beds'     => array(
 					'label'   => __( 'Bedrooms', 'east-property' ),
@@ -420,6 +421,7 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 				$any_developer,
 				core_unit_filter_developers( $post_type, $language, 'off-plan' )
 			),
+			'locations'  => get_locations( 'off-plan' ),
 			'defaults'   => array(
 				'beds'  => get_filter_beds_options(),
 				'price' => $price_max,

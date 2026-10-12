@@ -57,7 +57,7 @@ final class CLI {
 	 * : Locale or slug of the language to open, for example de_DE or de.
 	 *
 	 * [--post-type=<types>]
-	 * : Comma-separated types to copy.
+	 * : Comma-separated types to copy: unit, property, page.
 	 * ---
 	 * default: unit,property
 	 * ---
@@ -94,6 +94,7 @@ final class CLI {
 	 *     wp tools clone-language --locale=de_DE --dry-run
 	 *     wp tools clone-language --locale=de_DE --limit=50
 	 *     wp tools clone-language --locale=de_DE --post-type=property --yes
+	 *     wp tools clone-language --locale=de_DE --post-type=page --yes
 	 *     wp tools clone-language --locale=de_DE --post-id=12345
 	 *
 	 * @param array $args Positional arguments, unused.
@@ -136,7 +137,7 @@ final class CLI {
 		$types = array_filter(
 			array_map(
 				'trim',
-				explode( ',', (string) Utils\get_flag_value( $assoc_args, 'post-type', implode( ',', Language_Cloner::POST_TYPES ) ) )
+				explode( ',', (string) Utils\get_flag_value( $assoc_args, 'post-type', implode( ',', Language_Cloner::DEFAULT_POST_TYPES ) ) )
 			)
 		);
 
