@@ -4,7 +4,7 @@
 --dry-run - скрыть вывод в консоль
 
 ```bash
-wp tools translate-units --post-type=unit --limit=10 --language=de --allow-root 
+wp tools translate-units --post-type=unit --limit=10000 --language=de --allow-root 
 wp tools translate-units --post-type=property --limit=10 --language=ru --allow-root 
 wp tools translate-units --post-type=post --limit=10 --language=de --allow-root   # новости
 wp tools translate-units --limit=10 --language=de --allow-root        # все три типа
