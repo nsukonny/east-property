@@ -293,7 +293,9 @@ function core_property_linked_ids( int $property_id ): array {
  * One aggregate for the whole page of projects instead of a count per project.
  *
  * @param array $property_ids Project ids.
- * @param string $language Polylang slug; empty counts every language.
+ * @param string $language Polylang slug; empty counts every language. On a
+ *                         language other than the default, units still awaiting
+ *                         translation are left out, the way the listing does it.
  *
  * @return array Count per project id.
  */
@@ -321,6 +323,15 @@ function core_property_unit_counts( array $property_ids, string $language = '' )
 		$params[]      = $language;
 	}
 
+	$flag_join  = '';
+	$flag_where = '';
+	if ( core_is_awaiting_translation_hidden( $language ) ) {
+		$flag_join  = "LEFT JOIN {$wpdb->postmeta} AS pm_need_translate
+				ON pm_need_translate.post_id = u.ID
+				AND pm_need_translate.meta_key = 'need_translate'";
+		$flag_where = 'AND pm_need_translate.post_id IS NULL';
+	}
+
 	$params[]     = 'property';
 	$placeholders = implode( ',', array_fill( 0, count( $property_ids ), '%d' ) );
 	$params       = array_merge( $params, $property_ids );
@@ -334,8 +345,10 @@ function core_property_unit_counts( array $property_ids, string $language = '' )
 				AND u.post_type = %s
 				AND u.post_status = %s
 			{$language_join}
+			{$flag_join}
 			WHERE pm.meta_key = %s
 			  AND CAST(pm.meta_value AS UNSIGNED) IN ({$placeholders})
+			  {$flag_where}
 			GROUP BY property_id",
 			$params
 		),
