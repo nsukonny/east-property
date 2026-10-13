@@ -130,6 +130,13 @@ function core_query_units( $listing_type, $args ): array {
 	if ( empty( $args['draft'] ) ) {
 		$where[]  = 'u.post_status = %s';
 		$params[] = 'publish';
+
+		if ( core_is_awaiting_translation_hidden( (string) ( $args['current_language'] ?? '' ) ) ) {
+			$joins[] = "LEFT JOIN {$wpdb->postmeta} AS pm_need_translate
+				ON pm_need_translate.post_id = u.ID
+				AND pm_need_translate.meta_key = 'need_translate'";
+			$where[] = 'pm_need_translate.post_id IS NULL';
+		}
 	} else {
 		$where[]  = 'u.post_status <> %s';
 		$params[] = 'archived';
@@ -605,7 +612,7 @@ function core_query_count_of_units_by_date( string $date_from, string $date_to, 
  * titles end with a full stop and it collided with the sentence around them.
  *
  * @param string $title Unit name.
- * @param string $url   Unit page.
+ * @param string $url Unit page.
  *
  * @return string
  */

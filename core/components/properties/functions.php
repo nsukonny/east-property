@@ -383,6 +383,13 @@ function core_query_properties(
 	if ( empty( $args['draft'] ) ) {
 		$where[]  = 'p.post_status = %s';
 		$params[] = 'publish';
+
+		if ( core_is_awaiting_translation_hidden( (string) ( $args['current_language'] ?? '' ) ) ) {
+			$joins[] = "LEFT JOIN {$wpdb->postmeta} AS pm_need_translate
+				ON pm_need_translate.post_id = p.ID
+				AND pm_need_translate.meta_key = 'need_translate'";
+			$where[] = 'pm_need_translate.post_id IS NULL';
+		}
 	}
 
 	if ( ! empty( $_REQUEST['available'] ) && 'all' !== $_REQUEST['available'] ) {
