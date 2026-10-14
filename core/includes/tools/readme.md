@@ -41,6 +41,8 @@ wp tools clone-language --locale=de --post-type=unit --limit=5 --allow-root
 wp tools clone-language --locale=de_DE --post-type=property --yes --allow-root
 wp tools clone-language --locale=de --post-type=unit --yes --allow-root
 wp tools clone-language --locale=de_DE --post-id=12345 --allow-root
+wp tools clone-language --locale=de_DE --post-type=page --dry-run --allow-root
+wp tools clone-language --locale=de_DE --post-id=170 --yes --allow-root
 ```
 
 Связи переносятся на новый язык: юнит привязывается к property этого языка,
@@ -52,11 +54,6 @@ developers. `--dry-run` перечисляет всю цепочку.
 `--post-id`, в обход по умолчанию не попадают. Без перевода страницы листинга Polylang уводит
 `/<язык>/projects/` редиректом на английскую версию, и ссылки с главной
 перестают работать:
-
-```bash
-wp tools clone-language --locale=de_DE --post-type=page --dry-run --allow-root
-wp tools clone-language --locale=de_DE --post-id=170 --yes --allow-root
-```
 
 после запускаем `wp tools translate-units`
 

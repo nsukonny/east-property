@@ -44,7 +44,18 @@ function get_all_languages(): array {
 function core_carry_campaign_params( string $url ): string {
 	$params = array();
 
-	foreach ( array( 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid', 'li_fat_id' ) as $key ) {
+	foreach (
+		array(
+			'utm_source',
+			'utm_medium',
+			'utm_campaign',
+			'utm_term',
+			'utm_content',
+			'gclid',
+			'fbclid',
+			'li_fat_id',
+		) as $key
+	) {
 		if ( ! empty( $_GET[ $key ] ) && is_string( $_GET[ $key ] ) ) {
 			$params[ $key ] = sanitize_text_field( wp_unslash( $_GET[ $key ] ) );
 		}
@@ -320,3 +331,29 @@ function core_old_slug_redirect_language( $post_id ) {
 }
 
 add_filter( 'old_slug_redirect_post_id', 'core_old_slug_redirect_language' );
+
+/**
+ * Whether a listing in this language must hide what still awaits translation.
+ *
+ * Only a translation can await one. On the default language need_translate is a
+ * leftover of an importer that the translator itself refuses to clear, so the
+ * flag there would hide live records.
+ *
+ * @param string $language Polylang slug of the listing; the current one when empty.
+ *
+ * @return bool
+ */
+function core_is_awaiting_translation_hidden( string $language = '' ): bool {
+	$language = '' !== $language ? $language : core_get_current_language();
+
+	if ( '' === $language ) {
+		return false;
+	}
+
+	$default = function_exists( 'pll_default_language' )
+		? (string) pll_default_language( 'slug' )
+		: '';
+
+	return $language !== ( '' !== $default ? $default : 'en' );
+}
+
