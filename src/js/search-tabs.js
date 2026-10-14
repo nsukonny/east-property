@@ -126,7 +126,10 @@ const initSearchTabs = async () => {
 			selectorButton.setAttribute('aria-expanded', 'true')
 			const dropdown = container.querySelector(`[data-search-dropdown="${filterKey}"]`)
 
-			if (dropdown) dropdown.hidden = false
+			if (dropdown) {
+				dropdown.hidden = false
+				dropdown.scrollTop = 0
+			}
 		}
 
 		const renderDropdown = (filterKey, options) => {
@@ -137,6 +140,7 @@ const initSearchTabs = async () => {
 
 			activeOptions[filterKey] = list
 			dropdown.replaceChildren()
+			dropdown.scrollTop = 0
 			list.forEach((opt) => {
 				const btn = document.createElement('button')
 				btn.type = 'button'
