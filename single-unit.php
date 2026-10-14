@@ -65,8 +65,12 @@ while ( have_posts() ) {
 				<div class="single-items-top">
 					<div class="single-items-top-left">
 						<?php if ( null !== $property ) { ?>
-							<div class="h2"><?php echo esc_attr( __( 'Apartment by',
-										'east-property' ) . ' ' . $property->get_title() ); ?></div>
+							<div class="h2">
+								<?php echo esc_attr(
+									_x( 'Property by', 'followed by project', 'east-property' )
+									. ' ' . $property->get_title() );
+								?>
+							</div>
 						<?php } ?>
 						<?php if ( $is_archived ) { ?>
 							<div class="single-items-top-labels">

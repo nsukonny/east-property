@@ -85,8 +85,10 @@ if ( ! empty( $amenities ) ) {
 						<?php } ?>
 
 						<?php if ( ! empty( $developer_name ) ) { ?>
-							<span class="unit-card-desc"><?php _e( 'Apartment by ',
-									'east-property' ); ?><?php echo esc_html( $developer_name ); ?></span>
+							<span class="unit-card-desc">
+								<?php _ex( 'Property by', 'followed by developer', 'east-property' ); ?>
+								<?php echo esc_html( $developer_name ); ?>
+							</span>
 						<?php } ?>
 
 						<?php if ( ! empty( $property_name ) ) { ?>
