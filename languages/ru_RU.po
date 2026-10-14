@@ -2015,9 +2015,11 @@ msgstr "Далее"
 msgid "-%d%%"
 msgstr ""
 
-#: core/template-parts/cards/unit-card.php:88
-msgid "Apartment by "
-msgstr "Апартаменты в "
+#. translators: followed by the name of the developer.
+#: core/template-parts/cards/unit-card.php:89
+msgctxt "followed by developer"
+msgid "Property by"
+msgstr "Объект от"
 
 #: core/template-parts/cards/unit-card.php:162
 msgid "Boost property"
@@ -2408,9 +2410,11 @@ msgstr "Купить недвижимость от застройщика"
 msgid "Request quote"
 msgstr "Запросить предложение"
 
-#: single-unit.php:68
-msgid "Apartment by"
-msgstr "Апартаменты в"
+#. translators: followed by the name of the project.
+#: single-unit.php:69
+msgctxt "followed by project"
+msgid "Property by"
+msgstr "Объект в"
 
 #: single-unit.php:86
 msgid "of original price"

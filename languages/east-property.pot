@@ -2151,8 +2151,10 @@ msgstr ""
 msgid "-%d%%"
 msgstr ""
 
-#: core/template-parts/cards/unit-card.php:88
-msgid "Apartment by "
+#. translators: followed by the name of the developer.
+#: core/template-parts/cards/unit-card.php:89
+msgctxt "followed by developer"
+msgid "Property by"
 msgstr ""
 
 #: core/template-parts/cards/unit-card.php:162
@@ -2541,8 +2543,10 @@ msgstr ""
 msgid "amenities"
 msgstr ""
 
-#: single-unit.php:68
-msgid "Apartment by"
+#. translators: followed by the name of the project.
+#: single-unit.php:69
+msgctxt "followed by project"
+msgid "Property by"
 msgstr ""
 
 #: single-unit.php:86

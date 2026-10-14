@@ -2149,9 +2149,11 @@ msgstr "Weiter"
 msgid "-%d%%"
 msgstr "-%d%%"
 
-#: core/template-parts/cards/unit-card.php:88
-msgid "Apartment by "
-msgstr "Wohnung von "
+#. translators: followed by the name of the developer.
+#: core/template-parts/cards/unit-card.php:89
+msgctxt "followed by developer"
+msgid "Property by"
+msgstr "Immobilie von"
 
 #: core/template-parts/cards/unit-card.php:162
 msgid "Boost property"
@@ -2535,9 +2537,11 @@ msgstr "Angebot anfordern"
 msgid "amenities"
 msgstr "Ausstattung"
 
-#: single-unit.php:68
-msgid "Apartment by"
-msgstr "Wohnung von"
+#. translators: followed by the name of the project.
+#: single-unit.php:69
+msgctxt "followed by project"
+msgid "Property by"
+msgstr "Immobilie in"
 
 #: single-unit.php:86
 msgid "of original price"
