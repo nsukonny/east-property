@@ -1,8 +1,6 @@
 ## Деплой
 
-`auto-deploy.sh` обычно запускает не человек, а GitHub Actions: пуш в `main` разворачивает прод, пуш в `dev` — stage
-(`.github/workflows/deploy-main.yml` и `deploy-stage.yml`). Руками его зовут только когда workflow упал и надо
-догнать вручную — из каталога темы на нужном сервере.
+Запускается автоматически при деплое в мейн
 
 ```bash
 cd /var/www/eastproperty.com/public/wp-content/themes/east-property
@@ -12,20 +10,7 @@ cd /var/www/stage.eastproperty.com/public/wp-content/themes/east-property
 bash ./scripts/auto-deploy.sh dev
 ```
 
-Ветка и путь сверяются между собой: `main` разворачивается только в `/var/www/eastproperty.com/public`, `dev` — только
-в `/var/www/stage.eastproperty.com/public`. Ошибётесь каталогом — скрипт остановится, а не разложит stage на прод.
-
-По шагам: обновляет репозиторий темы на указанную ветку с `reset --hard` и `clean -fd`, то же делает с `mu-plugins`
-(и гоняет `composer install`, только если в них поменялись `composer.json`/`composer.lock`), затем `npm ci`, синхронизация
-ACF JSON, сброс транзиентов и `rewrite flush --hard`, сборка ассетов `npm run build`, сброс объектного кэша и прогрев
-`wp tools warm-cache`. Последние два шага не фатальны: если не вышли, деплой всё равно считается успешным.
-
-Все локальные правки в теме и `mu-plugins` на сервере затираются — это не инструмент для хотфиксов на живом.
-
 ## Клон прода на stage
-
-`tools.sh clone-to-stage` переносит базу прода на stage, переписывая домен. **Данные stage уничтожаются целиком.**
-Запускать на сервере, где лежат обе установки.
 
 ```bash
 cd /var/www/eastproperty.com/public/wp-content/themes/east-property
@@ -35,31 +20,23 @@ cd /var/www/eastproperty.com/public/wp-content/themes/east-property
 ./scripts/tools.sh clone-to-stage --keep-dump # оставить дамп после импорта
 ```
 
-Перед первой записью идут проверки, и главная из них — имя базы: скрипт откажется работать, если у установки в
-`STAGE_PATH` база называется не так, как ждёт `STAGE_DB`. Это то, что не даёт случайным запуском залить дамп обратно
-на прод. Дополнительно сверяются пути (по реальным, с разыменованием симлинков), префиксы таблиц и доступность базы
-stage.
+### Клон прода на локалку
 
-Домен переписывается по схемам (`https://`, `http://`, `//`), а не подменой голого хоста, поэтому `info@eastproperty.com`
-и `mail.eastproperty.com` остаются целыми; `guid` не трогается. В конце заново закрывается индексация, чистятся
-транзиенты, объектный кэш и правила ссылок.
-
-Дамп по умолчанию удаляется. С `--keep-dump` он остаётся в каталоге stage, то есть **под веб-рутом и доступен на
-скачивание** — скрипт об этом предупреждает, файл надо унести или удалить.
+```bash
+cd ~/Projects/eastproperty.com/app/public/wp-content/themes/east-property
+PROD_SSH=root@167.233.173.104 ./scripts/tools.sh clone-to-local
+./scripts/tools.sh clone-to-local --dump=~/Downloads/prod.sql.gz -y
+```
 
 ## Закрыть stage от поисковиков
+
+Выполнять после клонирования с прода.
 
 ```bash
 ./scripts/tools.sh lock-stage
 ```
 
-Ставит `blog_public = 0`. Нужно потому, что импорт дампа приносит опции прода и включает индексацию обратно, так что
-`clone-to-stage` вызывает это сам в конце. Отдельно команда пригодится, если stage настраивали руками.
-
-`robots.txt` намеренно оставлен открытым: `Disallow: /` помешал бы краулеру прочитать сам `noindex`.
-
-В комментарии к скрипту упомянут `scripts/stage-nginx.conf` с заголовком `X-Robots-Tag` — **этого файла в репозитории
-нет**, сниппет живёт только в конфиге nginx на сервере. Проверять так:
+Проверить 
 
 ```bash
 curl -sI https://stage.eastproperty.com/ | grep -i x-robots-tag
@@ -127,4 +104,5 @@ stdout попадала бы в значение. Поэтому прогон с
 
 ```bash
 STAGE_DB=other_db ./scripts/tools.sh clone-to-stage
+LOCAL_SITE_ID=AbCdEf12 ./scripts/tools.sh clone-to-local --dump=prod.sql.gz
 ```
