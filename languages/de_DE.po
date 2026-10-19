@@ -3084,3 +3084,20 @@ msgstr "Hallo! Ich hätte gerne eine kurze Beratung bezüglich eines Notverkaufs
 #: core/components/units/functions.php:618
 msgid "Hello! I am interested in %1$s. Could you tell me more about it? %2$s"
 msgstr "Hallo! Ich interessiere mich für %1$s. Könnten Sie mir mehr darüber erzählen? %2$s"
+
+#: core/template-parts/common/social-links.php:16
+msgid "Follow us on social media"
+msgstr "Folgen Sie uns in den sozialen Medien"
+
+#. translators: %s: language name.
+#: core/components/social/functions.php:122
+msgid "Social media: %s"
+msgstr "Soziale Medien: %s"
+
+#: core/components/social/functions.php:176
+msgid "Social links"
+msgstr "Links zu sozialen Medien"
+
+#: core/components/social/functions.php:172
+msgid "Social media"
+msgstr "Soziale Medien"

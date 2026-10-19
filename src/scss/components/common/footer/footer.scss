@@ -1,5 +1,6 @@
 @use '../../../vars/vars' as v;
 @use '../../../mixins/typography/text' as t;
+@use '../../../mixins/global' as g;
 
 .footer {
 	width: 100%;
@@ -36,6 +37,63 @@
 		flex-direction: column;
 		align-items: flex-start;
 		gap: 20px;
+	}
+
+	&-social {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 12px;
+
+		&-title {
+			color: v.$c-grey;
+
+			@include t.t-text;
+		}
+
+		&-list {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		// Иконка задаётся классом сети: в разметке имени файла нет.
+		&-link {
+			display: block;
+			width: 32px;
+			height: 32px;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: contain;
+			transition: opacity v.$tr;
+
+			@include g.hover {
+				opacity: .6;
+			}
+
+			&:focus-visible {
+				opacity: .6;
+			}
+
+			&--facebook {
+				background-image: url('../img/social/facebook.svg');
+			}
+
+			&--instagram {
+				background-image: url('../img/social/insta.svg');
+			}
+
+			&--telegram {
+				background-image: url('../img/social/tg.svg');
+			}
+
+			&--vk {
+				background-image: url('../img/social/vk.svg');
+			}
+		}
 	}
 
 	&-block {

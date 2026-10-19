@@ -3095,3 +3095,20 @@ msgstr "Здравствуйте! Хочу получить быструю ко�
 #: core/components/units/functions.php:618
 msgid "Hello! I am interested in %1$s. Could you tell me more about it? %2$s"
 msgstr "Здравствуйте! Меня интересует %1$s. Расскажите, пожалуйста, подробнее. %2$s"
+
+#: core/template-parts/common/social-links.php:16
+msgid "Follow us on social media"
+msgstr "Мы в социальных сетях"
+
+#. translators: %s: language name.
+#: core/components/social/functions.php:122
+msgid "Social media: %s"
+msgstr "Соцсети: %s"
+
+#: core/components/social/functions.php:176
+msgid "Social links"
+msgstr "Ссылки на соцсети"
+
+#: core/components/social/functions.php:172
+msgid "Social media"
+msgstr "Соцсети"
