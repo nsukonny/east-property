@@ -47,8 +47,8 @@ if ( empty( $current ) ) {
 			<?php $selected = ! empty( $entry['is_current'] ); ?>
 			<li class="lang-switch-item">
 				<a class="lang-switch-option<?php echo $selected ? ' is-selected' : ''; ?>"
-				   lang="<?php echo esc_attr( (string) $entry['locale'] ); ?>"
-				   hreflang="<?php echo esc_attr( (string) $entry['locale'] ); ?>"
+				   lang="<?php echo esc_attr( (string) ( $entry['tag'] ?? $entry['locale'] ) ); ?>"
+				   hreflang="<?php echo esc_attr( (string) ( $entry['tag'] ?? $entry['locale'] ) ); ?>"
 				   href="<?php echo esc_url( (string) $entry['url'] ); ?>"
 					<?php echo $selected ? ' aria-current="true"' : ''; ?>>
 					<span class="lang-switch-code"><?php echo esc_html( (string) $entry['label'] ); ?></span>

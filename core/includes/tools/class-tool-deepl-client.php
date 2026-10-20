@@ -60,6 +60,7 @@ final class DeepL_Client {
 	private const TARGET_VARIANTS = array(
 		'en' => 'EN-GB',
 		'pt' => 'PT-PT',
+		'zh' => 'ZH-HANS',
 	);
 
 	/**

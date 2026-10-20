@@ -104,3 +104,83 @@ wp tools strip-unit-floors --dry-run --report=/tmp/unit-floors-plan.csv --allow-
 wp tools strip-unit-floors --limit=10 --allow-root
 wp tools strip-unit-floors --yes --report=/tmp/unit-floors.csv --allow-root
 ```
+## Открытие языка (китайский, zh)
+
+Порядок обязателен: язык → страницы → клоны → перевод → публикация. Каждый шаг
+повторяем: второй запуск ничего не дублирует.
+
+### 1. Язык и локаль
+
+```bash
+wp tools add-language --slug=zh --dry-run --allow-root
+wp tools add-language --slug=zh --allow-root
+wp language core install zh_CN --allow-root
+wp rewrite flush --allow-root
+```
+
+Настройки берутся из `Language_Installer::PRESETS` (`zh` / `zh_CN` / 简体中文 /
+флаг `cn` / LTR). Повторный запуск печатает «язык уже настроен». Локаль, занятая
+другим языком, останавливает команду, второго языка не возникает.
+
+`wp language core install` обязателен: без языкового пакета ядра `zh_CN` не
+попадает в `get_available_languages()`, `switch_to_locale()` молча откатывается
+на `en_US`, и письма с админкой остаются английскими.
+
+### 2. Страницы листингов
+
+Без них `/zh/projects/` и остальные отдают 301 на английскую версию.
+
+```bash
+wp tools clone-language --locale=zh_CN --post-type=page --limit=50 --dry-run --allow-root
+wp tools clone-language --locale=zh_CN --post-type=page --limit=50 --copy-status=draft --yes --allow-root
+wp tools translate-units --language=zh --post-type=page --status=draft --limit=20 --allow-root
+```
+
+Копии создаются черновиками, переводятся и только потом публикуются — английский
+текст под видом китайского на сайт не попадает. Юридические страницы
+(`privacy-policy`, `terms-of-use`) машинным переводом не трогаем.
+
+### 3. Каталог
+
+```bash
+# сначала пробный прогон на одной записи
+wp tools clone-language --locale=zh_CN --post-id=<id> --dry-run --allow-root
+wp tools clone-language --locale=zh_CN --post-id=<id> --yes --allow-root
+wp tools translate-units --post-id=<копия> --allow-root
+
+# затем пакетами
+wp tools clone-language --locale=zh_CN --limit=200 --copy-status=draft --yes --allow-root
+wp tools translate-units --language=zh --status=draft --limit=50 --allow-root
+```
+
+`clone-language` сам заводит зависимости: юнит → проект → застройщик, каждый на
+своём языке. Группа переводов EN/RU/DE сохраняется, zh в неё добавляется.
+
+Заголовки проектов и застройщиков не переводятся — это зарегистрированные имена
+(`Unit_Translator::TITLE_PROTECTED_TYPES`). Переводятся описания, анонсы,
+`amenities` и `payment_plans`.
+
+### 4. Продолжение после сбоя и откат
+
+Ошибка API оставляет запись с `need_translate` и прежним текстом: повторный
+запуск той же команды берёт её снова, дублей не возникает. Оплаченный кусок
+остаётся в кэше (`ep_deepl_cache`), повторная отправка тех же строк бесплатна.
+
+```bash
+wp tools translate-units --language=zh --status=draft --limit=50 --allow-root   # продолжить
+wp option delete ep_deepl_cache --allow-root                                     # сбросить кэш
+```
+
+Откат языка целиком — удалить его в «Языки» Polylang: вместе с ним уходят
+привязки записей, сами копии остаются черновиками и видны по
+`wp post list --post_type=unit --post_status=draft`.
+
+### 5. После миграции
+
+```bash
+wp rewrite flush --allow-root
+wp cache flush --allow-root
+wp tools warm-cache --allow-root
+```
+
+На проде ещё W3TC: `wp w3-total-cache flush all`.

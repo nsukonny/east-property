@@ -18,7 +18,7 @@ final class Unit_Translator {
 	/**
 	 * Post types the flag is used on.
 	 */
-	public const POST_TYPES = array( 'unit', 'property', 'post' );
+	public const POST_TYPES = array( 'unit', 'property', 'post', 'page', 'developers' );
 
 	/**
 	 * Post fields carrying the copy, in the order they are reported.
@@ -27,6 +27,20 @@ final class Unit_Translator {
 	 * lives in a custom field.
 	 */
 	public const FIELDS = array( 'post_title', 'post_content', 'post_excerpt' );
+
+	/**
+	 * Types whose title is a registered name rather than a sentence.
+	 *
+	 * A project and a developer are known by the name on the contract. Machine
+	 * translation turns it into a brand that exists nowhere, and in a language
+	 * written in another script it also breaks the search visitors arrive with.
+	 */
+	public const TITLE_PROTECTED_TYPES = array( 'property', 'developers' );
+
+	/**
+	 * Statuses the bulk selection walks unless the caller asks for others.
+	 */
+	public const DEFAULT_STATUSES = array( 'publish', 'draft' );
 
 	/**
 	 * Fields whose value is markup and needs DeepL tag handling.
@@ -112,15 +126,22 @@ final class Unit_Translator {
 	 * language are left out: their text is the source, so the limit would
 	 * otherwise be spent on records that can only be skipped.
 	 *
-	 * @param int      $limit      Hard ceiling on the returned ids.
-	 * @param int      $offset     Flagged posts to pass over first.
-	 * @param string   $language   Restrict to one Polylang slug.
+	 * @param int $limit Hard ceiling on the returned ids.
+	 * @param int $offset Flagged posts to pass over first.
+	 * @param string $language Restrict to one Polylang slug.
 	 * @param string[] $post_types Types to walk; defaults to all supported.
 	 *
 	 * @return int[]
 	 */
-	public function find( int $limit, int $offset = 0, string $language = '', array $post_types = array() ): array {
+	public function find(
+		int $limit,
+		int $offset = 0,
+		string $language = '',
+		array $post_types = array(),
+		array $statuses = array()
+	): array {
 		$post_types = array_values( array_intersect( $post_types ?: self::POST_TYPES, self::POST_TYPES ) );
+		$statuses   = array_values( array_filter( array_map( 'strval', $statuses ) ) ) ?: self::DEFAULT_STATUSES;
 
 		if ( empty( $post_types ) ) {
 			return array();
@@ -135,7 +156,7 @@ final class Unit_Translator {
 			$ids = get_posts(
 				array(
 					'post_type'        => $post_types,
-					'post_status'      => 'publish',
+					'post_status'      => $statuses,
 					'posts_per_page'   => self::BATCH,
 					'offset'           => $page * self::BATCH,
 					'fields'           => 'ids',
@@ -195,7 +216,7 @@ final class Unit_Translator {
 	/**
 	 * What a unit needs, without touching the API.
 	 *
-	 * @param int  $post_id
+	 * @param int $post_id
 	 * @param bool $force Accept a unit that carries no flag.
 	 *
 	 * @return array|WP_Error Keys id, language, target, texts.
@@ -210,7 +231,9 @@ final class Unit_Translator {
 		if ( ! in_array( $post->post_type, self::POST_TYPES, true ) ) {
 			return new WP_Error(
 				'unit_type',
-				sprintf( '#%d — это %s, перевод поддержан для %s', $post_id, $post->post_type,
+				sprintf( '#%d — это %s, перевод поддержан для %s',
+					$post_id,
+					$post->post_type,
 					implode( ', ', self::POST_TYPES ) )
 			);
 		}
@@ -228,7 +251,9 @@ final class Unit_Translator {
 		if ( $language === self::default_language() ) {
 			return new WP_Error(
 				'post_default_language',
-				sprintf( '#%d на языке по умолчанию (%s) — текст уже исходный, флаг снимать нечем', $post_id, $language )
+				sprintf( '#%d на языке по умолчанию (%s) — текст уже исходный, флаг снимать нечем',
+					$post_id,
+					$language )
 			);
 		}
 
@@ -244,7 +269,7 @@ final class Unit_Translator {
 		$strings = array();
 		$summary = array();
 
-		foreach ( self::FIELDS as $field ) {
+		foreach ( self::fields_for( $post->post_type ) as $field ) {
 			$value = (string) $post->{$field};
 
 			if ( '' !== trim( $value ) ) {
@@ -285,6 +310,19 @@ final class Unit_Translator {
 			'amenities' => $amenities,
 			'summary'   => $summary,
 		);
+	}
+
+	/**
+	 * Post fields translated for a type.
+	 *
+	 * @param string $post_type
+	 *
+	 * @return string[]
+	 */
+	public static function fields_for( string $post_type ): array {
+		return in_array( $post_type, self::TITLE_PROTECTED_TYPES, true )
+			? array_values( array_diff( self::FIELDS, array( 'post_title' ) ) )
+			: self::FIELDS;
 	}
 
 	/**
@@ -349,7 +387,7 @@ final class Unit_Translator {
 	 * markup. Once the field values are in the cache that portion costs no
 	 * request at all, so a run settles at two calls per post.
 	 *
-	 * @param int  $post_id
+	 * @param int $post_id
 	 * @param bool $force Accept a post that carries no flag.
 	 *
 	 * @return array|WP_Error Names of the saved fields.
@@ -425,9 +463,9 @@ final class Unit_Translator {
 	 * translating out of the backlog. The slug is left alone on purpose, so no
 	 * public URL changes here.
 	 *
-	 * @param int      $post_id
-	 * @param array    $translated Prefixed key to translated value.
-	 * @param string[] $amenities  Original amenity lines, for an exact rebuild.
+	 * @param int $post_id
+	 * @param array $translated Prefixed key to translated value.
+	 * @param string[] $amenities Original amenity lines, for an exact rebuild.
 	 *
 	 * @return array|WP_Error Names of the saved fields.
 	 */

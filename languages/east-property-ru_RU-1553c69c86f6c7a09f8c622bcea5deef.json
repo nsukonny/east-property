@@ -37,6 +37,15 @@
             "Unit": [
                 "Unit"
             ],
+            "Pre-approval": [
+                "\u041f\u0440\u0435\u0434\u0432\u0430\u0440\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0435 \u043e\u0434\u043e\u0431\u0440\u0435\u043d\u0438\u0435"
+            ],
+            "MOU (Form F)": [
+                "MOU (Form F)"
+            ],
+            "Final approval": [
+                "\u0424\u0438\u043d\u0430\u043b\u044c\u043d\u043e\u0435 \u043e\u0434\u043e\u0431\u0440\u0435\u043d\u0438\u0435"
+            ],
             "beds": [
                 "\u0441\u043f\u0430\u043b\u0435\u043d"
             ],
@@ -54,6 +63,141 @@
             ],
             "%1$d projects \u00b7 %2$d units": [
                 "%1$d \u043f\u0440\u043e\u0435\u043a\u0442\u043e\u0432 \u00b7 %2$d \u044e\u043d\u0438\u0442\u043e\u0432"
+            ],
+            "UAE Resident": [
+                ""
+            ],
+            "Non-Resident": [
+                ""
+            ],
+            "Mortgage Calculation \u2014 East Property": [
+                ""
+            ],
+            "East Property Advisory": [
+                ""
+            ],
+            "Ref:": [
+                ""
+            ],
+            "Date:": [
+                ""
+            ],
+            "Dubai, United Arab Emirates": [
+                ""
+            ],
+            "UAE Mortgage Calculation Report": [
+                ""
+            ],
+            "Property financing estimate and upfront acquisition breakdown \u00b7 East Property Advisory": [
+                ""
+            ],
+            "Estimated Monthly Payment": [
+                ""
+            ],
+            "\/ month": [
+                ""
+            ],
+            "Profile": [
+                ""
+            ],
+            "Tenure": [
+                ""
+            ],
+            "%s Years": [
+                ""
+            ],
+            "Interest Rate": [
+                ""
+            ],
+            "Principal Loan:": [
+                ""
+            ],
+            "Total Interest:": [
+                ""
+            ],
+            "Loan Parameters": [
+                ""
+            ],
+            "Property Price": [
+                ""
+            ],
+            "Down Payment (%s%%)": [
+                ""
+            ],
+            "Bank Loan Amount": [
+                ""
+            ],
+            "Loan Tenure": [
+                ""
+            ],
+            "%1$s years (%2$s mos)": [
+                ""
+            ],
+            "%s%% p.a.": [
+                ""
+            ],
+            "Total Interest (Overpayment)": [
+                ""
+            ],
+            "Total Payable over Term": [
+                ""
+            ],
+            "Full Cost of Entry": [
+                ""
+            ],
+            "DLD Fee (4% + 580)": [
+                ""
+            ],
+            "Agency Commission (2%)": [
+                ""
+            ],
+            "Bank Fee (1% of loan)": [
+                ""
+            ],
+            "Property Valuation": [
+                ""
+            ],
+            "Mortgage Registration": [
+                ""
+            ],
+            "Total Required at Entry": [
+                ""
+            ],
+            "The Deal in 6 Steps (Timeline: 4\u20138 Weeks from MOU to Keys)": [
+                ""
+            ],
+            "Bank eligibility": [
+                ""
+            ],
+            "~10% deposit": [
+                ""
+            ],
+            "Valuation": [
+                ""
+            ],
+            "Property appraisal": [
+                ""
+            ],
+            "Loan offer letter": [
+                ""
+            ],
+            "DLD Transfer": [
+                ""
+            ],
+            "Title deed": [
+                ""
+            ],
+            "Handover": [
+                ""
+            ],
+            "Funds & keys": [
+                ""
+            ],
+            "Disclaimer:": [
+                ""
+            ],
+            "East Property Brokerage LLC": [
+                ""
             ]
         }
     }

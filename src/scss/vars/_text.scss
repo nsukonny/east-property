@@ -1,6 +1,11 @@
 // Font families.
-$ff-title: 'Exo 2', sans-serif;
-$ff: 'Inter', sans-serif;
+// Латиница и кириллица берутся из Exo 2 и Inter, в них нет иероглифов.
+// Поэтому следом идут системные CJK-шрифты macOS, Windows и Linux: на
+// китайских страницах подставляются только недостающие глифы, остальные
+// языки набор не меняют.
+$ff-cjk: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC';
+$ff-title: 'Exo 2', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif;
+$ff: 'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif;
 
 // Font sizes.
 $fs-xs: 12px;

@@ -37,6 +37,15 @@
             "Unit": [
                 "Einheit"
             ],
+            "Pre-approval": [
+                "Vorabgenehmigung"
+            ],
+            "MOU (Form F)": [
+                "Absichtserkl\u00e4rung (Formular F)"
+            ],
+            "Final approval": [
+                "Endg\u00fcltige Genehmigung"
+            ],
             "beds": [
                 "Betten"
             ],
@@ -54,6 +63,141 @@
             ],
             "%1$d projects \u00b7 %2$d units": [
                 "%1$d Projekte \u00b7 %2$d Einheiten"
+            ],
+            "UAE Resident": [
+                ""
+            ],
+            "Non-Resident": [
+                ""
+            ],
+            "Mortgage Calculation \u2014 East Property": [
+                ""
+            ],
+            "East Property Advisory": [
+                ""
+            ],
+            "Ref:": [
+                ""
+            ],
+            "Date:": [
+                ""
+            ],
+            "Dubai, United Arab Emirates": [
+                ""
+            ],
+            "UAE Mortgage Calculation Report": [
+                ""
+            ],
+            "Property financing estimate and upfront acquisition breakdown \u00b7 East Property Advisory": [
+                ""
+            ],
+            "Estimated Monthly Payment": [
+                ""
+            ],
+            "\/ month": [
+                ""
+            ],
+            "Profile": [
+                ""
+            ],
+            "Tenure": [
+                ""
+            ],
+            "%s Years": [
+                ""
+            ],
+            "Interest Rate": [
+                ""
+            ],
+            "Principal Loan:": [
+                ""
+            ],
+            "Total Interest:": [
+                ""
+            ],
+            "Loan Parameters": [
+                ""
+            ],
+            "Property Price": [
+                ""
+            ],
+            "Down Payment (%s%%)": [
+                ""
+            ],
+            "Bank Loan Amount": [
+                ""
+            ],
+            "Loan Tenure": [
+                ""
+            ],
+            "%1$s years (%2$s mos)": [
+                ""
+            ],
+            "%s%% p.a.": [
+                ""
+            ],
+            "Total Interest (Overpayment)": [
+                ""
+            ],
+            "Total Payable over Term": [
+                ""
+            ],
+            "Full Cost of Entry": [
+                ""
+            ],
+            "DLD Fee (4% + 580)": [
+                ""
+            ],
+            "Agency Commission (2%)": [
+                ""
+            ],
+            "Bank Fee (1% of loan)": [
+                ""
+            ],
+            "Property Valuation": [
+                ""
+            ],
+            "Mortgage Registration": [
+                ""
+            ],
+            "Total Required at Entry": [
+                ""
+            ],
+            "The Deal in 6 Steps (Timeline: 4\u20138 Weeks from MOU to Keys)": [
+                ""
+            ],
+            "Bank eligibility": [
+                ""
+            ],
+            "~10% deposit": [
+                ""
+            ],
+            "Valuation": [
+                ""
+            ],
+            "Property appraisal": [
+                ""
+            ],
+            "Loan offer letter": [
+                ""
+            ],
+            "DLD Transfer": [
+                ""
+            ],
+            "Title deed": [
+                ""
+            ],
+            "Handover": [
+                ""
+            ],
+            "Funds & keys": [
+                ""
+            ],
+            "Disclaimer:": [
+                ""
+            ],
+            "East Property Brokerage LLC": [
+                ""
             ]
         }
     }

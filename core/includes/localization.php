@@ -65,6 +65,77 @@ function core_carry_campaign_params( string $url ): string {
 }
 
 /**
+ * Short code shown on the switcher toggle, by language.
+ *
+ * The bare slug reads as an abbreviation of an English word, which tells a
+ * reader of that language nothing. A language whose own script differs from
+ * Latin gets its own short form instead.
+ *
+ * @return array<string, string>
+ */
+function core_language_labels(): array {
+	return array(
+		'ru' => 'РУ',
+		'zh' => '中文',
+	);
+}
+
+/**
+ * BCP 47 tag of a language, the form an HTML attribute expects.
+ *
+ * Polylang keeps it on the language object as w3c; the locale it stores
+ * alongside carries an underscore and is not a valid tag.
+ *
+ * @param string $slug Polylang slug.
+ * @param string $fallback Value to fall back on.
+ *
+ * @return string
+ */
+function core_language_tag( string $slug, string $fallback = '' ): string {
+	if ( function_exists( 'PLL' ) && ! empty( PLL()->model ) ) {
+		foreach ( PLL()->model->get_languages_list() as $language ) {
+			if ( $language->slug === $slug && ! empty( $language->w3c ) ) {
+				return (string) $language->w3c;
+			}
+		}
+	}
+
+	return '' !== $fallback ? str_replace( '_', '-', $fallback ) : $slug;
+}
+
+/**
+ * Spell out the Chinese hreflang instead of leaving it as a bare language.
+ *
+ * Polylang keys the alternates by Polylang slug, so Chinese goes out as `zh`,
+ * which means Chinese in any script and matches a reader of the traditional
+ * one just as well. The site is written in the simplified script only, so the
+ * alternate carries the same tag as the document: zh-CN.
+ *
+ * Only a language the map knows is touched; the rest keep the slug Polylang
+ * chose, which is already the right tag for them.
+ *
+ * @param array $hreflangs URLs keyed by language code.
+ *
+ * @return array
+ */
+function core_rel_hreflang_attributes( $hreflangs ) {
+	if ( ! is_array( $hreflangs ) ) {
+		return $hreflangs;
+	}
+
+	$spelled = array( 'zh' => 'zh-CN' );
+	$result  = array();
+
+	foreach ( $hreflangs as $code => $url ) {
+		$result[ $spelled[ $code ] ?? $code ] = $url;
+	}
+
+	return $result;
+}
+
+add_filter( 'pll_rel_hreflang_attributes', 'core_rel_hreflang_attributes' );
+
+/**
  * Language switcher entries for the page being rendered.
  *
  * The language home page is handed back by pll_the_languages() for every language the
@@ -99,14 +170,17 @@ function core_get_language_switcher(): array {
 			continue;
 		}
 
+		$locale = (string) ( $language['locale'] ?? $slug );
+
 		$entries[] = array(
 			'slug'           => $slug,
-			'locale'         => (string) ( $language['locale'] ?? $slug ),
+			'locale'         => $locale,
+			'tag'            => core_language_tag( $slug, $locale ),
 			'name'           => (string) ( $language['name'] ?? strtoupper( $slug ) ),
 			'url'            => core_carry_campaign_params( $url ),
 			'is_translation' => $is_translation,
 			'is_current'     => $is_current,
-			'label'          => 'ru' === $slug ? 'РУ' : strtoupper( $slug ),
+			'label'          => core_language_labels()[ $slug ] ?? strtoupper( $slug ),
 		);
 	}
 

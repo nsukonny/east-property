@@ -54,6 +54,7 @@ require_once get_stylesheet_directory() . '/core/includes/tools/class-tool-deepl
 require_once get_stylesheet_directory() . '/core/includes/tools/class-tool-unit-translator.php';
 require_once get_stylesheet_directory() . '/core/includes/tools/class-tool-location-translator.php';
 require_once get_stylesheet_directory() . '/core/includes/tools/class-tool-language-cloner.php';
+require_once get_stylesheet_directory() . '/core/includes/tools/class-tool-language-installer.php';
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	require_once get_stylesheet_directory() . '/core/includes/tools/class-tool-cache-warmer.php';

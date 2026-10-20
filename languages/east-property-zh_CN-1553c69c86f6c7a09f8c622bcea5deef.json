@@ -1,0 +1,204 @@
+{
+    "translation-revision-date": "2026-10-19 16:27+0000",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "assets\/js\/main.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "zh_CN",
+                "plural-forms": "nplurals=1; plural=0;"
+            },
+            "Location": [
+                "\u4f4d\u7f6e"
+            ],
+            "Developer": [
+                "\u5f00\u53d1\u5546"
+            ],
+            "Area": [
+                "\u533a\u57df"
+            ],
+            "Beds": [
+                "\u5e8a"
+            ],
+            "Studio": [
+                "\u5355\u95f4\u516c\u5bd3"
+            ],
+            "Select": [
+                "\u9009\u62e9"
+            ],
+            "Bed": [
+                "\u4e16\u754c"
+            ],
+            "sqft": [
+                "\u5e73\u65b9\u82f1\u5c3a"
+            ],
+            "Unit": [
+                "\u623f\u6e90"
+            ],
+            "Pre-approval": [
+                "\u9884\u5ba1\u6279"
+            ],
+            "MOU (Form F)": [
+                "\u8c05\u89e3\u5907\u5fd8\u5f55\uff08F\u8868\uff09"
+            ],
+            "Final approval": [
+                "\u6700\u7ec8\u6279\u51c6"
+            ],
+            "beds": [
+                "\u5e8a"
+            ],
+            "bed": [
+                "\u4e16\u754c"
+            ],
+            "baths": [
+                "\u6d74\u573a"
+            ],
+            "bath": [
+                "\u6d17\u6fa1"
+            ],
+            "Selected location": [
+                "\u5df2\u9009\u4f4d\u7f6e"
+            ],
+            "%1$d projects \u00b7 %2$d units": [
+                "%1$d \u4e2a\u9879\u76ee \u00b7 %2$d \u4e2a\u5355\u4f4d"
+            ],
+            "UAE Resident": [
+                "\u963f\u8054\u914b\u5c45\u6c11"
+            ],
+            "Non-Resident": [
+                "\u975e\u5c45\u6c11"
+            ],
+            "Mortgage Calculation \u2014 East Property": [
+                "\u62b5\u62bc\u8d37\u6b3e\u8ba1\u7b97 \u2014 \u4e1c\u533a\u623f\u4ea7"
+            ],
+            "East Property Advisory": [
+                "\u4e1c\u533a\u623f\u5730\u4ea7\u54a8\u8be2"
+            ],
+            "Ref:": [
+                "\u53c2\u8003\uff1a"
+            ],
+            "Date:": [
+                "\u65e5\u671f\uff1a"
+            ],
+            "Dubai, United Arab Emirates": [
+                "\u963f\u8054\u914b\u8fea\u62dc"
+            ],
+            "UAE Mortgage Calculation Report": [
+                "\u963f\u8054\u914b\u62b5\u62bc\u8d37\u6b3e\u8ba1\u7b97\u62a5\u544a"
+            ],
+            "Property financing estimate and upfront acquisition breakdown \u00b7 East Property Advisory": [
+                "\u623f\u5730\u4ea7\u878d\u8d44\u4f30\u7b97\u53ca\u524d\u671f\u6536\u8d2d\u8d39\u7528\u660e\u7ec6 \u00b7 \u4e1c\u533a\u623f\u5730\u4ea7\u54a8\u8be2\u516c\u53f8"
+            ],
+            "Estimated Monthly Payment": [
+                "\u9884\u8ba1\u6bcf\u6708\u8fd8\u6b3e\u989d"
+            ],
+            "\/ month": [
+                "\/\u6708"
+            ],
+            "Profile": [
+                "\u4e2a\u4eba\u7b80\u4ecb"
+            ],
+            "Tenure": [
+                "\u4efb\u671f"
+            ],
+            "%s Years": [
+                "%s \u5e74"
+            ],
+            "Interest Rate": [
+                "\u5229\u7387"
+            ],
+            "Principal Loan:": [
+                "\u4e3b\u8981\u8d37\u6b3e\uff1a"
+            ],
+            "Total Interest:": [
+                "\u5229\u606f\u603b\u989d\uff1a"
+            ],
+            "Loan Parameters": [
+                "\u8d37\u6b3e\u53c2\u6570"
+            ],
+            "Property Price": [
+                "\u623f\u4ef7"
+            ],
+            "Down Payment (%s%%)": [
+                "\u9996\u4ed8\u6b3e\uff08%s%%\uff09"
+            ],
+            "Bank Loan Amount": [
+                "\u94f6\u884c\u8d37\u6b3e\u91d1\u989d"
+            ],
+            "Loan Tenure": [
+                "\u8d37\u6b3e\u671f\u9650"
+            ],
+            "%1$s years (%2$s mos)": [
+                "%1$s \u5e74\uff08%2$s \u4e2a\u6708\uff09"
+            ],
+            "%s%% p.a.": [
+                "%s%% \u6bcf\u5e74"
+            ],
+            "Total Interest (Overpayment)": [
+                "\u5229\u606f\u603b\u989d\uff08\u591a\u7f34\u90e8\u5206\uff09"
+            ],
+            "Total Payable over Term": [
+                "\u8d37\u6b3e\u671f\u5185\u5e94\u4ed8\u603b\u989d"
+            ],
+            "Full Cost of Entry": [
+                "\u8d2d\u623f\u521d\u671f\u603b\u6210\u672c"
+            ],
+            "DLD Fee (4% + 580)": [
+                "DLD \u8d39\u7528\uff084% + 580\uff09"
+            ],
+            "Agency Commission (2%)": [
+                "\u4e2d\u4ecb\u4f63\u91d1\uff082%\uff09"
+            ],
+            "Bank Fee (1% of loan)": [
+                "\u94f6\u884c\u624b\u7eed\u8d39\uff08\u8d37\u6b3e\u91d1\u989d\u76841%\uff09"
+            ],
+            "Property Valuation": [
+                "\u623f\u4ea7\u8bc4\u4f30"
+            ],
+            "Mortgage Registration": [
+                "\u62b5\u62bc\u767b\u8bb0"
+            ],
+            "Total Required at Entry": [
+                "\u8d2d\u623f\u521d\u671f\u6240\u9700\u603b\u989d"
+            ],
+            "The Deal in 6 Steps (Timeline: 4\u20138 Weeks from MOU to Keys)": [
+                "6\u6b65\u5b8c\u6210\u4ea4\u6613\uff08\u65f6\u95f4\u8868\uff1a\u4ece\u7b7e\u7f72\u8c05\u89e3\u5907\u5fd8\u5f55\u5230\u4ea4\u94a5\u5319\uff0c\u97004\u81f38\u5468\uff09"
+            ],
+            "Bank eligibility": [
+                "\u94f6\u884c\u8d44\u683c\u5ba1\u6838"
+            ],
+            "~10% deposit": [
+                "~10%\u7684\u5b9a\u91d1"
+            ],
+            "Valuation": [
+                "\u623f\u4ea7\u4f30\u503c"
+            ],
+            "Property appraisal": [
+                "\u623f\u4ea7\u8bc4\u4f30"
+            ],
+            "Loan offer letter": [
+                "\u8d37\u6b3e\u6279\u51c6\u51fd"
+            ],
+            "DLD Transfer": [
+                "DLD \u8fc7\u6237"
+            ],
+            "Title deed": [
+                "\u4ea7\u6743\u8bc1"
+            ],
+            "Handover": [
+                "\u4ea4\u623f"
+            ],
+            "Funds & keys": [
+                "\u4ed8\u6b3e\u4e0e\u4ea4\u94a5\u5319"
+            ],
+            "Disclaimer:": [
+                "\u514d\u8d23\u58f0\u660e\uff1a"
+            ],
+            "East Property Brokerage LLC": [
+                "\u4e1c\u533a\u623f\u4ea7\u7ecf\u7eaa\u6709\u9650\u8d23\u4efb\u516c\u53f8"
+            ]
+        }
+    }
+}
