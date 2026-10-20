@@ -592,9 +592,9 @@ final class CLI {
 	 * ---
 	 *
 	 * [--status=<statuses>]
-	 * : Comma-separated statuses to walk; a new language is filled in as drafts.
+	 * : Comma-separated statuses to walk; pass publish to skip drafts.
 	 * ---
-	 * default: publish
+	 * default: publish,draft
 	 * ---
 	 *
 	 * [--limit=<number>]

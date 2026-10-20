@@ -287,9 +287,13 @@ class ChineseLanguageTest extends TestCase {
 	}
 
 	/**
-	 * A draft copy is invisible to the default run and found with --status.
+	 * A draft copy is picked up by the bulk run, and --status can narrow it out.
+	 *
+	 * Drafts are where a new language is filled in before it is published, so
+	 * they belong in the default selection; asking for publish alone is how a
+	 * run is kept to live records.
 	 */
-	public function test_drafts_are_found_only_when_asked_for() {
+	public function test_drafts_are_part_of_the_default_selection() {
 		$this->install();
 
 		$unit = $this->create_unit( array( 'slug' => 'draft-flow' ) );
@@ -303,8 +307,10 @@ class ChineseLanguageTest extends TestCase {
 
 		$translator = new Unit_Translator();
 
-		$this->assertNotContains( $chinese, $translator->find( 50, 0, 'zh', array( 'unit' ) ) );
+		$this->assertSame( array( 'publish', 'draft' ), Unit_Translator::DEFAULT_STATUSES );
+		$this->assertContains( $chinese, $translator->find( 50, 0, 'zh', array( 'unit' ) ) );
 		$this->assertContains( $chinese, $translator->find( 50, 0, 'zh', array( 'unit' ), array( 'draft' ) ) );
+		$this->assertNotContains( $chinese, $translator->find( 50, 0, 'zh', array( 'unit' ), array( 'publish' ) ) );
 	}
 
 	/**

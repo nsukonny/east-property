@@ -133,7 +133,7 @@ wp rewrite flush --allow-root
 ```bash
 wp tools clone-language --locale=zh_CN --post-type=page --limit=50 --dry-run --allow-root
 wp tools clone-language --locale=zh_CN --post-type=page --limit=50 --copy-status=draft --yes --allow-root
-wp tools translate-units --language=zh --post-type=page --status=draft --limit=20 --allow-root
+wp tools translate-units --language=zh --post-type=page --limit=20 --allow-root
 ```
 
 Копии создаются черновиками, переводятся и только потом публикуются — английский
@@ -150,8 +150,12 @@ wp tools translate-units --post-id=<копия> --allow-root
 
 # затем пакетами
 wp tools clone-language --locale=zh_CN --limit=200 --copy-status=draft --yes --allow-root
-wp tools translate-units --language=zh --status=draft --limit=50 --allow-root
+wp tools translate-units --language=zh --limit=50 --allow-root
 ```
+
+Черновики входят в выборку по умолчанию (`Unit_Translator::DEFAULT_STATUSES`),
+отдельный флаг не нужен; `--status=publish` наоборот сужает прогон до живых
+записей.
 
 `clone-language` сам заводит зависимости: юнит → проект → застройщик, каждый на
 своём языке. Группа переводов EN/RU/DE сохраняется, zh в неё добавляется.
@@ -167,7 +171,7 @@ wp tools translate-units --language=zh --status=draft --limit=50 --allow-root
 остаётся в кэше (`ep_deepl_cache`), повторная отправка тех же строк бесплатна.
 
 ```bash
-wp tools translate-units --language=zh --status=draft --limit=50 --allow-root   # продолжить
+wp tools translate-units --language=zh --limit=50 --allow-root                   # продолжить
 wp option delete ep_deepl_cache --allow-root                                     # сбросить кэш
 ```
 
