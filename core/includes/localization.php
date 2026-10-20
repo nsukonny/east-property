@@ -77,6 +77,7 @@ function core_language_labels(): array {
 	return array(
 		'ru' => 'РУ',
 		'zh' => '中文',
+		'hi' => 'हिं',
 	);
 }
 

@@ -1,0 +1,3264 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: East Property\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-10-19T16:27:49+00:00\n"
+"PO-Revision-Date: 2026-10-20 17:57+0000\n"
+"Language: hi_IN\n"
+"X-Generator: east-property make-translations\n"
+"X-Domain: east-property\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Theme Name of the theme
+#: style.css
+#: page-news.php:38
+msgid "East Property"
+msgstr "पूर्वी संपत्ति"
+
+#. Theme URI of the theme
+#: style.css
+msgid "https://eastproperty.com"
+msgstr "https://eastproperty.com"
+
+#. Description of the theme
+#: style.css
+msgid "East Property project"
+msgstr "ईस्ट प्रॉपर्टी परियोजना"
+
+#. Author of the theme
+#: style.css
+msgid "NSukonny"
+msgstr "एनसुकोन्नी"
+
+#. Author URI of the theme
+#: style.css
+msgid "https://nsukonny.agency/east-property/"
+msgstr "https://nsukonny.agency/east-property/"
+
+#: 404.php:11
+msgid "Page not found"
+msgstr "पृष्ठ नहीं मिला"
+
+#: 404.php:13
+msgid "Go to properties"
+msgstr "संपत्तियों पर जाएँ"
+
+#: core/components/account/functions.php:125
+#: core/components/filters/functions.php:912
+msgid "Apartments"
+msgstr "अपार्टमेंट्स"
+
+#: core/components/account/functions.php:126
+#: core/components/filters/functions.php:928
+msgid "Villas"
+msgstr "विला"
+
+#: core/components/account/functions.php:127
+msgid "Townhouses"
+msgstr "टाउनहाउस"
+
+#: core/components/account/functions.php:128
+msgid "Penthouses"
+msgstr "पेंटहाउस"
+
+#: core/components/account/functions.php:129
+#: core/components/filters/functions.php:920
+msgid "Houses"
+msgstr "घर"
+
+#: core/components/account/functions.php:130
+#: core/components/filters/functions.php:936
+msgid "Offices"
+msgstr "कार्यालय"
+
+#: core/components/account/functions.php:141
+#: core/includes/entities/class-entity-unit.php:419
+#: core/includes/entities/class-entity-unit.php:484
+msgid "Contains an error"
+msgstr "त्रुटि शामिल है"
+
+#: core/components/account/functions.php:142
+#: core/includes/entities/class-entity-unit.php:403
+#: core/includes/entities/class-entity-unit.php:469
+#: core/template-parts/account/profile.php:145
+msgid "Promoted"
+msgstr "प्रचारित"
+
+#: core/components/account/functions.php:143
+#: core/includes/entities/class-entity-unit.php:412
+#: core/includes/entities/class-entity-unit.php:477
+msgid "Waiting for approval"
+msgstr "मंजूरी का इंतजार"
+
+#: core/components/account/functions.php:319
+#: core/components/filters/functions.php:1101
+#: core/template-parts/filters/search-tabs.php:144
+msgid "Any Locations"
+msgstr "कोई भी स्थान"
+
+#: core/components/account/functions.php:320
+#: core/template-parts/filters/result-filters.php:273
+#: core/template-parts/filters/result-filters.php:293
+msgid "All"
+msgstr "सभी"
+
+#: core/components/account/functions.php:326
+#: core/components/filters/functions.php:312
+#: core/components/filters/functions.php:1045
+#: core/template-parts/filters/search-tabs.php:165
+msgid "Any Developers"
+msgstr "कोई भी डेवलपर्स"
+
+#: core/components/account/functions.php:332
+msgid "Any bedrooms"
+msgstr "कोई भी शयनकक्ष"
+
+#. translators: %s: number of bedrooms, "7+" for the last option.
+#: core/components/account/functions.php:337
+msgid "%s bedroom"
+msgid_plural "%s bedrooms"
+msgstr[0] "%s बेडरूम"
+msgstr[1] "%s बेडरूम"
+
+#: core/components/account/functions.php:341
+msgid "All unit types"
+msgstr "सभी यूनिट प्रकार"
+
+#: core/components/account/functions.php:348
+msgid "All listing types"
+msgstr "सभी लिस्टिंग प्रकार"
+
+#: core/components/account/functions.php:363
+msgid "Name or ID"
+msgstr "नाम या आईडी"
+
+#: core/components/account/functions.php:363
+msgid "Name, project or ID"
+msgstr "नाम, परियोजना या आईडी"
+
+#: core/components/account/functions.php:787
+msgid "Unit title is required."
+msgstr "यूनिट का शीर्षक अनिवार्य है।"
+
+#: core/components/account/functions.php:880
+msgid "A distress listing needs an original price higher than the asking price."
+msgstr "एक डिस्ट्रेस लिस्टिंग के लिए मूल कीमत माँग मूल्य से अधिक होनी चाहिए।"
+
+#: core/components/account/functions.php:922
+msgid "Unit not found."
+msgstr "यूनिट नहीं मिली।"
+
+#: core/components/account/functions.php:996
+#: core/components/account/functions.php:1134
+msgid "Property title is required."
+msgstr "संपत्ति का शीर्षक आवश्यक है।"
+
+#: core/components/account/functions.php:997
+msgid "Property description is required."
+msgstr "संपत्ति का विवरण आवश्यक है।"
+
+#: core/components/account/functions.php:1007
+msgid "Latitude is required."
+msgstr "अक्षांश आवश्यक है।"
+
+#: core/components/account/functions.php:1008
+msgid "Longitude is required."
+msgstr "अक्षांश आवश्यक है।"
+
+#: core/components/account/functions.php:1009
+msgid "Please select a valid location."
+msgstr "कृपया एक वैध स्थान चुनें।"
+
+#: core/components/account/functions.php:1010
+msgid "Please select a valid ownership type."
+msgstr "कृपया एक वैध स्वामित्व प्रकार चुनें।"
+
+#: core/components/account/functions.php:1011
+msgid "Please select a valid property type."
+msgstr "कृपया एक मान्य संपत्ति प्रकार चुनें।"
+
+#: core/components/account/functions.php:1052
+#: core/components/account/functions.php:1311
+#: core/components/account/functions.php:1571
+msgid "Property not found."
+msgstr "संपत्ति नहीं मिली।"
+
+#: core/components/account/functions.php:1110
+msgid "Please sign in to add a property."
+msgstr "कृपया संपत्ति जोड़ने के लिए साइन इन करें।"
+
+#: core/components/account/functions.php:1115
+msgid "Your account does not have permission to add property."
+msgstr "आपके खाते को संपत्ति जोड़ने की अनुमति नहीं है।"
+
+#: core/components/account/functions.php:1121
+msgid "Security check failed. Please try again."
+msgstr "सुरक्षा जाँच विफल हो गई। कृपया फिर से प्रयास करें।"
+
+#: core/components/account/functions.php:1306
+#: core/components/account/functions.php:1566
+#: core/components/account/functions.php:1661
+msgid "Property ID is required."
+msgstr "प्रॉपर्टी आईडी आवश्यक है।"
+
+#: core/components/account/functions.php:1324
+#: core/template-parts/account/edit-unit.php:463
+msgid "Property image"
+msgstr "संपत्ति की छवि"
+
+#: core/components/account/functions.php:1580
+msgid "Not enough boost points for boost plan."
+msgstr "बूस्ट योजना के लिए पर्याप्त बूस्ट अंक नहीं हैं।"
+
+#: core/components/account/functions.php:1585
+msgid "Property boosted successfully."
+msgstr "संपत्ति सफलतापूर्वक बढ़ाई गई।"
+
+#: core/components/account/functions.php:1602
+msgid "Broker not found."
+msgstr "ब्रोकर नहीं मिला।"
+
+#: core/components/account/functions.php:1647
+#: core/includes/registers/user-roles/client.php:7
+msgid "Client"
+msgstr "ग्राहक"
+
+#: core/components/account/functions.php:1648
+#: core/includes/registers/user-roles/broker.php:18
+msgid "Broker"
+msgstr "ब्रोकर"
+
+#: core/components/account/functions.php:1666
+msgid "YOu are not authenticated."
+msgstr "आप प्रमाणीकृत नहीं हैं।"
+
+#: core/components/account/functions.php:1710
+msgid "Hello "
+msgstr "नमस्ते "
+
+#: core/components/account/functions.php:1712
+msgid "Thank you for registering with"
+msgstr "के साथ पंजीकरण करने के लिए धन्यवाद"
+
+#: core/components/account/functions.php:1714
+msgid "To complete your registration and activate your account, please verify your email address by clicking the link below:"
+msgstr "अपनी पंजीकरण प्रक्रिया पूरी करने और अपना खाता सक्रिय करने के लिए, कृपया नीचे दिए गए लिंक पर क्लिक करके अपना ईमेल पता सत्यापित करें:"
+
+#: core/components/account/functions.php:1717
+msgid "Verify email address"
+msgstr "ईमेल पता सत्यापित करें"
+
+#: core/components/account/functions.php:1719
+#: core/components/modals/functions.php:37
+msgid "or copy and paste the following link into your browser:"
+msgstr "या निम्नलिखित लिंक को कॉपी करके अपने ब्राउज़र में पेस्ट करें:"
+
+#: core/components/account/functions.php:1731
+msgid "Verify your email address"
+msgstr "अपना ईमेल पता सत्यापित करें"
+
+#: core/components/account/functions.php:1747
+msgid "Sign in to save this property to your favorites."
+msgstr "इस संपत्ति को अपनी पसंदीदा में सहेजने के लिए साइन इन करें।"
+
+#: core/components/account/functions.php:1768
+msgid "You must be logged in."
+msgstr "आपको लॉग इन करना होगा।"
+
+#: core/components/account/functions.php:1773
+msgid "Verification email resent. Check your email."
+msgstr "सत्यापन ईमेल पुनः भेजा गया। अपना ईमेल जाँचें।"
+
+#: core/components/account/functions.php:1913
+msgid "This property is not a distress deal. Below Market Score : "
+msgstr "यह संपत्ति संकटकालीन सौदा नहीं है।  बाजार स्कोर से नीचे: "
+
+#: core/components/common/cookies/cookies.php:8
+msgid "We use cookies"
+msgstr "हम कुकीज़ का उपयोग करते हैं"
+
+#: core/components/common/cookies/cookies.php:10
+msgid ""
+"We use cookies to improve your browsing experience, analyze site traffic,\n"
+"\t\t\t\t\t\t\t\tand personalize content. By clicking “Accept”, you agree to our use of cookies."
+msgstr "हम आपके ब्राउज़िंग अनुभव को बेहतर बनाने, साइट ट्रैफ़िक का विश्लेषण करने, और सामग्री को व्यक्तिगत बनाने के लिए कुकीज़ का उपयोग करते हैं। \"स्वीकार करें\" पर क्लिक करके, आप हमारे द्वारा कुकीज़ के उपयोग के लिए सहमत होते हैं।"
+
+#: core/components/common/cookies/cookies.php:17
+msgid "Decline"
+msgstr "पतन"
+
+#: core/components/common/cookies/cookies.php:20
+msgid "Accept"
+msgstr "स्वीकार करें"
+
+#: core/components/common/functions.php:20
+#: core/components/sections/explore-by-beds.php:15
+#: core/components/sections/explore-by-beds.php:23
+#: core/components/sections/explore-by-beds.php:32
+#: core/components/sections/explore-by-beds.php:42
+#: core/includes/registers/post-types/properties.php:10
+msgid "Properties"
+msgstr "संपत्तियाँ"
+
+#: core/components/common/functions.php:33
+msgid "Off Plan Properties"
+msgstr "ऑफ़-प्लान संपत्तियाँ"
+
+#: core/components/common/functions.php:38
+msgid "Secondary Listings"
+msgstr "द्वितीयक लिस्टिंग"
+
+#: core/components/common/functions.php:43
+msgid "Distress Deals"
+msgstr "डिस्ट्रेस डील्स"
+
+#: core/components/common/functions.php:60
+msgid "Projects in UAE"
+msgstr "यूएई में परियोजनाएँ"
+
+#: core/components/common/nav.php:28
+msgid "Close menu"
+msgstr "मेनू बंद करें"
+
+#: core/components/common/nav.php:62
+#: core/template-parts/account/profile-client.php:42
+#: core/template-parts/account/profile.php:72
+msgid "Logout"
+msgstr "लॉग आउट करें"
+
+#: core/components/common/nav.php:68
+#: core/components/modals/create-modal.php:172
+#: core/components/modals/forgot-modal.php:23
+#: core/components/modals/signin-modal.php:10
+#: core/components/modals/signin-modal.php:43
+#: core/template-parts/account/login-form.php:20
+#: core/template-parts/account/login-form.php:63
+#: core/template-parts/common/header.php:33
+msgid "Sign in"
+msgstr "साइन इन"
+
+#: core/components/common/notifications/notifications.php:14
+msgid "Your property has been submitted successfully and saved as draft. Wait approve."
+msgstr "आपकी संपत्ति सफलतापूर्वक सबमिट हो गई है और मसौदे के रूप में सहेजी गई है। अनुमोदन के लिए प्रतीक्षा करें।"
+
+#: core/components/common/notifications/notifications.php:15
+msgid "Your profile has been created successfully."
+msgstr "आपकी प्रोफ़ाइल सफलतापूर्वक बनाई गई है।"
+
+#: core/components/common/notifications/notifications.php:16
+msgid "Your profile has been updated."
+msgstr "आपकी प्रोफ़ाइल अपडेट कर दी गई है।"
+
+#: core/components/common/notifications/notifications.php:17
+msgid "Your property has been deleted."
+msgstr "आपकी संपत्ति हटा दी गई है।"
+
+#: core/components/common/notifications/notifications.php:18
+msgid "Your password has been updated. Now you can login."
+msgstr "आपका पासवर्ड अपडेट कर दिया गया है। अब आप लॉगिन कर सकते हैं।"
+
+#: core/components/common/notifications/notifications.php:19
+msgid "Your email has been verified successfully."
+msgstr "आपका ईमेल सफलतापूर्वक सत्यापित हो गया है।"
+
+#: core/components/common/notifications/notifications.php:22
+msgid "Security error. Please try again."
+msgstr "सुरक्षा त्रुटि। कृपया फिर से प्रयास करें।"
+
+#: core/components/common/notifications/notifications.php:23
+msgid "Validation error. Please check your input and try again."
+msgstr "सत्यापन त्रुटि। कृपया अपना इनपुट जांचें और फिर से प्रयास करें।"
+
+#: core/components/common/notifications/notifications.php:24
+msgid "Please enter login and password."
+msgstr "कृपया लॉगिन और पासवर्ड दर्ज करें।"
+
+#: core/components/common/notifications/notifications.php:25
+msgid "Please fill in all required fields."
+msgstr "कृपया सभी आवश्यक फ़ील्ड भरें।"
+
+#: core/components/common/notifications/notifications.php:26
+msgid "This email is already registered. Please use another email."
+msgstr "यह ईमेल पहले से पंजीकृत है। कृपया कोई अन्य ईमेल उपयोग करें।"
+
+#: core/components/common/notifications/notifications.php:27
+msgid "An error occurred while updating your profile. Please try again later."
+msgstr "आपकी प्रोफ़ाइल अपडेट करते समय एक त्रुटि हुई। कृपया बाद में फिर से प्रयास करें।"
+
+#: core/components/common/notifications/notifications.php:28
+msgid "An error occurred while uploading your avatar. Please try again later."
+msgstr "आपका अवतार अपलोड करते समय एक त्रुटि हुई। कृपया बाद में फिर से प्रयास करें।"
+
+#: core/components/common/notifications/notifications.php:29
+msgid "Your password reset link has expired. Please request a new one."
+msgstr "आपका पासवर्ड रीसेट लिंक समाप्त हो गया है। कृपया एक नया लिंक अनुरोध करें।"
+
+#: core/components/common/notifications/notifications.php:30
+msgid "Your password must be at least 8 characters long."
+msgstr "आपका पासवर्ड कम से कम 8 अक्षरों का होना चाहिए।"
+
+#: core/components/common/notifications/notifications.php:31
+msgid "Your password and confirmation password do not match."
+msgstr "आपका पासवर्ड और पुष्टि पासवर्ड मेल नहीं खाते।"
+
+#: core/components/common/notifications/notifications.php:32
+msgid "Invalid or expired verification token."
+msgstr "अमान्य या समाप्त हो चुका सत्यापन टोकन।"
+
+#: core/components/common/notifications/notifications.php:35
+msgid "Unknown error occurred. Please try again later."
+msgstr "एक अज्ञात त्रुटि हुई। कृपया बाद में फिर से प्रयास करें।"
+
+#: core/components/common/notifications/notifications.php:51
+msgid "Close notification"
+msgstr "सूचना बंद करें"
+
+#: core/components/common/subscribe-form/functions.php:13
+msgid "Please provide a valid email address."
+msgstr "कृपया एक मान्य ईमेल पता प्रदान करें।"
+
+#: core/components/common/subscribe-form/functions.php:35
+msgid "This email is already subscribed."
+msgstr "यह ईमेल पहले से ही सब्सक्राइब है।"
+
+#: core/components/common/subscribe-form/functions.php:49
+msgid "An error occurred while subscribing. Please try again later."
+msgstr "सब्सक्राइब करते समय एक त्रुटि हुई। कृपया बाद में फिर से प्रयास करें।"
+
+#: core/components/common/subscribe-form/functions.php:54
+msgid "Thank you for subscribing!"
+msgstr "सब्सक्राइब करने के लिए धन्यवाद!"
+
+#: core/components/common/subscribe-form/subscribe-form.php:10
+msgid "Keep Yourself Up to Date"
+msgstr "खुद को अपडेट रखें"
+
+#: core/components/common/subscribe-form/subscribe-form.php:12
+msgid "Your email address"
+msgstr "आपका ईमेल पता"
+
+#: core/components/common/subscribe-form/subscribe-form.php:23
+msgid "Subscribe"
+msgstr "सब्सक्राइब करें"
+
+#: core/components/components-functions.php:207
+#: core/components/units/units-by-beds.php:21
+#: core/includes/entities/class-entity-property.php:271
+#: core/includes/entities/class-entity-unit.php:176
+#: core/includes/entities/class-entity-unit.php:191
+#: template-parts/sections/single/dropdowns.php:20
+msgid "AED"
+msgstr "स्वचालित बाहरी डिफिब्रिलेटर"
+
+#: core/components/components-functions.php:224
+msgctxt "handover quarter"
+msgid "Q1"
+msgstr "प्रथम तिमाही"
+
+#: core/components/components-functions.php:225
+msgctxt "handover quarter"
+msgid "Q2"
+msgstr "द्वितीय तिमाही"
+
+#: core/components/components-functions.php:226
+msgctxt "handover quarter"
+msgid "Q3"
+msgstr "तीसरी तिमाही"
+
+#: core/components/components-functions.php:227
+msgctxt "handover quarter"
+msgid "Q4"
+msgstr "चौथी तिमाही"
+
+#. translators: 1: quarter, 2: year.
+#: core/components/components-functions.php:232
+msgctxt "handover date"
+msgid "%1$s %2$d"
+msgstr "%1$s %2$d"
+
+#: core/components/email/functions.php:4
+msgid "Mailer"
+msgstr "मेलर"
+
+#. translators: option of the delivery date filter, projects already handed over.
+#: core/components/filters/functions.php:323
+#: core/components/filters/functions.php:848
+msgctxt "delivery filter"
+msgid "Ready"
+msgstr "तैयार"
+
+#: core/components/filters/functions.php:330
+#: core/components/filters/functions.php:852
+msgid "In Construction"
+msgstr "निर्माणधीन"
+
+#: core/components/filters/functions.php:341
+msgid "All Years"
+msgstr "सभी वर्ष"
+
+#: core/components/filters/functions.php:350
+#: core/components/filters/functions.php:861
+#: core/includes/registers/post-types/locations.php:10
+#: core/template-parts/account/edit-property.php:191
+#: core/template-parts/filters/result-filters.php:61
+#: core/template-parts/properties/property-single.php:111
+#: core/template-parts/properties/property-single.php:220
+#: core/template-parts/properties/property-units-list.php:28
+#: single-unit.php:291
+#: single-unit.php:380
+#: src/js/map/map.js:276
+msgid "Location"
+msgstr "स्थान"
+
+#: core/components/filters/functions.php:354
+msgid "Handover Year Before"
+msgstr "पिछले साल हस्तांतरण"
+
+#: core/components/filters/functions.php:355
+msgid "Completion Year After"
+msgstr "पूर्णता के बाद वर्ष"
+
+#: core/components/filters/functions.php:359
+#: core/components/filters/functions.php:869
+msgid "Price (AED)"
+msgstr "कीमत (एईडी)"
+
+#: core/components/filters/functions.php:366
+#: core/components/filters/functions.php:876
+#: core/includes/entities/class-entity-property.php:650
+msgid "Property Type"
+msgstr "संपत्ति का प्रकार"
+
+#: core/components/filters/functions.php:370
+#: core/components/filters/functions.php:880
+#: core/components/filters/functions.php:904
+msgid "Any"
+msgstr "वहाँ"
+
+#: core/components/filters/functions.php:375
+#: core/components/filters/functions.php:885
+#: core/includes/registers/post-types/developers.php:11
+#: core/includes/registers/post-types/developers.php:37
+#: core/template-parts/account/edit-property.php:128
+#: core/template-parts/filters/result-filters.php:268
+#: core/template-parts/filters/search-tabs.php:163
+#: src/js/map/html.js:58
+msgid "Developer"
+msgstr "डेवलपर"
+
+#: core/components/filters/functions.php:379
+#: core/template-parts/cards/map-sidebar.php:85
+#: src/js/map/html.js:66
+msgid "Area"
+msgstr "क्षेत्र"
+
+#: core/components/filters/functions.php:398
+msgctxt "search tab"
+msgid "Available"
+msgstr "उपलब्ध"
+
+#: core/components/filters/functions.php:407
+#: core/template-parts/account/edit-unit.php:271
+#: core/template-parts/filters/search-tabs.php:78
+msgid "Bedrooms"
+msgstr "शयनकक्ष"
+
+#: core/components/filters/functions.php:411
+#: core/template-parts/filters/search-tabs.php:142
+msgid "District"
+msgstr "जिला"
+
+#: core/components/filters/functions.php:418
+msgctxt "search tab"
+msgid "In construction"
+msgstr "निर्माणधीन"
+
+#: core/components/filters/functions.php:447
+#: core/components/units/units-by-beds.php:78
+#: core/includes/entities/class-entity-property.php:127
+#: core/includes/entities/class-entity-property.php:133
+#: core/includes/entities/class-entity-unit.php:206
+#: core/includes/entities/class-entity-unit.php:506
+#: core/template-parts/cards/map-sidebar.php:77
+#: core/template-parts/cards/map-sidebar.php:78
+#: core/template-parts/cards/unit-card.php:32
+#: core/template-parts/cards/unit-square-card.php:31
+#: core/template-parts/filters/result-filters.php:164
+#: src/js/common/beds-baths.js:11
+#: src/js/map/html.js:62
+#: src/js/map/html.js:63
+msgid "Beds"
+msgstr "बिस्तर"
+
+#: core/components/filters/functions.php:451
+#: core/includes/entities/class-entity-property.php:131
+#: core/includes/entities/class-entity-property.php:138
+#: core/includes/entities/class-entity-unit.php:204
+#: core/includes/entities/class-entity-unit.php:505
+#: core/template-parts/cards/unit-card.php:33
+#: core/template-parts/cards/unit-square-card.php:32
+#: src/js/common/beds-baths.js:16
+msgid "Studio"
+msgstr "स्टूडियो"
+
+#: core/components/filters/functions.php:500
+#: core/includes/entities/class-entity-property.php:145
+#: core/includes/entities/class-entity-property.php:149
+#: core/includes/entities/class-entity-unit.php:217
+#: core/includes/entities/class-entity-unit.php:516
+#: template-parts/sections/single/dropdowns.php:68
+msgid "Baths"
+msgstr "स्नानघर"
+
+#: core/components/filters/functions.php:596
+msgid "Price: high to low"
+msgstr "कीमत: उच्च से निम्न"
+
+#: core/components/filters/functions.php:600
+msgid "Price: low to high"
+msgstr "कीमत: कम से अधिक"
+
+#: core/components/filters/functions.php:604
+msgid "Newest first"
+msgstr "नवीनतम पहले"
+
+#: core/components/filters/functions.php:608
+msgid "Oldest first"
+msgstr "सबसे पुराने पहले"
+
+#: core/components/filters/functions.php:612
+msgid "Handover: soonest first"
+msgstr "हस्तांतरण: जितनी जल्दी हो सके, पहले"
+
+#: core/components/filters/functions.php:624
+msgctxt "listing sort"
+msgid "Recommended"
+msgstr "अनुशंसित"
+
+#: core/components/filters/functions.php:844
+msgid "Any year"
+msgstr "कोई भी वर्ष"
+
+#: core/components/filters/functions.php:865
+msgid "Available"
+msgstr "उपलब्ध"
+
+#: core/components/filters/functions.php:1236
+#: core/template-parts/search-results/properties-list.php:63
+#: core/template-parts/search-results/tabs.php:63
+#: core/template-parts/search-results/units-list.php:56
+msgid "Items not found"
+msgstr "आइटम नहीं मिले"
+
+#: core/components/filters/functions.php:1247
+#: core/components/filters/functions.php:1351
+msgid "%s property found"
+msgid_plural "%s properties found"
+msgstr[0] "%s संपत्ति मिली"
+msgstr[1] "%s संपत्तियाँ मिलीं"
+
+#: core/components/filters/functions.php:1339
+msgid "Properties not found"
+msgstr "संपत्तियाँ नहीं मिलीं"
+
+#. translators: %s: language code.
+#: core/components/locations/functions.php:101
+msgid "Description (%s)"
+msgstr "विवरण (%s)"
+
+#: core/components/locations/functions.php:111
+msgid "Shown on pages in this language. Left empty, the language shows no description."
+msgstr "इस भाषा में पृष्ठों पर दिखाया गया। खाली छोड़ने पर, भाषा कोई विवरण नहीं दिखाती।"
+
+#: core/components/modals/boost-info-modal.php:11
+#: core/components/modals/boost-modal.php:10
+msgid "Boost your property"
+msgstr "अपनी संपत्ति को बढ़ाएँ"
+
+#: core/components/modals/boost-info-modal.php:20
+msgid ""
+"The Gold Star Boost Program is an exclusive visibility tool created for \n"
+"\t\t\t\t\t\tsellers and agents who demand the \"top spot.\" By leveraging your earned Star Points, you can \n"
+"\t\t\t\t\t\tinstantly transform any standard listing into a featured powerhouse, ensuring your property is \n"
+"\t\t\t\t\t\tthe first thing potential buyers see when they start their search."
+msgstr "गोल्ड स्टार बूस्ट प्रोग्राम एक विशेष दृश्यता उपकरण है जिसे उन विक्रेताओं और एजेंटों के लिए बनाया गया है जो \"शीर्ष स्थान\" की मांग करते हैं। अपने अर्जित स्टार पॉइंट्स का उपयोग करके, आप किसी भी मानक लिस्टिंग को तुरंत एक प्रमुख फीचर्ड लिस्टिंग में बदल सकते हैं, जिससे जब संभावित खरीदार अपनी खोज शुरू करते हैं तो आपकी संपत्ति पहली चीज़ बन जाती है जो वे देखते हैं।"
+
+#: core/components/modals/boost-info-modal.php:27
+msgid "How much does it cost?"
+msgstr "इसकी कीमत कितनी है?"
+
+#: core/components/modals/boost-info-modal.php:30
+msgid ""
+"Boost costs are based on your selected timeframe. For example, you can \n"
+"\t\t\t\t\tsecure 24 hours of top-tier visibility for 250 points."
+msgstr "बूस्ट लागतें आपके चुने गए समय-सीमा पर आधारित होती हैं। उदाहरण के लिए, आप 250 अंकों में 24 घंटे के लिए शीर्ष-स्तरीय दृश्यता सुनिश्चित कर सकते हैं।"
+
+#: core/components/modals/boost-info-modal.php:36
+msgid "How long is the boost active?"
+msgstr "बूस्ट कितनी देर तक सक्रिय रहता है?"
+
+#: core/components/modals/boost-info-modal.php:40
+msgid ""
+"Your property will hold the \"Top Spot\" for the full duration you select, \n"
+"\t\t\t\t\t\tstarting the exact moment you hit activate."
+msgstr ""
+"आपकी संपत्ति आपके द्वारा चुने गए पूरे समय के लिए \"शीर्ष स्थान\" बनाए रखेगी, \n"
+" ठीक उसी क्षण से जब आप सक्रिय करें पर क्लिक करेंगे।"
+
+#: core/components/modals/boost-info-modal.php:45
+msgid "What happens after the boost ends?"
+msgstr "बूस्ट खत्म होने के बाद क्या होता है?"
+
+#: core/components/modals/boost-info-modal.php:48
+msgid ""
+"Your listing will return to its standard position in the search results. \n"
+"\t\t\t\t\t\tTo maintain your lead, you can redeploy another boost at any time to stay front and center."
+msgstr ""
+"आपकी लिस्टिंग खोज परिणामों में अपनी मानक स्थिति पर वापस आ जाएगी। \n"
+" अपनी लीड बनाए रखने के लिए, आप किसी भी समय फिर से बूस्ट तैनात कर सकते हैं ताकि आप सबसे आगे और केंद्र में बने रहें।"
+
+#: core/components/modals/boost-modal.php:22
+msgid "Choose how many days you want to boost this listing. During the boost period,"
+msgstr "चुनें कि आप इस लिस्टिंग को कितने दिनों के लिए बूस्ट करना चाहते हैं। बूस्ट अवधि के दौरान,"
+
+#: core/components/modals/boost-modal.php:23
+msgid " your listing will receive higher priority and appear more often to potential buyers."
+msgstr " आपकी लिस्टिंग को अधिक प्राथमिकता मिलेगी और संभावित खरीदारों को यह अधिक बार दिखाई देगी।"
+
+#: core/components/modals/boost-modal.php:41
+#: core/components/modals/create-modal.php:127
+#: core/template-parts/account/edit-property.php:130
+#: core/template-parts/account/edit-property.php:192
+#: core/template-parts/account/edit-property.php:211
+#: core/template-parts/account/edit-unit.php:238
+#: core/template-parts/account/edit-unit.php:256
+#: core/template-parts/account/login-form.php:202
+#: core/template-parts/filters/result-filters.php:169
+#: core/template-parts/ui/dropdown.php:12
+#: src/js/common/beds-baths.js:19
+#: src/js/filters.js:27
+msgid "Select"
+msgstr "चुनें"
+
+#: core/components/modals/boost-modal.php:57
+msgid "Boost"
+msgstr "बढ़ावा"
+
+#: core/components/modals/broker-modal.php:24
+msgid "Hello, I am interested in property"
+msgstr "नमस्ते, मुझे संपत्ति में रुचि है।"
+
+#: core/components/modals/broker-modal.php:34
+#: core/template-parts/cards/unit-card.php:187
+#: core/template-parts/common/contact-panel.php:66
+#: single-unit.php:173
+msgid "Contact broker"
+msgstr "ब्रोकर से संपर्क करें"
+
+#: core/components/modals/broker-modal.php:42
+#: core/components/modals/quote-modal.php:44
+msgid "You can get more information about the available properties, special deals and prices."
+msgstr "आप उपलब्ध संपत्तियों, विशेष सौदों और कीमतों के बारे में अधिक जानकारी प्राप्त कर सकते हैं।"
+
+#: core/components/modals/broker-modal.php:48
+msgid "We work directly with brokers"
+msgstr "हम सीधे ब्रोकरों के साथ काम करते हैं"
+
+#: core/components/modals/broker-modal.php:53
+#: core/components/modals/quote-modal.php:54
+#: template-parts/sections/index/about.php:20
+msgid "We facilitate the entire process for you"
+msgstr "हम आपके लिए पूरी प्रक्रिया को सुगम बनाते हैं।"
+
+#: core/components/modals/broker-modal.php:58
+#: core/components/modals/quote-modal.php:59
+#: template-parts/sections/index/about.php:25
+msgid "We don’t add anything on top of the price"
+msgstr "हम कीमत पर कुछ भी नहीं जोड़ते।"
+
+#: core/components/modals/broker-modal.php:69
+msgid "Phone"
+msgstr "फ़ोन"
+
+#: core/components/modals/broker-modal.php:78
+msgid "WhatsApp"
+msgstr "व्हाट्सएप"
+
+#: core/components/modals/create-modal.php:21
+#: core/components/modals/create-modal.php:167
+#: core/components/modals/signin-modal.php:27
+#: core/template-parts/account/login-form.php:26
+#: core/template-parts/account/login-form.php:244
+msgid "Create account"
+msgstr "खाता बनाएँ"
+
+#: core/components/modals/create-modal.php:29
+msgid "What account gives you:"
+msgstr "कौन सा खाता आपको देता है:"
+
+#: core/components/modals/create-modal.php:35
+msgid "Bookmark your favorites"
+msgstr "अपने पसंदीदा को बुकमार्क करें"
+
+#: core/components/modals/create-modal.php:40
+msgid "Get updates about new listings"
+msgstr "नई लिस्टिंग के बारे में अपडेट प्राप्त करें"
+
+#: core/components/modals/create-modal.php:52
+#: core/template-parts/account/login-form.php:105
+#: core/template-parts/account/login-form.php:107
+msgid "First name"
+msgstr "पहला नाम"
+
+#: core/components/modals/create-modal.php:58
+#: core/template-parts/account/email-verification.php:15
+msgid "Email"
+msgstr "ईमेल"
+
+#: core/components/modals/create-modal.php:64
+#: core/components/modals/signin-modal.php:37
+#: core/template-parts/account/login-form.php:52
+#: core/template-parts/account/login-form.php:128
+#: core/template-parts/account/reset-password.php:34
+msgid "Password"
+msgstr "पासवर्ड"
+
+#: core/components/modals/create-modal.php:70
+#: core/template-parts/account/login-form.php:136
+msgid "Repeat Password"
+msgstr "पासवर्ड दोहराएँ"
+
+#: core/components/modals/create-modal.php:78
+#: core/template-parts/account/login-form.php:145
+msgid "Choose your role"
+msgstr "अपनी भूमिका चुनें"
+
+#: core/components/modals/create-modal.php:109
+#: core/template-parts/account/login-form.php:177
+#: core/template-parts/account/profile-client.php:151
+#: core/template-parts/account/profile.php:421
+msgid "Phone number"
+msgstr "फ़ोन नंबर"
+
+#: core/components/modals/create-modal.php:116
+#: core/includes/registers/post-types/agencies.php:10
+#: core/includes/registers/post-types/agencies.php:36
+#: core/template-parts/account/profile.php:378
+msgid "Agency"
+msgstr "एजेंसी"
+
+#: core/components/modals/create-modal.php:119
+#: core/template-parts/account/login-form.php:191
+#: core/template-parts/account/profile.php:381
+msgid "If you can’t find your agency in the list, please contact us at "
+msgstr "यदि आप सूची में अपनी एजेंसी नहीं पा सकते हैं, तो कृपया हमसे संपर्क करें। "
+
+#: core/components/modals/create-modal.php:121
+#: core/template-parts/account/login-form.php:194
+#: core/template-parts/account/profile.php:384
+msgid "Your request will be reviewed within 24 hours."
+msgstr "आपके अनुरोध की समीक्षा 24 घंटों के भीतर की जाएगी।"
+
+#: core/components/modals/create-modal.php:132
+msgid "vector arrow"
+msgstr "वेक्टर तीर"
+
+#: core/components/modals/create-modal.php:154
+#: core/template-parts/account/login-form.php:231
+msgid "I have read and agree to the"
+msgstr "मैंने पढ़ लिया है और सहमत हूँ।"
+
+#: core/components/modals/create-modal.php:156
+#: core/template-parts/account/login-form.php:233
+msgid "Terms of Use"
+msgstr "उपयोग की शर्तें"
+
+#: core/components/modals/create-modal.php:158
+#: core/template-parts/account/login-form.php:235
+msgid "and"
+msgstr "और"
+
+#: core/components/modals/create-modal.php:160
+#: core/template-parts/account/login-form.php:237
+msgid "Privacy Policy"
+msgstr "गोपनीयता नीति"
+
+#: core/components/modals/create-modal.php:170
+msgid "Have an account?"
+msgstr "क्या आपका खाता है?"
+
+#: core/components/modals/forgot-modal.php:6
+msgid "Forgot password"
+msgstr "पासवर्ड भूल गए"
+
+#: core/components/modals/forgot-modal.php:16
+#: core/components/modals/forgot-modal.php:18
+#: core/components/modals/signin-modal.php:33
+#: core/template-parts/account/login-form.php:48
+msgid "Email or username"
+msgstr "ईमेल या उपयोगकर्ता नाम"
+
+#: core/components/modals/forgot-modal.php:26
+msgid "Send password reset link"
+msgstr "पासवर्ड रीसेट लिंक भेजें"
+
+#: core/components/modals/functions.php:13
+msgid "Email is required."
+msgstr "ईमेल आवश्यक है।"
+
+#: core/components/modals/functions.php:18
+msgid "No user found with this email."
+msgstr "इस ईमेल से कोई उपयोगकर्ता नहीं मिला।"
+
+#: core/components/modals/functions.php:23
+msgid "Error generating reset key."
+msgstr "रीसेट कुंजी उत्पन्न करने में त्रुटि।"
+
+#: core/components/modals/functions.php:28
+msgid "Hello,"
+msgstr "नमस्ते"
+
+#: core/components/modals/functions.php:30
+msgid ""
+"We received a request to reset the password for your EastProperty account.\n"
+"\tTo create a new password, please click the link below:"
+msgstr ""
+"हमें आपके EastProperty खाते के पासवर्ड को रीसेट करने का अनुरोध प्राप्त हुआ है।\n"
+"  नया पासवर्ड बनाने के लिए, कृपया नीचे दिए गए लिंक पर क्लिक करें:"
+
+#: core/components/modals/functions.php:35
+msgid "Reset password"
+msgstr "पासवर्ड रीसेट करें"
+
+#: core/components/modals/functions.php:42
+msgid "If you did not request a password reset, you can safely ignore this email. Your password will remain unchanged."
+msgstr "यदि आपने पासवर्ड रीसेट का अनुरोध नहीं किया है, तो आप इस ईमेल को सुरक्षित रूप से अनदेखा कर सकते हैं। आपका पासवर्ड अपरिवर्तित रहेगा।"
+
+#: core/components/modals/functions.php:49
+msgid "Password Reset Request"
+msgstr "पासवर्ड रीसेट अनुरोध"
+
+#: core/components/modals/functions.php:54
+msgid "Password reset request sent to your email address. Check your inbox."
+msgstr "पासवर्ड रीसेट अनुरोध आपके ईमेल पते पर भेजा गया है। कृपया अपना इनबॉक्स देखें।"
+
+#: core/components/modals/map-coords-picker.php:17
+msgid "Pick property coordinates"
+msgstr "संपत्ति के निर्देशांक चुनें"
+
+#: core/components/modals/quote-modal.php:36
+msgid "Request a quote"
+msgstr "कोटेशन का अनुरोध करें"
+
+#: core/components/modals/quote-modal.php:49
+#: template-parts/sections/index/about.php:15
+msgid "We work directly with builders"
+msgstr "हम सीधे बिल्डरों के साथ काम करते हैं।"
+
+#: core/components/modals/quote-modal.php:69
+msgid "Developer website"
+msgstr "डेवलपर वेबसाइट"
+
+#: core/components/modals/quote-modal.php:78
+#: core/template-parts/properties/property-single.php:69
+msgid "Contact us"
+msgstr "हमसे संपर्क करें"
+
+#: core/components/modals/signin-modal.php:24
+msgid "Don’t have an account?"
+msgstr "खाता नहीं है?"
+
+#: core/components/modals/signin-modal.php:46
+#: core/template-parts/account/login-form.php:73
+msgid "Forgot password?"
+msgstr "पासवर्ड भूल गए?"
+
+#: core/components/properties/filter.php:19
+msgid "Buy properties in UAE"
+msgstr "यूएई में संपत्तियाँ खरीदें"
+
+#: core/components/properties/filter.php:27
+#: single-developers.php:41
+msgid "projects found"
+msgstr "परियोजनाएँ मिलीं"
+
+#: core/components/properties/functions.php:152
+msgid "Apartment"
+msgstr "अपार्टमेंट"
+
+#: core/components/properties/functions.php:153
+msgid "Villa"
+msgstr "विला"
+
+#: core/components/properties/functions.php:154
+msgid "Townhouse"
+msgstr "शहर का मकान"
+
+#: core/components/properties/functions.php:155
+msgid "Penthouse"
+msgstr "पेंटहाउस"
+
+#: core/components/properties/functions.php:156
+msgid "House"
+msgstr "घर"
+
+#: core/components/properties/functions.php:157
+msgid "Office"
+msgstr "कार्यालय"
+
+#: core/components/properties/functions.php:158
+msgid "Freehold"
+msgstr "मुक्तस्वामित्व"
+
+#: core/components/properties/functions.php:159
+msgid "Leasehold"
+msgstr "पट्टेदारी"
+
+#: core/components/properties/functions.php:160
+msgid "Commonhold"
+msgstr "साझा स्वामित्व"
+
+#: core/components/properties/functions.php:161
+msgid "Strata"
+msgstr "सड़क"
+
+#: core/components/properties/functions.php:162
+msgid "Usufruct"
+msgstr "उपयोग का अधिकार"
+
+#: core/components/properties/functions.php:163
+msgid "Joint Ownership"
+msgstr "संयुक्त स्वामित्व"
+
+#: core/components/properties/functions.php:164
+msgid "Fractional Ownership"
+msgstr "अंशिक स्वामित्व"
+
+#: core/components/properties/functions.php:726
+#: core/includes/entities/class-entity-property.php:556
+#: core/includes/entities/class-entity-property.php:623
+#: core/includes/entities/class-entity-unit.php:373
+#: core/includes/entities/class-entity-unit.php:441
+msgid "Ready"
+msgstr "तैयार"
+
+#: core/components/properties/functions.php:731
+#: core/includes/entities/class-entity-property.php:562
+#: core/includes/entities/class-entity-unit.php:379
+#: core/includes/entities/class-entity-unit.php:447
+msgid "Handover:"
+msgstr "हस्तांतरण:"
+
+#. translators: 1: project name, 2: developer name, 3: project URL.
+#: core/components/properties/functions.php:985
+msgid "Hello! I am interested in the %1$s project by %2$s. Could you tell me more about it? %3$s"
+msgstr "नमस्ते! मैं %1$s द्वारा %2$s की परियोजना में रुचि रखता हूँ। क्या आप मुझे इसके बारे में और बता सकते हैं? %3$s"
+
+#. translators: 1: project name, 2: project URL.
+#: core/components/properties/functions.php:995
+msgid "Hello! I am interested in the %1$s project. Could you tell me more about it? %2$s"
+msgstr "नमस्ते! मैं %1$s परियोजना में रुचि रखता हूँ। क्या आप मुझे इसके बारे में और बता सकते हैं? %2$s"
+
+#: core/components/properties/property-single.php:59
+msgid "Show all properties in this project"
+msgstr "इस परियोजना में सभी संपत्तियाँ दिखाएँ"
+
+#: core/components/sections/explore-by-beds.php:11
+msgid "Studio or 1 bedroom"
+msgstr "स्टूडियो या एक बेडरूम"
+
+#: core/components/sections/explore-by-beds.php:15
+#: core/components/sections/explore-by-beds.php:23
+#: core/components/sections/explore-by-beds.php:32
+#: core/components/sections/explore-by-beds.php:42
+#: core/includes/registers/post-types/properties.php:11
+#: core/includes/registers/post-types/properties.php:34
+msgid "Property"
+msgstr "संपत्ति"
+
+#: core/components/sections/explore-by-beds.php:19
+msgid "2 bedrooms"
+msgstr "2 बेडरूम"
+
+#: core/components/sections/explore-by-beds.php:28
+msgid "3 bedrooms"
+msgstr "तीन बेडरूम"
+
+#: core/components/sections/explore-by-beds.php:38
+msgid "3+ bedrooms"
+msgstr "3+ बेडरूम"
+
+#: core/components/sections/explore-by-beds.php:49
+msgid "Explore properties by number of bedrooms"
+msgstr "बेडरूम की संख्या के अनुसार संपत्तियाँ खोजें"
+
+#: core/components/sections/explore-by-beds.php:50
+#: core/components/sections/explore-by-districts.php:41
+msgid "Quick picks for you in UAE"
+msgstr "यूएई में आपके लिए त्वरित सुझाव"
+
+#: core/components/sections/explore-by-beds.php:52
+#: core/includes/registers/post-types/properties.php:15
+#: core/includes/registers/post-types/properties.php:31
+msgid "All Properties"
+msgstr "सभी संपत्तियाँ"
+
+#: core/components/sections/explore-by-districts.php:30
+msgid "Projects"
+msgstr "परियोजनाएँ"
+
+#: core/components/sections/explore-by-districts.php:31
+#: core/template-parts/account/edit-unit.php:235
+msgid "Project"
+msgstr "परियोजना"
+
+#: core/components/sections/explore-by-districts.php:40
+msgid "Explore projects by district"
+msgstr "जिला के अनुसार परियोजनाओं का अन्वेषण करें"
+
+#: core/components/sections/explore-by-districts.php:43
+msgid "All Projects"
+msgstr "सभी परियोजनाएँ"
+
+#: core/components/security/functions.php:15
+msgid "Sorry, you are not allowed to access this resource."
+msgstr "क्षमा करें, आपको इस संसाधन तक पहुँच की अनुमति नहीं है।"
+
+#. translators: 1: current page number, 2: total number of pages.
+#: core/components/seo/functions.php:626
+msgid "Page %1$d of %2$d"
+msgstr "%2$d में से %1$d पृष्ठ"
+
+#: core/components/units/featured.php:22
+msgid "Featured new projects in the UAE"
+msgstr "यूएई में प्रमुख नए परियोजनाएँ"
+
+#: core/components/units/featured.php:23
+msgid "DISTRESS PROPERTIES"
+msgstr "डिस्ट्रेस संपत्तियाँ"
+
+#: core/components/units/featured.php:24
+msgid "Don’t wait till it’s late"
+msgstr "देर हो जाने तक इंतज़ार मत करो"
+
+#: core/components/units/featured.php:25
+msgid "Be first to explore new off-plan launches — early access, new prices, and direct WhatsApp contact."
+msgstr "नए ऑफ-प्लान लॉन्च का सबसे पहले अन्वेषण करें — प्रारंभिक पहुँच, नई कीमतें, और सीधे व्हाट्सएप संपर्क।"
+
+#: core/components/units/featured.php:29
+msgid "See all new projects"
+msgstr "सभी नए प्रोजेक्ट देखें"
+
+#: core/components/units/filter.php:9
+msgid "Available Units in UAE"
+msgstr "यूएई में उपलब्ध यूनिट्स"
+
+#: core/components/units/filter.php:28
+msgid "properties found"
+msgstr "मिलती हुई संपत्तियाँ"
+
+#: core/components/units/functions.php:19
+msgid "Off-plan"
+msgstr "ऑफ़-प्लान"
+
+#: core/components/units/functions.php:20
+msgid "Secondary"
+msgstr "सेकेंडरी"
+
+#: core/components/units/functions.php:21
+#: core/template-parts/filters/search-tabs.php:64
+msgid "Distress"
+msgstr "डिस्ट्रेस"
+
+#. translators: 1: unit name, 2: unit URL.
+#: core/components/units/functions.php:625
+msgid "Hello! I am interested in %1$s. Could you tell me more about it? %2$s"
+msgstr "नमस्ते! मुझे %1$s में रुचि है। क्या आप मुझे इसके बारे में और बता सकते हैं? %2$s"
+
+#: core/components/units/similar.php:64
+msgid "More properties like this"
+msgstr "इस तरह की और संपत्तियाँ"
+
+#: core/components/units/similar.php:67
+#: core/template-parts/properties/property-single.php:161
+#: page-mortgage-calculator.php:23
+msgid "All properties"
+msgstr "सभी संपत्तियाँ"
+
+#: core/components/units/units-by-beds.php:10
+msgid "Pricing"
+msgstr "मूल्य निर्धारण"
+
+#: core/components/units/units-by-beds.php:36
+#: template-parts/sections/single/dropdowns.php:32
+#: template-parts/sections/single/dropdowns.php:61
+#: src/js/common/beds-baths.js:11
+msgid "Bed"
+msgstr "विश्व"
+
+#: core/components/units/units-by-beds.php:43
+#: core/components/units/units-by-beds.php:82
+#: core/includes/entities/class-entity-property.php:157
+#: core/includes/entities/class-entity-property.php:161
+#: core/includes/entities/class-entity-unit.php:228
+#: core/includes/entities/class-entity-unit.php:524
+#: core/template-parts/cards/map-sidebar.php:86
+#: template-parts/sections/single/dropdowns.php:40
+#: template-parts/sections/single/dropdowns.php:75
+#: src/js/map/html.js:67
+msgid "sqft"
+msgstr "वर्ग फीट"
+
+#: core/components/units/units-by-beds.php:56
+#: core/components/units/units-by-beds.php:60
+msgid "Floor plan for %s bed unit"
+msgstr "%s बेड यूनिट के लिए मंजिल योजना"
+
+#: core/components/units/units-by-beds.php:85
+#: core/template-parts/cards/large-card.php:59
+#: template-parts/sections/single/dropdowns.php:45
+msgid "from"
+msgstr "से"
+
+#: core/includes/entities/class-entity-estate-user.php:265
+msgid "Your email address has been successfully verified."
+msgstr "आपका ईमेल पता सफलतापूर्वक सत्यापित हो गया है।"
+
+#: core/includes/entities/class-entity-estate-user.php:266
+msgid "You can now enjoy all the features of your account and start using our services."
+msgstr "अब आप अपने खाते की सभी सुविधाओं का आनंद ले सकते हैं और हमारी सेवाओं का उपयोग शुरू कर सकते हैं।"
+
+#: core/includes/entities/class-entity-estate-user.php:274
+msgid "Email Verified"
+msgstr "ईमेल सत्यापित"
+
+#: core/includes/entities/class-entity-property.php:571
+#: core/includes/entities/class-entity-unit.php:388
+#: core/includes/entities/class-entity-unit.php:455
+msgid "Popular"
+msgstr "लोकप्रिय"
+
+#: core/includes/entities/class-entity-property.php:579
+#: core/includes/entities/class-entity-unit.php:396
+#: core/includes/entities/class-entity-unit.php:462
+msgid "Premium Developer"
+msgstr "प्रिमियम डेवलपर"
+
+#: core/includes/entities/class-entity-property.php:626
+#: core/template-parts/account/edit-property.php:227
+msgid "Handover Date"
+msgstr "हस्तांतरण तिथि"
+
+#: core/includes/entities/class-entity-property.php:634
+msgid "Construction Started"
+msgstr "निर्माण शुरू"
+
+#: core/includes/entities/class-entity-property.php:642
+msgid "Number of Buildings"
+msgstr "भवनों की संख्या"
+
+#: core/includes/entities/class-entity-property.php:658
+msgid "Government Fee"
+msgstr "सरकारी शुल्क"
+
+#: core/includes/entities/class-entity-property.php:666
+msgid "Ownership Type"
+msgstr "स्वामित्व का प्रकार"
+
+#: core/includes/entities/class-entity-unit.php:217
+#: core/includes/entities/class-entity-unit.php:515
+msgid "1 Bath"
+msgstr "एक स्नान"
+
+#: core/includes/entities/class-entity-unit.php:696
+msgid "Gallery should not be empty"
+msgstr "गैलरी खाली नहीं होनी चाहिए"
+
+#: core/includes/entities/class-entity-unit.php:701
+msgid "Area should not be empty and must bigger than 50 sqft"
+msgstr "क्षेत्र खाली नहीं होना चाहिए और 50 वर्ग फुट से बड़ा होना चाहिए।"
+
+#: core/includes/entities/class-entity-unit.php:709
+msgid "Price should not be empty and must bigger than 200 000 AED"
+msgstr "कीमत खाली नहीं होनी चाहिए और 200,000 AED से अधिक होनी चाहिए।"
+
+#: core/includes/entities/class-entity-unit.php:719
+msgid "Your unit has been submitted and is waiting for approval. Please fix the following issues:"
+msgstr "आपकी यूनिट सबमिट हो चुकी है और अनुमोदन की प्रतीक्षा में है। कृपया निम्नलिखित समस्याएँ ठीक करें:"
+
+#: core/includes/entities/class-entity-unit.php:732
+msgid "Need to fix errors in your submitted property"
+msgstr "आपकी सबमिट की गई संपत्ति में त्रुटियों को ठीक करने की आवश्यकता है।"
+
+#: core/includes/registers/post-types/agencies.php:7
+msgctxt "Post Type General Name"
+msgid "Agencies"
+msgstr "एजेंसियाँ"
+
+#: core/includes/registers/post-types/agencies.php:8
+msgctxt "Post Type Singular Name"
+msgid "Agency"
+msgstr "एजेंसी"
+
+#: core/includes/registers/post-types/agencies.php:9
+msgid "Agencies"
+msgstr "एजेंसियाँ"
+
+#: core/includes/registers/post-types/agencies.php:11
+msgid "Agency Archives"
+msgstr "एजेंसी अभिलेखागार"
+
+#: core/includes/registers/post-types/agencies.php:12
+msgid "Agency Attributes"
+msgstr "एजेंसी गुण"
+
+#: core/includes/registers/post-types/agencies.php:13
+msgid "Parent Agency:"
+msgstr "मूल एजेंसी:"
+
+#: core/includes/registers/post-types/agencies.php:14
+msgid "All Agencies"
+msgstr "सभी एजेंसियाँ"
+
+#: core/includes/registers/post-types/agencies.php:15
+msgid "Add New Agency"
+msgstr "नई एजेंसी जोड़ें"
+
+#: core/includes/registers/post-types/agencies.php:16
+#: core/includes/registers/post-types/developers.php:17
+#: core/includes/registers/post-types/properties.php:17
+#: core/includes/registers/post-types/subscribers.php:17
+#: core/includes/registers/post-types/units.php:19
+msgid "Add New"
+msgstr "नया जोड़ें"
+
+#: core/includes/registers/post-types/agencies.php:17
+msgid "New Agency"
+msgstr "नई एजेंसी"
+
+#: core/includes/registers/post-types/agencies.php:18
+msgid "Edit Agency"
+msgstr "एजेंसी संपादित करें"
+
+#: core/includes/registers/post-types/agencies.php:19
+msgid "Update Agency"
+msgstr "एजेंसी को अपडेट करें"
+
+#: core/includes/registers/post-types/agencies.php:20
+msgid "View Agency"
+msgstr "एजेंसी देखें"
+
+#: core/includes/registers/post-types/agencies.php:21
+msgid "View Agencies"
+msgstr "एजेंसियाँ देखें"
+
+#: core/includes/registers/post-types/agencies.php:22
+msgid "Search Agency"
+msgstr "खोज एजेंसी"
+
+#: core/includes/registers/post-types/agencies.php:23
+#: core/includes/registers/post-types/developers.php:24
+#: core/includes/registers/post-types/properties.php:24
+#: core/includes/registers/post-types/subscribers.php:24
+#: core/includes/registers/post-types/units.php:26
+msgid "Not found"
+msgstr "नहीं मिला"
+
+#: core/includes/registers/post-types/agencies.php:24
+#: core/includes/registers/post-types/developers.php:25
+#: core/includes/registers/post-types/properties.php:25
+#: core/includes/registers/post-types/subscribers.php:25
+#: core/includes/registers/post-types/units.php:27
+msgid "Not found in Trash"
+msgstr "कचरे में नहीं मिला"
+
+#: core/includes/registers/post-types/agencies.php:25
+#: core/includes/registers/post-types/developers.php:26
+#: core/includes/registers/post-types/properties.php:26
+#: core/includes/registers/post-types/subscribers.php:26
+#: core/includes/registers/post-types/units.php:28
+msgid "Featured Image"
+msgstr "प्रमुख चित्र"
+
+#: core/includes/registers/post-types/agencies.php:26
+#: core/includes/registers/post-types/developers.php:27
+#: core/includes/registers/post-types/properties.php:27
+#: core/includes/registers/post-types/subscribers.php:27
+#: core/includes/registers/post-types/units.php:29
+msgid "Set featured image"
+msgstr "प्रमुख छवि सेट करें"
+
+#: core/includes/registers/post-types/agencies.php:27
+#: core/includes/registers/post-types/developers.php:28
+#: core/includes/registers/post-types/properties.php:28
+#: core/includes/registers/post-types/subscribers.php:28
+#: core/includes/registers/post-types/units.php:30
+msgid "Remove featured image"
+msgstr "फीचर्ड छवि हटाएँ"
+
+#: core/includes/registers/post-types/agencies.php:28
+#: core/includes/registers/post-types/developers.php:29
+#: core/includes/registers/post-types/properties.php:29
+#: core/includes/registers/post-types/subscribers.php:29
+#: core/includes/registers/post-types/units.php:31
+msgid "Use as featured image"
+msgstr "विशेष छवि के रूप में उपयोग करें"
+
+#: core/includes/registers/post-types/agencies.php:29
+msgid "Insert agency"
+msgstr "एजेंसी डालें"
+
+#: core/includes/registers/post-types/agencies.php:30
+msgid "Uploaded to this agency"
+msgstr "इस एजेंसी पर अपलोड किया गया"
+
+#: core/includes/registers/post-types/agencies.php:31
+msgid "Agencies list"
+msgstr "एजेंसियों की सूची"
+
+#: core/includes/registers/post-types/agencies.php:32
+msgid "Agencies list navigation"
+msgstr "एजेंसियों की सूची नेविगेशन"
+
+#: core/includes/registers/post-types/agencies.php:33
+msgid "Filter agencies list"
+msgstr "एजेंसियों की सूची फ़िल्टर करें"
+
+#: core/includes/registers/post-types/agencies.php:37
+#: core/includes/registers/post-types/developers.php:38
+#: core/includes/registers/post-types/properties.php:35
+#: core/includes/registers/post-types/subscribers.php:38
+#: core/includes/registers/post-types/units.php:37
+msgid "Post Type Description"
+msgstr "पोस्ट प्रकार का विवरण"
+
+#: core/includes/registers/post-types/developers.php:8
+msgctxt "Post Type General Name"
+msgid "Developers"
+msgstr "डेवलपर्स"
+
+#: core/includes/registers/post-types/developers.php:9
+msgctxt "Post Type Singular Name"
+msgid "Developer"
+msgstr "डेवलपर"
+
+#: core/includes/registers/post-types/developers.php:10
+msgid "Developers"
+msgstr "डेवलपर्स"
+
+#: core/includes/registers/post-types/developers.php:12
+msgid "Developer Archives"
+msgstr "डेवलपर अभिलेखागार"
+
+#: core/includes/registers/post-types/developers.php:13
+msgid "Developer Attributes"
+msgstr "डेवलपर गुण"
+
+#: core/includes/registers/post-types/developers.php:14
+msgid "Parent Developer:"
+msgstr "मूल डेवलपर:"
+
+#: core/includes/registers/post-types/developers.php:15
+msgid "All Developers"
+msgstr "सभी डेवलपर्स"
+
+#: core/includes/registers/post-types/developers.php:16
+msgid "Add New Developer"
+msgstr "नया डेवलपर जोड़ें"
+
+#: core/includes/registers/post-types/developers.php:18
+msgid "New Developer"
+msgstr "नया डेवलपर"
+
+#: core/includes/registers/post-types/developers.php:19
+msgid "Edit Developer"
+msgstr "डेवलपर संपादित करें"
+
+#: core/includes/registers/post-types/developers.php:20
+msgid "Update Developer"
+msgstr "डेवलपर अपडेट करें"
+
+#: core/includes/registers/post-types/developers.php:21
+msgid "View Developer"
+msgstr "डेवलपर देखें"
+
+#: core/includes/registers/post-types/developers.php:22
+msgid "View Developers"
+msgstr "डेवलपर्स देखें"
+
+#: core/includes/registers/post-types/developers.php:23
+msgid "Search Developer"
+msgstr "डेवलपर खोजें"
+
+#: core/includes/registers/post-types/developers.php:30
+msgid "Add into developer"
+msgstr "डेवलपर में जोड़ें"
+
+#: core/includes/registers/post-types/developers.php:31
+msgid "Uploaded to this developer"
+msgstr "इस डेवलपर पर अपलोड किया गया"
+
+#: core/includes/registers/post-types/developers.php:32
+msgid "Developers list"
+msgstr "डेवलपर्स की सूची"
+
+#: core/includes/registers/post-types/developers.php:33
+msgid "Developers list navigation"
+msgstr "डेवलपर्स नेविगेशन सूची"
+
+#: core/includes/registers/post-types/developers.php:34
+msgid "Filter developers list"
+msgstr "डेवलपर्स की सूची फ़िल्टर करें"
+
+#: core/includes/registers/post-types/locations.php:9
+#: core/includes/registers/post-types/locations.php:17
+msgid "Locations"
+msgstr "स्थान"
+
+#: core/includes/registers/post-types/locations.php:11
+msgid "Search Locations"
+msgstr "स्थान खोजें"
+
+#: core/includes/registers/post-types/locations.php:12
+msgid "All Locations"
+msgstr "सभी स्थान"
+
+#: core/includes/registers/post-types/locations.php:13
+msgid "Edit Location"
+msgstr "स्थान संपादित करें"
+
+#: core/includes/registers/post-types/locations.php:14
+msgid "Update Location"
+msgstr "स्थान अपडेट करें"
+
+#: core/includes/registers/post-types/locations.php:15
+msgid "Add New Location"
+msgstr "नया स्थान जोड़ें"
+
+#: core/includes/registers/post-types/locations.php:16
+msgid "New Location Name"
+msgstr "नए स्थान का नाम"
+
+#: core/includes/registers/post-types/properties.php:8
+msgctxt "Post Type General Name"
+msgid "Properties"
+msgstr "संपत्तियाँ"
+
+#: core/includes/registers/post-types/properties.php:9
+msgctxt "Post Type Singular Name"
+msgid "Property"
+msgstr "संपत्ति"
+
+#: core/includes/registers/post-types/properties.php:12
+msgid "Property Archives"
+msgstr "संपत्ति अभिलेखागार"
+
+#: core/includes/registers/post-types/properties.php:13
+msgid "Property Attributes"
+msgstr "संपत्ति गुण"
+
+#: core/includes/registers/post-types/properties.php:14
+msgid "Parent Property:"
+msgstr "मूल संपत्ति:"
+
+#: core/includes/registers/post-types/properties.php:16
+msgid "Add New Property"
+msgstr "नई संपत्ति जोड़ें"
+
+#: core/includes/registers/post-types/properties.php:18
+msgid "New Property"
+msgstr "नई संपत्ति"
+
+#: core/includes/registers/post-types/properties.php:19
+msgid "Edit Property"
+msgstr "संपत्ति संपादित करें"
+
+#: core/includes/registers/post-types/properties.php:20
+msgid "Update Property"
+msgstr "संपत्ति अपडेट करें"
+
+#: core/includes/registers/post-types/properties.php:21
+msgid "View Property"
+msgstr "संपत्ति देखें"
+
+#: core/includes/registers/post-types/properties.php:22
+msgid "View Properties"
+msgstr "विन्यास देखें"
+
+#: core/includes/registers/post-types/properties.php:23
+msgid "Search Property"
+msgstr "संपत्ति खोजें"
+
+#: core/includes/registers/post-types/properties.php:30
+msgid "Properties insighted by this author"
+msgstr "इस लेखक द्वारा अंतर्दृष्टि प्राप्त संपत्तियाँ"
+
+#: core/includes/registers/post-types/subscribers.php:8
+msgctxt "Post Type General Name"
+msgid "Subscribers"
+msgstr "सब्सक्राइबर"
+
+#: core/includes/registers/post-types/subscribers.php:9
+msgctxt "Post Type Singular Name"
+msgid "Subscriber"
+msgstr "सब्सक्राइबर"
+
+#: core/includes/registers/post-types/subscribers.php:10
+msgid "Subscribers"
+msgstr "सदस्य"
+
+#: core/includes/registers/post-types/subscribers.php:11
+#: core/includes/registers/post-types/subscribers.php:37
+msgid "Subscriber"
+msgstr "सब्सक्राइबर"
+
+#: core/includes/registers/post-types/subscribers.php:12
+msgid "Subscriber Archives"
+msgstr "सब्सक्राइबर अभिलेखागार"
+
+#: core/includes/registers/post-types/subscribers.php:13
+msgid "Subscriber Attributes"
+msgstr "सब्सक्राइबर गुण"
+
+#: core/includes/registers/post-types/subscribers.php:14
+msgid "Parent Subscriber:"
+msgstr "मूल सदस्य:"
+
+#: core/includes/registers/post-types/subscribers.php:15
+msgid "All Subscribers"
+msgstr "सभी ग्राहक"
+
+#: core/includes/registers/post-types/subscribers.php:16
+msgid "Add New Subscriber"
+msgstr "नया सदस्य जोड़ें"
+
+#: core/includes/registers/post-types/subscribers.php:18
+msgid "New Subscriber"
+msgstr "नया सदस्य"
+
+#: core/includes/registers/post-types/subscribers.php:19
+msgid "Edit Subscriber"
+msgstr "सदस्य संपादित करें"
+
+#: core/includes/registers/post-types/subscribers.php:20
+msgid "Update Subscriber"
+msgstr "अद्यतन सदस्य"
+
+#: core/includes/registers/post-types/subscribers.php:21
+msgid "View Subscriber"
+msgstr "सदस्य देखें"
+
+#: core/includes/registers/post-types/subscribers.php:22
+msgid "View Subscribers"
+msgstr "सब्सक्राइबर देखें"
+
+#: core/includes/registers/post-types/subscribers.php:23
+msgid "Search Subscriber"
+msgstr "सदस्य खोजें"
+
+#: core/includes/registers/post-types/subscribers.php:30
+msgid "Insert Subscriber"
+msgstr "सब्सक्राइबर डालें"
+
+#: core/includes/registers/post-types/subscribers.php:31
+msgid "Uploaded to this Subscriber"
+msgstr "इस सदस्य को अपलोड किया गया"
+
+#: core/includes/registers/post-types/subscribers.php:32
+msgid "Subscribers list"
+msgstr "सब्सक्राइबरों की सूची"
+
+#: core/includes/registers/post-types/subscribers.php:33
+msgid "Subscribers list navigation"
+msgstr "सब्सक्राइबर सूची नेविगेशन"
+
+#: core/includes/registers/post-types/subscribers.php:34
+msgid "Filter Subscribers list"
+msgstr "सब्सक्राइबर सूची फ़िल्टर करें"
+
+#: core/includes/registers/post-types/units.php:10
+msgctxt "Post Type General Name"
+msgid "Units"
+msgstr "यूनिट्स"
+
+#: core/includes/registers/post-types/units.php:11
+msgctxt "Post Type Singular Name"
+msgid "Unit"
+msgstr "यूनिट"
+
+#: core/includes/registers/post-types/units.php:12
+msgid "Units"
+msgstr "यूनिट्स"
+
+#: core/includes/registers/post-types/units.php:13
+#: core/includes/registers/post-types/units.php:36
+#: src/js/map/html.js:53
+msgid "Unit"
+msgstr "यूनिट"
+
+#: core/includes/registers/post-types/units.php:14
+msgid "Unit Archives"
+msgstr "यूनिट अभिलेखागार"
+
+#: core/includes/registers/post-types/units.php:15
+msgid "Unit Attributes"
+msgstr "यूनिट विशेषताएँ"
+
+#: core/includes/registers/post-types/units.php:16
+msgid "Parent Unit:"
+msgstr "मूल यूनिट:"
+
+#: core/includes/registers/post-types/units.php:17
+#: core/includes/registers/post-types/units.php:33
+msgid "All Units"
+msgstr "सभी यूनिट्स"
+
+#: core/includes/registers/post-types/units.php:18
+msgid "Add New Unit"
+msgstr "नई यूनिट जोड़ें"
+
+#: core/includes/registers/post-types/units.php:20
+msgid "New Unit"
+msgstr "नई यूनिट"
+
+#: core/includes/registers/post-types/units.php:21
+msgid "Edit Unit"
+msgstr "यूनिट संपादित करें"
+
+#: core/includes/registers/post-types/units.php:22
+#: core/template-parts/account/edit-unit.php:373
+msgid "Update Unit"
+msgstr "अपडेट यूनिट"
+
+#: core/includes/registers/post-types/units.php:23
+msgid "View Unit"
+msgstr "यूनिट देखें"
+
+#: core/includes/registers/post-types/units.php:24
+msgid "View Units"
+msgstr "यूनिट्स देखें"
+
+#: core/includes/registers/post-types/units.php:25
+msgid "Search Unit"
+msgstr "यूनिट खोजें"
+
+#: core/includes/registers/post-types/units.php:32
+msgid "Units insighted by this author"
+msgstr "इस लेखक द्वारा जोड़ी गई यूनिट्स"
+
+#: core/includes/registers/post-types/units.php:79
+#: single-unit.php:78
+msgid "Archived"
+msgstr "संग्रहीत"
+
+#: core/includes/registers/post-types/units.php:81
+msgid "Archived <span class=\"count\">(%s)</span>"
+msgid_plural "Archived <span class=\"count\">(%s)</span>"
+msgstr[0] "संग्रहीत <span class=\"count\">(%s)</span>"
+msgstr[1] "संग्रहीत <span class=\"count\">(%s)</span>"
+
+#: core/template-parts/account/edit-property.php:21
+msgid "Edit property project:"
+msgstr "संपत्ति परियोजना संपादित करें:"
+
+#: core/template-parts/account/edit-property.php:22
+msgid "Add new property project"
+msgstr "नया प्रॉपर्टी प्रोजेक्ट जोड़ें"
+
+#: core/template-parts/account/edit-property.php:23
+msgid "Edit property project"
+msgstr "संपत्ति परियोजना संपादित करें"
+
+#: core/template-parts/account/edit-property.php:24
+msgid "Add property project"
+msgstr "संपत्ति परियोजना जोड़ें"
+
+#: core/template-parts/account/edit-property.php:55
+#: core/template-parts/account/edit-unit.php:67
+msgid "My account"
+msgstr "मेरा खाता"
+
+#: core/template-parts/account/edit-property.php:107
+#: core/template-parts/account/edit-unit.php:130
+msgid "Title"
+msgstr "शीर्षक"
+
+#: core/template-parts/account/edit-property.php:112
+msgid "azizi “beach oasis”"
+msgstr "अज़ीज़ी \"बीच ओएसिस\""
+
+#: core/template-parts/account/edit-property.php:145
+msgid "Pick on map"
+msgstr "नक्शे पर चुनें"
+
+#: core/template-parts/account/edit-property.php:151
+msgid "Latitude"
+msgstr "अक्षांश"
+
+#: core/template-parts/account/edit-property.php:164
+msgid "Longitude"
+msgstr "अक्षांश"
+
+#: core/template-parts/account/edit-property.php:208
+msgid "Ownership type"
+msgstr "स्वामित्व का प्रकार"
+
+#: core/template-parts/account/edit-property.php:246
+msgid "Project is already completed / Ready"
+msgstr "परियोजना पहले ही पूरी हो चुकी है / तैयार है"
+
+#: core/template-parts/account/edit-property.php:259
+msgid "Contain Property Types "
+msgstr "संपत्ति प्रकार शामिल करें "
+
+#: core/template-parts/account/edit-property.php:285
+#: core/template-parts/account/edit-unit.php:319
+#: core/template-parts/properties/property-single.php:211
+msgid "Description"
+msgstr "विवरण"
+
+#: core/template-parts/account/edit-property.php:314
+msgid "Update project"
+msgstr "परियोजना अपडेट करें"
+
+#: core/template-parts/account/edit-property.php:315
+#: single-unit.php:106
+#: single-unit.php:112
+msgid "Save"
+msgstr "सहेजें"
+
+#: core/template-parts/account/edit-property.php:362
+#: core/template-parts/account/edit-unit.php:418
+msgid "Pictures"
+msgstr "तस्वीरें"
+
+#: core/template-parts/account/edit-property.php:364
+#: core/template-parts/account/edit-unit.php:420
+msgid "Browse files"
+msgstr "फ़ाइलें ब्राउज़ करें"
+
+#: core/template-parts/account/edit-unit.php:22
+msgid "Edit property:"
+msgstr "संपत्ति संपादित करें:"
+
+#: core/template-parts/account/edit-unit.php:22
+msgid "Add new property"
+msgstr "नई संपत्ति जोड़ें"
+
+#: core/template-parts/account/edit-unit.php:24
+#: core/template-parts/cards/large-card.php:124
+#: core/template-parts/cards/unit-card.php:153
+msgid "Edit property"
+msgstr "संपत्ति संपादित करें"
+
+#: core/template-parts/account/edit-unit.php:24
+msgid "Add property"
+msgstr "संपत्ति जोड़ें"
+
+#: core/template-parts/account/edit-unit.php:134
+msgid "City Walk 4BR Apartment on 2 floor"
+msgstr "दूसरी मंजिल पर सिटी वॉक का 4 बेडरूम वाला अपार्टमेंट"
+
+#: core/template-parts/account/edit-unit.php:146
+msgid "Listing Type"
+msgstr "सूची का प्रकार"
+
+#: core/template-parts/account/edit-unit.php:163
+msgid "Price, AED"
+msgstr "कीमत, एईडी"
+
+#: core/template-parts/account/edit-unit.php:177
+msgid "Area (sqft)"
+msgstr "क्षेत्रफल (वर्ग फुट)"
+
+#: core/template-parts/account/edit-unit.php:191
+msgid "Price per square foot:"
+msgstr "प्रति वर्ग फुट कीमत:"
+
+#: core/template-parts/account/edit-unit.php:204
+msgid "Original price, AED"
+msgstr "मूल कीमत, AED"
+
+#: core/template-parts/account/edit-unit.php:217
+#: single-unit.php:88
+msgid "Discount:"
+msgstr "छूट:"
+
+#: core/template-parts/account/edit-unit.php:236
+#: core/template-parts/account/profile.php:214
+msgid "+ Add new project"
+msgstr "+ नया प्रोजेक्ट जोड़ें"
+
+#: core/template-parts/account/edit-unit.php:255
+#: core/template-parts/filters/result-filters.php:241
+msgid "Property type"
+msgstr "संपत्ति का प्रकार"
+
+#: core/template-parts/account/edit-unit.php:294
+msgid "Bathrooms"
+msgstr "बाथरूम"
+
+#: core/template-parts/account/edit-unit.php:348
+msgid "Delete Property"
+msgstr "संपत्ति हटाएँ"
+
+#: core/template-parts/account/edit-unit.php:351
+msgid "Are you sure to delete this property?"
+msgstr "क्या आप इस संपत्ति को हटाने के लिए निश्चित हैं?"
+
+#: core/template-parts/account/edit-unit.php:354
+msgid "No"
+msgstr "से"
+
+#: core/template-parts/account/edit-unit.php:358
+msgid "Yes, Delete"
+msgstr "हाँ, हटाएँ"
+
+#: core/template-parts/account/edit-unit.php:364
+msgid "New units are saved as drafts for moderation"
+msgstr "नई यूनिट्स मॉडरेशन के लिए ड्राफ़्ट के रूप में सहेजी जाती हैं"
+
+#: core/template-parts/account/edit-unit.php:375
+msgid "Submit Unit"
+msgstr "सबमिट यूनिट"
+
+#: core/template-parts/account/edit-unit.php:436
+msgid "Select property pictures to include in unit page"
+msgstr "यूनिट पेज में शामिल करने के लिए संपत्ति की तस्वीरें चुनें"
+
+#: core/template-parts/account/edit-unit.php:440
+msgid "Select all"
+msgstr "सभी चुनें"
+
+#: core/template-parts/account/email-verification.php:20
+msgid "Email verification"
+msgstr "ईमेल सत्यापन"
+
+#: core/template-parts/account/email-verification.php:25
+msgid "To use this functionality, you need to verify your email address"
+msgstr "इस सुविधा का उपयोग करने के लिए, आपको अपना ईमेल पता सत्यापित करना होगा।"
+
+#: core/template-parts/account/email-verification.php:30
+msgid "Please check your email inbox for the verification email and click on the verification link."
+msgstr "कृपया अपने ईमेल इनबॉक्स में सत्यापन ईमेल देखें और सत्यापन लिंक पर क्लिक करें।"
+
+#: core/template-parts/account/email-verification.php:34
+msgid "If you did not receive the email, please check your spam folder or click the button below to resend the verification email."
+msgstr "यदि आपको ईमेल प्राप्त नहीं हुआ है, तो कृपया अपना स्पैम फ़ोल्डर जांचें या सत्यापन ईमेल दोबारा भेजने के लिए नीचे दिए गए बटन पर क्लिक करें।"
+
+#: core/template-parts/account/email-verification.php:40
+msgid "Resend verification email"
+msgstr "सत्यापन ईमेल पुनः भेजें"
+
+#: core/template-parts/account/list-filters.php:47
+#: core/template-parts/filters/result-filters.php:304
+msgid "Reset filters"
+msgstr "फ़िल्टर रीसेट करें"
+
+#: core/template-parts/account/login-form.php:35
+msgid "Sign in to start selling"
+msgstr "बेचना शुरू करने के लिए साइन इन करें"
+
+#: core/template-parts/account/login-form.php:88
+msgid "Create a new account"
+msgstr "एक नया खाता बनाएँ"
+
+#: core/template-parts/account/login-form.php:116
+#: core/template-parts/account/profile-client.php:140
+#: core/template-parts/account/profile.php:368
+msgid "Email address"
+msgstr "ईमेल पता"
+
+#: core/template-parts/account/login-form.php:118
+msgid "admin@example.com"
+msgstr "admin@example.com"
+
+#: core/template-parts/account/login-form.php:187
+msgid "Choose your agency"
+msgstr "अपनी एजेंसी चुनें"
+
+#: core/template-parts/account/profile-client.php:33
+#: core/template-parts/account/profile-client.php:52
+#: core/template-parts/account/profile.php:63
+#: core/template-parts/account/profile.php:280
+msgid "Saved properties"
+msgstr "सहेजी गई संपत्तियाँ"
+
+#: core/template-parts/account/profile-client.php:39
+msgid "My Account"
+msgstr "मेरा खाता"
+
+#: core/template-parts/account/profile-client.php:106
+#: core/template-parts/account/profile.php:334
+msgid "You have not added any favorite units."
+msgstr "आपने कोई पसंदीदा यूनिट नहीं जोड़ी है।"
+
+#: core/template-parts/account/profile-client.php:116
+#: core/template-parts/account/profile.php:69
+#: core/template-parts/account/profile.php:344
+msgid "Account details"
+msgstr "खाते का विवरण"
+
+#: core/template-parts/account/profile-client.php:131
+#: core/template-parts/account/profile.php:359
+msgid "Display name"
+msgstr "प्रदर्शित नाम"
+
+#: core/template-parts/account/profile-client.php:164
+#: core/template-parts/account/profile.php:434
+msgid "WhatsApp number"
+msgstr "व्हाट्सएप नंबर"
+
+#: core/template-parts/account/profile-client.php:180
+#: core/template-parts/account/profile.php:450
+msgid "Save changes"
+msgstr "बदलाव सहेजें"
+
+#: core/template-parts/account/profile-client.php:188
+#: core/template-parts/account/profile.php:458
+msgid "Avatar"
+msgstr "अवतार"
+
+#: core/template-parts/account/profile.php:37
+msgid "+ Add new distress"
+msgstr "+ नया तनाव जोड़ें"
+
+#: core/template-parts/account/profile.php:37
+msgid "+ Add new property"
+msgstr "+ नई संपत्ति जोड़ें"
+
+#: core/template-parts/account/profile.php:39
+msgid "My distress"
+msgstr "मेरी पीड़ा"
+
+#: core/template-parts/account/profile.php:39
+msgid "My properties"
+msgstr "मेरी संपत्तियाँ"
+
+#: core/template-parts/account/profile.php:56
+msgid "My projects"
+msgstr "मेरे प्रोजेक्ट्स"
+
+#: core/template-parts/account/profile.php:85
+msgid "My distress (%d)"
+msgstr "मेरी पीड़ा (%d)"
+
+#: core/template-parts/account/profile.php:85
+msgid "My properties (%d)"
+msgstr "मेरी संपत्तियाँ (%d)"
+
+#: core/template-parts/account/profile.php:129
+msgid "Gold Star"
+msgstr "गोल्ड स्टार"
+
+#: core/template-parts/account/profile.php:132
+msgid "Boost your property to get it sold faster"
+msgstr "अपनी संपत्ति को तेजी से बेचने के लिए उसे बेहतर बनाएं।"
+
+#: core/template-parts/account/profile.php:134
+msgid "Get More Eyes, Get More Offers. Fast-Track Your Sale. Priority Listing: Sell 2x Faster."
+msgstr "अधिक ग्राहकों का ध्यान आकर्षित करें, अधिक ऑफ़र प्राप्त करें। अपनी बिक्री को तेज़ी से आगे बढ़ाएँ। प्राथमिक सूचीकरण: 2 गुना तेज़ी से बेचें।"
+
+#: core/template-parts/account/profile.php:137
+msgid "How it works"
+msgstr "यह कैसे काम करता है"
+
+#: core/template-parts/account/profile.php:144
+#: core/template-parts/cards/unit-card.php:106
+#: core/template-parts/cards/unit-card.php:163
+msgid "Star"
+msgstr "तारा"
+
+#: core/template-parts/account/profile.php:175
+msgid "No units match the filters."
+msgstr "फ़िल्टर से कोई यूनिट मेल नहीं खाती।"
+
+#: core/template-parts/account/profile.php:177
+#: core/template-parts/account/profile.php:269
+msgid "You have not added any units yet."
+msgstr "आपने अभी तक कोई यूनिट नहीं जोड़ी है।"
+
+#: core/template-parts/account/profile.php:191
+msgid "My projects (%d)"
+msgstr "मेरे प्रोजेक्ट्स (%d)"
+
+#: core/template-parts/account/profile.php:267
+msgid "No projects match the filters."
+msgstr "फ़िल्टरों से कोई प्रोजेक्ट मेल नहीं खाता।"
+
+#: core/template-parts/account/profile.php:392
+msgid "select"
+msgstr "चुनें"
+
+#: core/template-parts/account/reset-password.php:20
+msgid "Enter new password"
+msgstr "नया पासवर्ड दर्ज करें"
+
+#: core/template-parts/account/reset-password.php:39
+msgid "Repeat password"
+msgstr "पासवर्ड दोहराएँ"
+
+#: core/template-parts/account/reset-password.php:45
+msgid "Update password"
+msgstr "पासवर्ड अपडेट करें"
+
+#: core/template-parts/cards/large-card.php:71
+msgid "Average price unavailable"
+msgstr "औसत मूल्य उपलब्ध नहीं है"
+
+#: core/template-parts/cards/large-card.php:104
+#: core/template-parts/cards/small-card.php:46
+#: core/template-parts/cards/unit-card.php:127
+#: template-parts/sections/index/about.php:14
+#: template-parts/sections/index/about.php:19
+#: template-parts/sections/index/about.php:24
+msgid "Vector icon"
+msgstr "वेक्टर आइकन"
+
+#: core/template-parts/cards/large-card.php:123
+#: core/template-parts/cards/unit-card.php:152
+msgid "Edit"
+msgstr "संपादित करें"
+
+#: core/template-parts/cards/large-card.php:133
+#: core/template-parts/cards/unit-card.php:141
+msgid "View details"
+msgstr "विवरण देखें"
+
+#: core/template-parts/cards/map-sidebar.php:45
+msgid "apartments for sale"
+msgstr "बिक्री के लिए अपार्टमेंट"
+
+#: core/template-parts/cards/map-sidebar.php:64
+msgid "Unit image"
+msgstr "यूनिट छवि"
+
+#: core/template-parts/cards/unit-card.php:55
+#: core/template-parts/common/pagination.php:28
+#: core/template-parts/common/pagination.php:62
+#: core/template-parts/sliders/unit-thumbs-slider.php:60
+#: template-parts/sections/single/thumbs-slider.php:17
+msgid "Prev"
+msgstr "अनुवाद करें"
+
+#: core/template-parts/cards/unit-card.php:59
+#: core/template-parts/sliders/unit-thumbs-slider.php:65
+#: template-parts/sections/single/thumbs-slider.php:19
+msgid "Next"
+msgstr "अगला"
+
+#. translators: %d is the discount percent off the original price.
+#: core/template-parts/cards/unit-card.php:80
+msgid "-%d%%"
+msgstr "-%d%%"
+
+#: core/template-parts/cards/unit-card.php:89
+msgctxt "followed by developer"
+msgid "Property by"
+msgstr "द्वारा संपत्ति"
+
+#: core/template-parts/cards/unit-card.php:164
+msgid "Boost property"
+msgstr "बढ़ाएँ संपत्ति"
+
+#: core/template-parts/cards/unit-square-card.php:55
+msgid "Original Price:"
+msgstr "मूल कीमत:"
+
+#: core/template-parts/common/breadcrumbs.php:14
+msgid "Home"
+msgstr "होम"
+
+#: core/template-parts/common/contact-panel.php:20
+#: page-mortgage-calculator.php:40
+msgid "Free consultation and pre-approval. A DDA specialist will contact you and advise on the next step."
+msgstr "नि:शुल्क परामर्श और पूर्व-अनुमोदन। एक डीडीए विशेषज्ञ आपसे संपर्क करेगा और अगले कदम के बारे में सलाह देगा।"
+
+#: core/template-parts/common/contact-panel.php:24
+msgid "Contact broker to learn more and get special offers."
+msgstr "अधिक जानने और विशेष ऑफ़र प्राप्त करने के लिए ब्रोकर से संपर्क करें।"
+
+#: core/template-parts/common/contact-panel.php:55
+#: page-mortgage-calculator.php:43
+#: template-parts/sections/mortgage-calculator/calculator.php:252
+msgid "Get pre-approved"
+msgstr "पूर्व-अनुमोदन प्राप्त करें"
+
+#: core/template-parts/common/footer.php:14
+msgid "Address"
+msgstr "पता"
+
+#: core/template-parts/common/footer.php:17
+msgid "Office 1-042S,"
+msgstr "कार्यालय 1-042S,"
+
+#: core/template-parts/common/footer.php:18
+msgid "Dubai Investment Park 1,"
+msgstr "दुबई इन्वेस्टमेंट पार्क 1"
+
+#: core/template-parts/common/footer.php:19
+msgid "Dubai, United Arab Emirates."
+msgstr "दुबई, संयुक्त अरब अमीरात।"
+
+#: core/template-parts/common/footer.php:23
+msgid "Live Support"
+msgstr "लाइव सपोर्ट"
+
+#: core/template-parts/common/footer.php:36
+msgid "Popular Search"
+msgstr "लोकप्रिय खोज"
+
+#: core/template-parts/common/footer.php:55
+msgid "Discovery"
+msgstr "खोज"
+
+#: core/template-parts/common/footer.php:75
+msgid "Quick Links"
+msgstr "त्वरित लिंक"
+
+#: core/template-parts/common/footer.php:92
+msgid "© East Property – All rights reserved"
+msgstr "© ईस्ट प्रॉपर्टी – सर्वाधिकार सुरक्षित"
+
+#: core/template-parts/common/header.php:16
+msgid "Vector logotype"
+msgstr "वेक्टर लोगो"
+
+#: core/template-parts/common/header.php:37
+msgid "Create"
+msgstr "बनाएँ"
+
+#: core/template-parts/common/header.php:38
+msgid "Create Account"
+msgstr "खाता बनाएँ"
+
+#: core/template-parts/common/header.php:44
+msgid "Top up"
+msgstr "टॉप अप"
+
+#: core/template-parts/common/header.php:49
+msgid "Boost Points"
+msgstr "बूस्ट पॉइंट्स"
+
+#: core/template-parts/common/header.php:59
+msgid "Open menu"
+msgstr "मेनू खोलें"
+
+#: core/template-parts/common/language-switcher.php:38
+msgid "Change language"
+msgstr "भाषा बदलें"
+
+#: core/template-parts/common/pagination.php:26
+#: core/template-parts/common/pagination.php:60
+msgid "Previous page"
+msgstr "पिछला पृष्ठ"
+
+#: core/template-parts/common/pagination.php:44
+msgid "Page"
+msgstr "पृष्ठ"
+
+#: core/template-parts/common/social-links.php:15
+msgid "Follow us on social media"
+msgstr "सोशल मीडिया पर हमें फॉलो करें"
+
+#: core/template-parts/email/base.php:47
+msgid "Best regards,"
+msgstr "सादर"
+
+#: core/template-parts/email/base.php:48
+msgid "Team"
+msgstr "टीम"
+
+#: core/template-parts/email/base.php:51
+msgid "Support:"
+msgstr "समर्थन:"
+
+#: core/template-parts/email/base.php:65
+msgid "If this was not you, please ignore this message or contact us."
+msgstr "यदि यह आप नहीं हैं, तो कृपया इस संदेश को अनदेखा करें या हमसे संपर्क करें।"
+
+#: core/template-parts/filters/result-filters.php:57
+#: core/template-parts/filters/result-filters.php:264
+#: core/template-parts/filters/search-tabs.php:140
+#: core/template-parts/filters/search-tabs.php:161
+#: core/template-parts/ui/dropdown.php:50
+msgid "Search..."
+msgstr "खोजें..."
+
+#: core/template-parts/filters/result-filters.php:126
+msgid "Min price"
+msgstr "मुझे खेद है"
+
+#: core/template-parts/filters/result-filters.php:136
+msgid "Max price"
+msgstr "अधिकतम मूल्य"
+
+#: core/template-parts/filters/result-filters.php:148
+#: core/template-parts/filters/result-filters.php:212
+#: core/template-parts/filters/search-tabs.php:121
+msgid "Cancel"
+msgstr "रद्द करें"
+
+#: core/template-parts/filters/result-filters.php:151
+#: core/template-parts/filters/result-filters.php:215
+#: core/template-parts/filters/search-tabs.php:124
+msgid "Apply"
+msgstr "लागू करें"
+
+#: core/template-parts/filters/result-filters.php:288
+msgid "Max Area"
+msgstr "अधिकतम क्षेत्रफल"
+
+#: core/template-parts/filters/search-tabs.php:146
+#: core/template-parts/filters/search-tabs.php:167
+msgid "Dropdown arrow"
+msgstr "ड्रॉपडाउन तीर"
+
+#: core/template-parts/filters/search-tabs.php:180
+msgid "Search"
+msgstr "खोजें"
+
+#: core/template-parts/filters/search-tabs.php:191
+msgid "Distress deals are sold below market price"
+msgstr "डिस्ट्रेस सौदे बाजार मूल्य से कम पर बेचे जाते हैं।"
+
+#: core/template-parts/filters/search-tabs.php:194
+msgid "Owners who need a fast exit, verified by us and limited in number. These listings are not published openly — we send them out on request."
+msgstr "जिन मालिकों को त्वरित निकास की आवश्यकता है, जिन्हें हमने सत्यापित किया है और जिनकी संख्या सीमित है। ये लिस्टिंग सार्वजनिक रूप से प्रकाशित नहीं की जातीं — हम इन्हें अनुरोध पर भेजते हैं।"
+
+#: core/template-parts/filters/search-tabs.php:200
+msgid "Explore distress deals"
+msgstr "डिस्ट्रेस डील्स देखें"
+
+#: core/template-parts/filters/search-tabs.php:203
+msgid "Sell my property"
+msgstr "मेरी संपत्ति बेचें"
+
+#: core/template-parts/filters/search-tabs.php:207
+msgid "One short call: we send the current list and check your property against buyer demand."
+msgstr "एक संक्षिप्त कॉल: हम वर्तमान सूची भेजते हैं और खरीदारों की मांग के अनुसार आपकी संपत्ति की जांच करते हैं।"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:5
+msgid "Get a quick consultation"
+msgstr "त्वरित परामर्श प्राप्त करें"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:13
+msgid "Message us on WhatsApp — it is the fastest way to reach our team with any question about pricing, availability or a viewing."
+msgstr "किसी भी मूल्य, उपलब्धता या निरीक्षण संबंधी प्रश्न के लिए हमारी टीम तक पहुँचने का सबसे तेज़ तरीका है हमें WhatsApp पर संदेश भेजें।"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:25
+msgid "Recommended"
+msgstr "अनुशंसित"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:34
+msgid "WhatsApp — fastest reply"
+msgstr "व्हाट्सएप — सबसे तेज़ जवाब"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:36
+msgid "Best for urgent questions, pricing, and quick consultation."
+msgstr "तत्काल प्रश्नों, मूल्य निर्धारण और त्वरित परामर्श के लिए सर्वोत्तम।"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:42
+msgid "Hello! I would like a quick consultation about a distress sale of my property."
+msgstr "नमस्ते! मैं अपनी संपत्ति की त्वरित बिक्री के बारे में एक संक्षिप्त परामर्श चाहता हूँ।"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:49
+msgid "Open WhatsApp"
+msgstr "व्हाट्सएप खोलें"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:55
+msgid "We usually reply within 5–10 minutes during working hours."
+msgstr "हम आमतौर पर कार्य समय के दौरान 5–10 मिनट के भीतर जवाब देते हैं।"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:66
+msgid "Your information is kept strictly confidential"
+msgstr "आपकी जानकारी पूरी तरह से गोपनीय रखी जाती है।"
+
+#: core/template-parts/properties/map.php:78
+msgid "Explore Project"
+msgstr "परियोजना अन्वेषण करें"
+
+#: core/template-parts/properties/property-single.php:56
+#: single-unit.php:99
+#: single-unit.php:100
+#: single.php:81
+msgid "Share"
+msgstr "साझा करें"
+
+#: core/template-parts/properties/property-single.php:86
+#: core/template-parts/properties/property-units-list.php:67
+#: single-unit.php:266
+msgid "Property information"
+msgstr "संपत्ति की जानकारी"
+
+#: core/template-parts/properties/property-single.php:143
+#: single-unit.php:370
+msgid "View developer"
+msgstr "डेवलपर देखें"
+
+#: core/template-parts/properties/property-single.php:157
+msgid "properties available in this project"
+msgstr "इस परियोजना में उपलब्ध संपत्तियाँ"
+
+#: core/template-parts/properties/property-single.php:186
+#: single-unit.php:206
+msgid "Payment plan"
+msgstr "भुगतान योजना"
+
+#: core/template-parts/properties/property-single.php:200
+#: single-unit.php:330
+msgid "Amenities"
+msgstr "सुविधाएँ"
+
+#: core/template-parts/properties/property-units-list.php:57
+msgid "View object page"
+msgstr "वस्तु पृष्ठ देखें"
+
+#: core/template-parts/search-results/properties-list.php:7
+msgid "Explore a wide selection of properties across Dubai. From modern apartments and family villas to premium off-plan opportunities  in the city’s most sought-after communities. Compare prices, locations, and layouts in one place and find the property that matches your goals and budget."
+msgstr "दुबई भर में विभिन्न प्रकार की संपत्तियों का विस्तृत चयन देखें। आधुनिक अपार्टमेंट्स और फैमिली विला से लेकर शहर के सबसे लोकप्रिय समुदायों में प्रीमियम ऑफ-प्लान अवसरों तक। कीमतों, स्थानों और लेआउट की एक ही जगह तुलना करें और अपने लक्ष्यों व बजट के अनुरूप संपत्ति खोजें।"
+
+#: core/template-parts/search-results/properties-list.php:23
+#: core/template-parts/search-results/tabs.php:16
+#: core/template-parts/search-results/units-list.php:20
+msgid "List view"
+msgstr "सूची दृश्य"
+
+#: core/template-parts/search-results/properties-list.php:27
+#: core/template-parts/search-results/tabs.php:20
+msgid "Map view"
+msgstr "नक्शा दृश्य"
+
+#: core/template-parts/search-results/tabs.php:39
+msgid "Aliquam lacinia diam quis lacus euismod"
+msgstr "कुछ लैसिनिया डायम किस लैक्स यूइस्मॉड"
+
+#: core/template-parts/search-results/units-list.php:8
+msgid "Browse a wide selection of apartments in Dubai. From smart studios to spacious family residences and premium off-plan units in top locations. Compare prices, layouts, and communities in one place and find the apartment that fits your lifestyle, goals, and budget."
+msgstr "दुबई में अपार्टमेंट्स का विस्तृत चयन ब्राउज़ करें। स्मार्ट स्टूडियो से लेकर विशाल पारिवारिक आवास और शीर्ष स्थानों में प्रीमियम ऑफ-प्लान यूनिट्स तक। एक ही जगह पर कीमतों, लेआउट और समुदायों की तुलना करें और अपनी जीवनशैली, लक्ष्यों और बजट के अनुरूप अपार्टमेंट खोजें।"
+
+#: core/template-parts/ui/dropdown.php:41
+msgid "Arrow down"
+msgstr "नीचे तीर"
+
+#: core/template-parts/ui/loader.php:5
+msgid "Loading project details..."
+msgstr "परियोजना विवरण लोड हो रहा है..."
+
+#: core/template-parts/ui/tooltip.php:10
+msgid "More info"
+msgstr "अधिक जानकारी"
+
+#: core/template-parts/units/featured.php:13
+msgid "See all properties"
+msgstr "सभी संपत्तियाँ देखें"
+
+#: functions.php:33
+msgid "Header"
+msgstr "शीर्षक"
+
+#: functions.php:34
+msgid "Footer | Popular Search"
+msgstr "फ़ुटर | लोकप्रिय खोज"
+
+#: functions.php:35
+msgid "Footer | Discovery"
+msgstr "फ़ुटर | खोज"
+
+#: functions.php:36
+msgid "Footer | Quick Links"
+msgstr "फ़ुटर | त्वरित लिंक"
+
+#: functions.php:95
+#: functions.php:96
+msgid "Настройки"
+msgstr "सेटिंग्स"
+
+#. Template Name of the theme
+msgid "Account"
+msgstr "खाता"
+
+#. Template Name of the theme
+msgid "Distress Units Listing Page"
+msgstr "डिस्ट्रेस यूनिट्स सूची पृष्ठ"
+
+#: page-distress.php:31
+msgid "Below-market deals in UAE"
+msgstr "यूएई में बाजार से कम कीमत पर सौदे"
+
+#. Template Name of the theme
+msgid "Homepage"
+msgstr "मुखपृष्ठ"
+
+#. Template Name of the theme
+msgid "Mortgage Calculator"
+msgstr "बंधक कैलकुलेटर"
+
+#: page-mortgage-calculator.php:22
+msgid "Objects that match your criteria"
+msgstr "आपके मानदंडों से मेल खाने वाली वस्तुएँ"
+
+#: page-mortgage-calculator.php:39
+msgid "Ready to find out the exact terms for your deal?"
+msgstr "क्या आप अपने सौदे की सटीक शर्तें जानने के लिए तैयार हैं?"
+
+#. Template Name of the theme
+msgid "News Listing Page"
+msgstr "समाचार सूची पृष्ठ"
+
+#: page-news.php:19
+#: single.php:36
+msgid "News"
+msgstr "समाचार"
+
+#: page-news.php:43
+msgid "No news articles found"
+msgstr "कोई समाचार लेख नहीं मिला।"
+
+#: page-news.php:46
+msgid "We are preparing the latest market updates and property news. Please check back later."
+msgstr "हम नवीनतम बाज़ार अपडेट और संपत्ति समाचार तैयार कर रहे हैं। कृपया बाद में फिर से देखें।"
+
+#. Template Name of the theme
+msgid "Off Plan Units Listing Page"
+msgstr "ऑफ-प्लान इकाइयों की सूची पृष्ठ"
+
+#. Template Name of the theme
+msgid "Properties Listing Page"
+msgstr "संपत्तियों की सूची पृष्ठ"
+
+#. Template Name of the theme
+msgid "Secondary Units Listing Page"
+msgstr "सेकेंडरी यूनिट्स सूची पृष्ठ"
+
+#. Template Name of the theme
+msgid "Text Page"
+msgstr "पाठ पृष्ठ"
+
+#: single-developers.php:19
+msgid "Buy properties from developer"
+msgstr "डेवलपर से संपत्तियाँ खरीदें"
+
+#: single-project.php:31
+msgid "Request quote"
+msgstr "कोटेशन का अनुरोध करें"
+
+#: single-unit.php:46
+msgid "amenities"
+msgstr "सुविधाएँ"
+
+#: single-unit.php:70
+msgctxt "followed by project"
+msgid "Property by"
+msgstr "द्वारा संपत्ति"
+
+#: single-unit.php:90
+msgid "of original price"
+msgstr "मूल कीमत का"
+
+#: single-unit.php:110
+msgid "Saved"
+msgstr "बचाया गया"
+
+#: single-unit.php:151
+msgid "Property broker"
+msgstr "संपत्ति ब्रोकर"
+
+#: single-unit.php:176
+msgid ""
+"Get in touch with broker using email, phone or WhatsApp. It’s free and does not\n"
+"                                                                        require any commitment from your side"
+msgstr "ईमेल, फोन या व्हाट्सएप के माध्यम से ब्रोकर से संपर्क करें। यह मुफ़्त है और इसमें आपकी ओर से किसी भी प्रतिबद्धता की आवश्यकता नहीं है।"
+
+#: single-unit.php:222
+#: template-parts/sections/mortgage-calculator/calculator.php:85
+#: template-parts/sections/mortgage-calculator/calculator.php:213
+#: template-parts/sections/mortgage-calculator/entry-costs.php:15
+msgid "Down payment"
+msgstr "अग्रिम भुगतान"
+
+#: single-unit.php:224
+msgid "Sales launch"
+msgstr "बिक्री शुभारंभ"
+
+#: single-unit.php:232
+msgid "During construction"
+msgstr "निर्माण के दौरान"
+
+#: single-unit.php:234
+msgid "installments"
+msgstr "किश्तें"
+
+#: single-unit.php:243
+msgid "On handover"
+msgstr "हस्तांतरण पर"
+
+#: single-unit.php:256
+#: single-unit.php:259
+msgid "Floor plan"
+msgstr "तल योजना"
+
+#: single-unit.php:309
+msgid "Building Information"
+msgstr "निर्माण संबंधी जानकारी"
+
+#: single-unit.php:314
+msgid "Building name"
+msgstr "भवन का नाम"
+
+#: single-unit.php:319
+msgid "Floors"
+msgstr "फर्श"
+
+#: single.php:134
+msgid "Copy link"
+msgstr "लिंक कॉपी करें"
+
+#: single.php:141
+msgid "Link copied to clipboard!"
+msgstr "लिंक क्लिपबोर्ड पर कॉपी हो गया!"
+
+#: single.php:167
+msgid "Updated: %s"
+msgstr "अद्यतन: %s"
+
+#: single.php:182
+msgid "Other news"
+msgstr "अन्य समाचार"
+
+#. translators: %s is a district name.
+#: taxonomy-location.php:36
+msgid "Projects in %s"
+msgstr "%s में परियोजनाएँ"
+
+#: template-parts/sections/index/about.php:10
+msgid "Why East Property"
+msgstr "ईस्ट प्रॉपर्टी क्यों"
+
+#: template-parts/sections/index/about.php:30
+msgid "About img"
+msgstr "इमेज के बारे में"
+
+#: template-parts/sections/index/distress.php:16
+msgid "Distress deals in Dubai"
+msgstr "दुबई में डिस्ट्रेस डील्स"
+
+#: template-parts/sections/index/distress.php:20
+msgid "DISTRESS DEALS"
+msgstr "डिस्ट्रेस डील्स"
+
+#: template-parts/sections/index/distress.php:21
+msgid "Own Dubai for Less"
+msgstr "कम कीमत में दुबई का मालिक बनें"
+
+#: template-parts/sections/index/distress.php:22
+msgid "Premium properties from motivated sellers at below-market prices."
+msgstr "बाज़ार मूल्य से कम कीमत पर, उत्साही विक्रेताओं से प्रीमियम संपत्तियाँ।"
+
+#: template-parts/sections/index/distress.php:23
+msgid "Limited opportunities. The best deals move fast."
+msgstr "सीमित अवसर। सबसे अच्छे सौदे जल्दी बिक जाते हैं।"
+
+#: template-parts/sections/index/distress.php:25
+msgid "Explore Distress Deals"
+msgstr "डिस्ट्रेस डील्स देखें"
+
+#: template-parts/sections/index/distress.php:31
+msgid "Your Dubai Home. For Less."
+msgstr "आपका दुबई का घर। कम कीमत पर।"
+
+#: template-parts/sections/index/distress.php:32
+msgid "Exclusive properties at below-market prices."
+msgstr "बाज़ार भाव से कम कीमतों पर विशिष्ट संपत्तियाँ।"
+
+#: template-parts/sections/index/distress.php:33
+msgid "Move fast — the best deals don’t wait."
+msgstr "तेज़ी से कदम उठाएँ — बेहतरीन सौदे इंतज़ार नहीं करते।"
+
+#: template-parts/sections/index/distress.php:35
+msgid "View Deals"
+msgstr "डील्स देखें"
+
+#: template-parts/sections/index/hero.php:32
+msgid "Available immediately"
+msgstr "तत्काल उपलब्ध"
+
+#: template-parts/sections/index/hero.php:40
+msgid "In construction"
+msgstr "निर्माणधीन"
+
+#: template-parts/sections/index/map.php:8
+msgid "Dubai map"
+msgstr "दुबई का नक्शा"
+
+#: template-parts/sections/index/properties.php:11
+msgid "See all new properties"
+msgstr "सभी नई संपत्तियाँ देखें"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:8
+msgid "Residency status"
+msgstr "निवास स्थिति"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:16
+msgid "UAE resident"
+msgstr "यूएई निवासी"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:25
+msgid "Non-resident"
+msgstr "गैर-निवासी"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:32
+msgid "Minimum income"
+msgstr "न्यूनतम आय"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:36
+msgid "Age"
+msgstr "आयु"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:37
+msgid "from 21, loan repaid by 65"
+msgstr "21 से, 65 तक कर्ज चुकता"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:40
+msgid "Bank financing"
+msgstr "बैंक वित्तपोषण"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:41
+msgid "up to 80%"
+msgstr "८०% तक"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:47
+msgid "Property price"
+msgstr "संपत्ति की कीमत"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:50
+msgid "Total purchase price of the property in AED"
+msgstr "संपत्ति की कुल खरीद मूल्य AED में"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:76
+msgid "from 300,000"
+msgstr "300,000 से"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:77
+msgid "to 20,000,000"
+msgstr "बीस मिलियन तक"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:88
+msgid "Upfront equity contribution (min 20% for residents, 40% for non-residents)"
+msgstr "प्रारंभिक इक्विटी योगदान (निवासियों के लिए न्यूनतम 20%, गैर-निवासियों के लिए 40%)"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:114
+msgid "from 20"
+msgstr "20 से"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:115
+msgid "to 80"
+msgstr "अस्सी तक"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:123
+msgid "Loan term"
+msgstr "ऋण अवधि"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:126
+msgid "Mortgage duration in years (up to 25 years)"
+msgstr "बंधक की अवधि वर्ष में (25 वर्ष तक)"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:140
+msgid "years"
+msgstr "साल"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:152
+msgid "from 1"
+msgstr "एक से"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:153
+msgid "to 25"
+msgstr "पच्चीस तक"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:161
+msgid "Interest rate"
+msgstr "ब्याज दर"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:164
+msgid "Annual interest rate offered by UAE mortgage lenders"
+msgstr "यूएई बंधक ऋणदाताओं द्वारा प्रस्तावित वार्षिक ब्याज दर"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:190
+msgid "from 2,5"
+msgstr "2,5 से"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:191
+msgid "to 8"
+msgstr "आठ तक"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:204
+msgid "Monthly payment"
+msgstr "मासिक भुगतान"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:209
+msgid "Loan"
+msgstr "ऋण"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:217
+msgid "Interest paid"
+msgstr "भुगतान किया गया ब्याज"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:231
+msgid "Principal"
+msgstr "होम"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:237
+msgid "Interest over term"
+msgstr "अवधि पर ब्याज"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:245
+msgid "Preliminary estimate. The final rate depends on the bank, your profile, and the property."
+msgstr "प्रारंभिक अनुमान। अंतिम दर बैंक, आपकी प्रोफ़ाइल और संपत्ति पर निर्भर करती है।"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:260
+msgid "Download calculation"
+msgstr "गणना डाउनलोड करें"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:266
+msgid "DDA mortgage services"
+msgstr "डीडीए बंधक सेवाएँ"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:7
+msgid "Full cost of mortgage entry"
+msgstr "बंधक में प्रवेश की पूरी लागत"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:24
+msgid "DLD fee (4% + 580 AED)"
+msgstr "डीएलडी शुल्क (4% + 580 एईडी)"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:33
+msgid "Agency commission (2%)"
+msgstr "एजेंसी कमीशन (2%)"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:42
+msgid "Bank fee (up to 1% of loan)"
+msgstr "बैंक शुल्क (ऋण का 1% तक)"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:51
+msgid "Property valuation"
+msgstr "संपत्ति मूल्यांकन"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:60
+msgid "Mortgage registration (0.25% + 290 AED)"
+msgstr "बंधक पंजीकरण (0.25% + 290 एईडी)"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:69
+msgid "Total"
+msgstr "कुल"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:82
+msgid "The deal in 6 steps"
+msgstr "6 चरणों में सौदा"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:90
+#: src/js/mortgage-calculator/modules/pdf/template.js:168
+msgid "Pre-approval"
+msgstr "पूर्व-अनुमोदन"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:91
+msgid "Preliminary approval from the bank"
+msgstr "बैंक से प्रारंभिक स्वीकृति"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:98
+#: src/js/mortgage-calculator/modules/pdf/template.js:173
+msgid "MOU (Form F)"
+msgstr "एमओयू (प्रपत्र एफ)"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:99
+msgid "Sales contract signing, ~10% deposit"
+msgstr "बिक्री अनुबंध पर हस्ताक्षर, लगभग 10% जमा"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:106
+msgid "Bank valuation"
+msgstr "बैंक मूल्यांकन"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:107
+msgid "Property valuation inspection"
+msgstr "संपत्ति मूल्यांकन निरीक्षण"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:114
+#: src/js/mortgage-calculator/modules/pdf/template.js:183
+msgid "Final approval"
+msgstr "अंतिम अनुमोदन"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:115
+msgid "Final mortgage offer & facility letter"
+msgstr "अंतिम बंधक प्रस्ताव और सुविधा पत्र"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:122
+msgid "DLD registration"
+msgstr "डीएलडी पंजीकरण"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:123
+msgid "Registration of ownership and mortgage"
+msgstr "स्वामित्व और बंधक का पंजीकरण"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:130
+msgid "Funds transfer & keys"
+msgstr "निधि हस्तांतरण और चाबियाँ"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:131
+msgid "Disbursement of funds and key handover"
+msgstr "निधि का वितरण और प्रमुख हस्तांतरण"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:138
+msgid "4–8 weeks from MOU to keys · full process 30–100 days"
+msgstr "एमओयू से चाबियाँ प्राप्त करने में 4–8 सप्ताह · पूरी प्रक्रिया 30–100 दिन"
+
+#: template-parts/sections/mortgage-calculator/faq.php:5
+msgid "Can a non-resident get a mortgage in Dubai?"
+msgstr "क्या एक गैर-निवासी दुबई में बंधक प्राप्त कर सकता है?"
+
+#: template-parts/sections/mortgage-calculator/faq.php:6
+msgid "Yes. Non-residents can get a mortgage with a down payment from 40% and verified income from 10,000 USD per month."
+msgstr "हाँ। गैर-निवासी 40% की डाउन पेमेंट और प्रति माह 10,000 अमेरिकी डॉलर की सत्यापित आय के साथ मॉर्गेज प्राप्त कर सकते हैं।"
+
+#: template-parts/sections/mortgage-calculator/faq.php:10
+msgid "Is life insurance mandatory?"
+msgstr "क्या जीवन बीमा अनिवार्य है?"
+
+#: template-parts/sections/mortgage-calculator/faq.php:11
+msgid "Yes, UAE banks require life insurance as a mandatory condition for securing a mortgage loan."
+msgstr "हाँ, संयुक्त अरब अमीरात के बैंकों को बंधक ऋण सुरक्षित करने के लिए जीवन बीमा एक अनिवार्य शर्त के रूप में आवश्यक है।"
+
+#: template-parts/sections/mortgage-calculator/faq.php:15
+msgid "Can I get a mortgage on an off-plan property?"
+msgstr "क्या मैं ऑफ-प्लान संपत्ति पर बंधक ले सकता हूँ?"
+
+#: template-parts/sections/mortgage-calculator/faq.php:16
+msgid "Yes, mortgages are available for completed as well as off-plan projects from authorized developers with up to 50% financing."
+msgstr "हाँ, अधिकृत डेवलपर्स द्वारा पूर्ण और ऑफ-प्लान दोनों परियोजनाओं के लिए 50% तक की वित्तपोषण सुविधा के साथ मॉर्गेज उपलब्ध हैं।"
+
+#: template-parts/sections/mortgage-calculator/faq.php:20
+msgid "How long does the whole process take?"
+msgstr "पूरे प्रक्रिया में कितना समय लगता है?"
+
+#: template-parts/sections/mortgage-calculator/faq.php:21
+msgid "The entire process typically takes between 30 and 100 days from the initial application to the key handover and deed registration."
+msgstr "पूरी प्रक्रिया में आम तौर पर प्रारंभिक आवेदन से लेकर चाबी सौंपने और दस्तावेज़ पंजीकरण तक 30 से 100 दिन लगते हैं।"
+
+#: template-parts/sections/mortgage-calculator/faq.php:25
+msgid "What is pre-approval and how long is it valid?"
+msgstr "पूर्व-अनुमोदन क्या है और यह कितने समय तक मान्य रहता है?"
+
+#: template-parts/sections/mortgage-calculator/faq.php:26
+msgid "Pre-approval is an initial assessment from a bank confirming the loan amount you qualify for. It is usually valid for 60 to 90 days."
+msgstr "पूर्व-अनुमोदन बैंक द्वारा किया गया एक प्रारंभिक मूल्यांकन है, जो यह पुष्टि करता है कि आप कितनी ऋण राशि के लिए पात्र हैं। यह आमतौर पर 60 से 90 दिनों के लिए वैध रहता है।"
+
+#: template-parts/sections/mortgage-calculator/faq.php:30
+msgid "What costs are there besides the down payment?"
+msgstr "डाउन पेमेंट के अलावा और कौन-कौन से खर्च हैं?"
+
+#: template-parts/sections/mortgage-calculator/faq.php:31
+msgid "Additional costs include the DLD fee (4% + 580 AED), agency commission (2%), bank processing fee (up to 1%), property valuation, and mortgage registration."
+msgstr "अतिरिक्त लागतों में डीएलडी शुल्क (4% + 580 AED), एजेंसी कमीशन (2%), बैंक प्रसंस्करण शुल्क (1% तक), संपत्ति मूल्यांकन, और बंधक पंजीकरण शामिल हैं।"
+
+#: template-parts/sections/mortgage-calculator/faq.php:40
+msgid "Questions and answers"
+msgstr "प्रश्न और उत्तर"
+
+#: template-parts/sections/mortgage-calculator/hero.php:7
+msgid "Mortgage calculator in"
+msgstr "बंधक कैलकुलेटर में"
+
+#: template-parts/sections/mortgage-calculator/hero.php:7
+msgid "Dubai"
+msgstr "दुबई"
+
+#: template-parts/sections/mortgage-calculator/hero.php:12
+msgid "Monthly payment, full cost of entering the deal, and a comparison of mortgage vs. developer payment plan — in a single calculation."
+msgstr "मासिक भुगतान, सौदे में प्रवेश की कुल लागत, और मॉर्गेज बनाम डेवलपर भुगतान योजना की तुलना — एक ही गणना में।"
+
+#: template-parts/sections/mortgage-calculator/hero.php:16
+msgid "Free consultation and pre-approval. Response within 15 minutes"
+msgstr "नि:शुल्क परामर्श और पूर्व-अनुमोदन। 15 मिनट के भीतर प्रतिक्रिया।"
+
+#: template-parts/sections/mortgage-calculator/off-plan.php:26
+msgid "Mortgage on an off-plan property"
+msgstr "ऑफ-प्लान संपत्ति पर बंधक"
+
+#. translators: %s: 50% complete
+#: template-parts/sections/mortgage-calculator/off-plan.php:34
+msgid "An off-plan mortgage becomes available once the building is more than %s, the buyer has paid over 50%% of the price, and the developer is accredited by the bank."
+msgstr "ऑफ-प्लान मॉर्गेज तब उपलब्ध होता है जब भवन %s से अधिक तैयार हो, खरीदार ने कीमत का 50%% से अधिक भुगतान कर दिया हो, और डेवलपर बैंक द्वारा मान्यता प्राप्त हो।"
+
+#: template-parts/sections/mortgage-calculator/off-plan.php:35
+msgid "50% complete"
+msgstr "50% पूरा"
+
+#: template-parts/sections/mortgage-calculator/off-plan.php:40
+msgid "Before that stage, buyers use the developer’s payment plan."
+msgstr "उस चरण से पहले, खरीदार डेवलपर की भुगतान योजना का उपयोग करते हैं।"
+
+#: template-parts/sections/mortgage-calculator/off-plan.php:51
+msgid "Learn more"
+msgstr "और जानें"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:5
+msgid "LTV / AECB / DBR Expertise"
+msgstr "एलटीवी / एईसीबी / डीबीआर विशेषज्ञता"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:6
+msgid "In-house mortgage advisory department"
+msgstr "अंतर्गत बंधक परामर्श विभाग"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:9
+msgid "Direct Negotiations with Banks"
+msgstr "बैंकों के साथ सीधी बातचीत"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:10
+msgid "Tailored terms based on your profile"
+msgstr "आपकी प्रोफ़ाइल के आधार पर अनुकूलित शर्तें"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:13
+msgid "Free of Charge"
+msgstr "नि:शुल्क"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:14
+msgid "Free consultation and pre-approval"
+msgstr "नि:शुल्क परामर्श और पूर्व-अनुमोदन"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:17
+msgid "RU / EN / AR"
+msgstr "सही / अंग्रेज़ी / फ्रेंच"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:18
+msgid "Response within 15 minutes"
+msgstr "15 मिनट के भीतर प्रतिक्रिया"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:21
+msgid "We Work with Non-Residents"
+msgstr "हम गैर-निवासियों के साथ काम करते हैं"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:22
+msgid "Full end-to-end support for purchases from abroad"
+msgstr "विदेश से की गई खरीदारी के लिए पूर्ण एंड-टू-एंड समर्थन"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:25
+msgid "Islamic Financing"
+msgstr "इस्लामी वित्तपोषण"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:26
+msgid "Murabaha · Ijarah · Musharakah → separate page"
+msgstr "मुराबाहा · इजारा · मुशरकाह → अलग पृष्ठ"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:34
+msgid "Why DDA"
+msgstr "डीडीए क्यों"
+
+#: src/js/filters.js:19
+msgid "beds"
+msgstr "बिस्तर"
+
+#: src/js/filters.js:19
+msgid "bed"
+msgstr "विश्व"
+
+#: src/js/filters.js:24
+msgid "baths"
+msgstr "स्नान"
+
+#: src/js/filters.js:24
+msgid "bath"
+msgstr "स्नान"
+
+#: src/js/map/map.js:418
+msgid "Selected location"
+msgstr "चुनी हुई जगह"
+
+#. translators: 1: number of projects in the cluster, 2: number of units in them.
+#: src/js/map/map.js:608
+msgid "%1$d projects · %2$d units"
+msgstr "%1$d परियोजनाएँ · %2$d यूनिट्स"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:17
+msgid "UAE Resident"
+msgstr "यूएई निवासी"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:18
+msgid "Non-Resident"
+msgstr "गैर-निवासी"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:24
+msgid "Mortgage Calculation — East Property"
+msgstr "बंधक गणना — ईस्ट प्रॉपर्टी"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:36
+msgid "East Property Advisory"
+msgstr "ईस्ट प्रॉपर्टी एडवाइजरी"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:37
+msgid "Ref:"
+msgstr "संदर्भ:"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:38
+msgid "Date:"
+msgstr "दिनांक:"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:39
+msgid "Dubai, United Arab Emirates"
+msgstr "दुबई, संयुक्त अरब अमीरात"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:44
+msgid "UAE Mortgage Calculation Report"
+msgstr "यूएई बंधक गणना रिपोर्ट"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:45
+msgid "Property financing estimate and upfront acquisition breakdown · East Property Advisory"
+msgstr "संपत्ति वित्तपोषण अनुमान और अग्रिम अधिग्रहण विवरण · ईस्ट प्रॉपर्टी एडवाइजरी"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:51
+msgid "Estimated Monthly Payment"
+msgstr "अनुमानित मासिक भुगतान"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:52
+msgid "/ month"
+msgstr "प्रति माह"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:56
+msgid "Profile"
+msgstr "प्रोफ़ाइल"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:60
+msgid "Tenure"
+msgstr "कार्यकाल"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:61
+msgid "%s Years"
+msgstr "%s वर्ष"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:64
+#: src/js/mortgage-calculator/modules/pdf/template.js:110
+msgid "Interest Rate"
+msgstr "ब्याज दर"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:77
+msgid "Principal Loan:"
+msgstr "प्रिंसिपल ऋण:"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:81
+msgid "Total Interest:"
+msgstr "कुल ब्याज:"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:90
+msgid "Loan Parameters"
+msgstr "ऋण पैरामीटर"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:94
+msgid "Property Price"
+msgstr "संपत्ति की कीमत"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:98
+#: src/js/mortgage-calculator/modules/pdf/template.js:130
+msgid "Down Payment (%s%%)"
+msgstr "डाउन पेमेंट (%s%%)"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:102
+msgid "Bank Loan Amount"
+msgstr "बैंक ऋण राशि"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:106
+msgid "Loan Tenure"
+msgstr "ऋण अवधि"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:107
+msgid "%1$s years (%2$s mos)"
+msgstr "%1$s वर्ष (%2$s माह)"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:111
+msgid "%s%% p.a."
+msgstr "%s%% प्रति वर्ष"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:114
+msgid "Total Interest (Overpayment)"
+msgstr "कुल ब्याज (अधिक भुगतान)"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:118
+msgid "Total Payable over Term"
+msgstr "अवधि के दौरान कुल देय"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:126
+msgid "Full Cost of Entry"
+msgstr "प्रवेश की पूरी लागत"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:134
+msgid "DLD Fee (4% + 580)"
+msgstr "डीएलडी शुल्क (4% + 580)"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:138
+msgid "Agency Commission (2%)"
+msgstr "एजेंसी कमीशन (2%)"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:142
+msgid "Bank Fee (1% of loan)"
+msgstr "बैंक शुल्क (ऋण का 1%)"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:146
+msgid "Property Valuation"
+msgstr "संपत्ति मूल्यांकन"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:150
+msgid "Mortgage Registration"
+msgstr "बंधक पंजीकरण"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:154
+msgid "Total Required at Entry"
+msgstr "प्रवेश पर कुल आवश्यक"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:164
+msgid "The Deal in 6 Steps (Timeline: 4–8 Weeks from MOU to Keys)"
+msgstr "6 चरणों में सौदा (समय-सीमा: एमओयू से चाबियाँ तक 4–8 सप्ताह)"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:169
+msgid "Bank eligibility"
+msgstr "बैंक पात्रता"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:174
+msgid "~10% deposit"
+msgstr "~10% जमा"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:178
+msgid "Valuation"
+msgstr "मूल्यांकन"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:179
+msgid "Property appraisal"
+msgstr "संपत्ति मूल्यांकन"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:184
+msgid "Loan offer letter"
+msgstr "ऋण प्रस्ताव पत्र"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:188
+msgid "DLD Transfer"
+msgstr "डीएलडी ट्रांसफर"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:189
+msgid "Title deed"
+msgstr "स्वामित्व दस्तावेज़"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:193
+msgid "Handover"
+msgstr "हस्तांतरण"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:194
+msgid "Funds & keys"
+msgstr "धन और चाबियाँ"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:201
+msgid "Disclaimer:"
+msgstr "अस्वीकरण:"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:204
+msgid "East Property Brokerage LLC"
+msgstr "ईस्ट प्रॉपर्टी ब्रोकरेज एलएलसी"

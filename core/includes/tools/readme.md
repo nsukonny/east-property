@@ -104,7 +104,7 @@ wp tools strip-unit-floors --dry-run --report=/tmp/unit-floors-plan.csv --allow-
 wp tools strip-unit-floors --limit=10 --allow-root
 wp tools strip-unit-floors --yes --report=/tmp/unit-floors.csv --allow-root
 ```
-## Открытие языка (китайский, zh)
+## Открытие языка (zh, hi)
 
 Порядок обязателен: язык → страницы → клоны → перевод → публикация. Каждый шаг
 повторяем: второй запуск ничего не дублирует.
@@ -112,15 +112,23 @@ wp tools strip-unit-floors --yes --report=/tmp/unit-floors.csv --allow-root
 ### 1. Язык и локаль
 
 ```bash
-wp tools add-language --slug=zh --dry-run --allow-root
+wp tools add-language --slug=zh --dry-run --allow-root   # или --slug=hi
 wp tools add-language --slug=zh --allow-root
-wp language core install zh_CN --allow-root
+wp language core install zh_CN --allow-root              # или hi_IN
 wp rewrite flush --allow-root
 ```
 
-Настройки берутся из `Language_Installer::PRESETS` (`zh` / `zh_CN` / 简体中文 /
-флаг `cn` / LTR). Повторный запуск печатает «язык уже настроен». Локаль, занятая
-другим языком, останавливает команду, второго языка не возникает.
+Настройки берутся из `Language_Installer::PRESETS`. Готовые наборы:
+
+| слаг | локаль | название | флаг | цель DeepL | plural |
+|---|---|---|---|---|---|
+| `zh` | `zh_CN` | 简体中文 | `cn` | `ZH-HANS` | одна форма |
+| `hi` | `hi_IN` | हिन्दी | `in` | `HI` | две формы |
+
+Повторный запуск печатает «язык уже настроен». Локаль, занятая другим языком,
+останавливает команду, второго языка не возникает. Новый язык добавляется
+строкой в `PRESETS` и строкой в `core_language_labels()` — подписью в его
+собственном письме.
 
 `wp language core install` обязателен: без языкового пакета ядра `zh_CN` не
 попадает в `get_available_languages()`, `switch_to_locale()` молча откатывается

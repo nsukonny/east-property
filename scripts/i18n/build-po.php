@@ -32,6 +32,10 @@ $po->set_headers(
 	)
 );
 
+// Сколько форм множественного числа у языка — читаем из заголовка Plural-Forms.
+preg_match( '~nplurals\s*=\s*(\d+)~', $plural, $forms );
+$nplurals = max( 1, (int) ( $forms[1] ?? 1 ) );
+
 $counts = array( 'deepl' => 0, 'override' => 0, 'empty' => 0 );
 
 foreach ( $po->entries as $key => $entry ) {
@@ -50,8 +54,17 @@ foreach ( $po->entries as $key => $entry ) {
 		}
 	}
 
-	// Chinese has a single plural form, so a plural entry keeps one string.
-	$entry->translations = $entry->is_plural ? array( $singular ) : array( $singular );
+	if ( ! $entry->is_plural ) {
+		$entry->translations = array( $singular );
+
+		continue;
+	}
+
+	// Вторая форма берётся из перевода msgid_plural. Языку с одной формой
+	// (китайский) достаётся только первая, и хвост отбрасывается.
+	$other = $overrides[ $entry->plural ] ?? $raw[ 'plural' . "\x01" . $key ] ?? $singular;
+
+	$entry->translations = array_slice( array( $singular, $other ), 0, $nplurals );
 }
 
 $po->export_to_file( $lang_dir . '/' . $locale . '.po' );

@@ -27,4 +27,19 @@ bash scripts/make-translations.sh
 «百分比», то есть выкинул оба. Проверка — сравнить наборы `%s`, `%d`, `%%` в
 msgid и msgstr по всему файлу.
 
-Китайский — один plural (`nplurals=1; plural=0;`), это задаётся `EP_PLURAL`.
+Формы множественного числа задаёт `EP_PLURAL`, и скрипт заполняет ровно
+столько форм, сколько объявлено в `nplurals`. Китайский — одна форма
+(`nplurals=1; plural=0;`), хинди — две (`nplurals=2; plural=(n != 1);`),
+вторая берётся из перевода `msgid_plural`.
+
+```bash
+EP_OUT="$OUT" EP_TARGET=HI wp eval-file scripts/i18n/translate-pot.php
+EP_OUT="$OUT" EP_LOCALE=hi_IN EP_PLURAL="nplurals=2; plural=(n != 1);" \
+  wp eval-file scripts/i18n/build-po.php
+```
+
+Свой `overrides.json` нужен каждому языку: ошибки DeepL у них разные. У хинди
+это `Properties → गुणधर्म` (свойства-атрибуты), `Secondary → माध्यमिक`
+(школьная ступень), `Studio → अध्ययन` (учёба), `Villa → गाँव` (деревня),
+`Unit → इकाई` (единица измерения), `Parent X: → माता-पिता` (буквально
+«мать-отец»), `Save → बचाएँ` («спасать»).

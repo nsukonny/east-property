@@ -31,6 +31,14 @@ final class Language_Installer {
 			'rtl'    => false,
 			'order'  => 40,
 		),
+		'hi' => array(
+			'slug'   => 'hi',
+			'locale' => 'hi_IN',
+			'name'   => 'हिन्दी',
+			'flag'   => 'in',
+			'rtl'    => false,
+			'order'  => 50,
+		),
 	);
 
 	/**
