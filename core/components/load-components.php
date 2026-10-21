@@ -19,3 +19,4 @@ require THEME_PATH . '/core/components/sections/functions.php';
 require THEME_PATH . '/core/components/modals/functions.php';
 require THEME_PATH . '/core/components/email/functions.php';
 require THEME_PATH . '/core/components/analytics/functions.php';
+require THEME_PATH . '/core/components/social/functions.php';

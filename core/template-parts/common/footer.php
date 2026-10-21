@@ -3,6 +3,7 @@
 		<div class="footer-wrapper">
 			<div class="footer-inner">
 				<div class="footer-info">
+					<?php get_template_part( 'core/template-parts/common/social-links' ); ?>
 					<?php get_template_part( 'core/components/common/subscribe-form/subscribe-form' ); ?>
 					<a class="footer-logo" href="<?php echo esc_url( core_home_url() ); ?>">
 						<img class="footer-logo" src="<?php echo THEME_URL; ?>/assets/img/logo.svg" width="132"

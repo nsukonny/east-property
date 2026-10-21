@@ -1,6 +1,6 @@
 import { DEFAULTS, RESIDENCY, SLIDER_CONFIG, FORMATTING } from '../config/index.js';
 import { calculateMortgage, calculateEntryCosts } from './math.js';
-import { formatCurrency, formatRate, parseNumericInput } from './formatter.js';
+import { formatCurrency, formatRate, parseControlValue, parseNumericInput } from './formatter.js';
 import { DonutChart } from './donut-chart.js';
 import { generateMortgagePdf } from './pdf/index.js';
 
@@ -106,7 +106,7 @@ export class MortgageCalculator {
 	bindSlider(sliderEl, stateUpdater) {
 		if (!sliderEl) return;
 		sliderEl.addEventListener('input', (event) => {
-			const value = parseNumericInput(event.target.value);
+			const value = parseControlValue(event.target.value);
 			stateUpdater(value);
 			this.scheduleRender();
 		});

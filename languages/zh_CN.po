@@ -1,0 +1,3271 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: East Property\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-10-19T16:27:49+00:00\n"
+"PO-Revision-Date: 2026-10-20 17:57+0000\n"
+"Language: zh_CN\n"
+"X-Generator: east-property make-translations\n"
+"X-Domain: east-property\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. Theme Name of the theme
+#: style.css
+#: page-news.php:38
+msgid "East Property"
+msgstr "东区地产"
+
+#. Theme URI of the theme
+#: style.css
+msgid "https://eastproperty.com"
+msgstr "https://eastproperty.com"
+
+#. Description of the theme
+#: style.css
+msgid "East Property project"
+msgstr "东区地产项目"
+
+#. Author of the theme
+#: style.css
+msgid "NSukonny"
+msgstr "NSukonny"
+
+#. Author URI of the theme
+#: style.css
+msgid "https://nsukonny.agency/east-property/"
+msgstr "https://nsukonny.agency/east-property/"
+
+#: 404.php:11
+msgid "Page not found"
+msgstr "页面未找到"
+
+#: 404.php:13
+msgid "Go to properties"
+msgstr "前往房产列表"
+
+#: core/components/account/functions.php:125
+#: core/components/filters/functions.php:912
+msgid "Apartments"
+msgstr "公寓"
+
+#: core/components/account/functions.php:126
+#: core/components/filters/functions.php:928
+msgid "Villas"
+msgstr "别墅"
+
+#: core/components/account/functions.php:127
+msgid "Townhouses"
+msgstr "联排别墅"
+
+#: core/components/account/functions.php:128
+msgid "Penthouses"
+msgstr "顶层公寓"
+
+#: core/components/account/functions.php:129
+#: core/components/filters/functions.php:920
+msgid "Houses"
+msgstr "房屋"
+
+#: core/components/account/functions.php:130
+#: core/components/filters/functions.php:936
+msgid "Offices"
+msgstr "办事处"
+
+#: core/components/account/functions.php:141
+#: core/includes/entities/class-entity-unit.php:419
+#: core/includes/entities/class-entity-unit.php:484
+msgid "Contains an error"
+msgstr "包含错误"
+
+#: core/components/account/functions.php:142
+#: core/includes/entities/class-entity-unit.php:403
+#: core/includes/entities/class-entity-unit.php:469
+#: core/template-parts/account/profile.php:145
+msgid "Promoted"
+msgstr "推广"
+
+#: core/components/account/functions.php:143
+#: core/includes/entities/class-entity-unit.php:412
+#: core/includes/entities/class-entity-unit.php:477
+msgid "Waiting for approval"
+msgstr "等待审批"
+
+#: core/components/account/functions.php:319
+#: core/components/filters/functions.php:1101
+#: core/template-parts/filters/search-tabs.php:144
+msgid "Any Locations"
+msgstr "任意地点"
+
+#: core/components/account/functions.php:320
+#: core/template-parts/filters/result-filters.php:273
+#: core/template-parts/filters/result-filters.php:293
+msgid "All"
+msgstr "全部"
+
+#: core/components/account/functions.php:326
+#: core/components/filters/functions.php:312
+#: core/components/filters/functions.php:1045
+#: core/template-parts/filters/search-tabs.php:165
+msgid "Any Developers"
+msgstr "任意开发商"
+
+#: core/components/account/functions.php:332
+msgid "Any bedrooms"
+msgstr "任何卧室"
+
+#. translators: %s: number of bedrooms, "7+" for the last option.
+#: core/components/account/functions.php:337
+msgid "%s bedroom"
+msgid_plural "%s bedrooms"
+msgstr[0] "%s 间卧室"
+
+#: core/components/account/functions.php:341
+msgid "All unit types"
+msgstr "所有房型"
+
+#: core/components/account/functions.php:348
+msgid "All listing types"
+msgstr "所有房源类型"
+
+#: core/components/account/functions.php:363
+msgid "Name or ID"
+msgstr "姓名或身份证号"
+
+#: core/components/account/functions.php:363
+msgid "Name, project or ID"
+msgstr "名称、项目或ID"
+
+#: core/components/account/functions.php:787
+msgid "Unit title is required."
+msgstr "必须填写单元名称。"
+
+#: core/components/account/functions.php:880
+msgid "A distress listing needs an original price higher than the asking price."
+msgstr "急售房源的原始价格必须高于要价。"
+
+#: core/components/account/functions.php:922
+msgid "Unit not found."
+msgstr "未找到该单元。"
+
+#: core/components/account/functions.php:996
+#: core/components/account/functions.php:1134
+msgid "Property title is required."
+msgstr "必须填写房产名称。"
+
+#: core/components/account/functions.php:997
+msgid "Property description is required."
+msgstr "必须填写房产描述。"
+
+#: core/components/account/functions.php:1007
+msgid "Latitude is required."
+msgstr "必须填写纬度。"
+
+#: core/components/account/functions.php:1008
+msgid "Longitude is required."
+msgstr "必须填写经度。"
+
+#: core/components/account/functions.php:1009
+msgid "Please select a valid location."
+msgstr "请选择一个有效的地点。"
+
+#: core/components/account/functions.php:1010
+msgid "Please select a valid ownership type."
+msgstr "请选择一种有效的所有权类型。"
+
+#: core/components/account/functions.php:1011
+msgid "Please select a valid property type."
+msgstr "请选择一种有效的房产类型。"
+
+#: core/components/account/functions.php:1052
+#: core/components/account/functions.php:1311
+#: core/components/account/functions.php:1571
+msgid "Property not found."
+msgstr "未找到该房产。"
+
+#: core/components/account/functions.php:1110
+msgid "Please sign in to add a property."
+msgstr "请登录以添加房源。"
+
+#: core/components/account/functions.php:1115
+msgid "Your account does not have permission to add property."
+msgstr "您的账户无权添加房产。"
+
+#: core/components/account/functions.php:1121
+msgid "Security check failed. Please try again."
+msgstr "安全检查失败。请重试。"
+
+#: core/components/account/functions.php:1306
+#: core/components/account/functions.php:1566
+#: core/components/account/functions.php:1661
+msgid "Property ID is required."
+msgstr "必须填写房源编号。"
+
+#: core/components/account/functions.php:1324
+#: core/template-parts/account/edit-unit.php:463
+msgid "Property image"
+msgstr "房产图片"
+
+#: core/components/account/functions.php:1580
+msgid "Not enough boost points for boost plan."
+msgstr "“增益计划”的增益点数不足。"
+
+#: core/components/account/functions.php:1585
+msgid "Property boosted successfully."
+msgstr "房产推广成功。"
+
+#: core/components/account/functions.php:1602
+msgid "Broker not found."
+msgstr "未找到经纪商。"
+
+#: core/components/account/functions.php:1647
+#: core/includes/registers/user-roles/client.php:7
+msgid "Client"
+msgstr "客户"
+
+#: core/components/account/functions.php:1648
+#: core/includes/registers/user-roles/broker.php:18
+msgid "Broker"
+msgstr "经纪人"
+
+#: core/components/account/functions.php:1666
+msgid "YOu are not authenticated."
+msgstr "您尚未通过身份验证。"
+
+#: core/components/account/functions.php:1710
+msgid "Hello "
+msgstr "你好"
+
+#: core/components/account/functions.php:1712
+msgid "Thank you for registering with"
+msgstr "感谢您注册"
+
+#: core/components/account/functions.php:1714
+msgid "To complete your registration and activate your account, please verify your email address by clicking the link below:"
+msgstr "为了完成注册并激活您的账户，请点击以下链接验证您的电子邮箱地址："
+
+#: core/components/account/functions.php:1717
+msgid "Verify email address"
+msgstr "验证电子邮箱地址"
+
+#: core/components/account/functions.php:1719
+#: core/components/modals/functions.php:37
+msgid "or copy and paste the following link into your browser:"
+msgstr "或者将以下链接复制并粘贴到浏览器中："
+
+#: core/components/account/functions.php:1731
+msgid "Verify your email address"
+msgstr "请验证您的电子邮箱地址"
+
+#: core/components/account/functions.php:1747
+msgid "Sign in to save this property to your favorites."
+msgstr "登录后，可将该房源保存至收藏夹。"
+
+#: core/components/account/functions.php:1768
+msgid "You must be logged in."
+msgstr "您必须先登录。"
+
+#: core/components/account/functions.php:1773
+msgid "Verification email resent. Check your email."
+msgstr "已重新发送验证邮件。请查收您的邮件。"
+
+#: core/components/account/functions.php:1913
+msgid "This property is not a distress deal. Below Market Score : "
+msgstr "该房产并非急售房源。市场评分低于市场水平："
+
+#: core/components/common/cookies/cookies.php:8
+msgid "We use cookies"
+msgstr "我们使用 Cookie"
+
+#: core/components/common/cookies/cookies.php:10
+msgid ""
+"We use cookies to improve your browsing experience, analyze site traffic,\n"
+"\t\t\t\t\t\t\t\tand personalize content. By clicking “Accept”, you agree to our use of cookies."
+msgstr ""
+"我们使用 Cookie 来改善您的浏览体验、分析网站流量，\n"
+"并提供个性化内容。点击“接受”即表示您同意我们使用 Cookie。"
+
+#: core/components/common/cookies/cookies.php:17
+msgid "Decline"
+msgstr "下降"
+
+#: core/components/common/cookies/cookies.php:20
+msgid "Accept"
+msgstr "接受"
+
+#: core/components/common/functions.php:20
+#: core/components/sections/explore-by-beds.php:15
+#: core/components/sections/explore-by-beds.php:23
+#: core/components/sections/explore-by-beds.php:32
+#: core/components/sections/explore-by-beds.php:42
+#: core/includes/registers/post-types/properties.php:10
+msgid "Properties"
+msgstr "房产"
+
+#: core/components/common/functions.php:33
+msgid "Off Plan Properties"
+msgstr "期房"
+
+#: core/components/common/functions.php:38
+msgid "Secondary Listings"
+msgstr "二次上市"
+
+#: core/components/common/functions.php:43
+msgid "Distress Deals"
+msgstr "急售房源"
+
+#: core/components/common/functions.php:60
+msgid "Projects in UAE"
+msgstr "阿联酋的项目"
+
+#: core/components/common/nav.php:28
+msgid "Close menu"
+msgstr "关闭菜单"
+
+#: core/components/common/nav.php:62
+#: core/template-parts/account/profile-client.php:42
+#: core/template-parts/account/profile.php:72
+msgid "Logout"
+msgstr "注销"
+
+#: core/components/common/nav.php:68
+#: core/components/modals/create-modal.php:172
+#: core/components/modals/forgot-modal.php:23
+#: core/components/modals/signin-modal.php:10
+#: core/components/modals/signin-modal.php:43
+#: core/template-parts/account/login-form.php:20
+#: core/template-parts/account/login-form.php:63
+#: core/template-parts/common/header.php:33
+msgid "Sign in"
+msgstr "登录"
+
+#: core/components/common/notifications/notifications.php:14
+msgid "Your property has been submitted successfully and saved as draft. Wait approve."
+msgstr "您的房产信息已成功提交，并已保存为草稿。请等待审核。"
+
+#: core/components/common/notifications/notifications.php:15
+msgid "Your profile has been created successfully."
+msgstr "您的个人资料已成功创建。"
+
+#: core/components/common/notifications/notifications.php:16
+msgid "Your profile has been updated."
+msgstr "您的个人资料已更新。"
+
+#: core/components/common/notifications/notifications.php:17
+msgid "Your property has been deleted."
+msgstr "您的房产已被删除。"
+
+#: core/components/common/notifications/notifications.php:18
+msgid "Your password has been updated. Now you can login."
+msgstr "您的密码已更新。现在您可以登录了。"
+
+#: core/components/common/notifications/notifications.php:19
+msgid "Your email has been verified successfully."
+msgstr "您的电子邮件地址已成功验证。"
+
+#: core/components/common/notifications/notifications.php:22
+msgid "Security error. Please try again."
+msgstr "安全错误。请重试。"
+
+#: core/components/common/notifications/notifications.php:23
+msgid "Validation error. Please check your input and try again."
+msgstr "验证错误。请检查您的输入并重试。"
+
+#: core/components/common/notifications/notifications.php:24
+msgid "Please enter login and password."
+msgstr "请输入用户名和密码。"
+
+#: core/components/common/notifications/notifications.php:25
+msgid "Please fill in all required fields."
+msgstr "请填写所有必填项。"
+
+#: core/components/common/notifications/notifications.php:26
+msgid "This email is already registered. Please use another email."
+msgstr "该邮箱已注册。请使用另一个邮箱。"
+
+#: core/components/common/notifications/notifications.php:27
+msgid "An error occurred while updating your profile. Please try again later."
+msgstr "更新个人资料时发生错误。请稍后再试。"
+
+#: core/components/common/notifications/notifications.php:28
+msgid "An error occurred while uploading your avatar. Please try again later."
+msgstr "上传头像时发生错误。请稍后再试。"
+
+#: core/components/common/notifications/notifications.php:29
+msgid "Your password reset link has expired. Please request a new one."
+msgstr "您的密码重置链接已过期。请重新申请一个。"
+
+#: core/components/common/notifications/notifications.php:30
+msgid "Your password must be at least 8 characters long."
+msgstr "您的密码必须至少包含 8 个字符。"
+
+#: core/components/common/notifications/notifications.php:31
+msgid "Your password and confirmation password do not match."
+msgstr "您的密码与确认密码不一致。"
+
+#: core/components/common/notifications/notifications.php:32
+msgid "Invalid or expired verification token."
+msgstr "验证令牌无效或已过期。"
+
+#: core/components/common/notifications/notifications.php:35
+msgid "Unknown error occurred. Please try again later."
+msgstr "发生未知错误。请稍后再试。"
+
+#: core/components/common/notifications/notifications.php:51
+msgid "Close notification"
+msgstr "关闭通知"
+
+#: core/components/common/subscribe-form/functions.php:13
+msgid "Please provide a valid email address."
+msgstr "请提供一个有效的电子邮箱地址。"
+
+#: core/components/common/subscribe-form/functions.php:35
+msgid "This email is already subscribed."
+msgstr "该邮箱已订阅。"
+
+#: core/components/common/subscribe-form/functions.php:49
+msgid "An error occurred while subscribing. Please try again later."
+msgstr "订阅时发生错误。请稍后再试。"
+
+#: core/components/common/subscribe-form/functions.php:54
+msgid "Thank you for subscribing!"
+msgstr "感谢您的订阅！"
+
+#: core/components/common/subscribe-form/subscribe-form.php:10
+msgid "Keep Yourself Up to Date"
+msgstr "随时掌握最新动态"
+
+#: core/components/common/subscribe-form/subscribe-form.php:12
+msgid "Your email address"
+msgstr "您的电子邮箱地址"
+
+#: core/components/common/subscribe-form/subscribe-form.php:23
+msgid "Subscribe"
+msgstr "订阅"
+
+#: core/components/components-functions.php:207
+#: core/components/units/units-by-beds.php:21
+#: core/includes/entities/class-entity-property.php:271
+#: core/includes/entities/class-entity-unit.php:176
+#: core/includes/entities/class-entity-unit.php:191
+#: template-parts/sections/single/dropdowns.php:20
+msgid "AED"
+msgstr "AED"
+
+#: core/components/components-functions.php:224
+msgctxt "handover quarter"
+msgid "Q1"
+msgstr "第一季度"
+
+#: core/components/components-functions.php:225
+msgctxt "handover quarter"
+msgid "Q2"
+msgstr "第二季度"
+
+#: core/components/components-functions.php:226
+msgctxt "handover quarter"
+msgid "Q3"
+msgstr "第三季度"
+
+#: core/components/components-functions.php:227
+msgctxt "handover quarter"
+msgid "Q4"
+msgstr "第四季度"
+
+#. translators: 1: quarter, 2: year.
+#: core/components/components-functions.php:232
+msgctxt "handover date"
+msgid "%1$s %2$d"
+msgstr "%1$s %2$d"
+
+#: core/components/email/functions.php:4
+msgid "Mailer"
+msgstr "梅勒"
+
+#. translators: option of the delivery date filter, projects already handed over.
+#: core/components/filters/functions.php:323
+#: core/components/filters/functions.php:848
+msgctxt "delivery filter"
+msgid "Ready"
+msgstr "现房"
+
+#: core/components/filters/functions.php:330
+#: core/components/filters/functions.php:852
+msgid "In Construction"
+msgstr "正在建设中"
+
+#: core/components/filters/functions.php:341
+msgid "All Years"
+msgstr "所有年份"
+
+#: core/components/filters/functions.php:350
+#: core/components/filters/functions.php:861
+#: core/includes/registers/post-types/locations.php:10
+#: core/template-parts/account/edit-property.php:191
+#: core/template-parts/filters/result-filters.php:61
+#: core/template-parts/properties/property-single.php:111
+#: core/template-parts/properties/property-single.php:220
+#: core/template-parts/properties/property-units-list.php:28
+#: single-unit.php:291
+#: single-unit.php:380
+#: src/js/map/map.js:276
+msgid "Location"
+msgstr "位置"
+
+#: core/components/filters/functions.php:354
+msgid "Handover Year Before"
+msgstr "移交前一年"
+
+#: core/components/filters/functions.php:355
+msgid "Completion Year After"
+msgstr "竣工年份后"
+
+#: core/components/filters/functions.php:359
+#: core/components/filters/functions.php:869
+msgid "Price (AED)"
+msgstr "价格（迪拉姆）"
+
+#: core/components/filters/functions.php:366
+#: core/components/filters/functions.php:876
+#: core/includes/entities/class-entity-property.php:650
+msgid "Property Type"
+msgstr "房产类型"
+
+#: core/components/filters/functions.php:370
+#: core/components/filters/functions.php:880
+#: core/components/filters/functions.php:904
+msgid "Any"
+msgstr "在那里"
+
+#: core/components/filters/functions.php:375
+#: core/components/filters/functions.php:885
+#: core/includes/registers/post-types/developers.php:11
+#: core/includes/registers/post-types/developers.php:37
+#: core/template-parts/account/edit-property.php:128
+#: core/template-parts/filters/result-filters.php:268
+#: core/template-parts/filters/search-tabs.php:163
+#: src/js/map/html.js:58
+msgid "Developer"
+msgstr "开发商"
+
+#: core/components/filters/functions.php:379
+#: core/template-parts/cards/map-sidebar.php:85
+#: src/js/map/html.js:66
+msgid "Area"
+msgstr "区域"
+
+#: core/components/filters/functions.php:398
+msgctxt "search tab"
+msgid "Available"
+msgstr "有货"
+
+#: core/components/filters/functions.php:407
+#: core/template-parts/account/edit-unit.php:271
+#: core/template-parts/filters/search-tabs.php:78
+msgid "Bedrooms"
+msgstr "卧室"
+
+#: core/components/filters/functions.php:411
+#: core/template-parts/filters/search-tabs.php:142
+msgid "District"
+msgstr "区"
+
+#: core/components/filters/functions.php:418
+msgctxt "search tab"
+msgid "In construction"
+msgstr "在建设中"
+
+#: core/components/filters/functions.php:447
+#: core/components/units/units-by-beds.php:78
+#: core/includes/entities/class-entity-property.php:127
+#: core/includes/entities/class-entity-property.php:133
+#: core/includes/entities/class-entity-unit.php:206
+#: core/includes/entities/class-entity-unit.php:506
+#: core/template-parts/cards/map-sidebar.php:77
+#: core/template-parts/cards/map-sidebar.php:78
+#: core/template-parts/cards/unit-card.php:32
+#: core/template-parts/cards/unit-square-card.php:31
+#: core/template-parts/filters/result-filters.php:164
+#: src/js/common/beds-baths.js:11
+#: src/js/map/html.js:62
+#: src/js/map/html.js:63
+msgid "Beds"
+msgstr "床"
+
+#: core/components/filters/functions.php:451
+#: core/includes/entities/class-entity-property.php:131
+#: core/includes/entities/class-entity-property.php:138
+#: core/includes/entities/class-entity-unit.php:204
+#: core/includes/entities/class-entity-unit.php:505
+#: core/template-parts/cards/unit-card.php:33
+#: core/template-parts/cards/unit-square-card.php:32
+#: src/js/common/beds-baths.js:16
+msgid "Studio"
+msgstr "单间公寓"
+
+#: core/components/filters/functions.php:500
+#: core/includes/entities/class-entity-property.php:145
+#: core/includes/entities/class-entity-property.php:149
+#: core/includes/entities/class-entity-unit.php:217
+#: core/includes/entities/class-entity-unit.php:516
+#: template-parts/sections/single/dropdowns.php:68
+msgid "Baths"
+msgstr "浴场"
+
+#: core/components/filters/functions.php:596
+msgid "Price: high to low"
+msgstr "价格：从高到低"
+
+#: core/components/filters/functions.php:600
+msgid "Price: low to high"
+msgstr "价格：从低到高"
+
+#: core/components/filters/functions.php:604
+msgid "Newest first"
+msgstr "最新优先"
+
+#: core/components/filters/functions.php:608
+msgid "Oldest first"
+msgstr "按时间倒序排列"
+
+#: core/components/filters/functions.php:612
+msgid "Handover: soonest first"
+msgstr "交接：先到先得"
+
+#: core/components/filters/functions.php:624
+msgctxt "listing sort"
+msgid "Recommended"
+msgstr "推荐"
+
+#: core/components/filters/functions.php:844
+msgid "Any year"
+msgstr "任意一年"
+
+#: core/components/filters/functions.php:865
+msgid "Available"
+msgstr "有货"
+
+#: core/components/filters/functions.php:1236
+#: core/template-parts/search-results/properties-list.php:63
+#: core/template-parts/search-results/tabs.php:63
+#: core/template-parts/search-results/units-list.php:56
+msgid "Items not found"
+msgstr "未找到相关项目"
+
+#: core/components/filters/functions.php:1247
+#: core/components/filters/functions.php:1351
+msgid "%s property found"
+msgid_plural "%s properties found"
+msgstr[0] "找到 %s 套房产"
+
+#: core/components/filters/functions.php:1339
+msgid "Properties not found"
+msgstr "未找到相关房产"
+
+#. translators: %s: language code.
+#: core/components/locations/functions.php:101
+msgid "Description (%s)"
+msgstr "描述 (%s)"
+
+#: core/components/locations/functions.php:111
+msgid "Shown on pages in this language. Left empty, the language shows no description."
+msgstr "显示在该语言的页面上。若留空，则该语言不显示任何描述。"
+
+#: core/components/modals/boost-info-modal.php:11
+#: core/components/modals/boost-modal.php:10
+msgid "Boost your property"
+msgstr "提升您的房产价值"
+
+#: core/components/modals/boost-info-modal.php:20
+msgid ""
+"The Gold Star Boost Program is an exclusive visibility tool created for \n"
+"\t\t\t\t\t\tsellers and agents who demand the \"top spot.\" By leveraging your earned Star Points, you can \n"
+"\t\t\t\t\t\tinstantly transform any standard listing into a featured powerhouse, ensuring your property is \n"
+"\t\t\t\t\t\tthe first thing potential buyers see when they start their search."
+msgstr ""
+"“金星推广计划”是一项专为\n"
+"追求“头条位置”的卖家和经纪人打造的独家曝光工具。 通过利用您赚取的星点，您可以\n"
+"将任何标准房源瞬间转化为引人注目的明星房源，确保您的房产\n"
+"成为潜在买家开始搜索时首先看到的内容。"
+
+#: core/components/modals/boost-info-modal.php:27
+msgid "How much does it cost?"
+msgstr "这要多少钱？"
+
+#: core/components/modals/boost-info-modal.php:30
+msgid ""
+"Boost costs are based on your selected timeframe. For example, you can \n"
+"\t\t\t\t\tsecure 24 hours of top-tier visibility for 250 points."
+msgstr ""
+"推广费用取决于您选择的时间段。例如，您可以\n"
+"使用250点获得24小时的顶级曝光。"
+
+#: core/components/modals/boost-info-modal.php:36
+msgid "How long is the boost active?"
+msgstr "增强效果会持续多长时间？"
+
+#: core/components/modals/boost-info-modal.php:40
+msgid ""
+"Your property will hold the \"Top Spot\" for the full duration you select, \n"
+"\t\t\t\t\t\tstarting the exact moment you hit activate."
+msgstr ""
+"在您选择的整个期间内，您的房产将占据“榜首位置”，\n"
+"从您点击“激活”的那一刻起即开始计算。"
+
+#: core/components/modals/boost-info-modal.php:45
+msgid "What happens after the boost ends?"
+msgstr "加成效果结束后会发生什么？"
+
+#: core/components/modals/boost-info-modal.php:48
+msgid ""
+"Your listing will return to its standard position in the search results. \n"
+"\t\t\t\t\t\tTo maintain your lead, you can redeploy another boost at any time to stay front and center."
+msgstr ""
+"您的列表将恢复到搜索结果中的标准位置。\n"
+"若要保持领先地位，您可以随时再次使用推广功能，以保持在搜索结果的最前端。"
+
+#: core/components/modals/boost-modal.php:22
+msgid "Choose how many days you want to boost this listing. During the boost period,"
+msgstr "请选择您希望推广此商品的时长（天数）。在推广期间，"
+
+#: core/components/modals/boost-modal.php:23
+msgid " your listing will receive higher priority and appear more often to potential buyers."
+msgstr " 您的房源将获得更高的优先级，并会更频繁地展示给潜在买家。"
+
+#: core/components/modals/boost-modal.php:41
+#: core/components/modals/create-modal.php:127
+#: core/template-parts/account/edit-property.php:130
+#: core/template-parts/account/edit-property.php:192
+#: core/template-parts/account/edit-property.php:211
+#: core/template-parts/account/edit-unit.php:238
+#: core/template-parts/account/edit-unit.php:256
+#: core/template-parts/account/login-form.php:202
+#: core/template-parts/filters/result-filters.php:169
+#: core/template-parts/ui/dropdown.php:12
+#: src/js/common/beds-baths.js:19
+#: src/js/filters.js:27
+msgid "Select"
+msgstr "选择"
+
+#: core/components/modals/boost-modal.php:57
+msgid "Boost"
+msgstr "增强"
+
+#: core/components/modals/broker-modal.php:24
+msgid "Hello, I am interested in property"
+msgstr "您好，我对房产很感兴趣"
+
+#: core/components/modals/broker-modal.php:34
+#: core/template-parts/cards/unit-card.php:187
+#: core/template-parts/common/contact-panel.php:66
+#: single-unit.php:173
+msgid "Contact broker"
+msgstr "联系经纪人"
+
+#: core/components/modals/broker-modal.php:42
+#: core/components/modals/quote-modal.php:44
+msgid "You can get more information about the available properties, special deals and prices."
+msgstr "您可以了解更多关于可选房源、特别优惠和价格的信息。"
+
+#: core/components/modals/broker-modal.php:48
+msgid "We work directly with brokers"
+msgstr "我们直接与经纪人合作"
+
+#: core/components/modals/broker-modal.php:53
+#: core/components/modals/quote-modal.php:54
+#: template-parts/sections/index/about.php:20
+msgid "We facilitate the entire process for you"
+msgstr "我们将为您全程提供协助"
+
+#: core/components/modals/broker-modal.php:58
+#: core/components/modals/quote-modal.php:59
+#: template-parts/sections/index/about.php:25
+msgid "We don’t add anything on top of the price"
+msgstr "我们不会在价格基础上额外加收任何费用"
+
+#: core/components/modals/broker-modal.php:69
+msgid "Phone"
+msgstr "电话"
+
+#: core/components/modals/broker-modal.php:78
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+#: core/components/modals/create-modal.php:21
+#: core/components/modals/create-modal.php:167
+#: core/components/modals/signin-modal.php:27
+#: core/template-parts/account/login-form.php:26
+#: core/template-parts/account/login-form.php:244
+msgid "Create account"
+msgstr "创建账户"
+
+#: core/components/modals/create-modal.php:29
+msgid "What account gives you:"
+msgstr "该账户为您提供："
+
+#: core/components/modals/create-modal.php:35
+msgid "Bookmark your favorites"
+msgstr "将您喜爱的内容添加到书签"
+
+#: core/components/modals/create-modal.php:40
+msgid "Get updates about new listings"
+msgstr "获取新房源的最新动态"
+
+#: core/components/modals/create-modal.php:52
+#: core/template-parts/account/login-form.php:105
+#: core/template-parts/account/login-form.php:107
+msgid "First name"
+msgstr "名字"
+
+#: core/components/modals/create-modal.php:58
+#: core/template-parts/account/email-verification.php:15
+msgid "Email"
+msgstr "电子邮件"
+
+#: core/components/modals/create-modal.php:64
+#: core/components/modals/signin-modal.php:37
+#: core/template-parts/account/login-form.php:52
+#: core/template-parts/account/login-form.php:128
+#: core/template-parts/account/reset-password.php:34
+msgid "Password"
+msgstr "密码"
+
+#: core/components/modals/create-modal.php:70
+#: core/template-parts/account/login-form.php:136
+msgid "Repeat Password"
+msgstr "再次输入密码"
+
+#: core/components/modals/create-modal.php:78
+#: core/template-parts/account/login-form.php:145
+msgid "Choose your role"
+msgstr "选择您的角色"
+
+#: core/components/modals/create-modal.php:109
+#: core/template-parts/account/login-form.php:177
+#: core/template-parts/account/profile-client.php:151
+#: core/template-parts/account/profile.php:421
+msgid "Phone number"
+msgstr "电话号码"
+
+#: core/components/modals/create-modal.php:116
+#: core/includes/registers/post-types/agencies.php:10
+#: core/includes/registers/post-types/agencies.php:36
+#: core/template-parts/account/profile.php:378
+msgid "Agency"
+msgstr "房产中介"
+
+#: core/components/modals/create-modal.php:119
+#: core/template-parts/account/login-form.php:191
+#: core/template-parts/account/profile.php:381
+msgid "If you can’t find your agency in the list, please contact us at "
+msgstr "如果您在列表中找不到您的代理机构，请通过以下方式联系我们："
+
+#: core/components/modals/create-modal.php:121
+#: core/template-parts/account/login-form.php:194
+#: core/template-parts/account/profile.php:384
+msgid "Your request will be reviewed within 24 hours."
+msgstr "您的请求将在24小时内得到审核。"
+
+#: core/components/modals/create-modal.php:132
+msgid "vector arrow"
+msgstr "矢量箭头"
+
+#: core/components/modals/create-modal.php:154
+#: core/template-parts/account/login-form.php:231
+msgid "I have read and agree to the"
+msgstr "我已阅读并同意"
+
+#: core/components/modals/create-modal.php:156
+#: core/template-parts/account/login-form.php:233
+msgid "Terms of Use"
+msgstr "使用条款"
+
+#: core/components/modals/create-modal.php:158
+#: core/template-parts/account/login-form.php:235
+msgid "and"
+msgstr "和"
+
+#: core/components/modals/create-modal.php:160
+#: core/template-parts/account/login-form.php:237
+msgid "Privacy Policy"
+msgstr "隐私政策"
+
+#: core/components/modals/create-modal.php:170
+msgid "Have an account?"
+msgstr "已有账号吗？"
+
+#: core/components/modals/forgot-modal.php:6
+msgid "Forgot password"
+msgstr "忘记密码"
+
+#: core/components/modals/forgot-modal.php:16
+#: core/components/modals/forgot-modal.php:18
+#: core/components/modals/signin-modal.php:33
+#: core/template-parts/account/login-form.php:48
+msgid "Email or username"
+msgstr "电子邮箱或用户名"
+
+#: core/components/modals/forgot-modal.php:26
+msgid "Send password reset link"
+msgstr "发送密码重置链接"
+
+#: core/components/modals/functions.php:13
+msgid "Email is required."
+msgstr "必须填写电子邮箱。"
+
+#: core/components/modals/functions.php:18
+msgid "No user found with this email."
+msgstr "未找到该邮箱的用户。"
+
+#: core/components/modals/functions.php:23
+msgid "Error generating reset key."
+msgstr "生成重置密钥时出错。"
+
+#: core/components/modals/functions.php:28
+msgid "Hello,"
+msgstr "你好，"
+
+#: core/components/modals/functions.php:30
+msgid ""
+"We received a request to reset the password for your EastProperty account.\n"
+"\tTo create a new password, please click the link below:"
+msgstr ""
+"我们收到了一条关于重置您 EastProperty 账户密码的请求。\n"
+"  如需设置新密码，请点击以下链接："
+
+#: core/components/modals/functions.php:35
+msgid "Reset password"
+msgstr "重置密码"
+
+#: core/components/modals/functions.php:42
+msgid "If you did not request a password reset, you can safely ignore this email. Your password will remain unchanged."
+msgstr "如果您并未申请重置密码，可以放心忽略这封邮件。您的密码将保持不变。"
+
+#: core/components/modals/functions.php:49
+msgid "Password Reset Request"
+msgstr "密码重置请求"
+
+#: core/components/modals/functions.php:54
+msgid "Password reset request sent to your email address. Check your inbox."
+msgstr "已向您的电子邮箱发送了密码重置请求。请查看您的收件箱。"
+
+#: core/components/modals/map-coords-picker.php:17
+msgid "Pick property coordinates"
+msgstr "选择对象坐标"
+
+#: core/components/modals/quote-modal.php:36
+msgid "Request a quote"
+msgstr "索取报价"
+
+#: core/components/modals/quote-modal.php:49
+#: template-parts/sections/index/about.php:15
+msgid "We work directly with builders"
+msgstr "我们直接与建筑商合作"
+
+#: core/components/modals/quote-modal.php:69
+msgid "Developer website"
+msgstr "开发商官网"
+
+#: core/components/modals/quote-modal.php:78
+#: core/template-parts/properties/property-single.php:69
+msgid "Contact us"
+msgstr "联系我们"
+
+#: core/components/modals/signin-modal.php:24
+msgid "Don’t have an account?"
+msgstr "还没有账号吗？"
+
+#: core/components/modals/signin-modal.php:46
+#: core/template-parts/account/login-form.php:73
+msgid "Forgot password?"
+msgstr "忘记密码了吗？"
+
+#: core/components/properties/filter.php:19
+msgid "Buy properties in UAE"
+msgstr "在阿联酋购买房产"
+
+#: core/components/properties/filter.php:27
+#: single-developers.php:41
+msgid "projects found"
+msgstr "找到的项目"
+
+#: core/components/properties/functions.php:152
+msgid "Apartment"
+msgstr "公寓"
+
+#: core/components/properties/functions.php:153
+msgid "Villa"
+msgstr "别墅"
+
+#: core/components/properties/functions.php:154
+msgid "Townhouse"
+msgstr "联排别墅"
+
+#: core/components/properties/functions.php:155
+msgid "Penthouse"
+msgstr "顶层公寓"
+
+#: core/components/properties/functions.php:156
+msgid "House"
+msgstr "房子"
+
+#: core/components/properties/functions.php:157
+msgid "Office"
+msgstr "办公室"
+
+#: core/components/properties/functions.php:158
+msgid "Freehold"
+msgstr "永久产权"
+
+#: core/components/properties/functions.php:159
+msgid "Leasehold"
+msgstr "租赁权"
+
+#: core/components/properties/functions.php:160
+msgid "Commonhold"
+msgstr "共同持有"
+
+#: core/components/properties/functions.php:161
+msgid "Strata"
+msgstr "街道"
+
+#: core/components/properties/functions.php:162
+msgid "Usufruct"
+msgstr "使用收益权"
+
+#: core/components/properties/functions.php:163
+msgid "Joint Ownership"
+msgstr "共同所有权"
+
+#: core/components/properties/functions.php:164
+msgid "Fractional Ownership"
+msgstr "分时所有权"
+
+#: core/components/properties/functions.php:726
+#: core/includes/entities/class-entity-property.php:556
+#: core/includes/entities/class-entity-property.php:623
+#: core/includes/entities/class-entity-unit.php:373
+#: core/includes/entities/class-entity-unit.php:441
+msgid "Ready"
+msgstr "现房"
+
+#: core/components/properties/functions.php:731
+#: core/includes/entities/class-entity-property.php:562
+#: core/includes/entities/class-entity-unit.php:379
+#: core/includes/entities/class-entity-unit.php:447
+msgid "Handover:"
+msgstr "移交："
+
+#. translators: 1: project name, 2: developer name, 3: project URL.
+#: core/components/properties/functions.php:985
+msgid "Hello! I am interested in the %1$s project by %2$s. Could you tell me more about it? %3$s"
+msgstr "你好！我对 %2$s 的 %1$s 项目很感兴趣。你能向我详细介绍一下吗？%3$s"
+
+#. translators: 1: project name, 2: project URL.
+#: core/components/properties/functions.php:995
+msgid "Hello! I am interested in the %1$s project. Could you tell me more about it? %2$s"
+msgstr "您好！我对 %1$s 项目很感兴趣。您能向我详细介绍一下吗？%2$s"
+
+#: core/components/properties/property-single.php:59
+msgid "Show all properties in this project"
+msgstr "显示该项目中的所有房源"
+
+#: core/components/sections/explore-by-beds.php:11
+msgid "Studio or 1 bedroom"
+msgstr "单间公寓或一居室"
+
+#: core/components/sections/explore-by-beds.php:15
+#: core/components/sections/explore-by-beds.php:23
+#: core/components/sections/explore-by-beds.php:32
+#: core/components/sections/explore-by-beds.php:42
+#: core/includes/registers/post-types/properties.php:11
+#: core/includes/registers/post-types/properties.php:34
+msgid "Property"
+msgstr "房产"
+
+#: core/components/sections/explore-by-beds.php:19
+msgid "2 bedrooms"
+msgstr "2间卧室"
+
+#: core/components/sections/explore-by-beds.php:28
+msgid "3 bedrooms"
+msgstr "3间卧室"
+
+#: core/components/sections/explore-by-beds.php:38
+msgid "3+ bedrooms"
+msgstr "3间及以上卧室"
+
+#: core/components/sections/explore-by-beds.php:49
+msgid "Explore properties by number of bedrooms"
+msgstr "按卧室数量浏览房源"
+
+#: core/components/sections/explore-by-beds.php:50
+#: core/components/sections/explore-by-districts.php:41
+msgid "Quick picks for you in UAE"
+msgstr "阿联酋的快速推荐"
+
+#: core/components/sections/explore-by-beds.php:52
+#: core/includes/registers/post-types/properties.php:15
+#: core/includes/registers/post-types/properties.php:31
+msgid "All Properties"
+msgstr "所有房产"
+
+#: core/components/sections/explore-by-districts.php:30
+msgid "Projects"
+msgstr "项目"
+
+#: core/components/sections/explore-by-districts.php:31
+#: core/template-parts/account/edit-unit.php:235
+msgid "Project"
+msgstr "项目"
+
+#: core/components/sections/explore-by-districts.php:40
+msgid "Explore projects by district"
+msgstr "按区浏览项目"
+
+#: core/components/sections/explore-by-districts.php:43
+msgid "All Projects"
+msgstr "所有项目"
+
+#: core/components/security/functions.php:15
+msgid "Sorry, you are not allowed to access this resource."
+msgstr "抱歉，您无权访问此资源。"
+
+#. translators: 1: current page number, 2: total number of pages.
+#: core/components/seo/functions.php:626
+msgid "Page %1$d of %2$d"
+msgstr "第 %1$d 页，共 %2$d 页"
+
+#: core/components/units/featured.php:22
+msgid "Featured new projects in the UAE"
+msgstr "阿联酋精选新项目"
+
+#: core/components/units/featured.php:23
+msgid "DISTRESS PROPERTIES"
+msgstr "急售房产"
+
+#: core/components/units/featured.php:24
+msgid "Don’t wait till it’s late"
+msgstr "别等到为时已晚"
+
+#: core/components/units/featured.php:25
+msgid "Be first to explore new off-plan launches — early access, new prices, and direct WhatsApp contact."
+msgstr "抢先探索最新期房项目——优先看房、最新价格，并可通过WhatsApp直接联系。"
+
+#: core/components/units/featured.php:29
+msgid "See all new projects"
+msgstr "查看所有新项目"
+
+#: core/components/units/filter.php:9
+msgid "Available Units in UAE"
+msgstr "阿联酋可售房源"
+
+#: core/components/units/filter.php:28
+msgid "properties found"
+msgstr "找到的房产"
+
+#: core/components/units/functions.php:19
+msgid "Off-plan"
+msgstr "期房"
+
+#: core/components/units/functions.php:20
+msgid "Secondary"
+msgstr "二手房"
+
+#: core/components/units/functions.php:21
+#: core/template-parts/filters/search-tabs.php:64
+msgid "Distress"
+msgstr "急售"
+
+#. translators: 1: unit name, 2: unit URL.
+#: core/components/units/functions.php:625
+msgid "Hello! I am interested in %1$s. Could you tell me more about it? %2$s"
+msgstr "您好！我对 %1$s 很感兴趣。您能向我详细介绍一下吗？%2$s"
+
+#: core/components/units/similar.php:64
+msgid "More properties like this"
+msgstr "更多类似房源"
+
+#: core/components/units/similar.php:67
+#: core/template-parts/properties/property-single.php:161
+#: page-mortgage-calculator.php:23
+msgid "All properties"
+msgstr "所有房产"
+
+#: core/components/units/units-by-beds.php:10
+msgid "Pricing"
+msgstr "定价"
+
+#: core/components/units/units-by-beds.php:36
+#: template-parts/sections/single/dropdowns.php:32
+#: template-parts/sections/single/dropdowns.php:61
+#: src/js/common/beds-baths.js:11
+msgid "Bed"
+msgstr "世界"
+
+#: core/components/units/units-by-beds.php:43
+#: core/components/units/units-by-beds.php:82
+#: core/includes/entities/class-entity-property.php:157
+#: core/includes/entities/class-entity-property.php:161
+#: core/includes/entities/class-entity-unit.php:228
+#: core/includes/entities/class-entity-unit.php:524
+#: core/template-parts/cards/map-sidebar.php:86
+#: template-parts/sections/single/dropdowns.php:40
+#: template-parts/sections/single/dropdowns.php:75
+#: src/js/map/html.js:67
+msgid "sqft"
+msgstr "平方英尺"
+
+#: core/components/units/units-by-beds.php:56
+#: core/components/units/units-by-beds.php:60
+msgid "Floor plan for %s bed unit"
+msgstr "%s床位单元的平面图"
+
+#: core/components/units/units-by-beds.php:85
+#: core/template-parts/cards/large-card.php:59
+#: template-parts/sections/single/dropdowns.php:45
+msgid "from"
+msgstr "来自"
+
+#: core/includes/entities/class-entity-estate-user.php:265
+msgid "Your email address has been successfully verified."
+msgstr "您的电子邮箱地址已成功验证。"
+
+#: core/includes/entities/class-entity-estate-user.php:266
+msgid "You can now enjoy all the features of your account and start using our services."
+msgstr "现在，您可以享受账户的所有功能，并开始使用我们的服务。"
+
+#: core/includes/entities/class-entity-estate-user.php:274
+msgid "Email Verified"
+msgstr "电子邮件已验证"
+
+#: core/includes/entities/class-entity-property.php:571
+#: core/includes/entities/class-entity-unit.php:388
+#: core/includes/entities/class-entity-unit.php:455
+msgid "Popular"
+msgstr "热门"
+
+#: core/includes/entities/class-entity-property.php:579
+#: core/includes/entities/class-entity-unit.php:396
+#: core/includes/entities/class-entity-unit.php:462
+msgid "Premium Developer"
+msgstr "优质开发商"
+
+#: core/includes/entities/class-entity-property.php:626
+#: core/template-parts/account/edit-property.php:227
+msgid "Handover Date"
+msgstr "移交日期"
+
+#: core/includes/entities/class-entity-property.php:634
+msgid "Construction Started"
+msgstr "工程开工"
+
+#: core/includes/entities/class-entity-property.php:642
+msgid "Number of Buildings"
+msgstr "建筑物数量"
+
+#: core/includes/entities/class-entity-property.php:658
+msgid "Government Fee"
+msgstr "政府费用"
+
+#: core/includes/entities/class-entity-property.php:666
+msgid "Ownership Type"
+msgstr "所有权类型"
+
+#: core/includes/entities/class-entity-unit.php:217
+#: core/includes/entities/class-entity-unit.php:515
+msgid "1 Bath"
+msgstr "一次洗澡"
+
+#: core/includes/entities/class-entity-unit.php:696
+msgid "Gallery should not be empty"
+msgstr "图库不应为空"
+
+#: core/includes/entities/class-entity-unit.php:701
+msgid "Area should not be empty and must bigger than 50 sqft"
+msgstr "面积不应为空，且必须大于50平方英尺"
+
+#: core/includes/entities/class-entity-unit.php:709
+msgid "Price should not be empty and must bigger than 200 000 AED"
+msgstr "价格不得为空，且必须大于 200 000 阿联酋迪拉姆"
+
+#: core/includes/entities/class-entity-unit.php:719
+msgid "Your unit has been submitted and is waiting for approval. Please fix the following issues:"
+msgstr "您的作品已提交，目前正在等待审核。请修正以下问题："
+
+#: core/includes/entities/class-entity-unit.php:732
+msgid "Need to fix errors in your submitted property"
+msgstr "需要修正您提交的房产信息中的错误"
+
+#: core/includes/registers/post-types/agencies.php:7
+msgctxt "Post Type General Name"
+msgid "Agencies"
+msgstr "房产中介"
+
+#: core/includes/registers/post-types/agencies.php:8
+msgctxt "Post Type Singular Name"
+msgid "Agency"
+msgstr "房产中介"
+
+#: core/includes/registers/post-types/agencies.php:9
+msgid "Agencies"
+msgstr "房产中介"
+
+#: core/includes/registers/post-types/agencies.php:11
+msgid "Agency Archives"
+msgstr "机构档案"
+
+#: core/includes/registers/post-types/agencies.php:12
+msgid "Agency Attributes"
+msgstr "中介属性"
+
+#: core/includes/registers/post-types/agencies.php:13
+msgid "Parent Agency:"
+msgstr "主管部门："
+
+#: core/includes/registers/post-types/agencies.php:14
+msgid "All Agencies"
+msgstr "所有机构"
+
+#: core/includes/registers/post-types/agencies.php:15
+msgid "Add New Agency"
+msgstr "添加新代理商"
+
+#: core/includes/registers/post-types/agencies.php:16
+#: core/includes/registers/post-types/developers.php:17
+#: core/includes/registers/post-types/properties.php:17
+#: core/includes/registers/post-types/subscribers.php:17
+#: core/includes/registers/post-types/units.php:19
+msgid "Add New"
+msgstr "添加新内容"
+
+#: core/includes/registers/post-types/agencies.php:17
+msgid "New Agency"
+msgstr "新机构"
+
+#: core/includes/registers/post-types/agencies.php:18
+msgid "Edit Agency"
+msgstr "编辑机构"
+
+#: core/includes/registers/post-types/agencies.php:19
+msgid "Update Agency"
+msgstr "更新机构"
+
+#: core/includes/registers/post-types/agencies.php:20
+msgid "View Agency"
+msgstr "查看代理机构"
+
+#: core/includes/registers/post-types/agencies.php:21
+msgid "View Agencies"
+msgstr "查看代理机构"
+
+#: core/includes/registers/post-types/agencies.php:22
+msgid "Search Agency"
+msgstr "搜索机构"
+
+#: core/includes/registers/post-types/agencies.php:23
+#: core/includes/registers/post-types/developers.php:24
+#: core/includes/registers/post-types/properties.php:24
+#: core/includes/registers/post-types/subscribers.php:24
+#: core/includes/registers/post-types/units.php:26
+msgid "Not found"
+msgstr "未找到"
+
+#: core/includes/registers/post-types/agencies.php:24
+#: core/includes/registers/post-types/developers.php:25
+#: core/includes/registers/post-types/properties.php:25
+#: core/includes/registers/post-types/subscribers.php:25
+#: core/includes/registers/post-types/units.php:27
+msgid "Not found in Trash"
+msgstr "未在“废纸篓”中找到"
+
+#: core/includes/registers/post-types/agencies.php:25
+#: core/includes/registers/post-types/developers.php:26
+#: core/includes/registers/post-types/properties.php:26
+#: core/includes/registers/post-types/subscribers.php:26
+#: core/includes/registers/post-types/units.php:28
+msgid "Featured Image"
+msgstr "特色图片"
+
+#: core/includes/registers/post-types/agencies.php:26
+#: core/includes/registers/post-types/developers.php:27
+#: core/includes/registers/post-types/properties.php:27
+#: core/includes/registers/post-types/subscribers.php:27
+#: core/includes/registers/post-types/units.php:29
+msgid "Set featured image"
+msgstr "设置特色图片"
+
+#: core/includes/registers/post-types/agencies.php:27
+#: core/includes/registers/post-types/developers.php:28
+#: core/includes/registers/post-types/properties.php:28
+#: core/includes/registers/post-types/subscribers.php:28
+#: core/includes/registers/post-types/units.php:30
+msgid "Remove featured image"
+msgstr "删除特色图片"
+
+#: core/includes/registers/post-types/agencies.php:28
+#: core/includes/registers/post-types/developers.php:29
+#: core/includes/registers/post-types/properties.php:29
+#: core/includes/registers/post-types/subscribers.php:29
+#: core/includes/registers/post-types/units.php:31
+msgid "Use as featured image"
+msgstr "设为特色图片"
+
+#: core/includes/registers/post-types/agencies.php:29
+msgid "Insert agency"
+msgstr "插入代理机构"
+
+#: core/includes/registers/post-types/agencies.php:30
+msgid "Uploaded to this agency"
+msgstr "已上传至该机构"
+
+#: core/includes/registers/post-types/agencies.php:31
+msgid "Agencies list"
+msgstr "机构列表"
+
+#: core/includes/registers/post-types/agencies.php:32
+msgid "Agencies list navigation"
+msgstr "机构列表导航"
+
+#: core/includes/registers/post-types/agencies.php:33
+msgid "Filter agencies list"
+msgstr "筛选机构列表"
+
+#: core/includes/registers/post-types/agencies.php:37
+#: core/includes/registers/post-types/developers.php:38
+#: core/includes/registers/post-types/properties.php:35
+#: core/includes/registers/post-types/subscribers.php:38
+#: core/includes/registers/post-types/units.php:37
+msgid "Post Type Description"
+msgstr "文章类型说明"
+
+#: core/includes/registers/post-types/developers.php:8
+msgctxt "Post Type General Name"
+msgid "Developers"
+msgstr "开发商"
+
+#: core/includes/registers/post-types/developers.php:9
+msgctxt "Post Type Singular Name"
+msgid "Developer"
+msgstr "开发商"
+
+#: core/includes/registers/post-types/developers.php:10
+msgid "Developers"
+msgstr "开发商"
+
+#: core/includes/registers/post-types/developers.php:12
+msgid "Developer Archives"
+msgstr "开发商归档"
+
+#: core/includes/registers/post-types/developers.php:13
+msgid "Developer Attributes"
+msgstr "开发商属性"
+
+#: core/includes/registers/post-types/developers.php:14
+msgid "Parent Developer:"
+msgstr "上级开发商："
+
+#: core/includes/registers/post-types/developers.php:15
+msgid "All Developers"
+msgstr "全部开发商"
+
+#: core/includes/registers/post-types/developers.php:16
+msgid "Add New Developer"
+msgstr "添加开发商"
+
+#: core/includes/registers/post-types/developers.php:18
+msgid "New Developer"
+msgstr "新开发商"
+
+#: core/includes/registers/post-types/developers.php:19
+msgid "Edit Developer"
+msgstr "编辑开发商"
+
+#: core/includes/registers/post-types/developers.php:20
+msgid "Update Developer"
+msgstr "更新开发商"
+
+#: core/includes/registers/post-types/developers.php:21
+msgid "View Developer"
+msgstr "查看开发商"
+
+#: core/includes/registers/post-types/developers.php:22
+msgid "View Developers"
+msgstr "查看开发商"
+
+#: core/includes/registers/post-types/developers.php:23
+msgid "Search Developer"
+msgstr "搜索开发商"
+
+#: core/includes/registers/post-types/developers.php:30
+msgid "Add into developer"
+msgstr "添加到开发商"
+
+#: core/includes/registers/post-types/developers.php:31
+msgid "Uploaded to this developer"
+msgstr "已上传至该开发商"
+
+#: core/includes/registers/post-types/developers.php:32
+msgid "Developers list"
+msgstr "开发商列表"
+
+#: core/includes/registers/post-types/developers.php:33
+msgid "Developers list navigation"
+msgstr "开发商列表导航"
+
+#: core/includes/registers/post-types/developers.php:34
+msgid "Filter developers list"
+msgstr "筛选开发商列表"
+
+#: core/includes/registers/post-types/locations.php:9
+#: core/includes/registers/post-types/locations.php:17
+msgid "Locations"
+msgstr "地点"
+
+#: core/includes/registers/post-types/locations.php:11
+msgid "Search Locations"
+msgstr "搜索地点"
+
+#: core/includes/registers/post-types/locations.php:12
+msgid "All Locations"
+msgstr "所有地点"
+
+#: core/includes/registers/post-types/locations.php:13
+msgid "Edit Location"
+msgstr "编辑位置"
+
+#: core/includes/registers/post-types/locations.php:14
+msgid "Update Location"
+msgstr "更新位置"
+
+#: core/includes/registers/post-types/locations.php:15
+msgid "Add New Location"
+msgstr "添加新位置"
+
+#: core/includes/registers/post-types/locations.php:16
+msgid "New Location Name"
+msgstr "新地点名称"
+
+#: core/includes/registers/post-types/properties.php:8
+msgctxt "Post Type General Name"
+msgid "Properties"
+msgstr "房产"
+
+#: core/includes/registers/post-types/properties.php:9
+msgctxt "Post Type Singular Name"
+msgid "Property"
+msgstr "房产"
+
+#: core/includes/registers/post-types/properties.php:12
+msgid "Property Archives"
+msgstr "房产档案"
+
+#: core/includes/registers/post-types/properties.php:13
+msgid "Property Attributes"
+msgstr "房产属性"
+
+#: core/includes/registers/post-types/properties.php:14
+msgid "Parent Property:"
+msgstr "上级房产："
+
+#: core/includes/registers/post-types/properties.php:16
+msgid "Add New Property"
+msgstr "添加新房产"
+
+#: core/includes/registers/post-types/properties.php:18
+msgid "New Property"
+msgstr "新房源"
+
+#: core/includes/registers/post-types/properties.php:19
+msgid "Edit Property"
+msgstr "编辑房产"
+
+#: core/includes/registers/post-types/properties.php:20
+msgid "Update Property"
+msgstr "更新房产"
+
+#: core/includes/registers/post-types/properties.php:21
+msgid "View Property"
+msgstr "查看房源"
+
+#: core/includes/registers/post-types/properties.php:22
+msgid "View Properties"
+msgstr "查看房产"
+
+#: core/includes/registers/post-types/properties.php:23
+msgid "Search Property"
+msgstr "搜索房源"
+
+#: core/includes/registers/post-types/properties.php:30
+msgid "Properties insighted by this author"
+msgstr "该作者提供的房产信息"
+
+#: core/includes/registers/post-types/subscribers.php:8
+msgctxt "Post Type General Name"
+msgid "Subscribers"
+msgstr "订阅者"
+
+#: core/includes/registers/post-types/subscribers.php:9
+msgctxt "Post Type Singular Name"
+msgid "Subscriber"
+msgstr "订阅者"
+
+#: core/includes/registers/post-types/subscribers.php:10
+msgid "Subscribers"
+msgstr "订阅者"
+
+#: core/includes/registers/post-types/subscribers.php:11
+#: core/includes/registers/post-types/subscribers.php:37
+msgid "Subscriber"
+msgstr "订阅者"
+
+#: core/includes/registers/post-types/subscribers.php:12
+msgid "Subscriber Archives"
+msgstr "订阅者档案"
+
+#: core/includes/registers/post-types/subscribers.php:13
+msgid "Subscriber Attributes"
+msgstr "订阅者属性"
+
+#: core/includes/registers/post-types/subscribers.php:14
+msgid "Parent Subscriber:"
+msgstr "家长订阅用户："
+
+#: core/includes/registers/post-types/subscribers.php:15
+msgid "All Subscribers"
+msgstr "所有订阅者"
+
+#: core/includes/registers/post-types/subscribers.php:16
+msgid "Add New Subscriber"
+msgstr "添加新订阅者"
+
+#: core/includes/registers/post-types/subscribers.php:18
+msgid "New Subscriber"
+msgstr "新订阅用户"
+
+#: core/includes/registers/post-types/subscribers.php:19
+msgid "Edit Subscriber"
+msgstr "编辑订阅者"
+
+#: core/includes/registers/post-types/subscribers.php:20
+msgid "Update Subscriber"
+msgstr "更新订阅者"
+
+#: core/includes/registers/post-types/subscribers.php:21
+msgid "View Subscriber"
+msgstr "查看订阅者"
+
+#: core/includes/registers/post-types/subscribers.php:22
+msgid "View Subscribers"
+msgstr "查看订阅者"
+
+#: core/includes/registers/post-types/subscribers.php:23
+msgid "Search Subscriber"
+msgstr "搜索订阅者"
+
+#: core/includes/registers/post-types/subscribers.php:30
+msgid "Insert Subscriber"
+msgstr "插入订阅者"
+
+#: core/includes/registers/post-types/subscribers.php:31
+msgid "Uploaded to this Subscriber"
+msgstr "已上传至该订阅者"
+
+#: core/includes/registers/post-types/subscribers.php:32
+msgid "Subscribers list"
+msgstr "订阅者列表"
+
+#: core/includes/registers/post-types/subscribers.php:33
+msgid "Subscribers list navigation"
+msgstr "订阅者列表导航"
+
+#: core/includes/registers/post-types/subscribers.php:34
+msgid "Filter Subscribers list"
+msgstr "筛选订阅者列表"
+
+#: core/includes/registers/post-types/units.php:10
+msgctxt "Post Type General Name"
+msgid "Units"
+msgstr "房源"
+
+#: core/includes/registers/post-types/units.php:11
+msgctxt "Post Type Singular Name"
+msgid "Unit"
+msgstr "房源"
+
+#: core/includes/registers/post-types/units.php:12
+msgid "Units"
+msgstr "房源"
+
+#: core/includes/registers/post-types/units.php:13
+#: core/includes/registers/post-types/units.php:36
+#: src/js/map/html.js:53
+msgid "Unit"
+msgstr "房源"
+
+#: core/includes/registers/post-types/units.php:14
+msgid "Unit Archives"
+msgstr "单位档案"
+
+#: core/includes/registers/post-types/units.php:15
+msgid "Unit Attributes"
+msgstr "房源属性"
+
+#: core/includes/registers/post-types/units.php:16
+msgid "Parent Unit:"
+msgstr "主单元："
+
+#: core/includes/registers/post-types/units.php:17
+#: core/includes/registers/post-types/units.php:33
+msgid "All Units"
+msgstr "所有单位"
+
+#: core/includes/registers/post-types/units.php:18
+msgid "Add New Unit"
+msgstr "添加新单元"
+
+#: core/includes/registers/post-types/units.php:20
+msgid "New Unit"
+msgstr "新单元"
+
+#: core/includes/registers/post-types/units.php:21
+msgid "Edit Unit"
+msgstr "编辑单位"
+
+#: core/includes/registers/post-types/units.php:22
+#: core/template-parts/account/edit-unit.php:373
+msgid "Update Unit"
+msgstr "更新单元"
+
+#: core/includes/registers/post-types/units.php:23
+msgid "View Unit"
+msgstr "查看房源"
+
+#: core/includes/registers/post-types/units.php:24
+msgid "View Units"
+msgstr "查看房源"
+
+#: core/includes/registers/post-types/units.php:25
+msgid "Search Unit"
+msgstr "搜索单元"
+
+#: core/includes/registers/post-types/units.php:32
+msgid "Units insighted by this author"
+msgstr "该作者所撰写的单位"
+
+#: core/includes/registers/post-types/units.php:79
+#: single-unit.php:78
+msgid "Archived"
+msgstr "已归档"
+
+#: core/includes/registers/post-types/units.php:81
+msgid "Archived <span class=\"count\">(%s)</span>"
+msgid_plural "Archived <span class=\"count\">(%s)</span>"
+msgstr[0] "已归档 <span class=\"count\">(%s)</span>"
+
+#: core/template-parts/account/edit-property.php:21
+msgid "Edit property project:"
+msgstr "编辑房产项目："
+
+#: core/template-parts/account/edit-property.php:22
+msgid "Add new property project"
+msgstr "添加新房产项目"
+
+#: core/template-parts/account/edit-property.php:23
+msgid "Edit property project"
+msgstr "编辑房产项目"
+
+#: core/template-parts/account/edit-property.php:24
+msgid "Add property project"
+msgstr "添加房产项目"
+
+#: core/template-parts/account/edit-property.php:55
+#: core/template-parts/account/edit-unit.php:67
+msgid "My account"
+msgstr "我的账户"
+
+#: core/template-parts/account/edit-property.php:107
+#: core/template-parts/account/edit-unit.php:130
+msgid "Title"
+msgstr "标题"
+
+#: core/template-parts/account/edit-property.php:112
+msgid "azizi “beach oasis”"
+msgstr "azizi “海滩绿洲”"
+
+#: core/template-parts/account/edit-property.php:145
+msgid "Pick on map"
+msgstr "在地图上选择"
+
+#: core/template-parts/account/edit-property.php:151
+msgid "Latitude"
+msgstr "纬度"
+
+#: core/template-parts/account/edit-property.php:164
+msgid "Longitude"
+msgstr "经度"
+
+#: core/template-parts/account/edit-property.php:208
+msgid "Ownership type"
+msgstr "所有权类型"
+
+#: core/template-parts/account/edit-property.php:246
+msgid "Project is already completed / Ready"
+msgstr "项目已完成 / 已就绪"
+
+#: core/template-parts/account/edit-property.php:259
+msgid "Contain Property Types "
+msgstr "包含房产类型 "
+
+#: core/template-parts/account/edit-property.php:285
+#: core/template-parts/account/edit-unit.php:319
+#: core/template-parts/properties/property-single.php:211
+msgid "Description"
+msgstr "描述"
+
+#: core/template-parts/account/edit-property.php:314
+msgid "Update project"
+msgstr "更新项目"
+
+#: core/template-parts/account/edit-property.php:315
+#: single-unit.php:106
+#: single-unit.php:112
+msgid "Save"
+msgstr "保存"
+
+#: core/template-parts/account/edit-property.php:362
+#: core/template-parts/account/edit-unit.php:418
+msgid "Pictures"
+msgstr "图片"
+
+#: core/template-parts/account/edit-property.php:364
+#: core/template-parts/account/edit-unit.php:420
+msgid "Browse files"
+msgstr "浏览文件"
+
+#: core/template-parts/account/edit-unit.php:22
+msgid "Edit property:"
+msgstr "编辑房产："
+
+#: core/template-parts/account/edit-unit.php:22
+msgid "Add new property"
+msgstr "添加房产"
+
+#: core/template-parts/account/edit-unit.php:24
+#: core/template-parts/cards/large-card.php:124
+#: core/template-parts/cards/unit-card.php:153
+msgid "Edit property"
+msgstr "编辑房产"
+
+#: core/template-parts/account/edit-unit.php:24
+msgid "Add property"
+msgstr "添加房产"
+
+#: core/template-parts/account/edit-unit.php:134
+msgid "City Walk 4BR Apartment on 2 floor"
+msgstr "City Walk 4居室公寓，位于2楼"
+
+#: core/template-parts/account/edit-unit.php:146
+msgid "Listing Type"
+msgstr "房源类型"
+
+#: core/template-parts/account/edit-unit.php:163
+msgid "Price, AED"
+msgstr "价格，阿联酋迪拉姆"
+
+#: core/template-parts/account/edit-unit.php:177
+msgid "Area (sqft)"
+msgstr "面积（平方英尺）"
+
+#: core/template-parts/account/edit-unit.php:191
+msgid "Price per square foot:"
+msgstr "每平方英尺价格："
+
+#: core/template-parts/account/edit-unit.php:204
+msgid "Original price, AED"
+msgstr "原价，迪拉姆"
+
+#: core/template-parts/account/edit-unit.php:217
+#: single-unit.php:88
+msgid "Discount:"
+msgstr "折扣："
+
+#: core/template-parts/account/edit-unit.php:236
+#: core/template-parts/account/profile.php:214
+msgid "+ Add new project"
+msgstr "+ 添加新项目"
+
+#: core/template-parts/account/edit-unit.php:255
+#: core/template-parts/filters/result-filters.php:241
+msgid "Property type"
+msgstr "房产类型"
+
+#: core/template-parts/account/edit-unit.php:294
+msgid "Bathrooms"
+msgstr "卫生间"
+
+#: core/template-parts/account/edit-unit.php:348
+msgid "Delete Property"
+msgstr "删除房产"
+
+#: core/template-parts/account/edit-unit.php:351
+msgid "Are you sure to delete this property?"
+msgstr "确定要删除此房产吗？"
+
+#: core/template-parts/account/edit-unit.php:354
+msgid "No"
+msgstr "来自"
+
+#: core/template-parts/account/edit-unit.php:358
+msgid "Yes, Delete"
+msgstr "是，删除"
+
+#: core/template-parts/account/edit-unit.php:364
+msgid "New units are saved as drafts for moderation"
+msgstr "新条目将作为草稿保存，待审核"
+
+#: core/template-parts/account/edit-unit.php:375
+msgid "Submit Unit"
+msgstr "提交单元"
+
+#: core/template-parts/account/edit-unit.php:436
+msgid "Select property pictures to include in unit page"
+msgstr "选择要包含在房源页面中的房源图片"
+
+#: core/template-parts/account/edit-unit.php:440
+msgid "Select all"
+msgstr "全选"
+
+#: core/template-parts/account/email-verification.php:20
+msgid "Email verification"
+msgstr "电子邮件验证"
+
+#: core/template-parts/account/email-verification.php:25
+msgid "To use this functionality, you need to verify your email address"
+msgstr "要使用此功能，您需要验证您的电子邮箱地址"
+
+#: core/template-parts/account/email-verification.php:30
+msgid "Please check your email inbox for the verification email and click on the verification link."
+msgstr "请查看您的电子邮箱收件箱，查找验证邮件，并点击其中的验证链接。"
+
+#: core/template-parts/account/email-verification.php:34
+msgid "If you did not receive the email, please check your spam folder or click the button below to resend the verification email."
+msgstr "如果您未收到该电子邮件，请检查您的垃圾邮件文件夹，或点击下方的按钮重新发送验证邮件。"
+
+#: core/template-parts/account/email-verification.php:40
+msgid "Resend verification email"
+msgstr "重新发送验证邮件"
+
+#: core/template-parts/account/list-filters.php:47
+#: core/template-parts/filters/result-filters.php:304
+msgid "Reset filters"
+msgstr "重置筛选条件"
+
+#: core/template-parts/account/login-form.php:35
+msgid "Sign in to start selling"
+msgstr "登录开始销售"
+
+#: core/template-parts/account/login-form.php:88
+msgid "Create a new account"
+msgstr "创建新账户"
+
+#: core/template-parts/account/login-form.php:116
+#: core/template-parts/account/profile-client.php:140
+#: core/template-parts/account/profile.php:368
+msgid "Email address"
+msgstr "电子邮箱地址"
+
+#: core/template-parts/account/login-form.php:118
+msgid "admin@example.com"
+msgstr "admin@example.com"
+
+#: core/template-parts/account/login-form.php:187
+msgid "Choose your agency"
+msgstr "选择您的代理机构"
+
+#: core/template-parts/account/profile-client.php:33
+#: core/template-parts/account/profile-client.php:52
+#: core/template-parts/account/profile.php:63
+#: core/template-parts/account/profile.php:280
+msgid "Saved properties"
+msgstr "已收藏的房产"
+
+#: core/template-parts/account/profile-client.php:39
+msgid "My Account"
+msgstr "我的账户"
+
+#: core/template-parts/account/profile-client.php:106
+#: core/template-parts/account/profile.php:334
+msgid "You have not added any favorite units."
+msgstr "您尚未添加任何收藏的单位。"
+
+#: core/template-parts/account/profile-client.php:116
+#: core/template-parts/account/profile.php:69
+#: core/template-parts/account/profile.php:344
+msgid "Account details"
+msgstr "账户详情"
+
+#: core/template-parts/account/profile-client.php:131
+#: core/template-parts/account/profile.php:359
+msgid "Display name"
+msgstr "显示名称"
+
+#: core/template-parts/account/profile-client.php:164
+#: core/template-parts/account/profile.php:434
+msgid "WhatsApp number"
+msgstr "WhatsApp 号码"
+
+#: core/template-parts/account/profile-client.php:180
+#: core/template-parts/account/profile.php:450
+msgid "Save changes"
+msgstr "保存更改"
+
+#: core/template-parts/account/profile-client.php:188
+#: core/template-parts/account/profile.php:458
+msgid "Avatar"
+msgstr "阿凡达"
+
+#: core/template-parts/account/profile.php:37
+msgid "+ Add new distress"
+msgstr "+ 添加新的受灾情况"
+
+#: core/template-parts/account/profile.php:37
+msgid "+ Add new property"
+msgstr "+ 添加房产"
+
+#: core/template-parts/account/profile.php:39
+msgid "My distress"
+msgstr "我的痛苦"
+
+#: core/template-parts/account/profile.php:39
+msgid "My properties"
+msgstr "我的房产"
+
+#: core/template-parts/account/profile.php:56
+msgid "My projects"
+msgstr "我的项目"
+
+#: core/template-parts/account/profile.php:85
+msgid "My distress (%d)"
+msgstr "我的痛苦 (%d)"
+
+#: core/template-parts/account/profile.php:85
+msgid "My properties (%d)"
+msgstr "我的房产 (%d)"
+
+#: core/template-parts/account/profile.php:129
+msgid "Gold Star"
+msgstr "金星"
+
+#: core/template-parts/account/profile.php:132
+msgid "Boost your property to get it sold faster"
+msgstr "提升房产吸引力，助您更快售出"
+
+#: core/template-parts/account/profile.php:134
+msgid "Get More Eyes, Get More Offers. Fast-Track Your Sale. Priority Listing: Sell 2x Faster."
+msgstr "吸引更多关注，获得更多报价。加速成交。优先展示：成交速度提升一倍。"
+
+#: core/template-parts/account/profile.php:137
+msgid "How it works"
+msgstr "工作原理"
+
+#: core/template-parts/account/profile.php:144
+#: core/template-parts/cards/unit-card.php:106
+#: core/template-parts/cards/unit-card.php:163
+msgid "Star"
+msgstr "Star"
+
+#: core/template-parts/account/profile.php:175
+msgid "No units match the filters."
+msgstr "没有符合筛选条件的商品。"
+
+#: core/template-parts/account/profile.php:177
+#: core/template-parts/account/profile.php:269
+msgid "You have not added any units yet."
+msgstr "您尚未添加任何单位。"
+
+#: core/template-parts/account/profile.php:191
+msgid "My projects (%d)"
+msgstr "我的项目 (%d)"
+
+#: core/template-parts/account/profile.php:267
+msgid "No projects match the filters."
+msgstr "没有项目符合筛选条件。"
+
+#: core/template-parts/account/profile.php:392
+msgid "select"
+msgstr "选择"
+
+#: core/template-parts/account/reset-password.php:20
+msgid "Enter new password"
+msgstr "输入新密码"
+
+#: core/template-parts/account/reset-password.php:39
+msgid "Repeat password"
+msgstr "再次输入密码"
+
+#: core/template-parts/account/reset-password.php:45
+msgid "Update password"
+msgstr "更新密码"
+
+#: core/template-parts/cards/large-card.php:71
+msgid "Average price unavailable"
+msgstr "平均价格无法提供"
+
+#: core/template-parts/cards/large-card.php:104
+#: core/template-parts/cards/small-card.php:46
+#: core/template-parts/cards/unit-card.php:127
+#: template-parts/sections/index/about.php:14
+#: template-parts/sections/index/about.php:19
+#: template-parts/sections/index/about.php:24
+msgid "Vector icon"
+msgstr "矢量图标"
+
+#: core/template-parts/cards/large-card.php:123
+#: core/template-parts/cards/unit-card.php:152
+msgid "Edit"
+msgstr "编辑"
+
+#: core/template-parts/cards/large-card.php:133
+#: core/template-parts/cards/unit-card.php:141
+msgid "View details"
+msgstr "查看详情"
+
+#: core/template-parts/cards/map-sidebar.php:45
+msgid "apartments for sale"
+msgstr "待售公寓"
+
+#: core/template-parts/cards/map-sidebar.php:64
+msgid "Unit image"
+msgstr "单元图片"
+
+#: core/template-parts/cards/unit-card.php:55
+#: core/template-parts/common/pagination.php:28
+#: core/template-parts/common/pagination.php:62
+#: core/template-parts/sliders/unit-thumbs-slider.php:60
+#: template-parts/sections/single/thumbs-slider.php:17
+msgid "Prev"
+msgstr "翻译"
+
+#: core/template-parts/cards/unit-card.php:59
+#: core/template-parts/sliders/unit-thumbs-slider.php:65
+#: template-parts/sections/single/thumbs-slider.php:19
+msgid "Next"
+msgstr "下一页"
+
+#. translators: %d is the discount percent off the original price.
+#: core/template-parts/cards/unit-card.php:80
+msgid "-%d%%"
+msgstr "-%d%%"
+
+#: core/template-parts/cards/unit-card.php:89
+msgctxt "followed by developer"
+msgid "Property by"
+msgstr "房产由"
+
+#: core/template-parts/cards/unit-card.php:164
+msgid "Boost property"
+msgstr "推广房产"
+
+#: core/template-parts/cards/unit-square-card.php:55
+msgid "Original Price:"
+msgstr "原价："
+
+#: core/template-parts/common/breadcrumbs.php:14
+msgid "Home"
+msgstr "首页"
+
+#: core/template-parts/common/contact-panel.php:20
+#: page-mortgage-calculator.php:40
+msgid "Free consultation and pre-approval. A DDA specialist will contact you and advise on the next step."
+msgstr "免费咨询和预审批。DDA专家将与您联系，并就下一步行动提供建议。"
+
+#: core/template-parts/common/contact-panel.php:24
+msgid "Contact broker to learn more and get special offers."
+msgstr "请联系经纪人了解更多信息并获取特别优惠。"
+
+#: core/template-parts/common/contact-panel.php:55
+#: page-mortgage-calculator.php:43
+#: template-parts/sections/mortgage-calculator/calculator.php:252
+msgid "Get pre-approved"
+msgstr "申请预批"
+
+#: core/template-parts/common/footer.php:14
+msgid "Address"
+msgstr "地址"
+
+#: core/template-parts/common/footer.php:17
+msgid "Office 1-042S,"
+msgstr "1-042S室，"
+
+#: core/template-parts/common/footer.php:18
+msgid "Dubai Investment Park 1,"
+msgstr "迪拜投资园1号，"
+
+#: core/template-parts/common/footer.php:19
+msgid "Dubai, United Arab Emirates."
+msgstr "阿联酋迪拜。"
+
+#: core/template-parts/common/footer.php:23
+msgid "Live Support"
+msgstr "在线支持"
+
+#: core/template-parts/common/footer.php:36
+msgid "Popular Search"
+msgstr "热门搜索"
+
+#: core/template-parts/common/footer.php:55
+msgid "Discovery"
+msgstr "发现"
+
+#: core/template-parts/common/footer.php:75
+msgid "Quick Links"
+msgstr "快速链接"
+
+#: core/template-parts/common/footer.php:92
+msgid "© East Property – All rights reserved"
+msgstr "© East Property – 保留所有权利"
+
+#: core/template-parts/common/header.php:16
+msgid "Vector logotype"
+msgstr "矢量标志"
+
+#: core/template-parts/common/header.php:37
+msgid "Create"
+msgstr "创建"
+
+#: core/template-parts/common/header.php:38
+msgid "Create Account"
+msgstr "创建账户"
+
+#: core/template-parts/common/header.php:44
+msgid "Top up"
+msgstr "充值"
+
+#: core/template-parts/common/header.php:49
+msgid "Boost Points"
+msgstr "增益点数"
+
+#: core/template-parts/common/header.php:59
+msgid "Open menu"
+msgstr "打开菜单"
+
+#: core/template-parts/common/language-switcher.php:38
+msgid "Change language"
+msgstr "更改语言"
+
+#: core/template-parts/common/pagination.php:26
+#: core/template-parts/common/pagination.php:60
+msgid "Previous page"
+msgstr "上一页"
+
+#: core/template-parts/common/pagination.php:44
+msgid "Page"
+msgstr "页面"
+
+#: core/template-parts/common/social-links.php:15
+msgid "Follow us on social media"
+msgstr "在社交媒体上关注我们"
+
+#: core/template-parts/email/base.php:47
+msgid "Best regards,"
+msgstr "此致，"
+
+#: core/template-parts/email/base.php:48
+msgid "Team"
+msgstr "团队"
+
+#: core/template-parts/email/base.php:51
+msgid "Support:"
+msgstr "支持："
+
+#: core/template-parts/email/base.php:65
+msgid "If this was not you, please ignore this message or contact us."
+msgstr "如果这不是您本人，请忽略此消息或联系我们。"
+
+#: core/template-parts/filters/result-filters.php:57
+#: core/template-parts/filters/result-filters.php:264
+#: core/template-parts/filters/search-tabs.php:140
+#: core/template-parts/filters/search-tabs.php:161
+#: core/template-parts/ui/dropdown.php:50
+msgid "Search..."
+msgstr "搜索..."
+
+#: core/template-parts/filters/result-filters.php:126
+msgid "Min price"
+msgstr "我是一个价格"
+
+#: core/template-parts/filters/result-filters.php:136
+msgid "Max price"
+msgstr "最高价格"
+
+#: core/template-parts/filters/result-filters.php:148
+#: core/template-parts/filters/result-filters.php:212
+#: core/template-parts/filters/search-tabs.php:121
+msgid "Cancel"
+msgstr "取消"
+
+#: core/template-parts/filters/result-filters.php:151
+#: core/template-parts/filters/result-filters.php:215
+#: core/template-parts/filters/search-tabs.php:124
+msgid "Apply"
+msgstr "应用"
+
+#: core/template-parts/filters/result-filters.php:288
+msgid "Max Area"
+msgstr "最大面积"
+
+#: core/template-parts/filters/search-tabs.php:146
+#: core/template-parts/filters/search-tabs.php:167
+msgid "Dropdown arrow"
+msgstr "下拉箭头"
+
+#: core/template-parts/filters/search-tabs.php:180
+msgid "Search"
+msgstr "搜索"
+
+#: core/template-parts/filters/search-tabs.php:191
+msgid "Distress deals are sold below market price"
+msgstr "急售房源以低于市场价出售"
+
+#: core/template-parts/filters/search-tabs.php:194
+msgid "Owners who need a fast exit, verified by us and limited in number. These listings are not published openly — we send them out on request."
+msgstr "需要快速套现的业主，经我们核实且名额有限。这些房源不会公开发布——我们仅应要求提供。"
+
+#: core/template-parts/filters/search-tabs.php:200
+msgid "Explore distress deals"
+msgstr "探索清仓特价商品"
+
+#: core/template-parts/filters/search-tabs.php:203
+msgid "Sell my property"
+msgstr "出售我的房产"
+
+#: core/template-parts/filters/search-tabs.php:207
+msgid "One short call: we send the current list and check your property against buyer demand."
+msgstr "只需一个简短的电话：我们会发送当前的房源清单，并根据买家的需求评估您的房产。"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:5
+msgid "Get a quick consultation"
+msgstr "获取快速咨询"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:13
+msgid "Message us on WhatsApp — it is the fastest way to reach our team with any question about pricing, availability or a viewing."
+msgstr "请通过 WhatsApp 联系我们——这是就价格、房源情况或看房事宜向我们的团队咨询的最快方式。"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:25
+msgid "Recommended"
+msgstr "推荐"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:34
+msgid "WhatsApp — fastest reply"
+msgstr "WhatsApp — 最快回复"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:36
+msgid "Best for urgent questions, pricing, and quick consultation."
+msgstr "最适合咨询紧急问题、了解价格以及快速咨询。"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:42
+msgid "Hello! I would like a quick consultation about a distress sale of my property."
+msgstr "您好！我想就我的房产紧急出售事宜进行一次简短咨询。"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:49
+msgid "Open WhatsApp"
+msgstr "打开 WhatsApp"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:55
+msgid "We usually reply within 5–10 minutes during working hours."
+msgstr "工作时间内，我们通常会在5至10分钟内回复。"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:66
+msgid "Your information is kept strictly confidential"
+msgstr "您的信息将严格保密"
+
+#: core/template-parts/properties/map.php:78
+msgid "Explore Project"
+msgstr "探索项目"
+
+#: core/template-parts/properties/property-single.php:56
+#: single-unit.php:99
+#: single-unit.php:100
+#: single.php:81
+msgid "Share"
+msgstr "分享"
+
+#: core/template-parts/properties/property-single.php:86
+#: core/template-parts/properties/property-units-list.php:67
+#: single-unit.php:266
+msgid "Property information"
+msgstr "房产信息"
+
+#: core/template-parts/properties/property-single.php:143
+#: single-unit.php:370
+msgid "View developer"
+msgstr "查看开发商"
+
+#: core/template-parts/properties/property-single.php:157
+msgid "properties available in this project"
+msgstr "该项目中的房源"
+
+#: core/template-parts/properties/property-single.php:186
+#: single-unit.php:206
+msgid "Payment plan"
+msgstr "付款计划"
+
+#: core/template-parts/properties/property-single.php:200
+#: single-unit.php:330
+msgid "Amenities"
+msgstr "配套设施"
+
+#: core/template-parts/properties/property-units-list.php:57
+msgid "View object page"
+msgstr "查看对象页面"
+
+#: core/template-parts/search-results/properties-list.php:7
+msgid "Explore a wide selection of properties across Dubai. From modern apartments and family villas to premium off-plan opportunities  in the city’s most sought-after communities. Compare prices, locations, and layouts in one place and find the property that matches your goals and budget."
+msgstr "探索迪拜各地丰富多样的房产。从现代公寓和家庭别墅，到位于该市最热门社区的优质期房项目，应有尽有。您可以在一个平台上比较价格、位置和户型，找到符合您的目标和预算的房产。"
+
+#: core/template-parts/search-results/properties-list.php:23
+#: core/template-parts/search-results/tabs.php:16
+#: core/template-parts/search-results/units-list.php:20
+msgid "List view"
+msgstr "列表视图"
+
+#: core/template-parts/search-results/properties-list.php:27
+#: core/template-parts/search-results/tabs.php:20
+msgid "Map view"
+msgstr "地图视图"
+
+#: core/template-parts/search-results/tabs.php:39
+msgid "Aliquam lacinia diam quis lacus euismod"
+msgstr "Some lacinia diam quis lacus euismod"
+
+#: core/template-parts/search-results/units-list.php:8
+msgid "Browse a wide selection of apartments in Dubai. From smart studios to spacious family residences and premium off-plan units in top locations. Compare prices, layouts, and communities in one place and find the apartment that fits your lifestyle, goals, and budget."
+msgstr "浏览迪拜丰富多样的公寓选择。从智能单间公寓到宽敞的家庭住宅，再到地段优越的顶级期房，应有尽有。您可以在一个平台上比较价格、户型和社区环境，找到最符合您的生活方式、目标和预算的公寓。"
+
+#: core/template-parts/ui/dropdown.php:41
+msgid "Arrow down"
+msgstr "向下箭头"
+
+#: core/template-parts/ui/loader.php:5
+msgid "Loading project details..."
+msgstr "正在加载项目详情..."
+
+#: core/template-parts/ui/tooltip.php:10
+msgid "More info"
+msgstr "更多信息"
+
+#: core/template-parts/units/featured.php:13
+msgid "See all properties"
+msgstr "查看所有房源"
+
+#: functions.php:33
+msgid "Header"
+msgstr "页眉"
+
+#: functions.php:34
+msgid "Footer | Popular Search"
+msgstr "页脚 | 热门搜索"
+
+#: functions.php:35
+msgid "Footer | Discovery"
+msgstr "页脚 | 探索"
+
+#: functions.php:36
+msgid "Footer | Quick Links"
+msgstr "页脚 | 快速链接"
+
+#: functions.php:95
+#: functions.php:96
+msgid "Настройки"
+msgstr "设置"
+
+#. Template Name of the theme
+msgid "Account"
+msgstr "账户"
+
+#. Template Name of the theme
+msgid "Distress Units Listing Page"
+msgstr "遇险单位列表页面"
+
+#: page-distress.php:31
+msgid "Below-market deals in UAE"
+msgstr "阿联酋的低价交易"
+
+#. Template Name of the theme
+msgid "Homepage"
+msgstr "主页"
+
+#. Template Name of the theme
+msgid "Mortgage Calculator"
+msgstr "房贷计算器"
+
+#: page-mortgage-calculator.php:22
+msgid "Objects that match your criteria"
+msgstr "符合您条件的物品"
+
+#: page-mortgage-calculator.php:39
+msgid "Ready to find out the exact terms for your deal?"
+msgstr "准备好了解您这笔交易的具体条款了吗？"
+
+#. Template Name of the theme
+msgid "News Listing Page"
+msgstr "新闻列表页面"
+
+#: page-news.php:19
+#: single.php:36
+msgid "News"
+msgstr "新闻"
+
+#: page-news.php:43
+msgid "No news articles found"
+msgstr "未找到相关新闻文章"
+
+#: page-news.php:46
+msgid "We are preparing the latest market updates and property news. Please check back later."
+msgstr "我们正在整理最新的市场动态和房产资讯。请稍后再查看。"
+
+#. Template Name of the theme
+msgid "Off Plan Units Listing Page"
+msgstr "期房房源列表页面"
+
+#. Template Name of the theme
+msgid "Properties Listing Page"
+msgstr "房源列表页面"
+
+#. Template Name of the theme
+msgid "Secondary Units Listing Page"
+msgstr "二手房源列表页"
+
+#. Template Name of the theme
+msgid "Text Page"
+msgstr "文本页"
+
+#: single-developers.php:19
+msgid "Buy properties from developer"
+msgstr "从开发商处购买房产"
+
+#: single-project.php:31
+msgid "Request quote"
+msgstr "请求报价"
+
+#: single-unit.php:46
+msgid "amenities"
+msgstr "配套设施"
+
+#: single-unit.php:70
+msgctxt "followed by project"
+msgid "Property by"
+msgstr "房产由"
+
+#: single-unit.php:90
+msgid "of original price"
+msgstr "原价的"
+
+#: single-unit.php:110
+msgid "Saved"
+msgstr "已保存"
+
+#: single-unit.php:151
+msgid "Property broker"
+msgstr "房产经纪人"
+
+#: single-unit.php:176
+msgid ""
+"Get in touch with broker using email, phone or WhatsApp. It’s free and does not\n"
+"                                                                        require any commitment from your side"
+msgstr ""
+"您可以通过电子邮件、电话或WhatsApp联系经纪人。这项服务是免费的，且\n"
+"无需您做出任何承诺。"
+
+#: single-unit.php:222
+#: template-parts/sections/mortgage-calculator/calculator.php:85
+#: template-parts/sections/mortgage-calculator/calculator.php:213
+#: template-parts/sections/mortgage-calculator/entry-costs.php:15
+msgid "Down payment"
+msgstr "首付款"
+
+#: single-unit.php:224
+msgid "Sales launch"
+msgstr "销售启动"
+
+#: single-unit.php:232
+msgid "During construction"
+msgstr "施工期间"
+
+#: single-unit.php:234
+msgid "installments"
+msgstr "分期付款"
+
+#: single-unit.php:243
+msgid "On handover"
+msgstr "关于移交"
+
+#: single-unit.php:256
+#: single-unit.php:259
+msgid "Floor plan"
+msgstr "平面图"
+
+#: single-unit.php:309
+msgid "Building Information"
+msgstr "建筑信息"
+
+#: single-unit.php:314
+msgid "Building name"
+msgstr "楼宇名称"
+
+#: single-unit.php:319
+msgid "Floors"
+msgstr "楼层"
+
+#: single.php:134
+msgid "Copy link"
+msgstr "复制链接"
+
+#: single.php:141
+msgid "Link copied to clipboard!"
+msgstr "链接已复制到剪贴板！"
+
+#: single.php:167
+msgid "Updated: %s"
+msgstr "更新时间：%s"
+
+#: single.php:182
+msgid "Other news"
+msgstr "其他新闻"
+
+#. translators: %s is a district name.
+#: taxonomy-location.php:36
+msgid "Projects in %s"
+msgstr "%s 中的项目"
+
+#: template-parts/sections/index/about.php:10
+msgid "Why East Property"
+msgstr "为什么选择East Property"
+
+#: template-parts/sections/index/about.php:30
+msgid "About img"
+msgstr "关于 img"
+
+#: template-parts/sections/index/distress.php:16
+msgid "Distress deals in Dubai"
+msgstr "迪拜急售房源"
+
+#: template-parts/sections/index/distress.php:20
+msgid "DISTRESS DEALS"
+msgstr "急售房源"
+
+#: template-parts/sections/index/distress.php:21
+msgid "Own Dubai for Less"
+msgstr "花更少的钱，拥有迪拜"
+
+#: template-parts/sections/index/distress.php:22
+msgid "Premium properties from motivated sellers at below-market prices."
+msgstr "来自急于出售的业主的优质房产，价格低于市场价。"
+
+#: template-parts/sections/index/distress.php:23
+msgid "Limited opportunities. The best deals move fast."
+msgstr "机会有限。最划算的优惠转瞬即逝。"
+
+#: template-parts/sections/index/distress.php:25
+msgid "Explore Distress Deals"
+msgstr "探索清仓特惠"
+
+#: template-parts/sections/index/distress.php:31
+msgid "Your Dubai Home. For Less."
+msgstr "您的迪拜家园。价格更实惠。"
+
+#: template-parts/sections/index/distress.php:32
+msgid "Exclusive properties at below-market prices."
+msgstr "以低于市场价出售的独家房源。"
+
+#: template-parts/sections/index/distress.php:33
+msgid "Move fast — the best deals don’t wait."
+msgstr "抓紧行动——最划算的优惠不会等你。"
+
+#: template-parts/sections/index/distress.php:35
+msgid "View Deals"
+msgstr "查看优惠"
+
+#: template-parts/sections/index/hero.php:32
+msgid "Available immediately"
+msgstr "立即可用"
+
+#: template-parts/sections/index/hero.php:40
+msgid "In construction"
+msgstr "在建设中"
+
+#: template-parts/sections/index/map.php:8
+msgid "Dubai map"
+msgstr "迪拜地图"
+
+#: template-parts/sections/index/properties.php:11
+msgid "See all new properties"
+msgstr "查看所有新房源"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:8
+msgid "Residency status"
+msgstr "居留身份"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:16
+msgid "UAE resident"
+msgstr "阿联酋居民"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:25
+msgid "Non-resident"
+msgstr "非居民"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:32
+msgid "Minimum income"
+msgstr "最低收入"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:36
+msgid "Age"
+msgstr "年龄"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:37
+msgid "from 21, loan repaid by 65"
+msgstr "从21岁起，65岁前还清贷款"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:40
+msgid "Bank financing"
+msgstr "银行融资"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:41
+msgid "up to 80%"
+msgstr "高达80%"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:47
+msgid "Property price"
+msgstr "房价"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:50
+msgid "Total purchase price of the property in AED"
+msgstr "该房产的总购买价格（阿联酋迪拉姆）"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:76
+msgid "from 300,000"
+msgstr "从300,000起"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:77
+msgid "to 20,000,000"
+msgstr "至 20,000,000"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:88
+msgid "Upfront equity contribution (min 20% for residents, 40% for non-residents)"
+msgstr "前期股权出资（居民至少20%，非居民至少40%）"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:114
+msgid "from 20"
+msgstr "从 20 开始"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:115
+msgid "to 80"
+msgstr "至 80"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:123
+msgid "Loan term"
+msgstr "贷款期限"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:126
+msgid "Mortgage duration in years (up to 25 years)"
+msgstr "抵押贷款期限（以年为单位，最长25年）"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:140
+msgid "years"
+msgstr "年"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:152
+msgid "from 1"
+msgstr "从 1 开始"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:153
+msgid "to 25"
+msgstr "至 25"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:161
+msgid "Interest rate"
+msgstr "利率"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:164
+msgid "Annual interest rate offered by UAE mortgage lenders"
+msgstr "阿联酋抵押贷款机构提供的年利率"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:190
+msgid "from 2,5"
+msgstr "从 2.5 开始"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:191
+msgid "to 8"
+msgstr "到 8"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:204
+msgid "Monthly payment"
+msgstr "月供"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:209
+msgid "Loan"
+msgstr "贷款"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:217
+msgid "Interest paid"
+msgstr "已支付的利息"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:231
+msgid "Principal"
+msgstr "首页"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:237
+msgid "Interest over term"
+msgstr "期限内的利息"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:245
+msgid "Preliminary estimate. The final rate depends on the bank, your profile, and the property."
+msgstr "初步估算。最终利率取决于银行、您的个人情况以及房产本身。"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:260
+msgid "Download calculation"
+msgstr "下载计算结果"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:266
+msgid "DDA mortgage services"
+msgstr "DDA 抵押贷款服务"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:7
+msgid "Full cost of mortgage entry"
+msgstr "抵押贷款的全部费用"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:24
+msgid "DLD fee (4% + 580 AED)"
+msgstr "DLD手续费（4% + 580迪拉姆）"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:33
+msgid "Agency commission (2%)"
+msgstr "代理佣金（2%）"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:42
+msgid "Bank fee (up to 1% of loan)"
+msgstr "银行手续费（最高为贷款金额的1%）"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:51
+msgid "Property valuation"
+msgstr "房产评估"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:60
+msgid "Mortgage registration (0.25% + 290 AED)"
+msgstr "抵押登记（0.25% + 290 阿联酋迪拉姆）"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:69
+msgid "Total"
+msgstr "总计"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:82
+msgid "The deal in 6 steps"
+msgstr "6步完成交易"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:90
+#: src/js/mortgage-calculator/modules/pdf/template.js:168
+msgid "Pre-approval"
+msgstr "预审批"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:91
+msgid "Preliminary approval from the bank"
+msgstr "银行的初步批准"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:98
+#: src/js/mortgage-calculator/modules/pdf/template.js:173
+msgid "MOU (Form F)"
+msgstr "谅解备忘录（F表）"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:99
+msgid "Sales contract signing, ~10% deposit"
+msgstr "签订销售合同，支付约10%的定金"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:106
+msgid "Bank valuation"
+msgstr "银行估值"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:107
+msgid "Property valuation inspection"
+msgstr "房产估价勘察"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:114
+#: src/js/mortgage-calculator/modules/pdf/template.js:183
+msgid "Final approval"
+msgstr "最终批准"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:115
+msgid "Final mortgage offer & facility letter"
+msgstr "最终抵押贷款报价及贷款确认函"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:122
+msgid "DLD registration"
+msgstr "DLD注册"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:123
+msgid "Registration of ownership and mortgage"
+msgstr "所有权和抵押权的登记"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:130
+msgid "Funds transfer & keys"
+msgstr "资金转账与密钥"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:131
+msgid "Disbursement of funds and key handover"
+msgstr "资金拨付与钥匙移交"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:138
+msgid "4–8 weeks from MOU to keys · full process 30–100 days"
+msgstr "从签署谅解备忘录到交钥匙需4–8周 · 整个流程需30–100天"
+
+#: template-parts/sections/mortgage-calculator/faq.php:5
+msgid "Can a non-resident get a mortgage in Dubai?"
+msgstr "非居民能在迪拜申请住房贷款吗？"
+
+#: template-parts/sections/mortgage-calculator/faq.php:6
+msgid "Yes. Non-residents can get a mortgage with a down payment from 40% and verified income from 10,000 USD per month."
+msgstr "是的。非居民只要首付达到40%，且月收入经核实不低于10,000美元，即可申请住房抵押贷款。"
+
+#: template-parts/sections/mortgage-calculator/faq.php:10
+msgid "Is life insurance mandatory?"
+msgstr "人寿保险是强制性的吗？"
+
+#: template-parts/sections/mortgage-calculator/faq.php:11
+msgid "Yes, UAE banks require life insurance as a mandatory condition for securing a mortgage loan."
+msgstr "是的，阿联酋的银行将购买人寿保险作为获得住房抵押贷款的强制性条件。"
+
+#: template-parts/sections/mortgage-calculator/faq.php:15
+msgid "Can I get a mortgage on an off-plan property?"
+msgstr "我可以为期房申请住房贷款吗？"
+
+#: template-parts/sections/mortgage-calculator/faq.php:16
+msgid "Yes, mortgages are available for completed as well as off-plan projects from authorized developers with up to 50% financing."
+msgstr "是的，无论是已竣工项目还是由授权开发商开发的期房项目，均可申请抵押贷款，最高可获得50%的融资。"
+
+#: template-parts/sections/mortgage-calculator/faq.php:20
+msgid "How long does the whole process take?"
+msgstr "整个过程需要多长时间？"
+
+#: template-parts/sections/mortgage-calculator/faq.php:21
+msgid "The entire process typically takes between 30 and 100 days from the initial application to the key handover and deed registration."
+msgstr "从最初提交申请到交付钥匙并办理产权登记，整个过程通常需要30至100天。"
+
+#: template-parts/sections/mortgage-calculator/faq.php:25
+msgid "What is pre-approval and how long is it valid?"
+msgstr "什么是预批，其有效期有多长？"
+
+#: template-parts/sections/mortgage-calculator/faq.php:26
+msgid "Pre-approval is an initial assessment from a bank confirming the loan amount you qualify for. It is usually valid for 60 to 90 days."
+msgstr "预批贷是指银行对您符合条件的贷款额度进行的初步评估。其有效期通常为60至90天。"
+
+#: template-parts/sections/mortgage-calculator/faq.php:30
+msgid "What costs are there besides the down payment?"
+msgstr "除了首付款外，还有哪些费用？"
+
+#: template-parts/sections/mortgage-calculator/faq.php:31
+msgid "Additional costs include the DLD fee (4% + 580 AED), agency commission (2%), bank processing fee (up to 1%), property valuation, and mortgage registration."
+msgstr "其他费用包括DLD费用（4% + 580迪拉姆）、中介佣金（2%）、银行手续费（最高1%）、房产评估费以及抵押登记费。"
+
+#: template-parts/sections/mortgage-calculator/faq.php:40
+msgid "Questions and answers"
+msgstr "问答"
+
+#: template-parts/sections/mortgage-calculator/hero.php:7
+msgid "Mortgage calculator in"
+msgstr "抵押贷款计算器在"
+
+#: template-parts/sections/mortgage-calculator/hero.php:7
+msgid "Dubai"
+msgstr "迪拜"
+
+#: template-parts/sections/mortgage-calculator/hero.php:12
+msgid "Monthly payment, full cost of entering the deal, and a comparison of mortgage vs. developer payment plan — in a single calculation."
+msgstr "月供、交易总成本，以及按揭与开发商付款计划的对比——只需一次计算即可完成。"
+
+#: template-parts/sections/mortgage-calculator/hero.php:16
+msgid "Free consultation and pre-approval. Response within 15 minutes"
+msgstr "免费咨询和预审批。15分钟内回复"
+
+#: template-parts/sections/mortgage-calculator/off-plan.php:26
+msgid "Mortgage on an off-plan property"
+msgstr "期房抵押贷款"
+
+#. translators: %s: 50% complete
+#: template-parts/sections/mortgage-calculator/off-plan.php:34
+msgid "An off-plan mortgage becomes available once the building is more than %s, the buyer has paid over 50%% of the price, and the developer is accredited by the bank."
+msgstr "当建筑工程进度超过 %s、买家已支付超过 50%% 的购房款，且开发商获得银行认证后，即可申请期房按揭贷款。"
+
+#: template-parts/sections/mortgage-calculator/off-plan.php:35
+msgid "50% complete"
+msgstr "已完成50%"
+
+#: template-parts/sections/mortgage-calculator/off-plan.php:40
+msgid "Before that stage, buyers use the developer’s payment plan."
+msgstr "在此阶段之前，购房者采用开发商提供的付款方案。"
+
+#: template-parts/sections/mortgage-calculator/off-plan.php:51
+msgid "Learn more"
+msgstr "了解更多"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:5
+msgid "LTV / AECB / DBR Expertise"
+msgstr "LTV / AECB / DBR 专业知识"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:6
+msgid "In-house mortgage advisory department"
+msgstr "内部抵押贷款咨询部门"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:9
+msgid "Direct Negotiations with Banks"
+msgstr "与银行直接谈判"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:10
+msgid "Tailored terms based on your profile"
+msgstr "根据您的个人资料量身定制的条款"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:13
+msgid "Free of Charge"
+msgstr "免费"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:14
+msgid "Free consultation and pre-approval"
+msgstr "免费咨询和预审批"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:17
+msgid "RU / EN / AR"
+msgstr "右 / 英语 / 法语"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:18
+msgid "Response within 15 minutes"
+msgstr "15分钟内回复"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:21
+msgid "We Work with Non-Residents"
+msgstr "我们为非居民提供服务"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:22
+msgid "Full end-to-end support for purchases from abroad"
+msgstr "为海外购物提供全程支持"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:25
+msgid "Islamic Financing"
+msgstr "伊斯兰金融"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:26
+msgid "Murabaha · Ijarah · Musharakah → separate page"
+msgstr "穆拉巴哈 · 伊贾拉 · 穆沙拉卡 → 单独页面"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:34
+msgid "Why DDA"
+msgstr "为什么选择 DDA"
+
+#: src/js/filters.js:19
+msgid "beds"
+msgstr "床"
+
+#: src/js/filters.js:19
+msgid "bed"
+msgstr "世界"
+
+#: src/js/filters.js:24
+msgid "baths"
+msgstr "浴场"
+
+#: src/js/filters.js:24
+msgid "bath"
+msgstr "洗澡"
+
+#: src/js/map/map.js:418
+msgid "Selected location"
+msgstr "已选位置"
+
+#. translators: 1: number of projects in the cluster, 2: number of units in them.
+#: src/js/map/map.js:608
+msgid "%1$d projects · %2$d units"
+msgstr "%1$d 个项目 · %2$d 个单位"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:17
+msgid "UAE Resident"
+msgstr "阿联酋居民"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:18
+msgid "Non-Resident"
+msgstr "非居民"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:24
+msgid "Mortgage Calculation — East Property"
+msgstr "抵押贷款计算 — 东区房产"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:36
+msgid "East Property Advisory"
+msgstr "东区房地产咨询"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:37
+msgid "Ref:"
+msgstr "参考："
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:38
+msgid "Date:"
+msgstr "日期："
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:39
+msgid "Dubai, United Arab Emirates"
+msgstr "阿联酋迪拜"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:44
+msgid "UAE Mortgage Calculation Report"
+msgstr "阿联酋抵押贷款计算报告"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:45
+msgid "Property financing estimate and upfront acquisition breakdown · East Property Advisory"
+msgstr "房地产融资估算及前期收购费用明细 · 东区房地产咨询公司"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:51
+msgid "Estimated Monthly Payment"
+msgstr "预计每月还款额"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:52
+msgid "/ month"
+msgstr "/月"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:56
+msgid "Profile"
+msgstr "个人简介"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:60
+msgid "Tenure"
+msgstr "任期"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:61
+msgid "%s Years"
+msgstr "%s 年"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:64
+#: src/js/mortgage-calculator/modules/pdf/template.js:110
+msgid "Interest Rate"
+msgstr "利率"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:77
+msgid "Principal Loan:"
+msgstr "主要贷款："
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:81
+msgid "Total Interest:"
+msgstr "利息总额："
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:90
+msgid "Loan Parameters"
+msgstr "贷款参数"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:94
+msgid "Property Price"
+msgstr "房价"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:98
+#: src/js/mortgage-calculator/modules/pdf/template.js:130
+msgid "Down Payment (%s%%)"
+msgstr "首付款（%s%%）"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:102
+msgid "Bank Loan Amount"
+msgstr "银行贷款金额"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:106
+msgid "Loan Tenure"
+msgstr "贷款期限"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:107
+msgid "%1$s years (%2$s mos)"
+msgstr "%1$s 年（%2$s 个月）"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:111
+msgid "%s%% p.a."
+msgstr "%s%% 每年"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:114
+msgid "Total Interest (Overpayment)"
+msgstr "利息总额（多缴部分）"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:118
+msgid "Total Payable over Term"
+msgstr "贷款期内应付总额"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:126
+msgid "Full Cost of Entry"
+msgstr "购房初期总成本"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:134
+msgid "DLD Fee (4% + 580)"
+msgstr "DLD 费用（4% + 580）"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:138
+msgid "Agency Commission (2%)"
+msgstr "中介佣金（2%）"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:142
+msgid "Bank Fee (1% of loan)"
+msgstr "银行手续费（贷款金额的1%）"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:146
+msgid "Property Valuation"
+msgstr "房产评估"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:150
+msgid "Mortgage Registration"
+msgstr "抵押登记"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:154
+msgid "Total Required at Entry"
+msgstr "购房初期所需总额"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:164
+msgid "The Deal in 6 Steps (Timeline: 4–8 Weeks from MOU to Keys)"
+msgstr "6步完成交易（时间表：从签署谅解备忘录到交钥匙，需4至8周）"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:169
+msgid "Bank eligibility"
+msgstr "银行资格审核"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:174
+msgid "~10% deposit"
+msgstr "~10%的定金"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:178
+msgid "Valuation"
+msgstr "房产估值"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:179
+msgid "Property appraisal"
+msgstr "房产评估"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:184
+msgid "Loan offer letter"
+msgstr "贷款批准函"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:188
+msgid "DLD Transfer"
+msgstr "DLD 过户"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:189
+msgid "Title deed"
+msgstr "产权证"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:193
+msgid "Handover"
+msgstr "交房"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:194
+msgid "Funds & keys"
+msgstr "付款与交钥匙"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:201
+msgid "Disclaimer:"
+msgstr "免责声明："
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:204
+msgid "East Property Brokerage LLC"
+msgstr "东区房产经纪有限责任公司"

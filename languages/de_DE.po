@@ -48,12 +48,12 @@ msgid "Go to properties"
 msgstr "Zu den Immobilien"
 
 #: core/components/account/functions.php:125
-#: core/components/filters/functions.php:903
+#: core/components/filters/functions.php:912
 msgid "Apartments"
 msgstr "Wohnungen"
 
 #: core/components/account/functions.php:126
-#: core/components/filters/functions.php:919
+#: core/components/filters/functions.php:928
 msgid "Villas"
 msgstr "Villen"
 
@@ -66,12 +66,12 @@ msgid "Penthouses"
 msgstr "Penthäuser"
 
 #: core/components/account/functions.php:129
-#: core/components/filters/functions.php:911
+#: core/components/filters/functions.php:920
 msgid "Houses"
 msgstr "Häuser"
 
 #: core/components/account/functions.php:130
-#: core/components/filters/functions.php:927
+#: core/components/filters/functions.php:936
 msgid "Offices"
 msgstr "Büros"
 
@@ -95,8 +95,8 @@ msgid "Waiting for approval"
 msgstr "Warten auf die Genehmigung"
 
 #: core/components/account/functions.php:319
-#: core/components/filters/functions.php:1092
-#: core/template-parts/filters/search-tabs.php:136
+#: core/components/filters/functions.php:1101
+#: core/template-parts/filters/search-tabs.php:144
 msgid "Any Locations"
 msgstr "Beliebige Standorte"
 
@@ -107,9 +107,9 @@ msgid "All"
 msgstr "Alle"
 
 #: core/components/account/functions.php:326
-#: core/components/filters/functions.php:313
-#: core/components/filters/functions.php:1036
-#: core/template-parts/filters/search-tabs.php:157
+#: core/components/filters/functions.php:312
+#: core/components/filters/functions.php:1045
+#: core/template-parts/filters/search-tabs.php:165
 msgid "Any Developers"
 msgstr "Alle Bauträger"
 
@@ -487,99 +487,99 @@ msgid "Mailer"
 msgstr "Mailer"
 
 #. translators: option of the delivery date filter, projects already handed over.
-#: core/components/filters/functions.php:324
-#: core/components/filters/functions.php:839
+#: core/components/filters/functions.php:323
+#: core/components/filters/functions.php:848
 msgctxt "delivery filter"
 msgid "Ready"
 msgstr "Bezugsfertig"
 
-#: core/components/filters/functions.php:331
-#: core/components/filters/functions.php:843
+#: core/components/filters/functions.php:330
+#: core/components/filters/functions.php:852
 msgid "In Construction"
 msgstr "Im Bau"
 
-#: core/components/filters/functions.php:342
+#: core/components/filters/functions.php:341
 msgid "All Years"
 msgstr "Alle Jahre"
 
-#: core/components/filters/functions.php:351
-#: core/components/filters/functions.php:852
+#: core/components/filters/functions.php:350
+#: core/components/filters/functions.php:861
 #: core/includes/registers/post-types/locations.php:10
 #: core/template-parts/account/edit-property.php:191
 #: core/template-parts/filters/result-filters.php:61
 #: core/template-parts/properties/property-single.php:111
 #: core/template-parts/properties/property-single.php:220
 #: core/template-parts/properties/property-units-list.php:28
-#: single-unit.php:287
-#: single-unit.php:376
+#: single-unit.php:291
+#: single-unit.php:380
 #: src/js/map/map.js:276
 msgid "Location"
 msgstr "Standort"
 
-#: core/components/filters/functions.php:355
+#: core/components/filters/functions.php:354
 msgid "Handover Year Before"
 msgstr "Übergabe bis"
 
-#: core/components/filters/functions.php:356
+#: core/components/filters/functions.php:355
 msgid "Completion Year After"
 msgstr "Fertigstellung ab"
 
-#: core/components/filters/functions.php:360
-#: core/components/filters/functions.php:860
+#: core/components/filters/functions.php:359
+#: core/components/filters/functions.php:869
 msgid "Price (AED)"
 msgstr "Preis (AED)"
 
-#: core/components/filters/functions.php:367
-#: core/components/filters/functions.php:867
+#: core/components/filters/functions.php:366
+#: core/components/filters/functions.php:876
 #: core/includes/entities/class-entity-property.php:650
 msgid "Property Type"
 msgstr "Objektart"
 
-#: core/components/filters/functions.php:371
-#: core/components/filters/functions.php:871
-#: core/components/filters/functions.php:895
+#: core/components/filters/functions.php:370
+#: core/components/filters/functions.php:880
+#: core/components/filters/functions.php:904
 msgid "Any"
 msgstr "Beliebige"
 
-#: core/components/filters/functions.php:376
-#: core/components/filters/functions.php:876
+#: core/components/filters/functions.php:375
+#: core/components/filters/functions.php:885
 #: core/includes/registers/post-types/developers.php:11
 #: core/includes/registers/post-types/developers.php:37
 #: core/template-parts/account/edit-property.php:128
 #: core/template-parts/filters/result-filters.php:268
-#: core/template-parts/filters/search-tabs.php:155
+#: core/template-parts/filters/search-tabs.php:163
 #: src/js/map/html.js:58
 msgid "Developer"
 msgstr "Bauträger"
 
-#: core/components/filters/functions.php:380
+#: core/components/filters/functions.php:379
 #: core/template-parts/cards/map-sidebar.php:85
 #: src/js/map/html.js:66
 msgid "Area"
 msgstr "Fläche"
 
-#: core/components/filters/functions.php:399
+#: core/components/filters/functions.php:398
 msgctxt "search tab"
 msgid "Available"
 msgstr "Verfügbar"
 
-#: core/components/filters/functions.php:403
+#: core/components/filters/functions.php:407
 #: core/template-parts/account/edit-unit.php:271
-#: core/template-parts/filters/search-tabs.php:70
+#: core/template-parts/filters/search-tabs.php:78
 msgid "Bedrooms"
 msgstr "Schlafzimmer"
 
-#: core/components/filters/functions.php:407
-#: core/template-parts/filters/search-tabs.php:134
+#: core/components/filters/functions.php:411
+#: core/template-parts/filters/search-tabs.php:142
 msgid "District"
 msgstr "Bezirk"
 
-#: core/components/filters/functions.php:414
+#: core/components/filters/functions.php:418
 msgctxt "search tab"
 msgid "In construction"
 msgstr "Im Bau"
 
-#: core/components/filters/functions.php:438
+#: core/components/filters/functions.php:447
 #: core/components/units/units-by-beds.php:78
 #: core/includes/entities/class-entity-property.php:127
 #: core/includes/entities/class-entity-property.php:133
@@ -596,7 +596,7 @@ msgstr "Im Bau"
 msgid "Beds"
 msgstr "Betten"
 
-#: core/components/filters/functions.php:442
+#: core/components/filters/functions.php:451
 #: core/includes/entities/class-entity-property.php:131
 #: core/includes/entities/class-entity-property.php:138
 #: core/includes/entities/class-entity-unit.php:204
@@ -607,7 +607,7 @@ msgstr "Betten"
 msgid "Studio"
 msgstr "Studio"
 
-#: core/components/filters/functions.php:491
+#: core/components/filters/functions.php:500
 #: core/includes/entities/class-entity-property.php:145
 #: core/includes/entities/class-entity-property.php:149
 #: core/includes/entities/class-entity-unit.php:217
@@ -616,54 +616,54 @@ msgstr "Studio"
 msgid "Baths"
 msgstr "Bäder"
 
-#: core/components/filters/functions.php:587
+#: core/components/filters/functions.php:596
 msgid "Price: high to low"
 msgstr "Preis: von hoch nach niedrig"
 
-#: core/components/filters/functions.php:591
+#: core/components/filters/functions.php:600
 msgid "Price: low to high"
 msgstr "Preis: von niedrig nach hoch"
 
-#: core/components/filters/functions.php:595
+#: core/components/filters/functions.php:604
 msgid "Newest first"
 msgstr "Neueste zuerst"
 
-#: core/components/filters/functions.php:599
+#: core/components/filters/functions.php:608
 msgid "Oldest first"
 msgstr "Älteste zuerst"
 
-#: core/components/filters/functions.php:603
+#: core/components/filters/functions.php:612
 msgid "Handover: soonest first"
 msgstr "Übergabe: früheste zuerst"
 
-#: core/components/filters/functions.php:615
+#: core/components/filters/functions.php:624
 msgctxt "listing sort"
 msgid "Recommended"
 msgstr "Empfohlen"
 
-#: core/components/filters/functions.php:835
+#: core/components/filters/functions.php:844
 msgid "Any year"
 msgstr "Jedes Jahr"
 
-#: core/components/filters/functions.php:856
+#: core/components/filters/functions.php:865
 msgid "Available"
 msgstr "Verfügbar"
 
-#: core/components/filters/functions.php:1227
+#: core/components/filters/functions.php:1236
 #: core/template-parts/search-results/properties-list.php:63
 #: core/template-parts/search-results/tabs.php:63
 #: core/template-parts/search-results/units-list.php:56
 msgid "Items not found"
 msgstr "Keine Treffer gefunden"
 
-#: core/components/filters/functions.php:1238
-#: core/components/filters/functions.php:1342
+#: core/components/filters/functions.php:1247
+#: core/components/filters/functions.php:1351
 msgid "%s property found"
 msgid_plural "%s properties found"
 msgstr[0] "Eigenschaft %s gefunden"
 msgstr[1] "%s Immobilien gefunden"
 
-#: core/components/filters/functions.php:1330
+#: core/components/filters/functions.php:1339
 msgid "Properties not found"
 msgstr "Keine Immobilien gefunden"
 
@@ -761,9 +761,9 @@ msgid "Hello, I am interested in property"
 msgstr "Hallo, ich interessiere mich für Immobilien"
 
 #: core/components/modals/broker-modal.php:34
-#: core/template-parts/cards/unit-card.php:185
+#: core/template-parts/cards/unit-card.php:187
 #: core/template-parts/common/contact-panel.php:66
-#: single-unit.php:169
+#: single-unit.php:173
 msgid "Contact broker"
 msgstr "Makler kontaktieren"
 
@@ -1046,7 +1046,7 @@ msgstr "Miteigentum"
 msgid "Fractional Ownership"
 msgstr "Teileigentum"
 
-#: core/components/properties/functions.php:706
+#: core/components/properties/functions.php:726
 #: core/includes/entities/class-entity-property.php:556
 #: core/includes/entities/class-entity-property.php:623
 #: core/includes/entities/class-entity-unit.php:373
@@ -1054,7 +1054,7 @@ msgstr "Teileigentum"
 msgid "Ready"
 msgstr "Bezugsfertig"
 
-#: core/components/properties/functions.php:711
+#: core/components/properties/functions.php:731
 #: core/includes/entities/class-entity-property.php:562
 #: core/includes/entities/class-entity-unit.php:379
 #: core/includes/entities/class-entity-unit.php:447
@@ -1168,15 +1168,15 @@ msgid "Secondary"
 msgstr "Wiederverkauf"
 
 #: core/components/units/functions.php:21
-#: core/template-parts/filters/search-tabs.php:57
+#: core/template-parts/filters/search-tabs.php:64
 msgid "Distress"
 msgstr "Notverkauf"
 
-#: core/components/units/similar.php:61
+#: core/components/units/similar.php:64
 msgid "More properties like this"
 msgstr "Weitere Immobilien wie diese"
 
-#: core/components/units/similar.php:64
+#: core/components/units/similar.php:67
 #: core/template-parts/properties/property-single.php:161
 #: page-mortgage-calculator.php:23
 msgid "All properties"
@@ -1744,7 +1744,7 @@ msgid "Units insighted by this author"
 msgstr "Von diesem Autor besprochene Einheiten"
 
 #: core/includes/registers/post-types/units.php:79
-#: single-unit.php:74
+#: single-unit.php:78
 msgid "Archived"
 msgstr "Archiviert"
 
@@ -1819,8 +1819,8 @@ msgid "Update project"
 msgstr "Projekt aktualisieren"
 
 #: core/template-parts/account/edit-property.php:315
-#: single-unit.php:102
-#: single-unit.php:108
+#: single-unit.php:106
+#: single-unit.php:112
 msgid "Save"
 msgstr "Speichern"
 
@@ -1844,7 +1844,7 @@ msgstr "Neue Immobilie hinzufügen"
 
 #: core/template-parts/account/edit-unit.php:24
 #: core/template-parts/cards/large-card.php:124
-#: core/template-parts/cards/unit-card.php:151
+#: core/template-parts/cards/unit-card.php:153
 msgid "Edit property"
 msgstr "Immobilie bearbeiten"
 
@@ -1877,7 +1877,7 @@ msgid "Original price, AED"
 msgstr "Ursprünglicher Preis, AED"
 
 #: core/template-parts/account/edit-unit.php:217
-#: single-unit.php:84
+#: single-unit.php:88
 msgid "Discount:"
 msgstr "Rabatt:"
 
@@ -2061,8 +2061,8 @@ msgid "How it works"
 msgstr "So funktioniert es"
 
 #: core/template-parts/account/profile.php:144
-#: core/template-parts/cards/unit-card.php:104
-#: core/template-parts/cards/unit-card.php:161
+#: core/template-parts/cards/unit-card.php:106
+#: core/template-parts/cards/unit-card.php:163
 msgid "Star"
 msgstr "Stern"
 
@@ -2105,7 +2105,7 @@ msgstr "Durchschnittspreis nicht verfügbar"
 
 #: core/template-parts/cards/large-card.php:104
 #: core/template-parts/cards/small-card.php:46
-#: core/template-parts/cards/unit-card.php:125
+#: core/template-parts/cards/unit-card.php:127
 #: template-parts/sections/index/about.php:14
 #: template-parts/sections/index/about.php:19
 #: template-parts/sections/index/about.php:24
@@ -2113,12 +2113,12 @@ msgid "Vector icon"
 msgstr "Vektor-Symbol"
 
 #: core/template-parts/cards/large-card.php:123
-#: core/template-parts/cards/unit-card.php:150
+#: core/template-parts/cards/unit-card.php:152
 msgid "Edit"
 msgstr "Bearbeiten"
 
 #: core/template-parts/cards/large-card.php:133
-#: core/template-parts/cards/unit-card.php:139
+#: core/template-parts/cards/unit-card.php:141
 msgid "View details"
 msgstr "Details anzeigen"
 
@@ -2149,13 +2149,12 @@ msgstr "Weiter"
 msgid "-%d%%"
 msgstr "-%d%%"
 
-#. translators: followed by the name of the developer.
 #: core/template-parts/cards/unit-card.php:89
 msgctxt "followed by developer"
 msgid "Property by"
 msgstr "Immobilie von"
 
-#: core/template-parts/cards/unit-card.php:162
+#: core/template-parts/cards/unit-card.php:164
 msgid "Boost property"
 msgstr "Immobilie bewerben"
 
@@ -2182,39 +2181,39 @@ msgstr "Wenden Sie sich an den Makler, um mehr zu erfahren und Sonderangebote zu
 msgid "Get pre-approved"
 msgstr "Eine Vorabgenehmigung einholen"
 
-#: core/template-parts/common/footer.php:13
+#: core/template-parts/common/footer.php:14
 msgid "Address"
 msgstr "Adresse"
 
-#: core/template-parts/common/footer.php:16
+#: core/template-parts/common/footer.php:17
 msgid "Office 1-042S,"
 msgstr "Büro 1-042S,"
 
-#: core/template-parts/common/footer.php:17
+#: core/template-parts/common/footer.php:18
 msgid "Dubai Investment Park 1,"
 msgstr "Dubai Investment Park 1,"
 
-#: core/template-parts/common/footer.php:18
+#: core/template-parts/common/footer.php:19
 msgid "Dubai, United Arab Emirates."
 msgstr "Dubai, Vereinigte Arabische Emirate."
 
-#: core/template-parts/common/footer.php:22
+#: core/template-parts/common/footer.php:23
 msgid "Live Support"
 msgstr "Live-Support"
 
-#: core/template-parts/common/footer.php:35
+#: core/template-parts/common/footer.php:36
 msgid "Popular Search"
 msgstr "Beliebte Suchanfragen"
 
-#: core/template-parts/common/footer.php:54
+#: core/template-parts/common/footer.php:55
 msgid "Discovery"
 msgstr "Entdecken"
 
-#: core/template-parts/common/footer.php:74
+#: core/template-parts/common/footer.php:75
 msgid "Quick Links"
 msgstr "Schnellzugriff"
 
-#: core/template-parts/common/footer.php:91
+#: core/template-parts/common/footer.php:92
 msgid "© East Property – All rights reserved"
 msgstr "© East Property – Alle Rechte vorbehalten"
 
@@ -2273,8 +2272,8 @@ msgstr "Falls Sie nicht die betreffende Person sind, ignorieren Sie diese Nachri
 
 #: core/template-parts/filters/result-filters.php:57
 #: core/template-parts/filters/result-filters.php:264
-#: core/template-parts/filters/search-tabs.php:132
-#: core/template-parts/filters/search-tabs.php:153
+#: core/template-parts/filters/search-tabs.php:140
+#: core/template-parts/filters/search-tabs.php:161
 #: core/template-parts/ui/dropdown.php:50
 msgid "Search..."
 msgstr "Suchen..."
@@ -2289,13 +2288,13 @@ msgstr "Höchstpreis"
 
 #: core/template-parts/filters/result-filters.php:148
 #: core/template-parts/filters/result-filters.php:212
-#: core/template-parts/filters/search-tabs.php:113
+#: core/template-parts/filters/search-tabs.php:121
 msgid "Cancel"
 msgstr "Abbrechen"
 
 #: core/template-parts/filters/result-filters.php:151
 #: core/template-parts/filters/result-filters.php:215
-#: core/template-parts/filters/search-tabs.php:116
+#: core/template-parts/filters/search-tabs.php:124
 msgid "Apply"
 msgstr "Anwenden"
 
@@ -2303,32 +2302,32 @@ msgstr "Anwenden"
 msgid "Max Area"
 msgstr "Maximale Fläche"
 
-#: core/template-parts/filters/search-tabs.php:138
-#: core/template-parts/filters/search-tabs.php:159
+#: core/template-parts/filters/search-tabs.php:146
+#: core/template-parts/filters/search-tabs.php:167
 msgid "Dropdown arrow"
 msgstr "Dropdown-Pfeil"
 
-#: core/template-parts/filters/search-tabs.php:172
+#: core/template-parts/filters/search-tabs.php:180
 msgid "Search"
 msgstr "Suche"
 
-#: core/template-parts/filters/search-tabs.php:183
+#: core/template-parts/filters/search-tabs.php:191
 msgid "Distress deals are sold below market price"
 msgstr "Notverkäufe werden unter dem Marktpreis verkauft"
 
-#: core/template-parts/filters/search-tabs.php:186
+#: core/template-parts/filters/search-tabs.php:194
 msgid "Owners who need a fast exit, verified by us and limited in number. These listings are not published openly — we send them out on request."
 msgstr "Eigentümer, die einen schnellen Verkauf benötigen, von uns geprüft und in ihrer Anzahl begrenzt. Diese Angebote werden nicht öffentlich veröffentlicht – wir versenden sie auf Anfrage."
 
-#: core/template-parts/filters/search-tabs.php:192
+#: core/template-parts/filters/search-tabs.php:200
 msgid "Explore distress deals"
 msgstr "Schnäppchen aus Notverkäufen entdecken"
 
-#: core/template-parts/filters/search-tabs.php:195
+#: core/template-parts/filters/search-tabs.php:203
 msgid "Sell my property"
 msgstr "Meine Immobilie verkaufen"
 
-#: core/template-parts/filters/search-tabs.php:199
+#: core/template-parts/filters/search-tabs.php:207
 msgid "One short call: we send the current list and check your property against buyer demand."
 msgstr "Ein kurzer Anruf genügt: Wir senden Ihnen die aktuelle Liste zu und prüfen, ob Ihre Immobilie der Nachfrage der Käufer entspricht."
 
@@ -2369,20 +2368,20 @@ msgid "Explore Project"
 msgstr "Projekt entdecken"
 
 #: core/template-parts/properties/property-single.php:56
-#: single-unit.php:95
-#: single-unit.php:96
+#: single-unit.php:99
+#: single-unit.php:100
 #: single.php:81
 msgid "Share"
 msgstr "Teilen"
 
 #: core/template-parts/properties/property-single.php:86
 #: core/template-parts/properties/property-units-list.php:67
-#: single-unit.php:262
+#: single-unit.php:266
 msgid "Property information"
 msgstr "Informationen zur Immobilie"
 
 #: core/template-parts/properties/property-single.php:143
-#: single-unit.php:366
+#: single-unit.php:370
 msgid "View developer"
 msgstr "Bauträger anzeigen"
 
@@ -2391,12 +2390,12 @@ msgid "properties available in this project"
 msgstr "In diesem Projekt verfügbare Immobilien"
 
 #: core/template-parts/properties/property-single.php:186
-#: single-unit.php:202
+#: single-unit.php:206
 msgid "Payment plan"
 msgstr "Zahlungsplan"
 
 #: core/template-parts/properties/property-single.php:200
-#: single-unit.php:326
+#: single-unit.php:330
 msgid "Amenities"
 msgstr "Ausstattung"
 
@@ -2459,8 +2458,8 @@ msgstr "Fußzeile | Entdecken"
 msgid "Footer | Quick Links"
 msgstr "Fußzeile | Schnelllinks"
 
-#: functions.php:91
-#: functions.php:92
+#: functions.php:95
+#: functions.php:96
 msgid "Настройки"
 msgstr "Einstellungen"
 
@@ -2537,25 +2536,24 @@ msgstr "Angebot anfordern"
 msgid "amenities"
 msgstr "Ausstattung"
 
-#. translators: followed by the name of the project.
-#: single-unit.php:69
+#: single-unit.php:70
 msgctxt "followed by project"
 msgid "Property by"
 msgstr "Immobilie in"
 
-#: single-unit.php:86
+#: single-unit.php:90
 msgid "of original price"
 msgstr "des ursprünglichen Preises"
 
-#: single-unit.php:106
+#: single-unit.php:110
 msgid "Saved"
 msgstr "Gespeichert"
 
-#: single-unit.php:147
+#: single-unit.php:151
 msgid "Property broker"
 msgstr "Immobilienmakler"
 
-#: single-unit.php:172
+#: single-unit.php:176
 msgid ""
 "Get in touch with broker using email, phone or WhatsApp. It’s free and does not\n"
 "                                                                        require any commitment from your side"
@@ -2563,43 +2561,43 @@ msgstr ""
 "Nehmen Sie per E-Mail, Telefon oder WhatsApp Kontakt mit dem Makler auf. Das ist kostenlos und\n"
 "verpflichtet Sie zu nichts."
 
-#: single-unit.php:218
+#: single-unit.php:222
 #: template-parts/sections/mortgage-calculator/calculator.php:85
 #: template-parts/sections/mortgage-calculator/calculator.php:213
 #: template-parts/sections/mortgage-calculator/entry-costs.php:15
 msgid "Down payment"
 msgstr "Anzahlung"
 
-#: single-unit.php:220
+#: single-unit.php:224
 msgid "Sales launch"
 msgstr "Markteinführung"
 
-#: single-unit.php:228
+#: single-unit.php:232
 msgid "During construction"
 msgstr "Während der Bauphase"
 
-#: single-unit.php:230
+#: single-unit.php:234
 msgid "installments"
 msgstr "Raten"
 
-#: single-unit.php:239
+#: single-unit.php:243
 msgid "On handover"
 msgstr "Bei der Übergabe"
 
-#: single-unit.php:252
-#: single-unit.php:255
+#: single-unit.php:256
+#: single-unit.php:259
 msgid "Floor plan"
 msgstr "Grundriss"
 
-#: single-unit.php:305
+#: single-unit.php:309
 msgid "Building Information"
 msgstr "Informationen zum Gebäude"
 
-#: single-unit.php:310
+#: single-unit.php:314
 msgid "Building name"
 msgstr "Name des Gebäudes"
 
-#: single-unit.php:315
+#: single-unit.php:319
 msgid "Floors"
 msgstr "Etagen"
 
@@ -2849,6 +2847,7 @@ msgid "The deal in 6 steps"
 msgstr "Der Abschluss in 6 Schritten"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:90
+#: src/js/mortgage-calculator/modules/pdf/template.js:168
 msgid "Pre-approval"
 msgstr "Vorabgenehmigung"
 
@@ -2857,6 +2856,7 @@ msgid "Preliminary approval from the bank"
 msgstr "Vorläufige Genehmigung durch die Bank"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:98
+#: src/js/mortgage-calculator/modules/pdf/template.js:173
 msgid "MOU (Form F)"
 msgstr "Absichtserklärung (Formular F)"
 
@@ -2873,6 +2873,7 @@ msgid "Property valuation inspection"
 msgstr "Begutachtung zur Bewertung von Immobilien"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:114
+#: src/js/mortgage-calculator/modules/pdf/template.js:183
 msgid "Final approval"
 msgstr "Endgültige Genehmigung"
 
@@ -3067,12 +3068,12 @@ msgid "%1$d projects · %2$d units"
 msgstr "%1$d Projekte · %2$d Einheiten"
 
 #. translators: 1: project name, 2: developer name, 3: project URL.
-#: core/components/properties/functions.php:965
+#: core/components/properties/functions.php:985
 msgid "Hello! I am interested in the %1$s project by %2$s. Could you tell me more about it? %3$s"
 msgstr "Hallo! Ich interessiere mich für das %1$s-Projekt von %2$s. Könnten Sie mir mehr darüber erzählen? %3$s"
 
 #. translators: 1: project name, 2: project URL.
-#: core/components/properties/functions.php:975
+#: core/components/properties/functions.php:995
 msgid "Hello! I am interested in the %1$s project. Could you tell me more about it? %2$s"
 msgstr "Hallo! Ich interessiere mich für das %1$s-Projekt. Könnten Sie mir mehr darüber erzählen? %2$s"
 
@@ -3081,6 +3082,192 @@ msgid "Hello! I would like a quick consultation about a distress sale of my prop
 msgstr "Hallo! Ich hätte gerne eine kurze Beratung bezüglich eines Notverkaufs meiner Immobilie."
 
 #. translators: 1: unit name, 2: unit URL.
-#: core/components/units/functions.php:618
+#: core/components/units/functions.php:625
 msgid "Hello! I am interested in %1$s. Could you tell me more about it? %2$s"
 msgstr "Hallo! Ich interessiere mich für %1$s. Könnten Sie mir mehr darüber erzählen? %2$s"
+
+#: core/template-parts/common/social-links.php:15
+msgid "Follow us on social media"
+msgstr "Folgen Sie uns in den sozialen Medien"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:17
+msgid "UAE Resident"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:18
+msgid "Non-Resident"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:24
+msgid "Mortgage Calculation — East Property"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:36
+msgid "East Property Advisory"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:37
+msgid "Ref:"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:38
+msgid "Date:"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:39
+msgid "Dubai, United Arab Emirates"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:44
+msgid "UAE Mortgage Calculation Report"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:45
+msgid "Property financing estimate and upfront acquisition breakdown · East Property Advisory"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:51
+msgid "Estimated Monthly Payment"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:52
+msgid "/ month"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:56
+msgid "Profile"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:60
+msgid "Tenure"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:61
+msgid "%s Years"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:64
+#: src/js/mortgage-calculator/modules/pdf/template.js:110
+msgid "Interest Rate"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:77
+msgid "Principal Loan:"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:81
+msgid "Total Interest:"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:90
+msgid "Loan Parameters"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:94
+msgid "Property Price"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:98
+#: src/js/mortgage-calculator/modules/pdf/template.js:130
+msgid "Down Payment (%s%%)"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:102
+msgid "Bank Loan Amount"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:106
+msgid "Loan Tenure"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:107
+msgid "%1$s years (%2$s mos)"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:111
+msgid "%s%% p.a."
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:114
+msgid "Total Interest (Overpayment)"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:118
+msgid "Total Payable over Term"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:126
+msgid "Full Cost of Entry"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:134
+msgid "DLD Fee (4% + 580)"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:138
+msgid "Agency Commission (2%)"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:142
+msgid "Bank Fee (1% of loan)"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:146
+msgid "Property Valuation"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:150
+msgid "Mortgage Registration"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:154
+msgid "Total Required at Entry"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:164
+msgid "The Deal in 6 Steps (Timeline: 4–8 Weeks from MOU to Keys)"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:169
+msgid "Bank eligibility"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:174
+msgid "~10% deposit"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:178
+msgid "Valuation"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:179
+msgid "Property appraisal"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:184
+msgid "Loan offer letter"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:188
+msgid "DLD Transfer"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:189
+msgid "Title deed"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:193
+msgid "Handover"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:194
+msgid "Funds & keys"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:201
+msgid "Disclaimer:"
+msgstr ""
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:204
+msgid "East Property Brokerage LLC"
+msgstr ""

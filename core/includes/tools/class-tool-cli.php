@@ -39,6 +39,143 @@ final class CLI {
 		WP_CLI::add_command( 'tools translate-units', array( __CLASS__, 'translate_units' ) );
 		WP_CLI::add_command( 'tools translate-locations', array( __CLASS__, 'translate_locations' ) );
 		WP_CLI::add_command( 'tools clone-language', array( __CLASS__, 'clone_language' ) );
+		WP_CLI::add_command( 'tools add-language', array( __CLASS__, 'add_language' ) );
+	}
+
+	/**
+	 * Register a language in Polylang, or report that it is already there.
+	 *
+	 * Safe to run again: an existing language with the same settings is left
+	 * alone, one that differs is reported and only changed with --update, and a
+	 * locale already taken by another slug stops the run instead of producing a
+	 * second language.
+	 *
+	 * ## OPTIONS
+	 *
+	 * --slug=<slug>
+	 * : Polylang language code, for example zh.
+	 *
+	 * [--locale=<locale>]
+	 * : WordPress locale. Taken from the project preset when left out.
+	 *
+	 * [--name=<name>]
+	 * : Name shown in the switcher. Taken from the project preset when left out.
+	 *
+	 * [--flag=<code>]
+	 * : Country code of the flag.
+	 *
+	 * [--rtl]
+	 * : Mark the language right to left.
+	 *
+	 * [--order=<number>]
+	 * : Position in the switcher.
+	 *
+	 * [--update]
+	 * : Bring an existing language in line with these settings.
+	 *
+	 * [--dry-run]
+	 * : Report the plan and write nothing.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp tools add-language --slug=zh --dry-run
+	 *     wp tools add-language --slug=zh
+	 *     wp tools add-language --slug=zh --update
+	 *
+	 * @param array $args Positional arguments, unused.
+	 * @param array $assoc_args Flags.
+	 *
+	 * @return void
+	 */
+	public static function add_language( array $args, array $assoc_args ): void {
+		$slug = strtolower( trim( (string) Utils\get_flag_value( $assoc_args, 'slug', '' ) ) );
+
+		if ( '' === $slug ) {
+			WP_CLI::error(
+				sprintf( 'нужен --slug, готовые наборы: %s',
+					implode( ', ', array_keys( Language_Installer::PRESETS ) ) )
+			);
+		}
+
+		if ( ! function_exists( 'PLL' ) || empty( PLL()->model ) ) {
+			WP_CLI::error( 'Polylang не активен — язык добавить некуда' );
+		}
+
+		$settings = Language_Installer::preset( $slug ) ?: array( 'slug' => $slug );
+
+		foreach ( array( 'locale', 'name', 'flag' ) as $key ) {
+			$value = (string) Utils\get_flag_value( $assoc_args, $key, '' );
+
+			if ( '' !== $value ) {
+				$settings[ $key ] = $value;
+			}
+		}
+
+		if ( Utils\get_flag_value( $assoc_args, 'rtl', false ) ) {
+			$settings['rtl'] = true;
+		}
+
+		$order = Utils\get_flag_value( $assoc_args, 'order', null );
+
+		if ( null !== $order ) {
+			$settings['order'] = (int) $order;
+		}
+
+		foreach ( array( 'locale', 'name' ) as $key ) {
+			if ( empty( $settings[ $key ] ) ) {
+				WP_CLI::error( sprintf( 'нет --%s и нет готового набора для «%s»', $key, $slug ) );
+			}
+		}
+
+		$plan = Language_Installer::plan( $settings );
+
+		WP_CLI::log(
+			sprintf(
+				'%s / %s / %s — %s',
+				$settings['slug'],
+				$settings['locale'],
+				$settings['name'],
+				$plan['message']
+			)
+		);
+
+		foreach ( $plan['differences'] as $key => $pair ) {
+			WP_CLI::log( sprintf( '  %-7s сейчас «%s», нужно «%s»', $key, $pair['have'], $pair['want'] ) );
+		}
+
+		if ( 'conflict' === $plan['action'] ) {
+			WP_CLI::error( $plan['message'] );
+		}
+
+		if ( Utils\get_flag_value( $assoc_args, 'dry-run', false ) ) {
+			WP_CLI::success( sprintf( 'dry-run: действие «%s», ничего не записано', $plan['action'] ) );
+
+			return;
+		}
+
+		if ( 'none' === $plan['action'] ) {
+			WP_CLI::success( 'язык уже настроен, изменений нет' );
+
+			return;
+		}
+
+		$result = Language_Installer::apply(
+			$settings,
+			(bool) Utils\get_flag_value( $assoc_args, 'update', false )
+		);
+
+		if ( is_wp_error( $result ) ) {
+			WP_CLI::error( $result->get_error_message() );
+		}
+
+		WP_CLI::success(
+			sprintf(
+				'язык %s: %s. Дальше: wp rewrite flush, затем wp tools clone-language --locale=%s',
+				$settings['slug'],
+				'create' === $result['action'] ? 'создан' : 'обновлён',
+				$settings['locale']
+			)
+		);
 	}
 
 	/**
@@ -449,9 +586,15 @@ final class CLI {
 	 * ## OPTIONS
 	 *
 	 * [--post-type=<types>]
-	 * : Comma-separated types to walk: unit, property, post.
+	 * : Comma-separated types to walk: unit, property, post, page, developers.
 	 * ---
-	 * default: unit,property,post
+	 * default: unit,property,post,page,developers
+	 * ---
+	 *
+	 * [--status=<statuses>]
+	 * : Comma-separated statuses to walk; pass publish to skip drafts.
+	 * ---
+	 * default: publish,draft
 	 * ---
 	 *
 	 * [--limit=<number>]
@@ -484,6 +627,7 @@ final class CLI {
 	 *     wp tools translate-units --limit=5 --language=ru
 	 *     wp tools translate-units --post-type=property --limit=5 --dry-run
 	 *     wp tools translate-units --post-type=post --language=de --limit=5
+	 *     wp tools translate-units --language=zh --status=draft --limit=5
 	 *
 	 * @param array $args Positional arguments, unused.
 	 * @param array $assoc_args Flags.
@@ -497,6 +641,12 @@ final class CLI {
 		$limit    = max( 1, (int) Utils\get_flag_value( $assoc_args, 'limit', 20 ) );
 		$offset   = max( 0, (int) Utils\get_flag_value( $assoc_args, 'offset', 0 ) );
 		$language = (string) Utils\get_flag_value( $assoc_args, 'language', '' );
+		$statuses = array_filter(
+			array_map(
+				'trim',
+				explode( ',', (string) Utils\get_flag_value( $assoc_args, 'status', implode( ',', Unit_Translator::DEFAULT_STATUSES ) ) )
+			)
+		);
 		$types    = array_filter(
 			array_map(
 				'trim',
@@ -532,7 +682,7 @@ final class CLI {
 
 		$ids = $post_id > 0
 			? array( $post_id )
-			: $translator->find( $limit, $offset, $language, $types );
+			: $translator->find( $limit, $offset, $language, $types, $statuses );
 
 		if ( empty( $ids ) ) {
 			WP_CLI::success( 'Записей с флагом need_translate не нашлось' );

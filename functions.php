@@ -72,6 +72,10 @@ function add_theme_styles(): void {
 			'ajax_url'    => admin_url( 'admin-ajax.php' ),
 			'_ajax_nonce' => wp_create_nonce( 'get_filtered_properties' ),
 			'languages'   => function_exists( 'pll_languages_list' ) ? pll_languages_list() : array(),
+			'language'    => function_exists( 'core_get_current_language' ) ? core_get_current_language() : 'en',
+			'tag'         => function_exists( 'core_language_tag' )
+				? core_language_tag( core_get_current_language(), get_locale() )
+				: str_replace( '_', '-', get_locale() ),
 		)
 	);
 

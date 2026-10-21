@@ -250,16 +250,21 @@ class UnitTranslatorTest extends TestCase {
 	}
 
 	/**
-	 * Anything that is not an existing unit is refused by its own error code.
+	 * Anything that is not a supported post is refused by its own error code.
+	 *
+	 * Pages and developers joined the supported types when Chinese was opened,
+	 * so the refused one here is an attachment.
 	 */
 	public function test_other_post_types_and_missing_posts_are_refused() {
-		$page = self::factory()->post->create( array( 'post_type' => 'page' ) );
+		$attachment = self::factory()->post->create( array( 'post_type' => 'attachment' ) );
 
-		$wrong_type = $this->translator()->plan( $page, true );
+		$wrong_type = $this->translator()->plan( $attachment, true );
 		$missing    = $this->translator()->plan( 99999999, true );
 
 		$this->assertSame( 'unit_type', $wrong_type->get_error_code() );
 		$this->assertSame( 'unit_missing', $missing->get_error_code() );
+		$this->assertContains( 'page', Unit_Translator::POST_TYPES );
+		$this->assertContains( 'developers', Unit_Translator::POST_TYPES );
 	}
 
 	/**
@@ -462,7 +467,8 @@ class UnitTranslatorTest extends TestCase {
 		$this->drop_http_stub( $stub );
 
 		$this->assertIsArray( $saved );
-		$this->assertSame( '[T] Studio in Marina', get_post( $project )->post_title );
+		// Название проекта — зарегистрированное имя, его не переводят.
+		$this->assertSame( 'Studio in Marina', get_post( $project )->post_title );
 		$this->assertStringContainsString( '[T] ', get_post( $project )->post_content );
 		$this->assertSame( '', (string) get_post_meta( $project, Distress_Units_Importer::NEED_TRANSLATE_META, true ) );
 	}
@@ -672,8 +678,9 @@ class UnitTranslatorTest extends TestCase {
 		$this->assertSame( '[T] Payment Plan 1', (string) get_post_meta( $second, 'payment_plans_0_name', true ) );
 
 		// Текст самого объекта в кэш не попадает, иначе опция росла бы на
-		// каждой записи: его отправляют заново.
-		$this->assertContains( 'Studio in Marina', $second_texts );
+		// каждой записи: его отправляют заново. Заголовок проекта не
+		// отправляют вовсе, поэтому сверяемся по описанию.
+		$this->assertContains( 'A studio with a sea view.', $second_texts );
 		$this->assertLessThan( $after_first, count( $sent ) - $after_first );
 	}
 
