@@ -811,7 +811,7 @@ final class CLI {
 	 * : Work on this unit alone, flagged or not.
 	 *
 	 * [--language=<slug>]
-	 * : Only units in this Polylang language.
+	 * : Only units in this Polylang language; with --post-id it is the target.
 	 *
 	 * [--dry-run]
 	 * : Report the plan, send nothing to DeepL and write nothing.
@@ -829,6 +829,7 @@ final class CLI {
 	 *     wp tools translate-units --post-type=property --limit=5 --dry-run
 	 *     wp tools translate-units --post-type=post --language=de --limit=5
 	 *     wp tools translate-units --language=zh --status=draft --limit=5
+	 *     wp tools translate-units --post-id=149352 --language=en
 	 *
 	 * @param array $args Positional arguments, unused.
 	 * @param array $assoc_args Flags.
@@ -868,8 +869,15 @@ final class CLI {
 			WP_CLI::error( '--force требует --post-id, иначе под перевод уйдёт весь каталог' );
 		}
 
-		// Названный юнит переводим независимо от флага.
+		// Названный юнит переводим независимо от флага, а указанный язык
+		// становится целью: запись может числиться на одном языке и нести текст
+		// на другом.
 		$force = $force || $post_id > 0;
+		$into  = $post_id > 0 ? $language : '';
+
+		if ( '' !== $into && '' === DeepL_Client::target_language( $into ) ) {
+			WP_CLI::error( sprintf( 'язык «%s» DeepL не поддерживает', $into ) );
+		}
 
 		if ( ! function_exists( 'pll_get_post_language' ) ) {
 			WP_CLI::error( 'Polylang не активен — язык поста определить нечем' );
@@ -906,7 +914,7 @@ final class CLI {
 
 			WP_CLI::log( sprintf( '[%d/%d] %s #%d', $index + 1, $total, get_post_type( $id ) ?: 'post', $id ) );
 
-			$plan = $translator->plan( (int) $id, $force );
+			$plan = $translator->plan( (int) $id, $force, $into );
 
 			if ( is_wp_error( $plan ) ) {
 				++ $totals['skipped'];
@@ -933,7 +941,7 @@ final class CLI {
 				continue;
 			}
 
-			$saved = $translator->translate( (int) $id, $force );
+			$saved = $translator->translate( (int) $id, $force, $into );
 
 			if ( is_wp_error( $saved ) ) {
 				++ $totals['failed'];

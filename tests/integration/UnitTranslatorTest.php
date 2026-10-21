@@ -250,6 +250,46 @@ class UnitTranslatorTest extends TestCase {
 	}
 
 	/**
+	 * A named post is translated into the language asked for, flag or no flag.
+	 *
+	 * A record can be filed under one language and carry text in another — an
+	 * English news post written in Russian. Naming the language makes it the
+	 * target and lifts the refusal that guards the default language.
+	 */
+	public function test_named_language_becomes_the_target_for_a_named_post() {
+		$english = $this->create_unit( array( 'slug' => 'filed-as-english' ) );
+
+		$refused = $this->translator()->plan( $english, true );
+
+		$this->assertTrue( is_wp_error( $refused ) );
+		$this->assertSame( 'post_default_language', $refused->get_error_code() );
+
+		$plan = $this->translator()->plan( $english, true, 'ru' );
+
+		$this->assertIsArray( $plan );
+		$this->assertSame( 'ru', $plan['language'] );
+		$this->assertSame( 'RU', $plan['target'] );
+
+		$same = $this->translator()->plan( $english, true, 'en' );
+
+		$this->assertIsArray( $same );
+		$this->assertSame( 'EN-GB', $same['target'] );
+	}
+
+	/**
+	 * Without a named language the post's own one still decides.
+	 */
+	public function test_without_a_named_language_the_post_language_decides() {
+		$russian = $this->create_flagged_post( 'unit' );
+
+		$plan = $this->translator()->plan( $russian );
+
+		$this->assertIsArray( $plan );
+		$this->assertSame( 'ru', $plan['language'] );
+		$this->assertSame( 'RU', $plan['target'] );
+	}
+
+	/**
 	 * Anything that is not a supported post is refused by its own error code.
 	 *
 	 * Pages and developers joined the supported types when Chinese was opened,
