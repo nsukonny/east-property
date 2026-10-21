@@ -35,6 +35,24 @@ export function formatCurrency(value) {
 }
 
 /**
+ * Разбор значения, которое пришло от элемента управления, а не от человека.
+ *
+ * `value` у range-инпута всегда канонический: точка как десятичный разделитель,
+ * без группировки, независимо от языка страницы. Пропускать его через разбор
+ * локализованного текста нельзя — в немецком точка считается разделителем
+ * тысяч, и ставка 4.5 превращалась в 45.
+ *
+ * @param {string|number} rawValue
+ *
+ * @return {number}
+ */
+export function parseControlValue(rawValue) {
+	const parsed = typeof rawValue === 'number' ? rawValue : parseFloat(String(rawValue));
+
+	return Number.isFinite(parsed) ? parsed : 0;
+}
+
+/**
  * Разбор того, что человек видит в поле.
  *
  * Принимается и разделитель этого языка, и точка с запятой: поле заполняют

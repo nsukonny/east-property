@@ -449,9 +449,37 @@ local_mysql_import() {
 }
 
 # Streams the production database down over ssh, compressed on the far side.
+#
+# pipefail in a subshell, because the status of a pipeline is the status of its
+# last command: gzip writes a valid, empty archive and reports success even
+# after ssh refused the connection, and the next step drops the local database
+# for that empty dump. The subshell keeps the option off for the rest of the
+# script, where a pipeline closed early by head is normal.
 fetch_prod_dump() {
-	ssh "$PROD_SSH" "$PROD_WP --path=$PROD_PATH db export - --add-drop-table --allow-root" \
-		| gzip -c > "$1"
+	(
+		set -o pipefail
+		ssh "$PROD_SSH" "$PROD_WP --path=$PROD_PATH db export - --add-drop-table --allow-root" \
+			| gzip -c > "$1"
+	)
+}
+
+# How much of a dump is read looking for the first statement.
+DUMP_PROBE_BYTES=${DUMP_PROBE_BYTES:-2000000}
+
+# Refuses to go on until the file looks like a database dump.
+#
+# Stands before DROP DATABASE and covers both ways a dump arrives: streamed
+# over ssh, and handed over with --dump. head closes the pipe early, so the
+# status read here is grep's, which is the point.
+assert_usable_dump() {
+	[ -s "$1" ] || die "the dump is empty, refusing to drop the database: $1"
+
+	case $1 in
+		*.gz) gunzip -c "$1" 2>/dev/null ;;
+		*) cat "$1" ;;
+	esac | head -c "$DUMP_PROBE_BYTES" \
+		| grep -qiE 'CREATE TABLE|INSERT INTO|MySQL dump|MariaDB dump' \
+		|| die "the file does not look like a database dump, refusing to drop the database: $1"
 }
 
 # Everything that must hold before the local database is dropped.
@@ -569,6 +597,8 @@ cmd_clone_to_local() {
 		run fetch_prod_dump "$dump"
 		run chmod 600 "$dump"
 	fi
+
+	assert_usable_dump "$dump"
 
 	log "Emptying $LOCAL_DB_NAME"
 	run local_mysql -e "DROP DATABASE IF EXISTS \`$LOCAL_DB_NAME\`; CREATE DATABASE \`$LOCAL_DB_NAME\` DEFAULT CHARACTER SET utf8mb4;"
