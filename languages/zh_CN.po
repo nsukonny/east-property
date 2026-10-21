@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-19T16:27:49+00:00\n"
-"PO-Revision-Date: 2026-10-20 17:57+0000\n"
+"POT-Creation-Date: 2026-10-20T17:57:50+00:00\n"
+"PO-Revision-Date: 2026-10-21 14:23+0000\n"
 "Language: zh_CN\n"
 "X-Generator: east-property make-translations\n"
 "X-Domain: east-property\n"
@@ -134,7 +134,7 @@ msgstr "所有房源类型"
 
 #: core/components/account/functions.php:363
 msgid "Name or ID"
-msgstr "姓名或身份证号"
+msgstr "名称或编号"
 
 #: core/components/account/functions.php:363
 msgid "Name, project or ID"
@@ -291,7 +291,7 @@ msgstr ""
 
 #: core/components/common/cookies/cookies.php:17
 msgid "Decline"
-msgstr "下降"
+msgstr "拒绝"
 
 #: core/components/common/cookies/cookies.php:20
 msgid "Accept"
@@ -527,7 +527,7 @@ msgstr "竣工年份后"
 #: core/components/filters/functions.php:359
 #: core/components/filters/functions.php:869
 msgid "Price (AED)"
-msgstr "价格（迪拉姆）"
+msgstr "价格（AED）"
 
 #: core/components/filters/functions.php:366
 #: core/components/filters/functions.php:876
@@ -1291,7 +1291,7 @@ msgstr "面积不应为空，且必须大于50平方英尺"
 
 #: core/includes/entities/class-entity-unit.php:709
 msgid "Price should not be empty and must bigger than 200 000 AED"
-msgstr "价格不得为空，且必须大于 200 000 阿联酋迪拉姆"
+msgstr "价格不得为空，且必须大于 200 000 AED"
 
 #: core/includes/entities/class-entity-unit.php:719
 msgid "Your unit has been submitted and is waiting for approval. Please fix the following issues:"
@@ -1875,7 +1875,7 @@ msgstr "房源类型"
 
 #: core/template-parts/account/edit-unit.php:163
 msgid "Price, AED"
-msgstr "价格，阿联酋迪拉姆"
+msgstr "价格，AED"
 
 #: core/template-parts/account/edit-unit.php:177
 msgid "Area (sqft)"
@@ -1887,7 +1887,7 @@ msgstr "每平方英尺价格："
 
 #: core/template-parts/account/edit-unit.php:204
 msgid "Original price, AED"
-msgstr "原价，迪拉姆"
+msgstr "原价，AED"
 
 #: core/template-parts/account/edit-unit.php:217
 #: single-unit.php:88
@@ -2745,7 +2745,7 @@ msgstr "房价"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:50
 msgid "Total purchase price of the property in AED"
-msgstr "该房产的总购买价格（阿联酋迪拉姆）"
+msgstr "该房产的总购买价格（AED）"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:76
 msgid "from 300,000"
@@ -2841,7 +2841,7 @@ msgstr "抵押贷款的全部费用"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:24
 msgid "DLD fee (4% + 580 AED)"
-msgstr "DLD手续费（4% + 580迪拉姆）"
+msgstr "DLD 手续费（4% + 580 AED）"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:33
 msgid "Agency commission (2%)"
@@ -2857,7 +2857,7 @@ msgstr "房产评估"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:60
 msgid "Mortgage registration (0.25% + 290 AED)"
-msgstr "抵押登记（0.25% + 290 阿联酋迪拉姆）"
+msgstr "抵押登记（0.25% + 290 AED）"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:69
 msgid "Total"
@@ -2968,7 +2968,7 @@ msgstr "除了首付款外，还有哪些费用？"
 
 #: template-parts/sections/mortgage-calculator/faq.php:31
 msgid "Additional costs include the DLD fee (4% + 580 AED), agency commission (2%), bank processing fee (up to 1%), property valuation, and mortgage registration."
-msgstr "其他费用包括DLD费用（4% + 580迪拉姆）、中介佣金（2%）、银行手续费（最高1%）、房产评估费以及抵押登记费。"
+msgstr "其他费用包括 DLD 手续费（4% + 580 AED）、中介佣金（2%）、银行手续费（最高 1%）、房产评估费以及抵押登记费。"
 
 #: template-parts/sections/mortgage-calculator/faq.php:40
 msgid "Questions and answers"
