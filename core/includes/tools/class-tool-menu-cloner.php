@@ -158,20 +158,47 @@ final class Menu_Cloner {
 				continue;
 			}
 
-			$copy  = self::existing_copy( $source_id, $language );
-			$items = $this->map_items( $source_id, $language );
+			$copy     = self::existing_copy( $source_id, $language );
+			$items    = $this->map_items( $source_id, $language );
+			$assigned = (int) ( self::assignments( $language )[ $location ] ?? 0 );
 
 			$plan[] = array(
 				'location' => $location,
 				'source'   => $source,
 				'copy'     => $copy,
-				'assigned' => (int) ( self::assignments( $language )[ $location ] ?? 0 ),
+				'assigned' => $assigned,
+				'action'   => self::decide( $copy, $assigned ),
 				'mapped'   => $items['mapped'],
 				'skipped'  => $items['skipped'],
 			);
 		}
 
 		return $plan;
+	}
+
+	/**
+	 * What to do with one theme location.
+	 *
+	 * The language may already have a menu there — made by hand, or made
+	 * before this command existed. Such a menu carries none of our markers, so
+	 * creating a copy and taking the location over would quietly swap the
+	 * navigation visitors see. It is left alone and reported instead.
+	 *
+	 * @param WP_Term|null $copy     Copy this command made earlier.
+	 * @param int          $assigned Menu the language has on that location now.
+	 *
+	 * @return string create, assign, none or occupied.
+	 */
+	public static function decide( ?WP_Term $copy, int $assigned ): string {
+		if ( null === $copy ) {
+			return 0 === $assigned ? 'create' : 'occupied';
+		}
+
+		if ( 0 === $assigned ) {
+			return 'assign';
+		}
+
+		return $assigned === (int) $copy->term_id ? 'none' : 'occupied';
 	}
 
 	/**

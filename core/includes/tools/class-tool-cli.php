@@ -51,8 +51,9 @@ final class CLI {
 	 * has no translation is left out and listed, rather than linking a visitor
 	 * out of the language they are reading.
 	 *
-	 * Safe to run again: a copy that already exists is left alone unless
-	 * --force is given.
+	 * Safe to run again: a copy that already exists is left alone, and so is a
+	 * location the language already fills with a menu of its own. Both are
+	 * taken over only with --force.
 	 *
 	 * ## OPTIONS
 	 *
@@ -139,15 +140,34 @@ final class CLI {
 		}
 
 		$totals = array(
-			'created' => 0,
-			'updated' => 0,
-			'kept'    => 0,
-			'items'   => 0,
-			'skipped' => 0,
+			'created'  => 0,
+			'updated'  => 0,
+			'kept'     => 0,
+			'items'    => 0,
+			'skipped'  => 0,
+			'occupied' => 0,
 		);
 
 		foreach ( $plan as $row ) {
-			$copy = $row['copy'];
+			$copy     = $row['copy'];
+			$occupied = 'occupied' === $row['action'] && ! $force;
+
+			if ( $occupied ) {
+				$current = get_term( (int) $row['assigned'], 'nav_menu' );
+
+				WP_CLI::warning(
+					sprintf(
+						'%s: у языка уже стоит «%s» (#%d) — не трогаю. Чтобы заменить: --force',
+						$row['location'],
+						$current instanceof \WP_Term ? $current->name : '?',
+						(int) $row['assigned']
+					)
+				);
+
+				++ $totals['occupied'];
+
+				continue;
+			}
 
 			WP_CLI::log(
 				sprintf(
@@ -160,6 +180,15 @@ final class CLI {
 						: sprintf( 'уже есть «%s» (#%d)%s', $copy->name, (int) $copy->term_id, $force ? ', пересоберу' : '' )
 				)
 			);
+
+			if ( 'occupied' === $row['action'] ) {
+				$current = get_term( (int) $row['assigned'], 'nav_menu' );
+
+				WP_CLI::warning(
+					sprintf( '        --force: место займёт копия, «%s» (#%d) останется без назначения',
+						$current instanceof \WP_Term ? $current->name : '?', (int) $row['assigned'] )
+				);
+			}
 
 			WP_CLI::log(
 				sprintf( '        пунктов к переносу: %d, пропущено: %d',
@@ -206,8 +235,9 @@ final class CLI {
 		}
 
 		WP_CLI::log(
-			sprintf( 'Создано: %d, пересобрано: %d, оставлено как есть: %d, пунктов: %d, пропущено: %d',
-				$totals['created'], $totals['updated'], $totals['kept'], $totals['items'], $totals['skipped'] )
+			sprintf( 'Создано: %d, пересобрано: %d, оставлено как есть: %d, чужих назначений не тронуто: %d, пунктов: %d, пропущено: %d',
+				$totals['created'], $totals['updated'], $totals['kept'], $totals['occupied'],
+				$totals['items'], $totals['skipped'] )
 		);
 
 		WP_CLI::success( 'Готово' );

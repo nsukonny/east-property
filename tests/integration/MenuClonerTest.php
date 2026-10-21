@@ -222,6 +222,121 @@ class MenuClonerTest extends TestCase {
 	}
 
 	/**
+	 * A menu the language already has on a location is not taken over.
+	 *
+	 * Menus made by hand, or made before this command existed, carry none of
+	 * its markers; creating a copy and reassigning the location would swap the
+	 * navigation visitors see.
+	 */
+	public function test_existing_assignment_of_the_language_is_reported_not_replaced() {
+		list( $english, $russian ) = $this->translated_page();
+
+		$this->source_menu(
+			'header_menu',
+			array(
+				array(
+					'menu-item-type'      => 'post_type',
+					'menu-item-object'    => 'page',
+					'menu-item-object-id' => $english,
+				),
+			)
+		);
+
+		$by_hand = (int) wp_create_nav_menu( 'Русская навигация ' . wp_rand() );
+
+		$this->menus[] = $by_hand;
+
+		wp_update_nav_menu_item(
+			$by_hand,
+			0,
+			array(
+				'menu-item-type'      => 'post_type',
+				'menu-item-object'    => 'page',
+				'menu-item-object-id' => $russian,
+				'menu-item-status'    => 'publish',
+			)
+		);
+
+		Menu_Cloner::assign( 'header_menu', 'ru', $by_hand );
+
+		$row = null;
+
+		foreach ( ( new Menu_Cloner() )->plan( 'ru' ) as $candidate ) {
+			if ( 'header_menu' === $candidate['location'] ) {
+				$row = $candidate;
+			}
+		}
+
+		$this->assertNotNull( $row );
+		$this->assertSame( 'occupied', $row['action'] );
+		$this->assertSame( $by_hand, (int) $row['assigned'] );
+		$this->assertNull( $row['copy'] );
+		$this->assertSame( $by_hand, (int) Menu_Cloner::assignments( 'ru' )['header_menu'] );
+	}
+
+	/**
+	 * Every combination of a copy and a current assignment has one verdict.
+	 */
+	public function test_decide_covers_copy_and_assignment() {
+		$this->assertSame( 'create', Menu_Cloner::decide( null, 0 ) );
+		$this->assertSame( 'occupied', Menu_Cloner::decide( null, 7 ) );
+		$this->assertSame( 'assign', Menu_Cloner::decide( self::term( 42 ), 0 ) );
+		$this->assertSame( 'none', Menu_Cloner::decide( self::term( 42 ), 42 ) );
+		$this->assertSame( 'occupied', Menu_Cloner::decide( self::term( 42 ), 7 ) );
+	}
+
+	/**
+	 * A bare term object standing in for a menu.
+	 *
+	 * @param int $term_id
+	 *
+	 * @return \WP_Term
+	 */
+	private static function term( int $term_id ): \WP_Term {
+		return new \WP_Term( (object) array( 'term_id' => $term_id, 'taxonomy' => 'nav_menu' ) );
+	}
+
+	/**
+	 * A copy that lost its assignment is put back without a second menu.
+	 */
+	public function test_copy_without_an_assignment_is_assigned_again() {
+		list( $english ) = $this->translated_page();
+
+		$source = $this->source_menu(
+			'header_menu',
+			array(
+				array(
+					'menu-item-type'      => 'post_type',
+					'menu-item-object'    => 'page',
+					'menu-item-object-id' => $english,
+				),
+			)
+		);
+
+		$cloner = new Menu_Cloner();
+		$made   = $cloner->clone_menu( $source, 'ru' );
+
+		$this->menus[] = (int) $made['menu_id'];
+
+		Menu_Cloner::assign( 'header_menu', 'ru', (int) $made['menu_id'] );
+
+		$option = (array) get_option( 'polylang', array() );
+		unset( $option['nav_menus'][ Menu_Cloner::theme() ]['header_menu']['ru'] );
+		update_option( 'polylang', $option );
+
+		$row = null;
+
+		foreach ( $cloner->plan( 'ru' ) as $candidate ) {
+			if ( 'header_menu' === $candidate['location'] ) {
+				$row = $candidate;
+			}
+		}
+
+		$this->assertSame( 'assign', $row['action'] );
+		$this->assertSame( (int) $made['menu_id'], (int) $row['copy']->term_id );
+	}
+
+	/**
 	 * The copy is reported for every location the default language fills.
 	 */
 	public function test_plan_covers_every_assigned_location() {
