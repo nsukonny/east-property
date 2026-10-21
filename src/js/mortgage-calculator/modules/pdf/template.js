@@ -1,6 +1,6 @@
 import { LOGO_SVG } from './logo.js';
 import { getPdfStyles } from './styles.js';
-import { formatCurrency } from '../formatter.js';
+import { formatCurrency, formatRate } from '../formatter.js';
 import { FORMATTING } from '../../config/index.js';
 
 const { __, sprintf } = window.wp.i18n;
@@ -62,7 +62,7 @@ export function buildPdfHtml({ state, metrics, entryCosts, refId, dateStr }) {
 				</div>
 				<div class="hero-badge">
 					<small>${__('Interest Rate', 'east-property')}</small>
-					${metrics.rate.toFixed(2)}%
+					${formatRate(metrics.rate)}%
 				</div>
 			</div>
 		</div>
@@ -108,7 +108,7 @@ export function buildPdfHtml({ state, metrics, entryCosts, refId, dateStr }) {
 					</tr>
 					<tr>
 						<td>${__('Interest Rate', 'east-property')}</td>
-						<td>${sprintf(__('%s%% p.a.', 'east-property'), metrics.rate.toFixed(2))}</td>
+						<td>${sprintf(__('%s%% p.a.', 'east-property'), formatRate(metrics.rate))}</td>
 					</tr>
 					<tr>
 						<td>${__('Total Interest (Overpayment)', 'east-property')}</td>

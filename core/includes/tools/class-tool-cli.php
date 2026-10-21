@@ -40,6 +40,177 @@ final class CLI {
 		WP_CLI::add_command( 'tools translate-locations', array( __CLASS__, 'translate_locations' ) );
 		WP_CLI::add_command( 'tools clone-language', array( __CLASS__, 'clone_language' ) );
 		WP_CLI::add_command( 'tools add-language', array( __CLASS__, 'add_language' ) );
+		WP_CLI::add_command( 'tools clone-menus', array( __CLASS__, 'clone_menus' ) );
+	}
+
+	/**
+	 * Build a language's navigation from the menus the default language uses.
+	 *
+	 * Every theme location that has a menu in the default language gets a copy
+	 * pointed at the same pages in the chosen language. An item whose target
+	 * has no translation is left out and listed, rather than linking a visitor
+	 * out of the language they are reading.
+	 *
+	 * Safe to run again: a copy that already exists is left alone unless
+	 * --force is given.
+	 *
+	 * ## OPTIONS
+	 *
+	 * --locale=<locale>
+	 * : Locale or slug of the language to build, for example zh_CN or zh.
+	 *
+	 * [--location=<locations>]
+	 * : Comma-separated theme locations; all of them when left out.
+	 *
+	 * [--labels=<mode>]
+	 * : copy keeps the source labels; inherit lets them follow the translation.
+	 * ---
+	 * default: copy
+	 * options:
+	 *   - copy
+	 *   - inherit
+	 * ---
+	 *
+	 * [--force]
+	 * : Rebuild the items of a copy that already exists.
+	 *
+	 * [--dry-run]
+	 * : Report the plan and write nothing.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp tools clone-menus --locale=zh_CN --dry-run
+	 *     wp tools clone-menus --locale=zh_CN
+	 *     wp tools clone-menus --locale=hi_IN --labels=inherit
+	 *     wp tools clone-menus --locale=zh_CN --location=header_menu --force
+	 *
+	 * @param array $args Positional arguments, unused.
+	 * @param array $assoc_args Flags.
+	 *
+	 * @return void
+	 */
+	public static function clone_menus( array $args, array $assoc_args ): void {
+		$wanted  = (string) Utils\get_flag_value( $assoc_args, 'locale', '' );
+		$dry_run = (bool) Utils\get_flag_value( $assoc_args, 'dry-run', false );
+		$force   = (bool) Utils\get_flag_value( $assoc_args, 'force', false );
+		$inherit = 'inherit' === (string) Utils\get_flag_value( $assoc_args, 'labels', 'copy' );
+
+		if ( ! function_exists( 'pll_languages_list' ) ) {
+			WP_CLI::error( 'Polylang не активен — языки взять негде' );
+		}
+
+		if ( '' === trim( $wanted ) ) {
+			WP_CLI::error(
+				sprintf( 'нужен --locale, известные языки: %s',
+					implode( ', ', Language_Cloner::known_languages() ) )
+			);
+		}
+
+		$language = Language_Cloner::language( $wanted );
+
+		if ( '' === $language ) {
+			WP_CLI::error(
+				sprintf( 'Polylang не знает «%s». Известные: %s',
+					$wanted, implode( ', ', Language_Cloner::known_languages() ) )
+			);
+		}
+
+		$cloner = new Menu_Cloner();
+		$plan   = $cloner->plan( $language );
+
+		if ( is_wp_error( $plan ) ) {
+			WP_CLI::error( $plan->get_error_message() );
+		}
+
+		$only = array_filter(
+			array_map( 'trim', explode( ',', (string) Utils\get_flag_value( $assoc_args, 'location', '' ) ) )
+		);
+
+		if ( ! empty( $only ) ) {
+			$plan = array_values(
+				array_filter( $plan, static fn( $row ) => in_array( $row['location'], $only, true ) )
+			);
+		}
+
+		if ( empty( $plan ) ) {
+			WP_CLI::success( 'копировать нечего' );
+
+			return;
+		}
+
+		$totals = array(
+			'created' => 0,
+			'updated' => 0,
+			'kept'    => 0,
+			'items'   => 0,
+			'skipped' => 0,
+		);
+
+		foreach ( $plan as $row ) {
+			$copy = $row['copy'];
+
+			WP_CLI::log(
+				sprintf(
+					'%s: «%s» (#%d) → %s',
+					$row['location'],
+					$row['source']->name,
+					(int) $row['source']->term_id,
+					null === $copy
+						? sprintf( 'новое меню «%s»', Menu_Cloner::copy_name( $row['source'], $language ) )
+						: sprintf( 'уже есть «%s» (#%d)%s', $copy->name, (int) $copy->term_id, $force ? ', пересоберу' : '' )
+				)
+			);
+
+			WP_CLI::log(
+				sprintf( '        пунктов к переносу: %d, пропущено: %d',
+					count( $row['mapped'] ), count( $row['skipped'] ) )
+			);
+
+			foreach ( $row['skipped'] as $miss ) {
+				WP_CLI::log( sprintf( '          — «%s»: %s', $miss['title'], $miss['reason'] ) );
+			}
+
+			$totals['skipped'] += count( $row['skipped'] );
+
+			if ( $dry_run ) {
+				continue;
+			}
+
+			$result = $cloner->clone_menu( (int) $row['source']->term_id, $language, $force, $inherit );
+
+			if ( is_wp_error( $result ) ) {
+				WP_CLI::warning( $result->get_error_message() );
+
+				continue;
+			}
+
+			if ( 'none' === $result['action'] ) {
+				++ $totals['kept'];
+			} else {
+				$totals[ 'create' === $result['action'] ? 'created' : 'updated' ] += 1;
+				$totals['items'] += (int) $result['created'];
+			}
+
+			Menu_Cloner::assign( $row['location'], $language, (int) $result['menu_id'] );
+
+			WP_CLI::log(
+				sprintf( '        меню #%d назначено на %s для %s',
+					(int) $result['menu_id'], $row['location'], $language )
+			);
+		}
+
+		if ( $dry_run ) {
+			WP_CLI::success( 'Проверка закончена, ничего не записано' );
+
+			return;
+		}
+
+		WP_CLI::log(
+			sprintf( 'Создано: %d, пересобрано: %d, оставлено как есть: %d, пунктов: %d, пропущено: %d',
+				$totals['created'], $totals['updated'], $totals['kept'], $totals['items'], $totals['skipped'] )
+		);
+
+		WP_CLI::success( 'Готово' );
 	}
 
 	/**

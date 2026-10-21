@@ -5,6 +5,7 @@ const numberFormatter = new Intl.NumberFormat(FORMATTING.locale, {
 });
 
 const rateFormatter = new Intl.NumberFormat(FORMATTING.locale, {
+	minimumFractionDigits: 2,
 	maximumFractionDigits: 2,
 });
 
@@ -98,12 +99,15 @@ export function parseNumericInput(rawValue) {
  * 0.05, поэтому округление до одного знака показывало «4» там, где считалось
  * по 4.05.
  *
+ * Знаков всегда два, включая незначащий ноль: иначе длина строки прыгает между
+ * «4,5» и «4,55», и поле дёргается, пока тянешь ползунок.
+ *
  * @param {number} value Годовая ставка в процентах.
  *
  * @return {string}
  */
 export function formatRate(value) {
-	if (!Number.isFinite(value)) return '0';
+	if (!Number.isFinite(value)) return rateFormatter.format(0);
 
 	return rateFormatter.format(Number(value.toFixed(2)));
 }

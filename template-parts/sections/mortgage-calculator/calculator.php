@@ -172,7 +172,7 @@
 								   id="mcRateInput" 
 								   class="calc-text-input" 
 								   data-mc-input="rate"
-								   value="4,5" 
+								   value="4.50" 
 								   inputmode="decimal" 
 								   autocomplete="off">
 							<span class="calc-input-unit">%</span>
