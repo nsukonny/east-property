@@ -18,6 +18,9 @@ wp tools translate-units --language=zh --post-type=unit --limit=5000 --allow-roo
 
 wp tools translate-locations --language=zh_CN --limit=10000 --allow-root
 
+### 4. Клонируем меню
+wp tools clone-menus --locale=zh_CN --labels=inherit --allow-root
+
 #### 4. Сброс кэшей
 wp option delete ep_deepl_cache --allow-root
 wp rewrite flush --allow-root
