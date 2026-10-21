@@ -221,7 +221,7 @@ final class Unit_Translator {
 	 *
 	 * @return array|WP_Error Keys id, language, target, texts.
 	 */
-	public function plan( int $post_id, bool $force = false ) {
+	public function plan( int $post_id, bool $force = false, string $into = '' ) {
 		$post = get_post( $post_id );
 
 		if ( ! $post instanceof WP_Post ) {
@@ -242,13 +242,15 @@ final class Unit_Translator {
 			return new WP_Error( 'unit_not_flagged', sprintf( '#%d не помечен need_translate', $post_id ) );
 		}
 
-		$language = self::language_of( $post_id );
+		$language = '' !== $into ? $into : self::language_of( $post_id );
 
 		if ( '' === $language ) {
 			return new WP_Error( 'unit_no_language', sprintf( 'у #%d нет языка Polylang', $post_id ) );
 		}
 
-		if ( $language === self::default_language() ) {
+		// Названный язык задаёт цель сам: запись может числиться на одном языке
+		// и нести текст на другом — тогда её переводят на месте.
+		if ( '' === $into && $language === self::default_language() ) {
 			return new WP_Error(
 				'post_default_language',
 				sprintf( '#%d на языке по умолчанию (%s) — текст уже исходный, флаг снимать нечем',
@@ -392,8 +394,8 @@ final class Unit_Translator {
 	 *
 	 * @return array|WP_Error Names of the saved fields.
 	 */
-	public function translate( int $post_id, bool $force = false ) {
-		$plan = $this->plan( $post_id, $force );
+	public function translate( int $post_id, bool $force = false, string $into = '' ) {
+		$plan = $this->plan( $post_id, $force, $into );
 
 		if ( is_wp_error( $plan ) ) {
 			return $plan;
