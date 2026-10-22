@@ -28,5 +28,6 @@ get_component_template( 'search-results/units-list',
 		'h2'            => $units['total'] . ' ' . __( 'properties found', 'east-property' ),
 		'card_template' => $card_template,
 		'units'         => $units,
+		'listing_type'  => $listing_type,
 	)
 );

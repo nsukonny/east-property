@@ -10,6 +10,7 @@ $description   = $args['description'] ?? __( 'Browse a wide selection of apartme
                                              . ' locations. Compare prices, layouts, and communities in one place '
                                              . 'and find the apartment that fits your lifestyle, goals, and budget.' , 'east-property' );
 $card_template = $args['card_template'] ?? 'large-card';
+$listing_type  = $args['listing_type'] ?? '';
 ?>
 <section class="result-tabs" data-tabs>
 	<div class="container">
@@ -19,6 +20,11 @@ $card_template = $args['card_template'] ?? 'large-card';
 				        data-tab="list" role="tab" aria-selected="true" aria-controls="result-tabs-list-panel">
 					<?php _e( 'List view' , 'east-property' ); ?>
 				</button>
+				<?php
+				if ( 'distress' === $listing_type ) {
+					get_component_template( 'search-results/offmarket-cta' );
+				}
+				?>
 			</div>
 			<div class="result-tabs-content active" id="result-tabs-list-panel" data-tab-panel data-tab="list"
 			     role="tabpanel" aria-labelledby="result-tabs-list-tab">

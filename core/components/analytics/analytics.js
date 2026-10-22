@@ -18,6 +18,42 @@ const getPageType = () => {
 	return segments[0] || 'home';
 };
 
+/**
+ * Событие в dataLayer для Google Tag Manager.
+ *
+ * Не через gtag: тот кладёт в dataLayer объект arguments, и в контейнере
+ * параметры доступны только как eventModel.*. Обычный push даёт «специальное
+ * событие» с параметрами на верхнем уровне — триггер и переменные в GTM
+ * собираются без префикса.
+ *
+ * @param {string} name Имя события.
+ * @param {Object} params Параметры события.
+ *
+ * @return {void}
+ */
+const pushDataLayerEvent = (name, params = {}) => {
+	window.dataLayer = window.dataLayer || [];
+
+	window.dataLayer.push({event: name, ...params});
+};
+
+/**
+ * Кнопка «Unlock more off-market deals» на листинге distress.
+ *
+ * Своим обработчиком, а не в общем: тот выходит, когда на странице нет gtag,
+ * а этому событию gtag не нужен.
+ */
+document.addEventListener('click', function (event) {
+	if (!event.target.closest('[data-offmarket-cta]')) {
+		return;
+	}
+
+	pushDataLayerEvent('click_unlock_offmarket_whatsapp', {
+		page_type: getPageType(),
+		contact_type: 'whatsapp'
+	});
+});
+
 document.addEventListener('click', function (event) {
 	if (typeof window.gtag !== 'function') {
 		return;
