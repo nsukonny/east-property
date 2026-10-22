@@ -652,7 +652,7 @@ msgstr "Verfügbar"
 #: core/components/filters/functions.php:1236
 #: core/template-parts/search-results/properties-list.php:63
 #: core/template-parts/search-results/tabs.php:63
-#: core/template-parts/search-results/units-list.php:56
+#: core/template-parts/search-results/units-list.php:62
 msgid "Items not found"
 msgstr "Keine Treffer gefunden"
 
@@ -2409,7 +2409,7 @@ msgstr "Entdecken Sie eine große Auswahl an Immobilien in ganz Dubai. Von moder
 
 #: core/template-parts/search-results/properties-list.php:23
 #: core/template-parts/search-results/tabs.php:16
-#: core/template-parts/search-results/units-list.php:20
+#: core/template-parts/search-results/units-list.php:21
 msgid "List view"
 msgstr "Listenansicht"
 
@@ -3271,3 +3271,11 @@ msgstr ""
 #: src/js/mortgage-calculator/modules/pdf/template.js:204
 msgid "East Property Brokerage LLC"
 msgstr ""
+
+#: core/template-parts/search-results/offmarket-cta.php:10
+msgid "Hello! I am interested in more off-market deals in Dubai. Could you share what is available now?"
+msgstr "Hallo! Ich interessiere mich für weitere Off-Market-Angebote in Dubai. Welche gibt es aktuell?"
+
+#: core/template-parts/search-results/offmarket-cta.php:24
+msgid "Unlock more off-market deals"
+msgstr "Off-Market-Angebote"

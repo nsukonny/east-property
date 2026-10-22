@@ -652,7 +652,7 @@ msgstr "有货"
 #: core/components/filters/functions.php:1236
 #: core/template-parts/search-results/properties-list.php:63
 #: core/template-parts/search-results/tabs.php:63
-#: core/template-parts/search-results/units-list.php:56
+#: core/template-parts/search-results/units-list.php:62
 msgid "Items not found"
 msgstr "未找到相关项目"
 
@@ -2430,7 +2430,7 @@ msgstr "探索迪拜各地丰富多样的房产。从现代公寓和家庭别墅
 
 #: core/template-parts/search-results/properties-list.php:23
 #: core/template-parts/search-results/tabs.php:16
-#: core/template-parts/search-results/units-list.php:20
+#: core/template-parts/search-results/units-list.php:21
 msgid "List view"
 msgstr "列表视图"
 
@@ -3269,3 +3269,11 @@ msgstr "免责声明："
 #: src/js/mortgage-calculator/modules/pdf/template.js:204
 msgid "East Property Brokerage LLC"
 msgstr "东区房产经纪有限责任公司"
+
+#: core/template-parts/search-results/offmarket-cta.php:10
+msgid "Hello! I am interested in more off-market deals in Dubai. Could you share what is available now?"
+msgstr "您好！我想了解迪拜更多的非公开房源，目前有哪些可以推荐？"
+
+#: core/template-parts/search-results/offmarket-cta.php:24
+msgid "Unlock more off-market deals"
+msgstr "获取更多非公开房源"

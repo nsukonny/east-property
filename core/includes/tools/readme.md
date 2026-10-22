@@ -12,8 +12,9 @@ wp tools clone-language --locale=zh_CN --post-type=property --limit=3000 --allow
 wp tools clone-language --locale=zh_CN --post-type=unit --copy-status=draft --limit=5000 --allow-root
 
 #### 3. Перевод
+wp tools translate-units --language=zh --post-type=page --limit=20 --allow-root
 wp tools translate-units --post-type=post --limit=100 --language=zh --allow-root   # новости
-wp tools translate-units --language=zh --post-type=property --limit=3000 --allow-root
+wp tools translate-units --language=hi --post-type=property --limit=3000 --allow-root
 wp tools translate-units --language=zh --post-type=unit --limit=5000 --allow-root
 
 wp tools translate-locations --language=zh_CN --limit=10000 --allow-root
