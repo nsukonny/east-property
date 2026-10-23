@@ -32,6 +32,14 @@ final class Language_Cloner {
 	public const DEFAULT_POST_TYPES = array( 'unit', 'property' );
 
 	/**
+	 * Statuses a run reads when none are named.
+	 *
+	 * Drafts and scheduled posts come along: a copy keeps the status and the
+	 * date of its source, so a scheduled post stays scheduled for the same day.
+	 */
+	public const DEFAULT_STATUSES = array( 'publish', 'draft', 'future' );
+
+	/**
 	 * How many ids are read from the database at a time.
 	 */
 	private const BATCH = 200;
