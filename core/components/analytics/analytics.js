@@ -22,9 +22,6 @@ const getPageType = () => {
  * Событие в dataLayer для Google Tag Manager.
  *
  * Не через gtag: тот кладёт в dataLayer объект arguments, и в контейнере
- * параметры доступны только как eventModel.*. Обычный push даёт «специальное
- * событие» с параметрами на верхнем уровне — триггер и переменные в GTM
- * собираются без префикса.
  *
  * @param {string} name Имя события.
  * @param {Object} params Параметры события.
@@ -37,33 +34,20 @@ const pushDataLayerEvent = (name, params = {}) => {
 	window.dataLayer.push({event: name, ...params});
 };
 
-/**
- * Кнопка «Unlock more off-market deals» на листинге distress.
- *
- * Своим обработчиком, а не в общем: тот выходит, когда на странице нет gtag,
- * а этому событию gtag не нужен.
- */
 document.addEventListener('click', function (event) {
-	if (!event.target.closest('[data-offmarket-cta]')) {
-		return;
-	}
-
-	pushDataLayerEvent('click_unlock_offmarket_whatsapp', {
-		page_type: getPageType(),
-		contact_type: 'whatsapp'
-	});
-});
-
-document.addEventListener('click', function (event) {
-	if (typeof window.gtag !== 'function') {
-		return;
-	}
-
 	const pageType = getPageType();
+
+	const offMarketCta = event.target.closest('[data-offmarket-cta]');
+	if (offMarketCta) {
+		pushDataLayerEvent('click_unlock_offmarket_whatsapp', {
+			page_type: pageType,
+			contact_type: 'whatsapp'
+		});
+	}
 
 	const brokerModalBtn = event.target.closest('button[data-modal-open="broker-modal"]');
 	if (brokerModalBtn) {
-		window.gtag('event', 'open_contact_broker_modal', {
+		pushDataLayerEvent('open_contact_broker_modal', {
 			page_type: pageType,
 			contact_type: 'broker_modal',
 			property_id: brokerModalBtn.dataset.propertyId || '',
@@ -80,7 +64,7 @@ document.addEventListener('click', function (event) {
 	const whatsAppLink = event.target.closest('#bm_whatsapp');
 	if (whatsAppLink) {
 		const brokerModal = whatsAppLink.closest('.modal-wrapper[data-modal-id="broker-modal"]');
-		window.gtag('event', 'contact_whatsapp', {
+		pushDataLayerEvent('contact_whatsapp', {
 			page_type: pageType,
 			contact_type: 'whatsapp',
 			property_id: brokerModal?.dataset.propertyId || '',
@@ -91,7 +75,7 @@ document.addEventListener('click', function (event) {
 	const phoneLink = event.target.closest('#bm_phone');
 	if (phoneLink) {
 		const brokerModal = phoneLink.closest('.modal-wrapper[data-modal-id="broker-modal"]');
-		window.gtag('event', 'contact_phone', {
+		pushDataLayerEvent('contact_phone', {
 			page_type: pageType,
 			contact_type: 'phone',
 			property_id: brokerModal?.dataset.propertyId || '',
@@ -101,7 +85,7 @@ document.addEventListener('click', function (event) {
 
 	const sellModalBtn = event.target.closest('button[data-modal-open="contact-manager-modal"]');
 	if (sellModalBtn) {
-		window.gtag('event', 'opened_sell_my_distress_modal', {
+		pushDataLayerEvent('opened_sell_my_distress_modal', {
 			page_type: pageType,
 			contact_type: 'contact_manager_modal'
 		});
@@ -109,7 +93,7 @@ document.addEventListener('click', function (event) {
 
 	const sellWhatsAppLink = event.target.closest('.modal-wrapper[data-modal-id="contact-manager-modal"] .ccm-btn-primary');
 	if (sellWhatsAppLink) {
-		window.gtag('event', 'sell_my_distress_whatsapp', {
+		pushDataLayerEvent('sell_my_distress_whatsapp', {
 			page_type: pageType,
 			contact_type: 'whatsapp'
 		});
@@ -117,11 +101,7 @@ document.addEventListener('click', function (event) {
 });
 
 document.addEventListener('subscribe_form_success', function () {
-	if (typeof window.gtag !== 'function') {
-		return;
-	}
-
-	window.gtag('event', 'subscribe_newsletter', {
+	pushDataLayerEvent('subscribe_newsletter', {
 		page_type: getPageType(),
 		contact_type: 'newsletter',
 		form_name: 'subscribe_form'
