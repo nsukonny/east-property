@@ -403,7 +403,7 @@ final class CLI {
 	 * [--status=<statuses>]
 	 * : Comma-separated statuses to copy from.
 	 * ---
-	 * default: publish
+	 * default: publish,draft,future
 	 * ---
 	 *
 	 * [--copy-status=<status>]
@@ -489,7 +489,10 @@ final class CLI {
 		}
 
 		$statuses = array_filter(
-			array_map( 'trim', explode( ',', (string) Utils\get_flag_value( $assoc_args, 'status', 'publish' ) ) )
+			array_map(
+				'trim',
+				explode( ',', (string) Utils\get_flag_value( $assoc_args, 'status', implode( ',', Language_Cloner::DEFAULT_STATUSES ) ) )
+			)
 		);
 
 		$cloner = new Language_Cloner();
