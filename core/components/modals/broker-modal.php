@@ -23,7 +23,7 @@ if ( ! empty( $post ) && 'unit' === $post->post_type ) {
 if ( '' === $whatsapp_text ) {
 	$whatsapp_text = __( 'Hello, I am interested in property', 'east-property' );
 }
-$whats_app_link = $broker?->get_whatsapp( $whatsapp_text ) ?: WHATS_APP_LINK;
+$whats_app_link = WHATS_APP_LINK . '?text=' . rawurlencode( $whatsapp_text );
 $phone          = $broker?->get_phone( '', true ) ?: PROJECT_PHONE;
 ?>
 <div class="modal-wrapper broker-modal" data-modal-id="broker-modal">

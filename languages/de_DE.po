@@ -312,11 +312,11 @@ msgstr "Immobilien ab Plan"
 
 #: core/components/common/functions.php:38
 msgid "Secondary Listings"
-msgstr "Angebote aus dem Wiederverkauf"
+msgstr "Angebote aus dem Bestand"
 
 #: core/components/common/functions.php:43
 msgid "Distress Deals"
-msgstr "Notverkäufe"
+msgstr "Top-Deals"
 
 #: core/components/common/functions.php:60
 msgid "Projects in UAE"
@@ -594,7 +594,7 @@ msgstr "Im Bau"
 #: src/js/map/html.js:62
 #: src/js/map/html.js:63
 msgid "Beds"
-msgstr "Betten"
+msgstr "Schlafzimmer"
 
 #: core/components/filters/functions.php:451
 #: core/includes/entities/class-entity-property.php:131
@@ -1161,16 +1161,16 @@ msgstr "gefundene Immobilien"
 
 #: core/components/units/functions.php:19
 msgid "Off-plan"
-msgstr "Ab Plan"
+msgstr "Off-Plan"
 
 #: core/components/units/functions.php:20
 msgid "Secondary"
-msgstr "Wiederverkauf"
+msgstr "Bestandsimmobilien"
 
 #: core/components/units/functions.php:21
 #: core/template-parts/filters/search-tabs.php:64
 msgid "Distress"
-msgstr "Notverkauf"
+msgstr "Top-Deals"
 
 #: core/components/units/similar.php:64
 msgid "More properties like this"
@@ -2018,7 +2018,7 @@ msgstr "Avatar"
 
 #: core/template-parts/account/profile.php:37
 msgid "+ Add new distress"
-msgstr "+ Neuen Notverkauf hinzufügen"
+msgstr "+ Neuen Top-Deal hinzufügen"
 
 #: core/template-parts/account/profile.php:37
 msgid "+ Add new property"
@@ -2026,7 +2026,7 @@ msgstr "+ Neue Immobilie hinzufügen"
 
 #: core/template-parts/account/profile.php:39
 msgid "My distress"
-msgstr "Meine Notverkäufe"
+msgstr "Meine Top-Deals"
 
 #: core/template-parts/account/profile.php:39
 msgid "My properties"
@@ -2321,7 +2321,7 @@ msgstr "Eigentümer, die einen schnellen Verkauf benötigen, von uns geprüft un
 
 #: core/template-parts/filters/search-tabs.php:200
 msgid "Explore distress deals"
-msgstr "Schnäppchen aus Notverkäufen entdecken"
+msgstr "Top-Deals entdecken"
 
 #: core/template-parts/filters/search-tabs.php:203
 msgid "Sell my property"
@@ -2636,7 +2636,7 @@ msgstr "Notverkäufe in Dubai"
 
 #: template-parts/sections/index/distress.php:20
 msgid "DISTRESS DEALS"
-msgstr "NOTVERKÄUFE"
+msgstr "TOP-DEALS"
 
 #: template-parts/sections/index/distress.php:21
 msgid "Own Dubai for Less"
@@ -2652,7 +2652,7 @@ msgstr "Begrenzte Auswahl. Die besten Angebote sind schnell vergriffen."
 
 #: template-parts/sections/index/distress.php:25
 msgid "Explore Distress Deals"
-msgstr "Entdecken Sie Schnäppchenangebote"
+msgstr "Top-Deals entdecken"
 
 #: template-parts/sections/index/distress.php:31
 msgid "Your Dubai Home. For Less."
@@ -3044,7 +3044,7 @@ msgstr "Warum DDA?"
 
 #: src/js/filters.js:19
 msgid "beds"
-msgstr "Betten"
+msgstr "Schlafzimmer"
 
 #: src/js/filters.js:19
 msgid "bed"

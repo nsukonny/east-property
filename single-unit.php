@@ -40,7 +40,7 @@ while ( have_posts() ) {
 	$floor_plan        = $unit->get_floor_plan();
 	$broker            = $unit->get_broker();
 	$whatsapp_text     = core_unit_enquiry_text( $unit->get_title(), $unit->get_url() );
-	$whats_app_link    = $broker?->get_whatsapp( $whatsapp_text ) ?: WHATS_APP_LINK;
+	$whats_app_link    = WHATS_APP_LINK . '?text=' . rawurlencode( $whatsapp_text );
 	$broker_phone      = $broker?->get_phone( '', true ) ?: PROJECT_PHONE;
 	$desc              = $unit->get_description_full();
 	$is_have_amenities = ! empty( $desc ) && stripos( $desc, __( 'amenities', 'east-property' ) ) !== false;

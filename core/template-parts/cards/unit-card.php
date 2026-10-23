@@ -174,7 +174,7 @@ if ( ! empty( $amenities ) ) {
 
 								<?php
 								$whatsapp_text  = core_unit_enquiry_text( $title, $url );
-								$whats_app_link = $broker?->get_whatsapp( $whatsapp_text ) ?: WHATS_APP_LINK;
+								$whats_app_link =  WHATS_APP_LINK . '?text=' . rawurlencode( $whatsapp_text );
 								$broker_phone   = $broker?->get_phone( '', true ) ?: PROJECT_PHONE;
 								?>
 								<button class="button orange sm"
