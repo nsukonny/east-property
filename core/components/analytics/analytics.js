@@ -19,6 +19,17 @@ const getPageType = () => {
 };
 
 /**
+ * Параметры, которые уходят с каждым событием.
+ *
+ * Список полный намеренно: модель данных GTM накапливает значения, и ключ,
+ * однажды попавший в dataLayer, виден всем следующим событиям. Из-за этого
+ * подписка на рассылку уезжала в GA4 с property_id объекта, который посетитель
+ * открывал до неё. Каждое событие перезаписывает весь набор, ненужное ему —
+ * пустым значением.
+ */
+const EVENT_PARAMS = ['page_type', 'contact_type', 'property_id', 'property_name', 'form_name'];
+
+/**
  * Событие в dataLayer для Google Tag Manager.
  *
  * Не через gtag: тот кладёт в dataLayer объект arguments, и в контейнере
@@ -31,7 +42,13 @@ const getPageType = () => {
 const pushDataLayerEvent = (name, params = {}) => {
 	window.dataLayer = window.dataLayer || [];
 
-	window.dataLayer.push({event: name, ...params});
+	const payload = {event: name};
+
+	EVENT_PARAMS.forEach(key => {
+		payload[key] = params[key] ?? '';
+	});
+
+	window.dataLayer.push(payload);
 };
 
 document.addEventListener('click', function (event) {
