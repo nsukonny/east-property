@@ -43,6 +43,11 @@ final class Cache_Warmer {
 	/**
 	 * Home page of every language, the most requested pages of the log, then what the home pages link to.
 	 *
+	 * The linked pages are taken one language at a time in turn, so that the
+	 * limit trims every language evenly. Read language after language, a limit
+	 * smaller than the whole set left the last languages with nothing but their
+	 * home page.
+	 *
 	 * @param int    $limit Maximum number of pages.
 	 * @param string $log   Access log in the combined format, empty to skip it.
 	 * @param int    $top   Pages to take from the log.
@@ -53,11 +58,13 @@ final class Cache_Warmer {
 		$warnings = array();
 		$homes    = $this->home_urls();
 		$logged   = $this->log_urls( $log, $top, $warnings );
-		$urls     = array_merge( $homes, $logged );
+		$linked   = array();
 
 		foreach ( $homes as $home ) {
-			$urls = array_merge( $urls, $this->linked_urls( $home, $warnings ) );
+			$linked[] = $this->linked_urls( $home, $warnings );
 		}
+
+		$urls = array_merge( $homes, $logged, self::interleave( $linked ) );
 
 		return array(
 			'urls'     => array_slice( array_values( array_unique( $urls ) ), 0, $limit ),
@@ -127,6 +134,33 @@ final class Cache_Warmer {
 		}
 
 		return array() === $urls ? array( home_url( '/' ) ) : $urls;
+	}
+
+	/**
+	 * One list out of several, taking one entry from each in turn.
+	 *
+	 * @param array<int, string[]> $lists Lists to merge.
+	 *
+	 * @return string[]
+	 */
+	private static function interleave( array $lists ): array {
+		$longest = 0;
+
+		foreach ( $lists as $list ) {
+			$longest = max( $longest, count( $list ) );
+		}
+
+		$result = array();
+
+		for ( $index = 0; $index < $longest; $index ++ ) {
+			foreach ( $lists as $list ) {
+				if ( isset( $list[ $index ] ) ) {
+					$result[] = $list[ $index ];
+				}
+			}
+		}
+
+		return $result;
 	}
 
 	/**

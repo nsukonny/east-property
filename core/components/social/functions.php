@@ -21,6 +21,8 @@ function core_social_networks(): array {
 		'instagram' => 'Instagram',
 		'telegram'  => 'Telegram',
 		'vk'        => 'VK',
+		'linkedin'  => 'LinkedIn',
+		'x'         => 'X',
 	);
 }
 
