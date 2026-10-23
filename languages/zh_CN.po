@@ -312,7 +312,7 @@ msgstr "期房"
 
 #: core/components/common/functions.php:38
 msgid "Secondary Listings"
-msgstr "二次上市"
+msgstr "二手房源"
 
 #: core/components/common/functions.php:43
 msgid "Distress Deals"
@@ -496,7 +496,7 @@ msgstr "现房"
 #: core/components/filters/functions.php:330
 #: core/components/filters/functions.php:852
 msgid "In Construction"
-msgstr "正在建设中"
+msgstr "在建房源"
 
 #: core/components/filters/functions.php:341
 msgid "All Years"
@@ -561,7 +561,7 @@ msgstr "区域"
 #: core/components/filters/functions.php:398
 msgctxt "search tab"
 msgid "Available"
-msgstr "有货"
+msgstr "现房"
 
 #: core/components/filters/functions.php:407
 #: core/template-parts/account/edit-unit.php:271
@@ -577,7 +577,7 @@ msgstr "区"
 #: core/components/filters/functions.php:418
 msgctxt "search tab"
 msgid "In construction"
-msgstr "在建设中"
+msgstr "在建房源"
 
 #: core/components/filters/functions.php:447
 #: core/components/units/units-by-beds.php:78
@@ -594,7 +594,7 @@ msgstr "在建设中"
 #: src/js/map/html.js:62
 #: src/js/map/html.js:63
 msgid "Beds"
-msgstr "床"
+msgstr "卧室"
 
 #: core/components/filters/functions.php:451
 #: core/includes/entities/class-entity-property.php:131
@@ -614,7 +614,7 @@ msgstr "单间公寓"
 #: core/includes/entities/class-entity-unit.php:516
 #: template-parts/sections/single/dropdowns.php:68
 msgid "Baths"
-msgstr "浴场"
+msgstr "浴室"
 
 #: core/components/filters/functions.php:596
 msgid "Price: high to low"
@@ -647,7 +647,7 @@ msgstr "任意一年"
 
 #: core/components/filters/functions.php:865
 msgid "Available"
-msgstr "有货"
+msgstr "现房"
 
 #: core/components/filters/functions.php:1236
 #: core/template-parts/search-results/properties-list.php:63
@@ -1279,7 +1279,7 @@ msgstr "所有权类型"
 #: core/includes/entities/class-entity-unit.php:217
 #: core/includes/entities/class-entity-unit.php:515
 msgid "1 Bath"
-msgstr "一次洗澡"
+msgstr "1间浴室"
 
 #: core/includes/entities/class-entity-unit.php:696
 msgid "Gallery should not be empty"
@@ -2031,7 +2031,7 @@ msgstr "阿凡达"
 
 #: core/template-parts/account/profile.php:37
 msgid "+ Add new distress"
-msgstr "+ 添加新的受灾情况"
+msgstr "+ 添加急售房源"
 
 #: core/template-parts/account/profile.php:37
 msgid "+ Add new property"
@@ -2039,7 +2039,7 @@ msgstr "+ 添加房产"
 
 #: core/template-parts/account/profile.php:39
 msgid "My distress"
-msgstr "我的痛苦"
+msgstr "我的急售房源"
 
 #: core/template-parts/account/profile.php:39
 msgid "My properties"
@@ -2297,7 +2297,7 @@ msgstr "搜索..."
 
 #: core/template-parts/filters/result-filters.php:126
 msgid "Min price"
-msgstr "我是一个价格"
+msgstr "最低价格"
 
 #: core/template-parts/filters/result-filters.php:136
 msgid "Max price"
@@ -2338,7 +2338,7 @@ msgstr "需要快速套现的业主，经我们核实且名额有限。这些房
 
 #: core/template-parts/filters/search-tabs.php:200
 msgid "Explore distress deals"
-msgstr "探索清仓特价商品"
+msgstr "查看低价房源"
 
 #: core/template-parts/filters/search-tabs.php:203
 msgid "Sell my property"
@@ -2673,7 +2673,7 @@ msgstr "机会有限。最划算的优惠转瞬即逝。"
 
 #: template-parts/sections/index/distress.php:25
 msgid "Explore Distress Deals"
-msgstr "探索清仓特惠"
+msgstr "查看低价房源"
 
 #: template-parts/sections/index/distress.php:31
 msgid "Your Dubai Home. For Less."
@@ -2697,7 +2697,7 @@ msgstr "立即可用"
 
 #: template-parts/sections/index/hero.php:40
 msgid "In construction"
-msgstr "在建设中"
+msgstr "在建房源"
 
 #: template-parts/sections/index/map.php:8
 msgid "Dubai map"
@@ -3065,7 +3065,7 @@ msgstr "为什么选择 DDA"
 
 #: src/js/filters.js:19
 msgid "beds"
-msgstr "床"
+msgstr "卧室"
 
 #: src/js/filters.js:19
 msgid "bed"
@@ -3073,11 +3073,11 @@ msgstr "世界"
 
 #: src/js/filters.js:24
 msgid "baths"
-msgstr "浴场"
+msgstr "浴室"
 
 #: src/js/filters.js:24
 msgid "bath"
-msgstr "洗澡"
+msgstr "浴室"
 
 #: src/js/map/map.js:418
 msgid "Selected location"

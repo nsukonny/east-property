@@ -116,7 +116,7 @@ msgstr "कोई भी डेवलपर्स"
 
 #: core/components/account/functions.php:332
 msgid "Any bedrooms"
-msgstr "कोई भी शयनकक्ष"
+msgstr "कोई भी बेडरूम"
 
 #. translators: %s: number of bedrooms, "7+" for the last option.
 #: core/components/account/functions.php:337
@@ -311,7 +311,7 @@ msgstr "ऑफ़-प्लान संपत्तियाँ"
 
 #: core/components/common/functions.php:38
 msgid "Secondary Listings"
-msgstr "द्वितीयक लिस्टिंग"
+msgstr "रीसेल लिस्टिंग"
 
 #: core/components/common/functions.php:43
 msgid "Distress Deals"
@@ -495,7 +495,7 @@ msgstr "तैयार"
 #: core/components/filters/functions.php:330
 #: core/components/filters/functions.php:852
 msgid "In Construction"
-msgstr "निर्माणधीन"
+msgstr "निर्माणाधीन"
 
 #: core/components/filters/functions.php:341
 msgid "All Years"
@@ -566,7 +566,7 @@ msgstr "उपलब्ध"
 #: core/template-parts/account/edit-unit.php:271
 #: core/template-parts/filters/search-tabs.php:78
 msgid "Bedrooms"
-msgstr "शयनकक्ष"
+msgstr "बेडरूम"
 
 #: core/components/filters/functions.php:411
 #: core/template-parts/filters/search-tabs.php:142
@@ -576,7 +576,7 @@ msgstr "जिला"
 #: core/components/filters/functions.php:418
 msgctxt "search tab"
 msgid "In construction"
-msgstr "निर्माणधीन"
+msgstr "निर्माणाधीन"
 
 #: core/components/filters/functions.php:447
 #: core/components/units/units-by-beds.php:78
@@ -593,7 +593,7 @@ msgstr "निर्माणधीन"
 #: src/js/map/html.js:62
 #: src/js/map/html.js:63
 msgid "Beds"
-msgstr "बिस्तर"
+msgstr "बेडरूम"
 
 #: core/components/filters/functions.php:451
 #: core/includes/entities/class-entity-property.php:131
@@ -613,7 +613,7 @@ msgstr "स्टूडियो"
 #: core/includes/entities/class-entity-unit.php:516
 #: template-parts/sections/single/dropdowns.php:68
 msgid "Baths"
-msgstr "स्नानघर"
+msgstr "बाथरूम"
 
 #: core/components/filters/functions.php:596
 msgid "Price: high to low"
@@ -1087,7 +1087,7 @@ msgstr "2 बेडरूम"
 
 #: core/components/sections/explore-by-beds.php:28
 msgid "3 bedrooms"
-msgstr "तीन बेडरूम"
+msgstr "3 बेडरूम"
 
 #: core/components/sections/explore-by-beds.php:38
 msgid "3+ bedrooms"
@@ -1136,7 +1136,7 @@ msgstr "%2$d में से %1$d पृष्ठ"
 
 #: core/components/units/featured.php:22
 msgid "Featured new projects in the UAE"
-msgstr "यूएई में प्रमुख नए परियोजनाएँ"
+msgstr "यूएई में प्रमुख नई परियोजनाएँ"
 
 #: core/components/units/featured.php:23
 msgid "DISTRESS PROPERTIES"
@@ -1168,7 +1168,7 @@ msgstr "ऑफ़-प्लान"
 
 #: core/components/units/functions.php:20
 msgid "Secondary"
-msgstr "सेकेंडरी"
+msgstr "रीसेल"
 
 #: core/components/units/functions.php:21
 #: core/template-parts/filters/search-tabs.php:64
@@ -1273,7 +1273,7 @@ msgstr "स्वामित्व का प्रकार"
 #: core/includes/entities/class-entity-unit.php:217
 #: core/includes/entities/class-entity-unit.php:515
 msgid "1 Bath"
-msgstr "एक स्नान"
+msgstr "1 बाथरूम"
 
 #: core/includes/entities/class-entity-unit.php:696
 msgid "Gallery should not be empty"
@@ -2026,7 +2026,7 @@ msgstr "अवतार"
 
 #: core/template-parts/account/profile.php:37
 msgid "+ Add new distress"
-msgstr "+ नया तनाव जोड़ें"
+msgstr "+ नई डिस्ट्रेस प्रॉपर्टी जोड़ें"
 
 #: core/template-parts/account/profile.php:37
 msgid "+ Add new property"
@@ -2034,7 +2034,7 @@ msgstr "+ नई संपत्ति जोड़ें"
 
 #: core/template-parts/account/profile.php:39
 msgid "My distress"
-msgstr "मेरी पीड़ा"
+msgstr "मेरी डिस्ट्रेस प्रॉपर्टी"
 
 #: core/template-parts/account/profile.php:39
 msgid "My properties"
@@ -2292,7 +2292,7 @@ msgstr "खोजें..."
 
 #: core/template-parts/filters/result-filters.php:126
 msgid "Min price"
-msgstr "मुझे खेद है"
+msgstr "न्यूनतम कीमत"
 
 #: core/template-parts/filters/result-filters.php:136
 msgid "Max price"
@@ -2690,7 +2690,7 @@ msgstr "तत्काल उपलब्ध"
 
 #: template-parts/sections/index/hero.php:40
 msgid "In construction"
-msgstr "निर्माणधीन"
+msgstr "निर्माणाधीन"
 
 #: template-parts/sections/index/map.php:8
 msgid "Dubai map"
@@ -3058,7 +3058,7 @@ msgstr "डीडीए क्यों"
 
 #: src/js/filters.js:19
 msgid "beds"
-msgstr "बिस्तर"
+msgstr "बेडरूम"
 
 #: src/js/filters.js:19
 msgid "bed"
@@ -3066,11 +3066,11 @@ msgstr "विश्व"
 
 #: src/js/filters.js:24
 msgid "baths"
-msgstr "स्नान"
+msgstr "बाथरूम"
 
 #: src/js/filters.js:24
 msgid "bath"
-msgstr "स्नान"
+msgstr "बाथरूम"
 
 #: src/js/map/map.js:418
 msgid "Selected location"
