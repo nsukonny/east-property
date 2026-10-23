@@ -18,7 +18,7 @@ define( 'THEME_VERSION', IS_DEV ? time() : '1.0.31' );
 const THEME_NAME          = 'east-property';
 const PROJECT_NAME        = 'East Property';
 const PROJECT_PHONE       = '+971566809684';
-const WHATS_APP_LINK      = 'https://wa.me/971566809684';
+const WHATS_APP_LINK      = 'https://wa.me/971585235351';
 const PROPERTIES_PER_PAGE = 20;
 const SUPPORT_EMAIL       = 'support@eastproperty.com';
 
