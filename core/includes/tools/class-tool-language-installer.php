@@ -39,6 +39,14 @@ final class Language_Installer {
 			'rtl'    => false,
 			'order'  => 50,
 		),
+		'ar' => array(
+			'slug'   => 'ar',
+			'locale' => 'ar',
+			'name'   => 'العربية',
+			'flag'   => 'ae',
+			'rtl'    => true,
+			'order'  => 60,
+		),
 	);
 
 	/**

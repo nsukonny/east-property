@@ -30,6 +30,15 @@ final class DeepL_Client {
 	private const MARKER_TAG = 'x-deepl-c';
 
 	/**
+	 * Request fields the caller may add to a translation call.
+	 *
+	 * Without source_lang the API guesses, and on a one-word label it guesses
+	 * wrong: "Bed" came back as «the world». model_type picks the newer engine,
+	 * context tells it what kind of text this is without translating it.
+	 */
+	private const EXTRA_FIELDS = array( 'source_lang', 'context', 'model_type', 'glossary_id' );
+
+	/**
 	 * Option holding translations already paid for.
 	 */
 	private const CACHE_OPTION = 'ep_deepl_cache';
@@ -126,10 +135,12 @@ final class DeepL_Client {
 	 * @param string $target   DeepL target language.
 	 * @param bool   $html     Whether the strings carry markup.
 	 * @param bool   $reusable Whether these strings repeat across records.
+	 * @param array  $options  source_lang, context, model_type and glossary_id.
 	 *
 	 * @return array|WP_Error Translations under the original keys.
 	 */
-	public function translate( array $texts, string $target, bool $html = false, bool $reusable = true ) {
+	public function translate( array $texts, string $target, bool $html = false, bool $reusable = true, array $options = array() ) {
+		$variant = self::variant( $options );
 		$result  = array();
 		$pending = array();
 
@@ -145,7 +156,7 @@ final class DeepL_Client {
 				continue;
 			}
 
-			$cached = $reusable ? $this->cached( $target, $text ) : null;
+			$cached = $reusable ? $this->cached( $target, $text, $variant ) : null;
 
 			if ( null !== $cached ) {
 				$result[ $key ] = $cached;
@@ -166,7 +177,7 @@ final class DeepL_Client {
 		$added = false;
 
 		foreach ( array_chunk( $pending, self::CHUNK, true ) as $chunk ) {
-			$answer = $this->request( $chunk, $target, $html );
+			$answer = $this->request( $chunk, $target, $html, $options );
 
 			if ( is_wp_error( $answer ) ) {
 				if ( $added ) {
@@ -180,7 +191,7 @@ final class DeepL_Client {
 				$result[ $key ] = $text;
 
 				if ( $reusable ) {
-					$this->remember( $target, $pending[ $key ], $text );
+					$this->remember( $target, $pending[ $key ], $text, $variant );
 					$added = true;
 				}
 			}
@@ -201,11 +212,12 @@ final class DeepL_Client {
 	 *
 	 * @param array  $texts  Strings keyed by caller.
 	 * @param string $target DeepL target language.
-	 * @param bool   $html   Whether the strings carry markup.
+	 * @param bool   $html    Whether the strings carry markup.
+	 * @param array  $options Extra API fields, sent only when filled.
 	 *
 	 * @return array|WP_Error
 	 */
-	private function request( array $texts, string $target, bool $html ) {
+	private function request( array $texts, string $target, bool $html, array $options = array() ) {
 		$keys    = array_keys( $texts );
 		$comments = array();
 
@@ -219,6 +231,12 @@ final class DeepL_Client {
 			'target_lang' => $target,
 			'text'        => array_values( array_map( 'strval', $texts ) ),
 		);
+
+		foreach ( self::EXTRA_FIELDS as $field ) {
+			if ( ! empty( $options[ $field ] ) ) {
+				$body[ $field ] = (string) $options[ $field ];
+			}
+		}
 
 		if ( $html ) {
 			$body['tag_handling'] = 'html';
@@ -352,16 +370,17 @@ final class DeepL_Client {
 	 *
 	 * @param string $target
 	 * @param string $text
+	 * @param string $variant
 	 *
 	 * @return string|null
 	 */
-	private function cached( string $target, string $text ): ?string {
+	private function cached( string $target, string $text, string $variant = '' ): ?string {
 		if ( null === $this->cache ) {
 			$stored      = get_option( self::CACHE_OPTION, array() );
 			$this->cache = is_array( $stored ) ? $stored : array();
 		}
 
-		$key = self::cache_key( $target, $text );
+		$key = self::cache_key( $target, $text, $variant );
 
 		return isset( $this->cache[ $key ] ) ? (string) $this->cache[ $key ] : null;
 	}
@@ -372,15 +391,16 @@ final class DeepL_Client {
 	 * @param string $target
 	 * @param string $source
 	 * @param string $translation
+	 * @param string $variant
 	 *
 	 * @return void
 	 */
-	private function remember( string $target, string $source, string $translation ): void {
+	private function remember( string $target, string $source, string $translation, string $variant = '' ): void {
 		if ( null === $this->cache || count( $this->cache ) >= self::CACHE_LIMIT ) {
 			return;
 		}
 
-		$this->cache[ self::cache_key( $target, $source ) ] = $translation;
+		$this->cache[ self::cache_key( $target, $source, $variant ) ] = $translation;
 	}
 
 	/**
@@ -399,11 +419,35 @@ final class DeepL_Client {
 	 *
 	 * @param string $target
 	 * @param string $text
+	 * @param string $variant
 	 *
 	 * @return string
 	 */
-	private static function cache_key( string $target, string $text ): string {
-		return md5( $target . "\0" . $text );
+	private static function cache_key( string $target, string $text, string $variant = '' ): string {
+		return md5( $target . "\0" . ( '' === $variant ? '' : $variant . "\0" ) . $text );
+	}
+
+	/**
+	 * Cache discriminator for a set of request options.
+	 *
+	 * The options change what comes back, so a call carrying them must not be
+	 * served an answer stored by a call without them. A call with no options
+	 * keeps the key it used before, and the entries paid for stay usable.
+	 *
+	 * @param array $options
+	 *
+	 * @return string
+	 */
+	private static function variant( array $options ): string {
+		$options = array_filter( $options, static fn( $value ): bool => '' !== (string) $value );
+
+		if ( empty( $options ) ) {
+			return '';
+		}
+
+		ksort( $options );
+
+		return md5( (string) wp_json_encode( $options ) );
 	}
 
 	/**

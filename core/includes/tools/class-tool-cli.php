@@ -798,7 +798,7 @@ final class CLI {
 	 * [--status=<statuses>]
 	 * : Comma-separated statuses to walk; pass publish to skip drafts.
 	 * ---
-	 * default: publish,draft
+	 * default: publish,draft,future
 	 * ---
 	 *
 	 * [--limit=<number>]

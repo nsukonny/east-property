@@ -1,6 +1,6 @@
 import gulp from 'gulp';
 import browserSyncLib from 'browser-sync';
-import {styles} from './styles.js';
+import {styles, stylesRtl} from './styles.js';
 import {scripts, validateJsSyntax} from './scripts.js';
 import {assets} from './assets.js';
 import {paths} from './config.js';
@@ -31,6 +31,8 @@ function reload(done) {
 }
 
 function stylesWatch() {
+    stylesRtl();
+
     return styles().pipe(browserSync.stream());
 }
 
@@ -49,9 +51,9 @@ function serve(cb) {
     cb();
 }
 
-const buildTasks = parallel(styles, scriptsPipeline, assets);
+const buildTasks = parallel(styles, stylesRtl, scriptsPipeline, assets);
 
-export {styles, scripts, assets, validateJsSyntax};
+export {styles, stylesRtl, scripts, assets, validateJsSyntax};
 export const dev = series(buildTasks, serve);
 export const build = series(buildTasks);
 export default dev;

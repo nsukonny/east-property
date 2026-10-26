@@ -1,18 +1,18 @@
 #### Добавление нового языка по шагам
 ```bash
 #### 1. Добавление языка и локали
-wp tools add-language --slug=hi --allow-root
-wp language core install zh_CN --allow-root
+wp tools add-language --slug=ar --allow-root
+wp language core install ar --allow-root
 wp rewrite flush --allow-root
 
 #### 2. Клонирование
-wp tools clone-language --locale=hi_IN --post-type=page --allow-root
-wp tools clone-language --locale=zh_CN --post-type=post --allow-root
-wp tools clone-language --locale=zh_CN --post-type=property --limit=3000 --allow-root
-wp tools clone-language --locale=zh_CN --post-type=unit --copy-status=draft --limit=5000 --allow-root
+wp tools clone-language --locale=ar --post-type=page --allow-root
+wp tools clone-language --locale=ar --post-type=post --allow-root
+wp tools clone-language --locale=ar --post-type=property --limit=3000 --allow-root
+wp tools clone-language --locale=ar --post-type=unit --copy-status=draft --limit=5000 --allow-root
 
 #### 3. Перевод
-wp tools translate-units --language=zh --post-type=page --limit=20 --allow-root
+wp tools translate-units --language=ar --post-type=page --limit=20 --allow-root
 wp tools translate-units --post-type=post --limit=100 --language=zh --allow-root   # новости
 wp tools translate-units --language=hi --post-type=property --limit=3000 --allow-root
 wp tools translate-units --language=zh --post-type=unit --limit=5000 --allow-root
@@ -35,9 +35,9 @@ wp tools warm-cache --allow-root
 ### 1. Язык и локаль
 
 ```bash
-wp tools add-language --slug=zh --dry-run --allow-root   # или --slug=hi
-wp tools add-language --slug=zh --allow-root
-wp language core install zh_CN --allow-root              # или hi_IN
+wp tools add-language --slug=ar --dry-run --allow-root   # или --slug=hi, --slug=ar
+wp tools add-language --slug=ar --allow-root
+wp language core install ar --allow-root              # или hi_IN, ar
 wp rewrite flush --allow-root
 ```
 
@@ -52,6 +52,10 @@ wp tools translate-units --limit=10 --language=de --allow-root        # все �
 wp tools translate-units --post-id=33067 --allow-root   # тип определяется сам
 wp tools translate-units --limit=5 --language=ru --allow-root
 ```
+
+Массовый отбор идёт по статусам `publish`, `draft` и `future`: отложенная
+новость копируется клонером с пометкой need_translate, и без `future` она
+доходила до публикации непереведённой. Сузить набор — через `--status`.
 
 У новостей переводятся заголовок, анонс и текст. Блочная разметка Гутенберга
 сохраняется: служебные комментарии `<!-- wp:… -->` на время запроса подменяются

@@ -2337,8 +2337,8 @@ msgstr "Футер | Подборка"
 msgid "Footer | Quick Links"
 msgstr "Футер | Быстрые ссылки"
 
-#: functions.php:95
 #: functions.php:96
+#: functions.php:97
 msgid "Настройки"
 msgstr "Настройки"
 

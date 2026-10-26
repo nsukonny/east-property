@@ -78,6 +78,7 @@ function core_language_labels(): array {
 		'ru' => 'РУ',
 		'zh' => '中文',
 		'hi' => 'हिं',
+		'ar' => 'ع',
 	);
 }
 

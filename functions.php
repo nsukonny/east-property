@@ -54,6 +54,7 @@ function add_theme_styles(): void {
 		false
 	);
 
+	wp_style_add_data( THEME_NAME . '-style', 'rtl', 'replace' );
 	wp_enqueue_style( THEME_NAME . '-style' );
 
 	wp_register_script(
