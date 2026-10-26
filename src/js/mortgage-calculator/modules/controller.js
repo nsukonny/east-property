@@ -171,7 +171,10 @@ export class MortgageCalculator {
 		const val = parseFloat(sliderEl.value) || 0;
 		const pct = Math.min(100, Math.max(0, ((val - min) / (max - min)) * 100));
 		const { filledTrackColor, unfilledTrackColor } = SLIDER_CONFIG;
-		sliderEl.style.background = `linear-gradient(to right, ${filledTrackColor} 0%, ${filledTrackColor} ${pct}%, ${unfilledTrackColor} ${pct}%, ${unfilledTrackColor} 100%)`;
+		// В арабской вёрстке бегунок идёт справа налево, и заливка должна идти
+		// за ним: с жёстким `to right` закрашенная часть оставалась слева.
+		const side = getComputedStyle(sliderEl).direction === 'rtl' ? 'left' : 'right';
+		sliderEl.style.background = `linear-gradient(to ${side}, ${filledTrackColor} 0%, ${filledTrackColor} ${pct}%, ${unfilledTrackColor} ${pct}%, ${unfilledTrackColor} 100%)`;
 	}
 
 	scheduleRender() {

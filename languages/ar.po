@@ -1,0 +1,3294 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: East Property\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-10-26T08:29:16+00:00\n"
+"PO-Revision-Date: 2026-10-26 08:30+0000\n"
+"Language: ar\n"
+"X-Generator: east-property make-translations\n"
+"X-Domain: east-property\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5);\n"
+
+#. Theme Name of the theme
+#: style.css
+#: page-news.php:38
+msgid "East Property"
+msgstr "East Property"
+
+#. Theme URI of the theme
+#: style.css
+msgid "https://eastproperty.com"
+msgstr "https://eastproperty.com"
+
+#. Description of the theme
+#: style.css
+msgid "East Property project"
+msgstr "مشروع East Property"
+
+#. Author of the theme
+#: style.css
+msgid "NSukonny"
+msgstr "NSukonny"
+
+#. Author URI of the theme
+#: style.css
+msgid "https://nsukonny.agency/east-property/"
+msgstr "https://nsukonny.agency/east-property/"
+
+#: 404.php:11
+msgid "Page not found"
+msgstr "الصفحة غير موجودة"
+
+#: 404.php:13
+msgid "Go to properties"
+msgstr "انتقل إلى العقارات"
+
+#: core/components/account/functions.php:125
+#: core/components/filters/functions.php:912
+msgid "Apartments"
+msgstr "شقق سكنية"
+
+#: core/components/account/functions.php:126
+#: core/components/filters/functions.php:928
+msgid "Villas"
+msgstr "القرى"
+
+#: core/components/account/functions.php:127
+msgid "Townhouses"
+msgstr "المنازل المتلاصقة"
+
+#: core/components/account/functions.php:128
+msgid "Penthouses"
+msgstr "الشقق الفاخرة"
+
+#: core/components/account/functions.php:129
+#: core/components/filters/functions.php:920
+msgid "Houses"
+msgstr "المنازل"
+
+#: core/components/account/functions.php:130
+#: core/components/filters/functions.php:936
+msgid "Offices"
+msgstr "المكاتب"
+
+#: core/components/account/functions.php:141
+#: core/includes/entities/class-entity-unit.php:419
+#: core/includes/entities/class-entity-unit.php:484
+msgid "Contains an error"
+msgstr "يحتوي على خطأ"
+
+#: core/components/account/functions.php:142
+#: core/includes/entities/class-entity-unit.php:403
+#: core/includes/entities/class-entity-unit.php:469
+#: core/template-parts/account/profile.php:145
+msgid "Promoted"
+msgstr "مُروَّج له"
+
+#: core/components/account/functions.php:143
+#: core/includes/entities/class-entity-unit.php:412
+#: core/includes/entities/class-entity-unit.php:477
+msgid "Waiting for approval"
+msgstr "في انتظار الموافقة"
+
+#: core/components/account/functions.php:319
+#: core/components/filters/functions.php:1101
+#: core/template-parts/filters/search-tabs.php:144
+msgid "Any Locations"
+msgstr "أي مواقع"
+
+#: core/components/account/functions.php:320
+#: core/template-parts/filters/result-filters.php:273
+#: core/template-parts/filters/result-filters.php:293
+msgid "All"
+msgstr "الكل"
+
+#: core/components/account/functions.php:326
+#: core/components/filters/functions.php:312
+#: core/components/filters/functions.php:1045
+#: core/template-parts/filters/search-tabs.php:165
+msgid "Any Developers"
+msgstr "جميع المطورين"
+
+#: core/components/account/functions.php:332
+msgid "Any bedrooms"
+msgstr "أي غرف نوم"
+
+#. translators: %s: number of bedrooms, "7+" for the last option.
+#: core/components/account/functions.php:337
+msgid "%s bedroom"
+msgid_plural "%s bedrooms"
+msgstr[0] "%s غرف نوم"
+msgstr[1] "غرفة نوم %s"
+msgstr[2] "%s غرف نوم"
+msgstr[3] "%s غرف نوم"
+msgstr[4] "%s غرف نوم"
+msgstr[5] "%s غرف نوم"
+
+#: core/components/account/functions.php:341
+msgid "All unit types"
+msgstr "جميع أنواع الوحدات"
+
+#: core/components/account/functions.php:348
+msgid "All listing types"
+msgstr "جميع أنواع الإعلانات"
+
+#: core/components/account/functions.php:363
+msgid "Name or ID"
+msgstr "الاسم أو رقم الهوية"
+
+#: core/components/account/functions.php:363
+msgid "Name, project or ID"
+msgstr "الاسم أو المشروع أو رقم التعريف"
+
+#: core/components/account/functions.php:787
+msgid "Unit title is required."
+msgstr "يجب إدخال عنوان الوحدة."
+
+#: core/components/account/functions.php:880
+msgid "A distress listing needs an original price higher than the asking price."
+msgstr "يجب أن يكون السعر الأصلي للعرض الطارئ أعلى من السعر المطلوب."
+
+#: core/components/account/functions.php:922
+msgid "Unit not found."
+msgstr "لم يتم العثور على الوحدة."
+
+#: core/components/account/functions.php:996
+#: core/components/account/functions.php:1134
+msgid "Property title is required."
+msgstr "يجب تقديم سند ملكية العقار."
+
+#: core/components/account/functions.php:997
+msgid "Property description is required."
+msgstr "يجب إدخال وصف العقار."
+
+#: core/components/account/functions.php:1007
+msgid "Latitude is required."
+msgstr "يجب إدخال خط العرض."
+
+#: core/components/account/functions.php:1008
+msgid "Longitude is required."
+msgstr "يجب إدخال خط الطول."
+
+#: core/components/account/functions.php:1009
+msgid "Please select a valid location."
+msgstr "يرجى تحديد موقع صالح."
+
+#: core/components/account/functions.php:1010
+msgid "Please select a valid ownership type."
+msgstr "يرجى اختيار نوع ملكية صالح."
+
+#: core/components/account/functions.php:1011
+msgid "Please select a valid property type."
+msgstr "يرجى اختيار نوع عقار صالح."
+
+#: core/components/account/functions.php:1052
+#: core/components/account/functions.php:1311
+#: core/components/account/functions.php:1571
+msgid "Property not found."
+msgstr "لم يتم العثور على العنصر المطلوب."
+
+#: core/components/account/functions.php:1110
+msgid "Please sign in to add a property."
+msgstr "يرجى تسجيل الدخول لإضافة عقار."
+
+#: core/components/account/functions.php:1115
+msgid "Your account does not have permission to add property."
+msgstr "حسابك لا يمتلك صلاحية إضافة عقار."
+
+#: core/components/account/functions.php:1121
+msgid "Security check failed. Please try again."
+msgstr "فشل الفحص الأمني. يرجى المحاولة مرة أخرى."
+
+#: core/components/account/functions.php:1306
+#: core/components/account/functions.php:1566
+#: core/components/account/functions.php:1661
+msgid "Property ID is required."
+msgstr "رقم العقار مطلوب."
+
+#: core/components/account/functions.php:1324
+#: core/template-parts/account/edit-unit.php:463
+msgid "Property image"
+msgstr "صورة العقار"
+
+#: core/components/account/functions.php:1580
+msgid "Not enough boost points for boost plan."
+msgstr "نقاط التعزيز غير كافية لخطة التعزيز."
+
+#: core/components/account/functions.php:1585
+msgid "Property boosted successfully."
+msgstr "تم تعزيز الخاصية بنجاح."
+
+#: core/components/account/functions.php:1602
+msgid "Broker not found."
+msgstr "لم يتم العثور على الوسيط."
+
+#: core/components/account/functions.php:1647
+#: core/includes/registers/user-roles/client.php:7
+msgid "Client"
+msgstr "العميل"
+
+#: core/components/account/functions.php:1648
+#: core/includes/registers/user-roles/broker.php:18
+msgid "Broker"
+msgstr "الوسيط"
+
+#: core/components/account/functions.php:1666
+msgid "YOu are not authenticated."
+msgstr "لم تتم مصادقتك."
+
+#: core/components/account/functions.php:1710
+msgid "Hello "
+msgstr "مرحبًا "
+
+#: core/components/account/functions.php:1712
+msgid "Thank you for registering with"
+msgstr "شكرًا لك على التسجيل في"
+
+#: core/components/account/functions.php:1714
+msgid "To complete your registration and activate your account, please verify your email address by clicking the link below:"
+msgstr "لإتمام التسجيل وتفعيل حسابك، يرجى التحقق من عنوان بريدك الإلكتروني بالنقر على الرابط أدناه:"
+
+#: core/components/account/functions.php:1717
+msgid "Verify email address"
+msgstr "التحقق من عنوان البريد الإلكتروني"
+
+#: core/components/account/functions.php:1719
+#: core/components/modals/functions.php:37
+msgid "or copy and paste the following link into your browser:"
+msgstr "أو انسخ الرابط التالي والصقه في متصفحك:"
+
+#: core/components/account/functions.php:1731
+msgid "Verify your email address"
+msgstr "تأكد من صحة عنوان بريدك الإلكتروني"
+
+#: core/components/account/functions.php:1747
+msgid "Sign in to save this property to your favorites."
+msgstr "سجّل الدخول لحفظ هذا العقار ضمن قائمة المفضلة."
+
+#: core/components/account/functions.php:1768
+msgid "You must be logged in."
+msgstr "يجب أن تكون قد سجلت الدخول."
+
+#: core/components/account/functions.php:1773
+msgid "Verification email resent. Check your email."
+msgstr "تم إعادة إرسال رسالة البريد الإلكتروني الخاصة بالتحقق. يرجى التحقق من بريدك الإلكتروني."
+
+#: core/components/account/functions.php:1913
+msgid "This property is not a distress deal. Below Market Score : "
+msgstr "هذه العقار ليس صفقة طارئة. التقييم أقل من مستوى السوق: "
+
+#: core/components/common/cookies/cookies.php:8
+msgid "We use cookies"
+msgstr "نحن نستخدم ملفات تعريف الارتباط"
+
+#: core/components/common/cookies/cookies.php:10
+msgid ""
+"We use cookies to improve your browsing experience, analyze site traffic,\n"
+"\t\t\t\t\t\t\t\tand personalize content. By clicking “Accept”, you agree to our use of cookies."
+msgstr ""
+"نستخدم ملفات تعريف الارتباط لتحسين تجربة التصفح الخاصة بك، وتحليل حركة المرور على الموقع،\n"
+"وتخصيص المحتوى. بالنقر على «قبول»، فإنك توافق على استخدامنا لملفات تعريف الارتباط."
+
+#: core/components/common/cookies/cookies.php:17
+msgid "Decline"
+msgstr "الانخفاض"
+
+#: core/components/common/cookies/cookies.php:20
+msgid "Accept"
+msgstr "قبول"
+
+#: core/components/common/functions.php:20
+#: core/components/sections/explore-by-beds.php:15
+#: core/components/sections/explore-by-beds.php:23
+#: core/components/sections/explore-by-beds.php:32
+#: core/components/sections/explore-by-beds.php:42
+#: core/includes/registers/post-types/properties.php:10
+msgid "Properties"
+msgstr "عقارات"
+
+#: core/components/common/functions.php:33
+msgid "Off Plan Properties"
+msgstr "العقارات قيد الإنشاء"
+
+#: core/components/common/functions.php:38
+msgid "Secondary Listings"
+msgstr "إعلانات إعادة البيع"
+
+#: core/components/common/functions.php:43
+msgid "Distress Deals"
+msgstr "صفقات الطوارئ"
+
+#: core/components/common/functions.php:60
+msgid "Projects in UAE"
+msgstr "المشاريع في الإمارات العربية المتحدة"
+
+#: core/components/common/nav.php:28
+msgid "Close menu"
+msgstr "إغلاق القائمة"
+
+#: core/components/common/nav.php:62
+#: core/template-parts/account/profile-client.php:42
+#: core/template-parts/account/profile.php:72
+msgid "Logout"
+msgstr "تسجيل الخروج"
+
+#: core/components/common/nav.php:68
+#: core/components/modals/create-modal.php:172
+#: core/components/modals/forgot-modal.php:23
+#: core/components/modals/signin-modal.php:10
+#: core/components/modals/signin-modal.php:43
+#: core/template-parts/account/login-form.php:20
+#: core/template-parts/account/login-form.php:63
+#: core/template-parts/common/header.php:33
+msgid "Sign in"
+msgstr "تسجيل الدخول"
+
+#: core/components/common/notifications/notifications.php:14
+msgid "Your property has been submitted successfully and saved as draft. Wait approve."
+msgstr "تم إرسال عقارك بنجاح وحفظه كمسودة. في انتظار الموافقة."
+
+#: core/components/common/notifications/notifications.php:15
+msgid "Your profile has been created successfully."
+msgstr "تم إنشاء ملفك الشخصي بنجاح."
+
+#: core/components/common/notifications/notifications.php:16
+msgid "Your profile has been updated."
+msgstr "تم تحديث ملفك الشخصي."
+
+#: core/components/common/notifications/notifications.php:17
+msgid "Your property has been deleted."
+msgstr "تم حذف عقارك."
+
+#: core/components/common/notifications/notifications.php:18
+msgid "Your password has been updated. Now you can login."
+msgstr "تم تحديث كلمة مرورك. يمكنك الآن تسجيل الدخول."
+
+#: core/components/common/notifications/notifications.php:19
+msgid "Your email has been verified successfully."
+msgstr "تم التحقق من بريدك الإلكتروني بنجاح."
+
+#: core/components/common/notifications/notifications.php:22
+msgid "Security error. Please try again."
+msgstr "خطأ أمني. يرجى المحاولة مرة أخرى."
+
+#: core/components/common/notifications/notifications.php:23
+msgid "Validation error. Please check your input and try again."
+msgstr "خطأ في التحقق من صحة البيانات. يرجى مراجعة البيانات التي أدخلتها ومحاولة الإدخال مرة أخرى."
+
+#: core/components/common/notifications/notifications.php:24
+msgid "Please enter login and password."
+msgstr "يرجى إدخال اسم المستخدم وكلمة المرور."
+
+#: core/components/common/notifications/notifications.php:25
+msgid "Please fill in all required fields."
+msgstr "يرجى ملء جميع الحقول الإلزامية."
+
+#: core/components/common/notifications/notifications.php:26
+msgid "This email is already registered. Please use another email."
+msgstr "هذا العنوان البريدي مسجل بالفعل. يرجى استخدام عنوان بريدي آخر."
+
+#: core/components/common/notifications/notifications.php:27
+msgid "An error occurred while updating your profile. Please try again later."
+msgstr "حدث خطأ أثناء تحديث ملفك الشخصي. يرجى المحاولة مرة أخرى لاحقًا."
+
+#: core/components/common/notifications/notifications.php:28
+msgid "An error occurred while uploading your avatar. Please try again later."
+msgstr "حدث خطأ أثناء تحميل صورتك الشخصية. يرجى المحاولة مرة أخرى لاحقًا."
+
+#: core/components/common/notifications/notifications.php:29
+msgid "Your password reset link has expired. Please request a new one."
+msgstr "لقد انتهت صلاحية رابط إعادة تعيين كلمة المرور الخاصة بك. يرجى طلب رابط جديد."
+
+#: core/components/common/notifications/notifications.php:30
+msgid "Your password must be at least 8 characters long."
+msgstr "يجب ألا يقل طول كلمة المرور عن 8 أحرف."
+
+#: core/components/common/notifications/notifications.php:31
+msgid "Your password and confirmation password do not match."
+msgstr "كلمة المرور وكلمة المرور للتأكيد غير متطابقتين."
+
+#: core/components/common/notifications/notifications.php:32
+msgid "Invalid or expired verification token."
+msgstr "رمز التحقق غير صالح أو منتهي الصلاحية."
+
+#: core/components/common/notifications/notifications.php:35
+msgid "Unknown error occurred. Please try again later."
+msgstr "حدث خطأ غير معروف. يرجى المحاولة مرة أخرى لاحقًا."
+
+#: core/components/common/notifications/notifications.php:51
+msgid "Close notification"
+msgstr "إغلاق الإشعار"
+
+#: core/components/common/subscribe-form/functions.php:13
+msgid "Please provide a valid email address."
+msgstr "يرجى إدخال عنوان بريد إلكتروني صالح."
+
+#: core/components/common/subscribe-form/functions.php:35
+msgid "This email is already subscribed."
+msgstr "هذا البريد الإلكتروني مسجل بالفعل في القائمة."
+
+#: core/components/common/subscribe-form/functions.php:49
+msgid "An error occurred while subscribing. Please try again later."
+msgstr "حدث خطأ أثناء الاشتراك. يرجى المحاولة مرة أخرى لاحقًا."
+
+#: core/components/common/subscribe-form/functions.php:54
+msgid "Thank you for subscribing!"
+msgstr "شكرًا لك على الاشتراك!"
+
+#: core/components/common/subscribe-form/subscribe-form.php:10
+msgid "Keep Yourself Up to Date"
+msgstr "ابقَ على اطلاع دائم"
+
+#: core/components/common/subscribe-form/subscribe-form.php:12
+msgid "Your email address"
+msgstr "عنوان بريدك الإلكتروني"
+
+#: core/components/common/subscribe-form/subscribe-form.php:23
+msgid "Subscribe"
+msgstr "اشترك"
+
+#: core/components/components-functions.php:207
+#: core/components/units/units-by-beds.php:21
+#: core/includes/entities/class-entity-property.php:271
+#: core/includes/entities/class-entity-unit.php:176
+#: core/includes/entities/class-entity-unit.php:191
+#: template-parts/sections/single/dropdowns.php:20
+msgid "AED"
+msgstr "جهاز الصدمات الكهربائية (AED)"
+
+#: core/components/components-functions.php:224
+msgctxt "handover quarter"
+msgid "Q1"
+msgstr "الربع الأول"
+
+#: core/components/components-functions.php:225
+msgctxt "handover quarter"
+msgid "Q2"
+msgstr "الربع الثاني"
+
+#: core/components/components-functions.php:226
+msgctxt "handover quarter"
+msgid "Q3"
+msgstr "الربع الثالث"
+
+#: core/components/components-functions.php:227
+msgctxt "handover quarter"
+msgid "Q4"
+msgstr "الربع الرابع"
+
+#. translators: 1: quarter, 2: year.
+#: core/components/components-functions.php:232
+msgctxt "handover date"
+msgid "%1$s %2$d"
+msgstr "%1$s %2$d"
+
+#: core/components/email/functions.php:4
+msgid "Mailer"
+msgstr "برنامج البريد الإلكتروني"
+
+#. translators: option of the delivery date filter, projects already handed over.
+#: core/components/filters/functions.php:323
+#: core/components/filters/functions.php:848
+msgctxt "delivery filter"
+msgid "Ready"
+msgstr "جاهز"
+
+#: core/components/filters/functions.php:330
+#: core/components/filters/functions.php:852
+msgid "In Construction"
+msgstr "قيد الإنشاء"
+
+#: core/components/filters/functions.php:341
+msgid "All Years"
+msgstr "جميع السنوات"
+
+#: core/components/filters/functions.php:350
+#: core/components/filters/functions.php:861
+#: core/includes/registers/post-types/locations.php:10
+#: core/template-parts/account/edit-property.php:191
+#: core/template-parts/filters/result-filters.php:61
+#: core/template-parts/properties/property-single.php:111
+#: core/template-parts/properties/property-single.php:220
+#: core/template-parts/properties/property-units-list.php:28
+#: single-unit.php:291
+#: single-unit.php:380
+#: src/js/map/map.js:276
+msgid "Location"
+msgstr "الموقع"
+
+#: core/components/filters/functions.php:354
+msgid "Handover Year Before"
+msgstr "تسليم المهام في العام السابق"
+
+#: core/components/filters/functions.php:355
+msgid "Completion Year After"
+msgstr "سنة الانتهاء بعد"
+
+#: core/components/filters/functions.php:359
+#: core/components/filters/functions.php:869
+msgid "Price (AED)"
+msgstr "السعر (درهم إماراتي)"
+
+#: core/components/filters/functions.php:366
+#: core/components/filters/functions.php:876
+#: core/includes/entities/class-entity-property.php:650
+msgid "Property Type"
+msgstr "نوع العقار"
+
+#: core/components/filters/functions.php:370
+#: core/components/filters/functions.php:880
+#: core/components/filters/functions.php:904
+msgid "Any"
+msgstr "هناك"
+
+#: core/components/filters/functions.php:375
+#: core/components/filters/functions.php:885
+#: core/includes/registers/post-types/developers.php:11
+#: core/includes/registers/post-types/developers.php:37
+#: core/template-parts/account/edit-property.php:128
+#: core/template-parts/filters/result-filters.php:268
+#: core/template-parts/filters/search-tabs.php:163
+#: src/js/map/html.js:58
+msgid "Developer"
+msgstr "مطور عقاري"
+
+#: core/components/filters/functions.php:379
+#: core/template-parts/cards/map-sidebar.php:85
+#: src/js/map/html.js:66
+msgid "Area"
+msgstr "المساحة"
+
+#: core/components/filters/functions.php:398
+msgctxt "search tab"
+msgid "Available"
+msgstr "متوفر"
+
+#: core/components/filters/functions.php:407
+#: core/template-parts/account/edit-unit.php:271
+#: core/template-parts/filters/search-tabs.php:78
+msgid "Bedrooms"
+msgstr "غرف النوم"
+
+#: core/components/filters/functions.php:411
+#: core/template-parts/filters/search-tabs.php:142
+msgid "District"
+msgstr "المنطقة"
+
+#: core/components/filters/functions.php:418
+msgctxt "search tab"
+msgid "In construction"
+msgstr "في مجال البناء"
+
+#: core/components/filters/functions.php:447
+#: core/components/units/units-by-beds.php:78
+#: core/includes/entities/class-entity-property.php:127
+#: core/includes/entities/class-entity-property.php:133
+#: core/includes/entities/class-entity-unit.php:206
+#: core/includes/entities/class-entity-unit.php:506
+#: core/template-parts/cards/map-sidebar.php:77
+#: core/template-parts/cards/map-sidebar.php:78
+#: core/template-parts/cards/unit-card.php:32
+#: core/template-parts/cards/unit-square-card.php:31
+#: core/template-parts/filters/result-filters.php:164
+#: src/js/common/beds-baths.js:11
+#: src/js/map/html.js:62
+#: src/js/map/html.js:63
+msgid "Beds"
+msgstr "غرف النوم"
+
+#: core/components/filters/functions.php:451
+#: core/includes/entities/class-entity-property.php:131
+#: core/includes/entities/class-entity-property.php:138
+#: core/includes/entities/class-entity-unit.php:204
+#: core/includes/entities/class-entity-unit.php:505
+#: core/template-parts/cards/unit-card.php:33
+#: core/template-parts/cards/unit-square-card.php:32
+#: src/js/common/beds-baths.js:16
+msgid "Studio"
+msgstr "استوديو"
+
+#: core/components/filters/functions.php:500
+#: core/includes/entities/class-entity-property.php:145
+#: core/includes/entities/class-entity-property.php:149
+#: core/includes/entities/class-entity-unit.php:217
+#: core/includes/entities/class-entity-unit.php:516
+#: template-parts/sections/single/dropdowns.php:68
+msgid "Baths"
+msgstr "الحمامات"
+
+#: core/components/filters/functions.php:596
+msgid "Price: high to low"
+msgstr "السعر: من الأعلى إلى الأدنى"
+
+#: core/components/filters/functions.php:600
+msgid "Price: low to high"
+msgstr "السعر: من الأقل إلى الأعلى"
+
+#: core/components/filters/functions.php:604
+msgid "Newest first"
+msgstr "الأحدث أولاً"
+
+#: core/components/filters/functions.php:608
+msgid "Oldest first"
+msgstr "الأقدم أولاً"
+
+#: core/components/filters/functions.php:612
+msgid "Handover: soonest first"
+msgstr "تسليم المهام: الأسرع أولاً"
+
+#: core/components/filters/functions.php:624
+msgctxt "listing sort"
+msgid "Recommended"
+msgstr "موصى به"
+
+#: core/components/filters/functions.php:844
+msgid "Any year"
+msgstr "أي سنة"
+
+#: core/components/filters/functions.php:865
+msgid "Available"
+msgstr "متوفر"
+
+#: core/components/filters/functions.php:1236
+#: core/template-parts/search-results/properties-list.php:63
+#: core/template-parts/search-results/tabs.php:63
+#: core/template-parts/search-results/units-list.php:62
+msgid "Items not found"
+msgstr "لم يتم العثور على العناصر"
+
+#: core/components/filters/functions.php:1247
+#: core/components/filters/functions.php:1351
+msgid "%s property found"
+msgid_plural "%s properties found"
+msgstr[0] "تم العثور على %s عقارات"
+msgstr[1] "تم العثور على %s عقار"
+msgstr[2] "تم العثور على %s عقارات"
+msgstr[3] "تم العثور على %s عقارات"
+msgstr[4] "تم العثور على %s عقارات"
+msgstr[5] "تم العثور على %s عقارات"
+
+#: core/components/filters/functions.php:1339
+msgid "Properties not found"
+msgstr "لم يتم العثور على العقارات"
+
+#. translators: %s: language code.
+#: core/components/locations/functions.php:101
+msgid "Description (%s)"
+msgstr "الوصف (%s)"
+
+#: core/components/locations/functions.php:111
+msgid "Shown on pages in this language. Left empty, the language shows no description."
+msgstr "يُعرض على الصفحات باللغة المذكورة. إذا تُركت فارغة، فلن تظهر أي وصف للغة."
+
+#: core/components/modals/boost-info-modal.php:11
+#: core/components/modals/boost-modal.php:10
+msgid "Boost your property"
+msgstr "عزز قيمة عقارك"
+
+#: core/components/modals/boost-info-modal.php:20
+msgid ""
+"The Gold Star Boost Program is an exclusive visibility tool created for \n"
+"\t\t\t\t\t\tsellers and agents who demand the \"top spot.\" By leveraging your earned Star Points, you can \n"
+"\t\t\t\t\t\tinstantly transform any standard listing into a featured powerhouse, ensuring your property is \n"
+"\t\t\t\t\t\tthe first thing potential buyers see when they start their search."
+msgstr ""
+"برنامج «Gold Star Boost» هو أداة حصرية لزيادة الظهور تم إنشاؤها خصيصًا \n"
+" للبائعين والوكلاء الذين يسعون إلى «المركز الأول». من خلال الاستفادة من نقاط «ستار» التي حصلت عليها، يمكنك \n"
+" تحويل أي إعلان عادي على الفور إلى إعلان مميز وقوي، مما يضمن أن تكون عقارتك \n"
+" أول ما يراه المشترون المحتملون عند بدء بحثهم."
+
+#: core/components/modals/boost-info-modal.php:27
+msgid "How much does it cost?"
+msgstr "كم تبلغ تكلفتها؟"
+
+#: core/components/modals/boost-info-modal.php:30
+msgid ""
+"Boost costs are based on your selected timeframe. For example, you can \n"
+"\t\t\t\t\tsecure 24 hours of top-tier visibility for 250 points."
+msgstr ""
+"تستند تكاليف «Boost» إلى الإطار الزمني الذي تختاره. على سبيل المثال، يمكنك \n"
+" الحصول على 24 ساعة من الظهور في المرتبة الأولى مقابل 250 نقطة."
+
+#: core/components/modals/boost-info-modal.php:36
+msgid "How long is the boost active?"
+msgstr "ما هي مدة استمرار مفعول التعزيز؟"
+
+#: core/components/modals/boost-info-modal.php:40
+msgid ""
+"Your property will hold the \"Top Spot\" for the full duration you select, \n"
+"\t\t\t\t\t\tstarting the exact moment you hit activate."
+msgstr ""
+"ستحتفظ عقارك بـ«المركز الأول» طوال المدة التي تختارها، \n"
+" بدءًا من اللحظة التي تضغط فيها على زر «تنشيط»."
+
+#: core/components/modals/boost-info-modal.php:45
+msgid "What happens after the boost ends?"
+msgstr "ماذا يحدث بعد انتهاء فترة التعزيز؟"
+
+#: core/components/modals/boost-info-modal.php:48
+msgid ""
+"Your listing will return to its standard position in the search results. \n"
+"\t\t\t\t\t\tTo maintain your lead, you can redeploy another boost at any time to stay front and center."
+msgstr ""
+"سيعود إعلانك إلى موضعه المعتاد في نتائج البحث.\n"
+"وللحفاظ على صدارتك، يمكنك إعادة تفعيل ميزة «التعزيز» في أي وقت لتظل في المقدمة وفي مركز الاهتمام."
+
+#: core/components/modals/boost-modal.php:22
+msgid "Choose how many days you want to boost this listing. During the boost period,"
+msgstr "اختر عدد الأيام التي تريد فيها تعزيز هذا الإعلان. خلال فترة التعزيز،"
+
+#: core/components/modals/boost-modal.php:23
+msgid " your listing will receive higher priority and appear more often to potential buyers."
+msgstr " ستحظى إعلاناتك بأولوية أعلى وستظهر بشكل متكرر أكثر أمام المشترين المحتملين."
+
+#: core/components/modals/boost-modal.php:41
+#: core/components/modals/create-modal.php:127
+#: core/template-parts/account/edit-property.php:130
+#: core/template-parts/account/edit-property.php:192
+#: core/template-parts/account/edit-property.php:211
+#: core/template-parts/account/edit-unit.php:238
+#: core/template-parts/account/edit-unit.php:256
+#: core/template-parts/account/login-form.php:202
+#: core/template-parts/filters/result-filters.php:169
+#: core/template-parts/ui/dropdown.php:12
+#: src/js/common/beds-baths.js:19
+#: src/js/filters.js:27
+msgid "Select"
+msgstr "اختر"
+
+#: core/components/modals/boost-modal.php:57
+msgid "Boost"
+msgstr "تعزيز"
+
+#: core/components/modals/broker-modal.php:24
+msgid "Hello, I am interested in property"
+msgstr "مرحبًا، أنا مهتم بشراء عقار"
+
+#: core/components/modals/broker-modal.php:34
+#: core/template-parts/cards/unit-card.php:187
+#: core/template-parts/common/contact-panel.php:66
+#: single-unit.php:173
+msgid "Contact broker"
+msgstr "اتصل بالوسيط"
+
+#: core/components/modals/broker-modal.php:42
+#: core/components/modals/quote-modal.php:44
+msgid "You can get more information about the available properties, special deals and prices."
+msgstr "يمكنك الحصول على مزيد من المعلومات حول العقارات المتاحة والعروض الخاصة والأسعار."
+
+#: core/components/modals/broker-modal.php:48
+msgid "We work directly with brokers"
+msgstr "نحن نعمل مباشرة مع الوسطاء"
+
+#: core/components/modals/broker-modal.php:53
+#: core/components/modals/quote-modal.php:54
+#: template-parts/sections/index/about.php:20
+msgid "We facilitate the entire process for you"
+msgstr "نحن نسهّل لك العملية برمتها"
+
+#: core/components/modals/broker-modal.php:58
+#: core/components/modals/quote-modal.php:59
+#: template-parts/sections/index/about.php:25
+msgid "We don’t add anything on top of the price"
+msgstr "نحن لا نضيف أي شيء إلى السعر"
+
+#: core/components/modals/broker-modal.php:69
+msgid "Phone"
+msgstr "الهاتف"
+
+#: core/components/modals/broker-modal.php:78
+msgid "WhatsApp"
+msgstr "واتساب"
+
+#: core/components/modals/create-modal.php:21
+#: core/components/modals/create-modal.php:167
+#: core/components/modals/signin-modal.php:27
+#: core/template-parts/account/login-form.php:26
+#: core/template-parts/account/login-form.php:244
+msgid "Create account"
+msgstr "إنشاء حساب"
+
+#: core/components/modals/create-modal.php:29
+msgid "What account gives you:"
+msgstr "ما الذي يوفره لك هذا الحساب:"
+
+#: core/components/modals/create-modal.php:35
+msgid "Bookmark your favorites"
+msgstr "أضف مواقعك المفضلة إلى قائمة المفضلة"
+
+#: core/components/modals/create-modal.php:40
+msgid "Get updates about new listings"
+msgstr "احصل على آخر المستجدات حول العقارات المعروضة حديثًا"
+
+#: core/components/modals/create-modal.php:52
+#: core/template-parts/account/login-form.php:105
+#: core/template-parts/account/login-form.php:107
+msgid "First name"
+msgstr "الاسم الأول"
+
+#: core/components/modals/create-modal.php:58
+#: core/template-parts/account/email-verification.php:15
+msgid "Email"
+msgstr "البريد الإلكتروني"
+
+#: core/components/modals/create-modal.php:64
+#: core/components/modals/signin-modal.php:37
+#: core/template-parts/account/login-form.php:52
+#: core/template-parts/account/login-form.php:128
+#: core/template-parts/account/reset-password.php:34
+msgid "Password"
+msgstr "كلمة المرور"
+
+#: core/components/modals/create-modal.php:70
+#: core/template-parts/account/login-form.php:136
+msgid "Repeat Password"
+msgstr "أعد كتابة كلمة المرور"
+
+#: core/components/modals/create-modal.php:78
+#: core/template-parts/account/login-form.php:145
+msgid "Choose your role"
+msgstr "اختر دورك"
+
+#: core/components/modals/create-modal.php:109
+#: core/template-parts/account/login-form.php:177
+#: core/template-parts/account/profile-client.php:151
+#: core/template-parts/account/profile.php:421
+msgid "Phone number"
+msgstr "رقم الهاتف"
+
+#: core/components/modals/create-modal.php:116
+#: core/includes/registers/post-types/agencies.php:10
+#: core/includes/registers/post-types/agencies.php:36
+#: core/template-parts/account/profile.php:378
+msgid "Agency"
+msgstr "الوكالة"
+
+#: core/components/modals/create-modal.php:119
+#: core/template-parts/account/login-form.php:191
+#: core/template-parts/account/profile.php:381
+msgid "If you can’t find your agency in the list, please contact us at "
+msgstr "إذا لم تتمكن من العثور على وكالتك في القائمة، يرجى الاتصال بنا على "
+
+#: core/components/modals/create-modal.php:121
+#: core/template-parts/account/login-form.php:194
+#: core/template-parts/account/profile.php:384
+msgid "Your request will be reviewed within 24 hours."
+msgstr "سيتم النظر في طلبك في غضون 24 ساعة."
+
+#: core/components/modals/create-modal.php:132
+msgid "vector arrow"
+msgstr "سهم متجه"
+
+#: core/components/modals/create-modal.php:154
+#: core/template-parts/account/login-form.php:231
+msgid "I have read and agree to the"
+msgstr "لقد قرأت الشروط وأوافق عليها"
+
+#: core/components/modals/create-modal.php:156
+#: core/template-parts/account/login-form.php:233
+msgid "Terms of Use"
+msgstr "شروط الاستخدام"
+
+#: core/components/modals/create-modal.php:158
+#: core/template-parts/account/login-form.php:235
+msgid "and"
+msgstr "و"
+
+#: core/components/modals/create-modal.php:160
+#: core/template-parts/account/login-form.php:237
+msgid "Privacy Policy"
+msgstr "سياسة الخصوصية"
+
+#: core/components/modals/create-modal.php:170
+msgid "Have an account?"
+msgstr "هل لديك حساب؟"
+
+#: core/components/modals/forgot-modal.php:6
+msgid "Forgot password"
+msgstr "نسيت كلمة المرور"
+
+#: core/components/modals/forgot-modal.php:16
+#: core/components/modals/forgot-modal.php:18
+#: core/components/modals/signin-modal.php:33
+#: core/template-parts/account/login-form.php:48
+msgid "Email or username"
+msgstr "البريد الإلكتروني أو اسم المستخدم"
+
+#: core/components/modals/forgot-modal.php:26
+msgid "Send password reset link"
+msgstr "إرسال رابط إعادة تعيين كلمة المرور"
+
+#: core/components/modals/functions.php:13
+msgid "Email is required."
+msgstr "البريد الإلكتروني مطلوب."
+
+#: core/components/modals/functions.php:18
+msgid "No user found with this email."
+msgstr "لم يتم العثور على مستخدم بهذا العنوان البريدي الإلكتروني."
+
+#: core/components/modals/functions.php:23
+msgid "Error generating reset key."
+msgstr "حدث خطأ أثناء إنشاء مفتاح إعادة الضبط."
+
+#: core/components/modals/functions.php:28
+msgid "Hello,"
+msgstr "مرحبًا،"
+
+#: core/components/modals/functions.php:30
+msgid ""
+"We received a request to reset the password for your EastProperty account.\n"
+"\tTo create a new password, please click the link below:"
+msgstr ""
+"تلقينا طلبًا لإعادة تعيين كلمة المرور لحسابك على EastProperty.\n"
+"  لإنشاء كلمة مرور جديدة، يرجى النقر على الرابط أدناه:"
+
+#: core/components/modals/functions.php:35
+msgid "Reset password"
+msgstr "إعادة تعيين كلمة المرور"
+
+#: core/components/modals/functions.php:42
+msgid "If you did not request a password reset, you can safely ignore this email. Your password will remain unchanged."
+msgstr "إذا لم تكن قد طلبت إعادة تعيين كلمة المرور، فيمكنك تجاهل هذه الرسالة الإلكترونية دون أي قلق. ستبقى كلمة مرورك كما هي."
+
+#: core/components/modals/functions.php:49
+msgid "Password Reset Request"
+msgstr "طلب إعادة تعيين كلمة المرور"
+
+#: core/components/modals/functions.php:54
+msgid "Password reset request sent to your email address. Check your inbox."
+msgstr "تم إرسال طلب إعادة تعيين كلمة المرور إلى عنوان بريدك الإلكتروني. يرجى التحقق من صندوق الوارد الخاص بك."
+
+#: core/components/modals/map-coords-picker.php:17
+msgid "Pick property coordinates"
+msgstr "تحديد إحداثيات العقار"
+
+#: core/components/modals/quote-modal.php:36
+msgid "Request a quote"
+msgstr "اطلب عرض أسعار"
+
+#: core/components/modals/quote-modal.php:49
+#: template-parts/sections/index/about.php:15
+msgid "We work directly with builders"
+msgstr "نحن نعمل مباشرة مع شركات البناء"
+
+#: core/components/modals/quote-modal.php:69
+msgid "Developer website"
+msgstr "موقع المطور"
+
+#: core/components/modals/quote-modal.php:78
+#: core/template-parts/properties/property-single.php:69
+msgid "Contact us"
+msgstr "اتصل بنا"
+
+#: core/components/modals/signin-modal.php:24
+msgid "Don’t have an account?"
+msgstr "ليس لديك حساب؟"
+
+#: core/components/modals/signin-modal.php:46
+#: core/template-parts/account/login-form.php:73
+msgid "Forgot password?"
+msgstr "هل نسيت كلمة المرور؟"
+
+#: core/components/properties/filter.php:19
+msgid "Buy properties in UAE"
+msgstr "شراء عقارات في الإمارات العربية المتحدة"
+
+#: core/components/properties/filter.php:27
+#: single-developers.php:41
+msgid "projects found"
+msgstr "المشاريع التي تم العثور عليها"
+
+#: core/components/properties/functions.php:152
+msgid "Apartment"
+msgstr "شقة"
+
+#: core/components/properties/functions.php:153
+msgid "Villa"
+msgstr "فيلا"
+
+#: core/components/properties/functions.php:154
+msgid "Townhouse"
+msgstr "تاون هاوس"
+
+#: core/components/properties/functions.php:155
+msgid "Penthouse"
+msgstr "بنتهاوس"
+
+#: core/components/properties/functions.php:156
+msgid "House"
+msgstr "المنزل"
+
+#: core/components/properties/functions.php:157
+msgid "Office"
+msgstr "المكتب"
+
+#: core/components/properties/functions.php:158
+msgid "Freehold"
+msgstr "ملكية حرة"
+
+#: core/components/properties/functions.php:159
+msgid "Leasehold"
+msgstr "حق الانتفاع"
+
+#: core/components/properties/functions.php:160
+msgid "Commonhold"
+msgstr "الملكية المشتركة"
+
+#: core/components/properties/functions.php:161
+msgid "Strata"
+msgstr "الشارع"
+
+#: core/components/properties/functions.php:162
+msgid "Usufruct"
+msgstr "حق الانتفاع"
+
+#: core/components/properties/functions.php:163
+msgid "Joint Ownership"
+msgstr "الملكية المشتركة"
+
+#: core/components/properties/functions.php:164
+msgid "Fractional Ownership"
+msgstr "الملكية الجزئية"
+
+#: core/components/properties/functions.php:726
+#: core/includes/entities/class-entity-property.php:556
+#: core/includes/entities/class-entity-property.php:623
+#: core/includes/entities/class-entity-unit.php:373
+#: core/includes/entities/class-entity-unit.php:441
+msgid "Ready"
+msgstr "جاهز"
+
+#: core/components/properties/functions.php:731
+#: core/includes/entities/class-entity-property.php:562
+#: core/includes/entities/class-entity-unit.php:379
+#: core/includes/entities/class-entity-unit.php:447
+msgid "Handover:"
+msgstr "تسليم المهام:"
+
+#. translators: 1: project name, 2: developer name, 3: project URL.
+#: core/components/properties/functions.php:985
+msgid "Hello! I am interested in the %1$s project by %2$s. Could you tell me more about it? %3$s"
+msgstr "مرحبًا! أنا مهتم بمشروع %1$s الذي أطلقه %2$s. هل يمكنك إخباري بالمزيد عنه؟ %3$s"
+
+#. translators: 1: project name, 2: project URL.
+#: core/components/properties/functions.php:995
+msgid "Hello! I am interested in the %1$s project. Could you tell me more about it? %2$s"
+msgstr "مرحبًا! أنا مهتم بمشروع %1$s. هل يمكنك إخباري بالمزيد عنه؟ %2$s"
+
+#: core/components/properties/property-single.php:59
+msgid "Show all properties in this project"
+msgstr "عرض جميع العقارات في هذا المشروع"
+
+#: core/components/sections/explore-by-beds.php:11
+msgid "Studio or 1 bedroom"
+msgstr "شقة استوديو أو شقة بغرفة نوم واحدة"
+
+#: core/components/sections/explore-by-beds.php:15
+#: core/components/sections/explore-by-beds.php:23
+#: core/components/sections/explore-by-beds.php:32
+#: core/components/sections/explore-by-beds.php:42
+#: core/includes/registers/post-types/properties.php:11
+#: core/includes/registers/post-types/properties.php:34
+msgid "Property"
+msgstr "عقار"
+
+#: core/components/sections/explore-by-beds.php:19
+msgid "2 bedrooms"
+msgstr "غرفتا نوم"
+
+#: core/components/sections/explore-by-beds.php:28
+msgid "3 bedrooms"
+msgstr "3 غرف نوم"
+
+#: core/components/sections/explore-by-beds.php:38
+msgid "3+ bedrooms"
+msgstr "3 غرف نوم أو أكثر"
+
+#: core/components/sections/explore-by-beds.php:49
+msgid "Explore properties by number of bedrooms"
+msgstr "استكشف العقارات حسب عدد غرف النوم"
+
+#: core/components/sections/explore-by-beds.php:50
+#: core/components/sections/explore-by-districts.php:41
+msgid "Quick picks for you in UAE"
+msgstr "اختيارات سريعة لك في الإمارات العربية المتحدة"
+
+#: core/components/sections/explore-by-beds.php:52
+#: core/includes/registers/post-types/properties.php:15
+#: core/includes/registers/post-types/properties.php:31
+msgid "All Properties"
+msgstr "جميع العقارات"
+
+#: core/components/sections/explore-by-districts.php:30
+msgid "Projects"
+msgstr "المشاريع"
+
+#: core/components/sections/explore-by-districts.php:31
+#: core/template-parts/account/edit-unit.php:235
+msgid "Project"
+msgstr "المشروع"
+
+#: core/components/sections/explore-by-districts.php:40
+msgid "Explore projects by district"
+msgstr "استكشف المشاريع حسب المنطقة"
+
+#: core/components/sections/explore-by-districts.php:43
+msgid "All Projects"
+msgstr "جميع المشاريع"
+
+#: core/components/security/functions.php:15
+msgid "Sorry, you are not allowed to access this resource."
+msgstr "عذرًا، لا يُسمح لك بالوصول إلى هذا المورد."
+
+#. translators: 1: current page number, 2: total number of pages.
+#: core/components/seo/functions.php:626
+msgid "Page %1$d of %2$d"
+msgstr "الصفحة %1$d من %2$d"
+
+#: core/components/units/featured.php:22
+msgid "Featured new projects in the UAE"
+msgstr "مشاريع جديدة بارزة في الإمارات العربية المتحدة"
+
+#: core/components/units/featured.php:23
+msgid "DISTRESS PROPERTIES"
+msgstr "العقارات المتعثرة"
+
+#: core/components/units/featured.php:24
+msgid "Don’t wait till it’s late"
+msgstr "لا تنتظر حتى يفوت الأوان"
+
+#: core/components/units/featured.php:25
+msgid "Be first to explore new off-plan launches — early access, new prices, and direct WhatsApp contact."
+msgstr "كن أول من يستكشف أحدث المشاريع العقارية قيد الإنشاء — فرصة الوصول المبكر، والأسعار الجديدة، والتواصل المباشر عبر WhatsApp."
+
+#: core/components/units/featured.php:29
+msgid "See all new projects"
+msgstr "عرض جميع المشاريع الجديدة"
+
+#: core/components/units/filter.php:9
+msgid "Available Units in UAE"
+msgstr "الوحدات المتوفرة في الإمارات العربية المتحدة"
+
+#: core/components/units/filter.php:28
+msgid "properties found"
+msgstr "العقارات التي تم العثور عليها"
+
+#: core/components/units/functions.php:19
+msgid "Off-plan"
+msgstr "على المخطط"
+
+#: core/components/units/functions.php:20
+msgid "Secondary"
+msgstr "إعادة بيع"
+
+#: core/components/units/functions.php:21
+#: core/template-parts/filters/search-tabs.php:64
+msgid "Distress"
+msgstr "بيع عاجل"
+
+#. translators: 1: unit name, 2: unit URL.
+#: core/components/units/functions.php:625
+msgid "Hello! I am interested in %1$s. Could you tell me more about it? %2$s"
+msgstr "مرحبًا! أنا مهتم بـ %1$s. هل يمكنك إخباري بالمزيد عنه؟ %2$s"
+
+#: core/components/units/similar.php:64
+msgid "More properties like this"
+msgstr "المزيد من العقارات المشابهة"
+
+#: core/components/units/similar.php:67
+#: core/template-parts/properties/property-single.php:161
+#: page-mortgage-calculator.php:23
+msgid "All properties"
+msgstr "جميع العقارات"
+
+#: core/components/units/units-by-beds.php:10
+msgid "Pricing"
+msgstr "الأسعار"
+
+#: core/components/units/units-by-beds.php:36
+#: template-parts/sections/single/dropdowns.php:32
+#: template-parts/sections/single/dropdowns.php:61
+#: src/js/common/beds-baths.js:11
+msgid "Bed"
+msgstr "العالم"
+
+#: core/components/units/units-by-beds.php:43
+#: core/components/units/units-by-beds.php:82
+#: core/includes/entities/class-entity-property.php:157
+#: core/includes/entities/class-entity-property.php:161
+#: core/includes/entities/class-entity-unit.php:228
+#: core/includes/entities/class-entity-unit.php:524
+#: core/template-parts/cards/map-sidebar.php:86
+#: template-parts/sections/single/dropdowns.php:40
+#: template-parts/sections/single/dropdowns.php:75
+#: src/js/map/html.js:67
+msgid "sqft"
+msgstr "قدم مربع"
+
+#: core/components/units/units-by-beds.php:56
+#: core/components/units/units-by-beds.php:60
+msgid "Floor plan for %s bed unit"
+msgstr "مخطط الطابق لوحدة السرير %s"
+
+#: core/components/units/units-by-beds.php:85
+#: core/template-parts/cards/large-card.php:59
+#: template-parts/sections/single/dropdowns.php:45
+msgid "from"
+msgstr "من"
+
+#: core/includes/entities/class-entity-estate-user.php:265
+msgid "Your email address has been successfully verified."
+msgstr "تم التحقق من عنوان بريدك الإلكتروني بنجاح."
+
+#: core/includes/entities/class-entity-estate-user.php:266
+msgid "You can now enjoy all the features of your account and start using our services."
+msgstr "يمكنك الآن الاستمتاع بجميع ميزات حسابك والبدء في استخدام خدماتنا."
+
+#: core/includes/entities/class-entity-estate-user.php:274
+msgid "Email Verified"
+msgstr "تم التحقق من البريد الإلكتروني"
+
+#: core/includes/entities/class-entity-property.php:571
+#: core/includes/entities/class-entity-unit.php:388
+#: core/includes/entities/class-entity-unit.php:455
+msgid "Popular"
+msgstr "شائع"
+
+#: core/includes/entities/class-entity-property.php:579
+#: core/includes/entities/class-entity-unit.php:396
+#: core/includes/entities/class-entity-unit.php:462
+msgid "Premium Developer"
+msgstr "مطور متميز"
+
+#: core/includes/entities/class-entity-property.php:626
+#: core/template-parts/account/edit-property.php:227
+msgid "Handover Date"
+msgstr "تاريخ التسليم"
+
+#: core/includes/entities/class-entity-property.php:634
+msgid "Construction Started"
+msgstr "بدء أعمال البناء"
+
+#: core/includes/entities/class-entity-property.php:642
+msgid "Number of Buildings"
+msgstr "عدد المباني"
+
+#: core/includes/entities/class-entity-property.php:658
+msgid "Government Fee"
+msgstr "الرسوم الحكومية"
+
+#: core/includes/entities/class-entity-property.php:666
+msgid "Ownership Type"
+msgstr "نوع الملكية"
+
+#: core/includes/entities/class-entity-unit.php:217
+#: core/includes/entities/class-entity-unit.php:515
+msgid "1 Bath"
+msgstr "حمام واحد"
+
+#: core/includes/entities/class-entity-unit.php:696
+msgid "Gallery should not be empty"
+msgstr "يجب ألا تكون معرض الصور فارغًا"
+
+#: core/includes/entities/class-entity-unit.php:701
+msgid "Area should not be empty and must bigger than 50 sqft"
+msgstr "يجب ألا تكون المساحة فارغة، ويجب أن تزيد عن 50 قدمًا مربعًا"
+
+#: core/includes/entities/class-entity-unit.php:709
+msgid "Price should not be empty and must bigger than 200 000 AED"
+msgstr "يجب ألا يكون حقل السعر فارغًا، ويجب أن يكون المبلغ أكبر من 200,000 درهم إماراتي"
+
+#: core/includes/entities/class-entity-unit.php:719
+msgid "Your unit has been submitted and is waiting for approval. Please fix the following issues:"
+msgstr "تم إرسال وحدتك وهي في انتظار الموافقة. يرجى تصحيح المشكلات التالية:"
+
+#: core/includes/entities/class-entity-unit.php:732
+msgid "Need to fix errors in your submitted property"
+msgstr "يلزم تصحيح الأخطاء الموجودة في بيانات العقار الذي قمت بتقديمه"
+
+#: core/includes/registers/post-types/agencies.php:7
+msgctxt "Post Type General Name"
+msgid "Agencies"
+msgstr "الوكالات"
+
+#: core/includes/registers/post-types/agencies.php:8
+msgctxt "Post Type Singular Name"
+msgid "Agency"
+msgstr "الوكالة"
+
+#: core/includes/registers/post-types/agencies.php:9
+msgid "Agencies"
+msgstr "الوكالات"
+
+#: core/includes/registers/post-types/agencies.php:11
+msgid "Agency Archives"
+msgstr "أرشيف الوكالة"
+
+#: core/includes/registers/post-types/agencies.php:12
+msgid "Agency Attributes"
+msgstr "خصائص الوكالة"
+
+#: core/includes/registers/post-types/agencies.php:13
+msgid "Parent Agency:"
+msgstr "الجهة الأم:"
+
+#: core/includes/registers/post-types/agencies.php:14
+msgid "All Agencies"
+msgstr "جميع الوكالات"
+
+#: core/includes/registers/post-types/agencies.php:15
+msgid "Add New Agency"
+msgstr "إضافة وكالة جديدة"
+
+#: core/includes/registers/post-types/agencies.php:16
+#: core/includes/registers/post-types/developers.php:17
+#: core/includes/registers/post-types/properties.php:17
+#: core/includes/registers/post-types/subscribers.php:17
+#: core/includes/registers/post-types/units.php:19
+msgid "Add New"
+msgstr "إضافة جديد"
+
+#: core/includes/registers/post-types/agencies.php:17
+msgid "New Agency"
+msgstr "وكالة جديدة"
+
+#: core/includes/registers/post-types/agencies.php:18
+msgid "Edit Agency"
+msgstr "وكالة التحرير"
+
+#: core/includes/registers/post-types/agencies.php:19
+msgid "Update Agency"
+msgstr "وكالة التحديث"
+
+#: core/includes/registers/post-types/agencies.php:20
+msgid "View Agency"
+msgstr "عرض الوكالة"
+
+#: core/includes/registers/post-types/agencies.php:21
+msgid "View Agencies"
+msgstr "عرض الوكالات"
+
+#: core/includes/registers/post-types/agencies.php:22
+msgid "Search Agency"
+msgstr "وكالة البحث"
+
+#: core/includes/registers/post-types/agencies.php:23
+#: core/includes/registers/post-types/developers.php:24
+#: core/includes/registers/post-types/properties.php:24
+#: core/includes/registers/post-types/subscribers.php:24
+#: core/includes/registers/post-types/units.php:26
+msgid "Not found"
+msgstr "لم يتم العثور عليه"
+
+#: core/includes/registers/post-types/agencies.php:24
+#: core/includes/registers/post-types/developers.php:25
+#: core/includes/registers/post-types/properties.php:25
+#: core/includes/registers/post-types/subscribers.php:25
+#: core/includes/registers/post-types/units.php:27
+msgid "Not found in Trash"
+msgstr "لم يتم العثور عليه في سلة المهملات"
+
+#: core/includes/registers/post-types/agencies.php:25
+#: core/includes/registers/post-types/developers.php:26
+#: core/includes/registers/post-types/properties.php:26
+#: core/includes/registers/post-types/subscribers.php:26
+#: core/includes/registers/post-types/units.php:28
+msgid "Featured Image"
+msgstr "الصورة المميزة"
+
+#: core/includes/registers/post-types/agencies.php:26
+#: core/includes/registers/post-types/developers.php:27
+#: core/includes/registers/post-types/properties.php:27
+#: core/includes/registers/post-types/subscribers.php:27
+#: core/includes/registers/post-types/units.php:29
+msgid "Set featured image"
+msgstr "تعيين الصورة المميزة"
+
+#: core/includes/registers/post-types/agencies.php:27
+#: core/includes/registers/post-types/developers.php:28
+#: core/includes/registers/post-types/properties.php:28
+#: core/includes/registers/post-types/subscribers.php:28
+#: core/includes/registers/post-types/units.php:30
+msgid "Remove featured image"
+msgstr "إزالة الصورة المميزة"
+
+#: core/includes/registers/post-types/agencies.php:28
+#: core/includes/registers/post-types/developers.php:29
+#: core/includes/registers/post-types/properties.php:29
+#: core/includes/registers/post-types/subscribers.php:29
+#: core/includes/registers/post-types/units.php:31
+msgid "Use as featured image"
+msgstr "استخدامها كصورة مميزة"
+
+#: core/includes/registers/post-types/agencies.php:29
+msgid "Insert agency"
+msgstr "إدراج الوكالة"
+
+#: core/includes/registers/post-types/agencies.php:30
+msgid "Uploaded to this agency"
+msgstr "تم تحميله إلى هذه الوكالة"
+
+#: core/includes/registers/post-types/agencies.php:31
+msgid "Agencies list"
+msgstr "قائمة الوكالات"
+
+#: core/includes/registers/post-types/agencies.php:32
+msgid "Agencies list navigation"
+msgstr "التنقل بين قوائم الوكالات"
+
+#: core/includes/registers/post-types/agencies.php:33
+msgid "Filter agencies list"
+msgstr "قائمة وكالات التصفية"
+
+#: core/includes/registers/post-types/agencies.php:37
+#: core/includes/registers/post-types/developers.php:38
+#: core/includes/registers/post-types/properties.php:35
+#: core/includes/registers/post-types/subscribers.php:38
+#: core/includes/registers/post-types/units.php:37
+msgid "Post Type Description"
+msgstr "وصف نوع المنشور"
+
+#: core/includes/registers/post-types/developers.php:8
+msgctxt "Post Type General Name"
+msgid "Developers"
+msgstr "مطورون عقاريون"
+
+#: core/includes/registers/post-types/developers.php:9
+msgctxt "Post Type Singular Name"
+msgid "Developer"
+msgstr "مطور عقاري"
+
+#: core/includes/registers/post-types/developers.php:10
+msgid "Developers"
+msgstr "مطورون عقاريون"
+
+#: core/includes/registers/post-types/developers.php:12
+msgid "Developer Archives"
+msgstr "أرشيف المطورين"
+
+#: core/includes/registers/post-types/developers.php:13
+msgid "Developer Attributes"
+msgstr "خصائص المطور"
+
+#: core/includes/registers/post-types/developers.php:14
+msgid "Parent Developer:"
+msgstr "المطور الأصلي:"
+
+#: core/includes/registers/post-types/developers.php:15
+msgid "All Developers"
+msgstr "جميع المطورين"
+
+#: core/includes/registers/post-types/developers.php:16
+msgid "Add New Developer"
+msgstr "إضافة مطور جديد"
+
+#: core/includes/registers/post-types/developers.php:18
+msgid "New Developer"
+msgstr "مطور جديد"
+
+#: core/includes/registers/post-types/developers.php:19
+msgid "Edit Developer"
+msgstr "تحرير المطور"
+
+#: core/includes/registers/post-types/developers.php:20
+msgid "Update Developer"
+msgstr "تحديث المطور"
+
+#: core/includes/registers/post-types/developers.php:21
+msgid "View Developer"
+msgstr "عرض المطور"
+
+#: core/includes/registers/post-types/developers.php:22
+msgid "View Developers"
+msgstr "عرض المطورين"
+
+#: core/includes/registers/post-types/developers.php:23
+msgid "Search Developer"
+msgstr "البحث عن مطور"
+
+#: core/includes/registers/post-types/developers.php:30
+msgid "Add into developer"
+msgstr "إضافة إلى المطور"
+
+#: core/includes/registers/post-types/developers.php:31
+msgid "Uploaded to this developer"
+msgstr "تم تحميله إلى هذا المطور"
+
+#: core/includes/registers/post-types/developers.php:32
+msgid "Developers list"
+msgstr "قائمة المطورين"
+
+#: core/includes/registers/post-types/developers.php:33
+msgid "Developers list navigation"
+msgstr "التنقل بين قوائم المطورين"
+
+#: core/includes/registers/post-types/developers.php:34
+msgid "Filter developers list"
+msgstr "تصفية قائمة المطورين"
+
+#: core/includes/registers/post-types/locations.php:9
+#: core/includes/registers/post-types/locations.php:17
+msgid "Locations"
+msgstr "المواقع"
+
+#: core/includes/registers/post-types/locations.php:11
+msgid "Search Locations"
+msgstr "البحث عن المواقع"
+
+#: core/includes/registers/post-types/locations.php:12
+msgid "All Locations"
+msgstr "جميع المواقع"
+
+#: core/includes/registers/post-types/locations.php:13
+msgid "Edit Location"
+msgstr "تعديل الموقع"
+
+#: core/includes/registers/post-types/locations.php:14
+msgid "Update Location"
+msgstr "تحديث الموقع"
+
+#: core/includes/registers/post-types/locations.php:15
+msgid "Add New Location"
+msgstr "إضافة موقع جديد"
+
+#: core/includes/registers/post-types/locations.php:16
+msgid "New Location Name"
+msgstr "اسم الموقع الجديد"
+
+#: core/includes/registers/post-types/properties.php:8
+msgctxt "Post Type General Name"
+msgid "Properties"
+msgstr "عقارات"
+
+#: core/includes/registers/post-types/properties.php:9
+msgctxt "Post Type Singular Name"
+msgid "Property"
+msgstr "عقار"
+
+#: core/includes/registers/post-types/properties.php:12
+msgid "Property Archives"
+msgstr "أرشيف العقارات"
+
+#: core/includes/registers/post-types/properties.php:13
+msgid "Property Attributes"
+msgstr "خصائص العقار"
+
+#: core/includes/registers/post-types/properties.php:14
+msgid "Parent Property:"
+msgstr "الخاصية الأصلية:"
+
+#: core/includes/registers/post-types/properties.php:16
+msgid "Add New Property"
+msgstr "إضافة عقار جديد"
+
+#: core/includes/registers/post-types/properties.php:18
+msgid "New Property"
+msgstr "عقار جديد"
+
+#: core/includes/registers/post-types/properties.php:19
+msgid "Edit Property"
+msgstr "تعديل العقار"
+
+#: core/includes/registers/post-types/properties.php:20
+msgid "Update Property"
+msgstr "تحديث الخاصية"
+
+#: core/includes/registers/post-types/properties.php:21
+msgid "View Property"
+msgstr "عرض العقار"
+
+#: core/includes/registers/post-types/properties.php:22
+msgid "View Properties"
+msgstr "عرض العقارات"
+
+#: core/includes/registers/post-types/properties.php:23
+msgid "Search Property"
+msgstr "البحث عن عقار"
+
+#: core/includes/registers/post-types/properties.php:30
+msgid "Properties insighted by this author"
+msgstr "العقارات التي قدمها هذا المؤلف"
+
+#: core/includes/registers/post-types/subscribers.php:8
+msgctxt "Post Type General Name"
+msgid "Subscribers"
+msgstr "المشتركون"
+
+#: core/includes/registers/post-types/subscribers.php:9
+msgctxt "Post Type Singular Name"
+msgid "Subscriber"
+msgstr "المشترك"
+
+#: core/includes/registers/post-types/subscribers.php:10
+msgid "Subscribers"
+msgstr "المشتركون"
+
+#: core/includes/registers/post-types/subscribers.php:11
+#: core/includes/registers/post-types/subscribers.php:37
+msgid "Subscriber"
+msgstr "المشترك"
+
+#: core/includes/registers/post-types/subscribers.php:12
+msgid "Subscriber Archives"
+msgstr "أرشيف المشتركين"
+
+#: core/includes/registers/post-types/subscribers.php:13
+msgid "Subscriber Attributes"
+msgstr "خصائص المشتركين"
+
+#: core/includes/registers/post-types/subscribers.php:14
+msgid "Parent Subscriber:"
+msgstr "الوالد المشترك:"
+
+#: core/includes/registers/post-types/subscribers.php:15
+msgid "All Subscribers"
+msgstr "جميع المشتركين"
+
+#: core/includes/registers/post-types/subscribers.php:16
+msgid "Add New Subscriber"
+msgstr "إضافة مشترك جديد"
+
+#: core/includes/registers/post-types/subscribers.php:18
+msgid "New Subscriber"
+msgstr "مشترك جديد"
+
+#: core/includes/registers/post-types/subscribers.php:19
+msgid "Edit Subscriber"
+msgstr "تعديل بيانات المشترك"
+
+#: core/includes/registers/post-types/subscribers.php:20
+msgid "Update Subscriber"
+msgstr "تحديث المشترك"
+
+#: core/includes/registers/post-types/subscribers.php:21
+msgid "View Subscriber"
+msgstr "عرض المشترك"
+
+#: core/includes/registers/post-types/subscribers.php:22
+msgid "View Subscribers"
+msgstr "عرض المشتركين"
+
+#: core/includes/registers/post-types/subscribers.php:23
+msgid "Search Subscriber"
+msgstr "البحث عن مشترك"
+
+#: core/includes/registers/post-types/subscribers.php:30
+msgid "Insert Subscriber"
+msgstr "إضافة مشترك"
+
+#: core/includes/registers/post-types/subscribers.php:31
+msgid "Uploaded to this Subscriber"
+msgstr "تم تحميله إلى هذا المشترك"
+
+#: core/includes/registers/post-types/subscribers.php:32
+msgid "Subscribers list"
+msgstr "قائمة المشتركين"
+
+#: core/includes/registers/post-types/subscribers.php:33
+msgid "Subscribers list navigation"
+msgstr "التنقل في قائمة المشتركين"
+
+#: core/includes/registers/post-types/subscribers.php:34
+msgid "Filter Subscribers list"
+msgstr "تصفية قائمة المشتركين"
+
+#: core/includes/registers/post-types/units.php:10
+msgctxt "Post Type General Name"
+msgid "Units"
+msgstr "وحدات"
+
+#: core/includes/registers/post-types/units.php:11
+msgctxt "Post Type Singular Name"
+msgid "Unit"
+msgstr "وحدة"
+
+#: core/includes/registers/post-types/units.php:12
+msgid "Units"
+msgstr "وحدات"
+
+#: core/includes/registers/post-types/units.php:13
+#: core/includes/registers/post-types/units.php:36
+#: src/js/map/html.js:53
+msgid "Unit"
+msgstr "وحدة"
+
+#: core/includes/registers/post-types/units.php:14
+msgid "Unit Archives"
+msgstr "أرشيف الوحدة"
+
+#: core/includes/registers/post-types/units.php:15
+msgid "Unit Attributes"
+msgstr "خصائص الوحدة"
+
+#: core/includes/registers/post-types/units.php:16
+msgid "Parent Unit:"
+msgstr "الوحدة الأم:"
+
+#: core/includes/registers/post-types/units.php:17
+#: core/includes/registers/post-types/units.php:33
+msgid "All Units"
+msgstr "جميع الوحدات"
+
+#: core/includes/registers/post-types/units.php:18
+msgid "Add New Unit"
+msgstr "إضافة وحدة جديدة"
+
+#: core/includes/registers/post-types/units.php:20
+msgid "New Unit"
+msgstr "وحدة جديدة"
+
+#: core/includes/registers/post-types/units.php:21
+msgid "Edit Unit"
+msgstr "تحرير الوحدة"
+
+#: core/includes/registers/post-types/units.php:22
+#: core/template-parts/account/edit-unit.php:373
+msgid "Update Unit"
+msgstr "وحدة التحديث"
+
+#: core/includes/registers/post-types/units.php:23
+msgid "View Unit"
+msgstr "عرض الوحدة"
+
+#: core/includes/registers/post-types/units.php:24
+msgid "View Units"
+msgstr "عرض الوحدات"
+
+#: core/includes/registers/post-types/units.php:25
+msgid "Search Unit"
+msgstr "وحدة البحث"
+
+#: core/includes/registers/post-types/units.php:32
+msgid "Units insighted by this author"
+msgstr "الوحدات التي تناولها هذا المؤلف"
+
+#: core/includes/registers/post-types/units.php:79
+#: single-unit.php:78
+msgid "Archived"
+msgstr "محفوظ"
+
+#: core/includes/registers/post-types/units.php:81
+msgid "Archived <span class=\"count\">(%s)</span>"
+msgid_plural "Archived <span class=\"count\">(%s)</span>"
+msgstr[0] "محفوظ <span class=\"count\">(%s)</span>"
+msgstr[1] "محفوظ <span class=\"count\">(%s)</span>"
+msgstr[2] "محفوظ <span class=\"count\">(%s)</span>"
+msgstr[3] "محفوظ <span class=\"count\">(%s)</span>"
+msgstr[4] "محفوظ <span class=\"count\">(%s)</span>"
+msgstr[5] "محفوظ <span class=\"count\">(%s)</span>"
+
+#: core/template-parts/account/edit-property.php:21
+msgid "Edit property project:"
+msgstr "تحرير مشروع العقار:"
+
+#: core/template-parts/account/edit-property.php:22
+msgid "Add new property project"
+msgstr "إضافة مشروع عقاري جديد"
+
+#: core/template-parts/account/edit-property.php:23
+msgid "Edit property project"
+msgstr "تحرير مشروع العقار"
+
+#: core/template-parts/account/edit-property.php:24
+msgid "Add property project"
+msgstr "إضافة مشروع عقاري"
+
+#: core/template-parts/account/edit-property.php:55
+#: core/template-parts/account/edit-unit.php:67
+msgid "My account"
+msgstr "حسابي"
+
+#: core/template-parts/account/edit-property.php:107
+#: core/template-parts/account/edit-unit.php:130
+msgid "Title"
+msgstr "العنوان"
+
+#: core/template-parts/account/edit-property.php:112
+msgid "azizi “beach oasis”"
+msgstr "عزيزي «واحة الشاطئ»"
+
+#: core/template-parts/account/edit-property.php:145
+msgid "Pick on map"
+msgstr "اختر موقعًا على الخريطة"
+
+#: core/template-parts/account/edit-property.php:151
+msgid "Latitude"
+msgstr "خط العرض"
+
+#: core/template-parts/account/edit-property.php:164
+msgid "Longitude"
+msgstr "خط الطول"
+
+#: core/template-parts/account/edit-property.php:208
+msgid "Ownership type"
+msgstr "نوع الملكية"
+
+#: core/template-parts/account/edit-property.php:246
+msgid "Project is already completed / Ready"
+msgstr "تم الانتهاء من المشروع بالفعل / جاهز"
+
+#: core/template-parts/account/edit-property.php:259
+msgid "Contain Property Types "
+msgstr "أنواع العقارات المضمنة "
+
+#: core/template-parts/account/edit-property.php:285
+#: core/template-parts/account/edit-unit.php:319
+#: core/template-parts/properties/property-single.php:211
+msgid "Description"
+msgstr "الوصف"
+
+#: core/template-parts/account/edit-property.php:314
+msgid "Update project"
+msgstr "تحديث المشروع"
+
+#: core/template-parts/account/edit-property.php:315
+#: single-unit.php:106
+#: single-unit.php:112
+msgid "Save"
+msgstr "حفظ"
+
+#: core/template-parts/account/edit-property.php:362
+#: core/template-parts/account/edit-unit.php:418
+msgid "Pictures"
+msgstr "الصور"
+
+#: core/template-parts/account/edit-property.php:364
+#: core/template-parts/account/edit-unit.php:420
+msgid "Browse files"
+msgstr "تصفح الملفات"
+
+#: core/template-parts/account/edit-unit.php:22
+msgid "Edit property:"
+msgstr "تحرير الخاصية:"
+
+#: core/template-parts/account/edit-unit.php:22
+msgid "Add new property"
+msgstr "إضافة عقار جديد"
+
+#: core/template-parts/account/edit-unit.php:24
+#: core/template-parts/cards/large-card.php:124
+#: core/template-parts/cards/unit-card.php:153
+msgid "Edit property"
+msgstr "تعديل الخاصية"
+
+#: core/template-parts/account/edit-unit.php:24
+msgid "Add property"
+msgstr "إضافة عقار"
+
+#: core/template-parts/account/edit-unit.php:134
+msgid "City Walk 4BR Apartment on 2 floor"
+msgstr "شقة «سيتي ووك» مكونة من 4 غرف نوم في الطابق الثاني"
+
+#: core/template-parts/account/edit-unit.php:146
+msgid "Listing Type"
+msgstr "نوع الإعلان"
+
+#: core/template-parts/account/edit-unit.php:163
+msgid "Price, AED"
+msgstr "السعر، بالدرهم الإماراتي"
+
+#: core/template-parts/account/edit-unit.php:177
+msgid "Area (sqft)"
+msgstr "المساحة (قدم مربع)"
+
+#: core/template-parts/account/edit-unit.php:191
+msgid "Price per square foot:"
+msgstr "السعر للقدم المربع:"
+
+#: core/template-parts/account/edit-unit.php:204
+msgid "Original price, AED"
+msgstr "السعر الأصلي، درهم إماراتي"
+
+#: core/template-parts/account/edit-unit.php:217
+#: single-unit.php:88
+msgid "Discount:"
+msgstr "الخصم:"
+
+#: core/template-parts/account/edit-unit.php:236
+#: core/template-parts/account/profile.php:214
+msgid "+ Add new project"
+msgstr "+ إضافة مشروع جديد"
+
+#: core/template-parts/account/edit-unit.php:255
+#: core/template-parts/filters/result-filters.php:241
+msgid "Property type"
+msgstr "نوع العقار"
+
+#: core/template-parts/account/edit-unit.php:294
+msgid "Bathrooms"
+msgstr "الحمامات"
+
+#: core/template-parts/account/edit-unit.php:348
+msgid "Delete Property"
+msgstr "حذف الخاصية"
+
+#: core/template-parts/account/edit-unit.php:351
+msgid "Are you sure to delete this property?"
+msgstr "هل أنت متأكد من رغبتك في حذف هذه الخاصية؟"
+
+#: core/template-parts/account/edit-unit.php:354
+msgid "No"
+msgstr "من"
+
+#: core/template-parts/account/edit-unit.php:358
+msgid "Yes, Delete"
+msgstr "نعم، حذف"
+
+#: core/template-parts/account/edit-unit.php:364
+msgid "New units are saved as drafts for moderation"
+msgstr "يتم حفظ الوحدات الجديدة كمسودات لخضوعها للمراجعة"
+
+#: core/template-parts/account/edit-unit.php:375
+msgid "Submit Unit"
+msgstr "إرسال الوحدة"
+
+#: core/template-parts/account/edit-unit.php:436
+msgid "Select property pictures to include in unit page"
+msgstr "اختر صور العقار التي تريد إدراجها في صفحة الوحدة"
+
+#: core/template-parts/account/edit-unit.php:440
+msgid "Select all"
+msgstr "تحديد الكل"
+
+#: core/template-parts/account/email-verification.php:20
+msgid "Email verification"
+msgstr "التحقق من البريد الإلكتروني"
+
+#: core/template-parts/account/email-verification.php:25
+msgid "To use this functionality, you need to verify your email address"
+msgstr "لاستخدام هذه الميزة، عليك التحقق من عنوان بريدك الإلكتروني"
+
+#: core/template-parts/account/email-verification.php:30
+msgid "Please check your email inbox for the verification email and click on the verification link."
+msgstr "يرجى التحقق من صندوق الوارد في بريدك الإلكتروني للبحث عن رسالة التحقق، ثم النقر على رابط التحقق."
+
+#: core/template-parts/account/email-verification.php:34
+msgid "If you did not receive the email, please check your spam folder or click the button below to resend the verification email."
+msgstr "إذا لم تستلم الرسالة الإلكترونية، يرجى التحقق من مجلد الرسائل غير المرغوب فيها أو النقر على الزر أدناه لإعادة إرسال رسالة التحقق."
+
+#: core/template-parts/account/email-verification.php:40
+msgid "Resend verification email"
+msgstr "إعادة إرسال رسالة البريد الإلكتروني الخاصة بالتحقق"
+
+#: core/template-parts/account/list-filters.php:47
+#: core/template-parts/filters/result-filters.php:304
+msgid "Reset filters"
+msgstr "إعادة تعيين عوامل التصفية"
+
+#: core/template-parts/account/login-form.php:35
+msgid "Sign in to start selling"
+msgstr "سجّل الدخول لبدء البيع"
+
+#: core/template-parts/account/login-form.php:88
+msgid "Create a new account"
+msgstr "إنشاء حساب جديد"
+
+#: core/template-parts/account/login-form.php:116
+#: core/template-parts/account/profile-client.php:140
+#: core/template-parts/account/profile.php:368
+msgid "Email address"
+msgstr "عنوان البريد الإلكتروني"
+
+#: core/template-parts/account/login-form.php:118
+msgid "admin@example.com"
+msgstr "admin@example.com"
+
+#: core/template-parts/account/login-form.php:187
+msgid "Choose your agency"
+msgstr "اختر وكالتك"
+
+#: core/template-parts/account/profile-client.php:33
+#: core/template-parts/account/profile-client.php:52
+#: core/template-parts/account/profile.php:63
+#: core/template-parts/account/profile.php:280
+msgid "Saved properties"
+msgstr "العقارات المحفوظة"
+
+#: core/template-parts/account/profile-client.php:39
+msgid "My Account"
+msgstr "حسابي"
+
+#: core/template-parts/account/profile-client.php:106
+#: core/template-parts/account/profile.php:334
+msgid "You have not added any favorite units."
+msgstr "لم تقم بإضافة أي وحدات مفضلة."
+
+#: core/template-parts/account/profile-client.php:116
+#: core/template-parts/account/profile.php:69
+#: core/template-parts/account/profile.php:344
+msgid "Account details"
+msgstr "تفاصيل الحساب"
+
+#: core/template-parts/account/profile-client.php:131
+#: core/template-parts/account/profile.php:359
+msgid "Display name"
+msgstr "الاسم المعروض"
+
+#: core/template-parts/account/profile-client.php:164
+#: core/template-parts/account/profile.php:434
+msgid "WhatsApp number"
+msgstr "رقم WhatsApp"
+
+#: core/template-parts/account/profile-client.php:180
+#: core/template-parts/account/profile.php:450
+msgid "Save changes"
+msgstr "حفظ التغييرات"
+
+#: core/template-parts/account/profile-client.php:188
+#: core/template-parts/account/profile.php:458
+msgid "Avatar"
+msgstr "أفاتار"
+
+#: core/template-parts/account/profile.php:37
+msgid "+ Add new distress"
+msgstr "+ إضافة حالة طوارئ جديدة"
+
+#: core/template-parts/account/profile.php:37
+msgid "+ Add new property"
+msgstr "+ إضافة عقار جديد"
+
+#: core/template-parts/account/profile.php:39
+msgid "My distress"
+msgstr "حزني"
+
+#: core/template-parts/account/profile.php:39
+msgid "My properties"
+msgstr "عقاراتي"
+
+#: core/template-parts/account/profile.php:56
+msgid "My projects"
+msgstr "مشاريعي"
+
+#: core/template-parts/account/profile.php:85
+msgid "My distress (%d)"
+msgstr "مدى انزعاجي (%d)"
+
+#: core/template-parts/account/profile.php:85
+msgid "My properties (%d)"
+msgstr "عقاراتي (%d)"
+
+#: core/template-parts/account/profile.php:129
+msgid "Gold Star"
+msgstr "النجمة الذهبية"
+
+#: core/template-parts/account/profile.php:132
+msgid "Boost your property to get it sold faster"
+msgstr "عزز جاذبية عقارك لبيعه بشكل أسرع"
+
+#: core/template-parts/account/profile.php:134
+msgid "Get More Eyes, Get More Offers. Fast-Track Your Sale. Priority Listing: Sell 2x Faster."
+msgstr "اجذب المزيد من المشاهدين، واحصل على المزيد من العروض. تسريع عملية البيع. الإعلان ذو الأولوية: بيع أسرع بمقدار الضعف."
+
+#: core/template-parts/account/profile.php:137
+msgid "How it works"
+msgstr "كيف يعمل"
+
+#: core/template-parts/account/profile.php:144
+#: core/template-parts/cards/unit-card.php:106
+#: core/template-parts/cards/unit-card.php:163
+msgid "Star"
+msgstr "ستار"
+
+#: core/template-parts/account/profile.php:175
+msgid "No units match the filters."
+msgstr "لا توجد وحدات تتطابق مع المعايير المحددة."
+
+#: core/template-parts/account/profile.php:177
+#: core/template-parts/account/profile.php:269
+msgid "You have not added any units yet."
+msgstr "لم تقم بإضافة أي وحدات حتى الآن."
+
+#: core/template-parts/account/profile.php:191
+msgid "My projects (%d)"
+msgstr "مشاريعي (%d)"
+
+#: core/template-parts/account/profile.php:267
+msgid "No projects match the filters."
+msgstr "لا توجد مشاريع تتطابق مع المعايير المحددة."
+
+#: core/template-parts/account/profile.php:392
+msgid "select"
+msgstr "اختر"
+
+#: core/template-parts/account/reset-password.php:20
+msgid "Enter new password"
+msgstr "أدخل كلمة مرور جديدة"
+
+#: core/template-parts/account/reset-password.php:39
+msgid "Repeat password"
+msgstr "أعد كتابة كلمة المرور"
+
+#: core/template-parts/account/reset-password.php:45
+msgid "Update password"
+msgstr "تحديث كلمة المرور"
+
+#: core/template-parts/cards/large-card.php:71
+msgid "Average price unavailable"
+msgstr "السعر المتوسط غير متوفر"
+
+#: core/template-parts/cards/large-card.php:104
+#: core/template-parts/cards/small-card.php:46
+#: core/template-parts/cards/unit-card.php:127
+#: template-parts/sections/index/about.php:14
+#: template-parts/sections/index/about.php:19
+#: template-parts/sections/index/about.php:24
+msgid "Vector icon"
+msgstr "أيقونة متجهة"
+
+#: core/template-parts/cards/large-card.php:123
+#: core/template-parts/cards/unit-card.php:152
+msgid "Edit"
+msgstr "تحرير"
+
+#: core/template-parts/cards/large-card.php:133
+#: core/template-parts/cards/unit-card.php:141
+msgid "View details"
+msgstr "عرض التفاصيل"
+
+#: core/template-parts/cards/map-sidebar.php:45
+msgid "apartments for sale"
+msgstr "شقق للبيع"
+
+#: core/template-parts/cards/map-sidebar.php:64
+msgid "Unit image"
+msgstr "صورة الوحدة"
+
+#: core/template-parts/cards/unit-card.php:55
+#: core/template-parts/common/pagination.php:28
+#: core/template-parts/common/pagination.php:62
+#: core/template-parts/sliders/unit-thumbs-slider.php:60
+#: template-parts/sections/single/thumbs-slider.php:17
+msgid "Prev"
+msgstr "ترجمة"
+
+#: core/template-parts/cards/unit-card.php:59
+#: core/template-parts/sliders/unit-thumbs-slider.php:65
+#: template-parts/sections/single/thumbs-slider.php:19
+msgid "Next"
+msgstr "التالي"
+
+#. translators: %d is the discount percent off the original price.
+#: core/template-parts/cards/unit-card.php:80
+msgid "-%d%%"
+msgstr "-%d%%"
+
+#: core/template-parts/cards/unit-card.php:89
+msgctxt "followed by developer"
+msgid "Property by"
+msgstr "العقار من"
+
+#: core/template-parts/cards/unit-card.php:164
+msgid "Boost property"
+msgstr "خاصية Boost"
+
+#: core/template-parts/cards/unit-square-card.php:55
+msgid "Original Price:"
+msgstr "السعر الأصلي:"
+
+#: core/template-parts/common/breadcrumbs.php:14
+msgid "Home"
+msgstr "الصفحة الرئيسية"
+
+#: core/template-parts/common/contact-panel.php:20
+#: page-mortgage-calculator.php:40
+msgid "Free consultation and pre-approval. A DDA specialist will contact you and advise on the next step."
+msgstr "استشارة مجانية وموافقة مسبقة. سيتصل بك أحد المتخصصين في قانون الإسكان (DDA) ويقدم لك المشورة بشأن الخطوة التالية."
+
+#: core/template-parts/common/contact-panel.php:24
+msgid "Contact broker to learn more and get special offers."
+msgstr "اتصل بالوسيط لمعرفة المزيد والحصول على العروض الخاصة."
+
+#: core/template-parts/common/contact-panel.php:55
+#: page-mortgage-calculator.php:43
+#: template-parts/sections/mortgage-calculator/calculator.php:252
+msgid "Get pre-approved"
+msgstr "احصل على موافقة مسبقة"
+
+#: core/template-parts/common/footer.php:14
+msgid "Address"
+msgstr "العنوان"
+
+#: core/template-parts/common/footer.php:17
+msgid "Office 1-042S,"
+msgstr "المكتب 1-042S،"
+
+#: core/template-parts/common/footer.php:18
+msgid "Dubai Investment Park 1,"
+msgstr "مجمع دبي للاستثمار 1،"
+
+#: core/template-parts/common/footer.php:19
+msgid "Dubai, United Arab Emirates."
+msgstr "دبي، الإمارات العربية المتحدة."
+
+#: core/template-parts/common/footer.php:23
+msgid "Live Support"
+msgstr "الدعم المباشر"
+
+#: core/template-parts/common/footer.php:36
+msgid "Popular Search"
+msgstr "البحث الأكثر شيوعًا"
+
+#: core/template-parts/common/footer.php:55
+msgid "Discovery"
+msgstr "الاكتشاف"
+
+#: core/template-parts/common/footer.php:75
+msgid "Quick Links"
+msgstr "روابط سريعة"
+
+#: core/template-parts/common/footer.php:92
+msgid "© East Property – All rights reserved"
+msgstr "© East Property – جميع الحقوق محفوظة"
+
+#: core/template-parts/common/header.php:16
+msgid "Vector logotype"
+msgstr "شعار فيكتور"
+
+#: core/template-parts/common/header.php:37
+msgid "Create"
+msgstr "إنشاء"
+
+#: core/template-parts/common/header.php:38
+msgid "Create Account"
+msgstr "إنشاء حساب"
+
+#: core/template-parts/common/header.php:44
+msgid "Top up"
+msgstr "إعادة التعبئة"
+
+#: core/template-parts/common/header.php:49
+msgid "Boost Points"
+msgstr "نقاط التعزيز"
+
+#: core/template-parts/common/header.php:59
+msgid "Open menu"
+msgstr "فتح القائمة"
+
+#: core/template-parts/common/language-switcher.php:38
+msgid "Change language"
+msgstr "تغيير اللغة"
+
+#: core/template-parts/common/pagination.php:26
+#: core/template-parts/common/pagination.php:60
+msgid "Previous page"
+msgstr "الصفحة السابقة"
+
+#: core/template-parts/common/pagination.php:44
+msgid "Page"
+msgstr "الصفحة"
+
+#: core/template-parts/common/social-links.php:15
+msgid "Follow us on social media"
+msgstr "تابعونا على مواقع التواصل الاجتماعي"
+
+#: core/template-parts/email/base.php:47
+msgid "Best regards,"
+msgstr "مع أطيب التحيات،"
+
+#: core/template-parts/email/base.php:48
+msgid "Team"
+msgstr "الفريق"
+
+#: core/template-parts/email/base.php:51
+msgid "Support:"
+msgstr "الدعم:"
+
+#: core/template-parts/email/base.php:65
+msgid "If this was not you, please ignore this message or contact us."
+msgstr "إذا لم تكن أنت المقصود، فيُرجى تجاهل هذه الرسالة أو الاتصال بنا."
+
+#: core/template-parts/filters/result-filters.php:57
+#: core/template-parts/filters/result-filters.php:264
+#: core/template-parts/filters/search-tabs.php:140
+#: core/template-parts/filters/search-tabs.php:161
+#: core/template-parts/ui/dropdown.php:50
+msgid "Search..."
+msgstr "بحث..."
+
+#: core/template-parts/filters/result-filters.php:126
+msgid "Min price"
+msgstr "أنا بخيل"
+
+#: core/template-parts/filters/result-filters.php:136
+msgid "Max price"
+msgstr "السعر الأقصى"
+
+#: core/template-parts/filters/result-filters.php:148
+#: core/template-parts/filters/result-filters.php:212
+#: core/template-parts/filters/search-tabs.php:121
+msgid "Cancel"
+msgstr "إلغاء"
+
+#: core/template-parts/filters/result-filters.php:151
+#: core/template-parts/filters/result-filters.php:215
+#: core/template-parts/filters/search-tabs.php:124
+msgid "Apply"
+msgstr "تقديم الطلب"
+
+#: core/template-parts/filters/result-filters.php:288
+msgid "Max Area"
+msgstr "المساحة القصوى"
+
+#: core/template-parts/filters/search-tabs.php:146
+#: core/template-parts/filters/search-tabs.php:167
+msgid "Dropdown arrow"
+msgstr "سهم القائمة المنسدلة"
+
+#: core/template-parts/filters/search-tabs.php:180
+msgid "Search"
+msgstr "بحث"
+
+#: core/template-parts/filters/search-tabs.php:191
+msgid "Distress deals are sold below market price"
+msgstr "تُباع الصفقات الطارئة بسعر أقل من سعر السوق"
+
+#: core/template-parts/filters/search-tabs.php:194
+msgid "Owners who need a fast exit, verified by us and limited in number. These listings are not published openly — we send them out on request."
+msgstr "الملاك الذين يحتاجون إلى بيع سريع، وقد تم التحقق منهم من قبلنا، وعددهم محدود. لا يتم نشر هذه الإعلانات علنًا — بل نرسلها بناءً على الطلب."
+
+#: core/template-parts/filters/search-tabs.php:200
+msgid "Explore distress deals"
+msgstr "اكتشف العروض الاستثنائية"
+
+#: core/template-parts/filters/search-tabs.php:203
+msgid "Sell my property"
+msgstr "بيع عقاري"
+
+#: core/template-parts/filters/search-tabs.php:207
+msgid "One short call: we send the current list and check your property against buyer demand."
+msgstr "مكالمة قصيرة واحدة: نرسل إليك القائمة الحالية ونقارن عقارك بمتطلبات المشترين."
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:5
+msgid "Get a quick consultation"
+msgstr "احصل على استشارة سريعة"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:13
+msgid "Message us on WhatsApp — it is the fastest way to reach our team with any question about pricing, availability or a viewing."
+msgstr "راسلنا عبر واتساب — فهي أسرع طريقة للتواصل مع فريقنا بشأن أي استفسار يتعلق بالأسعار أو التوافر أو تحديد موعد لزيارة العقار."
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:25
+msgid "Recommended"
+msgstr "موصى به"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:34
+msgid "WhatsApp — fastest reply"
+msgstr "واتساب — أسرع رد"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:36
+msgid "Best for urgent questions, pricing, and quick consultation."
+msgstr "الأفضل للأسئلة العاجلة، والاستفسارات المتعلقة بالأسعار، والاستشارة السريعة."
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:42
+msgid "Hello! I would like a quick consultation about a distress sale of my property."
+msgstr "مرحبًا! أود الحصول على استشارة سريعة بشأن بيع عقاري في ظروف طارئة."
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:49
+msgid "Open WhatsApp"
+msgstr "افتح تطبيق WhatsApp"
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:55
+msgid "We usually reply within 5–10 minutes during working hours."
+msgstr "عادةً ما نرد في غضون 5 إلى 10 دقائق خلال ساعات العمل."
+
+#: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:66
+msgid "Your information is kept strictly confidential"
+msgstr "يتم الحفاظ على سرية معلوماتك بشكل صارم"
+
+#: core/template-parts/properties/map.php:78
+msgid "Explore Project"
+msgstr "استكشف المشروع"
+
+#: core/template-parts/properties/property-single.php:56
+#: single-unit.php:99
+#: single-unit.php:100
+#: single.php:81
+msgid "Share"
+msgstr "مشاركة"
+
+#: core/template-parts/properties/property-single.php:86
+#: core/template-parts/properties/property-units-list.php:67
+#: single-unit.php:266
+msgid "Property information"
+msgstr "معلومات عن العقار"
+
+#: core/template-parts/properties/property-single.php:143
+#: single-unit.php:370
+msgid "View developer"
+msgstr "عرض المطور"
+
+#: core/template-parts/properties/property-single.php:157
+msgid "properties available in this project"
+msgstr "العقارات المتاحة في هذا المشروع"
+
+#: core/template-parts/properties/property-single.php:186
+#: single-unit.php:206
+msgid "Payment plan"
+msgstr "خطة السداد"
+
+#: core/template-parts/properties/property-single.php:200
+#: single-unit.php:330
+msgid "Amenities"
+msgstr "المرافق"
+
+#: core/template-parts/properties/property-units-list.php:57
+msgid "View object page"
+msgstr "عرض صفحة الكائن"
+
+#: core/template-parts/search-results/offmarket-cta.php:10
+msgid "Hello! I am interested in more off-market deals in Dubai. Could you share what is available now?"
+msgstr "مرحبًا! أنا مهتم بمعرفة المزيد عن الصفقات غير المعروضة في السوق في دبي. هل يمكنك إطلاعي على ما هو متاح حاليًا؟"
+
+#: core/template-parts/search-results/offmarket-cta.php:24
+msgid "Unlock more off-market deals"
+msgstr "اكتشف المزيد من الصفقات غير المعروضة في السوق"
+
+#: core/template-parts/search-results/properties-list.php:7
+msgid "Explore a wide selection of properties across Dubai. From modern apartments and family villas to premium off-plan opportunities  in the city’s most sought-after communities. Compare prices, locations, and layouts in one place and find the property that matches your goals and budget."
+msgstr "استكشف مجموعة واسعة من العقارات في جميع أنحاء دبي. بدءًا من الشقق العصرية والفيلات العائلية وصولاً إلى الفرص العقارية المتميزة قيد الإنشاء في أكثر الأحياء رواجًا في المدينة. قارن بين الأسعار والمواقع والتصميمات في مكان واحد، واعثر على العقار الذي يتناسب مع أهدافك وميزانيتك."
+
+#: core/template-parts/search-results/properties-list.php:23
+#: core/template-parts/search-results/tabs.php:16
+#: core/template-parts/search-results/units-list.php:21
+msgid "List view"
+msgstr "عرض القائمة"
+
+#: core/template-parts/search-results/properties-list.php:27
+#: core/template-parts/search-results/tabs.php:20
+msgid "Map view"
+msgstr "عرض الخريطة"
+
+#: core/template-parts/search-results/tabs.php:39
+msgid "Aliquam lacinia diam quis lacus euismod"
+msgstr "بعض اللاسينيا ديام كيس لاكوس إيوزيمود"
+
+#: core/template-parts/search-results/units-list.php:8
+msgid "Browse a wide selection of apartments in Dubai. From smart studios to spacious family residences and premium off-plan units in top locations. Compare prices, layouts, and communities in one place and find the apartment that fits your lifestyle, goals, and budget."
+msgstr "تصفح مجموعة واسعة من الشقق في دبي. بدءًا من الاستوديوهات العصرية وصولاً إلى المساكن العائلية الفسيحة والوحدات الفاخرة قيد الإنشاء في أفضل المواقع. قارن بين الأسعار والتصميمات والمجمعات السكنية في مكان واحد، واعثر على الشقة التي تناسب نمط حياتك وأهدافك وميزانيتك."
+
+#: core/template-parts/ui/dropdown.php:41
+msgid "Arrow down"
+msgstr "سهم لأسفل"
+
+#: core/template-parts/ui/loader.php:5
+msgid "Loading project details..."
+msgstr "جاري تحميل تفاصيل المشروع..."
+
+#: core/template-parts/ui/tooltip.php:10
+msgid "More info"
+msgstr "مزيد من المعلومات"
+
+#: core/template-parts/units/featured.php:13
+msgid "See all properties"
+msgstr "عرض جميع العقارات"
+
+#: functions.php:33
+msgid "Header"
+msgstr "العنوان"
+
+#: functions.php:34
+msgid "Footer | Popular Search"
+msgstr "التذييل | عمليات البحث الشائعة"
+
+#: functions.php:35
+msgid "Footer | Discovery"
+msgstr "التذييل | ديسكفري"
+
+#: functions.php:36
+msgid "Footer | Quick Links"
+msgstr "تذييل الصفحة | روابط سريعة"
+
+#: functions.php:99
+#: functions.php:100
+msgid "Настройки"
+msgstr "الإعدادات"
+
+#. Template Name of the theme
+msgid "Account"
+msgstr "الحساب"
+
+#. Template Name of the theme
+msgid "Distress Units Listing Page"
+msgstr "صفحة قائمة وحدات الطوارئ"
+
+#: page-distress.php:31
+msgid "Below-market deals in UAE"
+msgstr "صفقات بأسعار أقل من سعر السوق في الإمارات العربية المتحدة"
+
+#. Template Name of the theme
+msgid "Homepage"
+msgstr "الصفحة الرئيسية"
+
+#. Template Name of the theme
+msgid "Mortgage Calculator"
+msgstr "حاسبة الرهن العقاري"
+
+#: page-mortgage-calculator.php:22
+msgid "Objects that match your criteria"
+msgstr "العناصر التي تتطابق مع معاييرك"
+
+#: page-mortgage-calculator.php:39
+msgid "Ready to find out the exact terms for your deal?"
+msgstr "هل أنت مستعد لمعرفة الشروط الدقيقة لصفقتك؟"
+
+#. Template Name of the theme
+msgid "News Listing Page"
+msgstr "صفحة قائمة الأخبار"
+
+#: page-news.php:19
+#: single.php:36
+msgid "News"
+msgstr "الأخبار"
+
+#: page-news.php:43
+msgid "No news articles found"
+msgstr "لم يتم العثور على أي مقالات إخبارية"
+
+#: page-news.php:46
+msgid "We are preparing the latest market updates and property news. Please check back later."
+msgstr "نحن نعمل حالياً على إعداد أحدث المستجدات في السوق وأخبار العقارات. يرجى العودة لاحقاً."
+
+#. Template Name of the theme
+msgid "Off Plan Units Listing Page"
+msgstr "صفحة عرض الوحدات قيد الإنشاء"
+
+#. Template Name of the theme
+msgid "Properties Listing Page"
+msgstr "صفحة قائمة العقارات"
+
+#. Template Name of the theme
+msgid "Secondary Units Listing Page"
+msgstr "صفحة قائمة الوحدات الثانوية"
+
+#. Template Name of the theme
+msgid "Text Page"
+msgstr "صفحة النص"
+
+#: single-developers.php:19
+msgid "Buy properties from developer"
+msgstr "شراء عقارات من المطور العقاري"
+
+#: single-project.php:31
+msgid "Request quote"
+msgstr "طلب عرض أسعار"
+
+#: single-unit.php:46
+msgid "amenities"
+msgstr "المرافق"
+
+#: single-unit.php:70
+msgctxt "followed by project"
+msgid "Property by"
+msgstr "العقار من"
+
+#: single-unit.php:90
+msgid "of original price"
+msgstr "من السعر الأصلي"
+
+#: single-unit.php:110
+msgid "Saved"
+msgstr "تم الحفظ"
+
+#: single-unit.php:151
+msgid "Property broker"
+msgstr "وسيط عقاري"
+
+#: single-unit.php:176
+msgid ""
+"Get in touch with broker using email, phone or WhatsApp. It’s free and does not\n"
+"                                                                        require any commitment from your side"
+msgstr ""
+"تواصل مع الوسيط عبر البريد الإلكتروني أو الهاتف أو واتساب. الخدمة مجانية ولا\n"
+"تتطلب أي التزام من جانبك"
+
+#: single-unit.php:222
+#: template-parts/sections/mortgage-calculator/calculator.php:85
+#: template-parts/sections/mortgage-calculator/calculator.php:213
+#: template-parts/sections/mortgage-calculator/entry-costs.php:15
+msgid "Down payment"
+msgstr "الدفعة الأولى"
+
+#: single-unit.php:224
+msgid "Sales launch"
+msgstr "انطلاق المبيعات"
+
+#: single-unit.php:232
+msgid "During construction"
+msgstr "أثناء البناء"
+
+#: single-unit.php:234
+msgid "installments"
+msgstr "الأقساط"
+
+#: single-unit.php:243
+msgid "On handover"
+msgstr "عند التسليم"
+
+#: single-unit.php:256
+#: single-unit.php:259
+msgid "Floor plan"
+msgstr "مخطط الطابق"
+
+#: single-unit.php:309
+msgid "Building Information"
+msgstr "معلومات عن المبنى"
+
+#: single-unit.php:314
+msgid "Building name"
+msgstr "اسم المبنى"
+
+#: single-unit.php:319
+msgid "Floors"
+msgstr "الطوابق"
+
+#: single.php:134
+msgid "Copy link"
+msgstr "نسخ الرابط"
+
+#: single.php:141
+msgid "Link copied to clipboard!"
+msgstr "تم نسخ الرابط إلى الحافظة!"
+
+#: single.php:167
+msgid "Updated: %s"
+msgstr "تم التحديث: %s"
+
+#: single.php:182
+msgid "Other news"
+msgstr "أخبار أخرى"
+
+#. translators: %s is a district name.
+#: taxonomy-location.php:36
+msgid "Projects in %s"
+msgstr "المشاريع في %s"
+
+#: template-parts/sections/index/about.php:10
+msgid "Why East Property"
+msgstr "لماذا East Property؟"
+
+#: template-parts/sections/index/about.php:30
+msgid "About img"
+msgstr "حول الصورة"
+
+#: template-parts/sections/index/distress.php:16
+msgid "Distress deals in Dubai"
+msgstr "صفقات الطوارئ في دبي"
+
+#: template-parts/sections/index/distress.php:20
+msgid "DISTRESS DEALS"
+msgstr "صفقات الطوارئ"
+
+#: template-parts/sections/index/distress.php:21
+msgid "Own Dubai for Less"
+msgstr "امتلك عقارًا في دبي بسعر أقل"
+
+#: template-parts/sections/index/distress.php:22
+msgid "Premium properties from motivated sellers at below-market prices."
+msgstr "عقارات فاخرة معروضة من بائعين حريصين على البيع بأسعار أقل من أسعار السوق."
+
+#: template-parts/sections/index/distress.php:23
+msgid "Limited opportunities. The best deals move fast."
+msgstr "الفرص محدودة. أفضل العروض تُباع بسرعة."
+
+#: template-parts/sections/index/distress.php:25
+msgid "Explore Distress Deals"
+msgstr "اكتشف عروض «ديسترس»"
+
+#: template-parts/sections/index/distress.php:31
+msgid "Your Dubai Home. For Less."
+msgstr "منزلك في دبي. بسعر أقل."
+
+#: template-parts/sections/index/distress.php:32
+msgid "Exclusive properties at below-market prices."
+msgstr "عقارات حصرية بأسعار أقل من أسعار السوق."
+
+#: template-parts/sections/index/distress.php:33
+msgid "Move fast — the best deals don’t wait."
+msgstr "سارع بالتصرف — فالصفقات الأفضل لا تنتظر."
+
+#: template-parts/sections/index/distress.php:35
+msgid "View Deals"
+msgstr "عرض العروض"
+
+#: template-parts/sections/index/hero.php:32
+msgid "Available immediately"
+msgstr "متوفر فورًا"
+
+#: template-parts/sections/index/hero.php:40
+msgid "In construction"
+msgstr "في مجال البناء"
+
+#: template-parts/sections/index/map.php:8
+msgid "Dubai map"
+msgstr "خريطة دبي"
+
+#: template-parts/sections/index/properties.php:11
+msgid "See all new properties"
+msgstr "عرض جميع العقارات الجديدة"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:8
+msgid "Residency status"
+msgstr "وضع الإقامة"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:16
+msgid "UAE resident"
+msgstr "مقيم في الإمارات العربية المتحدة"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:25
+msgid "Non-resident"
+msgstr "غير مقيم"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:32
+msgid "Minimum income"
+msgstr "الدخل الأدنى"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:36
+msgid "Age"
+msgstr "العمر"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:37
+msgid "from 21, loan repaid by 65"
+msgstr "ابتداءً من سن 21، ويتم سداد القرض بحلول سن 65"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:40
+msgid "Bank financing"
+msgstr "التمويل المصرفي"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:41
+msgid "up to 80%"
+msgstr "تصل إلى 80%"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:47
+msgid "Property price"
+msgstr "سعر العقار"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:50
+msgid "Total purchase price of the property in AED"
+msgstr "السعر الإجمالي لشراء العقار بالدرهم الإماراتي"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:76
+msgid "from 300,000"
+msgstr "ابتداءً من 300,000"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:77
+msgid "to 20,000,000"
+msgstr "إلى 20,000,000"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:88
+msgid "Upfront equity contribution (min 20% for residents, 40% for non-residents)"
+msgstr "مساهمة رأس المال الأولية (20% كحد أدنى للمقيمين، و40% لغير المقيمين)"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:114
+msgid "from 20"
+msgstr "ابتداءً من 20"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:115
+msgid "to 80"
+msgstr "إلى 80"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:123
+msgid "Loan term"
+msgstr "مدة القرض"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:126
+msgid "Mortgage duration in years (up to 25 years)"
+msgstr "مدة القرض العقاري بالسنوات (حتى 25 سنة)"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:140
+msgid "years"
+msgstr "سنوات"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:152
+msgid "from 1"
+msgstr "من 1"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:153
+msgid "to 25"
+msgstr "إلى 25"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:161
+msgid "Interest rate"
+msgstr "سعر الفائدة"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:164
+msgid "Annual interest rate offered by UAE mortgage lenders"
+msgstr "معدل الفائدة السنوي الذي تقدمه مؤسسات الإقراض العقاري في الإمارات العربية المتحدة"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:190
+msgid "from 2,5"
+msgstr "ابتداءً من 2,5"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:191
+msgid "to 8"
+msgstr "إلى 8"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:204
+msgid "Monthly payment"
+msgstr "الدفعة الشهرية"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:209
+msgid "Loan"
+msgstr "قرض"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:217
+msgid "Interest paid"
+msgstr "الفوائد المدفوعة"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:231
+msgid "Principal"
+msgstr "الصفحة الرئيسية"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:237
+msgid "Interest over term"
+msgstr "الفائدة على مدى المدة"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:245
+msgid "Preliminary estimate. The final rate depends on the bank, your profile, and the property."
+msgstr "تقدير أولي. يعتمد السعر النهائي على البنك وبياناتك الشخصية والعقار."
+
+#: template-parts/sections/mortgage-calculator/calculator.php:260
+msgid "Download calculation"
+msgstr "تنزيل الحسابات"
+
+#: template-parts/sections/mortgage-calculator/calculator.php:266
+msgid "DDA mortgage services"
+msgstr "خدمات الرهن العقاري من DDA"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:7
+msgid "Full cost of mortgage entry"
+msgstr "التكلفة الإجمالية لبدء الرهن العقاري"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:24
+msgid "DLD fee (4% + 580 AED)"
+msgstr "رسوم DLD (4% + 580 درهم إماراتي)"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:33
+msgid "Agency commission (2%)"
+msgstr "عمولة الوكالة (2٪)"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:42
+msgid "Bank fee (up to 1% of loan)"
+msgstr "الرسوم المصرفية (تصل إلى 1% من قيمة القرض)"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:51
+msgid "Property valuation"
+msgstr "تقييم العقارات"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:60
+msgid "Mortgage registration (0.25% + 290 AED)"
+msgstr "تسجيل الرهن العقاري (0.25% + 290 درهم إماراتي)"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:69
+msgid "Total"
+msgstr "المجموع"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:82
+msgid "The deal in 6 steps"
+msgstr "الصفقة في 6 خطوات"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:90
+#: src/js/mortgage-calculator/modules/pdf/template.js:168
+msgid "Pre-approval"
+msgstr "الموافقة المسبقة"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:91
+msgid "Preliminary approval from the bank"
+msgstr "موافقة مبدئية من البنك"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:98
+#: src/js/mortgage-calculator/modules/pdf/template.js:173
+msgid "MOU (Form F)"
+msgstr "مذكرة التفاهم (النموذج F)"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:99
+msgid "Sales contract signing, ~10% deposit"
+msgstr "توقيع عقد البيع، دفعة مقدمة بنسبة 10٪ تقريبًا"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:106
+msgid "Bank valuation"
+msgstr "تقييم البنوك"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:107
+msgid "Property valuation inspection"
+msgstr "فحص تقييم العقارات"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:114
+#: src/js/mortgage-calculator/modules/pdf/template.js:183
+msgid "Final approval"
+msgstr "الموافقة النهائية"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:115
+msgid "Final mortgage offer & facility letter"
+msgstr "العرض النهائي للرهن العقاري وخطاب التسهيل"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:122
+msgid "DLD registration"
+msgstr "تسجيل DLD"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:123
+msgid "Registration of ownership and mortgage"
+msgstr "تسجيل الملكية والرهن العقاري"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:130
+msgid "Funds transfer & keys"
+msgstr "تحويل الأموال والمفاتيح"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:131
+msgid "Disbursement of funds and key handover"
+msgstr "صرف الأموال وتسليم المفاتيح"
+
+#: template-parts/sections/mortgage-calculator/entry-costs.php:138
+msgid "4–8 weeks from MOU to keys · full process 30–100 days"
+msgstr "4–8 أسابيع من توقيع مذكرة التفاهم حتى تسليم المفاتيح · مدة العملية الكاملة 30–100 يومًا"
+
+#: template-parts/sections/mortgage-calculator/faq.php:5
+msgid "Can a non-resident get a mortgage in Dubai?"
+msgstr "هل يمكن لغير المقيم الحصول على قرض عقاري في دبي؟"
+
+#: template-parts/sections/mortgage-calculator/faq.php:6
+msgid "Yes. Non-residents can get a mortgage with a down payment from 40% and verified income from 10,000 USD per month."
+msgstr "نعم. يمكن لغير المقيمين الحصول على قرض عقاري بشرط دفع دفعة أولى بنسبة 40٪ ودخل مؤكد يبلغ 10,000 دولار أمريكي شهريًّا."
+
+#: template-parts/sections/mortgage-calculator/faq.php:10
+msgid "Is life insurance mandatory?"
+msgstr "هل التأمين على الحياة إلزامي؟"
+
+#: template-parts/sections/mortgage-calculator/faq.php:11
+msgid "Yes, UAE banks require life insurance as a mandatory condition for securing a mortgage loan."
+msgstr "نعم، تشترط البنوك في الإمارات العربية المتحدة الحصول على تأمين على الحياة كشرط إلزامي للحصول على قرض عقاري."
+
+#: template-parts/sections/mortgage-calculator/faq.php:15
+msgid "Can I get a mortgage on an off-plan property?"
+msgstr "هل يمكنني الحصول على قرض عقاري لشراء عقار قيد الإنشاء؟"
+
+#: template-parts/sections/mortgage-calculator/faq.php:16
+msgid "Yes, mortgages are available for completed as well as off-plan projects from authorized developers with up to 50% financing."
+msgstr "نعم، تتوفر قروض الرهن العقاري للمشاريع المكتملة وكذلك للمشاريع قيد الإنشاء من المطورين المعتمدين، مع تمويل يصل إلى 50%."
+
+#: template-parts/sections/mortgage-calculator/faq.php:20
+msgid "How long does the whole process take?"
+msgstr "كم من الوقت تستغرق العملية برمتها؟"
+
+#: template-parts/sections/mortgage-calculator/faq.php:21
+msgid "The entire process typically takes between 30 and 100 days from the initial application to the key handover and deed registration."
+msgstr "تستغرق العملية برمتها عادةً ما بين 30 و100 يومًا، بدءًا من تقديم الطلب الأولي وحتى تسليم المفاتيح وتسجيل سند الملكية."
+
+#: template-parts/sections/mortgage-calculator/faq.php:25
+msgid "What is pre-approval and how long is it valid?"
+msgstr "ما المقصود بالموافقة المسبقة وكم تبلغ مدة صلاحيتها؟"
+
+#: template-parts/sections/mortgage-calculator/faq.php:26
+msgid "Pre-approval is an initial assessment from a bank confirming the loan amount you qualify for. It is usually valid for 60 to 90 days."
+msgstr "الموافقة المسبقة هي تقييم أولي من البنك يؤكد مبلغ القرض الذي تستوفي شروط الحصول عليه. وعادةً ما تكون صالحة لمدة تتراوح بين 60 و90 يومًا."
+
+#: template-parts/sections/mortgage-calculator/faq.php:30
+msgid "What costs are there besides the down payment?"
+msgstr "ما هي التكاليف الأخرى بخلاف الدفعة الأولى؟"
+
+#: template-parts/sections/mortgage-calculator/faq.php:31
+msgid "Additional costs include the DLD fee (4% + 580 AED), agency commission (2%), bank processing fee (up to 1%), property valuation, and mortgage registration."
+msgstr "وتشمل التكاليف الإضافية رسوم إدارة الأراضي والعقارات (4% + 580 درهم إماراتي)، وعمولة الوكالة (2%)، ورسوم المعالجة المصرفية (تصل إلى 1%)، وتقييم العقار، وتسجيل الرهن العقاري."
+
+#: template-parts/sections/mortgage-calculator/faq.php:40
+msgid "Questions and answers"
+msgstr "أسئلة وأجوبة"
+
+#: template-parts/sections/mortgage-calculator/hero.php:7
+msgid "Mortgage calculator in"
+msgstr "حاسبة الرهن العقاري في"
+
+#: template-parts/sections/mortgage-calculator/hero.php:7
+msgid "Dubai"
+msgstr "دبي"
+
+#: template-parts/sections/mortgage-calculator/hero.php:12
+msgid "Monthly payment, full cost of entering the deal, and a comparison of mortgage vs. developer payment plan — in a single calculation."
+msgstr "الدفعة الشهرية، والتكلفة الإجمالية للدخول في الصفقة، ومقارنة بين الرهن العقاري وخطة السداد التي يقدمها المطور — كل ذلك في حساب واحد."
+
+#: template-parts/sections/mortgage-calculator/hero.php:16
+msgid "Free consultation and pre-approval. Response within 15 minutes"
+msgstr "استشارة مجانية وموافقة مسبقة. الرد في غضون 15 دقيقة"
+
+#: template-parts/sections/mortgage-calculator/off-plan.php:26
+msgid "Mortgage on an off-plan property"
+msgstr "رهن عقاري على عقار قيد الإنشاء"
+
+#. translators: %s: 50% complete
+#: template-parts/sections/mortgage-calculator/off-plan.php:34
+msgid "An off-plan mortgage becomes available once the building is more than %s, the buyer has paid over 50%% of the price, and the developer is accredited by the bank."
+msgstr "يصبح القرض العقاري على المخطط متاحًا بمجرد أن يتجاوز تقدم البناء نسبة %s، وأن يكون المشتري قد سدد أكثر من 50%% من السعر، وأن يكون المطور معتمدًا من قبل البنك."
+
+#: template-parts/sections/mortgage-calculator/off-plan.php:35
+msgid "50% complete"
+msgstr "تم إنجاز 50%"
+
+#: template-parts/sections/mortgage-calculator/off-plan.php:40
+msgid "Before that stage, buyers use the developer’s payment plan."
+msgstr "قبل تلك المرحلة، يستفيد المشترون من خطة السداد التي يقدمها المطور."
+
+#: template-parts/sections/mortgage-calculator/off-plan.php:51
+msgid "Learn more"
+msgstr "اعرف المزيد"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:5
+msgid "LTV / AECB / DBR Expertise"
+msgstr "الخبرة في مجالات LTV / AECB / DBR"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:6
+msgid "In-house mortgage advisory department"
+msgstr "قسم الاستشارات العقارية الداخلي"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:9
+msgid "Direct Negotiations with Banks"
+msgstr "المفاوضات المباشرة مع البنوك"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:10
+msgid "Tailored terms based on your profile"
+msgstr "شروط مخصصة بناءً على ملفك الشخصي"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:13
+msgid "Free of Charge"
+msgstr "مجانًا"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:14
+msgid "Free consultation and pre-approval"
+msgstr "استشارة مجانية وموافقة مسبقة"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:17
+msgid "RU / EN / AR"
+msgstr "يمين / الإنجليزية / الفرنسية"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:18
+msgid "Response within 15 minutes"
+msgstr "الرد في غضون 15 دقيقة"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:21
+msgid "We Work with Non-Residents"
+msgstr "نحن نتعامل مع غير المقيمين"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:22
+msgid "Full end-to-end support for purchases from abroad"
+msgstr "دعم شامل من البداية إلى النهاية للمشتريات من الخارج"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:25
+msgid "Islamic Financing"
+msgstr "التمويل الإسلامي"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:26
+msgid "Murabaha · Ijarah · Musharakah → separate page"
+msgstr "المرابحة · الإيجارة · المشاركة → صفحة منفصلة"
+
+#: template-parts/sections/mortgage-calculator/why-dda.php:34
+msgid "Why DDA"
+msgstr "لماذا DDA؟"
+
+#: src/js/filters.js:19
+msgid "beds"
+msgstr "أسرة"
+
+#: src/js/filters.js:19
+msgid "bed"
+msgstr "العالم"
+
+#: src/js/filters.js:24
+msgid "baths"
+msgstr "الحمامات"
+
+#: src/js/filters.js:24
+msgid "bath"
+msgstr "الحمام"
+
+#: src/js/map/map.js:418
+msgid "Selected location"
+msgstr "الموقع المحدد"
+
+#. translators: 1: number of projects in the cluster, 2: number of units in them.
+#: src/js/map/map.js:608
+msgid "%1$d projects · %2$d units"
+msgstr "%1$d مشروعًا · %2$d وحدة"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:17
+msgid "UAE Resident"
+msgstr "مقيم في الإمارات العربية المتحدة"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:18
+msgid "Non-Resident"
+msgstr "غير مقيم"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:24
+msgid "Mortgage Calculation — East Property"
+msgstr "حساب الرهن العقاري — East Property"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:36
+msgid "East Property Advisory"
+msgstr "East Property Advisory"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:37
+msgid "Ref:"
+msgstr "المرجع:"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:38
+msgid "Date:"
+msgstr "التاريخ:"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:39
+msgid "Dubai, United Arab Emirates"
+msgstr "دبي، الإمارات العربية المتحدة"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:44
+msgid "UAE Mortgage Calculation Report"
+msgstr "تقرير حساب الرهن العقاري في الإمارات العربية المتحدة"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:45
+msgid "Property financing estimate and upfront acquisition breakdown · East Property Advisory"
+msgstr "تقدير تمويل العقار وتفاصيل التكاليف الأولية للشراء · East Property Advisory"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:51
+msgid "Estimated Monthly Payment"
+msgstr "القسط الشهري المقدر"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:52
+msgid "/ month"
+msgstr "/ شهريًّا"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:56
+msgid "Profile"
+msgstr "الملف الشخصي"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:60
+msgid "Tenure"
+msgstr "مدة الخدمة"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:61
+msgid "%s Years"
+msgstr "%s سنة"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:64
+#: src/js/mortgage-calculator/modules/pdf/template.js:110
+msgid "Interest Rate"
+msgstr "سعر الفائدة"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:77
+msgid "Principal Loan:"
+msgstr "القرض الرئيسي:"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:81
+msgid "Total Interest:"
+msgstr "إجمالي الفائدة:"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:90
+msgid "Loan Parameters"
+msgstr "معايير القرض"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:94
+msgid "Property Price"
+msgstr "سعر العقار"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:98
+#: src/js/mortgage-calculator/modules/pdf/template.js:130
+msgid "Down Payment (%s%%)"
+msgstr "الدفعة المقدمة (%s%%)"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:102
+msgid "Bank Loan Amount"
+msgstr "مبلغ القرض المصرفي"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:106
+msgid "Loan Tenure"
+msgstr "مدة القرض"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:107
+msgid "%1$s years (%2$s mos)"
+msgstr "%1$s سنة (%2$s شهر)"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:111
+msgid "%s%% p.a."
+msgstr "%s%% سنويًّا"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:114
+msgid "Total Interest (Overpayment)"
+msgstr "إجمالي الفائدة (المبلغ الزائد)"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:118
+msgid "Total Payable over Term"
+msgstr "إجمالي المبلغ المستحق الدفع على مدى فترة السداد"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:126
+msgid "Full Cost of Entry"
+msgstr "التكلفة الإجمالية للدخول"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:134
+msgid "DLD Fee (4% + 580)"
+msgstr "رسوم DLD (4% + 580)"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:138
+msgid "Agency Commission (2%)"
+msgstr "عمولة الوكالة (2٪)"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:142
+msgid "Bank Fee (1% of loan)"
+msgstr "الرسوم المصرفية (1% من قيمة القرض)"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:146
+msgid "Property Valuation"
+msgstr "تقييم العقارات"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:150
+msgid "Mortgage Registration"
+msgstr "تسجيل الرهن العقاري"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:154
+msgid "Total Required at Entry"
+msgstr "المبلغ الإجمالي المطلوب عند الالتحاق"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:164
+msgid "The Deal in 6 Steps (Timeline: 4–8 Weeks from MOU to Keys)"
+msgstr "الصفقة في 6 خطوات (الجدول الزمني: من 4 إلى 8 أسابيع من توقيع مذكرة التفاهم حتى تسليم المفاتيح)"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:169
+msgid "Bank eligibility"
+msgstr "شروط الأهلية المصرفية"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:174
+msgid "~10% deposit"
+msgstr "~10% كعربون"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:178
+msgid "Valuation"
+msgstr "التقييم"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:179
+msgid "Property appraisal"
+msgstr "تقييم العقارات"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:184
+msgid "Loan offer letter"
+msgstr "خطاب عرض القرض"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:188
+msgid "DLD Transfer"
+msgstr "نقل DLD"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:189
+msgid "Title deed"
+msgstr "سند الملكية"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:193
+msgid "Handover"
+msgstr "التسليم"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:194
+msgid "Funds & keys"
+msgstr "الأموال والمفاتيح"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:201
+msgid "Disclaimer:"
+msgstr "إخلاء المسؤولية:"
+
+#: src/js/mortgage-calculator/modules/pdf/template.js:204
+msgid "East Property Brokerage LLC"
+msgstr "East Property Brokerage LLC"

@@ -35,9 +35,9 @@ wp tools warm-cache --allow-root
 ### 1. Язык и локаль
 
 ```bash
-wp tools add-language --slug=zh --dry-run --allow-root   # или --slug=hi
-wp tools add-language --slug=zh --allow-root
-wp language core install zh_CN --allow-root              # или hi_IN
+wp tools add-language --slug=ar --dry-run --allow-root   # или --slug=hi, --slug=ar
+wp tools add-language --slug=ar --allow-root
+wp language core install ar --allow-root              # или hi_IN, ar
 wp rewrite flush --allow-root
 ```
 

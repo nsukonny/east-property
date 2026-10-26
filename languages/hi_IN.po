@@ -2474,8 +2474,8 @@ msgstr "फ़ुटर | खोज"
 msgid "Footer | Quick Links"
 msgstr "फ़ुटर | त्वरित लिंक"
 
-#: functions.php:95
-#: functions.php:96
+#: functions.php:99
+#: functions.php:100
 msgid "Настройки"
 msgstr "सेटिंग्स"
 
