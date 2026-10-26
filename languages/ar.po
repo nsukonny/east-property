@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-26T08:29:16+00:00\n"
-"PO-Revision-Date: 2026-10-26 08:30+0000\n"
+"POT-Creation-Date: 2026-10-26T08:30:20+00:00\n"
+"PO-Revision-Date: 2026-10-26 09:07+0000\n"
 "Language: ar\n"
 "X-Generator: east-property make-translations\n"
 "X-Domain: east-property\n"
@@ -51,20 +51,20 @@ msgstr "انتقل إلى العقارات"
 #: core/components/account/functions.php:125
 #: core/components/filters/functions.php:912
 msgid "Apartments"
-msgstr "شقق سكنية"
+msgstr "شقق"
 
 #: core/components/account/functions.php:126
 #: core/components/filters/functions.php:928
 msgid "Villas"
-msgstr "القرى"
+msgstr "فلل"
 
 #: core/components/account/functions.php:127
 msgid "Townhouses"
-msgstr "المنازل المتلاصقة"
+msgstr "تاون هاوسات"
 
 #: core/components/account/functions.php:128
 msgid "Penthouses"
-msgstr "الشقق الفاخرة"
+msgstr "بنتهاوسات"
 
 #: core/components/account/functions.php:129
 #: core/components/filters/functions.php:920
@@ -1215,7 +1215,7 @@ msgstr "الأسعار"
 #: template-parts/sections/single/dropdowns.php:61
 #: src/js/common/beds-baths.js:11
 msgid "Bed"
-msgstr "العالم"
+msgstr "غرفة نوم"
 
 #: core/components/units/units-by-beds.php:43
 #: core/components/units/units-by-beds.php:82
@@ -1233,7 +1233,7 @@ msgstr "قدم مربع"
 #: core/components/units/units-by-beds.php:56
 #: core/components/units/units-by-beds.php:60
 msgid "Floor plan for %s bed unit"
-msgstr "مخطط الطابق لوحدة السرير %s"
+msgstr "مخطط الطابق لوحدة بـ %s غرفة نوم"
 
 #: core/components/units/units-by-beds.php:85
 #: core/template-parts/cards/large-card.php:59
@@ -2502,8 +2502,8 @@ msgstr "التذييل | ديسكفري"
 msgid "Footer | Quick Links"
 msgstr "تذييل الصفحة | روابط سريعة"
 
-#: functions.php:99
-#: functions.php:100
+#: functions.php:96
+#: functions.php:97
 msgid "Настройки"
 msgstr "الإعدادات"
 
@@ -3088,19 +3088,19 @@ msgstr "لماذا DDA؟"
 
 #: src/js/filters.js:19
 msgid "beds"
-msgstr "أسرة"
+msgstr "غرف نوم"
 
 #: src/js/filters.js:19
 msgid "bed"
-msgstr "العالم"
+msgstr "غرفة نوم"
 
 #: src/js/filters.js:24
 msgid "baths"
-msgstr "الحمامات"
+msgstr "حمامات"
 
 #: src/js/filters.js:24
 msgid "bath"
-msgstr "الحمام"
+msgstr "حمام"
 
 #: src/js/map/map.js:418
 msgid "Selected location"

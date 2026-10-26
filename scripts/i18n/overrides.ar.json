@@ -55,5 +55,17 @@
     "Mortgage Calculation — East Property": "حساب الرهن العقاري — East Property",
     "East Property Advisory": "East Property Advisory",
     "Property financing estimate and upfront acquisition breakdown · East Property Advisory": "تقدير تمويل العقار وتفاصيل التكاليف الأولية للشراء · East Property Advisory",
-    "East Property Brokerage LLC": "East Property Brokerage LLC"
+    "East Property Brokerage LLC": "East Property Brokerage LLC",
+    "Apartments": "شقق",
+    "Villas": "فلل",
+    "Townhouses": "تاون هاوسات",
+    "Penthouses": "بنتهاوسات",
+    "Bed": "غرفة نوم",
+    "bed": "غرفة نوم",
+    "beds": "غرف نوم",
+    "Bedrooms": "غرف النوم",
+    "Floor plan for %s bed unit": "مخطط الطابق لوحدة بـ %s غرفة نوم",
+    "Bathrooms": "الحمامات",
+    "baths": "حمامات",
+    "bath": "حمام"
 }
