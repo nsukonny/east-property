@@ -307,7 +307,7 @@ class ChineseLanguageTest extends TestCase {
 
 		$translator = new Unit_Translator();
 
-		$this->assertSame( array( 'publish', 'draft' ), Unit_Translator::DEFAULT_STATUSES );
+		$this->assertSame( array( 'publish', 'draft', 'future' ), Unit_Translator::DEFAULT_STATUSES );
 		$this->assertContains( $chinese, $translator->find( 50, 0, 'zh', array( 'unit' ) ) );
 		$this->assertContains( $chinese, $translator->find( 50, 0, 'zh', array( 'unit' ), array( 'draft' ) ) );
 		$this->assertNotContains( $chinese, $translator->find( 50, 0, 'zh', array( 'unit' ), array( 'publish' ) ) );

@@ -39,8 +39,11 @@ final class Unit_Translator {
 
 	/**
 	 * Statuses the bulk selection walks unless the caller asks for others.
+	 *
+	 * Scheduled posts are walked too: clone-language copies them flagged, and
+	 * leaving them out meant a post went live untranslated.
 	 */
-	public const DEFAULT_STATUSES = array( 'publish', 'draft' );
+	public const DEFAULT_STATUSES = array( 'publish', 'draft', 'future' );
 
 	/**
 	 * Fields whose value is markup and needs DeepL tag handling.
