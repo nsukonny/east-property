@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-26T08:30:20+00:00\n"
-"PO-Revision-Date: 2026-10-26 09:07+0000\n"
+"POT-Creation-Date: 2026-10-26T12:51:03+00:00\n"
+"PO-Revision-Date: 2026-10-26 12:52+0000\n"
 "Language: ar\n"
 "X-Generator: east-property make-translations\n"
 "X-Domain: east-property\n"
@@ -56,20 +56,20 @@ msgstr "شقق"
 #: core/components/account/functions.php:126
 #: core/components/filters/functions.php:928
 msgid "Villas"
-msgstr "فلل"
+msgstr "الفلل"
 
 #: core/components/account/functions.php:127
 msgid "Townhouses"
-msgstr "تاون هاوسات"
+msgstr "المنازل المتلاصقة"
 
 #: core/components/account/functions.php:128
 msgid "Penthouses"
-msgstr "بنتهاوسات"
+msgstr "البنتهاوس"
 
 #: core/components/account/functions.php:129
 #: core/components/filters/functions.php:920
 msgid "Houses"
-msgstr "المنازل"
+msgstr "منازل"
 
 #: core/components/account/functions.php:130
 #: core/components/filters/functions.php:936
@@ -87,7 +87,7 @@ msgstr "يحتوي على خطأ"
 #: core/includes/entities/class-entity-unit.php:469
 #: core/template-parts/account/profile.php:145
 msgid "Promoted"
-msgstr "مُروَّج له"
+msgstr "مُروَّج"
 
 #: core/components/account/functions.php:143
 #: core/includes/entities/class-entity-unit.php:412
@@ -112,18 +112,18 @@ msgstr "الكل"
 #: core/components/filters/functions.php:1045
 #: core/template-parts/filters/search-tabs.php:165
 msgid "Any Developers"
-msgstr "جميع المطورين"
+msgstr "أي مطورين عقاريين"
 
 #: core/components/account/functions.php:332
 msgid "Any bedrooms"
-msgstr "أي غرف نوم"
+msgstr "أي عدد من غرف النوم"
 
 #. translators: %s: number of bedrooms, "7+" for the last option.
 #: core/components/account/functions.php:337
 msgid "%s bedroom"
 msgid_plural "%s bedrooms"
 msgstr[0] "%s غرف نوم"
-msgstr[1] "غرفة نوم %s"
+msgstr[1] "%s غرفة نوم"
 msgstr[2] "%s غرف نوم"
 msgstr[3] "%s غرف نوم"
 msgstr[4] "%s غرف نوم"
@@ -135,7 +135,7 @@ msgstr "جميع أنواع الوحدات"
 
 #: core/components/account/functions.php:348
 msgid "All listing types"
-msgstr "جميع أنواع الإعلانات"
+msgstr "جميع أنواع العقارات المعروضة"
 
 #: core/components/account/functions.php:363
 msgid "Name or ID"
@@ -143,15 +143,15 @@ msgstr "الاسم أو رقم الهوية"
 
 #: core/components/account/functions.php:363
 msgid "Name, project or ID"
-msgstr "الاسم أو المشروع أو رقم التعريف"
+msgstr "الاسم أو اسم المشروع أو الرقم التعريفي"
 
 #: core/components/account/functions.php:787
 msgid "Unit title is required."
-msgstr "يجب إدخال عنوان الوحدة."
+msgstr "عنوان الوحدة مطلوب."
 
 #: core/components/account/functions.php:880
 msgid "A distress listing needs an original price higher than the asking price."
-msgstr "يجب أن يكون السعر الأصلي للعرض الطارئ أعلى من السعر المطلوب."
+msgstr "يجب أن يكون السعر الأصلي للعقار المعروض للبيع العاجل أعلى من السعر المطلوب."
 
 #: core/components/account/functions.php:922
 msgid "Unit not found."
@@ -160,19 +160,19 @@ msgstr "لم يتم العثور على الوحدة."
 #: core/components/account/functions.php:996
 #: core/components/account/functions.php:1134
 msgid "Property title is required."
-msgstr "يجب تقديم سند ملكية العقار."
+msgstr "يجب إدخال عنوان العقار."
 
 #: core/components/account/functions.php:997
 msgid "Property description is required."
-msgstr "يجب إدخال وصف العقار."
+msgstr "يلزم توفير وصف للعقار."
 
 #: core/components/account/functions.php:1007
 msgid "Latitude is required."
-msgstr "يجب إدخال خط العرض."
+msgstr "يلزم تحديد خط العرض."
 
 #: core/components/account/functions.php:1008
 msgid "Longitude is required."
-msgstr "يجب إدخال خط الطول."
+msgstr "يلزم إدخال خط الطول."
 
 #: core/components/account/functions.php:1009
 msgid "Please select a valid location."
@@ -180,17 +180,17 @@ msgstr "يرجى تحديد موقع صالح."
 
 #: core/components/account/functions.php:1010
 msgid "Please select a valid ownership type."
-msgstr "يرجى اختيار نوع ملكية صالح."
+msgstr "يرجى تحديد نوع ملكية صالح."
 
 #: core/components/account/functions.php:1011
 msgid "Please select a valid property type."
-msgstr "يرجى اختيار نوع عقار صالح."
+msgstr "يرجى تحديد نوع عقار صالح."
 
 #: core/components/account/functions.php:1052
 #: core/components/account/functions.php:1311
 #: core/components/account/functions.php:1571
 msgid "Property not found."
-msgstr "لم يتم العثور على العنصر المطلوب."
+msgstr "لم يتم العثور على العقار."
 
 #: core/components/account/functions.php:1110
 msgid "Please sign in to add a property."
@@ -198,7 +198,7 @@ msgstr "يرجى تسجيل الدخول لإضافة عقار."
 
 #: core/components/account/functions.php:1115
 msgid "Your account does not have permission to add property."
-msgstr "حسابك لا يمتلك صلاحية إضافة عقار."
+msgstr "حسابك لا يملك صلاحية إضافة عقار."
 
 #: core/components/account/functions.php:1121
 msgid "Security check failed. Please try again."
@@ -208,7 +208,7 @@ msgstr "فشل الفحص الأمني. يرجى المحاولة مرة أخر�
 #: core/components/account/functions.php:1566
 #: core/components/account/functions.php:1661
 msgid "Property ID is required."
-msgstr "رقم العقار مطلوب."
+msgstr "يلزم إدخال رقم العقار."
 
 #: core/components/account/functions.php:1324
 #: core/template-parts/account/edit-unit.php:463
@@ -221,11 +221,11 @@ msgstr "نقاط التعزيز غير كافية لخطة التعزيز."
 
 #: core/components/account/functions.php:1585
 msgid "Property boosted successfully."
-msgstr "تم تعزيز الخاصية بنجاح."
+msgstr "تم الترويج للعقار بنجاح."
 
 #: core/components/account/functions.php:1602
 msgid "Broker not found."
-msgstr "لم يتم العثور على الوسيط."
+msgstr "لم يتم العثور على وسيط."
 
 #: core/components/account/functions.php:1647
 #: core/includes/registers/user-roles/client.php:7
@@ -235,11 +235,11 @@ msgstr "العميل"
 #: core/components/account/functions.php:1648
 #: core/includes/registers/user-roles/broker.php:18
 msgid "Broker"
-msgstr "الوسيط"
+msgstr "الوسيط العقاري"
 
 #: core/components/account/functions.php:1666
 msgid "YOu are not authenticated."
-msgstr "لم تتم مصادقتك."
+msgstr "لم يتم توثيق هويتك."
 
 #: core/components/account/functions.php:1710
 msgid "Hello "
@@ -268,19 +268,19 @@ msgstr "تأكد من صحة عنوان بريدك الإلكتروني"
 
 #: core/components/account/functions.php:1747
 msgid "Sign in to save this property to your favorites."
-msgstr "سجّل الدخول لحفظ هذا العقار ضمن قائمة المفضلة."
+msgstr "سجّل الدخول لحفظ هذا العقار في قائمة المفضلة."
 
 #: core/components/account/functions.php:1768
 msgid "You must be logged in."
-msgstr "يجب أن تكون قد سجلت الدخول."
+msgstr "يجب أن تكون مسجلاً للدخول."
 
 #: core/components/account/functions.php:1773
 msgid "Verification email resent. Check your email."
-msgstr "تم إعادة إرسال رسالة البريد الإلكتروني الخاصة بالتحقق. يرجى التحقق من بريدك الإلكتروني."
+msgstr "تم إعادة إرسال رسالة التحقق عبر البريد الإلكتروني. يرجى التحقق من بريدك الإلكتروني."
 
 #: core/components/account/functions.php:1913
 msgid "This property is not a distress deal. Below Market Score : "
-msgstr "هذه العقار ليس صفقة طارئة. التقييم أقل من مستوى السوق: "
+msgstr "هذه العقارات ليست معروضة للبيع بشكل عاجل. التقييم أقل من متوسط السوق: "
 
 #: core/components/common/cookies/cookies.php:8
 msgid "We use cookies"
@@ -296,7 +296,7 @@ msgstr ""
 
 #: core/components/common/cookies/cookies.php:17
 msgid "Decline"
-msgstr "الانخفاض"
+msgstr "رفض"
 
 #: core/components/common/cookies/cookies.php:20
 msgid "Accept"
@@ -309,23 +309,23 @@ msgstr "قبول"
 #: core/components/sections/explore-by-beds.php:42
 #: core/includes/registers/post-types/properties.php:10
 msgid "Properties"
-msgstr "عقارات"
+msgstr "العقارات"
 
 #: core/components/common/functions.php:33
 msgid "Off Plan Properties"
-msgstr "العقارات قيد الإنشاء"
+msgstr "العقارات المباعة على المخطط"
 
 #: core/components/common/functions.php:38
 msgid "Secondary Listings"
-msgstr "إعلانات إعادة البيع"
+msgstr "قوائم العقارات في السوق الثانوية"
 
 #: core/components/common/functions.php:43
 msgid "Distress Deals"
-msgstr "صفقات الطوارئ"
+msgstr "عروض البيع العاجلة"
 
 #: core/components/common/functions.php:60
 msgid "Projects in UAE"
-msgstr "المشاريع في الإمارات العربية المتحدة"
+msgstr "مشاريع في الإمارات العربية المتحدة"
 
 #: core/components/common/nav.php:28
 msgid "Close menu"
@@ -350,7 +350,7 @@ msgstr "تسجيل الدخول"
 
 #: core/components/common/notifications/notifications.php:14
 msgid "Your property has been submitted successfully and saved as draft. Wait approve."
-msgstr "تم إرسال عقارك بنجاح وحفظه كمسودة. في انتظار الموافقة."
+msgstr "تم إرسال عقارك بنجاح وحفظه كمسودة. انتظر الموافقة."
 
 #: core/components/common/notifications/notifications.php:15
 msgid "Your profile has been created successfully."
@@ -386,11 +386,11 @@ msgstr "يرجى إدخال اسم المستخدم وكلمة المرور."
 
 #: core/components/common/notifications/notifications.php:25
 msgid "Please fill in all required fields."
-msgstr "يرجى ملء جميع الحقول الإلزامية."
+msgstr "يرجى ملء جميع الحقول المطلوبة."
 
 #: core/components/common/notifications/notifications.php:26
 msgid "This email is already registered. Please use another email."
-msgstr "هذا العنوان البريدي مسجل بالفعل. يرجى استخدام عنوان بريدي آخر."
+msgstr "هذا البريد الإلكتروني مسجل بالفعل. يرجى استخدام بريد إلكتروني آخر."
 
 #: core/components/common/notifications/notifications.php:27
 msgid "An error occurred while updating your profile. Please try again later."
@@ -402,7 +402,7 @@ msgstr "حدث خطأ أثناء تحميل صورتك الشخصية. يرجى 
 
 #: core/components/common/notifications/notifications.php:29
 msgid "Your password reset link has expired. Please request a new one."
-msgstr "لقد انتهت صلاحية رابط إعادة تعيين كلمة المرور الخاصة بك. يرجى طلب رابط جديد."
+msgstr "لقد انتهت صلاحية رابط إعادة تعيين كلمة المرور. يرجى طلب رابط جديد."
 
 #: core/components/common/notifications/notifications.php:30
 msgid "Your password must be at least 8 characters long."
@@ -438,7 +438,7 @@ msgstr "حدث خطأ أثناء الاشتراك. يرجى المحاولة م�
 
 #: core/components/common/subscribe-form/functions.php:54
 msgid "Thank you for subscribing!"
-msgstr "شكرًا لك على الاشتراك!"
+msgstr "شكرًا على اشتراكك!"
 
 #: core/components/common/subscribe-form/subscribe-form.php:10
 msgid "Keep Yourself Up to Date"
@@ -459,27 +459,27 @@ msgstr "اشترك"
 #: core/includes/entities/class-entity-unit.php:191
 #: template-parts/sections/single/dropdowns.php:20
 msgid "AED"
-msgstr "جهاز الصدمات الكهربائية (AED)"
+msgstr "درهم إماراتي"
 
 #: core/components/components-functions.php:224
 msgctxt "handover quarter"
 msgid "Q1"
-msgstr "الربع الأول"
+msgstr "السؤال 1"
 
 #: core/components/components-functions.php:225
 msgctxt "handover quarter"
 msgid "Q2"
-msgstr "الربع الثاني"
+msgstr "السؤال 2"
 
 #: core/components/components-functions.php:226
 msgctxt "handover quarter"
 msgid "Q3"
-msgstr "الربع الثالث"
+msgstr "السؤال 3"
 
 #: core/components/components-functions.php:227
 msgctxt "handover quarter"
 msgid "Q4"
-msgstr "الربع الرابع"
+msgstr "السؤال 4"
 
 #. translators: 1: quarter, 2: year.
 #: core/components/components-functions.php:232
@@ -489,7 +489,7 @@ msgstr "%1$s %2$d"
 
 #: core/components/email/functions.php:4
 msgid "Mailer"
-msgstr "برنامج البريد الإلكتروني"
+msgstr "Mailer"
 
 #. translators: option of the delivery date filter, projects already handed over.
 #: core/components/filters/functions.php:323
@@ -523,7 +523,7 @@ msgstr "الموقع"
 
 #: core/components/filters/functions.php:354
 msgid "Handover Year Before"
-msgstr "تسليم المهام في العام السابق"
+msgstr "تسليم المشروع قبل عام"
 
 #: core/components/filters/functions.php:355
 msgid "Completion Year After"
@@ -544,7 +544,7 @@ msgstr "نوع العقار"
 #: core/components/filters/functions.php:880
 #: core/components/filters/functions.php:904
 msgid "Any"
-msgstr "هناك"
+msgstr "أي"
 
 #: core/components/filters/functions.php:375
 #: core/components/filters/functions.php:885
@@ -555,7 +555,7 @@ msgstr "هناك"
 #: core/template-parts/filters/search-tabs.php:163
 #: src/js/map/html.js:58
 msgid "Developer"
-msgstr "مطور عقاري"
+msgstr "المطور العقاري"
 
 #: core/components/filters/functions.php:379
 #: core/template-parts/cards/map-sidebar.php:85
@@ -582,7 +582,7 @@ msgstr "المنطقة"
 #: core/components/filters/functions.php:418
 msgctxt "search tab"
 msgid "In construction"
-msgstr "في مجال البناء"
+msgstr "قيد الإنشاء"
 
 #: core/components/filters/functions.php:447
 #: core/components/units/units-by-beds.php:78
@@ -639,7 +639,7 @@ msgstr "الأقدم أولاً"
 
 #: core/components/filters/functions.php:612
 msgid "Handover: soonest first"
-msgstr "تسليم المهام: الأسرع أولاً"
+msgstr "تسليم المشروع: في أقرب وقت ممكن"
 
 #: core/components/filters/functions.php:624
 msgctxt "listing sort"
@@ -659,22 +659,22 @@ msgstr "متوفر"
 #: core/template-parts/search-results/tabs.php:63
 #: core/template-parts/search-results/units-list.php:62
 msgid "Items not found"
-msgstr "لم يتم العثور على العناصر"
+msgstr "لم يتم العثور على العناصر المطلوبة"
 
 #: core/components/filters/functions.php:1247
 #: core/components/filters/functions.php:1351
 msgid "%s property found"
 msgid_plural "%s properties found"
-msgstr[0] "تم العثور على %s عقارات"
+msgstr[0] "تم العثور على %s عقارًا"
 msgstr[1] "تم العثور على %s عقار"
-msgstr[2] "تم العثور على %s عقارات"
-msgstr[3] "تم العثور على %s عقارات"
-msgstr[4] "تم العثور على %s عقارات"
-msgstr[5] "تم العثور على %s عقارات"
+msgstr[2] "تم العثور على %s عقارًا"
+msgstr[3] "تم العثور على %s عقارًا"
+msgstr[4] "تم العثور على %s عقارًا"
+msgstr[5] "تم العثور على %s عقارًا"
 
 #: core/components/filters/functions.php:1339
 msgid "Properties not found"
-msgstr "لم يتم العثور على العقارات"
+msgstr "لم يتم العثور على عقارات"
 
 #. translators: %s: language code.
 #: core/components/locations/functions.php:101
@@ -683,7 +683,7 @@ msgstr "الوصف (%s)"
 
 #: core/components/locations/functions.php:111
 msgid "Shown on pages in this language. Left empty, the language shows no description."
-msgstr "يُعرض على الصفحات باللغة المذكورة. إذا تُركت فارغة، فلن تظهر أي وصف للغة."
+msgstr "يتم عرضها على الصفحات بهذه اللغة. إذا تُركت فارغة، فلن تظهر أي وصف للغة."
 
 #: core/components/modals/boost-info-modal.php:11
 #: core/components/modals/boost-modal.php:10
@@ -697,9 +697,9 @@ msgid ""
 "\t\t\t\t\t\tinstantly transform any standard listing into a featured powerhouse, ensuring your property is \n"
 "\t\t\t\t\t\tthe first thing potential buyers see when they start their search."
 msgstr ""
-"برنامج «Gold Star Boost» هو أداة حصرية لزيادة الظهور تم إنشاؤها خصيصًا \n"
-" للبائعين والوكلاء الذين يسعون إلى «المركز الأول». من خلال الاستفادة من نقاط «ستار» التي حصلت عليها، يمكنك \n"
-" تحويل أي إعلان عادي على الفور إلى إعلان مميز وقوي، مما يضمن أن تكون عقارتك \n"
+"برنامج «Gold Star Boost» هو أداة حصرية لزيادة الظهور تم إنشاؤها \n"
+" للبائعين والوكلاء الذين يسعون إلى «المركز الأول». من خلال الاستفادة من نقاط «Star Points» التي حصلت عليها، يمكنك \n"
+" تحويل أي إعلان عادي على الفور إلى إعلان مميز وقوي، مما يضمن أن تكون عقارك \n"
 " أول ما يراه المشترون المحتملون عند بدء بحثهم."
 
 #: core/components/modals/boost-info-modal.php:27
@@ -711,20 +711,20 @@ msgid ""
 "Boost costs are based on your selected timeframe. For example, you can \n"
 "\t\t\t\t\tsecure 24 hours of top-tier visibility for 250 points."
 msgstr ""
-"تستند تكاليف «Boost» إلى الإطار الزمني الذي تختاره. على سبيل المثال، يمكنك \n"
-" الحصول على 24 ساعة من الظهور في المرتبة الأولى مقابل 250 نقطة."
+"تستند تكاليف الترويج إلى الإطار الزمني الذي تختاره. على سبيل المثال، يمكنك \n"
+" الحصول على 24 ساعة من الظهور في المراتب العليا مقابل 250 نقطة."
 
 #: core/components/modals/boost-info-modal.php:36
 msgid "How long is the boost active?"
-msgstr "ما هي مدة استمرار مفعول التعزيز؟"
+msgstr "ما هي مدة سريان فعالية التعزيز؟"
 
 #: core/components/modals/boost-info-modal.php:40
 msgid ""
 "Your property will hold the \"Top Spot\" for the full duration you select, \n"
 "\t\t\t\t\t\tstarting the exact moment you hit activate."
 msgstr ""
-"ستحتفظ عقارك بـ«المركز الأول» طوال المدة التي تختارها، \n"
-" بدءًا من اللحظة التي تضغط فيها على زر «تنشيط»."
+"ستحتل عقارك «المركز الأول» طوال المدة التي تختارها، \n"
+" بدءًا من اللحظة التي تضغط فيها على زر «تفعيل»."
 
 #: core/components/modals/boost-info-modal.php:45
 msgid "What happens after the boost ends?"
@@ -735,12 +735,12 @@ msgid ""
 "Your listing will return to its standard position in the search results. \n"
 "\t\t\t\t\t\tTo maintain your lead, you can redeploy another boost at any time to stay front and center."
 msgstr ""
-"سيعود إعلانك إلى موضعه المعتاد في نتائج البحث.\n"
-"وللحفاظ على صدارتك، يمكنك إعادة تفعيل ميزة «التعزيز» في أي وقت لتظل في المقدمة وفي مركز الاهتمام."
+"سيعود إعلانك إلى موضعه المعتاد في نتائج البحث. \n"
+" وللحفاظ على صدارتك، يمكنك إعادة تفعيل ميزة «التعزيز» في أي وقت لتظل في الصدارة."
 
 #: core/components/modals/boost-modal.php:22
 msgid "Choose how many days you want to boost this listing. During the boost period,"
-msgstr "اختر عدد الأيام التي تريد فيها تعزيز هذا الإعلان. خلال فترة التعزيز،"
+msgstr "اختر عدد الأيام التي تريد فيها تعزيز ظهور هذا الإعلان. خلال فترة التعزيز،"
 
 #: core/components/modals/boost-modal.php:23
 msgid " your listing will receive higher priority and appear more often to potential buyers."
@@ -767,14 +767,14 @@ msgstr "تعزيز"
 
 #: core/components/modals/broker-modal.php:24
 msgid "Hello, I am interested in property"
-msgstr "مرحبًا، أنا مهتم بشراء عقار"
+msgstr "مرحبًا، أنا مهتم بالعقارات"
 
 #: core/components/modals/broker-modal.php:34
 #: core/template-parts/cards/unit-card.php:187
 #: core/template-parts/common/contact-panel.php:66
 #: single-unit.php:173
 msgid "Contact broker"
-msgstr "اتصل بالوسيط"
+msgstr "اتصل بالوسيط العقاري"
 
 #: core/components/modals/broker-modal.php:42
 #: core/components/modals/quote-modal.php:44
@@ -783,19 +783,19 @@ msgstr "يمكنك الحصول على مزيد من المعلومات حول �
 
 #: core/components/modals/broker-modal.php:48
 msgid "We work directly with brokers"
-msgstr "نحن نعمل مباشرة مع الوسطاء"
+msgstr "نعمل مباشرة مع الوسطاء العقاريين"
 
 #: core/components/modals/broker-modal.php:53
 #: core/components/modals/quote-modal.php:54
 #: template-parts/sections/index/about.php:20
 msgid "We facilitate the entire process for you"
-msgstr "نحن نسهّل لك العملية برمتها"
+msgstr "نحن نسهل لك العملية برمتها"
 
 #: core/components/modals/broker-modal.php:58
 #: core/components/modals/quote-modal.php:59
 #: template-parts/sections/index/about.php:25
 msgid "We don’t add anything on top of the price"
-msgstr "نحن لا نضيف أي شيء إلى السعر"
+msgstr "لا نضيف أي تكلفة إضافية على السعر"
 
 #: core/components/modals/broker-modal.php:69
 msgid "Phone"
@@ -815,15 +815,15 @@ msgstr "إنشاء حساب"
 
 #: core/components/modals/create-modal.php:29
 msgid "What account gives you:"
-msgstr "ما الذي يوفره لك هذا الحساب:"
+msgstr "ما يقدمه لك هذا الحساب:"
 
 #: core/components/modals/create-modal.php:35
 msgid "Bookmark your favorites"
-msgstr "أضف مواقعك المفضلة إلى قائمة المفضلة"
+msgstr "أضف المواقع المفضلة إلى قائمة المفضلة"
 
 #: core/components/modals/create-modal.php:40
 msgid "Get updates about new listings"
-msgstr "احصل على آخر المستجدات حول العقارات المعروضة حديثًا"
+msgstr "احصل على آخر المستجدات حول العقارات الجديدة المعروضة"
 
 #: core/components/modals/create-modal.php:52
 #: core/template-parts/account/login-form.php:105
@@ -847,7 +847,7 @@ msgstr "كلمة المرور"
 #: core/components/modals/create-modal.php:70
 #: core/template-parts/account/login-form.php:136
 msgid "Repeat Password"
-msgstr "أعد كتابة كلمة المرور"
+msgstr "أعد إدخال كلمة المرور"
 
 #: core/components/modals/create-modal.php:78
 #: core/template-parts/account/login-form.php:145
@@ -866,7 +866,7 @@ msgstr "رقم الهاتف"
 #: core/includes/registers/post-types/agencies.php:36
 #: core/template-parts/account/profile.php:378
 msgid "Agency"
-msgstr "الوكالة"
+msgstr "وكالة"
 
 #: core/components/modals/create-modal.php:119
 #: core/template-parts/account/login-form.php:191
@@ -878,7 +878,7 @@ msgstr "إذا لم تتمكن من العثور على وكالتك في الق
 #: core/template-parts/account/login-form.php:194
 #: core/template-parts/account/profile.php:384
 msgid "Your request will be reviewed within 24 hours."
-msgstr "سيتم النظر في طلبك في غضون 24 ساعة."
+msgstr "سيتم مراجعة طلبك في غضون 24 ساعة."
 
 #: core/components/modals/create-modal.php:132
 msgid "vector arrow"
@@ -887,7 +887,7 @@ msgstr "سهم متجه"
 #: core/components/modals/create-modal.php:154
 #: core/template-parts/account/login-form.php:231
 msgid "I have read and agree to the"
-msgstr "لقد قرأت الشروط وأوافق عليها"
+msgstr "لقد قرأت وأوافق على"
 
 #: core/components/modals/create-modal.php:156
 #: core/template-parts/account/login-form.php:233
@@ -929,7 +929,7 @@ msgstr "البريد الإلكتروني مطلوب."
 
 #: core/components/modals/functions.php:18
 msgid "No user found with this email."
-msgstr "لم يتم العثور على مستخدم بهذا العنوان البريدي الإلكتروني."
+msgstr "لم يتم العثور على مستخدم بهذا البريد الإلكتروني."
 
 #: core/components/modals/functions.php:23
 msgid "Error generating reset key."
@@ -953,7 +953,7 @@ msgstr "إعادة تعيين كلمة المرور"
 
 #: core/components/modals/functions.php:42
 msgid "If you did not request a password reset, you can safely ignore this email. Your password will remain unchanged."
-msgstr "إذا لم تكن قد طلبت إعادة تعيين كلمة المرور، فيمكنك تجاهل هذه الرسالة الإلكترونية دون أي قلق. ستبقى كلمة مرورك كما هي."
+msgstr "إذا لم تكن قد طلبت إعادة تعيين كلمة المرور، فيمكنك تجاهل هذه الرسالة الإلكترونية دون أي قلق. ستبقى كلمة مرورك كما هي دون تغيير."
 
 #: core/components/modals/functions.php:49
 msgid "Password Reset Request"
@@ -965,7 +965,7 @@ msgstr "تم إرسال طلب إعادة تعيين كلمة المرور إل�
 
 #: core/components/modals/map-coords-picker.php:17
 msgid "Pick property coordinates"
-msgstr "تحديد إحداثيات العقار"
+msgstr "اختر إحداثيات العقار"
 
 #: core/components/modals/quote-modal.php:36
 msgid "Request a quote"
@@ -978,7 +978,7 @@ msgstr "نحن نعمل مباشرة مع شركات البناء"
 
 #: core/components/modals/quote-modal.php:69
 msgid "Developer website"
-msgstr "موقع المطور"
+msgstr "موقع المطور العقاري"
 
 #: core/components/modals/quote-modal.php:78
 #: core/template-parts/properties/property-single.php:69
@@ -1013,7 +1013,7 @@ msgstr "فيلا"
 
 #: core/components/properties/functions.php:154
 msgid "Townhouse"
-msgstr "تاون هاوس"
+msgstr "منزل متلاصق"
 
 #: core/components/properties/functions.php:155
 msgid "Penthouse"
@@ -1021,7 +1021,7 @@ msgstr "بنتهاوس"
 
 #: core/components/properties/functions.php:156
 msgid "House"
-msgstr "المنزل"
+msgstr "منزل"
 
 #: core/components/properties/functions.php:157
 msgid "Office"
@@ -1041,7 +1041,7 @@ msgstr "الملكية المشتركة"
 
 #: core/components/properties/functions.php:161
 msgid "Strata"
-msgstr "الشارع"
+msgstr "ستراتا"
 
 #: core/components/properties/functions.php:162
 msgid "Usufruct"
@@ -1068,12 +1068,12 @@ msgstr "جاهز"
 #: core/includes/entities/class-entity-unit.php:379
 #: core/includes/entities/class-entity-unit.php:447
 msgid "Handover:"
-msgstr "تسليم المهام:"
+msgstr "تسليم المشروع:"
 
 #. translators: 1: project name, 2: developer name, 3: project URL.
 #: core/components/properties/functions.php:985
 msgid "Hello! I am interested in the %1$s project by %2$s. Could you tell me more about it? %3$s"
-msgstr "مرحبًا! أنا مهتم بمشروع %1$s الذي أطلقه %2$s. هل يمكنك إخباري بالمزيد عنه؟ %3$s"
+msgstr "مرحبًا! أنا مهتم بمشروع %1$s الذي أطلقته شركة %2$s. هل يمكنك إخباري بالمزيد عنه؟ %3$s"
 
 #. translators: 1: project name, 2: project URL.
 #: core/components/properties/functions.php:995
@@ -1152,11 +1152,11 @@ msgstr "الصفحة %1$d من %2$d"
 
 #: core/components/units/featured.php:22
 msgid "Featured new projects in the UAE"
-msgstr "مشاريع جديدة بارزة في الإمارات العربية المتحدة"
+msgstr "أبرز المشاريع الجديدة في الإمارات العربية المتحدة"
 
 #: core/components/units/featured.php:23
 msgid "DISTRESS PROPERTIES"
-msgstr "العقارات المتعثرة"
+msgstr "عقارات للبيع العاجل"
 
 #: core/components/units/featured.php:24
 msgid "Don’t wait till it’s late"
@@ -1164,15 +1164,15 @@ msgstr "لا تنتظر حتى يفوت الأوان"
 
 #: core/components/units/featured.php:25
 msgid "Be first to explore new off-plan launches — early access, new prices, and direct WhatsApp contact."
-msgstr "كن أول من يستكشف أحدث المشاريع العقارية قيد الإنشاء — فرصة الوصول المبكر، والأسعار الجديدة، والتواصل المباشر عبر WhatsApp."
+msgstr "كن أول من يستكشف أحدث المشاريع العقارية قيد الإنشاء — إمكانية الوصول المبكر، والأسعار الجديدة، والتواصل المباشر عبر WhatsApp."
 
 #: core/components/units/featured.php:29
 msgid "See all new projects"
-msgstr "عرض جميع المشاريع الجديدة"
+msgstr "شاهد جميع المشاريع الجديدة"
 
 #: core/components/units/filter.php:9
 msgid "Available Units in UAE"
-msgstr "الوحدات المتوفرة في الإمارات العربية المتحدة"
+msgstr "الوحدات المتاحة في الإمارات العربية المتحدة"
 
 #: core/components/units/filter.php:28
 msgid "properties found"
@@ -1184,7 +1184,7 @@ msgstr "على المخطط"
 
 #: core/components/units/functions.php:20
 msgid "Secondary"
-msgstr "إعادة بيع"
+msgstr "إعادة البيع"
 
 #: core/components/units/functions.php:21
 #: core/template-parts/filters/search-tabs.php:64
@@ -1194,7 +1194,7 @@ msgstr "بيع عاجل"
 #. translators: 1: unit name, 2: unit URL.
 #: core/components/units/functions.php:625
 msgid "Hello! I am interested in %1$s. Could you tell me more about it? %2$s"
-msgstr "مرحبًا! أنا مهتم بـ %1$s. هل يمكنك إخباري بالمزيد عنه؟ %2$s"
+msgstr "مرحبًا! أنا مهتم بـ %1$s. هل يمكنك إخباري بالمزيد عنها؟ %2$s"
 
 #: core/components/units/similar.php:64
 msgid "More properties like this"
@@ -1233,7 +1233,7 @@ msgstr "قدم مربع"
 #: core/components/units/units-by-beds.php:56
 #: core/components/units/units-by-beds.php:60
 msgid "Floor plan for %s bed unit"
-msgstr "مخطط الطابق لوحدة بـ %s غرفة نوم"
+msgstr "مخطط طابق لوحدة سكنية مكونة من %s غرف نوم"
 
 #: core/components/units/units-by-beds.php:85
 #: core/template-parts/cards/large-card.php:59
@@ -1257,13 +1257,13 @@ msgstr "تم التحقق من البريد الإلكتروني"
 #: core/includes/entities/class-entity-unit.php:388
 #: core/includes/entities/class-entity-unit.php:455
 msgid "Popular"
-msgstr "شائع"
+msgstr "الأكثر رواجًا"
 
 #: core/includes/entities/class-entity-property.php:579
 #: core/includes/entities/class-entity-unit.php:396
 #: core/includes/entities/class-entity-unit.php:462
 msgid "Premium Developer"
-msgstr "مطور متميز"
+msgstr "مطور عقاري متميز"
 
 #: core/includes/entities/class-entity-property.php:626
 #: core/template-parts/account/edit-property.php:227
@@ -1297,19 +1297,19 @@ msgstr "يجب ألا تكون معرض الصور فارغًا"
 
 #: core/includes/entities/class-entity-unit.php:701
 msgid "Area should not be empty and must bigger than 50 sqft"
-msgstr "يجب ألا تكون المساحة فارغة، ويجب أن تزيد عن 50 قدمًا مربعًا"
+msgstr "يجب ألا تكون المساحة فارغة ويجب أن تزيد عن 50 قدمًا مربعًا"
 
 #: core/includes/entities/class-entity-unit.php:709
 msgid "Price should not be empty and must bigger than 200 000 AED"
-msgstr "يجب ألا يكون حقل السعر فارغًا، ويجب أن يكون المبلغ أكبر من 200,000 درهم إماراتي"
+msgstr "يجب ألا يكون حقل السعر فارغًا ويجب أن يكون المبلغ أكبر من 200 000 درهم إماراتي"
 
 #: core/includes/entities/class-entity-unit.php:719
 msgid "Your unit has been submitted and is waiting for approval. Please fix the following issues:"
-msgstr "تم إرسال وحدتك وهي في انتظار الموافقة. يرجى تصحيح المشكلات التالية:"
+msgstr "تم إرسال الوحدة الخاصة بك وهي في انتظار الموافقة. يرجى تصحيح المشكلات التالية:"
 
 #: core/includes/entities/class-entity-unit.php:732
 msgid "Need to fix errors in your submitted property"
-msgstr "يلزم تصحيح الأخطاء الموجودة في بيانات العقار الذي قمت بتقديمه"
+msgstr "الحاجة إلى تصحيح الأخطاء في العقار الذي قمت بإدراجه"
 
 #: core/includes/registers/post-types/agencies.php:7
 msgctxt "Post Type General Name"
@@ -1319,7 +1319,7 @@ msgstr "الوكالات"
 #: core/includes/registers/post-types/agencies.php:8
 msgctxt "Post Type Singular Name"
 msgid "Agency"
-msgstr "الوكالة"
+msgstr "وكالة"
 
 #: core/includes/registers/post-types/agencies.php:9
 msgid "Agencies"
@@ -1335,7 +1335,7 @@ msgstr "خصائص الوكالة"
 
 #: core/includes/registers/post-types/agencies.php:13
 msgid "Parent Agency:"
-msgstr "الجهة الأم:"
+msgstr "الوكالة الأم:"
 
 #: core/includes/registers/post-types/agencies.php:14
 msgid "All Agencies"
@@ -1359,7 +1359,7 @@ msgstr "وكالة جديدة"
 
 #: core/includes/registers/post-types/agencies.php:18
 msgid "Edit Agency"
-msgstr "وكالة التحرير"
+msgstr "تحرير الوكالة"
 
 #: core/includes/registers/post-types/agencies.php:19
 msgid "Update Agency"
@@ -1383,7 +1383,7 @@ msgstr "وكالة البحث"
 #: core/includes/registers/post-types/subscribers.php:24
 #: core/includes/registers/post-types/units.php:26
 msgid "Not found"
-msgstr "لم يتم العثور عليه"
+msgstr "لم يتم العثور على ما تبحث عنه"
 
 #: core/includes/registers/post-types/agencies.php:24
 #: core/includes/registers/post-types/developers.php:25
@@ -1427,11 +1427,11 @@ msgstr "استخدامها كصورة مميزة"
 
 #: core/includes/registers/post-types/agencies.php:29
 msgid "Insert agency"
-msgstr "إدراج الوكالة"
+msgstr "إدراج وكالة"
 
 #: core/includes/registers/post-types/agencies.php:30
 msgid "Uploaded to this agency"
-msgstr "تم تحميله إلى هذه الوكالة"
+msgstr "تم تحميلها إلى هذه الوكالة"
 
 #: core/includes/registers/post-types/agencies.php:31
 msgid "Agencies list"
@@ -1443,7 +1443,7 @@ msgstr "التنقل بين قوائم الوكالات"
 
 #: core/includes/registers/post-types/agencies.php:33
 msgid "Filter agencies list"
-msgstr "قائمة وكالات التصفية"
+msgstr "تصفية قائمة الوكالات"
 
 #: core/includes/registers/post-types/agencies.php:37
 #: core/includes/registers/post-types/developers.php:38
@@ -1456,16 +1456,16 @@ msgstr "وصف نوع المنشور"
 #: core/includes/registers/post-types/developers.php:8
 msgctxt "Post Type General Name"
 msgid "Developers"
-msgstr "مطورون عقاريون"
+msgstr "المطورون العقاريون"
 
 #: core/includes/registers/post-types/developers.php:9
 msgctxt "Post Type Singular Name"
 msgid "Developer"
-msgstr "مطور عقاري"
+msgstr "المطور العقاري"
 
 #: core/includes/registers/post-types/developers.php:10
 msgid "Developers"
-msgstr "مطورون عقاريون"
+msgstr "المطورون العقاريون"
 
 #: core/includes/registers/post-types/developers.php:12
 msgid "Developer Archives"
@@ -1473,27 +1473,27 @@ msgstr "أرشيف المطورين"
 
 #: core/includes/registers/post-types/developers.php:13
 msgid "Developer Attributes"
-msgstr "خصائص المطور"
+msgstr "خصائص المطورين"
 
 #: core/includes/registers/post-types/developers.php:14
 msgid "Parent Developer:"
-msgstr "المطور الأصلي:"
+msgstr "العنصر الأصلي للمطور:"
 
 #: core/includes/registers/post-types/developers.php:15
 msgid "All Developers"
-msgstr "جميع المطورين"
+msgstr "جميع المطورين العقاريين"
 
 #: core/includes/registers/post-types/developers.php:16
 msgid "Add New Developer"
-msgstr "إضافة مطور جديد"
+msgstr "إضافة مطور عقاري جديد"
 
 #: core/includes/registers/post-types/developers.php:18
 msgid "New Developer"
-msgstr "مطور جديد"
+msgstr "مطور عقاري جديد"
 
 #: core/includes/registers/post-types/developers.php:19
 msgid "Edit Developer"
-msgstr "تحرير المطور"
+msgstr "تعديل معلومات المطور"
 
 #: core/includes/registers/post-types/developers.php:20
 msgid "Update Developer"
@@ -1505,31 +1505,31 @@ msgstr "عرض المطور"
 
 #: core/includes/registers/post-types/developers.php:22
 msgid "View Developers"
-msgstr "عرض المطورين"
+msgstr "عرض المطورين العقاريين"
 
 #: core/includes/registers/post-types/developers.php:23
 msgid "Search Developer"
-msgstr "البحث عن مطور"
+msgstr "البحث عن مطور عقاري"
 
 #: core/includes/registers/post-types/developers.php:30
 msgid "Add into developer"
-msgstr "إضافة إلى المطور"
+msgstr "إضافة إلى قائمة المطورين"
 
 #: core/includes/registers/post-types/developers.php:31
 msgid "Uploaded to this developer"
-msgstr "تم تحميله إلى هذا المطور"
+msgstr "تم تحميلها إلى هذا المطور"
 
 #: core/includes/registers/post-types/developers.php:32
 msgid "Developers list"
-msgstr "قائمة المطورين"
+msgstr "قائمة المطورين العقاريين"
 
 #: core/includes/registers/post-types/developers.php:33
 msgid "Developers list navigation"
-msgstr "التنقل بين قوائم المطورين"
+msgstr "التنقل بين قائمة المطورين العقاريين"
 
 #: core/includes/registers/post-types/developers.php:34
 msgid "Filter developers list"
-msgstr "تصفية قائمة المطورين"
+msgstr "تصفية قائمة المطورين العقاريين"
 
 #: core/includes/registers/post-types/locations.php:9
 #: core/includes/registers/post-types/locations.php:17
@@ -1563,7 +1563,7 @@ msgstr "اسم الموقع الجديد"
 #: core/includes/registers/post-types/properties.php:8
 msgctxt "Post Type General Name"
 msgid "Properties"
-msgstr "عقارات"
+msgstr "العقارات"
 
 #: core/includes/registers/post-types/properties.php:9
 msgctxt "Post Type Singular Name"
@@ -1576,11 +1576,11 @@ msgstr "أرشيف العقارات"
 
 #: core/includes/registers/post-types/properties.php:13
 msgid "Property Attributes"
-msgstr "خصائص العقار"
+msgstr "خصائص العقارات"
 
 #: core/includes/registers/post-types/properties.php:14
 msgid "Parent Property:"
-msgstr "الخاصية الأصلية:"
+msgstr "العنصر العقاري الأصلي:"
 
 #: core/includes/registers/post-types/properties.php:16
 msgid "Add New Property"
@@ -1588,7 +1588,7 @@ msgstr "إضافة عقار جديد"
 
 #: core/includes/registers/post-types/properties.php:18
 msgid "New Property"
-msgstr "عقار جديد"
+msgstr "عقارات جديدة"
 
 #: core/includes/registers/post-types/properties.php:19
 msgid "Edit Property"
@@ -1596,7 +1596,7 @@ msgstr "تعديل العقار"
 
 #: core/includes/registers/post-types/properties.php:20
 msgid "Update Property"
-msgstr "تحديث الخاصية"
+msgstr "تحديث العقار"
 
 #: core/includes/registers/post-types/properties.php:21
 msgid "View Property"
@@ -1612,7 +1612,7 @@ msgstr "البحث عن عقار"
 
 #: core/includes/registers/post-types/properties.php:30
 msgid "Properties insighted by this author"
-msgstr "العقارات التي قدمها هذا المؤلف"
+msgstr "العقارات التي استعرضها هذا المؤلف"
 
 #: core/includes/registers/post-types/subscribers.php:8
 msgctxt "Post Type General Name"
@@ -1643,7 +1643,7 @@ msgstr "خصائص المشتركين"
 
 #: core/includes/registers/post-types/subscribers.php:14
 msgid "Parent Subscriber:"
-msgstr "الوالد المشترك:"
+msgstr "المشترك الرئيسي:"
 
 #: core/includes/registers/post-types/subscribers.php:15
 msgid "All Subscribers"
@@ -1659,7 +1659,7 @@ msgstr "مشترك جديد"
 
 #: core/includes/registers/post-types/subscribers.php:19
 msgid "Edit Subscriber"
-msgstr "تعديل بيانات المشترك"
+msgstr "تعديل المشترك"
 
 #: core/includes/registers/post-types/subscribers.php:20
 msgid "Update Subscriber"
@@ -1675,7 +1675,7 @@ msgstr "عرض المشتركين"
 
 #: core/includes/registers/post-types/subscribers.php:23
 msgid "Search Subscriber"
-msgstr "البحث عن مشترك"
+msgstr "البحث عن المشتركين"
 
 #: core/includes/registers/post-types/subscribers.php:30
 msgid "Insert Subscriber"
@@ -1683,7 +1683,7 @@ msgstr "إضافة مشترك"
 
 #: core/includes/registers/post-types/subscribers.php:31
 msgid "Uploaded to this Subscriber"
-msgstr "تم تحميله إلى هذا المشترك"
+msgstr "تم تحميلها إلى هذا المشترك"
 
 #: core/includes/registers/post-types/subscribers.php:32
 msgid "Subscribers list"
@@ -1700,26 +1700,26 @@ msgstr "تصفية قائمة المشتركين"
 #: core/includes/registers/post-types/units.php:10
 msgctxt "Post Type General Name"
 msgid "Units"
-msgstr "وحدات"
+msgstr "الوحدات"
 
 #: core/includes/registers/post-types/units.php:11
 msgctxt "Post Type Singular Name"
 msgid "Unit"
-msgstr "وحدة"
+msgstr "الوحدة"
 
 #: core/includes/registers/post-types/units.php:12
 msgid "Units"
-msgstr "وحدات"
+msgstr "الوحدات"
 
 #: core/includes/registers/post-types/units.php:13
 #: core/includes/registers/post-types/units.php:36
 #: src/js/map/html.js:53
 msgid "Unit"
-msgstr "وحدة"
+msgstr "الوحدة"
 
 #: core/includes/registers/post-types/units.php:14
 msgid "Unit Archives"
-msgstr "أرشيف الوحدة"
+msgstr "أرشيف الوحدات"
 
 #: core/includes/registers/post-types/units.php:15
 msgid "Unit Attributes"
@@ -1744,7 +1744,7 @@ msgstr "وحدة جديدة"
 
 #: core/includes/registers/post-types/units.php:21
 msgid "Edit Unit"
-msgstr "تحرير الوحدة"
+msgstr "تعديل الوحدة"
 
 #: core/includes/registers/post-types/units.php:22
 #: core/template-parts/account/edit-unit.php:373
@@ -1784,7 +1784,7 @@ msgstr[5] "محفوظ <span class=\"count\">(%s)</span>"
 
 #: core/template-parts/account/edit-property.php:21
 msgid "Edit property project:"
-msgstr "تحرير مشروع العقار:"
+msgstr "تحرير مشروع عقاري:"
 
 #: core/template-parts/account/edit-property.php:22
 msgid "Add new property project"
@@ -1792,7 +1792,7 @@ msgstr "إضافة مشروع عقاري جديد"
 
 #: core/template-parts/account/edit-property.php:23
 msgid "Edit property project"
-msgstr "تحرير مشروع العقار"
+msgstr "تحرير مشروع عقاري"
 
 #: core/template-parts/account/edit-property.php:24
 msgid "Add property project"
@@ -1814,15 +1814,15 @@ msgstr "عزيزي «واحة الشاطئ»"
 
 #: core/template-parts/account/edit-property.php:145
 msgid "Pick on map"
-msgstr "اختر موقعًا على الخريطة"
+msgstr "اختر على الخريطة"
 
 #: core/template-parts/account/edit-property.php:151
 msgid "Latitude"
-msgstr "خط العرض"
+msgstr "خط العرض الجغرافي"
 
 #: core/template-parts/account/edit-property.php:164
 msgid "Longitude"
-msgstr "خط الطول"
+msgstr "خط الطول الجغرافي"
 
 #: core/template-parts/account/edit-property.php:208
 msgid "Ownership type"
@@ -1834,7 +1834,7 @@ msgstr "تم الانتهاء من المشروع بالفعل / جاهز"
 
 #: core/template-parts/account/edit-property.php:259
 msgid "Contain Property Types "
-msgstr "أنواع العقارات المضمنة "
+msgstr "تضم أنواع العقارات "
 
 #: core/template-parts/account/edit-property.php:285
 #: core/template-parts/account/edit-unit.php:319
@@ -1864,7 +1864,7 @@ msgstr "تصفح الملفات"
 
 #: core/template-parts/account/edit-unit.php:22
 msgid "Edit property:"
-msgstr "تحرير الخاصية:"
+msgstr "تعديل العقار:"
 
 #: core/template-parts/account/edit-unit.php:22
 msgid "Add new property"
@@ -1874,7 +1874,7 @@ msgstr "إضافة عقار جديد"
 #: core/template-parts/cards/large-card.php:124
 #: core/template-parts/cards/unit-card.php:153
 msgid "Edit property"
-msgstr "تعديل الخاصية"
+msgstr "تعديل العقار"
 
 #: core/template-parts/account/edit-unit.php:24
 msgid "Add property"
@@ -1882,7 +1882,7 @@ msgstr "إضافة عقار"
 
 #: core/template-parts/account/edit-unit.php:134
 msgid "City Walk 4BR Apartment on 2 floor"
-msgstr "شقة «سيتي ووك» مكونة من 4 غرف نوم في الطابق الثاني"
+msgstr "شقة من 4 غرف نوم في «سيتي ووك» في الطابق الثاني"
 
 #: core/template-parts/account/edit-unit.php:146
 msgid "Listing Type"
@@ -1902,7 +1902,7 @@ msgstr "السعر للقدم المربع:"
 
 #: core/template-parts/account/edit-unit.php:204
 msgid "Original price, AED"
-msgstr "السعر الأصلي، درهم إماراتي"
+msgstr "السعر الأصلي، بالدرهم الإماراتي"
 
 #: core/template-parts/account/edit-unit.php:217
 #: single-unit.php:88
@@ -1925,15 +1925,15 @@ msgstr "الحمامات"
 
 #: core/template-parts/account/edit-unit.php:348
 msgid "Delete Property"
-msgstr "حذف الخاصية"
+msgstr "حذف العقار"
 
 #: core/template-parts/account/edit-unit.php:351
 msgid "Are you sure to delete this property?"
-msgstr "هل أنت متأكد من رغبتك في حذف هذه الخاصية؟"
+msgstr "هل أنت متأكد من حذف هذا العقار؟"
 
 #: core/template-parts/account/edit-unit.php:354
 msgid "No"
-msgstr "من"
+msgstr "لا"
 
 #: core/template-parts/account/edit-unit.php:358
 msgid "Yes, Delete"
@@ -1941,15 +1941,15 @@ msgstr "نعم، حذف"
 
 #: core/template-parts/account/edit-unit.php:364
 msgid "New units are saved as drafts for moderation"
-msgstr "يتم حفظ الوحدات الجديدة كمسودات لخضوعها للمراجعة"
+msgstr "يتم حفظ الوحدات الجديدة كمسودات لتخضع للمراجعة"
 
 #: core/template-parts/account/edit-unit.php:375
 msgid "Submit Unit"
-msgstr "إرسال الوحدة"
+msgstr "إضافة وحدة"
 
 #: core/template-parts/account/edit-unit.php:436
 msgid "Select property pictures to include in unit page"
-msgstr "اختر صور العقار التي تريد إدراجها في صفحة الوحدة"
+msgstr "اختر صور العقارات التي تريد إدراجها في صفحة الوحدة"
 
 #: core/template-parts/account/edit-unit.php:440
 msgid "Select all"
@@ -1961,24 +1961,24 @@ msgstr "التحقق من البريد الإلكتروني"
 
 #: core/template-parts/account/email-verification.php:25
 msgid "To use this functionality, you need to verify your email address"
-msgstr "لاستخدام هذه الميزة، عليك التحقق من عنوان بريدك الإلكتروني"
+msgstr "لاستخدام هذه الميزة، يتعين عليك التحقق من عنوان بريدك الإلكتروني"
 
 #: core/template-parts/account/email-verification.php:30
 msgid "Please check your email inbox for the verification email and click on the verification link."
-msgstr "يرجى التحقق من صندوق الوارد في بريدك الإلكتروني للبحث عن رسالة التحقق، ثم النقر على رابط التحقق."
+msgstr "يرجى التحقق من صندوق الوارد في بريدك الإلكتروني للعثور على رسالة التحقق والنقر على رابط التحقق."
 
 #: core/template-parts/account/email-verification.php:34
 msgid "If you did not receive the email, please check your spam folder or click the button below to resend the verification email."
-msgstr "إذا لم تستلم الرسالة الإلكترونية، يرجى التحقق من مجلد الرسائل غير المرغوب فيها أو النقر على الزر أدناه لإعادة إرسال رسالة التحقق."
+msgstr "إذا لم تستلم البريد الإلكتروني، يرجى التحقق من مجلد الرسائل غير المرغوب فيها أو النقر على الزر أدناه لإعادة إرسال بريد التحقق."
 
 #: core/template-parts/account/email-verification.php:40
 msgid "Resend verification email"
-msgstr "إعادة إرسال رسالة البريد الإلكتروني الخاصة بالتحقق"
+msgstr "إعادة إرسال رسالة البريد الإلكتروني للتحقق"
 
 #: core/template-parts/account/list-filters.php:47
 #: core/template-parts/filters/result-filters.php:304
 msgid "Reset filters"
-msgstr "إعادة تعيين عوامل التصفية"
+msgstr "إعادة ضبط المعايير"
 
 #: core/template-parts/account/login-form.php:35
 msgid "Sign in to start selling"
@@ -2042,11 +2042,11 @@ msgstr "حفظ التغييرات"
 #: core/template-parts/account/profile-client.php:188
 #: core/template-parts/account/profile.php:458
 msgid "Avatar"
-msgstr "أفاتار"
+msgstr "الصورة الرمزية"
 
 #: core/template-parts/account/profile.php:37
 msgid "+ Add new distress"
-msgstr "+ إضافة حالة طوارئ جديدة"
+msgstr "+ إضافة إعلان جديد للبيع العاجل"
 
 #: core/template-parts/account/profile.php:37
 msgid "+ Add new property"
@@ -2054,7 +2054,7 @@ msgstr "+ إضافة عقار جديد"
 
 #: core/template-parts/account/profile.php:39
 msgid "My distress"
-msgstr "حزني"
+msgstr "قائمة عقاراتي المعروضة للبيع العاجل"
 
 #: core/template-parts/account/profile.php:39
 msgid "My properties"
@@ -2066,7 +2066,7 @@ msgstr "مشاريعي"
 
 #: core/template-parts/account/profile.php:85
 msgid "My distress (%d)"
-msgstr "مدى انزعاجي (%d)"
+msgstr "قائمة عقاراتي المعروضة للبيع العاجل (%d)"
 
 #: core/template-parts/account/profile.php:85
 msgid "My properties (%d)"
@@ -2074,15 +2074,15 @@ msgstr "عقاراتي (%d)"
 
 #: core/template-parts/account/profile.php:129
 msgid "Gold Star"
-msgstr "النجمة الذهبية"
+msgstr "جولد ستار"
 
 #: core/template-parts/account/profile.php:132
 msgid "Boost your property to get it sold faster"
-msgstr "عزز جاذبية عقارك لبيعه بشكل أسرع"
+msgstr "قم بتسويق عقارك لتسريع عملية بيعه"
 
 #: core/template-parts/account/profile.php:134
 msgid "Get More Eyes, Get More Offers. Fast-Track Your Sale. Priority Listing: Sell 2x Faster."
-msgstr "اجذب المزيد من المشاهدين، واحصل على المزيد من العروض. تسريع عملية البيع. الإعلان ذو الأولوية: بيع أسرع بمقدار الضعف."
+msgstr "اجذب المزيد من الزوار، واحصل على المزيد من العروض. تسريع عملية البيع. الإدراج في قائمة الأولوية: بيع أسرع بمقدار الضعف."
 
 #: core/template-parts/account/profile.php:137
 msgid "How it works"
@@ -2121,7 +2121,7 @@ msgstr "أدخل كلمة مرور جديدة"
 
 #: core/template-parts/account/reset-password.php:39
 msgid "Repeat password"
-msgstr "أعد كتابة كلمة المرور"
+msgstr "أعد إدخال كلمة المرور"
 
 #: core/template-parts/account/reset-password.php:45
 msgid "Update password"
@@ -2164,7 +2164,7 @@ msgstr "صورة الوحدة"
 #: core/template-parts/sliders/unit-thumbs-slider.php:60
 #: template-parts/sections/single/thumbs-slider.php:17
 msgid "Prev"
-msgstr "ترجمة"
+msgstr "السابق"
 
 #: core/template-parts/cards/unit-card.php:59
 #: core/template-parts/sliders/unit-thumbs-slider.php:65
@@ -2180,11 +2180,11 @@ msgstr "-%d%%"
 #: core/template-parts/cards/unit-card.php:89
 msgctxt "followed by developer"
 msgid "Property by"
-msgstr "العقار من"
+msgstr "عقارات من"
 
 #: core/template-parts/cards/unit-card.php:164
 msgid "Boost property"
-msgstr "خاصية Boost"
+msgstr "تعزيز العقارات"
 
 #: core/template-parts/cards/unit-square-card.php:55
 msgid "Original Price:"
@@ -2197,11 +2197,11 @@ msgstr "الصفحة الرئيسية"
 #: core/template-parts/common/contact-panel.php:20
 #: page-mortgage-calculator.php:40
 msgid "Free consultation and pre-approval. A DDA specialist will contact you and advise on the next step."
-msgstr "استشارة مجانية وموافقة مسبقة. سيتصل بك أحد المتخصصين في قانون الإسكان (DDA) ويقدم لك المشورة بشأن الخطوة التالية."
+msgstr "استشارة مجانية وموافقة مسبقة. سيتصل بك أحد المتخصصين في DDA ويقدم لك المشورة بشأن الخطوة التالية."
 
 #: core/template-parts/common/contact-panel.php:24
 msgid "Contact broker to learn more and get special offers."
-msgstr "اتصل بالوسيط لمعرفة المزيد والحصول على العروض الخاصة."
+msgstr "اتصل بالوسيط العقاري لمعرفة المزيد والحصول على عروض خاصة."
 
 #: core/template-parts/common/contact-panel.php:55
 #: page-mortgage-calculator.php:43
@@ -2219,7 +2219,7 @@ msgstr "المكتب 1-042S،"
 
 #: core/template-parts/common/footer.php:18
 msgid "Dubai Investment Park 1,"
-msgstr "مجمع دبي للاستثمار 1،"
+msgstr "حديقة دبي للاستثمار 1،"
 
 #: core/template-parts/common/footer.php:19
 msgid "Dubai, United Arab Emirates."
@@ -2231,7 +2231,7 @@ msgstr "الدعم المباشر"
 
 #: core/template-parts/common/footer.php:36
 msgid "Popular Search"
-msgstr "البحث الأكثر شيوعًا"
+msgstr "البحث الشائع"
 
 #: core/template-parts/common/footer.php:55
 msgid "Discovery"
@@ -2247,7 +2247,7 @@ msgstr "© East Property – جميع الحقوق محفوظة"
 
 #: core/template-parts/common/header.php:16
 msgid "Vector logotype"
-msgstr "شعار فيكتور"
+msgstr "شعار متجه"
 
 #: core/template-parts/common/header.php:37
 msgid "Create"
@@ -2259,7 +2259,7 @@ msgstr "إنشاء حساب"
 
 #: core/template-parts/common/header.php:44
 msgid "Top up"
-msgstr "إعادة التعبئة"
+msgstr "إضافة رصيد"
 
 #: core/template-parts/common/header.php:49
 msgid "Boost Points"
@@ -2300,7 +2300,7 @@ msgstr "الدعم:"
 
 #: core/template-parts/email/base.php:65
 msgid "If this was not you, please ignore this message or contact us."
-msgstr "إذا لم تكن أنت المقصود، فيُرجى تجاهل هذه الرسالة أو الاتصال بنا."
+msgstr "إذا لم تكن أنت المقصود، يرجى تجاهل هذه الرسالة أو الاتصال بنا."
 
 #: core/template-parts/filters/result-filters.php:57
 #: core/template-parts/filters/result-filters.php:264
@@ -2312,7 +2312,7 @@ msgstr "بحث..."
 
 #: core/template-parts/filters/result-filters.php:126
 msgid "Min price"
-msgstr "أنا بخيل"
+msgstr "السعر الأدنى"
 
 #: core/template-parts/filters/result-filters.php:136
 msgid "Max price"
@@ -2328,11 +2328,11 @@ msgstr "إلغاء"
 #: core/template-parts/filters/result-filters.php:215
 #: core/template-parts/filters/search-tabs.php:124
 msgid "Apply"
-msgstr "تقديم الطلب"
+msgstr "تقدم بطلبك"
 
 #: core/template-parts/filters/result-filters.php:288
 msgid "Max Area"
-msgstr "المساحة القصوى"
+msgstr "مساحة قصوى"
 
 #: core/template-parts/filters/search-tabs.php:146
 #: core/template-parts/filters/search-tabs.php:167
@@ -2345,15 +2345,15 @@ msgstr "بحث"
 
 #: core/template-parts/filters/search-tabs.php:191
 msgid "Distress deals are sold below market price"
-msgstr "تُباع الصفقات الطارئة بسعر أقل من سعر السوق"
+msgstr "تُعرض صفقات البيع العاجلة بأسعار أقل من سعر السوق"
 
 #: core/template-parts/filters/search-tabs.php:194
 msgid "Owners who need a fast exit, verified by us and limited in number. These listings are not published openly — we send them out on request."
-msgstr "الملاك الذين يحتاجون إلى بيع سريع، وقد تم التحقق منهم من قبلنا، وعددهم محدود. لا يتم نشر هذه الإعلانات علنًا — بل نرسلها بناءً على الطلب."
+msgstr "مالكو العقارات الذين يحتاجون إلى بيع سريع، تم التحقق منهم من قبلنا وعددهم محدود. لا يتم نشر هذه القوائم علنًا — بل نرسلها عند الطلب."
 
 #: core/template-parts/filters/search-tabs.php:200
 msgid "Explore distress deals"
-msgstr "اكتشف العروض الاستثنائية"
+msgstr "اكتشف عروض البيع العاجلة"
 
 #: core/template-parts/filters/search-tabs.php:203
 msgid "Sell my property"
@@ -2361,7 +2361,7 @@ msgstr "بيع عقاري"
 
 #: core/template-parts/filters/search-tabs.php:207
 msgid "One short call: we send the current list and check your property against buyer demand."
-msgstr "مكالمة قصيرة واحدة: نرسل إليك القائمة الحالية ونقارن عقارك بمتطلبات المشترين."
+msgstr "مكالمة هاتفية قصيرة واحدة: نرسل لك القائمة الحالية ونقارن عقارك بمتطلبات المشترين."
 
 #: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:5
 msgid "Get a quick consultation"
@@ -2369,7 +2369,7 @@ msgstr "احصل على استشارة سريعة"
 
 #: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:13
 msgid "Message us on WhatsApp — it is the fastest way to reach our team with any question about pricing, availability or a viewing."
-msgstr "راسلنا عبر واتساب — فهي أسرع طريقة للتواصل مع فريقنا بشأن أي استفسار يتعلق بالأسعار أو التوافر أو تحديد موعد لزيارة العقار."
+msgstr "راسلنا عبر WhatsApp — فهي أسرع طريقة للاتصال بفريقنا لطرح أي أسئلة حول الأسعار أو التوافر أو تحديد موعد للمشاهدة."
 
 #: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:25
 msgid "Recommended"
@@ -2381,15 +2381,15 @@ msgstr "واتساب — أسرع رد"
 
 #: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:36
 msgid "Best for urgent questions, pricing, and quick consultation."
-msgstr "الأفضل للأسئلة العاجلة، والاستفسارات المتعلقة بالأسعار، والاستشارة السريعة."
+msgstr "الأفضل للأسئلة العاجلة، والأسعار، والاستشارة السريعة."
 
 #: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:42
 msgid "Hello! I would like a quick consultation about a distress sale of my property."
-msgstr "مرحبًا! أود الحصول على استشارة سريعة بشأن بيع عقاري في ظروف طارئة."
+msgstr "مرحبًا! أود الحصول على استشارة سريعة بشأن بيع عقاري بشكل عاجل."
 
 #: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:49
 msgid "Open WhatsApp"
-msgstr "افتح تطبيق WhatsApp"
+msgstr "فتح تطبيق WhatsApp"
 
 #: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:55
 msgid "We usually reply within 5–10 minutes during working hours."
@@ -2397,7 +2397,7 @@ msgstr "عادةً ما نرد في غضون 5 إلى 10 دقائق خلال س�
 
 #: core/template-parts/modals/contact-manager-modal/contact-manager-modal.php:66
 msgid "Your information is kept strictly confidential"
-msgstr "يتم الحفاظ على سرية معلوماتك بشكل صارم"
+msgstr "تُحفظ معلوماتك بسرية تامة"
 
 #: core/template-parts/properties/map.php:78
 msgid "Explore Project"
@@ -2414,7 +2414,7 @@ msgstr "مشاركة"
 #: core/template-parts/properties/property-units-list.php:67
 #: single-unit.php:266
 msgid "Property information"
-msgstr "معلومات عن العقار"
+msgstr "معلومات عن العقارات"
 
 #: core/template-parts/properties/property-single.php:143
 #: single-unit.php:370
@@ -2437,11 +2437,11 @@ msgstr "المرافق"
 
 #: core/template-parts/properties/property-units-list.php:57
 msgid "View object page"
-msgstr "عرض صفحة الكائن"
+msgstr "عرض صفحة العنصر"
 
 #: core/template-parts/search-results/offmarket-cta.php:10
 msgid "Hello! I am interested in more off-market deals in Dubai. Could you share what is available now?"
-msgstr "مرحبًا! أنا مهتم بمعرفة المزيد عن الصفقات غير المعروضة في السوق في دبي. هل يمكنك إطلاعي على ما هو متاح حاليًا؟"
+msgstr "مرحبًا! أنا مهتم بمزيد من الصفقات غير المعروضة في السوق في دبي. هل يمكنكم إطلاعي على ما هو متاح حاليًا؟"
 
 #: core/template-parts/search-results/offmarket-cta.php:24
 msgid "Unlock more off-market deals"
@@ -2449,7 +2449,7 @@ msgstr "اكتشف المزيد من الصفقات غير المعروضة في
 
 #: core/template-parts/search-results/properties-list.php:7
 msgid "Explore a wide selection of properties across Dubai. From modern apartments and family villas to premium off-plan opportunities  in the city’s most sought-after communities. Compare prices, locations, and layouts in one place and find the property that matches your goals and budget."
-msgstr "استكشف مجموعة واسعة من العقارات في جميع أنحاء دبي. بدءًا من الشقق العصرية والفيلات العائلية وصولاً إلى الفرص العقارية المتميزة قيد الإنشاء في أكثر الأحياء رواجًا في المدينة. قارن بين الأسعار والمواقع والتصميمات في مكان واحد، واعثر على العقار الذي يتناسب مع أهدافك وميزانيتك."
+msgstr "استكشف مجموعة واسعة من العقارات في جميع أنحاء دبي. بدءًا من الشقق العصرية والفيلات العائلية وصولاً إلى الفرص المتميزة للعقارات قيد الإنشاء في أكثر الأحياء رواجًا في المدينة. قارن بين الأسعار والمواقع والتصميمات في مكان واحد واعثر على العقار الذي يتناسب مع أهدافك وميزانيتك."
 
 #: core/template-parts/search-results/properties-list.php:23
 #: core/template-parts/search-results/tabs.php:16
@@ -2464,11 +2464,11 @@ msgstr "عرض الخريطة"
 
 #: core/template-parts/search-results/tabs.php:39
 msgid "Aliquam lacinia diam quis lacus euismod"
-msgstr "بعض اللاسينيا ديام كيس لاكوس إيوزيمود"
+msgstr "Aliquam lacinia diam quis lacus euismod"
 
 #: core/template-parts/search-results/units-list.php:8
 msgid "Browse a wide selection of apartments in Dubai. From smart studios to spacious family residences and premium off-plan units in top locations. Compare prices, layouts, and communities in one place and find the apartment that fits your lifestyle, goals, and budget."
-msgstr "تصفح مجموعة واسعة من الشقق في دبي. بدءًا من الاستوديوهات العصرية وصولاً إلى المساكن العائلية الفسيحة والوحدات الفاخرة قيد الإنشاء في أفضل المواقع. قارن بين الأسعار والتصميمات والمجمعات السكنية في مكان واحد، واعثر على الشقة التي تناسب نمط حياتك وأهدافك وميزانيتك."
+msgstr "تصفح مجموعة واسعة من الشقق في دبي. بدءًا من الاستوديوهات الذكية وصولاً إلى المساكن العائلية الفسيحة والوحدات الفاخرة قيد الإنشاء في أفضل المواقع. قارن بين الأسعار والتصميمات والمجمعات السكنية في مكان واحد واعثر على الشقة التي تناسب نمط حياتك وأهدافك وميزانيتك."
 
 #: core/template-parts/ui/dropdown.php:41
 msgid "Arrow down"
@@ -2492,11 +2492,11 @@ msgstr "العنوان"
 
 #: functions.php:34
 msgid "Footer | Popular Search"
-msgstr "التذييل | عمليات البحث الشائعة"
+msgstr "تذييل الصفحة | عمليات البحث الشائعة"
 
 #: functions.php:35
 msgid "Footer | Discovery"
-msgstr "التذييل | ديسكفري"
+msgstr "التذييل | الاكتشاف"
 
 #: functions.php:36
 msgid "Footer | Quick Links"
@@ -2513,11 +2513,11 @@ msgstr "الحساب"
 
 #. Template Name of the theme
 msgid "Distress Units Listing Page"
-msgstr "صفحة قائمة وحدات الطوارئ"
+msgstr "صفحة قائمة الوحدات المعروضة للبيع العاجل"
 
 #: page-distress.php:31
 msgid "Below-market deals in UAE"
-msgstr "صفقات بأسعار أقل من سعر السوق في الإمارات العربية المتحدة"
+msgstr "صفقات بأسعار أقل من السوق في الإمارات العربية المتحدة"
 
 #. Template Name of the theme
 msgid "Homepage"
@@ -2550,27 +2550,27 @@ msgstr "لم يتم العثور على أي مقالات إخبارية"
 
 #: page-news.php:46
 msgid "We are preparing the latest market updates and property news. Please check back later."
-msgstr "نحن نعمل حالياً على إعداد أحدث المستجدات في السوق وأخبار العقارات. يرجى العودة لاحقاً."
+msgstr "نحن نعمل حالياً على إعداد آخر مستجدات السوق وأخبار العقارات. يرجى العودة لاحقاً."
 
 #. Template Name of the theme
 msgid "Off Plan Units Listing Page"
-msgstr "صفحة عرض الوحدات قيد الإنشاء"
+msgstr "صفحة قوائم الوحدات المباعة على المخطط"
 
 #. Template Name of the theme
 msgid "Properties Listing Page"
-msgstr "صفحة قائمة العقارات"
+msgstr "صفحة قوائم العقارات"
 
 #. Template Name of the theme
 msgid "Secondary Units Listing Page"
-msgstr "صفحة قائمة الوحدات الثانوية"
+msgstr "صفحة قوائم الوحدات المعروضة في السوق الثانوية"
 
 #. Template Name of the theme
 msgid "Text Page"
-msgstr "صفحة النص"
+msgstr "صفحة نصية"
 
 #: single-developers.php:19
 msgid "Buy properties from developer"
-msgstr "شراء عقارات من المطور العقاري"
+msgstr "شراء العقارات من المطور العقاري"
 
 #: single-project.php:31
 msgid "Request quote"
@@ -2583,7 +2583,7 @@ msgstr "المرافق"
 #: single-unit.php:70
 msgctxt "followed by project"
 msgid "Property by"
-msgstr "العقار من"
+msgstr "عقارات من"
 
 #: single-unit.php:90
 msgid "of original price"
@@ -2603,7 +2603,7 @@ msgid ""
 "                                                                        require any commitment from your side"
 msgstr ""
 "تواصل مع الوسيط عبر البريد الإلكتروني أو الهاتف أو واتساب. الخدمة مجانية ولا\n"
-"تتطلب أي التزام من جانبك"
+" تتطلب أي التزام من جانبك"
 
 #: single-unit.php:222
 #: template-parts/sections/mortgage-calculator/calculator.php:85
@@ -2614,11 +2614,11 @@ msgstr "الدفعة الأولى"
 
 #: single-unit.php:224
 msgid "Sales launch"
-msgstr "انطلاق المبيعات"
+msgstr "بدء المبيعات"
 
 #: single-unit.php:232
 msgid "During construction"
-msgstr "أثناء البناء"
+msgstr "أثناء الإنشاء"
 
 #: single-unit.php:234
 msgid "installments"
@@ -2655,7 +2655,7 @@ msgstr "تم نسخ الرابط إلى الحافظة!"
 
 #: single.php:167
 msgid "Updated: %s"
-msgstr "تم التحديث: %s"
+msgstr "تاريخ التحديث: %s"
 
 #: single.php:182
 msgid "Other news"
@@ -2668,19 +2668,19 @@ msgstr "المشاريع في %s"
 
 #: template-parts/sections/index/about.php:10
 msgid "Why East Property"
-msgstr "لماذا East Property؟"
+msgstr "لماذا East Property"
 
 #: template-parts/sections/index/about.php:30
 msgid "About img"
-msgstr "حول الصورة"
+msgstr "نبذة عن img"
 
 #: template-parts/sections/index/distress.php:16
 msgid "Distress deals in Dubai"
-msgstr "صفقات الطوارئ في دبي"
+msgstr "عروض بيع عاجلة في دبي"
 
 #: template-parts/sections/index/distress.php:20
 msgid "DISTRESS DEALS"
-msgstr "صفقات الطوارئ"
+msgstr "عروض بيع عاجلة"
 
 #: template-parts/sections/index/distress.php:21
 msgid "Own Dubai for Less"
@@ -2688,15 +2688,15 @@ msgstr "امتلك عقارًا في دبي بسعر أقل"
 
 #: template-parts/sections/index/distress.php:22
 msgid "Premium properties from motivated sellers at below-market prices."
-msgstr "عقارات فاخرة معروضة من بائعين حريصين على البيع بأسعار أقل من أسعار السوق."
+msgstr "عقارات فاخرة من بائعين راغبين في البيع بأسعار أقل من أسعار السوق."
 
 #: template-parts/sections/index/distress.php:23
 msgid "Limited opportunities. The best deals move fast."
-msgstr "الفرص محدودة. أفضل العروض تُباع بسرعة."
+msgstr "الفرص محدودة. أفضل الصفقات تُباع بسرعة."
 
 #: template-parts/sections/index/distress.php:25
 msgid "Explore Distress Deals"
-msgstr "اكتشف عروض «ديسترس»"
+msgstr "اكتشف عروض البيع العاجلة"
 
 #: template-parts/sections/index/distress.php:31
 msgid "Your Dubai Home. For Less."
@@ -2708,7 +2708,7 @@ msgstr "عقارات حصرية بأسعار أقل من أسعار السوق."
 
 #: template-parts/sections/index/distress.php:33
 msgid "Move fast — the best deals don’t wait."
-msgstr "سارع بالتصرف — فالصفقات الأفضل لا تنتظر."
+msgstr "سارع بالتصرف — أفضل الصفقات لا تنتظر."
 
 #: template-parts/sections/index/distress.php:35
 msgid "View Deals"
@@ -2716,11 +2716,11 @@ msgstr "عرض العروض"
 
 #: template-parts/sections/index/hero.php:32
 msgid "Available immediately"
-msgstr "متوفر فورًا"
+msgstr "متاح فورًا"
 
 #: template-parts/sections/index/hero.php:40
 msgid "In construction"
-msgstr "في مجال البناء"
+msgstr "قيد الإنشاء"
 
 #: template-parts/sections/index/map.php:8
 msgid "Dubai map"
@@ -2732,7 +2732,7 @@ msgstr "عرض جميع العقارات الجديدة"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:8
 msgid "Residency status"
-msgstr "وضع الإقامة"
+msgstr "حالة الإقامة"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:16
 msgid "UAE resident"
@@ -2740,11 +2740,11 @@ msgstr "مقيم في الإمارات العربية المتحدة"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:25
 msgid "Non-resident"
-msgstr "غير مقيم"
+msgstr "غير المقيم"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:32
 msgid "Minimum income"
-msgstr "الدخل الأدنى"
+msgstr "الحد الأدنى للدخل"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:36
 msgid "Age"
@@ -2752,7 +2752,7 @@ msgstr "العمر"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:37
 msgid "from 21, loan repaid by 65"
-msgstr "ابتداءً من سن 21، ويتم سداد القرض بحلول سن 65"
+msgstr "ابتداءً من 21، ويتم سداد القرض بحلول سن 65"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:40
 msgid "Bank financing"
@@ -2776,15 +2776,15 @@ msgstr "ابتداءً من 300,000"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:77
 msgid "to 20,000,000"
-msgstr "إلى 20,000,000"
+msgstr "حتى 20,000,000"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:88
 msgid "Upfront equity contribution (min 20% for residents, 40% for non-residents)"
-msgstr "مساهمة رأس المال الأولية (20% كحد أدنى للمقيمين، و40% لغير المقيمين)"
+msgstr "مساهمة رأس المال الأولي (20% كحد أدنى للمقيمين، و40% لغير المقيمين)"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:114
 msgid "from 20"
-msgstr "ابتداءً من 20"
+msgstr "من 20"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:115
 msgid "to 80"
@@ -2796,7 +2796,7 @@ msgstr "مدة القرض"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:126
 msgid "Mortgage duration in years (up to 25 years)"
-msgstr "مدة القرض العقاري بالسنوات (حتى 25 سنة)"
+msgstr "مدة الرهن العقاري بالسنوات (حتى 25 سنة)"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:140
 msgid "years"
@@ -2816,7 +2816,7 @@ msgstr "سعر الفائدة"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:164
 msgid "Annual interest rate offered by UAE mortgage lenders"
-msgstr "معدل الفائدة السنوي الذي تقدمه مؤسسات الإقراض العقاري في الإمارات العربية المتحدة"
+msgstr "معدل الفائدة السنوي الذي تقدمه مؤسسات التمويل العقاري في الإمارات العربية المتحدة"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:190
 msgid "from 2,5"
@@ -2832,15 +2832,15 @@ msgstr "الدفعة الشهرية"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:209
 msgid "Loan"
-msgstr "قرض"
+msgstr "القرض"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:217
 msgid "Interest paid"
-msgstr "الفوائد المدفوعة"
+msgstr "الفائدة المدفوعة"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:231
 msgid "Principal"
-msgstr "الصفحة الرئيسية"
+msgstr "الرئيسي"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:237
 msgid "Interest over term"
@@ -2848,19 +2848,19 @@ msgstr "الفائدة على مدى المدة"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:245
 msgid "Preliminary estimate. The final rate depends on the bank, your profile, and the property."
-msgstr "تقدير أولي. يعتمد السعر النهائي على البنك وبياناتك الشخصية والعقار."
+msgstr "تقدير أولي. يعتمد السعر النهائي على البنك وملفك الشخصي والعقار."
 
 #: template-parts/sections/mortgage-calculator/calculator.php:260
 msgid "Download calculation"
-msgstr "تنزيل الحسابات"
+msgstr "تنزيل الحساب"
 
 #: template-parts/sections/mortgage-calculator/calculator.php:266
 msgid "DDA mortgage services"
-msgstr "خدمات الرهن العقاري من DDA"
+msgstr "خدمات الرهن العقاري التي تقدمها هيئة دبي للتطوير العقاري (DDA)"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:7
 msgid "Full cost of mortgage entry"
-msgstr "التكلفة الإجمالية لبدء الرهن العقاري"
+msgstr "التكلفة الإجمالية للرهن العقاري"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:24
 msgid "DLD fee (4% + 580 AED)"
@@ -2868,7 +2868,7 @@ msgstr "رسوم DLD (4% + 580 درهم إماراتي)"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:33
 msgid "Agency commission (2%)"
-msgstr "عمولة الوكالة (2٪)"
+msgstr "عمولة الوكالة (2%)"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:42
 msgid "Bank fee (up to 1% of loan)"
@@ -2884,7 +2884,7 @@ msgstr "تسجيل الرهن العقاري (0.25% + 290 درهم إمارات�
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:69
 msgid "Total"
-msgstr "المجموع"
+msgstr "الإجمالي"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:82
 msgid "The deal in 6 steps"
@@ -2897,12 +2897,12 @@ msgstr "الموافقة المسبقة"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:91
 msgid "Preliminary approval from the bank"
-msgstr "موافقة مبدئية من البنك"
+msgstr "الموافقة المبدئية من البنك"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:98
 #: src/js/mortgage-calculator/modules/pdf/template.js:173
 msgid "MOU (Form F)"
-msgstr "مذكرة التفاهم (النموذج F)"
+msgstr "مذكرة تفاهم (نموذج F)"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:99
 msgid "Sales contract signing, ~10% deposit"
@@ -2910,7 +2910,7 @@ msgstr "توقيع عقد البيع، دفعة مقدمة بنسبة 10٪ تق�
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:106
 msgid "Bank valuation"
-msgstr "تقييم البنوك"
+msgstr "تقييم مصرفي"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:107
 msgid "Property valuation inspection"
@@ -2923,11 +2923,11 @@ msgstr "الموافقة النهائية"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:115
 msgid "Final mortgage offer & facility letter"
-msgstr "العرض النهائي للرهن العقاري وخطاب التسهيل"
+msgstr "العرض النهائي للرهن العقاري وخطاب التسهيلات"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:122
 msgid "DLD registration"
-msgstr "تسجيل DLD"
+msgstr "التسجيل في DLD"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:123
 msgid "Registration of ownership and mortgage"
@@ -2935,7 +2935,7 @@ msgstr "تسجيل الملكية والرهن العقاري"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:130
 msgid "Funds transfer & keys"
-msgstr "تحويل الأموال والمفاتيح"
+msgstr "تحويل الأموال وتسليم المفاتيح"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:131
 msgid "Disbursement of funds and key handover"
@@ -2943,7 +2943,7 @@ msgstr "صرف الأموال وتسليم المفاتيح"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:138
 msgid "4–8 weeks from MOU to keys · full process 30–100 days"
-msgstr "4–8 أسابيع من توقيع مذكرة التفاهم حتى تسليم المفاتيح · مدة العملية الكاملة 30–100 يومًا"
+msgstr "4–8 أسابيع من توقيع مذكرة التفاهم حتى تسليم المفاتيح · مدة العملية الكاملة 30–100 يوم"
 
 #: template-parts/sections/mortgage-calculator/faq.php:5
 msgid "Can a non-resident get a mortgage in Dubai?"
@@ -2951,7 +2951,7 @@ msgstr "هل يمكن لغير المقيم الحصول على قرض عقار�
 
 #: template-parts/sections/mortgage-calculator/faq.php:6
 msgid "Yes. Non-residents can get a mortgage with a down payment from 40% and verified income from 10,000 USD per month."
-msgstr "نعم. يمكن لغير المقيمين الحصول على قرض عقاري بشرط دفع دفعة أولى بنسبة 40٪ ودخل مؤكد يبلغ 10,000 دولار أمريكي شهريًّا."
+msgstr "نعم. يمكن لغير المقيمين الحصول على قرض عقاري بدفعة أولى تبدأ من 40% ودخل مؤكد يبلغ 10,000 دولار أمريكي شهريًا."
 
 #: template-parts/sections/mortgage-calculator/faq.php:10
 msgid "Is life insurance mandatory?"
@@ -2963,19 +2963,19 @@ msgstr "نعم، تشترط البنوك في الإمارات العربية ا
 
 #: template-parts/sections/mortgage-calculator/faq.php:15
 msgid "Can I get a mortgage on an off-plan property?"
-msgstr "هل يمكنني الحصول على قرض عقاري لشراء عقار قيد الإنشاء؟"
+msgstr "هل يمكنني الحصول على قرض عقاري لشراء عقار على المخطط؟"
 
 #: template-parts/sections/mortgage-calculator/faq.php:16
 msgid "Yes, mortgages are available for completed as well as off-plan projects from authorized developers with up to 50% financing."
-msgstr "نعم، تتوفر قروض الرهن العقاري للمشاريع المكتملة وكذلك للمشاريع قيد الإنشاء من المطورين المعتمدين، مع تمويل يصل إلى 50%."
+msgstr "نعم، تتوفر قروض الرهن العقاري للمشاريع المكتملة وكذلك المشاريع قيد الإنشاء من المطورين المعتمدين بتمويل يصل إلى 50%."
 
 #: template-parts/sections/mortgage-calculator/faq.php:20
 msgid "How long does the whole process take?"
-msgstr "كم من الوقت تستغرق العملية برمتها؟"
+msgstr "كم من الوقت تستغرق العملية بأكملها؟"
 
 #: template-parts/sections/mortgage-calculator/faq.php:21
 msgid "The entire process typically takes between 30 and 100 days from the initial application to the key handover and deed registration."
-msgstr "تستغرق العملية برمتها عادةً ما بين 30 و100 يومًا، بدءًا من تقديم الطلب الأولي وحتى تسليم المفاتيح وتسجيل سند الملكية."
+msgstr "تستغرق العملية بأكملها عادةً ما بين 30 و100 يومًا بدءًا من تقديم الطلب الأولي وحتى تسليم المفاتيح وتسجيل سند الملكية."
 
 #: template-parts/sections/mortgage-calculator/faq.php:25
 msgid "What is pre-approval and how long is it valid?"
@@ -2991,7 +2991,7 @@ msgstr "ما هي التكاليف الأخرى بخلاف الدفعة الأو
 
 #: template-parts/sections/mortgage-calculator/faq.php:31
 msgid "Additional costs include the DLD fee (4% + 580 AED), agency commission (2%), bank processing fee (up to 1%), property valuation, and mortgage registration."
-msgstr "وتشمل التكاليف الإضافية رسوم إدارة الأراضي والعقارات (4% + 580 درهم إماراتي)، وعمولة الوكالة (2%)، ورسوم المعالجة المصرفية (تصل إلى 1%)، وتقييم العقار، وتسجيل الرهن العقاري."
+msgstr "تشمل التكاليف الإضافية رسوم دائرة الأراضي والأملاك في دبي (4% + 580 درهم إماراتي)، وعمولة الوكالة (2%)، ورسوم المعالجة المصرفية (تصل إلى 1%)، وتقييم العقار، وتسجيل الرهن العقاري."
 
 #: template-parts/sections/mortgage-calculator/faq.php:40
 msgid "Questions and answers"
@@ -3007,7 +3007,7 @@ msgstr "دبي"
 
 #: template-parts/sections/mortgage-calculator/hero.php:12
 msgid "Monthly payment, full cost of entering the deal, and a comparison of mortgage vs. developer payment plan — in a single calculation."
-msgstr "الدفعة الشهرية، والتكلفة الإجمالية للدخول في الصفقة، ومقارنة بين الرهن العقاري وخطة السداد التي يقدمها المطور — كل ذلك في حساب واحد."
+msgstr "الدفعة الشهرية، والتكلفة الإجمالية لإبرام الصفقة، ومقارنة بين الرهن العقاري وخطة السداد التي يقدمها المطور — في عملية حسابية واحدة."
 
 #: template-parts/sections/mortgage-calculator/hero.php:16
 msgid "Free consultation and pre-approval. Response within 15 minutes"
@@ -3015,12 +3015,12 @@ msgstr "استشارة مجانية وموافقة مسبقة. الرد في غ�
 
 #: template-parts/sections/mortgage-calculator/off-plan.php:26
 msgid "Mortgage on an off-plan property"
-msgstr "رهن عقاري على عقار قيد الإنشاء"
+msgstr "الرهن العقاري على عقار قيد الإنشاء"
 
 #. translators: %s: 50% complete
 #: template-parts/sections/mortgage-calculator/off-plan.php:34
 msgid "An off-plan mortgage becomes available once the building is more than %s, the buyer has paid over 50%% of the price, and the developer is accredited by the bank."
-msgstr "يصبح القرض العقاري على المخطط متاحًا بمجرد أن يتجاوز تقدم البناء نسبة %s، وأن يكون المشتري قد سدد أكثر من 50%% من السعر، وأن يكون المطور معتمدًا من قبل البنك."
+msgstr "يصبح الرهن العقاري على المخطط متاحًا بمجرد أن يتجاوز بناء المبنى %s، وأن يكون المشتري قد سدد أكثر من 50%% من السعر، وأن يكون المطور معتمدًا من قبل البنك."
 
 #: template-parts/sections/mortgage-calculator/off-plan.php:35
 msgid "50% complete"
@@ -3028,7 +3028,7 @@ msgstr "تم إنجاز 50%"
 
 #: template-parts/sections/mortgage-calculator/off-plan.php:40
 msgid "Before that stage, buyers use the developer’s payment plan."
-msgstr "قبل تلك المرحلة، يستفيد المشترون من خطة السداد التي يقدمها المطور."
+msgstr "وقبل الوصول إلى تلك المرحلة، يستخدم المشترون خطة السداد التي يقدمها المطور العقاري."
 
 #: template-parts/sections/mortgage-calculator/off-plan.php:51
 msgid "Learn more"
@@ -3040,11 +3040,11 @@ msgstr "الخبرة في مجالات LTV / AECB / DBR"
 
 #: template-parts/sections/mortgage-calculator/why-dda.php:6
 msgid "In-house mortgage advisory department"
-msgstr "قسم الاستشارات العقارية الداخلي"
+msgstr "قسم استشارات الرهن العقاري الداخلي"
 
 #: template-parts/sections/mortgage-calculator/why-dda.php:9
 msgid "Direct Negotiations with Banks"
-msgstr "المفاوضات المباشرة مع البنوك"
+msgstr "مفاوضات مباشرة مع البنوك"
 
 #: template-parts/sections/mortgage-calculator/why-dda.php:10
 msgid "Tailored terms based on your profile"
@@ -3060,7 +3060,7 @@ msgstr "استشارة مجانية وموافقة مسبقة"
 
 #: template-parts/sections/mortgage-calculator/why-dda.php:17
 msgid "RU / EN / AR"
-msgstr "يمين / الإنجليزية / الفرنسية"
+msgstr "RU / EN / AR"
 
 #: template-parts/sections/mortgage-calculator/why-dda.php:18
 msgid "Response within 15 minutes"
@@ -3068,11 +3068,11 @@ msgstr "الرد في غضون 15 دقيقة"
 
 #: template-parts/sections/mortgage-calculator/why-dda.php:21
 msgid "We Work with Non-Residents"
-msgstr "نحن نتعامل مع غير المقيمين"
+msgstr "نحن نعمل مع غير المقيمين"
 
 #: template-parts/sections/mortgage-calculator/why-dda.php:22
 msgid "Full end-to-end support for purchases from abroad"
-msgstr "دعم شامل من البداية إلى النهاية للمشتريات من الخارج"
+msgstr "دعم شامل ومتكامل لعمليات الشراء من الخارج"
 
 #: template-parts/sections/mortgage-calculator/why-dda.php:25
 msgid "Islamic Financing"
@@ -3084,11 +3084,11 @@ msgstr "المرابحة · الإيجارة · المشاركة → صفحة م
 
 #: template-parts/sections/mortgage-calculator/why-dda.php:34
 msgid "Why DDA"
-msgstr "لماذا DDA؟"
+msgstr "لماذا DDA"
 
 #: src/js/filters.js:19
 msgid "beds"
-msgstr "غرف نوم"
+msgstr "غرف النوم"
 
 #: src/js/filters.js:19
 msgid "bed"
@@ -3096,7 +3096,7 @@ msgstr "غرفة نوم"
 
 #: src/js/filters.js:24
 msgid "baths"
-msgstr "حمامات"
+msgstr "الحمامات"
 
 #: src/js/filters.js:24
 msgid "bath"
@@ -3117,7 +3117,7 @@ msgstr "مقيم في الإمارات العربية المتحدة"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:18
 msgid "Non-Resident"
-msgstr "غير مقيم"
+msgstr "غير المقيم"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:24
 msgid "Mortgage Calculation — East Property"
@@ -3149,11 +3149,11 @@ msgstr "تقدير تمويل العقار وتفاصيل التكاليف ال�
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:51
 msgid "Estimated Monthly Payment"
-msgstr "القسط الشهري المقدر"
+msgstr "الدفعة الشهرية المقدرة"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:52
 msgid "/ month"
-msgstr "/ شهريًّا"
+msgstr "/ الشهر"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:56
 msgid "Profile"
@@ -3161,7 +3161,7 @@ msgstr "الملف الشخصي"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:60
 msgid "Tenure"
-msgstr "مدة الخدمة"
+msgstr "مدة الحيازة"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:61
 msgid "%s Years"
@@ -3186,7 +3186,7 @@ msgstr "معايير القرض"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:94
 msgid "Property Price"
-msgstr "سعر العقار"
+msgstr "أسعار العقارات"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:98
 #: src/js/mortgage-calculator/modules/pdf/template.js:130
@@ -3207,7 +3207,7 @@ msgstr "%1$s سنة (%2$s شهر)"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:111
 msgid "%s%% p.a."
-msgstr "%s%% سنويًّا"
+msgstr "%s%% سنويًا"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:114
 msgid "Total Interest (Overpayment)"
@@ -3215,11 +3215,11 @@ msgstr "إجمالي الفائدة (المبلغ الزائد)"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:118
 msgid "Total Payable over Term"
-msgstr "إجمالي المبلغ المستحق الدفع على مدى فترة السداد"
+msgstr "إجمالي المبلغ المستحق السداد على مدى المدة"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:126
 msgid "Full Cost of Entry"
-msgstr "التكلفة الإجمالية للدخول"
+msgstr "التكلفة الإجمالية للدخول إلى السوق"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:134
 msgid "DLD Fee (4% + 580)"
@@ -3227,11 +3227,11 @@ msgstr "رسوم DLD (4% + 580)"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:138
 msgid "Agency Commission (2%)"
-msgstr "عمولة الوكالة (2٪)"
+msgstr "عمولة الوكالة (2%)"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:142
 msgid "Bank Fee (1% of loan)"
-msgstr "الرسوم المصرفية (1% من قيمة القرض)"
+msgstr "رسوم البنك (1% من قيمة القرض)"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:146
 msgid "Property Valuation"
@@ -3243,11 +3243,11 @@ msgstr "تسجيل الرهن العقاري"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:154
 msgid "Total Required at Entry"
-msgstr "المبلغ الإجمالي المطلوب عند الالتحاق"
+msgstr "المبلغ الإجمالي المطلوب عند التسجيل"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:164
 msgid "The Deal in 6 Steps (Timeline: 4–8 Weeks from MOU to Keys)"
-msgstr "الصفقة في 6 خطوات (الجدول الزمني: من 4 إلى 8 أسابيع من توقيع مذكرة التفاهم حتى تسليم المفاتيح)"
+msgstr "إتمام الصفقة في 6 خطوات (الجدول الزمني: من 4 إلى 8 أسابيع من توقيع مذكرة التفاهم حتى استلام المفاتيح)"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:169
 msgid "Bank eligibility"
@@ -3255,7 +3255,7 @@ msgstr "شروط الأهلية المصرفية"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:174
 msgid "~10% deposit"
-msgstr "~10% كعربون"
+msgstr "عربون بنسبة 10٪ تقريبًا"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:178
 msgid "Valuation"
@@ -3271,7 +3271,7 @@ msgstr "خطاب عرض القرض"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:188
 msgid "DLD Transfer"
-msgstr "نقل DLD"
+msgstr "نقل ملكية العقارات في DLD"
 
 #: src/js/mortgage-calculator/modules/pdf/template.js:189
 msgid "Title deed"

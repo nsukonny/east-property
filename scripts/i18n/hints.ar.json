@@ -1,0 +1,53 @@
+{
+    "_comment": "msgid -> unambiguous English sent to DeepL in its place. The Arabic always comes back from the API; this file only removes an ambiguity the catalogue itself carries. Keys with a gettext context are written as context\u0004msgid. Checked against the API on 26.10.2026.",
+
+    "_beds": "«Bed» in a listing means a bedroom, and DeepL reads the furniture: Bed came back as «the world» on the old model and as «the bed» on the new one.",
+    "Bed": "bedroom",
+    "bed": "bedroom",
+    "Beds": "bedrooms",
+    "beds": "bedrooms",
+
+    "_distress": "«Distress» as a product category has no counterpart: DeepL read it as an emotion and «My distress» came back as «what worries me», «+ Add new distress» as «+ add a new problem».",
+    "Distress": "urgent sale",
+    "Distress Deals": "Urgent sale deals",
+    "DISTRESS DEALS": "URGENT SALE DEALS",
+    "DISTRESS PROPERTIES": "URGENT SALE PROPERTIES",
+    "Distress deals in Dubai": "Urgent sale deals in Dubai",
+    "Distress deals are sold below market price": "Urgent sale deals are sold below market price",
+    "Explore distress deals": "Explore urgent sale deals",
+    "Explore Distress Deals": "Explore urgent sale deals",
+    "Distress Units Listing Page": "Urgent sale units listing page",
+    "My distress": "My urgent sale listings",
+    "My distress (%d)": "My urgent sale listings (%d)",
+    "+ Add new distress": "+ Add new urgent sale listing",
+    "A distress listing needs an original price higher than the asking price.": "An urgent sale listing needs an original price higher than the asking price.",
+    "This property is not a distress deal. Below Market Score : ": "This property is not an urgent sale deal. Below Market Score : ",
+    "Hello! I would like a quick consultation about a distress sale of my property.": "Hello! I would like a quick consultation about an urgent sale of my property.",
+
+    "_secondary": "«Secondary» alone reads as a school stage; the market sense has to be named.",
+    "Secondary": "resale",
+    "Secondary Listings": "Secondary-market listings",
+    "Secondary Units Listing Page": "Listing page for secondary-market units",
+
+    "_offplan": "Three spellings of one term in the catalogue gave three different Arabic phrasings; these pin them to one.",
+    "Off-plan": "off-plan",
+    "Off Plan Properties": "Properties sold off-plan",
+    "Off Plan Units Listing Page": "Listing page for units sold off-plan",
+
+    "_types": "Singular labels DeepL turned into something else: Townhouse into «country house», Property into the plural.",
+    "Townhouse": "terraced house",
+    "Property": "a property",
+    "Post Type Singular Name\u0004Property": "a property",
+    "Property price": "price of the property",
+    "Handover": "handover",
+
+
+    "_untranslated": "Short labels DeepL handed back in English unchanged; Longitude comes along so the pair reads the same way.",
+    "Latitude": "geographic latitude",
+    "Longitude": "geographic longitude",
+    "DLD Transfer": "DLD property transfer",
+
+    "_parents": "WordPress hierarchy labels: «Parent Developer:» came back as «the main developer», «Parent Property:» lost the word property.",
+    "Parent Property:": "Parent property item:",
+    "Parent Developer:": "Parent developer item:"
+}
