@@ -6,15 +6,32 @@
 require_once ABSPATH . 'wp-includes/pomo/po.php';
 
 $out_dir = getenv( 'EP_OUT' ) ?: sys_get_temp_dir();
-$target  = getenv( 'EP_TARGET' ) ?: 'ZH-HANS';
+$client  = Tools\Translation_Client::make();
 
-$options = array_filter(
-	array(
-		'source_lang' => getenv( 'EP_SOURCE' ) ?: 'EN',
-		'model_type'  => getenv( 'EP_MODEL' ) ?: 'quality_optimized',
-		'context'     => getenv( 'EP_CONTEXT' ) ?: '',
+// EP_LANG — слаг Polylang, провайдер сам скажет, как он называет этот язык.
+// EP_TARGET остаётся для прежних вызовов, где код DeepL задавался напрямую.
+$lang   = getenv( 'EP_LANG' ) ?: '';
+$target = '' !== $lang ? $client->target_for( $lang ) : ( getenv( 'EP_TARGET' ) ?: 'ZH-HANS' );
+
+if ( '' === $lang && ! $client instanceof Tools\DeepL_Client ) {
+	fwrite( STDERR, "нужен EP_LANG: EP_TARGET — это код языка DeepL\n" );
+	exit( 1 );
+}
+
+if ( '' === $target ) {
+	fwrite( STDERR, sprintf( "язык «%s» провайдер не поддерживает\n", $lang ) );
+	exit( 1 );
+}
+
+$options = $client instanceof Tools\DeepL_Client
+	? array_filter(
+		array(
+			'source_lang' => getenv( 'EP_SOURCE' ) ?: 'EN',
+			'model_type'  => getenv( 'EP_MODEL' ) ?: 'quality_optimized',
+			'context'     => getenv( 'EP_CONTEXT' ) ?: '',
+		)
 	)
-);
+	: array();
 
 $hints = array();
 
@@ -52,15 +69,14 @@ foreach ( $po->entries as $key => $entry ) {
 }
 
 printf(
-	"строк: plain=%d html=%d, с подсказкой %d; модель %s, источник %s\n",
+	"строк: plain=%d html=%d, с подсказкой %d; провайдер %s, цель %s\n",
 	count( $plain ),
 	count( $html ),
 	$hinted,
-	$options['model_type'] ?? 'по умолчанию',
-	$options['source_lang'] ?? 'автодетект'
+	( new ReflectionClass( $client ) )->getShortName(),
+	$target
 );
 
-$client = new Tools\DeepL_Client();
 $result = array();
 
 foreach ( array( array( $plain, false ), array( $html, true ) ) as [$texts, $is_html] ) {
@@ -71,7 +87,7 @@ foreach ( array( array( $plain, false ), array( $html, true ) ) as [$texts, $is_
 	$got = $client->translate( $texts, $target, $is_html, true, $options );
 
 	if ( is_wp_error( $got ) ) {
-		fwrite( STDERR, 'ОШИБКА DeepL: ' . $got->get_error_message() . "\n" );
+		fwrite( STDERR, 'ОШИБКА перевода: ' . $got->get_error_message() . "\n" );
 		exit( 1 );
 	}
 

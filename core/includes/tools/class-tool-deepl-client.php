@@ -12,7 +12,17 @@ use WP_Error;
 /**
  * Translates batches of text through the DeepL v2 API.
  */
-final class DeepL_Client {
+final class DeepL_Client extends Translation_Client {
+
+	/**
+	 * Name of the .env entry holding the key.
+	 */
+	protected const ENV_KEY = 'DEEPL_API_KEY';
+
+	/**
+	 * WP_Error code for a missing key.
+	 */
+	protected const NO_KEY_CODE = 'deepl_no_key';
 
 	/**
 	 * Seconds to wait for the API.
@@ -22,12 +32,7 @@ final class DeepL_Client {
 	/**
 	 * Texts the API accepts in one request.
 	 */
-	private const CHUNK = 50;
-
-	/**
-	 * Element standing in for an HTML comment while DeepL works.
-	 */
-	private const MARKER_TAG = 'x-deepl-c';
+	protected const CHUNK = 50;
 
 	/**
 	 * Request fields the caller may add to a translation call.
@@ -37,23 +42,6 @@ final class DeepL_Client {
 	 * context tells it what kind of text this is without translating it.
 	 */
 	private const EXTRA_FIELDS = array( 'source_lang', 'context', 'model_type', 'glossary_id' );
-
-	/**
-	 * Option holding translations already paid for.
-	 */
-	private const CACHE_OPTION = 'ep_deepl_cache';
-
-	/**
-	 * Entries the cache is allowed to hold.
-	 */
-	private const CACHE_LIMIT = 50000;
-
-	/**
-	 * Translations by target language and source text.
-	 *
-	 * @var array<string, string>|null
-	 */
-	private ?array $cache = null;
 
 	/**
 	 * Target codes the API accepts, read from /v2/languages on 08.10.2026.
@@ -71,31 +59,6 @@ final class DeepL_Client {
 		'pt' => 'PT-PT',
 		'zh' => 'ZH-HANS',
 	);
-
-	/**
-	 * Auth key, empty when the project has none configured.
-	 *
-	 * @var string
-	 */
-	private string $key;
-
-	/**
-	 * @param string $key Overrides DEEPL_API_KEY from the project .env.
-	 */
-	public function __construct( string $key = '' ) {
-		$this->key = '' !== $key
-			? $key
-			: ( function_exists( 'core_env' ) ? core_env( 'DEEPL_API_KEY' ) : (string) ( $_ENV['DEEPL_API_KEY'] ?? '' ) );
-	}
-
-	/**
-	 * Whether a key is configured.
-	 *
-	 * @return bool
-	 */
-	public function has_key(): bool {
-		return '' !== $this->key;
-	}
 
 	/**
 	 * DeepL target language for a Polylang slug.
@@ -117,91 +80,14 @@ final class DeepL_Client {
 	}
 
 	/**
-	 * Translate several strings into one language.
+	 * DeepL target language for a Polylang slug.
 	 *
-	 * Strings already translated once are served from the option cache, and
-	 * strings without a single letter are handed back untouched: the project
-	 * data is full of values like "10%" repeated thousands of times.
+	 * @param string $slug Polylang language slug.
 	 *
-	 * Only strings the caller marks reusable go through the cache. A title or a
-	 * description belongs to one post and would never be asked for again, so
-	 * keeping it would grow the stored option with every post translated and
-	 * make every later write rewrite all of it.
-	 *
-	 * A chunk that came back before a later one failed is already paid for, so
-	 * the cache is written on the way out of an error too.
-	 *
-	 * @param array  $texts    Strings keyed by caller; the keys come back on the result.
-	 * @param string $target   DeepL target language.
-	 * @param bool   $html     Whether the strings carry markup.
-	 * @param bool   $reusable Whether these strings repeat across records.
-	 * @param array  $options  source_lang, context, model_type and glossary_id.
-	 *
-	 * @return array|WP_Error Translations under the original keys.
+	 * @return string
 	 */
-	public function translate( array $texts, string $target, bool $html = false, bool $reusable = true, array $options = array() ) {
-		$variant = self::variant( $options );
-		$result  = array();
-		$pending = array();
-
-		foreach ( $texts as $key => $text ) {
-			$text = (string) $text;
-
-			if ( '' === trim( $text ) ) {
-				continue;
-			}
-
-			if ( ! preg_match( '~\p{L}~u', $text ) ) {
-				$result[ $key ] = $text;
-				continue;
-			}
-
-			$cached = $reusable ? $this->cached( $target, $text, $variant ) : null;
-
-			if ( null !== $cached ) {
-				$result[ $key ] = $cached;
-				continue;
-			}
-
-			$pending[ $key ] = $text;
-		}
-
-		if ( empty( $pending ) ) {
-			return $result;
-		}
-
-		if ( ! $this->has_key() ) {
-			return new WP_Error( 'deepl_no_key', 'DEEPL_API_KEY не задан в .env' );
-		}
-
-		$added = false;
-
-		foreach ( array_chunk( $pending, self::CHUNK, true ) as $chunk ) {
-			$answer = $this->request( $chunk, $target, $html, $options );
-
-			if ( is_wp_error( $answer ) ) {
-				if ( $added ) {
-					$this->flush_cache();
-				}
-
-				return $answer;
-			}
-
-			foreach ( $answer as $key => $text ) {
-				$result[ $key ] = $text;
-
-				if ( $reusable ) {
-					$this->remember( $target, $pending[ $key ], $text, $variant );
-					$added = true;
-				}
-			}
-		}
-
-		if ( $added ) {
-			$this->flush_cache();
-		}
-
-		return $result;
+	public function target_for( string $slug ): string {
+		return self::target_language( $slug );
 	}
 
 	/**
@@ -210,15 +96,15 @@ final class DeepL_Client {
 	 * Sent as JSON because the form encoding WordPress produces for a nested
 	 * array is text[0]=…, which the API does not accept.
 	 *
-	 * @param array  $texts  Strings keyed by caller.
-	 * @param string $target DeepL target language.
+	 * @param array  $texts   Strings keyed by caller.
+	 * @param string $target  DeepL target language.
 	 * @param bool   $html    Whether the strings carry markup.
 	 * @param array  $options Extra API fields, sent only when filled.
 	 *
 	 * @return array|WP_Error
 	 */
-	private function request( array $texts, string $target, bool $html, array $options = array() ) {
-		$keys    = array_keys( $texts );
+	protected function request( array $texts, string $target, bool $html, array $options = array() ) {
+		$keys     = array_keys( $texts );
 		$comments = array();
 
 		if ( $html ) {
@@ -312,145 +198,6 @@ final class DeepL_Client {
 	}
 
 	/**
-	 * Replace HTML comments with placeholder elements.
-	 *
-	 * With tag_handling=html DeepL rejects a string holding four comments or
-	 * more — «text without parent» — and WordPress block markup carries two per
-	 * block, so any post of two blocks would fail. The comments also hold block
-	 * attributes the editor parses, and must come back byte for byte.
-	 *
-	 * @param string $text
-	 * @param array  $comments Filled with the comments taken out, by index.
-	 *
-	 * @return string
-	 */
-	private static function mask_comments( string $text, ?array &$comments ): string {
-		$comments = array();
-		$index    = 0;
-
-		return (string) preg_replace_callback(
-			'~<!--[\s\S]*?-->~',
-			static function ( array $match ) use ( &$comments, &$index ): string {
-				$comments[ $index ] = $match[0];
-
-				return sprintf( '<%1$s i="%2$d"></%1$s>', self::MARKER_TAG, $index++ );
-			},
-			$text
-		);
-	}
-
-	/**
-	 * Put the comments back where the placeholders stand.
-	 *
-	 * @param string $text
-	 * @param array  $comments Comments taken out by mask_comments().
-	 *
-	 * @return string|null Null when a placeholder did not come back.
-	 */
-	private static function unmask_comments( string $text, array $comments ): ?string {
-		$seen    = array();
-		$pattern = sprintf( '~<%1$s i="(\d+)"\s*></%1$s>~', self::MARKER_TAG );
-
-		$text = (string) preg_replace_callback(
-			$pattern,
-			static function ( array $match ) use ( $comments, &$seen ): string {
-				$index          = (int) $match[1];
-				$seen[ $index ] = true;
-
-				return (string) ( $comments[ $index ] ?? '' );
-			},
-			$text
-		);
-
-		return count( $seen ) === count( $comments ) ? $text : null;
-	}
-
-	/**
-	 * Translation paid for earlier, if any.
-	 *
-	 * @param string $target
-	 * @param string $text
-	 * @param string $variant
-	 *
-	 * @return string|null
-	 */
-	private function cached( string $target, string $text, string $variant = '' ): ?string {
-		if ( null === $this->cache ) {
-			$stored      = get_option( self::CACHE_OPTION, array() );
-			$this->cache = is_array( $stored ) ? $stored : array();
-		}
-
-		$key = self::cache_key( $target, $text, $variant );
-
-		return isset( $this->cache[ $key ] ) ? (string) $this->cache[ $key ] : null;
-	}
-
-	/**
-	 * Keep a translation for the next run.
-	 *
-	 * @param string $target
-	 * @param string $source
-	 * @param string $translation
-	 * @param string $variant
-	 *
-	 * @return void
-	 */
-	private function remember( string $target, string $source, string $translation, string $variant = '' ): void {
-		if ( null === $this->cache || count( $this->cache ) >= self::CACHE_LIMIT ) {
-			return;
-		}
-
-		$this->cache[ self::cache_key( $target, $source, $variant ) ] = $translation;
-	}
-
-	/**
-	 * Write the cache back.
-	 *
-	 * @return void
-	 */
-	private function flush_cache(): void {
-		if ( null !== $this->cache ) {
-			update_option( self::CACHE_OPTION, $this->cache, false );
-		}
-	}
-
-	/**
-	 * Cache key of a source string in a language.
-	 *
-	 * @param string $target
-	 * @param string $text
-	 * @param string $variant
-	 *
-	 * @return string
-	 */
-	private static function cache_key( string $target, string $text, string $variant = '' ): string {
-		return md5( $target . "\0" . ( '' === $variant ? '' : $variant . "\0" ) . $text );
-	}
-
-	/**
-	 * Cache discriminator for a set of request options.
-	 *
-	 * The options change what comes back, so a call carrying them must not be
-	 * served an answer stored by a call without them. A call with no options
-	 * keeps the key it used before, and the entries paid for stay usable.
-	 *
-	 * @param array $options
-	 *
-	 * @return string
-	 */
-	private static function variant( array $options ): string {
-		$options = array_filter( $options, static fn( $value ): bool => '' !== (string) $value );
-
-		if ( empty( $options ) ) {
-			return '';
-		}
-
-		ksort( $options );
-
-		return md5( (string) wp_json_encode( $options ) );
-	}
-
-	/**
 	 * Endpoint for the configured key.
 	 *
 	 * Free keys end with :fx and are served by a different host.
@@ -458,7 +205,7 @@ final class DeepL_Client {
 	 * @return string
 	 */
 	private function endpoint(): string {
-		$override = function_exists( 'core_env' ) ? core_env( 'DEEPL_API_URL' ) : '';
+		$override = self::env( 'DEEPL_API_URL' );
 
 		if ( '' !== $override ) {
 			return $override;

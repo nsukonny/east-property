@@ -13,19 +13,19 @@ wp tools clone-language --locale=ar --post-type=unit --copy-status=draft --limit
 
 #### 3. Перевод
 wp tools translate-units --language=ar --post-type=page --limit=20 --allow-root
-wp tools translate-units --post-type=post --limit=100 --language=zh --allow-root   # новости
-wp tools translate-units --language=hi --post-type=property --limit=3000 --allow-root
-wp tools translate-units --language=zh --post-type=unit --limit=5000 --allow-root
+wp tools translate-units --post-type=post --limit=100 --language=ar --allow-root   # новости
+wp tools translate-units --language=ar --post-type=property --limit=3000 --allow-root
+wp tools translate-units --language=ar --post-type=unit --limit=5000 --allow-root
 
-wp tools translate-locations --language=zh_CN --limit=10000 --allow-root
+wp tools translate-locations --language=ar --limit=10000 --allow-root
 
 ### 4. Клонируем меню
-wp tools clone-menus --locale=zh_CN --labels=inherit --allow-root
+wp tools clone-menus --locale=ar --labels=inherit --allow-root
 
 #### 4. Сброс кэшей
 wp option delete ep_deepl_cache --allow-root
 wp rewrite flush --allow-root
-wp w3-total-cache flush all
+wp w3-total-cache flush all --allow-root
 wp cache flush --allow-root
 wp tools warm-cache --allow-root
 ```
@@ -41,7 +41,65 @@ wp language core install ar --allow-root              # или hi_IN, ar
 wp rewrite flush --allow-root
 ```
 
-Переводим при помощи Deepl все unit, property и новости (post) у которых указан need_translate
+### 2. Чем переводим
+
+Провайдер выбирается в `.env` рядом с `wp-config.php`:
+
+```ini
+TRANSLATE_PROVIDER="gemini"          # gemini (по умолчанию) или deepl
+GEMINI_API_KEY="…"                   # aistudio.google.com/apikey
+GEMINI_MODEL="gemini-3.1-flash-lite" # необязательно
+```
+
+Замер 27.10.2026 на содержимом базы: 12 000 юнитов — это ~41 млн символов.
+У DeepL это ~€900, у Gemini 3.1 Flash-Lite ~$23, пакетным режимом вдвое
+меньше. Поэтому брать самую дешёвую модель смысла нет: разница между
+моделями здесь — единицы долларов, а разница в качестве стоит дороже.
+
+Второе, и более важное: DeepL указаний не принимает, а модель принимает.
+Отраслевые значения слов лежат в `translation-domain.md` и уходят в системный
+промпт — это тот самый список, из-за которого DeepL выдавал `distress` как
+«моя печаль», `Post Handover` как «без передачи должности», а `Handover` как
+«передача задач». Файл написан по-английски и описывает смысл, а не перевод,
+поэтому работает сразу на все языки и проверяется чтением.
+
+Цена за это — модель может потерять тег или дописать «вот перевод». Поэтому
+`Gemini_Client` сверяет каждый ответ с исходником: набор тегов, плейсхолдеры
+`%s`/`%d`/`%%`, непустота и длина в пределах 0,3–3,5 от исходной. Что не
+прошло — перезапрашивается поодиночке, что не прошло дважды — роняет порцию
+с ошибкой, а не пишется в базу. Блочные комментарии Гутенберга маскируются,
+как и раньше, и возвращаются байт в байт.
+
+Отдельная ловушка: описание юнита — это полсотни строк в одном поле, и модель
+принимала перевод строки за границу элемента, возвращая сорок один перевод на
+один запрос. Лечится не проверкой, а запросом: в нём названо число элементов и
+сказано, что перевод строки элементы не разделяет.
+
+Переменные окружения из шелла сюда не доходят: `core_env()` читает только
+`$_ENV`, а `variables_order` и на локалке, и на проде — `GPCS`, без `E`.
+Значит `TRANSLATE_PROVIDER=…` перед командой молча ничего не меняет; провайдер
+и модель задаются либо в `.env`, либо флагами.
+
+Перед большим прогоном — сравнение на своих же текстах, в базу не пишет:
+
+```bash
+wp tools translate-bakeoff --limit=20 --allow-root
+wp tools translate-bakeoff --limit=20 --model=gemini-2.5-flash-lite --allow-root
+wp tools translate-bakeoff --limit=5 --provider=deepl --allow-root
+```
+
+Команда печатает, сколько ответов отклонено проверкой, сколько стоил прогон и
+сколько выйдет на 12 000 юнитов, а сами тексты кладёт в файл — термины и
+падежи всё равно смотреть глазами. Ответы бейк-оффа мимо кэша, поэтому те же
+строки можно тут же отдать другому провайдеру.
+
+Кэш `ep_deepl_cache` общий, но ключи разведены по провайдеру и модели:
+оплаченные переводы DeepL остаются в деле, переключение туда и обратно их не
+портит.
+
+### 3. Прогон
+
+Переводим все unit, property и новости (post), у которых указан need_translate.
 --dry-run - скрыть вывод в консоль
 
 ```bash
