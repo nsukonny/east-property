@@ -1,5 +1,7 @@
 {
-    "_comment": "msgid -> exact replacement, applied after DeepL. Arabic here is DeepL's own output with the brand put back in Latin: tag_handling=xml with ignore_tags is refused by the quality model, so the name cannot be shielded inside the request. Everything else the catalogue needs is handled by hints.ar.json, which clarifies the English instead of rewriting the Arabic.",
+    "_comment": "msgid -> exact replacement, applied after the API answers. Two groups: the brand, which must stay Latin because tag_handling=xml with ignore_tags is refused by the quality model and the name cannot be shielded inside the request; and corrections from a native reviewer, which must survive a rebuild.",
+
+    "_brand": "— имя бренда латиницей —",
     "East Property": "East Property",
     "East Property project": "مشروع East Property",
     "© East Property – All rights reserved": "© East Property – جميع الحقوق محفوظة",
@@ -7,5 +9,17 @@
     "Mortgage Calculation — East Property": "حساب الرهن العقاري — East Property",
     "East Property Advisory": "East Property Advisory",
     "Property financing estimate and upfront acquisition breakdown · East Property Advisory": "تقدير تمويل العقار وتفاصيل التكاليف الأولية للشراء · East Property Advisory",
-    "East Property Brokerage LLC": "East Property Brokerage LLC"
+    "East Property Brokerage LLC": "East Property Brokerage LLC",
+
+    "_reviewed": "— правки носителя языка, 27.10.2026 —",
+    "Any Locations": "جميع المناطق",
+    "Any Developers": "جميع المطورين",
+    "Apply": "تطبيق",
+    "Freehold": "تملّك حر",
+
+    "_quarters": "— Q1..Q4 уходили как «вопрос 1..4» —",
+    "handover quarter\u0004Q1": "الربع الأول",
+    "handover quarter\u0004Q2": "الربع الثاني",
+    "handover quarter\u0004Q3": "الربع الثالث",
+    "handover quarter\u0004Q4": "الربع الرابع"
 }

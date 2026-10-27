@@ -38,6 +38,7 @@ final class CLI {
 		WP_CLI::add_command( 'tools strip-unit-floors', array( __CLASS__, 'strip_unit_floors' ) );
 		WP_CLI::add_command( 'tools translate-units', array( __CLASS__, 'translate_units' ) );
 		WP_CLI::add_command( 'tools translate-locations', array( __CLASS__, 'translate_locations' ) );
+		WP_CLI::add_command( 'tools translate-bakeoff', array( __CLASS__, 'translate_bakeoff' ) );
 		WP_CLI::add_command( 'tools clone-language', array( __CLASS__, 'clone_language' ) );
 		WP_CLI::add_command( 'tools add-language', array( __CLASS__, 'add_language' ) );
 		WP_CLI::add_command( 'tools clone-menus', array( __CLASS__, 'clone_menus' ) );
@@ -878,8 +879,8 @@ final class CLI {
 		$force = $force || $post_id > 0;
 		$into  = $post_id > 0 ? $language : '';
 
-		if ( '' !== $into && '' === DeepL_Client::target_language( $into ) ) {
-			WP_CLI::error( sprintf( 'язык «%s» DeepL не поддерживает', $into ) );
+		if ( '' !== $into && '' === Translation_Client::make()->target_for( $into ) ) {
+			WP_CLI::error( sprintf( 'язык «%s» переводчик не поддерживает', $into ) );
 		}
 
 		if ( ! function_exists( 'pll_get_post_language' ) ) {
@@ -982,6 +983,234 @@ final class CLI {
 		}
 
 		WP_CLI::success( $dry_run ? 'Проверка закончена, ничего не записано' : 'Готово' );
+	}
+
+	/**
+	 * Dry run of a translation provider over real posts.
+	 *
+	 * Writes nothing: no post is touched and the answers are not cached, so the
+	 * same strings can be sent to another provider straight after. Reports what
+	 * the validator rejected, what the call cost and where the texts landed, so
+	 * a provider is judged on this project's own content instead of on
+	 * somebody's benchmark.
+	 *
+	 * Terminology and grammar still need a human — the machine side only proves
+	 * that markup, placeholders and brand names survived.
+	 *
+	 * ## OPTIONS
+	 *
+	 * [--language=<slug>]
+	 * : Polylang slug to translate into.
+	 * ---
+	 * default: ar
+	 * ---
+	 *
+	 * [--limit=<number>]
+	 * : How many random published English posts to take.
+	 * ---
+	 * default: 20
+	 * ---
+	 *
+	 * [--post-type=<type>]
+	 * : Post type to sample.
+	 * ---
+	 * default: unit
+	 * ---
+	 *
+	 * [--provider=<name>]
+	 * : gemini or deepl, overriding TRANSLATE_PROVIDER from the .env.
+	 *
+	 * [--model=<id>]
+	 * : Model to ask for, Gemini only.
+	 *
+	 * [--out=<path>]
+	 * : Directory for the dump of source and translation.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp tools translate-bakeoff
+	 *     wp tools translate-bakeoff --language=ar --limit=20
+	 *     wp tools translate-bakeoff --model=gemini-2.5-flash-lite
+	 *     wp tools translate-bakeoff --provider=deepl --limit=5
+	 *     wp tools translate-bakeoff --post-type=property --limit=10
+	 *
+	 * @param array $args Positional arguments, unused.
+	 * @param array $assoc_args Flags.
+	 *
+	 * @return void
+	 */
+	public static function translate_bakeoff( array $args, array $assoc_args ): void {
+		$language = (string) Utils\get_flag_value( $assoc_args, 'language', 'ar' );
+		$limit    = max( 1, (int) Utils\get_flag_value( $assoc_args, 'limit', 20 ) );
+		$type     = (string) Utils\get_flag_value( $assoc_args, 'post-type', 'unit' );
+		$provider = (string) Utils\get_flag_value( $assoc_args, 'provider', '' );
+		$model    = (string) Utils\get_flag_value( $assoc_args, 'model', '' );
+		$out      = (string) Utils\get_flag_value( $assoc_args, 'out', sys_get_temp_dir() );
+
+		// Прайсы провайдеров на 27.10.2026, за миллион токенов: вход, выход.
+		// Пакетный режим вдвое дешевле и здесь не учитывается.
+		$prices = array(
+			'gemini-3.1-flash-lite' => array( 0.25, 1.50 ),
+			'gemini-2.5-flash-lite' => array( 0.10, 0.40 ),
+			'gemini-3-flash'        => array( 0.50, 3.00 ),
+		);
+
+		if ( ! post_type_exists( $type ) ) {
+			WP_CLI::error( sprintf( 'типа записи «%s» нет', $type ) );
+		}
+
+		$client = Translation_Client::make( $provider );
+
+		if ( '' !== $model ) {
+			if ( ! $client instanceof Gemini_Client ) {
+				WP_CLI::error( '--model понимает только gemini' );
+			}
+
+			$client->use_model( $model );
+		}
+
+		$target = $client->target_for( $language );
+
+		if ( '' === $target ) {
+			WP_CLI::error( sprintf( 'язык «%s» переводчик не поддерживает', $language ) );
+		}
+
+		if ( ! $client->has_key() ) {
+			WP_CLI::error( 'ключ провайдера не задан в .env' );
+		}
+
+		$posts = get_posts(
+			array(
+				'post_type'        => $type,
+				'post_status'      => 'publish',
+				'numberposts'      => $limit,
+				'orderby'          => 'rand',
+				'suppress_filters' => false,
+				'lang'             => 'en',
+			)
+		);
+
+		if ( empty( $posts ) ) {
+			WP_CLI::error( sprintf( 'английских записей типа «%s» не нашлось', $type ) );
+		}
+
+		WP_CLI::log(
+			sprintf(
+				'провайдер %s, цель %s, записей %d',
+				( new \ReflectionClass( $client ) )->getShortName(),
+				$target,
+				count( $posts )
+			)
+		);
+
+		$started = microtime( true );
+		$rows    = array();
+		$failed  = 0;
+		$chars   = 0;
+
+		foreach ( $posts as $post ) {
+			$fields = array_filter(
+				array(
+					'title'   => (string) $post->post_title,
+					'excerpt' => (string) $post->post_excerpt,
+					'content' => (string) $post->post_content,
+				),
+				static fn( string $value ): bool => '' !== trim( $value )
+			);
+
+			$plain = array_diff_key( $fields, array( 'content' => 1 ) );
+			$got   = $client->translate( $plain, $target, false, false );
+			$body  = isset( $fields['content'] )
+				? $client->translate( array( 'content' => $fields['content'] ), $target, true, false )
+				: array();
+
+			foreach ( array( $got, $body ) as $part ) {
+				if ( is_wp_error( $part ) ) {
+					++ $failed;
+					WP_CLI::warning( sprintf( '#%d отклонено: %s', $post->ID, $part->get_error_message() ) );
+
+					continue 2;
+				}
+			}
+
+			// Токены считаются и за отклонённые записи, поэтому цена за символ
+			// выходит скорее завышенной, чем заниженной.
+			$chars += array_sum( array_map( 'mb_strlen', $fields ) );
+
+			$rows[] = array(
+				'id'     => $post->ID,
+				'source' => $fields,
+				'target' => array_merge( $got, $body ),
+			);
+		}
+
+		$spent = microtime( true ) - $started;
+
+		if ( empty( $rows ) ) {
+			WP_CLI::error( 'ни одна запись не прошла проверку — сравнивать нечего' );
+		}
+
+		// Бренд и имена проектов обязаны остаться латиницей: это единственная
+		// часть перевода, которую можно проверить машинно.
+		$latin = 0;
+
+		foreach ( $rows as $row ) {
+			$source = implode( ' ', $row['source'] );
+			$result = implode( ' ', $row['target'] );
+
+			foreach ( array( 'East Property', 'Emaar', 'Damac', 'Azizi' ) as $name ) {
+				if ( false !== stripos( $source, $name ) && false === stripos( $result, $name ) ) {
+					++ $latin;
+					WP_CLI::warning( sprintf( '#%d бренд «%s» потерял латиницу', $row['id'], $name ) );
+				}
+			}
+		}
+
+		$file = rtrim( $out, '/' ) . '/bakeoff-' . $language . '.txt';
+		$dump = '';
+
+		foreach ( $rows as $row ) {
+			$dump .= sprintf( "===== #%d =====\n", $row['id'] );
+
+			foreach ( $row['source'] as $field => $text ) {
+				$dump .= sprintf( "--- %s ---\n%s\n>>>\n%s\n\n", $field, $text, $row['target'][ $field ] ?? '' );
+			}
+		}
+
+		if ( false === file_put_contents( $file, $dump ) ) {
+			WP_CLI::warning( sprintf( 'тексты не записались в %s', $file ) );
+		}
+
+		WP_CLI::log( sprintf( 'переведено %d, отклонено %d, бренд потерян %d раз', count( $rows ), $failed, $latin ) );
+		WP_CLI::log( sprintf( 'символов исходника %d, времени %.1f с', $chars, $spent ) );
+
+		if ( $client instanceof Gemini_Client ) {
+			$usage = $client->usage();
+			$rate  = $prices[ $client->model() ] ?? null;
+
+			WP_CLI::log(
+				sprintf( 'токенов: вход %d, выход %d, вызовов %d', $usage['in'], $usage['out'], $usage['calls'] )
+			);
+
+			if ( null === $rate ) {
+				WP_CLI::warning( sprintf( 'цены модели «%s» в таблице нет — стоимость не посчитана', $client->model() ) );
+			} elseif ( $chars > 0 ) {
+				$cost     = $usage['in'] / 1e6 * $rate[0] + $usage['out'] / 1e6 * $rate[1];
+				$per_char = $cost / $chars;
+				$average  = $chars / count( $rows );
+
+				WP_CLI::log( sprintf( 'стоимость прогона $%.4f, это $%.3f за миллион символов', $cost, $per_char * 1e6 ) );
+				WP_CLI::log(
+					sprintf(
+						'на 12 000 юнитов по %d символов: $%.2f (пакетным режимом вдвое меньше)',
+						(int) $average,
+						$per_char * $average * 12000
+					)
+				);
+			}
+		}
+
+		WP_CLI::success( sprintf( 'тексты для чтения: %s', $file ) );
 	}
 
 	/**

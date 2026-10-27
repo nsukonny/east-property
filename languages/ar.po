@@ -99,7 +99,7 @@ msgstr "في انتظار الموافقة"
 #: core/components/filters/functions.php:1101
 #: core/template-parts/filters/search-tabs.php:144
 msgid "Any Locations"
-msgstr "أي مواقع"
+msgstr "جميع المناطق"
 
 #: core/components/account/functions.php:320
 #: core/template-parts/filters/result-filters.php:273
@@ -112,7 +112,7 @@ msgstr "الكل"
 #: core/components/filters/functions.php:1045
 #: core/template-parts/filters/search-tabs.php:165
 msgid "Any Developers"
-msgstr "أي مطورين عقاريين"
+msgstr "جميع المطورين"
 
 #: core/components/account/functions.php:332
 msgid "Any bedrooms"
@@ -464,22 +464,22 @@ msgstr "درهم إماراتي"
 #: core/components/components-functions.php:224
 msgctxt "handover quarter"
 msgid "Q1"
-msgstr "السؤال 1"
+msgstr "الربع الأول"
 
 #: core/components/components-functions.php:225
 msgctxt "handover quarter"
 msgid "Q2"
-msgstr "السؤال 2"
+msgstr "الربع الثاني"
 
 #: core/components/components-functions.php:226
 msgctxt "handover quarter"
 msgid "Q3"
-msgstr "السؤال 3"
+msgstr "الربع الثالث"
 
 #: core/components/components-functions.php:227
 msgctxt "handover quarter"
 msgid "Q4"
-msgstr "السؤال 4"
+msgstr "الربع الرابع"
 
 #. translators: 1: quarter, 2: year.
 #: core/components/components-functions.php:232
@@ -1029,7 +1029,7 @@ msgstr "المكتب"
 
 #: core/components/properties/functions.php:158
 msgid "Freehold"
-msgstr "ملكية حرة"
+msgstr "تملّك حر"
 
 #: core/components/properties/functions.php:159
 msgid "Leasehold"
@@ -2328,7 +2328,7 @@ msgstr "إلغاء"
 #: core/template-parts/filters/result-filters.php:215
 #: core/template-parts/filters/search-tabs.php:124
 msgid "Apply"
-msgstr "تقدم بطلبك"
+msgstr "تطبيق"
 
 #: core/template-parts/filters/result-filters.php:288
 msgid "Max Area"
