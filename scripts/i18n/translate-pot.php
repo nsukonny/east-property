@@ -42,9 +42,10 @@ if ( is_readable( $out_dir . '/hints.json' ) ) {
 $po = new PO();
 $po->import_from_file( get_stylesheet_directory() . '/languages/east-property.pot' );
 
-$plain  = array();
-$html   = array();
-$hinted = 0;
+$plain    = array();
+$html     = array();
+$contexts = array();
+$hinted   = 0;
 
 foreach ( $po->entries as $key => $entry ) {
 	foreach ( array( 'singular', 'plural' ) as $slot ) {
@@ -55,7 +56,7 @@ foreach ( $po->entries as $key => $entry ) {
 		}
 
 		// Подсказка подменяет английский источник, а не ответ: в каталоге
-		// «Bed» значит спальню, и DeepL об этом знать неоткуда.
+		// «Bed» значит спальню, и переводчику об этом знать неоткуда.
 		$lookup = ( '' !== (string) $entry->context ? $entry->context . "\x04" : '' ) . $text;
 		$sent   = (string) ( $hints[ $lookup ] ?? $hints[ $text ] ?? $text );
 
@@ -64,15 +65,30 @@ foreach ( $po->entries as $key => $entry ) {
 		}
 
 		$bucket = preg_match( '~<[a-z/]~i', $sent ) ? 'html' : 'plain';
-		${$bucket}[ $slot . "\x01" . $key ] = $sent;
+		$field  = $slot . "\x01" . $key;
+
+		${$bucket}[ $field ] = $sent;
+
+		// msgctxt в каталоге есть ровно затем, чтобы различать одинаковые
+		// msgid: «Q1» как квартал сдачи и «Q1» как что угодно ещё. Но ярлыки
+		// типов записи WordPress — «Post Type Singular Name» и подобные —
+		// про слот в массиве labels, а не про смысл слова. Замер: с ними в
+		// партии модель принимает короткие строки за системные коды и
+		// возвращает «Q1» вместо «पहली तिमाही», без них переводит.
+		$context = (string) $entry->context;
+
+		if ( '' !== $context && ! preg_match( '~^(Post Type|Taxonomy) .*Name$~', $context ) ) {
+			$contexts[ $field ] = $context;
+		}
 	}
 }
 
 printf(
-	"строк: plain=%d html=%d, с подсказкой %d; провайдер %s, цель %s\n",
+	"строк: plain=%d html=%d, с подсказкой %d, с контекстом %d; провайдер %s, цель %s\n",
 	count( $plain ),
 	count( $html ),
 	$hinted,
+	count( $contexts ),
 	( new ReflectionClass( $client ) )->getShortName(),
 	$target
 );
@@ -84,7 +100,14 @@ foreach ( array( array( $plain, false ), array( $html, true ) ) as [$texts, $is_
 		continue;
 	}
 
-	$got = $client->translate( $texts, $target, $is_html, true, $options );
+	$got = $client->translate(
+		$texts,
+		$target,
+		$is_html,
+		true,
+		$options,
+		array_intersect_key( $contexts, $texts )
+	);
 
 	if ( is_wp_error( $got ) ) {
 		fwrite( STDERR, 'ОШИБКА перевода: ' . $got->get_error_message() . "\n" );

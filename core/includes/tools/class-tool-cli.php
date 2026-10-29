@@ -997,6 +997,13 @@ final class CLI {
 	 * Terminology and grammar still need a human — the machine side only proves
 	 * that markup, placeholders and brand names survived.
 	 *
+	 * With --marker the model is asked to end every translation with a
+	 * terminator, and the run reports how often it forgot. That is the one
+	 * measurement worth having before trusting the terminator as a check: a
+	 * model that forgets even rarely turns it into a rejecter of good work.
+	 * Such a run is not comparable with one without the flag — the prompt
+	 * differs, so the cache is cold and nothing is reused.
+	 *
 	 * ## OPTIONS
 	 *
 	 * [--language=<slug>]
@@ -1023,6 +1030,9 @@ final class CLI {
 	 * [--model=<id>]
 	 * : Model to ask for, Gemini only.
 	 *
+	 * [--marker]
+	 * : Gemini only. Ask for a terminator and count how often it is forgotten.
+	 *
 	 * [--out=<path>]
 	 * : Directory for the dump of source and translation.
 	 *
@@ -1033,6 +1043,7 @@ final class CLI {
 	 *     wp tools translate-bakeoff --model=gemini-2.5-flash-lite
 	 *     wp tools translate-bakeoff --provider=deepl --limit=5
 	 *     wp tools translate-bakeoff --post-type=property --limit=10
+	 *     wp tools translate-bakeoff --limit=30 --marker
 	 *
 	 * @param array $args Positional arguments, unused.
 	 * @param array $assoc_args Flags.
@@ -1045,6 +1056,7 @@ final class CLI {
 		$type     = (string) Utils\get_flag_value( $assoc_args, 'post-type', 'unit' );
 		$provider = (string) Utils\get_flag_value( $assoc_args, 'provider', '' );
 		$model    = (string) Utils\get_flag_value( $assoc_args, 'model', '' );
+		$marker   = (bool) Utils\get_flag_value( $assoc_args, 'marker', false );
 		$out      = (string) Utils\get_flag_value( $assoc_args, 'out', sys_get_temp_dir() );
 
 		// Прайсы провайдеров на 27.10.2026, за миллион токенов: вход, выход.
@@ -1067,6 +1079,15 @@ final class CLI {
 			}
 
 			$client->use_model( $model );
+		}
+
+		if ( $marker ) {
+			if ( ! $client instanceof Gemini_Client ) {
+				WP_CLI::error( '--marker понимает только gemini' );
+			}
+
+			$client->use_marker( true );
+			WP_CLI::log( 'маркер конца включён: промпт другой, кэш холодный' );
 		}
 
 		$target = $client->target_for( $language );
@@ -1191,6 +1212,22 @@ final class CLI {
 			WP_CLI::log(
 				sprintf( 'токенов: вход %d, выход %d, вызовов %d', $usage['in'], $usage['out'], $usage['calls'] )
 			);
+
+			if ( $marker && $usage['items'] > 0 ) {
+				WP_CLI::log(
+					sprintf(
+						'маркер конца: проверено ответов %d, забыт %d раз (%.1f%%)',
+						$usage['items'],
+						$usage['missed'],
+						$usage['missed'] / $usage['items'] * 100
+					)
+				);
+				WP_CLI::log(
+					0 === $usage['missed']
+						? 'ни одного промаха — проверку можно включать'
+						: 'есть промахи: включать нельзя, это будет машина ложных отказов'
+				);
+			}
 
 			if ( null === $rate ) {
 				WP_CLI::warning( sprintf( 'цены модели «%s» в таблице нет — стоимость не посчитана', $client->model() ) );

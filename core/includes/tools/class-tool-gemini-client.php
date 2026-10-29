@@ -54,6 +54,17 @@ final class Gemini_Client extends Translation_Client {
 	private const CHUNK_CHARS = 12000;
 
 	/**
+	 * Answers worth asking for again, and how long to wait before each retry.
+	 *
+	 * Overload and rate limiting are states of the service, not of the
+	 * request: the same body succeeds a minute later. A catalogue is a few
+	 * hundred calls and a full language run tens of thousands, so one 503
+	 * without this would end the whole job.
+	 */
+	private const RETRY_ON = array( 0, 429, 500, 502, 503, 504 );
+	private const BACKOFF = array( 2, 8, 20, 45 );
+
+	/**
 	 * Where the domain notes for the prompt live, relative to the theme.
 	 */
 	private const DOMAIN_FILE = '/core/includes/tools/translation-domain.md';
@@ -82,16 +93,52 @@ final class Gemini_Client extends Translation_Client {
 	);
 
 	/**
-	 * Tokens billed so far in this process, for reporting.
+	 * What this process has spent and seen, for reporting.
+	 *
+	 * items and missed count answers passed through the terminator check, so
+	 * a miss the single retry then fixed is still counted: the question the
+	 * check has to answer is how often the model forgets, not how often it
+	 * forgets twice.
 	 *
 	 * @var array<string, int>
 	 */
-	private array $usage = array( 'in' => 0, 'out' => 0, 'calls' => 0 );
+	private array $usage = array( 'in' => 0, 'out' => 0, 'calls' => 0, 'items' => 0, 'missed' => 0 );
 
 	/**
 	 * Model asked for by the caller, ahead of the .env.
 	 */
 	private string $named_model = '';
+
+	/**
+	 * Terminator the model is asked to put after every translation.
+	 *
+	 * A response can finish cleanly with one item cut short inside it: the
+	 * array is the right length, finishReason is STOP, tags and placeholders
+	 * survive, and a third of a description is gone. Nothing else sees that.
+	 * The marker turns the per-response signal into a per-item one.
+	 *
+	 * It is weak evidence — the model decides for itself that it is done, so
+	 * a short paraphrase gets a marker too — and it is off until a run proves
+	 * the model never forgets it. One miss in a hundred makes this a machine
+	 * for rejecting good work.
+	 */
+	private const MARKER = '[[end-translate]]';
+
+	/**
+	 * Whether this instance asks for the terminator.
+	 */
+	private bool $marker = false;
+
+	/**
+	 * Ask the model to terminate every translation, and check that it did.
+	 *
+	 * @param bool $on
+	 *
+	 * @return void
+	 */
+	public function use_marker( bool $on ): void {
+		$this->marker = $on;
+	}
 
 	/**
 	 * Talk to another model than the .env names.
@@ -142,10 +189,15 @@ final class Gemini_Client extends Translation_Client {
 	/**
 	 * Keep this provider's answers apart from another provider's.
 	 *
+	 * The prompt is part of what produced an answer, so it belongs in the key
+	 * next to the model. Without it, sharpening a domain note or a rule looks
+	 * like it changed nothing: every string is served from the cache as it was
+	 * translated under the old wording.
+	 *
 	 * @return string
 	 */
 	protected function cache_scope(): string {
-		return 'gemini:' . $this->model();
+		return 'gemini:' . $this->model() . ':' . substr( md5( $this->instruction( '' ) ), 0, 8 );
 	}
 
 	/**
@@ -183,14 +235,15 @@ final class Gemini_Client extends Translation_Client {
 	/**
 	 * One chunk, with a second try for whatever came back wrong.
 	 *
-	 * @param array  $texts   Strings keyed by caller.
-	 * @param string $target  Target language name.
-	 * @param bool   $html    Whether the strings carry markup.
-	 * @param array  $options Unused; kept for the shared signature.
+	 * @param array  $texts    Strings keyed by caller.
+	 * @param string $target   Target language name.
+	 * @param bool   $html     Whether the strings carry markup.
+	 * @param array  $options  Unused; kept for the shared signature.
+	 * @param array  $contexts What a string means, under the same keys as $texts.
 	 *
 	 * @return array|WP_Error
 	 */
-	protected function request( array $texts, string $target, bool $html, array $options = array() ) {
+	protected function request( array $texts, string $target, bool $html, array $options = array(), array $contexts = array() ) {
 		$comments = array();
 		$sources  = $texts;
 
@@ -200,23 +253,28 @@ final class Gemini_Client extends Translation_Client {
 			}
 		}
 
-		$answer = $this->attempt( $texts, $target );
+		$answer = $this->attempt( $texts, $target, $contexts );
 
 		if ( is_wp_error( $answer ) ) {
 			return $answer;
 		}
 
-		$faults = $this->faults( $texts, $answer );
+		$faults = $this->take_markers( $answer ) + $this->faults( $texts, $answer );
 
 		if ( ! empty( $faults ) ) {
-			$retry = $this->attempt( array_intersect_key( $texts, $faults ), $target );
+			$retry = $this->attempt(
+				array_intersect_key( $texts, $faults ),
+				$target,
+				array_intersect_key( $contexts, $faults )
+			);
 
 			if ( is_wp_error( $retry ) ) {
 				return $retry;
 			}
 
+			$missed = $this->take_markers( $retry );
 			$answer = array_merge( $answer, $retry );
-			$faults = $this->faults( $texts, $answer );
+			$faults = $missed + $this->faults( $texts, $answer );
 		}
 
 		if ( ! empty( $faults ) ) {
@@ -258,6 +316,61 @@ final class Gemini_Client extends Translation_Client {
 	 *
 	 * @return array<string, string>
 	 */
+	/**
+	 * Strip the terminator off each answer, naming the ones that lack it.
+	 *
+	 * Runs before the other checks, or the marker itself would count towards
+	 * the length and the tag set. A key named here goes through the same
+	 * single retry as any other fault.
+	 *
+	 * @param array $answer Translations by key, stripped in place.
+	 *
+	 * @return array Reasons by key, empty when the marker is off.
+	 */
+	private function take_markers( array &$answer ): array {
+		if ( ! $this->marker ) {
+			return array();
+		}
+
+		$missing = array();
+
+		$this->usage['items'] += count( $answer );
+
+		foreach ( $answer as $key => $text ) {
+			$text = rtrim( (string) $text );
+
+			if ( ! str_ends_with( $text, self::MARKER ) ) {
+				$missing[ $key ] = str_contains( $text, self::MARKER )
+					? 'маркер конца не в конце'
+					: 'маркер конца не поставлен';
+
+				continue;
+			}
+
+			$text = rtrim( substr( $text, 0, -strlen( self::MARKER ) ) );
+
+			if ( str_contains( $text, self::MARKER ) ) {
+				$missing[ $key ] = 'маркер конца встречается не один раз';
+
+				continue;
+			}
+
+			$answer[ $key ] = $text;
+		}
+
+		$this->usage['missed'] += count( $missing );
+
+		return $missing;
+	}
+
+	/**
+	 * What came back wrong in this answer, by key.
+	 *
+	 * @param array $sources Strings that were sent.
+	 * @param array $answer  Strings that came back.
+	 *
+	 * @return array
+	 */
 	private function faults( array $sources, array $answer ): array {
 		$faults = array();
 
@@ -281,12 +394,19 @@ final class Gemini_Client extends Translation_Client {
 	 * of the same length by responseSchema: asked in prose, a model renumbers,
 	 * merges or prefaces the list, and the keys stop lining up.
 	 *
-	 * @param array  $texts  Strings keyed by caller.
-	 * @param string $target Target language name.
+	 * The model also over-escapes a slash inside the JSON it writes, so a
+	 * closing tag comes back as `<\/span>` and the markup check rejects a
+	 * translation that is otherwise right. The sequence never occurs in the
+	 * catalogue or in any post, so it is undone here rather than guarded
+	 * against downstream.
+	 *
+	 * @param array  $texts    Strings keyed by caller.
+	 * @param string $target   Target language name.
+	 * @param array  $contexts What a string means, under the same keys as $texts.
 	 *
 	 * @return array|WP_Error
 	 */
-	private function attempt( array $texts, string $target ) {
+	private function attempt( array $texts, string $target, array $contexts = array() ) {
 		if ( empty( $texts ) ) {
 			return array();
 		}
@@ -294,6 +414,18 @@ final class Gemini_Client extends Translation_Client {
 		$keys   = array_keys( $texts );
 		$values = array_values( array_map( 'strval', $texts ) );
 		$budget = (int) ( mb_strlen( implode( '', $values ) ) / 2 ) + 1024;
+		$items  = $values;
+
+		foreach ( $keys as $index => $key ) {
+			$context = (string) ( $contexts[ $key ] ?? '' );
+
+			if ( '' !== $context ) {
+				$items[ $index ] = array(
+					'text'    => $values[ $index ],
+					'context' => $context,
+				);
+			}
+		}
 
 		$body = array(
 			'systemInstruction' => array(
@@ -308,7 +440,7 @@ final class Gemini_Client extends Translation_Client {
 								"%d items follow. Answer with exactly %d translations.\n%s",
 								count( $values ),
 								count( $values ),
-								(string) wp_json_encode( $values, JSON_UNESCAPED_UNICODE )
+								(string) wp_json_encode( $items, JSON_UNESCAPED_UNICODE )
 							),
 						),
 					),
@@ -325,27 +457,48 @@ final class Gemini_Client extends Translation_Client {
 			),
 		);
 
-		$response = wp_remote_post(
-			sprintf( 'https://generativelanguage.googleapis.com/v1beta/models/%s:generateContent', $this->model() ),
-			array(
-				'timeout' => self::TIMEOUT,
-				'headers' => array(
-					'x-goog-api-key' => $this->key,
-					'Content-Type'   => 'application/json',
-				),
-				'body'    => wp_json_encode( $body ),
-			)
+		$url = sprintf(
+			'https://generativelanguage.googleapis.com/v1beta/models/%s:generateContent',
+			$this->model()
 		);
 
-		if ( is_wp_error( $response ) ) {
-			return new WP_Error( 'gemini_http', $response->get_error_message() );
-		}
+		$args = array(
+			'timeout' => self::TIMEOUT,
+			'headers' => array(
+				'x-goog-api-key' => $this->key,
+				'Content-Type'   => 'application/json',
+			),
+			'body'    => wp_json_encode( $body ),
+		);
 
-		$code = (int) wp_remote_retrieve_response_code( $response );
-		$raw  = (string) wp_remote_retrieve_body( $response );
+		$code     = 0;
+		$raw      = '';
+		$attempts = count( self::BACKOFF ) + 1;
 
-		if ( 200 !== $code ) {
-			return new WP_Error( 'gemini_status', self::status_message( $code, $raw ) );
+		for ( $try = 0; $try < $attempts; $try++ ) {
+			$response = wp_remote_post( $url, $args );
+
+			if ( is_wp_error( $response ) ) {
+				$code = 0;
+				$raw  = $response->get_error_message();
+			} else {
+				$code = (int) wp_remote_retrieve_response_code( $response );
+				$raw  = (string) wp_remote_retrieve_body( $response );
+			}
+
+			if ( 200 === $code ) {
+				break;
+			}
+
+			$wait = self::retry_after( $raw );
+
+			if ( ! in_array( $code, self::RETRY_ON, true ) || $try === $attempts - 1 || $wait > array_sum( self::BACKOFF ) ) {
+				return 0 === $code
+					? new WP_Error( 'gemini_http', $raw )
+					: new WP_Error( 'gemini_status', self::status_message( $code, $raw ) );
+			}
+
+			sleep( max( self::BACKOFF[ $try ], $wait ) );
 		}
 
 		$decoded = json_decode( $raw, true );
@@ -381,7 +534,12 @@ final class Gemini_Client extends Translation_Client {
 			);
 		}
 
-		return array_combine( $keys, array_map( 'strval', $list ) );
+		$clean = array_map(
+			static fn( $text ): string => str_replace( '\\/', '/', (string) $text ),
+			$list
+		);
+
+		return array_combine( $keys, $clean );
 	}
 
 	/**
@@ -394,7 +552,8 @@ final class Gemini_Client extends Translation_Client {
 	private function instruction( string $target ): string {
 		$rules = array(
 			sprintf( 'You translate Dubai real estate website content from English into %s.', $target ),
-			'Input is a JSON array of strings. Return a JSON array of translations, same length, same order.',
+			'Input is a JSON array. Return a JSON array of translations, same length, same order.',
+			'An item is either a string to translate, or an object {"text", "context"} where context says what the text means on this site. The context is a hint about meaning, not a reason to leave the text alone: translate the text exactly as you would any other item, pick the sense the context points at, and never put the context itself in the answer.',
 			'Translate every item independently. Never merge, split, reorder, drop or add items.',
 			'One item often holds several lines or paragraphs. Line breaks inside an item are part of it and never separate items: such an item is still one string in the answer, with its line breaks kept.',
 			'Output the translation only. No notes, no quotes around it, no explanation.',
@@ -403,7 +562,15 @@ final class Gemini_Client extends Translation_Client {
 			'Keep numbers, prices, currency codes, areas, dates and URLs unchanged.',
 			'Leave proper names in Latin script: project, developer, community and company names, and the brand East Property.',
 			'An item that is already in the target language is returned unchanged.',
+			'Everything else must be rendered in the target language, even where English is common in that market and even for industry jargon. An item may stay in English only if it is a brand, a person, a project, a developer, a place, or one of the acronyms the domain notes keep as they are.',
 		);
+
+		if ( $this->marker ) {
+			$rules[] = sprintf(
+				'End every translation with %s, exactly once, as the very last characters of the item. Nothing may follow it.',
+				self::MARKER
+			);
+		}
 
 		$domain = $this->domain();
 
@@ -428,6 +595,42 @@ final class Gemini_Client extends Translation_Client {
 		}
 
 		return $notes;
+	}
+
+	/**
+	 * Readable reason for a non-200 answer.
+	 *
+	 * @param int    $code HTTP status.
+	 * @param string $raw  Response body.
+	 *
+	 * @return string
+	 */
+	/**
+	 * Seconds the API itself asks us to wait, 0 when it does not say.
+	 *
+	 * A 429 is two different things. Too many requests a second clears in
+	 * seconds; a day's quota spent on the free tier comes back with a
+	 * retryDelay of eighteen hours, and sitting through the backoff five times
+	 * over only wastes a minute before failing anyway.
+	 *
+	 * @param string $raw Response body.
+	 *
+	 * @return int
+	 */
+	private static function retry_after( string $raw ): int {
+		$decoded = json_decode( $raw, true );
+
+		foreach ( (array) ( $decoded['error']['details'] ?? array() ) as $detail ) {
+			if ( ! is_array( $detail ) || ! str_ends_with( (string) ( $detail['@type'] ?? '' ), 'RetryInfo' ) ) {
+				continue;
+			}
+
+			if ( preg_match( '~^(\d+(?:\.\d+)?)s$~', (string) ( $detail['retryDelay'] ?? '' ), $found ) ) {
+				return (int) ceil( (float) $found[1] );
+			}
+		}
+
+		return 0;
 	}
 
 	/**

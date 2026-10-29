@@ -96,14 +96,20 @@ final class DeepL_Client extends Translation_Client {
 	 * Sent as JSON because the form encoding WordPress produces for a nested
 	 * array is text[0]=…, which the API does not accept.
 	 *
-	 * @param array  $texts   Strings keyed by caller.
-	 * @param string $target  DeepL target language.
-	 * @param bool   $html    Whether the strings carry markup.
-	 * @param array  $options Extra API fields, sent only when filled.
+	 * The API takes one `context` for the whole call, not one per string, so a
+	 * per-string context cannot be honoured here. It still reaches the cache
+	 * key through the base class, so a Gemini answer that used the context is
+	 * never served to a DeepL call that could not.
+	 *
+	 * @param array  $texts    Strings keyed by caller.
+	 * @param string $target   DeepL target language.
+	 * @param bool   $html     Whether the strings carry markup.
+	 * @param array  $options  Extra API fields, sent only when filled.
+	 * @param array  $contexts Unused; see above.
 	 *
 	 * @return array|WP_Error
 	 */
-	protected function request( array $texts, string $target, bool $html, array $options = array() ) {
+	protected function request( array $texts, string $target, bool $html, array $options = array(), array $contexts = array() ) {
 		$keys     = array_keys( $texts );
 		$comments = array();
 

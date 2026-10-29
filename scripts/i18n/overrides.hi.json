@@ -1,0 +1,8 @@
+{
+    "_comment": "msgid -> exact replacement, applied after the API answers. The quarters come back as Q1..Q3 but Q4 translated, which reads as a broken dropdown. The catalogue carries msgctxt \"handover quarter\" and that context never reaches the API, so the model has nothing to go on.",
+
+    "Q1": "प्रथम तिमाही",
+    "Q2": "द्वितीय तिमाही",
+    "Q3": "तृतीय तिमाही",
+    "Q4": "चतुर्थ तिमाही"
+}

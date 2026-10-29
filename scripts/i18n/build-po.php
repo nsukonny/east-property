@@ -1,6 +1,6 @@
 <?php
 /**
- * Build languages/<locale>.po from the catalogue, the DeepL output and the
+ * Build languages/<locale>.po from the catalogue, the translated output and the
  * project overrides. Rerunning it is safe: the file is written from scratch.
  */
 require_once ABSPATH . 'wp-includes/pomo/po.php';
@@ -83,7 +83,7 @@ foreach ( $po->entries as $key => $entry ) {
 $po->export_to_file( $lang_dir . '/' . $locale . '.po' );
 
 printf(
-	"%s.po: записей %d, из DeepL %d, переопределено %d, пусто %d\n",
+	"%s.po: записей %d, от переводчика %d, переопределено %d, пусто %d\n",
 	$locale,
 	count( $po->entries ),
 	$counts['deepl'],

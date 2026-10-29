@@ -57,6 +57,23 @@ abstract class Translation_Client {
 	private const RATIO_FROM = 40;
 
 	/**
+	 * Bounds for that ratio: alphabetic target, then CJK, then the upper one.
+	 *
+	 * A Han character carries a whole word, so Chinese legitimately comes back
+	 * three times shorter: measured over zh_CN.po the median is 0.333 and the
+	 * smallest honest answer 0.196, where Arabic, German, Hindi and Russian
+	 * never drop below 0.542. One floor for both rejects correct Chinese.
+	 *
+	 * The ceiling is there for a model that starts repeating itself. Across
+	 * 488 real pairs in five languages the widest honest answer is 1.886, so
+	 * 2.5 leaves a third of headroom; at 3.5 a translation could repeat
+	 * two and a half times over and still pass.
+	 */
+	private const RATIO_MIN = 0.3;
+	private const RATIO_MIN_CJK = 0.1;
+	private const RATIO_MAX = 2.5;
+
+	/**
 	 * Translations by target language and source text.
 	 *
 	 * @var array<string, string>|null
@@ -134,13 +151,18 @@ abstract class Translation_Client {
 	 * @param bool   $html     Whether the strings carry markup.
 	 * @param bool   $reusable Whether these strings repeat across records.
 	 * @param array  $options  Provider specific request fields.
+	 * @param array  $contexts What a string means, under the same keys as $texts.
+	 *                         A context belongs in the cache key as much as in
+	 *                         the request: "Q1" the quarter and "Q1" anything
+	 *                         else are two different strings to translate.
 	 *
 	 * @return array|WP_Error Translations under the original keys.
 	 */
-	public function translate( array $texts, string $target, bool $html = false, bool $reusable = true, array $options = array() ) {
+	public function translate( array $texts, string $target, bool $html = false, bool $reusable = true, array $options = array(), array $contexts = array() ) {
 		$variant = $this->variant( $options );
 		$result  = array();
 		$pending = array();
+		$keyed   = array();
 
 		foreach ( $texts as $key => $text ) {
 			$text = (string) $text;
@@ -154,7 +176,8 @@ abstract class Translation_Client {
 				continue;
 			}
 
-			$cached = $reusable ? $this->cached( $target, $text, $variant ) : null;
+			$keyed[ $key ] = self::with_context( $text, (string) ( $contexts[ $key ] ?? '' ) );
+			$cached        = $reusable ? $this->cached( $target, $keyed[ $key ], $variant ) : null;
 
 			if ( null !== $cached ) {
 				$result[ $key ] = $cached;
@@ -175,7 +198,7 @@ abstract class Translation_Client {
 		$added = false;
 
 		foreach ( $this->chunks( $pending ) as $chunk ) {
-			$answer = $this->request( $chunk, $target, $html, $options );
+			$answer = $this->request( $chunk, $target, $html, $options, array_intersect_key( $contexts, $chunk ) );
 
 			if ( is_wp_error( $answer ) ) {
 				if ( $added ) {
@@ -189,7 +212,7 @@ abstract class Translation_Client {
 				$result[ $key ] = $text;
 
 				if ( $reusable ) {
-					$this->remember( $target, $pending[ $key ], $text, $variant );
+					$this->remember( $target, $keyed[ $key ], $text, $variant );
 					$added = true;
 				}
 			}
@@ -216,14 +239,27 @@ abstract class Translation_Client {
 	/**
 	 * One call to the API.
 	 *
-	 * @param array  $texts   Strings keyed by caller.
-	 * @param string $target  Target language.
-	 * @param bool   $html    Whether the strings carry markup.
-	 * @param array  $options Provider specific request fields.
+	 * @param array  $texts    Strings keyed by caller.
+	 * @param string $target   Target language.
+	 * @param bool   $html     Whether the strings carry markup.
+	 * @param array  $options  Provider specific request fields.
+	 * @param array  $contexts What a string means, under the same keys as $texts.
 	 *
 	 * @return array|WP_Error
 	 */
-	abstract protected function request( array $texts, string $target, bool $html, array $options = array() );
+	abstract protected function request( array $texts, string $target, bool $html, array $options = array(), array $contexts = array() );
+
+	/**
+	 * Source string joined with its context, the way gettext writes the pair.
+	 *
+	 * @param string $text
+	 * @param string $context
+	 *
+	 * @return string
+	 */
+	protected static function with_context( string $text, string $context ): string {
+		return '' === $context ? $text : $context . "\x04" . $text;
+	}
 
 	/**
 	 * Provider language code for a Polylang slug, empty when there is none.
@@ -330,10 +366,39 @@ abstract class Translation_Client {
 			return 'плейсхолдеры не совпали';
 		}
 
+		$attributes = static function ( string $text ): array {
+			preg_match_all( '~<[a-z0-9-]+\s[^>]*>~i', $text, $found );
+			$list = array();
+
+			foreach ( $found[0] as $tag ) {
+				preg_match_all(
+					'~([a-z_:][a-z0-9_.:-]*)\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)~i',
+					$tag,
+					$pairs,
+					PREG_SET_ORDER
+				);
+
+				foreach ( $pairs as $pair ) {
+					$list[] = strtolower( $pair[1] ) . '=' . trim( $pair[2], '"\'' );
+				}
+			}
+
+			sort( $list );
+
+			return $list;
+		};
+
+		if ( $attributes( $source ) !== $attributes( $translation ) ) {
+			return 'атрибуты тегов не совпали';
+		}
+
 		$length = mb_strlen( $source );
 		$ratio  = mb_strlen( $translation ) / max( 1, $length );
+		$floor  = preg_match( '~[\p{Han}\p{Hiragana}\p{Katakana}\p{Hangul}]~u', $translation )
+			? self::RATIO_MIN_CJK
+			: self::RATIO_MIN;
 
-		if ( $length > self::RATIO_FROM && ( $ratio < 0.3 || $ratio > 3.5 ) ) {
+		if ( $length > self::RATIO_FROM && ( $ratio < $floor || $ratio > self::RATIO_MAX ) ) {
 			return sprintf( 'длина изменилась в %.1f раза', $ratio );
 		}
 
