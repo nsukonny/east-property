@@ -584,6 +584,25 @@ function core_result_filters_reset_url(): string {
 }
 
 /**
+ * Heading over a result list, with its own wording for an empty one.
+ *
+ * The page render and the ajax refresh must word this the same way, otherwise
+ * the heading changes as soon as a filter is touched.
+ *
+ * @param int $total Records found.
+ *
+ * @return string
+ */
+function core_results_found_label( int $total ): string {
+	if ( 1 > $total ) {
+		return __( 'No properties found', 'east-property' );
+	}
+
+	/* translators: %s is the number of properties found. */
+	return sprintf( _n( '%s property found', '%s properties found', $total, 'east-property' ), $total );
+}
+
+/**
  * Sort orders of the unit and project listings, by value of the `sort` argument.
  *
  * Only the enabled ones are offered and accepted; the others are ready to switch on.
@@ -1243,10 +1262,7 @@ function ajax_get_property(): void {
 		array(
 			'properties'       => $properties_html,
 			'map_properties'   => get_map_properties_json( get_map_properties(), true ),
-			'properties_found' => sprintf(
-				_n( '%s property found', '%s properties found', $total_found, 'east-property' ),
-				$total_found
-			),
+			'properties_found' => core_results_found_label( (int) $total_found ),
 		)
 	);
 }
@@ -1347,10 +1363,7 @@ function ajax_get_unit(): void {
 		array(
 			'properties'       => $properties_html,
 			'map_properties'   => array(),
-			'properties_found' => sprintf(
-				_n( '%s property found', '%s properties found', $total_found, 'east-property' ),
-				$total_found
-			),
+			'properties_found' => core_results_found_label( (int) $total_found ),
 			'current_url'      => get_permalink( get_page_by_path( 'search' ) ),
 		)
 	);

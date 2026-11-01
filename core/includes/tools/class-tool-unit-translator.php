@@ -66,15 +66,15 @@ final class Unit_Translator {
 	private const BATCH = 100;
 
 	/**
-	 * @var DeepL_Client
+	 * @var Translation_Client
 	 */
-	private DeepL_Client $client;
+	private Translation_Client $client;
 
 	/**
-	 * @param DeepL_Client|null $client Injected in tests.
+	 * @param Translation_Client|null $client Injected in tests.
 	 */
-	public function __construct( ?DeepL_Client $client = null ) {
-		$this->client = $client ?? new DeepL_Client();
+	public function __construct( ?Translation_Client $client = null ) {
+		$this->client = $client ?? Translation_Client::make();
 	}
 
 	/**
@@ -262,12 +262,12 @@ final class Unit_Translator {
 			);
 		}
 
-		$target = DeepL_Client::target_language( $language );
+		$target = $this->client->target_for( $language );
 
 		if ( '' === $target ) {
 			return new WP_Error(
 				'unit_language_unsupported',
-				sprintf( 'язык «%s» DeepL не поддерживает', $language )
+				sprintf( 'язык «%s» переводчик не поддерживает', $language )
 			);
 		}
 

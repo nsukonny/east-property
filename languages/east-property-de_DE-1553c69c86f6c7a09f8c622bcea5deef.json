@@ -1,5 +1,5 @@
 {
-    "translation-revision-date": "",
+    "translation-revision-date": "2026-10-27 11:46+0000",
     "generator": "WP-CLI\/2.11.0",
     "source": "assets\/js\/main.js",
     "domain": "messages",
@@ -7,7 +7,7 @@
         "messages": {
             "": {
                 "domain": "messages",
-                "lang": "de",
+                "lang": "de_DE",
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
             "Location": [
@@ -29,19 +29,19 @@
                 "Ausw\u00e4hlen"
             ],
             "Bed": [
-                "Bett"
+                "Schlafzimmer"
             ],
             "sqft": [
                 "sqft"
             ],
             "Unit": [
-                "Einheit"
+                "Immobilie"
             ],
             "Pre-approval": [
                 "Vorabgenehmigung"
             ],
             "MOU (Form F)": [
-                "Absichtserkl\u00e4rung (Formular F)"
+                "MOU (Form F)"
             ],
             "Final approval": [
                 "Endg\u00fcltige Genehmigung"
@@ -50,13 +50,13 @@
                 "Schlafzimmer"
             ],
             "bed": [
-                "Bett"
+                "Schlafzimmer"
             ],
             "baths": [
-                "B\u00e4der"
+                "Badezimmer"
             ],
             "bath": [
-                "Bad"
+                "Badezimmer"
             ],
             "Selected location": [
                 "Ausgew\u00e4hlter Standort"
@@ -65,139 +65,139 @@
                 "%1$d Projekte \u00b7 %2$d Einheiten"
             ],
             "UAE Resident": [
-                ""
+                "Ans\u00e4ssig in den VAE"
             ],
             "Non-Resident": [
-                ""
+                "Nichtans\u00e4ssig"
             ],
             "Mortgage Calculation \u2014 East Property": [
-                ""
+                "Hypothekenberechnung \u2014 East Property"
             ],
             "East Property Advisory": [
-                ""
+                "East Property Advisory"
             ],
             "Ref:": [
-                ""
+                "Ref:"
             ],
             "Date:": [
-                ""
+                "Datum:"
             ],
             "Dubai, United Arab Emirates": [
-                ""
+                "Dubai, Vereinigte Arabische Emirate"
             ],
             "UAE Mortgage Calculation Report": [
-                ""
+                "Bericht zur Immobilienfinanzierung in den VAE"
             ],
             "Property financing estimate and upfront acquisition breakdown \u00b7 East Property Advisory": [
-                ""
+                "Sch\u00e4tzung der Immobilienfinanzierung und Aufschl\u00fcsselung der Anschaffungskosten \u00b7 East Property Advisory"
             ],
             "Estimated Monthly Payment": [
-                ""
+                "Gesch\u00e4tzte monatliche Rate"
             ],
             "\/ month": [
-                ""
+                "\/ Monat"
             ],
             "Profile": [
-                ""
+                "Profil"
             ],
             "Tenure": [
-                ""
+                "Laufzeit"
             ],
             "%s Years": [
-                ""
+                "%s Jahre"
             ],
             "Interest Rate": [
-                ""
+                "Zinssatz"
             ],
             "Principal Loan:": [
-                ""
+                "Darlehensbetrag:"
             ],
             "Total Interest:": [
-                ""
+                "Gesamtzinsen:"
             ],
             "Loan Parameters": [
-                ""
+                "Darlehensparameter"
             ],
             "Property Price": [
-                ""
+                "Immobilienpreis"
             ],
             "Down Payment (%s%%)": [
-                ""
+                "Anzahlung (%s%%)"
             ],
             "Bank Loan Amount": [
-                ""
+                "Bankdarlehensbetrag"
             ],
             "Loan Tenure": [
-                ""
+                "Darlehenslaufzeit"
             ],
             "%1$s years (%2$s mos)": [
-                ""
+                "%1$s Jahre (%2$s Monate)"
             ],
             "%s%% p.a.": [
-                ""
+                "%s%% p.a."
             ],
             "Total Interest (Overpayment)": [
-                ""
+                "Gesamtzinsen (Mehrzahlung)"
             ],
             "Total Payable over Term": [
-                ""
+                "Gesamtbetrag \u00fcber die Laufzeit"
             ],
             "Full Cost of Entry": [
-                ""
+                "Gesamteinstiegskosten"
             ],
             "DLD Fee (4% + 580)": [
-                ""
+                "DLD-Geb\u00fchr (4% + 580)"
             ],
             "Agency Commission (2%)": [
-                ""
+                "Maklerprovision (2%)"
             ],
             "Bank Fee (1% of loan)": [
-                ""
+                "Bankgeb\u00fchr (1% des Darlehens)"
             ],
             "Property Valuation": [
-                ""
+                "Immobilienbewertung"
             ],
             "Mortgage Registration": [
-                ""
+                "Hypothekenregistrierung"
             ],
             "Total Required at Entry": [
-                ""
+                "Gesamtbetrag bei Einstieg"
             ],
             "The Deal in 6 Steps (Timeline: 4\u20138 Weeks from MOU to Keys)": [
-                ""
+                "Der Deal in 6 Schritten (Zeitplan: 4\u20138 Wochen von MOU bis zur Schl\u00fcssel\u00fcbergabe)"
             ],
             "Bank eligibility": [
-                ""
+                "Bankpr\u00fcfung der Kreditw\u00fcrdigkeit"
             ],
             "~10% deposit": [
-                ""
+                "~10% Anzahlung"
             ],
             "Valuation": [
-                ""
+                "Bewertung"
             ],
             "Property appraisal": [
-                ""
+                "Immobiliensch\u00e4tzung"
             ],
             "Loan offer letter": [
-                ""
+                "Kreditangebot"
             ],
             "DLD Transfer": [
-                ""
+                "DLD-\u00dcbertragung"
             ],
             "Title deed": [
-                ""
+                "Eigentumsurkunde"
             ],
             "Handover": [
-                ""
+                "\u00dcbergabe"
             ],
             "Funds & keys": [
-                ""
+                "Zahlung & Schl\u00fcssel\u00fcbergabe"
             ],
             "Disclaimer:": [
-                ""
+                "Haftungsausschluss:"
             ],
             "East Property Brokerage LLC": [
-                ""
+                "East Property Brokerage LLC"
             ]
         }
     }

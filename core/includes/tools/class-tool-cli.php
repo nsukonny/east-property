@@ -34,10 +34,12 @@ final class CLI {
 		WP_CLI::add_command( 'tools import-properties', array( __CLASS__, 'import_properties' ) );
 		WP_CLI::add_command( 'tools import-distress-units', array( __CLASS__, 'import_distress_units' ) );
 		WP_CLI::add_command( 'tools flag-untranslated', array( __CLASS__, 'flag_untranslated' ) );
+		WP_CLI::add_command( 'tools relink-units', array( __CLASS__, 'relink_units' ) );
 		WP_CLI::add_command( 'tools warm-cache', array( __CLASS__, 'warm_cache' ) );
 		WP_CLI::add_command( 'tools strip-unit-floors', array( __CLASS__, 'strip_unit_floors' ) );
 		WP_CLI::add_command( 'tools translate-units', array( __CLASS__, 'translate_units' ) );
 		WP_CLI::add_command( 'tools translate-locations', array( __CLASS__, 'translate_locations' ) );
+		WP_CLI::add_command( 'tools translate-bakeoff', array( __CLASS__, 'translate_bakeoff' ) );
 		WP_CLI::add_command( 'tools clone-language', array( __CLASS__, 'clone_language' ) );
 		WP_CLI::add_command( 'tools add-language', array( __CLASS__, 'add_language' ) );
 		WP_CLI::add_command( 'tools clone-menus', array( __CLASS__, 'clone_menus' ) );
@@ -878,8 +880,8 @@ final class CLI {
 		$force = $force || $post_id > 0;
 		$into  = $post_id > 0 ? $language : '';
 
-		if ( '' !== $into && '' === DeepL_Client::target_language( $into ) ) {
-			WP_CLI::error( sprintf( 'язык «%s» DeepL не поддерживает', $into ) );
+		if ( '' !== $into && '' === Translation_Client::make()->target_for( $into ) ) {
+			WP_CLI::error( sprintf( 'язык «%s» переводчик не поддерживает', $into ) );
 		}
 
 		if ( ! function_exists( 'pll_get_post_language' ) ) {
@@ -982,6 +984,271 @@ final class CLI {
 		}
 
 		WP_CLI::success( $dry_run ? 'Проверка закончена, ничего не записано' : 'Готово' );
+	}
+
+	/**
+	 * Dry run of a translation provider over real posts.
+	 *
+	 * Writes nothing: no post is touched and the answers are not cached, so the
+	 * same strings can be sent to another provider straight after. Reports what
+	 * the validator rejected, what the call cost and where the texts landed, so
+	 * a provider is judged on this project's own content instead of on
+	 * somebody's benchmark.
+	 *
+	 * Terminology and grammar still need a human — the machine side only proves
+	 * that markup, placeholders and brand names survived.
+	 *
+	 * With --marker the model is asked to end every translation with a
+	 * terminator, and the run reports how often it forgot. That is the one
+	 * measurement worth having before trusting the terminator as a check: a
+	 * model that forgets even rarely turns it into a rejecter of good work.
+	 * Such a run is not comparable with one without the flag — the prompt
+	 * differs, so the cache is cold and nothing is reused.
+	 *
+	 * ## OPTIONS
+	 *
+	 * [--language=<slug>]
+	 * : Polylang slug to translate into.
+	 * ---
+	 * default: ar
+	 * ---
+	 *
+	 * [--limit=<number>]
+	 * : How many random published English posts to take.
+	 * ---
+	 * default: 20
+	 * ---
+	 *
+	 * [--post-type=<type>]
+	 * : Post type to sample.
+	 * ---
+	 * default: unit
+	 * ---
+	 *
+	 * [--provider=<name>]
+	 * : gemini or deepl, overriding TRANSLATE_PROVIDER from the .env.
+	 *
+	 * [--model=<id>]
+	 * : Model to ask for, Gemini only.
+	 *
+	 * [--marker]
+	 * : Gemini only. Ask for a terminator and count how often it is forgotten.
+	 *
+	 * [--out=<path>]
+	 * : Directory for the dump of source and translation.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp tools translate-bakeoff
+	 *     wp tools translate-bakeoff --language=ar --limit=20
+	 *     wp tools translate-bakeoff --model=gemini-2.5-flash-lite
+	 *     wp tools translate-bakeoff --provider=deepl --limit=5
+	 *     wp tools translate-bakeoff --post-type=property --limit=10
+	 *     wp tools translate-bakeoff --limit=30 --marker
+	 *
+	 * @param array $args Positional arguments, unused.
+	 * @param array $assoc_args Flags.
+	 *
+	 * @return void
+	 */
+	public static function translate_bakeoff( array $args, array $assoc_args ): void {
+		$language = (string) Utils\get_flag_value( $assoc_args, 'language', 'ar' );
+		$limit    = max( 1, (int) Utils\get_flag_value( $assoc_args, 'limit', 20 ) );
+		$type     = (string) Utils\get_flag_value( $assoc_args, 'post-type', 'unit' );
+		$provider = (string) Utils\get_flag_value( $assoc_args, 'provider', '' );
+		$model    = (string) Utils\get_flag_value( $assoc_args, 'model', '' );
+		$marker   = (bool) Utils\get_flag_value( $assoc_args, 'marker', false );
+		$out      = (string) Utils\get_flag_value( $assoc_args, 'out', sys_get_temp_dir() );
+
+		// Прайсы провайдеров на 27.10.2026, за миллион токенов: вход, выход.
+		// Пакетный режим вдвое дешевле и здесь не учитывается.
+		$prices = array(
+			'gemini-3.1-flash-lite' => array( 0.25, 1.50 ),
+			'gemini-2.5-flash-lite' => array( 0.10, 0.40 ),
+			'gemini-3-flash'        => array( 0.50, 3.00 ),
+		);
+
+		if ( ! post_type_exists( $type ) ) {
+			WP_CLI::error( sprintf( 'типа записи «%s» нет', $type ) );
+		}
+
+		$client = Translation_Client::make( $provider );
+
+		if ( '' !== $model ) {
+			if ( ! $client instanceof Gemini_Client ) {
+				WP_CLI::error( '--model понимает только gemini' );
+			}
+
+			$client->use_model( $model );
+		}
+
+		if ( $marker ) {
+			if ( ! $client instanceof Gemini_Client ) {
+				WP_CLI::error( '--marker понимает только gemini' );
+			}
+
+			$client->use_marker( true );
+			WP_CLI::log( 'маркер конца включён: промпт другой, кэш холодный' );
+		}
+
+		$target = $client->target_for( $language );
+
+		if ( '' === $target ) {
+			WP_CLI::error( sprintf( 'язык «%s» переводчик не поддерживает', $language ) );
+		}
+
+		if ( ! $client->has_key() ) {
+			WP_CLI::error( 'ключ провайдера не задан в .env' );
+		}
+
+		$posts = get_posts(
+			array(
+				'post_type'        => $type,
+				'post_status'      => 'publish',
+				'numberposts'      => $limit,
+				'orderby'          => 'rand',
+				'suppress_filters' => false,
+				'lang'             => 'en',
+			)
+		);
+
+		if ( empty( $posts ) ) {
+			WP_CLI::error( sprintf( 'английских записей типа «%s» не нашлось', $type ) );
+		}
+
+		WP_CLI::log(
+			sprintf(
+				'провайдер %s, цель %s, записей %d',
+				( new \ReflectionClass( $client ) )->getShortName(),
+				$target,
+				count( $posts )
+			)
+		);
+
+		$started = microtime( true );
+		$rows    = array();
+		$failed  = 0;
+		$chars   = 0;
+
+		foreach ( $posts as $post ) {
+			$fields = array_filter(
+				array(
+					'title'   => (string) $post->post_title,
+					'excerpt' => (string) $post->post_excerpt,
+					'content' => (string) $post->post_content,
+				),
+				static fn( string $value ): bool => '' !== trim( $value )
+			);
+
+			$plain = array_diff_key( $fields, array( 'content' => 1 ) );
+			$got   = $client->translate( $plain, $target, false, false );
+			$body  = isset( $fields['content'] )
+				? $client->translate( array( 'content' => $fields['content'] ), $target, true, false )
+				: array();
+
+			foreach ( array( $got, $body ) as $part ) {
+				if ( is_wp_error( $part ) ) {
+					++ $failed;
+					WP_CLI::warning( sprintf( '#%d отклонено: %s', $post->ID, $part->get_error_message() ) );
+
+					continue 2;
+				}
+			}
+
+			// Токены считаются и за отклонённые записи, поэтому цена за символ
+			// выходит скорее завышенной, чем заниженной.
+			$chars += array_sum( array_map( 'mb_strlen', $fields ) );
+
+			$rows[] = array(
+				'id'     => $post->ID,
+				'source' => $fields,
+				'target' => array_merge( $got, $body ),
+			);
+		}
+
+		$spent = microtime( true ) - $started;
+
+		if ( empty( $rows ) ) {
+			WP_CLI::error( 'ни одна запись не прошла проверку — сравнивать нечего' );
+		}
+
+		// Бренд и имена проектов обязаны остаться латиницей: это единственная
+		// часть перевода, которую можно проверить машинно.
+		$latin = 0;
+
+		foreach ( $rows as $row ) {
+			$source = implode( ' ', $row['source'] );
+			$result = implode( ' ', $row['target'] );
+
+			foreach ( array( 'East Property', 'Emaar', 'Damac', 'Azizi' ) as $name ) {
+				if ( false !== stripos( $source, $name ) && false === stripos( $result, $name ) ) {
+					++ $latin;
+					WP_CLI::warning( sprintf( '#%d бренд «%s» потерял латиницу', $row['id'], $name ) );
+				}
+			}
+		}
+
+		$file = rtrim( $out, '/' ) . '/bakeoff-' . $language . '.txt';
+		$dump = '';
+
+		foreach ( $rows as $row ) {
+			$dump .= sprintf( "===== #%d =====\n", $row['id'] );
+
+			foreach ( $row['source'] as $field => $text ) {
+				$dump .= sprintf( "--- %s ---\n%s\n>>>\n%s\n\n", $field, $text, $row['target'][ $field ] ?? '' );
+			}
+		}
+
+		if ( false === file_put_contents( $file, $dump ) ) {
+			WP_CLI::warning( sprintf( 'тексты не записались в %s', $file ) );
+		}
+
+		WP_CLI::log( sprintf( 'переведено %d, отклонено %d, бренд потерян %d раз', count( $rows ), $failed, $latin ) );
+		WP_CLI::log( sprintf( 'символов исходника %d, времени %.1f с', $chars, $spent ) );
+
+		if ( $client instanceof Gemini_Client ) {
+			$usage = $client->usage();
+			$rate  = $prices[ $client->model() ] ?? null;
+
+			WP_CLI::log(
+				sprintf( 'токенов: вход %d, выход %d, вызовов %d', $usage['in'], $usage['out'], $usage['calls'] )
+			);
+
+			if ( $marker && $usage['items'] > 0 ) {
+				WP_CLI::log(
+					sprintf(
+						'маркер конца: проверено ответов %d, забыт %d раз (%.1f%%)',
+						$usage['items'],
+						$usage['missed'],
+						$usage['missed'] / $usage['items'] * 100
+					)
+				);
+				WP_CLI::log(
+					0 === $usage['missed']
+						? 'ни одного промаха — проверку можно включать'
+						: 'есть промахи: включать нельзя, это будет машина ложных отказов'
+				);
+			}
+
+			if ( null === $rate ) {
+				WP_CLI::warning( sprintf( 'цены модели «%s» в таблице нет — стоимость не посчитана', $client->model() ) );
+			} elseif ( $chars > 0 ) {
+				$cost     = $usage['in'] / 1e6 * $rate[0] + $usage['out'] / 1e6 * $rate[1];
+				$per_char = $cost / $chars;
+				$average  = $chars / count( $rows );
+
+				WP_CLI::log( sprintf( 'стоимость прогона $%.4f, это $%.3f за миллион символов', $cost, $per_char * 1e6 ) );
+				WP_CLI::log(
+					sprintf(
+						'на 12 000 юнитов по %d символов: $%.2f (пакетным режимом вдвое меньше)',
+						(int) $average,
+						$per_char * $average * 12000
+					)
+				);
+			}
+		}
+
+		WP_CLI::success( sprintf( 'тексты для чтения: %s', $file ) );
 	}
 
 	/**
@@ -1163,6 +1430,282 @@ final class CLI {
 		}
 
 		WP_CLI::success( 'готово' );
+	}
+
+	/**
+	 * Relink units to property in same language
+	 *
+	 * [--language=<slug>]
+	 * : Only units in this Polylang language.
+	 *
+	 * [--status=<statuses>]
+	 * : Comma-separated post statuses to walk.
+	 * ---
+	 * default: publish,draft,future
+	 * ---
+	 *
+	 * [--limit=<number>]
+	 * : Stop after this many fixes. 0 takes them all.
+	 * ---
+	 * default: 0
+	 * ---
+	 *
+	 * [--report=<path>]
+	 * : Write a CSV of every unit considered, fixed or not.
+	 *
+	 * [--dry-run]
+	 * : Report the counts and write nothing.
+	 *
+	 * [--yes]
+	 * : Skip the confirmation.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp tools relink-units --dry-run
+	 *     wp tools relink-units --language=ru --dry-run
+	 *     wp tools relink-units --report=/tmp/relink.csv
+	 *     wp tools relink-units --language=de --yes
+	 *     wp tools relink-units --language=de
+	 *
+	 * @param array $args Positional arguments, unused.
+	 * @param array $assoc_args Flags.
+	 *
+	 * @return void
+	 */
+	public static function relink_units( array $args, array $assoc_args ): void {
+		global $wpdb;
+
+		$dry_run  = (bool) Utils\get_flag_value( $assoc_args, 'dry-run', false );
+		$language = (string) Utils\get_flag_value( $assoc_args, 'language', '' );
+		$limit    = max( 0, (int) Utils\get_flag_value( $assoc_args, 'limit', 0 ) );
+		$report   = (string) Utils\get_flag_value( $assoc_args, 'report', '' );
+		$statuses = array_values(
+			array_filter(
+				array_map(
+					'trim',
+					explode( ',', (string) Utils\get_flag_value( $assoc_args, 'status', implode( ',', Unit_Translator::DEFAULT_STATUSES ) ) )
+				)
+			)
+		) ?: Unit_Translator::DEFAULT_STATUSES;
+
+		if ( ! function_exists( 'pll_get_post_translations' ) ) {
+			WP_CLI::error( 'Polylang не активен — язык записи определить нечем' );
+		}
+
+		$status_in = implode( ',', array_fill( 0, count( $statuses ), '%s' ) );
+		$params    = array_merge( array( 'unit' ), $statuses );
+		$language_clause = '';
+
+		if ( '' !== $language ) {
+			$language_clause = 'AND ul.slug = %s';
+			$params[]        = $language;
+		}
+
+		$rows = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT u.ID AS unit_id, ul.slug AS unit_lang,
+				        p.ID AS project_id, pl.slug AS project_lang
+				 FROM {$wpdb->posts} u
+				 INNER JOIN {$wpdb->postmeta} pm
+				         ON pm.post_id = u.ID AND pm.meta_key = 'property'
+				 INNER JOIN {$wpdb->posts} p
+				         ON p.ID = CAST(pm.meta_value AS UNSIGNED)
+				 INNER JOIN {$wpdb->term_relationships} utr ON utr.object_id = u.ID
+				 INNER JOIN {$wpdb->term_taxonomy} utt
+				         ON utt.term_taxonomy_id = utr.term_taxonomy_id AND utt.taxonomy = 'language'
+				 INNER JOIN {$wpdb->terms} ul ON ul.term_id = utt.term_id
+				 INNER JOIN {$wpdb->term_relationships} ptr ON ptr.object_id = p.ID
+				 INNER JOIN {$wpdb->term_taxonomy} ptt
+				         ON ptt.term_taxonomy_id = ptr.term_taxonomy_id AND ptt.taxonomy = 'language'
+				 INNER JOIN {$wpdb->terms} pl ON pl.term_id = ptt.term_id
+				 WHERE u.post_type = %s
+				   AND u.post_status IN ({$status_in})
+				   AND ul.slug <> pl.slug
+				   {$language_clause}
+				 ORDER BY ul.slug, u.ID",
+				$params
+			)
+		);
+
+		$orphans = (int) $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT COUNT(*) FROM {$wpdb->posts} p
+				 WHERE p.post_type = %s AND p.post_status IN ({$status_in})
+				   AND NOT EXISTS (
+				       SELECT 1 FROM {$wpdb->postmeta} m
+				       WHERE m.post_id = p.ID AND m.meta_key = 'property'
+				         AND m.meta_value REGEXP '^[0-9]+$' AND m.meta_value <> '0'
+				   )",
+				array_merge( array( 'unit' ), $statuses )
+			)
+		);
+
+		if ( empty( $rows ) ) {
+			WP_CLI::success(
+				sprintf( 'Юнитов с привязкой к чужому языку не нашлось; без привязки вовсе: %d', $orphans )
+			);
+
+			return;
+		}
+
+		$plan      = array();
+		$stuck     = array();
+		$pairs     = array();
+		$by_target = array();
+
+		foreach ( $rows as $row ) {
+			$pair = $row->unit_lang . ' -> ' . $row->project_lang;
+
+			if ( ! isset( $pairs[ $pair ] ) ) {
+				$pairs[ $pair ] = array( 'fixable' => 0, 'stuck' => 0 );
+			}
+
+			$project_id = (int) $row->project_id;
+
+			if ( ! isset( $by_target[ $project_id ] ) ) {
+				$by_target[ $project_id ] = pll_get_post_translations( $project_id );
+			}
+
+			$target = (int) ( $by_target[ $project_id ][ $row->unit_lang ] ?? 0 );
+			$item   = array(
+				'unit_id'      => (int) $row->unit_id,
+				'unit_lang'    => (string) $row->unit_lang,
+				'project_id'   => $project_id,
+				'project_lang' => (string) $row->project_lang,
+				'target_id'    => $target,
+				'result'       => '',
+			);
+
+			if ( $target > 0 && $target !== $project_id ) {
+				++ $pairs[ $pair ]['fixable'];
+				$plan[] = $item;
+
+				continue;
+			}
+
+			++ $pairs[ $pair ]['stuck'];
+			$item['result'] = 0 === $target ? 'у проекта нет перевода на этот язык' : 'перевод совпал с исходным проектом';
+			$stuck[]        = $item;
+		}
+
+		ksort( $pairs );
+
+		WP_CLI::log( 'Юниты, привязанные к проекту другого языка:' );
+
+		foreach ( $pairs as $pair => $counts ) {
+			WP_CLI::log(
+				sprintf(
+					'  %-12s всего %-6d исправимо %-6d нечем %d',
+					$pair,
+					$counts['fixable'] + $counts['stuck'],
+					$counts['fixable'],
+					$counts['stuck']
+				)
+			);
+		}
+
+		WP_CLI::log(
+			sprintf( 'Итого %d, исправимо %d, нечем %d', count( $rows ), count( $plan ), count( $stuck ) )
+		);
+
+		if ( $orphans > 0 ) {
+			WP_CLI::log( sprintf( 'Без привязки вовсе: %d — не трогаю, связь придумывать нечем', $orphans ) );
+		}
+
+		if ( $limit > 0 && count( $plan ) > $limit ) {
+			$plan = array_slice( $plan, 0, $limit );
+			WP_CLI::log( sprintf( 'Ограничение --limit: беру первые %d', $limit ) );
+		}
+
+		if ( '' !== $report ) {
+			self::write_relink_report( $report, array_merge( $plan, $stuck ) );
+		}
+
+		if ( $dry_run ) {
+			WP_CLI::success( 'dry-run завершён, ничего не записано' );
+
+			return;
+		}
+
+		if ( empty( $plan ) ) {
+			WP_CLI::warning( 'Исправить нечего: у проектов нет переводов на нужные языки' );
+
+			return;
+		}
+
+		WP_CLI::confirm( sprintf( 'Перепривязать %d юнитов?', count( $plan ) ), $assoc_args );
+
+		$bar    = Utils\make_progress_bar( 'Relinking', count( $plan ) );
+		$done   = 0;
+		$failed = 0;
+
+		foreach ( $plan as $index => $item ) {
+			$written = update_post_meta( $item['unit_id'], 'property', (string) $item['target_id'] );
+
+			if ( false === $written ) {
+				++ $failed;
+				$plan[ $index ]['result'] = 'запись не удалась';
+				WP_CLI::warning( sprintf( 'юнит #%d: мета не записалась', $item['unit_id'] ) );
+			} else {
+				++ $done;
+				$plan[ $index ]['result'] = 'перепривязан';
+			}
+
+			$bar->tick();
+		}
+
+		$bar->finish();
+
+		if ( '' !== $report ) {
+			self::write_relink_report( $report, array_merge( $plan, $stuck ) );
+		}
+
+		WP_CLI::log( sprintf( 'Перепривязано %d, не удалось %d, осталось нечем %d', $done, $failed, count( $stuck ) ) );
+
+		self::flush_caches();
+
+		WP_CLI::success( 'Готово' );
+	}
+
+	/**
+	 * Write what the relink considered, fixed or not.
+	 *
+	 * @param string $path  Destination CSV.
+	 * @param array  $items Rows to write.
+	 *
+	 * @return void
+	 */
+	private static function write_relink_report( string $path, array $items ): void {
+		$handle = fopen( $path, 'w' );
+
+		if ( false === $handle ) {
+			WP_CLI::warning( sprintf( 'не удалось записать отчёт %s', $path ) );
+
+			return;
+		}
+
+		fputcsv( $handle, array( 'unit_id', 'unit_lang', 'old_project', 'old_project_lang', 'new_project', 'result' ), ',', '"', '' );
+
+		foreach ( $items as $item ) {
+			fputcsv(
+				$handle,
+				array(
+					$item['unit_id'],
+					$item['unit_lang'],
+					$item['project_id'],
+					$item['project_lang'],
+					$item['target_id'] ?: '',
+					$item['result'],
+				),
+				',',
+				'"',
+				''
+			);
+		}
+
+		fclose( $handle );
+
+		WP_CLI::log( sprintf( 'Отчёт: %s', $path ) );
 	}
 
 	/**

@@ -49,12 +49,12 @@ msgid "Go to properties"
 msgstr "انتقل إلى العقارات"
 
 #: core/components/account/functions.php:125
-#: core/components/filters/functions.php:912
+#: core/components/filters/functions.php:931
 msgid "Apartments"
 msgstr "شقق"
 
 #: core/components/account/functions.php:126
-#: core/components/filters/functions.php:928
+#: core/components/filters/functions.php:947
 msgid "Villas"
 msgstr "الفلل"
 
@@ -67,12 +67,12 @@ msgid "Penthouses"
 msgstr "البنتهاوس"
 
 #: core/components/account/functions.php:129
-#: core/components/filters/functions.php:920
+#: core/components/filters/functions.php:939
 msgid "Houses"
 msgstr "منازل"
 
 #: core/components/account/functions.php:130
-#: core/components/filters/functions.php:936
+#: core/components/filters/functions.php:955
 msgid "Offices"
 msgstr "المكاتب"
 
@@ -96,10 +96,10 @@ msgid "Waiting for approval"
 msgstr "في انتظار الموافقة"
 
 #: core/components/account/functions.php:319
-#: core/components/filters/functions.php:1101
+#: core/components/filters/functions.php:1120
 #: core/template-parts/filters/search-tabs.php:144
 msgid "Any Locations"
-msgstr "أي مواقع"
+msgstr "جميع المناطق"
 
 #: core/components/account/functions.php:320
 #: core/template-parts/filters/result-filters.php:273
@@ -109,10 +109,10 @@ msgstr "الكل"
 
 #: core/components/account/functions.php:326
 #: core/components/filters/functions.php:312
-#: core/components/filters/functions.php:1045
+#: core/components/filters/functions.php:1064
 #: core/template-parts/filters/search-tabs.php:165
 msgid "Any Developers"
-msgstr "أي مطورين عقاريين"
+msgstr "جميع المطورين"
 
 #: core/components/account/functions.php:332
 msgid "Any bedrooms"
@@ -464,22 +464,22 @@ msgstr "درهم إماراتي"
 #: core/components/components-functions.php:224
 msgctxt "handover quarter"
 msgid "Q1"
-msgstr "السؤال 1"
+msgstr "الربع الأول"
 
 #: core/components/components-functions.php:225
 msgctxt "handover quarter"
 msgid "Q2"
-msgstr "السؤال 2"
+msgstr "الربع الثاني"
 
 #: core/components/components-functions.php:226
 msgctxt "handover quarter"
 msgid "Q3"
-msgstr "السؤال 3"
+msgstr "الربع الثالث"
 
 #: core/components/components-functions.php:227
 msgctxt "handover quarter"
 msgid "Q4"
-msgstr "السؤال 4"
+msgstr "الربع الرابع"
 
 #. translators: 1: quarter, 2: year.
 #: core/components/components-functions.php:232
@@ -493,13 +493,13 @@ msgstr "Mailer"
 
 #. translators: option of the delivery date filter, projects already handed over.
 #: core/components/filters/functions.php:323
-#: core/components/filters/functions.php:848
+#: core/components/filters/functions.php:867
 msgctxt "delivery filter"
 msgid "Ready"
 msgstr "جاهز"
 
 #: core/components/filters/functions.php:330
-#: core/components/filters/functions.php:852
+#: core/components/filters/functions.php:871
 msgid "In Construction"
 msgstr "قيد الإنشاء"
 
@@ -508,7 +508,7 @@ msgid "All Years"
 msgstr "جميع السنوات"
 
 #: core/components/filters/functions.php:350
-#: core/components/filters/functions.php:861
+#: core/components/filters/functions.php:880
 #: core/includes/registers/post-types/locations.php:10
 #: core/template-parts/account/edit-property.php:191
 #: core/template-parts/filters/result-filters.php:61
@@ -530,24 +530,24 @@ msgid "Completion Year After"
 msgstr "سنة الانتهاء بعد"
 
 #: core/components/filters/functions.php:359
-#: core/components/filters/functions.php:869
+#: core/components/filters/functions.php:888
 msgid "Price (AED)"
 msgstr "السعر (درهم إماراتي)"
 
 #: core/components/filters/functions.php:366
-#: core/components/filters/functions.php:876
+#: core/components/filters/functions.php:895
 #: core/includes/entities/class-entity-property.php:650
 msgid "Property Type"
 msgstr "نوع العقار"
 
 #: core/components/filters/functions.php:370
-#: core/components/filters/functions.php:880
-#: core/components/filters/functions.php:904
+#: core/components/filters/functions.php:899
+#: core/components/filters/functions.php:923
 msgid "Any"
 msgstr "أي"
 
 #: core/components/filters/functions.php:375
-#: core/components/filters/functions.php:885
+#: core/components/filters/functions.php:904
 #: core/includes/registers/post-types/developers.php:11
 #: core/includes/registers/post-types/developers.php:37
 #: core/template-parts/account/edit-property.php:128
@@ -621,48 +621,48 @@ msgstr "استوديو"
 msgid "Baths"
 msgstr "الحمامات"
 
-#: core/components/filters/functions.php:596
+#: core/components/filters/functions.php:615
 msgid "Price: high to low"
 msgstr "السعر: من الأعلى إلى الأدنى"
 
-#: core/components/filters/functions.php:600
+#: core/components/filters/functions.php:619
 msgid "Price: low to high"
 msgstr "السعر: من الأقل إلى الأعلى"
 
-#: core/components/filters/functions.php:604
+#: core/components/filters/functions.php:623
 msgid "Newest first"
 msgstr "الأحدث أولاً"
 
-#: core/components/filters/functions.php:608
+#: core/components/filters/functions.php:627
 msgid "Oldest first"
 msgstr "الأقدم أولاً"
 
-#: core/components/filters/functions.php:612
+#: core/components/filters/functions.php:631
 msgid "Handover: soonest first"
 msgstr "تسليم المشروع: في أقرب وقت ممكن"
 
-#: core/components/filters/functions.php:624
+#: core/components/filters/functions.php:643
 msgctxt "listing sort"
 msgid "Recommended"
 msgstr "موصى به"
 
-#: core/components/filters/functions.php:844
+#: core/components/filters/functions.php:863
 msgid "Any year"
 msgstr "أي سنة"
 
-#: core/components/filters/functions.php:865
+#: core/components/filters/functions.php:884
 msgid "Available"
 msgstr "متوفر"
 
-#: core/components/filters/functions.php:1236
+#: core/components/filters/functions.php:1255
 #: core/template-parts/search-results/properties-list.php:63
 #: core/template-parts/search-results/tabs.php:63
 #: core/template-parts/search-results/units-list.php:62
 msgid "Items not found"
 msgstr "لم يتم العثور على العناصر المطلوبة"
 
-#: core/components/filters/functions.php:1247
-#: core/components/filters/functions.php:1351
+#. translators: %s is the number of properties found.
+#: core/components/filters/functions.php:602
 msgid "%s property found"
 msgid_plural "%s properties found"
 msgstr[0] "تم العثور على %s عقارًا"
@@ -672,7 +672,7 @@ msgstr[3] "تم العثور على %s عقارًا"
 msgstr[4] "تم العثور على %s عقارًا"
 msgstr[5] "تم العثور على %s عقارًا"
 
-#: core/components/filters/functions.php:1339
+#: core/components/filters/functions.php:1355
 msgid "Properties not found"
 msgstr "لم يتم العثور على عقارات"
 
@@ -1029,7 +1029,7 @@ msgstr "المكتب"
 
 #: core/components/properties/functions.php:158
 msgid "Freehold"
-msgstr "ملكية حرة"
+msgstr "تملّك حر"
 
 #: core/components/properties/functions.php:159
 msgid "Leasehold"
@@ -1173,10 +1173,6 @@ msgstr "شاهد جميع المشاريع الجديدة"
 #: core/components/units/filter.php:9
 msgid "Available Units in UAE"
 msgstr "الوحدات المتاحة في الإمارات العربية المتحدة"
-
-#: core/components/units/filter.php:28
-msgid "properties found"
-msgstr "العقارات التي تم العثور عليها"
 
 #: core/components/units/functions.php:19
 msgid "Off-plan"
@@ -2328,7 +2324,7 @@ msgstr "إلغاء"
 #: core/template-parts/filters/result-filters.php:215
 #: core/template-parts/filters/search-tabs.php:124
 msgid "Apply"
-msgstr "تقدم بطلبك"
+msgstr "تطبيق"
 
 #: core/template-parts/filters/result-filters.php:288
 msgid "Max Area"
@@ -3292,3 +3288,7 @@ msgstr "إخلاء المسؤولية:"
 #: src/js/mortgage-calculator/modules/pdf/template.js:204
 msgid "East Property Brokerage LLC"
 msgstr "East Property Brokerage LLC"
+
+#: core/components/filters/functions.php:598
+msgid "No properties found"
+msgstr "لم يتم العثور على عقارات"

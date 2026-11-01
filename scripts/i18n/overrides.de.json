@@ -1,0 +1,8 @@
+{
+    "_comment": "msgid -> exact replacement, applied after the API answers. German keeps a lot of English in property marketing, and the model follows that: Studio, Villa, Penthouse, Boost and Q1..Q4 are left alone on purpose. These four are not marketing words but ownership types in a dropdown, and German has its own.",
+
+    "Townhouse": "Reihenhaus",
+    "Freehold": "Volleigentum",
+    "Leasehold": "Pachtvertrag",
+    "Commonhold": "Gemeinschaftseigentum"
+}

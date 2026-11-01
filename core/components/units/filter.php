@@ -25,7 +25,7 @@ get_component_template(
 
 get_component_template( 'search-results/units-list',
 	array(
-		'h2'            => $units['total'] . ' ' . __( 'properties found', 'east-property' ),
+		'h2'            => core_results_found_label( (int) $units['total'] ),
 		'card_template' => $card_template,
 		'units'         => $units,
 		'listing_type'  => $listing_type,
