@@ -203,7 +203,8 @@ final class Unit {
 		if ( 0 === $beds ) {
 			$beds = __( 'Studio', 'east-property' );
 		} else {
-			$beds .= ' ' . __( 'Beds', 'east-property' );
+			$beds = core_open_ended_label( $beds, get_filter_beds_options()['options'] )
+					. ' ' . __( 'Beds', 'east-property' );
 		}
 		$amenities[] = array(
 			'icon'  => THEME_URL . '/assets/img/bed.svg',
@@ -503,7 +504,8 @@ final class Unit {
 				'icon'  => THEME_URL . '/assets/img/bed.svg',
 				'value' => 0 === $beds
 					? __( 'Studio', 'east-property' )
-					: $beds . ' ' . __( 'Beds', 'east-property' ),
+					: core_open_ended_label( $beds, get_filter_beds_options()['options'] )
+					  . ' ' . __( 'Beds', 'east-property' ),
 			),
 		);
 
