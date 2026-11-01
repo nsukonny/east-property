@@ -488,15 +488,12 @@ function core_query_properties(
 		$params[] = $location;
 	}
 
-	$joins[] = "INNER JOIN {$wpdb->postmeta} AS pm_units_count
+	$joins[] = "LEFT JOIN {$wpdb->postmeta} AS pm_units_count
 				ON pm_units_count.post_id = p.ID
 				AND pm_units_count.meta_key = 'units_count'";
-	/*
-	 * The map counts units itself, so it skips this gate: units_count counts
-	 * every row pointing at the project, whatever the post status or language.
-	 */
+
 	if ( ! $skip_filters && ! $is_map ) {
-		$where[] = "CAST(pm_units_count.meta_value AS UNSIGNED) > 0";
+		$where[] = "CAST(COALESCE(pm_units_count.meta_value, '0') AS UNSIGNED) > 0";
 	}
 
 	$filter_min_price = is_numeric( $_REQUEST['min_price'] ?? null )
