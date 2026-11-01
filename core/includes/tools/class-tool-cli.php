@@ -35,6 +35,7 @@ final class CLI {
 		WP_CLI::add_command( 'tools import-distress-units', array( __CLASS__, 'import_distress_units' ) );
 		WP_CLI::add_command( 'tools flag-untranslated', array( __CLASS__, 'flag_untranslated' ) );
 		WP_CLI::add_command( 'tools relink-units', array( __CLASS__, 'relink_units' ) );
+		WP_CLI::add_command( 'tools recount-units', array( __CLASS__, 'recount_units' ) );
 		WP_CLI::add_command( 'tools warm-cache', array( __CLASS__, 'warm_cache' ) );
 		WP_CLI::add_command( 'tools strip-unit-floors', array( __CLASS__, 'strip_unit_floors' ) );
 		WP_CLI::add_command( 'tools translate-units', array( __CLASS__, 'translate_units' ) );
@@ -1666,6 +1667,242 @@ final class CLI {
 
 		WP_CLI::success( 'Готово' );
 	}
+
+	/**
+	 * Recompute the cached unit counter of every project.
+	 *
+	 * `units_count` is written lazily, once something asks a project how many
+	 * units it has. A project nobody asked about has no row at all, and the
+	 * listing reads the stored value rather than counting afresh — so a missing
+	 * or stale counter decides what the catalogue shows.
+	 *
+	 * The count is the one Property::get_units_count() makes: rows of the
+	 * `property` meta pointing at this project, whatever their post status or
+	 * language. Nothing else is touched.
+	 *
+	 * ## OPTIONS
+	 *
+	 * [--language=<slug>]
+	 * : Only projects in this Polylang language.
+	 *
+	 * [--status=<statuses>]
+	 * : Comma-separated post statuses to walk.
+	 * ---
+	 * default: publish,draft,future
+	 * ---
+	 *
+	 * [--limit=<number>]
+	 * : Stop after this many writes. 0 takes them all.
+	 * ---
+	 * default: 0
+	 * ---
+	 *
+	 * [--all]
+	 * : Rewrite every project, including those whose counter is already right.
+	 *
+	 * [--report=<path>]
+	 * : Write a CSV of every project that needed a new value.
+	 *
+	 * [--dry-run]
+	 * : Report the counts and write nothing.
+	 *
+	 * [--yes]
+	 * : Skip the confirmation.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp tools recount-units --dry-run
+	 *     wp tools recount-units --dry-run --report=/tmp/counts.csv
+	 *     wp tools recount-units --language=en
+	 *     wp tools recount-units --yes
+	 *
+	 * @param array $args Positional arguments, unused.
+	 * @param array $assoc_args Flags.
+	 *
+	 * @return void
+	 */
+	public static function recount_units( array $args, array $assoc_args ): void {
+		global $wpdb;
+
+		$dry_run  = (bool) Utils\get_flag_value( $assoc_args, 'dry-run', false );
+		$language = (string) Utils\get_flag_value( $assoc_args, 'language', '' );
+		$limit    = max( 0, (int) Utils\get_flag_value( $assoc_args, 'limit', 0 ) );
+		$report   = (string) Utils\get_flag_value( $assoc_args, 'report', '' );
+		$rewrite  = (bool) Utils\get_flag_value( $assoc_args, 'all', false );
+		$statuses = array_values(
+			array_filter(
+				array_map(
+					'trim',
+					explode( ',', (string) Utils\get_flag_value( $assoc_args, 'status', implode( ',', Unit_Translator::DEFAULT_STATUSES ) ) )
+				)
+			)
+		) ?: Unit_Translator::DEFAULT_STATUSES;
+
+		$status_in     = implode( ',', array_fill( 0, count( $statuses ), '%s' ) );
+		$language_join = '';
+		// Плейсхолдер языка стоит в SQL раньше типа записи, поэтому и в
+		// параметрах он должен идти первым: prepare() связывает их по порядку.
+		$params = array();
+
+		if ( '' !== $language ) {
+			$language_join = "INNER JOIN {$wpdb->term_relationships} ptr ON ptr.object_id = p.ID
+				INNER JOIN {$wpdb->term_taxonomy} ptt
+				        ON ptt.term_taxonomy_id = ptr.term_taxonomy_id AND ptt.taxonomy = 'language'
+				INNER JOIN {$wpdb->terms} pl ON pl.term_id = ptt.term_id AND pl.slug = %s";
+			$params[]      = $language;
+		}
+
+		$params = array_merge( $params, array( 'property' ), $statuses );
+
+		$rows = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT p.ID,
+				        MIN( cnt.meta_value ) AS saved,
+				        COUNT( DISTINCT cnt.meta_id ) AS rows_saved,
+				        COUNT( DISTINCT exp.meta_id ) AS rows_expired,
+				        MAX( COALESCE( live.c, 0 ) ) AS fresh
+				 FROM {$wpdb->posts} p
+				 {$language_join}
+				 LEFT JOIN {$wpdb->postmeta} cnt
+				        ON cnt.post_id = p.ID AND cnt.meta_key = 'units_count'
+				 LEFT JOIN {$wpdb->postmeta} exp
+				        ON exp.post_id = p.ID AND exp.meta_key = 'units_count_expired'
+				 LEFT JOIN ( SELECT meta_value AS pid, COUNT(*) c
+				             FROM {$wpdb->postmeta}
+				             WHERE meta_key = 'property' AND meta_value REGEXP '^[0-9]+$'
+				             GROUP BY meta_value ) live ON live.pid = p.ID
+				 WHERE p.post_type = %s AND p.post_status IN ({$status_in})
+				 GROUP BY p.ID
+				 ORDER BY p.ID",
+				$params
+			)
+		);
+
+		if ( empty( $rows ) ) {
+			WP_CLI::error( 'Проектов не нашлось' );
+		}
+
+		$plan    = array();
+		$missing = $wrong = $right = $doubled = 0;
+
+		foreach ( $rows as $row ) {
+			$fresh = (int) $row->fresh;
+			$saved = null === $row->saved ? null : (int) $row->saved;
+
+			// Дубликаты меты: get_post_meta() берёт первую строку, так что
+			// значение зависит от порядка. Такую запись переписываем всегда.
+			$twice = (int) $row->rows_saved > 1 || (int) $row->rows_expired > 1;
+
+			if ( $twice ) {
+				++ $doubled;
+			}
+
+			if ( null === $saved ) {
+				++ $missing;
+			} elseif ( $saved !== $fresh ) {
+				++ $wrong;
+			} else {
+				++ $right;
+
+				if ( ! $rewrite && ! $twice ) {
+					continue;
+				}
+			}
+
+			$plan[] = array(
+				'id'    => (int) $row->ID,
+				'saved' => null === $saved ? '' : $saved,
+				'fresh' => $fresh,
+				'twice' => $twice,
+			);
+		}
+
+		WP_CLI::log( sprintf( 'Проектов осмотрено: %d', count( $rows ) ) );
+		WP_CLI::log( sprintf( '  без счётчика:       %d', $missing ) );
+		WP_CLI::log( sprintf( '  значение разошлось: %d', $wrong ) );
+		WP_CLI::log( sprintf( '  счётчик верен:      %d%s', $right, $rewrite ? ' (перезапишем, --all)' : ' (пропускаем)' ) );
+		WP_CLI::log( sprintf( '  строк меты больше одной: %d', $doubled ) );
+		WP_CLI::log( sprintf( 'К записи: %d', count( $plan ) ) );
+
+		if ( $limit > 0 && count( $plan ) > $limit ) {
+			$plan = array_slice( $plan, 0, $limit );
+			WP_CLI::log( sprintf( 'Ограничение --limit: беру первые %d', $limit ) );
+		}
+
+		if ( '' !== $report ) {
+			self::write_recount_report( $report, $plan );
+		}
+
+		if ( $dry_run ) {
+			WP_CLI::success( 'dry-run завершён, ничего не записано' );
+
+			return;
+		}
+
+		if ( empty( $plan ) ) {
+			WP_CLI::success( 'Все счётчики на месте и верны' );
+
+			return;
+		}
+
+		WP_CLI::confirm( sprintf( 'Пересчитать %d проектов?', count( $plan ) ), $assoc_args );
+
+		$bar     = Utils\make_progress_bar( 'Recounting', count( $plan ) );
+		$expires = time() + DAY_IN_SECONDS;
+		$done    = 0;
+
+		foreach ( $plan as $item ) {
+			// update_post_meta переписывает все строки ключа, но лишние
+			// оставляет; дубликат переживёт правку и снова разойдётся при
+			// первой же частичной записи, поэтому его сносим целиком.
+			if ( $item['twice'] ) {
+				delete_post_meta( $item['id'], 'units_count' );
+				delete_post_meta( $item['id'], 'units_count_expired' );
+			}
+
+			update_post_meta( $item['id'], 'units_count', $item['fresh'] );
+			update_post_meta( $item['id'], 'units_count_expired', $expires );
+			++ $done;
+			$bar->tick();
+		}
+
+		$bar->finish();
+
+		WP_CLI::log( sprintf( 'Записано счётчиков: %d', $done ) );
+
+		self::flush_caches();
+
+		WP_CLI::success( 'Готово' );
+	}
+
+	/**
+	 * Write what the recount changed.
+	 *
+	 * @param string $path  Destination CSV.
+	 * @param array  $items Rows to write.
+	 *
+	 * @return void
+	 */
+	private static function write_recount_report( string $path, array $items ): void {
+		$handle = fopen( $path, 'w' );
+
+		if ( false === $handle ) {
+			WP_CLI::warning( sprintf( 'не удалось записать отчёт %s', $path ) );
+
+			return;
+		}
+
+		fputcsv( $handle, array( 'property_id', 'saved', 'fresh' ), ',', '"', '' );
+
+		foreach ( $items as $item ) {
+			fputcsv( $handle, array( $item['id'], $item['saved'], $item['fresh'] ), ',', '"', '' );
+		}
+
+		fclose( $handle );
+
+		WP_CLI::log( sprintf( 'Отчёт: %s', $path ) );
+	}
+
 
 	/**
 	 * Write what the relink considered, fixed or not.

@@ -522,6 +522,29 @@ function get_filter_baths_options(): array {
 }
 
 /**
+ * How a count reads when the last filter option is open-ended.
+ *
+ * The form offers 1, 2, 3 and 4+ bathrooms, and every one of them saves as a
+ * plain number: a villa with six is stored as 4. Printing that back as "4"
+ * states a number nobody chose, so the last option is shown with the label it
+ * has in the filter — "4+". The maximum comes from the option list itself, so
+ * adding a wider option moves it along.
+ *
+ * @param int   $count   Stored count.
+ * @param array $options Options of a filter, each with value and label.
+ *
+ * @return string
+ */
+function core_open_ended_label( int $count, array $options ): string {
+	$last = end( $options );
+	$max  = (int) ( $last['value'] ?? 0 );
+
+	return ( $max > 0 && $count >= $max )
+		? (string) ( $last['label'] ?? $count )
+		: (string) $count;
+}
+
+/**
  * Whether the request narrows a filter the results bar shows.
  *
  * @param array $search_by Filters the bar shows.

@@ -647,6 +647,7 @@ final class Property {
 		$property_type = $this->get_field( 'property_type' );
 		if ( ! empty( $property_type[0] ) ) {
 			$information[] = array(
+				'key'   => 'property_type',
 				'label' => __( 'Property Type', 'east-property' ),
 				'value' => core_property_choice_label( (string) $property_type[0] ),
 			);

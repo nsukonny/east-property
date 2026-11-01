@@ -214,10 +214,10 @@ final class Unit {
 		if ( 0 < $baths ) {
 			$amenities[] = array(
 				'icon'  => THEME_URL . '/assets/img/bath.svg',
-				'value' => ( 1 === $baths ) ? __( '1 Bath', 'east-property' ) : $baths . ' ' . __(
-						'Baths',
-						'east-property'
-					),
+				'value' => ( 1 === $baths )
+					? __( '1 Bath', 'east-property' )
+					: core_open_ended_label( $baths, get_filter_baths_options()['options'] )
+					  . ' ' . __( 'Baths', 'east-property' ),
 			);
 		}
 
@@ -513,7 +513,8 @@ final class Unit {
 				'icon'  => THEME_URL . '/assets/img/bath.svg',
 				'value' => 1 === $baths
 					? __( '1 Bath', 'east-property' )
-					: $baths . ' ' . __( 'Baths', 'east-property' ),
+					: core_open_ended_label( $baths, get_filter_baths_options()['options'] )
+					  . ' ' . __( 'Baths', 'east-property' ),
 			);
 		}
 
