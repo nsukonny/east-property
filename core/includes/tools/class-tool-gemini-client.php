@@ -222,7 +222,7 @@ final class Gemini_Client extends Translation_Client {
 			}
 
 			$batch[ $key ] = $text;
-			$size         += $length;
+			$size          += $length;
 		}
 
 		if ( ! empty( $batch ) ) {
@@ -235,15 +235,21 @@ final class Gemini_Client extends Translation_Client {
 	/**
 	 * One chunk, with a second try for whatever came back wrong.
 	 *
-	 * @param array  $texts    Strings keyed by caller.
-	 * @param string $target   Target language name.
-	 * @param bool   $html     Whether the strings carry markup.
-	 * @param array  $options  Unused; kept for the shared signature.
-	 * @param array  $contexts What a string means, under the same keys as $texts.
+	 * @param array $texts Strings keyed by caller.
+	 * @param string $target Target language name.
+	 * @param bool $html Whether the strings carry markup.
+	 * @param array $options Unused; kept for the shared signature.
+	 * @param array $contexts What a string means, under the same keys as $texts.
 	 *
 	 * @return array|WP_Error
 	 */
-	protected function request( array $texts, string $target, bool $html, array $options = array(), array $contexts = array() ) {
+	protected function request(
+		array $texts,
+		string $target,
+		bool $html,
+		array $options = array(),
+		array $contexts = array()
+	) {
 		$comments = array();
 		$sources  = $texts;
 
@@ -273,7 +279,7 @@ final class Gemini_Client extends Translation_Client {
 			}
 
 			$missed = $this->take_markers( $retry );
-			$answer = array_merge( $answer, $retry );
+			$answer = array_replace( $answer, $retry );
 			$faults = $missed + $this->faults( $texts, $answer );
 		}
 
@@ -347,7 +353,7 @@ final class Gemini_Client extends Translation_Client {
 				continue;
 			}
 
-			$text = rtrim( substr( $text, 0, -strlen( self::MARKER ) ) );
+			$text = rtrim( substr( $text, 0, - strlen( self::MARKER ) ) );
 
 			if ( str_contains( $text, self::MARKER ) ) {
 				$missing[ $key ] = 'маркер конца встречается не один раз';
@@ -367,7 +373,7 @@ final class Gemini_Client extends Translation_Client {
 	 * What came back wrong in this answer, by key.
 	 *
 	 * @param array $sources Strings that were sent.
-	 * @param array $answer  Strings that came back.
+	 * @param array $answer Strings that came back.
 	 *
 	 * @return array
 	 */
@@ -400,9 +406,9 @@ final class Gemini_Client extends Translation_Client {
 	 * catalogue or in any post, so it is undone here rather than guarded
 	 * against downstream.
 	 *
-	 * @param array  $texts    Strings keyed by caller.
-	 * @param string $target   Target language name.
-	 * @param array  $contexts What a string means, under the same keys as $texts.
+	 * @param array $texts Strings keyed by caller.
+	 * @param string $target Target language name.
+	 * @param array $contexts What a string means, under the same keys as $texts.
 	 *
 	 * @return array|WP_Error
 	 */
@@ -475,7 +481,7 @@ final class Gemini_Client extends Translation_Client {
 		$raw      = '';
 		$attempts = count( self::BACKOFF ) + 1;
 
-		for ( $try = 0; $try < $attempts; $try++ ) {
+		for ( $try = 0; $try < $attempts; $try ++ ) {
 			$response = wp_remote_post( $url, $args );
 
 			if ( is_wp_error( $response ) ) {
@@ -492,7 +498,9 @@ final class Gemini_Client extends Translation_Client {
 
 			$wait = self::retry_after( $raw );
 
-			if ( ! in_array( $code, self::RETRY_ON, true ) || $try === $attempts - 1 || $wait > array_sum( self::BACKOFF ) ) {
+			if ( ! in_array( $code,
+					self::RETRY_ON,
+					true ) || $try === $attempts - 1 || $wait > array_sum( self::BACKOFF ) ) {
 				return 0 === $code
 					? new WP_Error( 'gemini_http', $raw )
 					: new WP_Error( 'gemini_status', self::status_message( $code, $raw ) );
@@ -600,8 +608,8 @@ final class Gemini_Client extends Translation_Client {
 	/**
 	 * Readable reason for a non-200 answer.
 	 *
-	 * @param int    $code HTTP status.
-	 * @param string $raw  Response body.
+	 * @param int $code HTTP status.
+	 * @param string $raw Response body.
 	 *
 	 * @return string
 	 */
@@ -636,8 +644,8 @@ final class Gemini_Client extends Translation_Client {
 	/**
 	 * Readable reason for a non-200 answer.
 	 *
-	 * @param int    $code HTTP status.
-	 * @param string $raw  Response body.
+	 * @param int $code HTTP status.
+	 * @param string $raw Response body.
 	 *
 	 * @return string
 	 */

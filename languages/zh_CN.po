@@ -2898,7 +2898,7 @@ msgstr "最终批准"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:115
 msgid "Final mortgage offer & facility letter"
-msgstr "最终抵押贷款报价及贷款意向书"
+msgstr "最终抵押贷款报价及贷款协议"
 
 #: template-parts/sections/mortgage-calculator/entry-costs.php:122
 msgid "DLD registration"
