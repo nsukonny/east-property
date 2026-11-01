@@ -34,6 +34,7 @@ final class CLI {
 		WP_CLI::add_command( 'tools import-properties', array( __CLASS__, 'import_properties' ) );
 		WP_CLI::add_command( 'tools import-distress-units', array( __CLASS__, 'import_distress_units' ) );
 		WP_CLI::add_command( 'tools flag-untranslated', array( __CLASS__, 'flag_untranslated' ) );
+		WP_CLI::add_command( 'tools relink-units', array( __CLASS__, 'relink_units' ) );
 		WP_CLI::add_command( 'tools warm-cache', array( __CLASS__, 'warm_cache' ) );
 		WP_CLI::add_command( 'tools strip-unit-floors', array( __CLASS__, 'strip_unit_floors' ) );
 		WP_CLI::add_command( 'tools translate-units', array( __CLASS__, 'translate_units' ) );
@@ -1429,6 +1430,282 @@ final class CLI {
 		}
 
 		WP_CLI::success( 'готово' );
+	}
+
+	/**
+	 * Relink units to property in same language
+	 *
+	 * [--language=<slug>]
+	 * : Only units in this Polylang language.
+	 *
+	 * [--status=<statuses>]
+	 * : Comma-separated post statuses to walk.
+	 * ---
+	 * default: publish,draft,future
+	 * ---
+	 *
+	 * [--limit=<number>]
+	 * : Stop after this many fixes. 0 takes them all.
+	 * ---
+	 * default: 0
+	 * ---
+	 *
+	 * [--report=<path>]
+	 * : Write a CSV of every unit considered, fixed or not.
+	 *
+	 * [--dry-run]
+	 * : Report the counts and write nothing.
+	 *
+	 * [--yes]
+	 * : Skip the confirmation.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp tools relink-units --dry-run
+	 *     wp tools relink-units --language=ru --dry-run
+	 *     wp tools relink-units --report=/tmp/relink.csv
+	 *     wp tools relink-units --language=de --yes
+	 *     wp tools relink-units --language=de
+	 *
+	 * @param array $args Positional arguments, unused.
+	 * @param array $assoc_args Flags.
+	 *
+	 * @return void
+	 */
+	public static function relink_units( array $args, array $assoc_args ): void {
+		global $wpdb;
+
+		$dry_run  = (bool) Utils\get_flag_value( $assoc_args, 'dry-run', false );
+		$language = (string) Utils\get_flag_value( $assoc_args, 'language', '' );
+		$limit    = max( 0, (int) Utils\get_flag_value( $assoc_args, 'limit', 0 ) );
+		$report   = (string) Utils\get_flag_value( $assoc_args, 'report', '' );
+		$statuses = array_values(
+			array_filter(
+				array_map(
+					'trim',
+					explode( ',', (string) Utils\get_flag_value( $assoc_args, 'status', implode( ',', Unit_Translator::DEFAULT_STATUSES ) ) )
+				)
+			)
+		) ?: Unit_Translator::DEFAULT_STATUSES;
+
+		if ( ! function_exists( 'pll_get_post_translations' ) ) {
+			WP_CLI::error( 'Polylang не активен — язык записи определить нечем' );
+		}
+
+		$status_in = implode( ',', array_fill( 0, count( $statuses ), '%s' ) );
+		$params    = array_merge( array( 'unit' ), $statuses );
+		$language_clause = '';
+
+		if ( '' !== $language ) {
+			$language_clause = 'AND ul.slug = %s';
+			$params[]        = $language;
+		}
+
+		$rows = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT u.ID AS unit_id, ul.slug AS unit_lang,
+				        p.ID AS project_id, pl.slug AS project_lang
+				 FROM {$wpdb->posts} u
+				 INNER JOIN {$wpdb->postmeta} pm
+				         ON pm.post_id = u.ID AND pm.meta_key = 'property'
+				 INNER JOIN {$wpdb->posts} p
+				         ON p.ID = CAST(pm.meta_value AS UNSIGNED)
+				 INNER JOIN {$wpdb->term_relationships} utr ON utr.object_id = u.ID
+				 INNER JOIN {$wpdb->term_taxonomy} utt
+				         ON utt.term_taxonomy_id = utr.term_taxonomy_id AND utt.taxonomy = 'language'
+				 INNER JOIN {$wpdb->terms} ul ON ul.term_id = utt.term_id
+				 INNER JOIN {$wpdb->term_relationships} ptr ON ptr.object_id = p.ID
+				 INNER JOIN {$wpdb->term_taxonomy} ptt
+				         ON ptt.term_taxonomy_id = ptr.term_taxonomy_id AND ptt.taxonomy = 'language'
+				 INNER JOIN {$wpdb->terms} pl ON pl.term_id = ptt.term_id
+				 WHERE u.post_type = %s
+				   AND u.post_status IN ({$status_in})
+				   AND ul.slug <> pl.slug
+				   {$language_clause}
+				 ORDER BY ul.slug, u.ID",
+				$params
+			)
+		);
+
+		$orphans = (int) $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT COUNT(*) FROM {$wpdb->posts} p
+				 WHERE p.post_type = %s AND p.post_status IN ({$status_in})
+				   AND NOT EXISTS (
+				       SELECT 1 FROM {$wpdb->postmeta} m
+				       WHERE m.post_id = p.ID AND m.meta_key = 'property'
+				         AND m.meta_value REGEXP '^[0-9]+$' AND m.meta_value <> '0'
+				   )",
+				array_merge( array( 'unit' ), $statuses )
+			)
+		);
+
+		if ( empty( $rows ) ) {
+			WP_CLI::success(
+				sprintf( 'Юнитов с привязкой к чужому языку не нашлось; без привязки вовсе: %d', $orphans )
+			);
+
+			return;
+		}
+
+		$plan      = array();
+		$stuck     = array();
+		$pairs     = array();
+		$by_target = array();
+
+		foreach ( $rows as $row ) {
+			$pair = $row->unit_lang . ' -> ' . $row->project_lang;
+
+			if ( ! isset( $pairs[ $pair ] ) ) {
+				$pairs[ $pair ] = array( 'fixable' => 0, 'stuck' => 0 );
+			}
+
+			$project_id = (int) $row->project_id;
+
+			if ( ! isset( $by_target[ $project_id ] ) ) {
+				$by_target[ $project_id ] = pll_get_post_translations( $project_id );
+			}
+
+			$target = (int) ( $by_target[ $project_id ][ $row->unit_lang ] ?? 0 );
+			$item   = array(
+				'unit_id'      => (int) $row->unit_id,
+				'unit_lang'    => (string) $row->unit_lang,
+				'project_id'   => $project_id,
+				'project_lang' => (string) $row->project_lang,
+				'target_id'    => $target,
+				'result'       => '',
+			);
+
+			if ( $target > 0 && $target !== $project_id ) {
+				++ $pairs[ $pair ]['fixable'];
+				$plan[] = $item;
+
+				continue;
+			}
+
+			++ $pairs[ $pair ]['stuck'];
+			$item['result'] = 0 === $target ? 'у проекта нет перевода на этот язык' : 'перевод совпал с исходным проектом';
+			$stuck[]        = $item;
+		}
+
+		ksort( $pairs );
+
+		WP_CLI::log( 'Юниты, привязанные к проекту другого языка:' );
+
+		foreach ( $pairs as $pair => $counts ) {
+			WP_CLI::log(
+				sprintf(
+					'  %-12s всего %-6d исправимо %-6d нечем %d',
+					$pair,
+					$counts['fixable'] + $counts['stuck'],
+					$counts['fixable'],
+					$counts['stuck']
+				)
+			);
+		}
+
+		WP_CLI::log(
+			sprintf( 'Итого %d, исправимо %d, нечем %d', count( $rows ), count( $plan ), count( $stuck ) )
+		);
+
+		if ( $orphans > 0 ) {
+			WP_CLI::log( sprintf( 'Без привязки вовсе: %d — не трогаю, связь придумывать нечем', $orphans ) );
+		}
+
+		if ( $limit > 0 && count( $plan ) > $limit ) {
+			$plan = array_slice( $plan, 0, $limit );
+			WP_CLI::log( sprintf( 'Ограничение --limit: беру первые %d', $limit ) );
+		}
+
+		if ( '' !== $report ) {
+			self::write_relink_report( $report, array_merge( $plan, $stuck ) );
+		}
+
+		if ( $dry_run ) {
+			WP_CLI::success( 'dry-run завершён, ничего не записано' );
+
+			return;
+		}
+
+		if ( empty( $plan ) ) {
+			WP_CLI::warning( 'Исправить нечего: у проектов нет переводов на нужные языки' );
+
+			return;
+		}
+
+		WP_CLI::confirm( sprintf( 'Перепривязать %d юнитов?', count( $plan ) ), $assoc_args );
+
+		$bar    = Utils\make_progress_bar( 'Relinking', count( $plan ) );
+		$done   = 0;
+		$failed = 0;
+
+		foreach ( $plan as $index => $item ) {
+			$written = update_post_meta( $item['unit_id'], 'property', (string) $item['target_id'] );
+
+			if ( false === $written ) {
+				++ $failed;
+				$plan[ $index ]['result'] = 'запись не удалась';
+				WP_CLI::warning( sprintf( 'юнит #%d: мета не записалась', $item['unit_id'] ) );
+			} else {
+				++ $done;
+				$plan[ $index ]['result'] = 'перепривязан';
+			}
+
+			$bar->tick();
+		}
+
+		$bar->finish();
+
+		if ( '' !== $report ) {
+			self::write_relink_report( $report, array_merge( $plan, $stuck ) );
+		}
+
+		WP_CLI::log( sprintf( 'Перепривязано %d, не удалось %d, осталось нечем %d', $done, $failed, count( $stuck ) ) );
+
+		self::flush_caches();
+
+		WP_CLI::success( 'Готово' );
+	}
+
+	/**
+	 * Write what the relink considered, fixed or not.
+	 *
+	 * @param string $path  Destination CSV.
+	 * @param array  $items Rows to write.
+	 *
+	 * @return void
+	 */
+	private static function write_relink_report( string $path, array $items ): void {
+		$handle = fopen( $path, 'w' );
+
+		if ( false === $handle ) {
+			WP_CLI::warning( sprintf( 'не удалось записать отчёт %s', $path ) );
+
+			return;
+		}
+
+		fputcsv( $handle, array( 'unit_id', 'unit_lang', 'old_project', 'old_project_lang', 'new_project', 'result' ), ',', '"', '' );
+
+		foreach ( $items as $item ) {
+			fputcsv(
+				$handle,
+				array(
+					$item['unit_id'],
+					$item['unit_lang'],
+					$item['project_id'],
+					$item['project_lang'],
+					$item['target_id'] ?: '',
+					$item['result'],
+				),
+				',',
+				'"',
+				''
+			);
+		}
+
+		fclose( $handle );
+
+		WP_CLI::log( sprintf( 'Отчёт: %s', $path ) );
 	}
 
 	/**
