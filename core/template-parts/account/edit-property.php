@@ -61,8 +61,8 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 			?>
 			<h1><?php echo esc_html( $h1 ); ?></h1>
 			<form class="submit-unit-form" autocomplete="off"
-			      action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="POST"
-			      enctype="multipart/form-data">
+				  action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="POST"
+				  enctype="multipart/form-data">
 				<input type="hidden" name="action" value="core_account_create_property">
 				<?php wp_nonce_field( 'account_create_property_nonce' ); ?>
 
@@ -70,7 +70,7 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 				foreach ( $translations as $lang => $translation ) {
 					?>
 					<input type="hidden" name="<?php echo esc_attr( $lang ); ?>[property_id]"
-					       value="<?php echo esc_attr( $translation->get_id() ); ?>">
+						   value="<?php echo esc_attr( $translation->get_id() ); ?>">
 					<?php
 				}
 				?>
@@ -86,7 +86,7 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 									   class="button sm <?php echo esc_attr( $current_class ); ?>"
 									>
 										<img src="<?php echo esc_url( THEME_URL . '/assets/img/lang/' . $language['slug'] . '.png' ) ?>"
-										     alt="<?php echo esc_html( $language['name'] ); ?>"/>
+											 alt="<?php echo esc_html( $language['name'] ); ?>"/>
 										<span><?php echo esc_html( $language['name'] ); ?></span>
 									</a>
 								<?php } ?>
@@ -106,11 +106,12 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 										<span class="required">*</span>
 										<?php esc_html_e( 'Title', 'east-property' ); ?>
 										<input type="text"
-										       id="s-text_<?php echo esc_attr( $language['slug'] ); ?>"
-										       name="<?php echo esc_attr( $language['slug'] . '[title]' ); ?>"
-										       value="<?php echo esc_attr( $property_title ); ?>"
-										       placeholder="<?php esc_html_e( 'azizi “beach oasis”', 'east-property' ); ?>"
-										       required>
+											   id="s-text_<?php echo esc_attr( $language['slug'] ); ?>"
+											   name="<?php echo esc_attr( $language['slug'] . '[title]' ); ?>"
+											   value="<?php echo esc_attr( $property_title ); ?>"
+											   placeholder="<?php esc_html_e( 'azizi “beach oasis”',
+											       'east-property' ); ?>"
+											   required>
 									</label>
 								</div>
 
@@ -150,12 +151,12 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 												<label for="s-latitude_<?php echo esc_attr( $language['slug'] ); ?>">
 													<?php esc_html_e( 'Latitude', 'east-property' ); ?>
 													<input type="number"
-													       id="s-latitude_<?php echo esc_attr( $language['slug'] ); ?>"
-													       name="<?php echo esc_attr( $language['slug'] . '[latitude]' ); ?>"
-													       min="-90" step="any" max="90"
-													       value="<?php echo esc_attr( $latitude ); ?>"
-													       placeholder="25.123240725545"
-													       data-lang-sync="latitude"
+														   id="s-latitude_<?php echo esc_attr( $language['slug'] ); ?>"
+														   name="<?php echo esc_attr( $language['slug'] . '[latitude]' ); ?>"
+														   min="-90" step="any" max="90"
+														   value="<?php echo esc_attr( $latitude ); ?>"
+														   placeholder="25.123240725545"
+														   data-lang-sync="latitude"
 													/>
 												</label>
 											</div>
@@ -163,12 +164,12 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 												<label for="s-longitude_<?php echo esc_attr( $language['slug'] ); ?>">
 													<?php esc_html_e( 'Longitude', 'east-property' ); ?>
 													<input type="number"
-													       id="s-longitude_<?php echo esc_attr( $language['slug'] ); ?>"
-													       name="<?php echo esc_attr( $language['slug'] . '[longitude]' ); ?>"
-													       step="any" min="-180" max="180"
-													       value="<?php echo esc_attr( $longitude ); ?>"
-													       placeholder="55.11228769811"
-													       data-lang-sync="longitude"
+														   id="s-longitude_<?php echo esc_attr( $language['slug'] ); ?>"
+														   name="<?php echo esc_attr( $language['slug'] . '[longitude]' ); ?>"
+														   step="any" min="-180" max="180"
+														   value="<?php echo esc_attr( $longitude ); ?>"
+														   placeholder="55.11228769811"
+														   data-lang-sync="longitude"
 													/>
 												</label>
 											</div>
@@ -226,11 +227,11 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 												<label for="s-delivery-date_<?php echo esc_attr( $language['slug'] ); ?>">
 													<?php esc_html_e( 'Handover Date', 'east-property' ); ?>
 													<input type="date"
-													       id="s-delivery-date_<?php echo esc_attr( $language['slug'] ); ?>"
-													       name="<?php echo esc_attr( $language['slug'] . '[delivery_date]' ); ?>"
-													       value="<?php echo esc_attr( $delivery_date ); ?>"
-													       placeholder="21.07.2029"
-													       data-lang-sync="delivery_date"
+														   id="s-delivery-date_<?php echo esc_attr( $language['slug'] ); ?>"
+														   name="<?php echo esc_attr( $language['slug'] . '[delivery_date]' ); ?>"
+														   value="<?php echo esc_attr( $delivery_date ); ?>"
+														   placeholder="21.07.2029"
+														   data-lang-sync="delivery_date"
 														<?php disabled( true, $is_completed ); ?>
 													/>
 												</label>
@@ -238,9 +239,9 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 											<div class="input-group half-width">
 												<label class="custom-checkbox">
 													<input type="checkbox"
-													       name="<?php echo esc_attr( $language['slug'] . '[is_completed]' ); ?>"
-													       value="1"
-													       data-lang-sync="is_completed"
+														   name="<?php echo esc_attr( $language['slug'] . '[is_completed]' ); ?>"
+														   value="1"
+														   data-lang-sync="is_completed"
 														<?php checked( true, $is_completed ); ?>
 													>
 													<span><?php esc_html_e( 'Project is already completed / Ready',
@@ -253,7 +254,7 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 
 								<div class="inputs-group">
 									<div class="checkbox-buttons-wrapper" data-checkbox-buttons data-multiply="true"
-									     data-lang-sync="property_types">
+										 data-lang-sync="property_types">
 									<span class="dropdown-label">
 										<span class="required">*</span>
 										<?php esc_html_e( 'Contain Property Types ', 'east-property' ); ?>
@@ -261,20 +262,21 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 										<div class="checkbox-buttons">
 											<?php
 											foreach ( $property_type_options as $option_key => $option ) {
-												$active_class = in_array( $option_key, $property_types,
+												$active_class = in_array( $option_key,
+													$property_types,
 													true ) ? 'active' : '';
 												?>
 												<button type="button"
-												        class="checkbox-btn <?php echo esc_attr( $active_class ); ?>"
-												        data-value="<?php echo esc_attr( $option_key ); ?>">
+														class="checkbox-btn <?php echo esc_attr( $active_class ); ?>"
+														data-value="<?php echo esc_attr( $option_key ); ?>">
 													<?php echo esc_html( $option ); ?>
 												</button>
 											<?php } ?>
 										</div>
 										<input type="hidden"
-										       name="<?php echo esc_attr( $language['slug'] . '[property_types]' ); ?>"
-										       value="<?php echo esc_attr( implode( ',', $property_types ) ); ?>"
-										       data-required>
+											   name="<?php echo esc_attr( $language['slug'] . '[property_types]' ); ?>"
+											   value="<?php echo esc_attr( implode( ',', $property_types ) ); ?>"
+											   data-required>
 									</div>
 								</div>
 
@@ -320,8 +322,8 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 								?>
 							</div>
 							<?php
+							restore_previous_locale();
 						}
-						restore_previous_locale();
 						?>
 					</div>
 
@@ -355,8 +357,8 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 					<div class="submit-unit-right">
 						<div class="uploader">
 							<input type="hidden" name="user_thumbnails_ids"
-							       value="<?php echo esc_attr( $property_gallery_ids ); ?>"
-							       id="user-thumbnail-ids">
+								   value="<?php echo esc_attr( $property_gallery_ids ); ?>"
+								   id="user-thumbnail-ids">
 							<div class="uploader-user" id="uploader-user">
 								<div class="uploader-header" id="user-header">
 									<h2><?php esc_html_e( 'Pictures', 'east-property' ); ?></h2>
@@ -366,7 +368,7 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 								</div>
 								<div class="uploader-dropzone" id="uploader-dropzone">
 									<input type="file" class="filepond" name="filepond" multiple
-									       data-max-file-size="10MB" data-max-files="50">
+										   data-max-file-size="10MB" data-max-files="50">
 								</div>
 								<div class="uploader-grid" id="user-grid">
 									<!-- Сюда будут рендерится загруженные фото юзера. Не удалять -->

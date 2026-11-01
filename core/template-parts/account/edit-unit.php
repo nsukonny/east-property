@@ -377,8 +377,8 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 								</button>
 							</div>
 							<?php
+							restore_previous_locale();
 						}
-						restore_previous_locale();
 						?>
 					</div>
 					<script>
