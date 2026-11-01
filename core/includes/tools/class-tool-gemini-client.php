@@ -567,7 +567,7 @@ final class Gemini_Client extends Translation_Client {
 
 		if ( $this->marker ) {
 			$rules[] = sprintf(
-				'End every translation with %s, exactly once, as the very last characters of the item. Nothing may follow it.',
+				'Close each item with %s. One item gets one terminator however many lines, paragraphs or headings it holds: it belongs after the last line of the whole item, never after a line, a sentence or a block inside it, and nothing may follow it.',
 				self::MARKER
 			);
 		}
