@@ -48,7 +48,31 @@ while ( have_posts() ) {
 	$location             = $property?->get_location();
 	$down_payment_group   = $property?->get_down_payment_group();
 	$delivery_date        = $property?->get_delivery_date();
-	$property_information = $property?->get_key_information();
+	$property_information = $property?->get_key_information() ?? array();
+
+	$unit_type = (string) ( $unit->get_unit_type() ?? '' );
+
+	if ( '' !== $unit_type ) {
+		$type_row = array(
+			'key'   => 'property_type',
+			'label' => __( 'Property Type', 'east-property' ),
+			'value' => core_property_choice_label( $unit_type ),
+		);
+
+		$replaced = false;
+
+		foreach ( $property_information as $at => $row ) {
+			if ( 'property_type' === ( $row['key'] ?? '' ) ) {
+				$property_information[ $at ] = $type_row;
+				$replaced                    = true;
+				break;
+			}
+		}
+
+		if ( ! $replaced ) {
+			$property_information[] = $type_row;
+		}
+	}
 	$property_amenities   = ( $property && ! $is_have_amenities ) ? $property?->get_amenities() : array();
 	$building_name        = $property?->get_title();
 	$floors               = $property?->get_floors();
