@@ -434,6 +434,10 @@ const syncLangValues = () => {
 					return;
 				}
 
+				if (syncInput.value === value) {
+					return;
+				}
+
 				let btn = syncInput.parentElement.querySelector('.submit-buttons [data-beds="' + value + '"]');
 				btn?.click();
 

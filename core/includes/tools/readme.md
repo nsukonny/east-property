@@ -282,3 +282,9 @@ wp tools strip-unit-floors --dry-run --report=/tmp/unit-floors-plan.csv --allow-
 wp tools strip-unit-floors --limit=10 --allow-root
 wp tools strip-unit-floors --yes --report=/tmp/unit-floors.csv --allow-root
 ```
+
+## Пересчитать count_units
+
+```bash
+wp tools recount-units --language=en --allow-root
+```
