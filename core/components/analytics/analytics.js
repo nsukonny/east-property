@@ -30,6 +30,11 @@ const getPageType = () => {
 const EVENT_PARAMS = ['page_type', 'contact_type', 'property_id', 'property_name', 'form_name'];
 
 /**
+ * Ссылка WhatsApp. Группа 1 — номер получателя, пустая у «поделиться».
+ */
+const WHATSAPP_HREF = /^(?:https?:)?\/\/wa\.me\/(\d*)/i;
+
+/**
  * Событие в dataLayer для Google Tag Manager.
  *
  * Не через gtag: тот кладёт в dataLayer объект arguments, и в контейнере
@@ -52,17 +57,21 @@ const pushDataLayerEvent = (name, params = {}) => {
 };
 
 document.addEventListener('click', function (event) {
+	const hit = event.target.closest('a, button');
+	if (!hit) {
+		return;
+	}
+
 	const pageType = getPageType();
 
-	const offMarketCta = event.target.closest('[data-offmarket-cta]');
+	const offMarketCta = hit.closest('[data-offmarket-cta]');
 	if (offMarketCta) {
 		pushDataLayerEvent('click_unlock_offmarket_whatsapp', {
-			page_type: pageType,
-			contact_type: 'whatsapp'
+			page_type: pageType, contact_type: 'whatsapp'
 		});
 	}
 
-	const brokerModalBtn = event.target.closest('button[data-modal-open="broker-modal"]');
+	const brokerModalBtn = hit.closest('button[data-modal-open="broker-modal"]');
 	if (brokerModalBtn) {
 		pushDataLayerEvent('open_contact_broker_modal', {
 			page_type: pageType,
@@ -78,18 +87,20 @@ document.addEventListener('click', function (event) {
 		}
 	}
 
-	const whatsAppLink = event.target.closest('#bm_whatsapp');
-	if (whatsAppLink) {
-		const brokerModal = whatsAppLink.closest('.modal-wrapper[data-modal-id="broker-modal"]');
-		pushDataLayerEvent('contact_whatsapp', {
+	const whatsApp = offMarketCta ? null : WHATSAPP_HREF.exec(hit.getAttribute('href') || '');
+	if (whatsApp) {
+		const share = '' === whatsApp[1];
+		const source = hit.closest('.modal-wrapper[data-modal-id="broker-modal"], [data-property-id]');
+
+		pushDataLayerEvent(share ? 'share_whatsapp' : 'contact_whatsapp', {
 			page_type: pageType,
-			contact_type: 'whatsapp',
-			property_id: brokerModal?.dataset.propertyId || '',
-			property_name: brokerModal?.dataset.propertyTitle || ''
+			contact_type: share ? 'whatsapp_share' : 'whatsapp',
+			property_id: source?.dataset.propertyId || '',
+			property_name: source?.dataset.propertyTitle || ''
 		});
 	}
 
-	const phoneLink = event.target.closest('#bm_phone');
+	const phoneLink = hit.closest('#bm_phone');
 	if (phoneLink) {
 		const brokerModal = phoneLink.closest('.modal-wrapper[data-modal-id="broker-modal"]');
 		pushDataLayerEvent('contact_phone', {
@@ -100,27 +111,23 @@ document.addEventListener('click', function (event) {
 		});
 	}
 
-	const sellModalBtn = event.target.closest('button[data-modal-open="contact-manager-modal"]');
+	const sellModalBtn = hit.closest('button[data-modal-open="contact-manager-modal"]');
 	if (sellModalBtn) {
 		pushDataLayerEvent('opened_sell_my_distress_modal', {
-			page_type: pageType,
-			contact_type: 'contact_manager_modal'
+			page_type: pageType, contact_type: 'contact_manager_modal'
 		});
 	}
 
-	const sellWhatsAppLink = event.target.closest('.modal-wrapper[data-modal-id="contact-manager-modal"] .ccm-btn-primary');
+	const sellWhatsAppLink = hit.closest('.modal-wrapper[data-modal-id="contact-manager-modal"] .ccm-btn-primary');
 	if (sellWhatsAppLink) {
 		pushDataLayerEvent('sell_my_distress_whatsapp', {
-			page_type: pageType,
-			contact_type: 'whatsapp'
+			page_type: pageType, contact_type: 'whatsapp'
 		});
 	}
 });
 
 document.addEventListener('subscribe_form_success', function () {
 	pushDataLayerEvent('subscribe_newsletter', {
-		page_type: getPageType(),
-		contact_type: 'newsletter',
-		form_name: 'subscribe_form'
+		page_type: getPageType(), contact_type: 'newsletter', form_name: 'subscribe_form'
 	});
 });
