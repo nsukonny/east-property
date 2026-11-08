@@ -19,7 +19,7 @@ get_component_template(
 		'subject'   => $subject,
 		'content'   => $content,
 		'site_name' => PROJECT_NAME,
-		'domain'    => $_SERVER['HTTP_HOST'] ?? core_home_url(),
+		'domain'    => wp_parse_url( home_url(), PHP_URL_HOST ),
 	)
 );
 $html = ob_get_clean();
