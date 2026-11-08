@@ -113,7 +113,10 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 					if ( $broker->is_verified() && ( ! empty( $user_units['items'] ) || ! empty( $unit_query ) ) ) {
 						get_component_template(
 							'account/list-filters',
-							core_get_account_filters_form( 'unit', $unit_filters, $args['unit_filter_options'] ?? array(), $project_query )
+							core_get_account_filters_form( 'unit',
+								$unit_filters,
+								$args['unit_filter_options'] ?? array(),
+								$project_query )
 						);
 					}
 
@@ -224,7 +227,10 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 					if ( $broker->is_verified() && ( ! empty( $user_properties['items'] ) || ! empty( $project_query ) ) ) {
 						get_component_template(
 							'account/list-filters',
-							core_get_account_filters_form( 'project', $project_filters, $args['project_filter_options'] ?? array(), $unit_query )
+							core_get_account_filters_form( 'project',
+								$project_filters,
+								$args['project_filter_options'] ?? array(),
+								$unit_query )
 						);
 					}
 
@@ -373,46 +379,24 @@ $my_properties_text    = IS_DISTRESS ? __( 'My distress', 'east-property' ) : __
 									</div>
 
 									<div class="input-group">
-										<div class="input-wrapper">
-											<div class="label-text">
-												<span><?php esc_html_e( 'Agency', 'east-property' ); ?></span>
-												<span class="agency_info">
-													<?php
-													esc_html_e( 'If you can’t find your agency in the list, please contact us at ',
-														'east-property' );
-													echo '<a href="mailto:' . SUPPORT_EMAIL . '">' . SUPPORT_EMAIL . '</a>. ';
-													esc_html_e( 'Your request will be reviewed within 24 hours.',
-														'east-property' );
-													?>
-												</span>
-											</div>
-											<div class="dropdown">
-												<button class="dropdown-button" type="button">
-														<span class="dropdown-title">
-															<?php echo ! empty( $user_agency ) ? esc_html( $user_agency->post_title ) : esc_attr__( 'select',
-																'east-property' ); ?>
-														</span>
-													<span class="dropdown-arrow">
-															<img src="<?php echo THEME_URL; ?>/assets/img/arrow-down.svg"
-																 width="16" height="16"
-																 alt="vector arrow">
-														</span>
-												</button>
-												<div class="dropdown-content">
-													<div class="dropdown-inner">
-														<?php foreach ( $agencies_posts as $agency ) { ?>
-															<button type="button" class="dropdown-option"
-																	data-value="<?php echo esc_attr( $agency['ID'] ); ?>">
-																<?php echo esc_html( $agency['post_title'] ); ?>
-															</button>
-														<?php } ?>
-													</div>
-												</div>
-											</div>
-											<input type="hidden" name="agency_id"
-												   value="<?php echo esc_attr( $user_agency_id ); ?>"
-												   data-required>
-										</div>
+										<?php
+										get_component_template(
+											'ui/dropdown',
+											array(
+												'input_name'     => 'agency_id',
+												'title'          => __( 'Agency', 'east-property' ),
+												'info_text'      => __( 'If you can’t find your agency in the list, please contact us at ',
+														'east-property' )
+												                    . '<a href="mailto:' . SUPPORT_EMAIL . '">' . SUPPORT_EMAIL . '</a>. '
+												                    . __( 'Your request will be reviewed within 24 hours.',
+														'east-property' ),
+												'selected_title' => $user_agency ? esc_html( $user_agency->post_title ) : __( 'Select',
+													'east-property' ),
+												'selected_key'   => $user_agency ? $user_agency->ID : '',
+												'items'          => $agencies_posts,
+											)
+										);
+										?>
 									</div>
 									<br>
 									<?php foreach ( $languages as $language_slug => $language ) { ?>
