@@ -129,6 +129,7 @@ add_action( 'after_setup_theme', static function (): void {
 require_once 'core/includes/entities/load.php';
 require_once 'core/includes/registers/acf/loader.php';
 require_once 'core/includes/registers/post-types/loader.php';
+require_once 'core/includes/registers/countries.php';
 require_once 'core/includes/registers/user-roles/loader.php';
 require_once 'core/includes/localization.php';
 require_once 'core/includes/tools/load.php';

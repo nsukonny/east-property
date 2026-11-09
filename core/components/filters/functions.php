@@ -356,7 +356,8 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 			'options' => $delivery_dates,
 		),
 		'price'         => array(
-			'label'   => __( 'Price (AED)', 'east-property' ),
+			/* translators: %s: currency code. */
+			'label'   => sprintf( __( 'Price (%s)', 'east-property' ), core_currency_label( core_display_currency() ) ),
 			'options' => array(
 				'min' => $price_min,
 				'max' => $price_max,
@@ -381,6 +382,17 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 		),
 		'beds'          => get_filter_beds_options(),
 	);
+
+	$country_options = core_country_filter_options();
+
+	if ( ! empty( $country_options ) ) {
+		$search_tabs_data['filters'] = array(
+			'country' => array(
+				'label'   => __( 'Country', 'east-property' ),
+				'options' => $country_options,
+			),
+		) + $search_tabs_data['filters'];
+	}
 
 	$all_units_types = get_field_object( 'field_694ea57c4ae1f' );
 	if ( ! empty( $all_units_types ) ) {
@@ -908,7 +920,8 @@ function get_properties_search_tabs_data(): array {
 			'options' => $delivery_dates,
 		),
 		'price'         => array(
-			'label'   => __( 'Price (AED)', 'east-property' ),
+			/* translators: %s: currency code. */
+			'label'   => sprintf( __( 'Price (%s)', 'east-property' ), core_currency_label( core_display_currency() ) ),
 			'options' => array(
 				'min' => $price_min,
 				'max' => $price_max,
@@ -929,6 +942,17 @@ function get_properties_search_tabs_data(): array {
 		),
 		'beds'          => get_filter_beds_options(),
 	);
+
+	$country_options = core_country_filter_options();
+
+	if ( ! empty( $country_options ) ) {
+		$search_tabs_data['filters'] = array(
+			'country' => array(
+				'label'   => __( 'Country', 'east-property' ),
+				'options' => $country_options,
+			),
+		) + $search_tabs_data['filters'];
+	}
 
 	$all_units_types = get_field_object( 'field_694ea57c4ae1f' );
 	if ( ! empty( $all_units_types ) ) {

@@ -1,6 +1,6 @@
 <?php
 
-$redirect_to = core_home_url( '/account' );
+$redirect_to = core_home_url( '/account/' );
 ?>
 <div class="modal-wrapper signin-modal" data-modal-id="signin-modal">
 	<div class="modal">

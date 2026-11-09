@@ -36,6 +36,8 @@ final class CLI {
 		WP_CLI::add_command( 'tools flag-untranslated', array( __CLASS__, 'flag_untranslated' ) );
 		WP_CLI::add_command( 'tools relink-units', array( __CLASS__, 'relink_units' ) );
 		WP_CLI::add_command( 'tools recount-units', array( __CLASS__, 'recount_units' ) );
+		WP_CLI::add_command( 'tools setup-countries', array( __CLASS__, 'setup_countries' ) );
+		WP_CLI::add_command( 'tools sync-prices', array( __CLASS__, 'sync_prices' ) );
 		WP_CLI::add_command( 'tools warm-cache', array( __CLASS__, 'warm_cache' ) );
 		WP_CLI::add_command( 'tools strip-unit-floors', array( __CLASS__, 'strip_unit_floors' ) );
 		WP_CLI::add_command( 'tools translate-units', array( __CLASS__, 'translate_units' ) );
@@ -3079,5 +3081,408 @@ final class CLI {
 		if ( count( $errors ) > count( $shown ) ) {
 			WP_CLI::log( sprintf( '... and %d more', count( $errors ) - count( $shown ) ) );
 		}
+	}
+
+	/**
+	 * Put every location under a country and create the countries themselves.
+	 *
+	 * The top level of the location tree is the country. Everything that sits
+	 * at the top today is a UAE district, so it moves under the default
+	 * country; a slug listed in --countries stays where it is.
+	 *
+	 * ## OPTIONS
+	 *
+	 * [--countries=<slugs>]
+	 * : Comma-separated country slugs, created when missing.
+	 * ---
+	 * default: uae,saudi-arabia,oman
+	 * ---
+	 *
+	 * [--default=<slug>]
+	 * : Country the orphan locations move under.
+	 * ---
+	 * default: uae
+	 * ---
+	 *
+	 * [--dry-run]
+	 * : Only report what would change.
+	 *
+	 * [--yes]
+	 * : Skip the confirmation.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp tools setup-countries --dry-run --allow-root
+	 *     wp tools setup-countries --allow-root
+	 *
+	 * @param array $args
+	 * @param array $assoc_args
+	 *
+	 * @return void
+	 */
+	public static function setup_countries( array $args, array $assoc_args ): void {
+		$dry_run = (bool) Utils\get_flag_value( $assoc_args, 'dry-run', false );
+		$default = sanitize_title( (string) Utils\get_flag_value( $assoc_args, 'default', 'uae' ) );
+		$slugs   = array_values(
+			array_filter(
+				array_map(
+					static function ( string $slug ): string {
+						return sanitize_title( trim( $slug ) );
+					},
+					explode( ',', (string) Utils\get_flag_value( $assoc_args, 'countries', 'uae,saudi-arabia,oman' ) )
+				)
+			)
+		);
+
+		if ( '' === $default || ! in_array( $default, $slugs, true ) ) {
+			WP_CLI::error( 'Страна по умолчанию должна быть в списке --countries' );
+		}
+
+		$countries = array();
+
+		foreach ( $slugs as $slug ) {
+			$term = get_term_by( 'slug', $slug, 'location' );
+
+			if ( $term instanceof \WP_Term ) {
+				$countries[ $slug ] = (int) $term->term_id;
+
+				if ( 0 !== (int) $term->parent ) {
+					WP_CLI::log( sprintf( 'Страна %s лежит не на верхнем уровне, поднимаю', $slug ) );
+
+					if ( ! $dry_run ) {
+						self::set_term_parent( (int) $term->term_id, 0 );
+					}
+				}
+
+				continue;
+			}
+
+			WP_CLI::log( sprintf( 'Создаю страну %s', $slug ) );
+
+			if ( $dry_run ) {
+				$countries[ $slug ] = 0;
+
+				continue;
+			}
+
+			$created = wp_insert_term( self::country_name( $slug ), 'location', array( 'slug' => $slug, 'parent' => 0 ) );
+
+			if ( is_wp_error( $created ) ) {
+				WP_CLI::error( sprintf( '%s: %s', $slug, $created->get_error_message() ) );
+			}
+
+			$countries[ $slug ] = (int) $created['term_id'];
+		}
+
+		$orphans = get_terms(
+			array(
+				'taxonomy'   => 'location',
+				'parent'     => 0,
+				'hide_empty' => false,
+				'exclude'    => array_values( array_filter( $countries ) ),
+				'fields'     => 'ids',
+			)
+		);
+
+		if ( is_wp_error( $orphans ) ) {
+			WP_CLI::error( $orphans->get_error_message() );
+		}
+
+		$orphans = array_map( 'intval', (array) $orphans );
+
+		WP_CLI::log(
+			sprintf(
+				'Стран: %d. Локаций без страны: %d',
+				count( $countries ),
+				count( $orphans )
+			)
+		);
+
+		if ( empty( $orphans ) ) {
+			WP_CLI::success( 'Переносить нечего' );
+
+			return;
+		}
+
+		if ( $dry_run ) {
+			WP_CLI::success( sprintf( 'Сухой прогон: под %s ушло бы %d локаций', $default, count( $orphans ) ) );
+
+			return;
+		}
+
+		WP_CLI::confirm( sprintf( 'Перенести %d локаций под %s?', count( $orphans ), $default ), $assoc_args );
+
+		$parent   = (int) $countries[ $default ];
+		$moved    = 0;
+		$failed   = array();
+		$progress = Utils\make_progress_bar( 'Перенос локаций', count( $orphans ) );
+
+		foreach ( $orphans as $term_id ) {
+			if ( self::set_term_parent( $term_id, $parent ) ) {
+				++$moved;
+			} else {
+				$failed[] = sprintf( '%d: запись не изменилась', $term_id );
+			}
+
+			$progress->tick();
+		}
+
+		$progress->finish();
+
+		foreach ( array_slice( $failed, 0, 20 ) as $error ) {
+			WP_CLI::warning( $error );
+		}
+
+		WP_CLI::success( sprintf( 'Перенесено %d, ошибок %d', $moved, count( $failed ) ) );
+	}
+
+	/**
+	 * Move a location term under another one.
+	 *
+	 * Written straight to the table: wp_update_term() re-derives the slug from
+	 * the name whenever the parent changes, and renames terms whose name is a
+	 * duplicate.
+	 *
+	 * @param int $term_id
+	 * @param int $parent
+	 *
+	 * @return bool
+	 */
+	private static function set_term_parent( int $term_id, int $parent ): bool {
+		global $wpdb;
+
+		$updated = $wpdb->update(
+			$wpdb->term_taxonomy,
+			array( 'parent' => $parent ),
+			array( 'term_id' => $term_id, 'taxonomy' => 'location' ),
+			array( '%d' ),
+			array( '%d', '%s' )
+		);
+
+		if ( false === $updated ) {
+			return false;
+		}
+
+		clean_term_cache( $term_id, 'location' );
+
+		return true;
+	}
+
+	/**
+	 * Readable name for a country slug.
+	 *
+	 * @param string $slug
+	 *
+	 * @return string
+	 */
+	private static function country_name( string $slug ): string {
+		$known = array(
+			'uae'          => 'United Arab Emirates',
+			'saudi-arabia' => 'Saudi Arabia',
+			'oman'         => 'Oman',
+		);
+
+		return $known[ $slug ] ?? ucwords( str_replace( '-', ' ', $slug ) );
+	}
+
+	/**
+	 * Write price_base for every unit and project.
+	 *
+	 * Listings sort and filter on the base currency, so a Saudi object priced
+	 * in riyals does not land among the cheap ones. Grouped by country, so the
+	 * currency is known per batch instead of per post.
+	 *
+	 * ## OPTIONS
+	 *
+	 * [--post-type=<types>]
+	 * : Comma-separated post types.
+	 * ---
+	 * default: unit,property
+	 * ---
+	 *
+	 * [--dry-run]
+	 * : Report the counts and write nothing.
+	 *
+	 * [--yes]
+	 * : Skip the confirmation.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp tools sync-prices --dry-run --allow-root
+	 *
+	 * @param array $args
+	 * @param array $assoc_args
+	 *
+	 * @return void
+	 */
+	public static function sync_prices( array $args, array $assoc_args ): void {
+		global $wpdb;
+
+		$dry_run = (bool) Utils\get_flag_value( $assoc_args, 'dry-run', false );
+		$types   = array_values(
+			array_filter(
+				array_map( 'trim', explode( ',', (string) Utils\get_flag_value( $assoc_args, 'post-type', 'unit,property' ) ) )
+			)
+		);
+
+		if ( empty( $types ) ) {
+			WP_CLI::error( 'Нужен хотя бы один тип записи' );
+		}
+
+		$type_in = implode( ',', array_fill( 0, count( $types ), '%s' ) );
+		$plan    = array();
+		$rates   = core_currency_rates();
+
+		foreach ( core_country_slugs() as $country ) {
+			$tt_ids = core_country_location_tt_ids( $country );
+
+			if ( empty( $tt_ids ) ) {
+				continue;
+			}
+
+			$currency = core_country_currency( $country );
+			$rate     = (float) ( $rates[ $currency ] ?? 1.0 );
+			$in       = implode( ',', $tt_ids );
+
+			$rows = $wpdb->get_results(
+				$wpdb->prepare(
+					"SELECT p.ID, pm.meta_value AS price
+					 FROM {$wpdb->posts} p
+					 INNER JOIN {$wpdb->term_relationships} tr
+					         ON tr.object_id = p.ID AND tr.term_taxonomy_id IN ({$in})
+					 INNER JOIN {$wpdb->postmeta} pm
+					         ON pm.post_id = p.ID AND pm.meta_key = 'price'
+					 WHERE p.post_type IN ({$type_in})",
+					$types
+				)
+			);
+
+			foreach ( (array) $rows as $row ) {
+				if ( ! is_numeric( $row->price ) || 0.0 === (float) $row->price ) {
+					continue;
+				}
+
+				$plan[ (int) $row->ID ] = (int) round( (float) $row->price * $rate );
+			}
+		}
+
+		// Объект без района страны не имеет, цена уже в базовой валюте.
+		$rows = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT p.ID, pm.meta_value AS price
+				 FROM {$wpdb->posts} p
+				 INNER JOIN {$wpdb->postmeta} pm
+				         ON pm.post_id = p.ID AND pm.meta_key = 'price'
+				 LEFT JOIN {$wpdb->term_relationships} tr ON tr.object_id = p.ID
+				 LEFT JOIN {$wpdb->term_taxonomy} tt
+				        ON tt.term_taxonomy_id = tr.term_taxonomy_id AND tt.taxonomy = 'location'
+				 WHERE p.post_type IN ({$type_in})
+				 GROUP BY p.ID, pm.meta_value
+				 HAVING COUNT( tt.term_taxonomy_id ) = 0",
+				$types
+			)
+		);
+
+		foreach ( (array) $rows as $row ) {
+			if ( is_numeric( $row->price ) && 0.0 !== (float) $row->price && ! isset( $plan[ (int) $row->ID ] ) ) {
+				$plan[ (int) $row->ID ] = (int) round( (float) $row->price );
+			}
+		}
+
+		if ( empty( $plan ) ) {
+			WP_CLI::error( 'Записей с ценой не нашлось' );
+		}
+
+		$stored = array();
+
+		foreach ( array_chunk( array_keys( $plan ), 2000 ) as $chunk ) {
+			$ids  = implode( ',', array_map( 'intval', $chunk ) );
+			$rows = $wpdb->get_results(
+				"SELECT post_id, meta_value, COUNT(*) AS rows_saved
+				 FROM {$wpdb->postmeta}
+				 WHERE meta_key = 'price_base' AND post_id IN ({$ids})
+				 GROUP BY post_id, meta_value"
+			);
+
+			foreach ( (array) $rows as $row ) {
+				$stored[ (int) $row->post_id ] = array( (int) $row->meta_value, (int) $row->rows_saved );
+			}
+		}
+
+		$missing = $wrong = $doubled = $right = 0;
+
+		foreach ( $plan as $post_id => $expected ) {
+			if ( ! isset( $stored[ $post_id ] ) ) {
+				++$missing;
+
+				continue;
+			}
+
+			list( $value, $rows_saved ) = $stored[ $post_id ];
+
+			if ( 1 < $rows_saved ) {
+				++$doubled;
+			} elseif ( $value !== $expected ) {
+				++$wrong;
+			} else {
+				++$right;
+				unset( $plan[ $post_id ] );
+			}
+		}
+
+		WP_CLI::log(
+			sprintf(
+				'Записей с ценой: %d. Нет price_base: %d, неверных: %d, дублей меты: %d, верных: %d',
+				count( $stored ) + $missing,
+				$missing,
+				$wrong,
+				$doubled,
+				$right
+			)
+		);
+
+		if ( empty( $plan ) ) {
+			WP_CLI::success( 'Переписывать нечего' );
+
+			return;
+		}
+
+		if ( $dry_run ) {
+			WP_CLI::success( sprintf( 'Сухой прогон: переписать %d записей', count( $plan ) ) );
+
+			return;
+		}
+
+		WP_CLI::confirm( sprintf( 'Переписать price_base у %d записей?', count( $plan ) ), $assoc_args );
+
+		$progress = Utils\make_progress_bar( 'Цены в базовой валюте', count( $plan ) );
+		$written  = 0;
+
+		foreach ( array_chunk( $plan, 500, true ) as $chunk ) {
+			$ids = implode( ',', array_map( 'intval', array_keys( $chunk ) ) );
+
+			// Уникального индекса по (post_id, meta_key) нет, поэтому строка
+			// сначала удаляется: иначе дубли меты только множатся.
+			$wpdb->query( "DELETE FROM {$wpdb->postmeta} WHERE meta_key = 'price_base' AND post_id IN ({$ids})" );
+
+			$values = array();
+
+			foreach ( $chunk as $post_id => $expected ) {
+				$values[] = $wpdb->prepare( '(%d, %s, %s)', $post_id, 'price_base', (string) $expected );
+			}
+
+			$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES " . implode( ',', $values ) );
+
+			foreach ( array_keys( $chunk ) as $post_id ) {
+				wp_cache_delete( $post_id, 'post_meta' );
+			}
+
+			$written += count( $chunk );
+			$progress->tick( count( $chunk ) );
+		}
+
+		$progress->finish();
+
+		WP_CLI::success( sprintf( 'Переписано %d записей', $written ) );
 	}
 }

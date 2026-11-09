@@ -393,6 +393,7 @@ add_filter( 'wpseo_sitemap_http_headers', 'core_sitemap_cache_headers' );
  */
 function core_get_listing_filter_params(): array {
 	return array(
+		'country',
 		'location',
 		'developer',
 		'beds',
@@ -492,13 +493,25 @@ function core_location_has_projects( int $term_id ): bool {
 	$key = $term_id . '|' . core_get_current_language();
 
 	if ( ! isset( $known[ $key ] ) ) {
-		$known[ $key ] = core_listing_has_projects(
-			"INNER JOIN {$wpdb->term_relationships} ptr ON ptr.object_id = p.ID
-			 INNER JOIN {$wpdb->term_taxonomy} ptt
-			         ON ptt.term_taxonomy_id = ptr.term_taxonomy_id
-			        AND ptt.taxonomy = 'location' AND ptt.term_id = %d",
-			array( $term_id )
-		);
+		$tt_ids = core_location_is_country( $term_id )
+			? core_country_location_tt_ids( (string) get_term_field( 'slug', $term_id, 'location' ) )
+			: array();
+
+		// У страны объекты висят на районах, поэтому считается всё поддерево.
+		$known[ $key ] = empty( $tt_ids )
+			? core_listing_has_projects(
+				"INNER JOIN {$wpdb->term_relationships} ptr ON ptr.object_id = p.ID
+				 INNER JOIN {$wpdb->term_taxonomy} ptt
+				         ON ptt.term_taxonomy_id = ptr.term_taxonomy_id
+				        AND ptt.taxonomy = 'location' AND ptt.term_id = %d",
+				array( $term_id )
+			)
+			: core_listing_has_projects(
+				"INNER JOIN {$wpdb->term_relationships} ptr
+				         ON ptr.object_id = p.ID
+				        AND ptr.term_taxonomy_id IN ( " . implode( ',', $tt_ids ) . " )",
+				array()
+			);
 	}
 
 	return $known[ $key ];
@@ -687,7 +700,10 @@ function core_paginated_listing( string $template ): ?array {
 
 		case 'page-properties.php':
 		case 'taxonomy-location.php':
-			$properties = get_properties( $per_page );
+			// Шаблон архива выставляет фильтр у себя внутри, то есть уже после
+			// template_include: здесь область берётся из запрошенного термина,
+			// иначе страницы считались бы по всему каталогу.
+			$properties = get_properties( $per_page, false, core_properties_listing_args( core_queried_location_scope() ) );
 			$listing    = array(
 				'items'    => $properties['items'] ?? array(),
 				'total'    => (int) ( $properties['total'] ?? 0 ),
@@ -757,6 +773,23 @@ function core_paginated_listing_template( ?string $template = null ): string {
 	}
 
 	return $stored;
+}
+
+/**
+ * Listing scope of the location archive being rendered.
+ *
+ * @return array Empty on any other request.
+ */
+function core_queried_location_scope(): array {
+	$term = is_tax( 'location' ) ? get_queried_object() : null;
+
+	if ( ! $term instanceof WP_Term ) {
+		return array();
+	}
+
+	$scope = core_location_is_country( (int) $term->term_id ) ? 'country' : 'location';
+
+	return array( $scope => (string) $term->slug );
 }
 
 /**
@@ -1199,3 +1232,50 @@ function core_twitter_gallery_image( string $image ): string {
 }
 
 add_filter( 'wpseo_twitter_image', 'core_twitter_gallery_image' );
+
+/**
+ * Pagination links for location archives, from the listing's own paging.
+ *
+ * Yoast counts pages by the main query, which on these archives has nothing to
+ * do with the listing: rel=next pointed at page two from every page, including
+ * page two itself, and rel=prev was never printed at all.
+ *
+ * @param string $url   Address Yoast built.
+ * @param string $which prev or next.
+ *
+ * @return string Empty string drops the link.
+ */
+function core_location_adjacent_rel_url( $url, $which ) {
+	if ( ! is_tax( 'location' ) ) {
+		return $url;
+	}
+
+	$term = get_queried_object();
+
+	if ( ! $term instanceof WP_Term ) {
+		return '';
+	}
+
+	$per_page = max( 1, (int) ( defined( 'PROPERTIES_PER_PAGE' ) ? PROPERTIES_PER_PAGE : 20 ) );
+
+	// Те же аргументы, что и в шаблоне: ключ кэша совпадает, работа не дублируется.
+	$listing = get_properties( $per_page, false, core_properties_listing_args( core_queried_location_scope() ) );
+
+	$pages   = (int) ceil( (int) ( $listing['total'] ?? 0 ) / $per_page );
+	$current = max( 1, pagination_get_current_page() );
+	$target  = 'next' === $which ? $current + 1 : $current - 1;
+
+	if ( 1 > $target || $target > $pages ) {
+		return '';
+	}
+
+	$base = get_term_link( $term );
+
+	if ( ! is_string( $base ) || '' === $base ) {
+		return '';
+	}
+
+	return 1 === $target ? $base : trailingslashit( $base ) . 'page-' . $target . '/';
+}
+
+add_filter( 'wpseo_adjacent_rel_url', 'core_location_adjacent_rel_url', 10, 2 );

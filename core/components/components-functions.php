@@ -204,7 +204,7 @@ function core_after_response( callable $callback ): void {
  * @return string
  */
 function get_price_html( $price ): string {
-	return sprintf( '%s %s', __( 'AED', 'east-property' ), number_format( (float) $price, 0, '.', ',' ) );
+	return core_format_price( $price );
 }
 
 /**

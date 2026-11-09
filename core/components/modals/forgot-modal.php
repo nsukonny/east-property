@@ -10,7 +10,7 @@
 				</button>
 			</div>
 			<form name="forgot-password-form" method="post"
-			      action="<?php echo esc_url( core_home_url( '/account?action=reset_password' ) ); ?>">
+			      action="<?php echo esc_url( core_home_url( '/account/?action=reset_password' ) ); ?>">
 				<fieldset>
 					<label for="forgot_email">
 						<?php _e( 'Email or username' , 'east-property' ); ?>

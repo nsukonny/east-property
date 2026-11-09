@@ -9,6 +9,7 @@
 $locations = get_terms(
 	array(
 		'taxonomy'   => 'location',
+		'exclude'    => core_country_term_ids(),
 		'hide_empty' => false,
 		'orderby'    => 'count',
 		'order'      => 'DESC',

@@ -27,6 +27,8 @@ function get_core_breadcrumbs_links(): array {
 	}
 
 	if ( null !== $unit ) {
+		$links[] = core_country_breadcrumb( (int) $unit->get_id() );
+
 		if ( 'off-plan' === $unit->get_listing_type() ) {
 			$links[] = array(
 				'url'   => core_home_url( '/off-plan/' ),
@@ -55,10 +57,7 @@ function get_core_breadcrumbs_links(): array {
 	}
 
 	if ( null === $unit && null !== $property ) {
-		$links[] = array(
-			'url'   => core_home_url( '/projects/' ),
-			'title' => __( 'Projects in UAE', 'east-property' ),
-		);
+		$links[] = core_country_breadcrumb( (int) $property->get_id() );
 
 		$current_page_title = $property->get_title();
 	}
@@ -126,11 +125,14 @@ function core_env( string $key, string $fallback = '' ): string {
  * @return void
  */
 function custom_head_scripts(): void {
+	$map_view = core_country_map_view( core_current_country() );
+
 	?>
 	<script>
 		window.MAP_CONFIG = {
 			apiKey: '<?php echo core_env( 'GOOGLE_MAPS_KEY' ); ?>',
 			mapId: '<?php echo core_env( 'GOOGLE_MAPS_MAP_ID' ); ?>',
+			center: <?php echo wp_json_encode( $map_view ); ?>,
 		};
 	</script>
 	<?php

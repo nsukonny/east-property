@@ -1,6 +1,6 @@
 <?php
 
-$redirect_to = core_home_url( '/account' );
+$redirect_to = core_home_url( '/account/' );
 ?>
 <div class="modal-wrapper boost-modal" data-modal-id="boost-modal">
 	<div class="modal">

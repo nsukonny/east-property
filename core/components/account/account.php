@@ -87,7 +87,7 @@ if ( isset( $_GET['action'] ) && in_array( $_GET['action'], array( 'add_property
 		'account/edit-property',
 		array(
 			'property'               => isset( $_GET['id'] ) ? new Property( $_GET['id'] ) : null,
-			'locations'              => get_terms( 'location', array( 'hide_empty' => false ) ),
+			'locations'              => get_terms( 'location', array( 'hide_empty' => false, 'exclude' => core_country_term_ids() ) ),
 			'developers'             => $developers ?: array(),
 			'property_type_options'  => $property_type_options,
 			'ownership_type_options' => $ownership_type_options,

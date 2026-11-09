@@ -9,10 +9,7 @@ $search_by     = $args['search_by'] ?? array();
 $card_template = $args['card_template'] ?? 'large-card';
 
 $posts_per_page = PROPERTIES_PER_PAGE ?? 20;
-$properties     = get_properties( $posts_per_page, false, array(
-	'specifications' => true,
-	'galleries'      => true,
-) );
+$properties     = get_properties( $posts_per_page, false, core_properties_listing_args( core_queried_location_scope() ) );
 
 get_component_template( 'search-results/filters',
 	array(

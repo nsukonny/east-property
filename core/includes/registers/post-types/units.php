@@ -147,7 +147,7 @@ add_filter( 'post_type_link', static function ( $permalink, $post ) {
 	$project_slug = core_unit_project_slug( $unit );
 	$project_path = '' === $project_slug ? '' : $project_slug . '/';
 
-	return core_home_url( '/property/' . $project_path . $unit->get_slug() . '/' );
+	return core_home_url( '/' . core_country_path( (int) $post->ID ) . 'property/' . $project_path . $unit->get_slug() . '/' );
 }, 10, 2 );
 
 /**

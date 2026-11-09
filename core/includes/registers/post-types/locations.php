@@ -48,6 +48,12 @@ add_action( 'init', static function () {
 		);
 
 		add_rewrite_rule(
+			'^' . $prefix . 'areas/(?!page-[0-9]+/?$)([^/]+)/page-([0-9]+)/?$',
+			'index.php?location=$matches[1]&cur_page=$matches[2]' . $lang,
+			'top'
+		);
+
+		add_rewrite_rule(
 			'^' . $prefix . 'projects/(?!page-[0-9]+/?$)([^/]+)/?$',
 			'index.php?location=$matches[1]' . $lang,
 			'top'

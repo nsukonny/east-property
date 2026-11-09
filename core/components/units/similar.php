@@ -57,7 +57,7 @@ if ( empty( $similar_units ) ) {
 	return;
 }
 
-$all_units_link = core_home_url( '/off-plan' );
+$all_units_link = core_home_url( '/off-plan/' );
 get_component_template(
 	'units/featured',
 	array(

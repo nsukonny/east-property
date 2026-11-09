@@ -21,6 +21,7 @@ function get_properties( int $limit = - 1, bool $skip_filters = false, array $ar
 		'properties',
 		'properties_listings',
 		array(
+			'country',
 			'location',
 			'available',
 			'developer',
@@ -187,6 +188,7 @@ function get_map_properties( array $args = array() ): array {
 		'map_properties',
 		'properties_listings',
 		array(
+			'country',
 			'location',
 			'available',
 			'developer',
@@ -393,6 +395,12 @@ function core_query_properties(
 	$where  = array( 'p.post_type = %s' );
 	$params = array( 'property' );
 
+	$country_join = core_country_listing_join( 'p.ID', (string) ( $args['country'] ?? '' ) );
+
+	if ( '' !== $country_join ) {
+		$joins[] = $country_join;
+	}
+
 	if ( empty( $args['draft'] ) ) {
 		$where[]  = 'p.post_status = %s';
 		$params[] = 'publish';
@@ -507,13 +515,19 @@ function core_query_properties(
 			INNER JOIN {$wpdb->postmeta} AS pm_price
 				ON pm_price.post_id = p.ID
 				AND pm_price.meta_key = 'price'
+			LEFT JOIN {$wpdb->postmeta} AS pm_price_base
+				ON pm_price_base.post_id = p.ID
+				AND pm_price_base.meta_key = 'price_base'
 		";
+
+		$price_sql = 'COALESCE( CAST( pm_price_base.meta_value AS UNSIGNED ), CAST( pm_price.meta_value AS UNSIGNED ) )';
+
 		if ( null !== $filter_min_price ) {
-			$where[]  = 'CAST(pm_price.meta_value AS UNSIGNED) >= %d';
+			$where[]  = $price_sql . ' >= %d';
 			$params[] = $filter_min_price;
 		}
 		if ( null !== $filter_max_price ) {
-			$where[]  = 'CAST(pm_price.meta_value AS UNSIGNED) <= %d';
+			$where[]  = $price_sql . ' <= %d';
 			$params[] = $filter_max_price;
 		}
 	}
@@ -599,7 +613,7 @@ function core_query_properties(
 					MIN(sort_prices.min_price) AS min_price
 				FROM (
 					SELECT CAST(pm_sort_property.meta_value AS UNSIGNED) AS property_id,
-						MIN(NULLIF(CAST(pm_sort_price.meta_value AS UNSIGNED), 0)) AS min_price
+						MIN(NULLIF(CAST(COALESCE(pm_sort_price_base.meta_value, pm_sort_price.meta_value) AS UNSIGNED), 0)) AS min_price
 					FROM {$wpdb->posts} AS sort_unit
 					INNER JOIN {$wpdb->postmeta} AS pm_sort_property
 						ON pm_sort_property.post_id = sort_unit.ID
@@ -607,6 +621,9 @@ function core_query_properties(
 					INNER JOIN {$wpdb->postmeta} AS pm_sort_price
 						ON pm_sort_price.post_id = sort_unit.ID
 						AND pm_sort_price.meta_key = 'price'
+					LEFT JOIN {$wpdb->postmeta} AS pm_sort_price_base
+						ON pm_sort_price_base.post_id = sort_unit.ID
+						AND pm_sort_price_base.meta_key = 'price_base'
 					WHERE sort_unit.post_type = 'unit'
 						AND sort_unit.post_status = 'publish'
 					GROUP BY property_id
@@ -992,5 +1009,20 @@ function core_property_enquiry_text( Entities\Property $property ): string {
 		__( 'Hello! I am interested in the %1$s project. Could you tell me more about it? %2$s', 'east-property' ),
 		$title,
 		$url
+	);
+}
+
+/**
+ * Arguments the projects listing is built with.
+ *
+ * Shared so the SEO layer asks get_properties() for the same cache key the
+ * template does, instead of running the listing a second time.
+ *
+ * @return array
+ */
+function core_properties_listing_args( array $scope = array() ): array {
+	return $scope + array(
+		'specifications' => true,
+		'galleries'      => true,
 	);
 }

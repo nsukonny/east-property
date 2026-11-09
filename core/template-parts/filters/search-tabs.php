@@ -196,7 +196,7 @@ if ( '' !== $active_action ) {
 			</p>
 		</div>
 		<div class="distress-panel-actions">
-			<a class="button green orange xl" href="<?php echo esc_url( core_home_url( '/distress' ) ); ?>">
+			<a class="button green orange xl" href="<?php echo esc_url( core_home_url( '/distress/' ) ); ?>">
 				<?php esc_html_e( 'Explore distress deals', 'east-property' ); ?>
 			</a>
 			<button class="button black xl" type="button" data-modal-open="contact-manager-modal">

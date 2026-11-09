@@ -20,9 +20,12 @@ if ( ! $location instanceof WP_Term ) {
 	return;
 }
 
-// The listing reads the district from the request, the same way /projects/?location= does.
-$_REQUEST['location'] = $location->slug;
-$_GET['location']     = $location->slug;
+// The listing reads the scope from the request, the same way /projects/?location= does.
+// A country holds its projects on the districts below it, so it filters by country.
+$scope = core_location_is_country( (int) $location->term_id ) ? 'country' : 'location';
+
+$_REQUEST[ $scope ] = $location->slug;
+$_GET[ $scope ]     = $location->slug;
 
 get_header( null, array( 'color' => 'sand' ) );
 
@@ -37,7 +40,7 @@ get_template_part(
 			$location->name
 		),
 		'default_filters' => array(
-			'location' => $location->slug,
+			$scope => $location->slug,
 		),
 	)
 );

@@ -11,7 +11,7 @@ $agencies_posts = get_agencies();
 
 $user_roles = get_existing_user_roles();
 
-$redirect_to = core_home_url( '/account' );
+$redirect_to = core_home_url( '/account/' );
 ?>
 <div class="modal-wrapper create-modal" data-modal-id="create-modal">
 	<div class="modal">

@@ -9,7 +9,7 @@ get_header();
 			<div class="text">
 				<h1>404</h1>
 				<p><?php _e( 'Page not found', 'east-property' ); ?></p>
-				<a href="<?php echo esc_url( core_home_url( '/projects' ) ) ?>"
+				<a href="<?php echo esc_url( core_home_url( '/projects/' ) ) ?>"
 				   class="button orange xl"><?php _e( 'Go to properties', 'east-property' ); ?></a>
 			</div>
 		</div>

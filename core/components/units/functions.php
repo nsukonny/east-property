@@ -52,6 +52,7 @@ function get_units( $listing_type = '', int $limit = 25, $args = array() ): arra
 		'units',
 		'units_listings',
 		array(
+			'country',
 			'location',
 			'available',
 			'developer',
@@ -126,6 +127,14 @@ function core_query_units( $listing_type, $args ): array {
 	$joins  = array( "LEFT JOIN {$wpdb->postmeta} AS pm_property ON pm_property.post_id = u.ID AND pm_property.meta_key = 'property'" );
 	$where  = array( 'u.post_type = %s' );
 	$params = array( 'unit' );
+
+	// Фильтрующее соединение идёт перед цепочкой LEFT JOIN: дописанное после неё
+	// MariaDB применяет поздно, собрав все строки.
+	$country_join = core_country_listing_join( 'u.ID', (string) ( $args['country'] ?? '' ) );
+
+	if ( '' !== $country_join ) {
+		array_unshift( $joins, $country_join );
+	}
 
 	if ( empty( $args['draft'] ) ) {
 		$where[]  = 'u.post_status = %s';
@@ -289,6 +298,9 @@ function core_query_units( $listing_type, $args ): array {
 			LEFT JOIN {$wpdb->postmeta} AS pm_price
 				ON pm_price.post_id = u.ID
 				AND pm_price.meta_key = 'price'
+			LEFT JOIN {$wpdb->postmeta} AS pm_price_base
+				ON pm_price_base.post_id = u.ID
+				AND pm_price_base.meta_key = 'price_base'
 			LEFT JOIN {$wpdb->postmeta} AS pm_original_price
 				ON pm_original_price.post_id = u.ID
 				AND pm_original_price.meta_key = 'original_price'
@@ -296,12 +308,14 @@ function core_query_units( $listing_type, $args ): array {
 				ON pm_discount.post_id = u.ID
 				AND pm_discount.meta_key = 'discount'
 		";
+	$price_sql = 'COALESCE( CAST( pm_price_base.meta_value AS UNSIGNED ), CAST( pm_price.meta_value AS UNSIGNED ) )';
+
 	if ( null !== $filter_min_price ) {
-		$where[]  = 'CAST(pm_price.meta_value AS UNSIGNED) >= %d';
+		$where[]  = $price_sql . ' >= %d';
 		$params[] = $filter_min_price;
 	}
 	if ( null !== $filter_max_price ) {
-		$where[]  = 'CAST(pm_price.meta_value AS UNSIGNED) <= %d';
+		$where[]  = $price_sql . ' <= %d';
 		$params[] = $filter_max_price;
 	}
 
@@ -408,8 +422,8 @@ function core_query_units( $listing_type, $args ): array {
 	}
 
 	$orders    = array(
-		'price_desc'   => 'COALESCE(CAST(pm_price.meta_value AS UNSIGNED), 0) = 0, CAST(pm_price.meta_value AS UNSIGNED) DESC, u.ID DESC',
-		'price_asc'    => 'COALESCE(CAST(pm_price.meta_value AS UNSIGNED), 0) = 0, CAST(pm_price.meta_value AS UNSIGNED) ASC, u.ID DESC',
+		'price_desc'   => 'COALESCE( ' . $price_sql . ', 0 ) = 0, ' . $price_sql . ' DESC, u.ID DESC',
+		'price_asc'    => 'COALESCE( ' . $price_sql . ', 0 ) = 0, ' . $price_sql . ' ASC, u.ID DESC',
 		'newest'       => 'u.post_date DESC, u.ID DESC',
 		'oldest'       => 'u.post_date ASC, u.ID ASC',
 		'handover_asc' => "COALESCE(pm_label_delivery.meta_value, '') = '', pm_label_delivery.meta_value ASC, u.ID DESC",
@@ -441,7 +455,7 @@ function core_query_units( $listing_type, $args ): array {
 			pm_beds.meta_value AS bedrooms,
 			pm_baths.meta_value AS bathrooms,
 			pm_area.meta_value AS area_size,
-			pm_price.meta_value AS price,
+			COALESCE( pm_price_base.meta_value, pm_price.meta_value ) AS price,
 			pm_original_price.meta_value AS original_price,
 			pm_discount.meta_value AS discount,
 			pm_boost_score.meta_value AS boost_score,

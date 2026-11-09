@@ -173,7 +173,7 @@ final class Unit {
 	public function get_price_html(): string {
 		$price = $this->get_price();
 
-		return sprintf( '%s %s', __( 'AED', 'east-property' ), number_format( (float) $price, 0, '.', ',' ) );
+		return core_format_price( core_base_price( (int) $this->get_id(), $price ) );
 	}
 
 	/**
@@ -188,7 +188,7 @@ final class Unit {
 			return '';
 		}
 
-		return sprintf( '%s %s', __( 'AED', 'east-property' ), number_format( (float) $price, 0, '.', ',' ) );
+		return core_format_price( core_base_price( (int) $this->get_id(), $price ) );
 	}
 
 	/**
