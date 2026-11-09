@@ -689,22 +689,37 @@ function core_sitemap_exclude_empty_developers( $excluded ): array {
 
 	list( $translation_join, $translation_where ) = core_awaiting_translation_sql( 'p.ID', $language );
 
+	$project_language_join = '';
+
+	if ( '' !== $language ) {
+		// Проект тоже должен быть на этом языке: иначе застройщик с одними
+		// английскими проектами считается наполненным на любом языке.
+		$project_language_join = "INNER JOIN {$wpdb->term_relationships} ptr ON ptr.object_id = p.ID
+			INNER JOIN {$wpdb->term_taxonomy} ptt
+			        ON ptt.term_taxonomy_id = ptr.term_taxonomy_id AND ptt.taxonomy = 'language'
+			INNER JOIN {$wpdb->terms} pt ON pt.term_id = ptt.term_id AND pt.slug = %s";
+		$params[]              = $language;
+	}
+
+	// Один проход: коррелированный NOT EXISTS считался на каждого из трёх тысяч
+	// застройщиков и занимал пятнадцать секунд.
 	$sql = "SELECT d.ID
 		FROM {$wpdb->posts} d
 		{$language_join}
+		LEFT JOIN (
+		    SELECT DISTINCT CAST( dev.meta_value AS UNSIGNED ) AS developer_id
+		    FROM {$wpdb->postmeta} dev
+		    INNER JOIN {$wpdb->posts} p
+		            ON p.ID = dev.post_id AND p.post_type = 'property' AND p.post_status = 'publish'
+		    INNER JOIN {$wpdb->postmeta} uc
+		            ON uc.post_id = p.ID AND uc.meta_key = 'units_count'
+		           AND CAST( uc.meta_value AS UNSIGNED ) > 0
+		    {$project_language_join}
+		    {$translation_join}
+		    WHERE dev.meta_key = 'developer_rel' {$translation_where}
+		) filled ON filled.developer_id = d.ID
 		WHERE d.post_type = 'developers' AND d.post_status = 'publish'
-		  AND NOT EXISTS (
-		      SELECT 1 FROM {$wpdb->postmeta} dev
-		      INNER JOIN {$wpdb->posts} p
-		              ON p.ID = dev.post_id AND p.post_type = 'property' AND p.post_status = 'publish'
-		      INNER JOIN {$wpdb->postmeta} uc
-		              ON uc.post_id = p.ID AND uc.meta_key = 'units_count'
-		             AND CAST( uc.meta_value AS UNSIGNED ) > 0
-		      {$translation_join}
-		      WHERE dev.meta_key = 'developer_rel'
-		        AND CAST( dev.meta_value AS UNSIGNED ) = d.ID
-		        {$translation_where}
-		  )";
+		  AND filled.developer_id IS NULL";
 
 	$ids = $wpdb->get_col( empty( $params ) ? $sql : $wpdb->prepare( $sql, $params ) );
 
