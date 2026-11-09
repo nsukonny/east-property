@@ -12,10 +12,14 @@ $wrapper_title  = $args['title'] ?? '';
 $selected_title = $args['selected_title'] ?? __( 'Select', 'east-property' );
 $selected_key   = $args['selected_key'] ?? '';
 $items          = $args['items'] ?? '';
+if ( ! empty( $items ) && isset( $items[0]['ID'] ) ) {
+	$items = array_column( $items, 'post_title', 'ID' );
+}
 $search_enabled = $args['search_enabled'] ?? true;
 $link_text      = $args['link_text'] ?? '';
 $link_url       = $args['link_url'] ?? '';
 $lang_sync      = $args['lang_sync'] ?? '';
+$info_text      = $args['info_text'] ?? '';
 ?>
 <div class="input-wrapper">
 	<?php if ( ! empty( $wrapper_title ) ) { ?>
@@ -28,6 +32,10 @@ $lang_sync      = $args['lang_sync'] ?? '';
 					<?php echo esc_html( $link_text ); ?>
 				</a>
 			<?php } ?>
+
+			<?php if ( ! empty( $info_text ) ) { ?>
+				<span class="info_text"><?php echo $info_text; ?></span>
+			<?php } ?>
 		</div>
 	<?php } ?>
 
@@ -38,7 +46,7 @@ $lang_sync      = $args['lang_sync'] ?? '';
 			</span>
 			<span class="dropdown-arrow">
 				<img src="<?php echo esc_url( THEME_URL . '/assets/img/arrow-down.svg' ); ?>" width="16" height="16"
-				     alt="<?php esc_html_e( 'Arrow down', 'east-property' ); ?>">
+					 alt="<?php esc_html_e( 'Arrow down', 'east-property' ); ?>">
 			</span>
 		</button>
 
@@ -46,8 +54,8 @@ $lang_sync      = $args['lang_sync'] ?? '';
 			<div class="dropdown-search">
 				<label for="<?php echo esc_attr( $input_name ); ?>-search">
 					<input type="text" class="dropdown-search-input"
-					       id="<?php echo esc_attr( $input_name ); ?>-search"
-					       placeholder="<?php esc_html_e( 'Search...', 'east-property' ); ?>">
+						   id="<?php echo esc_attr( $input_name ); ?>-search"
+						   placeholder="<?php esc_html_e( 'Search...', 'east-property' ); ?>">
 				</label>
 			</div>
 		<?php } ?>
@@ -56,7 +64,7 @@ $lang_sync      = $args['lang_sync'] ?? '';
 			<div class="dropdown-inner">
 				<?php foreach ( $items as $key => $item ) { ?>
 					<button type="button" class="dropdown-option"
-					        data-value="<?php echo esc_attr( $key ); ?>">
+							data-value="<?php echo esc_attr( $key ); ?>">
 						<?php echo esc_html( $item ); ?>
 					</button>
 				<?php } ?>
@@ -64,5 +72,5 @@ $lang_sync      = $args['lang_sync'] ?? '';
 		</div>
 	</div>
 	<input type="hidden" name="<?php echo esc_attr( $input_name ); ?>" value="<?php echo esc_attr( $selected_key ); ?>"
-	       data-required>
+		   data-required>
 </div>

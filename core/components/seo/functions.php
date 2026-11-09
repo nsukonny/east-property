@@ -22,13 +22,10 @@ function core_get_unroutable_post_types(): array {
 /**
  * Taxonomies without a public template.
  *
- * `location` belongs in the sitemap as soon as taxonomy-location.php exists —
- * until then /areas/{slug}/ redirects to /404.
- *
  * @return array
  */
 function core_get_unroutable_taxonomies(): array {
-	return array( 'location' );
+	return array();
 }
 
 /**
@@ -388,6 +385,333 @@ function core_sitemap_cache_headers( $headers ): array {
 }
 
 add_filter( 'wpseo_sitemap_http_headers', 'core_sitemap_cache_headers' );
+
+/**
+ * Query parameters that mark a listing as filtered. Pagination is not one of them.
+ *
+ * @return array
+ */
+function core_get_listing_filter_params(): array {
+	return array(
+		'location',
+		'developer',
+		'beds',
+		'baths',
+		'available',
+		'property_type',
+		'min_price',
+		'max_price',
+		'price',
+		'area',
+		'sort',
+		'orderby',
+		'listing_type',
+		'units',
+		'search',
+		'filtered',
+	);
+}
+
+/**
+ * Whether the address carries a listing filter. Reads the raw query string, not $_GET.
+ *
+ * @return bool
+ */
+function core_is_filtered_listing_request(): bool {
+	$query = (string) ( $_SERVER['QUERY_STRING'] ?? '' );
+
+	if ( '' === $query ) {
+		return false;
+	}
+
+	$params = array();
+	parse_str( $query, $params );
+
+	foreach ( core_get_listing_filter_params() as $name ) {
+		if ( ! isset( $params[ $name ] ) ) {
+			continue;
+		}
+
+		$value = is_array( $params[ $name ] ) ? reset( $params[ $name ] ) : $params[ $name ];
+
+		if ( '' !== trim( (string) $value ) ) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/**
+ * Join and condition hiding projects that still wait for a translation.
+ *
+ * @param string $column   Primary key column of the projects table.
+ * @param string $language Language being rendered.
+ *
+ * @return array{0:string,1:string} Join and WHERE fragment, both empty when nothing hides.
+ */
+function core_awaiting_translation_sql( string $column, string $language ): array {
+	global $wpdb;
+
+	if ( ! core_is_awaiting_translation_hidden( $language ) ) {
+		return array( '', '' );
+	}
+
+	return array(
+		"LEFT JOIN {$wpdb->postmeta} nt ON nt.post_id = {$column} AND nt.meta_key = 'need_translate'",
+		'AND nt.post_id IS NULL',
+	);
+}
+
+/**
+ * Whether a listing narrowed by this join would show any project.
+ *
+ * @param string $join Join that narrows to one district or developer.
+ * @param array $params Values for that join.
+ *
+ * @return bool
+ */
+function core_listing_has_projects( string $join, array $params ): bool {
+	global $wpdb;
+
+	$language      = core_get_current_language();
+	$language_join = '';
+
+	if ( '' !== $language ) {
+		$language_join = "INNER JOIN {$wpdb->term_relationships} ltr ON ltr.object_id = p.ID
+			INNER JOIN {$wpdb->term_taxonomy} ltt
+			        ON ltt.term_taxonomy_id = ltr.term_taxonomy_id AND ltt.taxonomy = 'language'
+			INNER JOIN {$wpdb->terms} lt ON lt.term_id = ltt.term_id AND lt.slug = %s";
+		array_unshift( $params, $language );
+	}
+
+	list( $translation_join, $translation_where ) = core_awaiting_translation_sql( 'p.ID', $language );
+
+	$sql = "SELECT 1
+		FROM {$wpdb->posts} p
+		INNER JOIN {$wpdb->postmeta} uc
+		        ON uc.post_id = p.ID AND uc.meta_key = 'units_count'
+		{$language_join}
+		{$join}
+		{$translation_join}
+		WHERE p.post_type = 'property' AND p.post_status = 'publish'
+		  AND CAST( uc.meta_value AS UNSIGNED ) > 0
+		  {$translation_where}
+		LIMIT 1";
+
+	return (bool) $wpdb->get_var( $wpdb->prepare( $sql, $params ) );
+}
+
+/**
+ * Whether a district has projects to show in the current language.
+ *
+ * @param int $term_id Term of the location taxonomy.
+ *
+ * @return bool
+ */
+function core_location_has_projects( int $term_id ): bool {
+	return in_array( $term_id, core_locations_with_projects(), true );
+}
+
+/**
+ * Districts whose listing shows at least one project in the current language.
+ *
+ * One query for the whole taxonomy: the sitemap used to ask per term, which
+ * cost a query each and ran into the hundreds on a cold build.
+ *
+ * @return int[] Term ids.
+ */
+function core_locations_with_projects(): array {
+	global $wpdb;
+
+	static $known = array();
+
+	$language = core_get_current_language();
+
+	if ( isset( $known[ $language ] ) ) {
+		return $known[ $language ];
+	}
+
+	$params        = array();
+	$language_join = '';
+
+	if ( '' !== $language ) {
+		$language_join = "INNER JOIN {$wpdb->term_relationships} ltr ON ltr.object_id = p.ID
+			INNER JOIN {$wpdb->term_taxonomy} ltt
+			        ON ltt.term_taxonomy_id = ltr.term_taxonomy_id AND ltt.taxonomy = 'language'
+			INNER JOIN {$wpdb->terms} lt ON lt.term_id = ltt.term_id AND lt.slug = %s";
+		$params[]      = $language;
+	}
+
+	list( $translation_join, $translation_where ) = core_awaiting_translation_sql( 'p.ID', $language );
+
+	$sql = "SELECT DISTINCT ptt.term_id
+		FROM {$wpdb->posts} p
+		INNER JOIN {$wpdb->postmeta} uc
+		        ON uc.post_id = p.ID AND uc.meta_key = 'units_count'
+		INNER JOIN {$wpdb->term_relationships} ptr ON ptr.object_id = p.ID
+		INNER JOIN {$wpdb->term_taxonomy} ptt
+		        ON ptt.term_taxonomy_id = ptr.term_taxonomy_id AND ptt.taxonomy = 'location'
+		{$language_join}
+		{$translation_join}
+		WHERE p.post_type = 'property' AND p.post_status = 'publish'
+		  AND CAST( uc.meta_value AS UNSIGNED ) > 0
+		  {$translation_where}";
+
+	$rows = empty( $params )
+		? $wpdb->get_col( $sql )
+		: $wpdb->get_col( $wpdb->prepare( $sql, $params ) );
+
+	$known[ $language ] = array_map( 'intval', (array) $rows );
+
+	return $known[ $language ];
+}
+
+/**
+ * Whether a developer has projects to show in the current language.
+ *
+ * @param int $post_id Developer post.
+ *
+ * @return bool
+ */
+function core_developer_has_projects( int $post_id ): bool {
+	global $wpdb;
+
+	static $known = array();
+
+	$key = $post_id . '|' . core_get_current_language();
+
+	if ( ! isset( $known[ $key ] ) ) {
+		$known[ $key ] = core_listing_has_projects(
+			"INNER JOIN {$wpdb->postmeta} dev
+			         ON dev.post_id = p.ID AND dev.meta_key = 'developer_rel'
+			        AND CAST( dev.meta_value AS UNSIGNED ) = %d",
+			array( $post_id )
+		);
+	}
+
+	return $known[ $key ];
+}
+
+/**
+ * Keep filtered listings and empty district or developer pages out of the index.
+ *
+ * @param mixed $robots Robots directives.
+ *
+ * @return array
+ */
+function core_noindex_filtered_and_empty( $robots ): array {
+	$robots = (array) $robots;
+
+	if ( is_admin() || is_feed() ) {
+		return $robots;
+	}
+
+	$hide = core_is_filtered_listing_request();
+
+	if ( ! $hide && is_tax( 'location' ) ) {
+		$term = get_queried_object();
+		$hide = $term instanceof WP_Term && ! core_location_has_projects( (int) $term->term_id );
+	}
+
+	if ( ! $hide && is_singular( 'developers' ) ) {
+		$developer_id = (int) get_queried_object_id();
+		$hide         = ! core_developer_has_projects( $developer_id );
+	}
+
+	if ( $hide ) {
+		$robots['index']  = 'noindex';
+		$robots['follow'] = 'follow';
+	}
+
+	return $robots;
+}
+
+add_filter( 'wpseo_robots_array', 'core_noindex_filtered_and_empty' );
+
+/**
+ * Exclude empty locations for the sitemap.
+ *
+ * @param mixed $excluded Term ids Yoast already skips.
+ *
+ * @return array
+ */
+function core_sitemap_exclude_empty_locations( $excluded ): array {
+	$excluded = (array) $excluded;
+
+	$terms = get_terms(
+		array(
+			'taxonomy'   => 'location',
+			'hide_empty' => false,
+			'fields'     => 'ids',
+		)
+	);
+
+	if ( is_wp_error( $terms ) ) {
+		return $excluded;
+	}
+
+	$filled = core_locations_with_projects();
+
+	foreach ( $terms as $term_id ) {
+		if ( ! in_array( (int) $term_id, $filled, true ) ) {
+			$excluded[] = (int) $term_id;
+		}
+	}
+
+	return array_values( array_unique( $excluded ) );
+}
+
+add_filter( 'wpseo_exclude_from_sitemap_by_term_ids', 'core_sitemap_exclude_empty_locations' );
+
+/**
+ * Hide empty developers from sitemap
+ *
+ * @param mixed $excluded Post ids Yoast already skips.
+ *
+ * @return array
+ */
+function core_sitemap_exclude_empty_developers( $excluded ): array {
+	global $wpdb;
+
+	$excluded      = (array) $excluded;
+	$language      = core_get_current_language();
+	$language_join = '';
+	$params        = array();
+
+	if ( '' !== $language ) {
+		$language_join = "INNER JOIN {$wpdb->term_relationships} dtr ON dtr.object_id = d.ID
+			INNER JOIN {$wpdb->term_taxonomy} dtt
+			        ON dtt.term_taxonomy_id = dtr.term_taxonomy_id AND dtt.taxonomy = 'language'
+			INNER JOIN {$wpdb->terms} dt ON dt.term_id = dtt.term_id AND dt.slug = %s";
+		$params[]      = $language;
+	}
+
+	list( $translation_join, $translation_where ) = core_awaiting_translation_sql( 'p.ID', $language );
+
+	$sql = "SELECT d.ID
+		FROM {$wpdb->posts} d
+		{$language_join}
+		WHERE d.post_type = 'developers' AND d.post_status = 'publish'
+		  AND NOT EXISTS (
+		      SELECT 1 FROM {$wpdb->postmeta} dev
+		      INNER JOIN {$wpdb->posts} p
+		              ON p.ID = dev.post_id AND p.post_type = 'property' AND p.post_status = 'publish'
+		      INNER JOIN {$wpdb->postmeta} uc
+		              ON uc.post_id = p.ID AND uc.meta_key = 'units_count'
+		             AND CAST( uc.meta_value AS UNSIGNED ) > 0
+		      {$translation_join}
+		      WHERE dev.meta_key = 'developer_rel'
+		        AND CAST( dev.meta_value AS UNSIGNED ) = d.ID
+		        {$translation_where}
+		  )";
+
+	$ids = $wpdb->get_col( empty( $params ) ? $sql : $wpdb->prepare( $sql, $params ) );
+
+	return array_values( array_unique( array_merge( $excluded, array_map( 'intval', $ids ) ) ) );
+}
+
+add_filter( 'wpseo_exclude_from_sitemap_by_post_ids', 'core_sitemap_exclude_empty_developers' );
 
 /**
  * The paginated listing a template is about to render.

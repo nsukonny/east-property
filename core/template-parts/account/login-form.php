@@ -6,7 +6,7 @@
 $agencies_posts = $args['agencies_posts'] ?? array();
 $user_roles     = $args['user_roles'] ?? array();
 
-$active_tab = core_get_account_active_tab();
+$active_tab  = core_get_account_active_tab();
 $redirect_to = core_home_url( '/account?tab=account' );
 ?>
 <section class="profile-tabs" data-tabs>
@@ -182,46 +182,24 @@ $redirect_to = core_home_url( '/account?tab=account' );
 									</div>
 
 									<div class="input-group" data-for-role="broker">
-										<div class="input-wrapper">
-											<div class="label-text">
-												<span><?php esc_html_e( 'Choose your agency',
-														'east-property' ); ?></span>
-												<span class="agency_info">
-													<?php
-													esc_html_e( 'If you can’t find your agency in the list, please contact us at ',
-														'east-property' );
-													echo '<a href="mailto:' . SUPPORT_EMAIL . '">' . SUPPORT_EMAIL . '</a>. ';
-													esc_html_e( 'Your request will be reviewed within 24 hours.',
-														'east-property' );
-													?>
-												</span>
-											</div>
-											<div class="dropdown">
-												<button class="dropdown-button" type="button">
-														<span class="dropdown-title">
-															<?php echo ! empty( $user_agency ) ? esc_html( $user_agency->post_title ) : esc_attr__( 'Select',
-																'east-property' ); ?>
-														</span>
-													<span class="dropdown-arrow">
-															<img src="<?php echo THEME_URL; ?>/assets/img/arrow-down.svg"
-																 width="16" height="16"
-																 alt="vector arrow">
-														</span>
-												</button>
-												<div class="dropdown-content">
-													<div class="dropdown-inner">
-														<?php foreach ( $agencies_posts as $agency ) { ?>
-															<button type="button" class="dropdown-option"
-																	data-value="<?php echo esc_attr( $agency['ID'] ); ?>">
-																<?php echo esc_html( $agency['post_title'] ); ?>
-															</button>
-														<?php } ?>
-													</div>
-												</div>
-											</div>
-											<input type="hidden" name="agency_id"
-												   value="0">
-										</div>
+										<?php
+										get_component_template(
+											'ui/dropdown',
+											array(
+												'input_name'     => 'agency_id',
+												'title'          => __( 'Choose your agency', 'east-property' ),
+												'info_text'      => __( 'If you can’t find your agency in the list, please contact us at ',
+														'east-property' )
+												                    . '<a href="mailto:' . SUPPORT_EMAIL . '">' . SUPPORT_EMAIL . '</a>. '
+												                    . __( 'Your request will be reviewed within 24 hours.',
+														'east-property' ),
+												'selected_title' => __( 'Select',
+													'east-property' ),
+												'selected_key'   => '',
+												'items'          => $agencies_posts,
+											)
+										);
+										?>
 									</div>
 								</fieldset>
 								<div class="submit-group">
