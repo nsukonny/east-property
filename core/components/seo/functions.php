@@ -444,6 +444,27 @@ function core_is_filtered_listing_request(): bool {
 }
 
 /**
+ * Join and condition hiding projects that still wait for a translation.
+ *
+ * @param string $column   Primary key column of the projects table.
+ * @param string $language Language being rendered.
+ *
+ * @return array{0:string,1:string} Join and WHERE fragment, both empty when nothing hides.
+ */
+function core_awaiting_translation_sql( string $column, string $language ): array {
+	global $wpdb;
+
+	if ( ! core_is_awaiting_translation_hidden( $language ) ) {
+		return array( '', '' );
+	}
+
+	return array(
+		"LEFT JOIN {$wpdb->postmeta} nt ON nt.post_id = {$column} AND nt.meta_key = 'need_translate'",
+		'AND nt.post_id IS NULL',
+	);
+}
+
+/**
  * Whether a listing narrowed by this join would show any project.
  *
  * @param string $join Join that narrows to one district or developer.
@@ -465,14 +486,18 @@ function core_listing_has_projects( string $join, array $params ): bool {
 		array_unshift( $params, $language );
 	}
 
+	list( $translation_join, $translation_where ) = core_awaiting_translation_sql( 'p.ID', $language );
+
 	$sql = "SELECT 1
 		FROM {$wpdb->posts} p
 		INNER JOIN {$wpdb->postmeta} uc
 		        ON uc.post_id = p.ID AND uc.meta_key = 'units_count'
 		{$language_join}
 		{$join}
+		{$translation_join}
 		WHERE p.post_type = 'property' AND p.post_status = 'publish'
 		  AND CAST( uc.meta_value AS UNSIGNED ) > 0
+		  {$translation_where}
 		LIMIT 1";
 
 	return (bool) $wpdb->get_var( $wpdb->prepare( $sql, $params ) );
@@ -486,29 +511,73 @@ function core_listing_has_projects( string $join, array $params ): bool {
  * @return bool
  */
 function core_location_has_projects( int $term_id ): bool {
+	return in_array( $term_id, core_locations_with_projects(), true );
+}
+
+/**
+ * Districts whose listing shows at least one project in the current language.
+ *
+ * One query for the whole taxonomy: the sitemap used to ask per term, which
+ * cost a query each and ran into the hundreds on a cold build.
+ *
+ * @return int[] Term ids.
+ */
+function core_locations_with_projects(): array {
 	global $wpdb;
 
 	static $known = array();
 
-	$key = $term_id . '|' . core_get_current_language();
+	$language = core_get_current_language();
 
-	if ( ! isset( $known[ $key ] ) ) {
-		// Объекты висят на конечных районах, поэтому у страны и у города
-		// считается всё поддерево, а у района — он сам.
-		$tt_ids = core_location_subtree_tt_ids( $term_id );
-		$known[ $key ] = empty( $tt_ids )
-			? false
-			: core_listing_has_projects(
-				"INNER JOIN (
-				     SELECT DISTINCT object_id
-				     FROM {$wpdb->term_relationships}
-				     WHERE term_taxonomy_id IN ( " . implode( ',', $tt_ids ) . " )
-				 ) ptr ON ptr.object_id = p.ID",
-				array()
-			);
+	if ( isset( $known[ $language ] ) ) {
+		return $known[ $language ];
 	}
 
-	return $known[ $key ];
+	$params        = array();
+	$language_join = '';
+
+	if ( '' !== $language ) {
+		$language_join = "INNER JOIN {$wpdb->term_relationships} ltr ON ltr.object_id = p.ID
+			INNER JOIN {$wpdb->term_taxonomy} ltt
+			        ON ltt.term_taxonomy_id = ltr.term_taxonomy_id AND ltt.taxonomy = 'language'
+			INNER JOIN {$wpdb->terms} lt ON lt.term_id = ltt.term_id AND lt.slug = %s";
+		$params[]      = $language;
+	}
+
+	list( $translation_join, $translation_where ) = core_awaiting_translation_sql( 'p.ID', $language );
+
+	$sql = "SELECT DISTINCT ptt.term_id
+		FROM {$wpdb->posts} p
+		INNER JOIN {$wpdb->postmeta} uc
+		        ON uc.post_id = p.ID AND uc.meta_key = 'units_count'
+		INNER JOIN {$wpdb->term_relationships} ptr ON ptr.object_id = p.ID
+		INNER JOIN {$wpdb->term_taxonomy} ptt
+		        ON ptt.term_taxonomy_id = ptr.term_taxonomy_id AND ptt.taxonomy = 'location'
+		{$language_join}
+		{$translation_join}
+		WHERE p.post_type = 'property' AND p.post_status = 'publish'
+		  AND CAST( uc.meta_value AS UNSIGNED ) > 0
+		  {$translation_where}";
+
+	$rows = empty( $params )
+		? $wpdb->get_col( $sql )
+		: $wpdb->get_col( $wpdb->prepare( $sql, $params ) );
+
+	$filled = array();
+
+	// Проекты висят на конечных районах, поэтому город и страна наполнены
+	// своими потомками: иначе их архивы уходят в noindex и из sitemap.
+	foreach ( array_map( 'intval', (array) $rows ) as $term_id ) {
+		$filled[ $term_id ] = true;
+
+		foreach ( (array) get_ancestors( $term_id, 'location', 'taxonomy' ) as $ancestor ) {
+			$filled[ (int) $ancestor ] = true;
+		}
+	}
+
+	$known[ $language ] = array_keys( $filled );
+
+	return $known[ $language ];
 }
 
 /**
@@ -595,8 +664,10 @@ function core_sitemap_exclude_empty_locations( $excluded ): array {
 		return $excluded;
 	}
 
+	$filled = core_locations_with_projects();
+
 	foreach ( $terms as $term_id ) {
-		if ( ! core_location_has_projects( (int) $term_id ) ) {
+		if ( ! in_array( (int) $term_id, $filled, true ) ) {
 			$excluded[] = (int) $term_id;
 		}
 	}
@@ -629,20 +700,39 @@ function core_sitemap_exclude_empty_developers( $excluded ): array {
 		$params[]      = $language;
 	}
 
+	list( $translation_join, $translation_where ) = core_awaiting_translation_sql( 'p.ID', $language );
+
+	$project_language_join = '';
+
+	if ( '' !== $language ) {
+		// Проект тоже должен быть на этом языке: иначе застройщик с одними
+		// английскими проектами считается наполненным на любом языке.
+		$project_language_join = "INNER JOIN {$wpdb->term_relationships} ptr ON ptr.object_id = p.ID
+			INNER JOIN {$wpdb->term_taxonomy} ptt
+			        ON ptt.term_taxonomy_id = ptr.term_taxonomy_id AND ptt.taxonomy = 'language'
+			INNER JOIN {$wpdb->terms} pt ON pt.term_id = ptt.term_id AND pt.slug = %s";
+		$params[]              = $language;
+	}
+
+	// Один проход: коррелированный NOT EXISTS считался на каждого из трёх тысяч
+	// застройщиков и занимал пятнадцать секунд.
 	$sql = "SELECT d.ID
 		FROM {$wpdb->posts} d
 		{$language_join}
+		LEFT JOIN (
+		    SELECT DISTINCT CAST( dev.meta_value AS UNSIGNED ) AS developer_id
+		    FROM {$wpdb->postmeta} dev
+		    INNER JOIN {$wpdb->posts} p
+		            ON p.ID = dev.post_id AND p.post_type = 'property' AND p.post_status = 'publish'
+		    INNER JOIN {$wpdb->postmeta} uc
+		            ON uc.post_id = p.ID AND uc.meta_key = 'units_count'
+		           AND CAST( uc.meta_value AS UNSIGNED ) > 0
+		    {$project_language_join}
+		    {$translation_join}
+		    WHERE dev.meta_key = 'developer_rel' {$translation_where}
+		) filled ON filled.developer_id = d.ID
 		WHERE d.post_type = 'developers' AND d.post_status = 'publish'
-		  AND NOT EXISTS (
-		      SELECT 1 FROM {$wpdb->postmeta} dev
-		      INNER JOIN {$wpdb->posts} p
-		              ON p.ID = dev.post_id AND p.post_type = 'property' AND p.post_status = 'publish'
-		      INNER JOIN {$wpdb->postmeta} uc
-		              ON uc.post_id = p.ID AND uc.meta_key = 'units_count'
-		             AND CAST( uc.meta_value AS UNSIGNED ) > 0
-		      WHERE dev.meta_key = 'developer_rel'
-		        AND CAST( dev.meta_value AS UNSIGNED ) = d.ID
-		  )";
+		  AND filled.developer_id IS NULL";
 
 	$ids = $wpdb->get_col( empty( $params ) ? $sql : $wpdb->prepare( $sql, $params ) );
 
