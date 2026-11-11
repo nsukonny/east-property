@@ -491,9 +491,15 @@ function core_query_properties(
 	$location_filter = $args['location'] ?? $_REQUEST['location'] ?? '';
 	$location_filter = is_scalar( $location_filter ) ? (string) $location_filter : '';
 	if ( '' !== $location_filter && 'all' !== $location_filter ) {
-		$location = sanitize_title( wp_unslash( $location_filter ) );
-		$where[]  = 't_location.slug = %s';
-		$params[] = $location;
+		// По поддереву, а не по одному термину: архив города должен находить
+		// проекты, привязанные только к его районам.
+		$scope_join = core_location_scope_join( 'p.ID', core_location_scope_term( wp_unslash( $location_filter ) ) );
+
+		if ( '' === $scope_join ) {
+			$where[] = '1 = 0';
+		} else {
+			$joins[] = $scope_join;
+		}
 	}
 
 	$joins[] = "LEFT JOIN {$wpdb->postmeta} AS pm_units_count

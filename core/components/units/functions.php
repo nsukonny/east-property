@@ -275,17 +275,15 @@ function core_query_units( $listing_type, $args ): array {
 	$location_filter = $args['location'] ?? $_REQUEST['location'] ?? '';
 	$location_filter = is_scalar( $location_filter ) ? (string) $location_filter : '';
 	if ( '' !== $location_filter && 'all' !== $location_filter ) {
-		$joins[]  = "
-			INNER JOIN {$wpdb->term_relationships} AS tr_location
-				ON tr_location.object_id = u.ID
-			INNER JOIN {$wpdb->term_taxonomy} AS tt_location
-				ON tt_location.term_taxonomy_id = tr_location.term_taxonomy_id
-				AND tt_location.taxonomy = 'location'
-			INNER JOIN {$wpdb->terms} AS t_location
-				ON t_location.term_id = tt_location.term_id
-		";
-		$where[]  = 't_location.slug = %s';
-		$params[] = sanitize_title( wp_unslash( $location_filter ) );
+		// По поддереву, а не по одному термину: архив города должен находить
+		// юниты, привязанные только к его районам.
+		$scope_join = core_location_scope_join( 'u.ID', core_location_scope_term( wp_unslash( $location_filter ) ) );
+
+		if ( '' === $scope_join ) {
+			$where[] = '1 = 0';
+		} else {
+			array_unshift( $joins, $scope_join );
+		}
 	}
 
 	$filter_min_price = is_numeric( $_REQUEST['min_price'] ?? null )

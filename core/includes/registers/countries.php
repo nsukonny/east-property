@@ -42,10 +42,18 @@ function core_country_slugs(): array {
  * @return string[]
  */
 function core_read_country_slugs(): array {
+	$ids = core_country_term_ids();
+
+	if ( empty( $ids ) ) {
+		return array();
+	}
+
+	// Только явный тип: корневой район страной не становится и маршрутов себе
+	// не открывает.
 	$terms = get_terms(
 		array(
 			'taxonomy'   => 'location',
-			'parent'     => 0,
+			'include'    => $ids,
 			'hide_empty' => false,
 			'fields'     => 'slugs',
 			'orderby'    => 'slug',
@@ -343,6 +351,52 @@ function core_country_from_path(): string {
 }
 
 /**
+ * Meta holding how a country's addresses are shaped.
+ */
+const CORE_COUNTRY_URL_MODE_META = 'url_mode';
+
+/**
+ * How one country's addresses are shaped.
+ *
+ * Per country rather than one switch for the site: a new destination can get
+ * its prefix without moving the addresses the UAE already ranks for.
+ *
+ * @param string $country Country slug.
+ *
+ * @return string prefix when the country segment is canonical, none otherwise.
+ */
+function core_country_url_mode( string $country ): string {
+	if ( '' === $country ) {
+		return 'none';
+	}
+
+	$term = get_term_by( 'slug', $country, 'location' );
+
+	if ( $term instanceof WP_Term ) {
+		$stored = (string) get_term_meta( $term->term_id, CORE_COUNTRY_URL_MODE_META, true );
+
+		if ( in_array( $stored, array( 'none', 'prefix' ), true ) ) {
+			return $stored;
+		}
+	}
+
+	// Не размеченной стране достаётся умолчание политики, а не прежний
+	// глобальный переключатель: его смысл переносит отдельная миграция.
+	return $country === core_default_country() ? 'none' : 'prefix';
+}
+
+/**
+ * Whether this country carries its segment in addresses.
+ *
+ * @param string $country Country slug.
+ *
+ * @return bool
+ */
+function core_country_has_prefix( string $country ): bool {
+	return 'prefix' === core_country_url_mode( $country );
+}
+
+/**
  * Whether the country segment is the canonical address shape.
  *
  * Until the migration the old addresses stay canonical and the country ones
@@ -351,45 +405,107 @@ function core_country_from_path(): string {
  * @return bool
  */
 function core_country_urls_enabled(): bool {
-	return 'country' === get_option( 'core_country_urls', 'legacy' );
+	foreach ( core_country_slugs() as $slug ) {
+		if ( core_country_has_prefix( $slug ) ) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+
+/**
+ * Address a location archive should answer on, or nothing when it already does.
+ *
+ * Only the country segment is judged: /projects/{district}/ and
+ * /areas/{district}/ are both routes this theme has always served, and
+ * canonicalising one onto the other would break the older of them.
+ *
+ * @param mixed $term Queried term.
+ *
+ * @return string Empty when the address is fine as it stands.
+ */
+function core_country_term_canonical( $term ): string {
+	if ( ! $term instanceof WP_Term ) {
+		return '';
+	}
+
+	$country  = get_term( core_location_country( (int) $term->term_id ), 'location' );
+	$slug     = $country instanceof WP_Term ? (string) $country->slug : '';
+	$expected = '' !== $slug && core_country_has_prefix( $slug ) ? $slug : '';
+	$actual   = core_country_from_path();
+	$aliases  = core_country_aliases();
+	$actual   = $aliases[ $actual ] ?? $actual;
+
+	if ( $expected === $actual ) {
+		return '';
+	}
+
+	$link = get_term_link( $term );
+
+	return is_string( $link ) ? $link : '';
 }
 
 /**
- * Send a country address to the canonical one while the old shape rules.
+ * Pagination segment of a path, kept when an address is rewritten.
+ *
+ * @param string $path Request path.
+ *
+ * @return string Segment with its slashes, empty when the page is the first.
+ */
+function core_country_pagination_suffix( string $path ): string {
+	return preg_match( '~/(page-\d+|page/\d+)/?$~', $path, $found ) ? $found[1] . '/' : '';
+}
+
+/**
+ * Send every alternative address to the one address of that content.
+ *
+ * One rule for both directions: the canonical URL is whatever the record
+ * itself resolves to under the current policy, so a country that keeps its old
+ * shape and one that carries a prefix are handled the same way, in one hop.
  *
  * @return void
  */
-function core_country_redirect_to_legacy(): void {
-	// Страна из адреса, а не из фильтра: иначе /off-plan/?country=oman уводил бы
-	// страницу саму на себя.
-	if ( is_404() || '' === core_country_from_path() ) {
+function core_country_canonical_redirect(): void {
+	if ( is_404() || is_admin() || is_feed() || is_robots() ) {
 		return;
 	}
 
-	// Псевдоним не канонический адрес ни в одном режиме.
-	if ( core_country_urls_enabled() && 1 !== (int) get_query_var( 'country_alias' ) ) {
-		return;
-	}
-
-	$object = get_queried_object();
 	$target = '';
 
-	if ( $object instanceof WP_Post ) {
-		$target = (string) get_permalink( $object );
-	} elseif ( $object instanceof WP_Term ) {
-		$link   = get_term_link( $object );
-		$target = is_string( $link ) ? $link : '';
+	if ( is_singular( array( 'unit', 'property', 'developers' ) ) ) {
+		$target = (string) get_permalink( get_queried_object_id() );
+	} elseif ( is_tax( 'location' ) ) {
+		$target = core_country_term_canonical( get_queried_object() );
 	}
 
 	if ( '' === $target ) {
 		return;
 	}
 
-	wp_safe_redirect( $target, 301 );
+	$request = (string) wp_parse_url( (string) ( $_SERVER['REQUEST_URI'] ?? '' ), PHP_URL_PATH );
+	$canon   = (string) wp_parse_url( $target, PHP_URL_PATH );
+	$pages   = core_country_pagination_suffix( $request );
+
+	if ( '' !== $pages ) {
+		$canon  = trailingslashit( $canon ) . $pages;
+		$target = trailingslashit( $target ) . $pages;
+	}
+
+	if ( untrailingslashit( $request ) === untrailingslashit( $canon ) ) {
+		return;
+	}
+
+	$query = (string) wp_parse_url( (string) ( $_SERVER['REQUEST_URI'] ?? '' ), PHP_URL_QUERY );
+
+	// Абсолютный адрес: относительный Location ломает сверку в тестах и
+	// вынуждает клиента достраивать хост самому.
+	wp_safe_redirect( user_trailingslashit( $target ) . ( '' === $query ? '' : '?' . $query ), 301 );
 	exit;
 }
 
-add_action( 'template_redirect', 'core_country_redirect_to_legacy', 8 );
+add_action( 'template_redirect', 'core_country_canonical_redirect', 8 );
 
 /**
  * Country segment of a post's address, with the trailing slash.
@@ -399,13 +515,10 @@ add_action( 'template_redirect', 'core_country_redirect_to_legacy', 8 );
  * @return string Empty while the old addresses are canonical.
  */
 function core_country_path( int $post_id ): string {
-	if ( ! core_country_urls_enabled() ) {
-		return '';
-	}
-
 	$country = core_post_country( $post_id );
+	$slug    = null === $country ? core_default_country() : (string) $country->slug;
 
-	return ( null === $country ? core_default_country() : (string) $country->slug ) . '/';
+	return core_country_has_prefix( $slug ) ? $slug . '/' : '';
 }
 
 /**
@@ -437,7 +550,11 @@ function core_country_post_type_link( $permalink, $post ) {
 		'developers' => 'developers',
 	);
 
-	if ( ! core_country_urls_enabled() || ! isset( $bases[ $post->post_type ] ) ) {
+	if ( ! isset( $bases[ $post->post_type ] ) ) {
+		return $permalink;
+	}
+
+	if ( '' === core_country_path( (int) $post->ID ) ) {
 		return $permalink;
 	}
 
@@ -456,47 +573,23 @@ add_filter( 'post_type_link', 'core_country_post_type_link', 5, 2 );
  * @return string
  */
 function core_country_term_link( $link, $term, $taxonomy ) {
-	if ( 'location' !== $taxonomy || ! core_country_urls_enabled() || ! $term instanceof WP_Term ) {
+	if ( 'location' !== $taxonomy || ! $term instanceof WP_Term ) {
+		return $link;
+	}
+
+	$country = get_term( core_location_country( (int) $term->term_id ), 'location' );
+	$slug    = $country instanceof WP_Term ? (string) $country->slug : '';
+
+	if ( '' === $slug || ! core_country_has_prefix( $slug ) ) {
 		return $link;
 	}
 
 	if ( core_location_is_country( (int) $term->term_id ) ) {
-		return core_home_url( '/' . $term->slug . '/' );
+		return core_home_url( '/' . $slug . '/' );
 	}
-
-	$country = get_term( core_location_country( (int) $term->term_id ), 'location' );
-	$slug    = $country instanceof WP_Term ? (string) $country->slug : core_default_country();
 
 	return core_home_url( '/' . $slug . '/areas/' . core_public_area_slug( $term, $slug ) . '/' );
 }
 
 add_filter( 'term_link', 'core_country_term_link', 5, 3 );
 
-/**
- * Send an address without the country to the one that carries it.
- *
- * @return void
- */
-function core_country_redirect_to_country(): void {
-	if ( ! core_country_urls_enabled() || is_404() || '' !== core_country_from_path() ) {
-		return;
-	}
-
-	$target = '';
-
-	if ( is_singular( array( 'unit', 'property', 'developers' ) ) ) {
-		$target = (string) get_permalink( get_queried_object_id() );
-	} elseif ( is_tax( 'location' ) ) {
-		$link   = get_term_link( get_queried_object() );
-		$target = is_string( $link ) ? $link : '';
-	}
-
-	if ( '' === $target ) {
-		return;
-	}
-
-	wp_safe_redirect( $target, 301 );
-	exit;
-}
-
-add_action( 'template_redirect', 'core_country_redirect_to_country', 8 );

@@ -37,6 +37,8 @@ final class CLI {
 		WP_CLI::add_command( 'tools relink-units', array( __CLASS__, 'relink_units' ) );
 		WP_CLI::add_command( 'tools recount-units', array( __CLASS__, 'recount_units' ) );
 		WP_CLI::add_command( 'tools setup-countries', array( __CLASS__, 'setup_countries' ) );
+		WP_CLI::add_command( 'tools classify-locations', array( __CLASS__, 'classify_locations' ) );
+		WP_CLI::add_command( 'tools migrate-url-policy', array( __CLASS__, 'migrate_url_policy' ) );
 		WP_CLI::add_command( 'tools sync-prices', array( __CLASS__, 'sync_prices' ) );
 		WP_CLI::add_command( 'tools warm-cache', array( __CLASS__, 'warm_cache' ) );
 		WP_CLI::add_command( 'tools strip-unit-floors', array( __CLASS__, 'strip_unit_floors' ) );
@@ -3146,6 +3148,11 @@ final class CLI {
 			if ( $term instanceof \WP_Term ) {
 				$countries[ $slug ] = (int) $term->term_id;
 
+				if ( ! $dry_run && 'country' !== core_location_type( (int) $term->term_id ) ) {
+					update_term_meta( (int) $term->term_id, CORE_LOCATION_TYPE_META, 'country' );
+					core_location_flush_type_caches();
+				}
+
 				if ( 0 !== (int) $term->parent ) {
 					WP_CLI::log( sprintf( 'Страна %s лежит не на верхнем уровне, поднимаю', $slug ) );
 
@@ -3172,14 +3179,22 @@ final class CLI {
 			}
 
 			$countries[ $slug ] = (int) $created['term_id'];
+
+			update_term_meta( (int) $created['term_id'], CORE_LOCATION_TYPE_META, 'country' );
+			core_location_flush_type_caches();
 		}
+
+		// Исключаются и страны из списка, и любые уже помеченные страной: иначе
+		// повторный запуск уводил новую страну под страну по умолчанию только
+		// потому, что её слаг не назвали в --countries.
+		$exclude = array_values( array_unique( array_merge( array_filter( $countries ), core_country_term_ids() ) ) );
 
 		$orphans = get_terms(
 			array(
 				'taxonomy'   => 'location',
 				'parent'     => 0,
 				'hide_empty' => false,
-				'exclude'    => array_values( array_filter( $countries ) ),
+				'exclude'    => $exclude,
 				'fields'     => 'ids',
 			)
 		);
@@ -3484,5 +3499,265 @@ final class CLI {
 		$progress->finish();
 
 		WP_CLI::success( sprintf( 'Переписано %d записей', $written ) );
+	}
+
+	/**
+	 * Give every location an explicit type.
+	 *
+	 * Nothing is inferred from the tree: a root term that is not a known
+	 * country is reported rather than promoted, because a district saved
+	 * without a parent used to become a country and open routes of its own.
+	 *
+	 * ## OPTIONS
+	 *
+	 * [--countries=<slugs>]
+	 * : Root slugs to mark as countries.
+	 * ---
+	 * default: uae,saudi-arabia,oman
+	 * ---
+	 *
+	 * [--dry-run]
+	 * : Report the plan and write nothing.
+	 *
+	 * [--yes]
+	 * : Skip the confirmation.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp tools classify-locations --dry-run --allow-root
+	 *     wp tools classify-locations --allow-root
+	 *
+	 * @param array $args
+	 * @param array $assoc_args
+	 *
+	 * @return void
+	 */
+	public static function classify_locations( array $args, array $assoc_args ): void {
+		$dry_run   = (bool) Utils\get_flag_value( $assoc_args, 'dry-run', false );
+		$countries = array_values(
+			array_filter(
+				array_map(
+					static function ( string $slug ): string {
+						return sanitize_title( trim( $slug ) );
+					},
+					explode( ',', (string) Utils\get_flag_value( $assoc_args, 'countries', 'uae,saudi-arabia,oman' ) )
+				)
+			)
+		);
+
+		$terms = get_terms(
+			array(
+				'taxonomy'   => 'location',
+				'hide_empty' => false,
+			)
+		);
+
+		if ( is_wp_error( $terms ) ) {
+			WP_CLI::error( $terms->get_error_message() );
+		}
+
+		$plan      = array();
+		$ambiguous = array();
+		$already   = 0;
+
+		foreach ( $terms as $term ) {
+			$term_id = (int) $term->term_id;
+			$parent  = (int) $term->parent;
+			$current = core_location_type( $term_id );
+
+			if ( '' !== $current ) {
+				++$already;
+
+				continue;
+			}
+
+			$children = get_term_children( $term_id, 'location' );
+			$children = is_wp_error( $children ) ? array() : $children;
+
+			if ( 0 === $parent ) {
+				if ( in_array( (string) $term->slug, $countries, true ) ) {
+					$plan[ $term_id ] = 'country';
+
+					continue;
+				}
+
+				$ambiguous[] = sprintf(
+					'%s (#%d): корневой термин вне списка стран, детей %d',
+					$term->name,
+					$term_id,
+					count( $children )
+				);
+
+				continue;
+			}
+
+			// Район из фида Geniemap: district_id проставляет только импортёр.
+			if ( '' !== (string) get_term_meta( $term_id, 'district_id', true ) ) {
+				$plan[ $term_id ] = 'area';
+
+				continue;
+			}
+
+			if ( empty( $children ) ) {
+				$plan[ $term_id ] = 'area';
+
+				continue;
+			}
+
+			$ambiguous[] = sprintf(
+				'%s (#%d): есть дети (%d), город или район — решить вручную',
+				$term->name,
+				$term_id,
+				count( $children )
+			);
+		}
+
+		$by_type = array_count_values( $plan );
+
+		WP_CLI::log(
+			sprintf(
+				'Терминов %d. Уже с типом: %d. К простановке: %d (%s). Неоднозначных: %d',
+				count( $terms ),
+				$already,
+				count( $plan ),
+				implode( ', ', array_map( static function ( $type, $count ) {
+					return $type . ' ' . $count;
+				}, array_keys( $by_type ), $by_type ) ) ?: '-',
+				count( $ambiguous )
+			)
+		);
+
+		foreach ( $ambiguous as $line ) {
+			WP_CLI::warning( $line );
+		}
+
+		if ( empty( $plan ) ) {
+			WP_CLI::success( 'Проставлять нечего' );
+
+			return;
+		}
+
+		if ( $dry_run ) {
+			WP_CLI::success( sprintf( 'Сухой прогон: проставить тип %d терминам', count( $plan ) ) );
+
+			return;
+		}
+
+		WP_CLI::confirm( sprintf( 'Проставить тип %d терминам?', count( $plan ) ), $assoc_args );
+
+		$written = 0;
+
+		foreach ( $plan as $term_id => $type ) {
+			$term     = get_term( $term_id, 'location' );
+			$parent   = $term instanceof \WP_Term ? (int) $term->parent : 0;
+			$conflict = core_location_type_conflict( $type, $parent );
+
+			if ( '' !== $conflict ) {
+				WP_CLI::warning( sprintf( '#%d: %s', $term_id, $conflict ) );
+
+				continue;
+			}
+
+			update_term_meta( $term_id, CORE_LOCATION_TYPE_META, $type );
+			++$written;
+		}
+
+		core_location_flush_type_caches();
+
+		WP_CLI::success( sprintf( 'Проставлено %d, неоднозначных %d', $written, count( $ambiguous ) ) );
+	}
+
+	/**
+	 * Move the single URL switch onto a policy per country.
+	 *
+	 * The old option decided for the whole site at once. Current behaviour is
+	 * carried over as is, so updating the code redirects nothing by itself;
+	 * a country is moved to the other shape afterwards, one at a time.
+	 *
+	 * ## OPTIONS
+	 *
+	 * [--set=<pairs>]
+	 * : Comma-separated country:mode overrides, for example uae:none,oman:prefix.
+	 *
+	 * [--dry-run]
+	 * : Report the plan and write nothing.
+	 *
+	 * [--yes]
+	 * : Skip the confirmation.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp tools migrate-url-policy --dry-run --allow-root
+	 *     wp tools migrate-url-policy --allow-root
+	 *     wp tools migrate-url-policy --set=uae:none,oman:prefix --yes --allow-root
+	 *
+	 * @param array $args
+	 * @param array $assoc_args
+	 *
+	 * @return void
+	 */
+	public static function migrate_url_policy( array $args, array $assoc_args ): void {
+		$dry_run  = (bool) Utils\get_flag_value( $assoc_args, 'dry-run', false );
+		$legacy   = (string) get_option( 'core_country_urls', 'legacy' );
+		$default  = core_default_country();
+		$override = array();
+
+		foreach ( explode( ',', (string) Utils\get_flag_value( $assoc_args, 'set', '' ) ) as $pair ) {
+			$parts = array_map( 'trim', explode( ':', $pair ) );
+
+			if ( 2 !== count( $parts ) || ! in_array( $parts[1], array( 'none', 'prefix' ), true ) ) {
+				continue;
+			}
+
+			$override[ sanitize_title( $parts[0] ) ] = $parts[1];
+		}
+
+		$plan = array();
+
+		foreach ( core_country_slugs() as $slug ) {
+			$term = get_term_by( 'slug', $slug, 'location' );
+
+			if ( ! $term instanceof \WP_Term ) {
+				continue;
+			}
+
+			$stored = (string) get_term_meta( $term->term_id, CORE_COUNTRY_URL_MODE_META, true );
+
+			// Прежний глобальный режим переносится как есть: обновление кода
+			// само по себе не должно никого редиректить.
+			$wanted = $override[ $slug ]
+				?? ( '' !== $stored ? $stored : ( 'country' === $legacy ? 'prefix' : ( $slug === $default ? 'none' : 'prefix' ) ) );
+
+			WP_CLI::log( sprintf( '  %-16s %s -> %s', $slug, $stored ?: '(не задан)', $wanted ) );
+
+			if ( $stored !== $wanted ) {
+				$plan[ (int) $term->term_id ] = $wanted;
+			}
+		}
+
+		WP_CLI::log( sprintf( 'Прежний глобальный переключатель: %s (больше не читается)', $legacy ) );
+
+		if ( empty( $plan ) ) {
+			WP_CLI::success( 'Политика уже соответствует' );
+
+			return;
+		}
+
+		if ( $dry_run ) {
+			WP_CLI::success( sprintf( 'Сухой прогон: изменить политику у %d стран', count( $plan ) ) );
+
+			return;
+		}
+
+		WP_CLI::confirm( sprintf( 'Изменить политику адресов у %d стран?', count( $plan ) ), $assoc_args );
+
+		foreach ( $plan as $term_id => $mode ) {
+			update_term_meta( $term_id, CORE_COUNTRY_URL_MODE_META, $mode );
+		}
+
+		core_location_flush_type_caches();
+		flush_rewrite_rules();
+
+		WP_CLI::success( sprintf( 'Изменено %d', count( $plan ) ) );
 	}
 }

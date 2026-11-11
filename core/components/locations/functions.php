@@ -167,23 +167,86 @@ function core_location_save_descriptions( int $term_id ): void {
 add_action( 'edited_location', 'core_location_save_descriptions' );
 
 /**
- * Country terms: the top level of the location tree.
+ * Generation of the per-request location caches.
+ *
+ * Bumped by the flush so a write inside the same request — a migration, an
+ * admin save — is seen by everything that already asked.
+ *
+ * @param bool $bump Increment instead of reading.
+ *
+ * @return int
+ */
+function core_location_cache_generation( bool $bump = false ): int {
+	static $generation = 0;
+
+	if ( $bump ) {
+		++$generation;
+	}
+
+	return $generation;
+}
+
+/**
+ * Meta holding the explicit kind of a location term.
+ */
+const CORE_LOCATION_TYPE_META = 'location_type';
+
+/**
+ * Kinds a location can be.
+ *
+ * @return array<string,string> Slug to label.
+ */
+function core_location_types(): array {
+	return array(
+		'country' => __( 'Country', 'east-property' ),
+		'city'    => __( 'City', 'east-property' ),
+		'area'    => __( 'Area', 'east-property' ),
+	);
+}
+
+/**
+ * Kind of a location term.
+ *
+ * Nothing is inferred from the tree: a term that was never classified stays
+ * unknown, because a district saved without a parent used to be read as a
+ * country and opened routes of its own.
+ *
+ * @param int $term_id Location term id.
+ *
+ * @return string One of the kinds, empty when the term was never classified.
+ */
+function core_location_type( int $term_id ): string {
+	$stored = $term_id > 0 ? (string) get_term_meta( $term_id, CORE_LOCATION_TYPE_META, true ) : '';
+
+	return isset( core_location_types()[ $stored ] ) ? $stored : '';
+}
+
+/**
+ * Country terms, by explicit kind.
  *
  * @return int[]
  */
 function core_country_term_ids(): array {
-	static $ids = null;
+	static $ids        = null;
+	static $generation = -1;
 
-	if ( null !== $ids ) {
+	if ( null !== $ids && core_location_cache_generation() === $generation ) {
 		return $ids;
 	}
+
+	$generation = core_location_cache_generation();
 
 	$terms = get_terms(
 		array(
 			'taxonomy'   => 'location',
-			'parent'     => 0,
 			'hide_empty' => false,
 			'fields'     => 'ids',
+			'meta_query'=> array(
+				array(
+					'key'   => CORE_LOCATION_TYPE_META,
+					'value' => 'country',
+				),
+			),
 		)
 	);
 
@@ -200,58 +263,89 @@ function core_country_term_ids(): array {
  * @return bool
  */
 function core_location_is_country( int $term_id ): bool {
-	return in_array( $term_id, core_country_term_ids(), true );
+	return 'country' === core_location_type( $term_id );
 }
 
 /**
- * Country the location belongs to; the term itself when it is one.
+ * Country a location belongs to, itself included.
+ *
+ * Walks up until a term is explicitly a country, rather than taking the top of
+ * the tree: with a city in between, the topmost term is still the country, but
+ * a branch rooted at an unclassified term has no country at all and must say so.
  *
  * @param int $term_id Location term id.
  *
- * @return int Term id, 0 when unknown.
+ * @return int Country term id, 0 when the branch holds none.
  */
 function core_location_country( int $term_id ): int {
+	static $known      = array();
+	static $generation = -1;
+
+	if ( core_location_cache_generation() !== $generation ) {
+		$known      = array();
+		$generation = core_location_cache_generation();
+	}
+
+	if ( isset( $known[ $term_id ] ) ) {
+		return $known[ $term_id ];
+	}
+
+	$known[ $term_id ] = 0;
+
 	if ( $term_id < 1 ) {
 		return 0;
 	}
 
-	$ancestors = get_ancestors( $term_id, 'location', 'taxonomy' );
+	$chain = array_merge( array( $term_id ), array_map( 'intval', (array) get_ancestors( $term_id, 'location', 'taxonomy' ) ) );
 
-	return empty( $ancestors ) ? $term_id : (int) end( $ancestors );
+	foreach ( $chain as $candidate ) {
+		if ( core_location_is_country( $candidate ) ) {
+			$known[ $term_id ] = $candidate;
+
+			break;
+		}
+	}
+
+	return $known[ $term_id ];
 }
 
 /**
- * term_taxonomy ids of a country and the districts under it.
+ * term_taxonomy ids of a location and everything under it.
  *
- * @param string $slug Country slug.
+ * @param int $term_id Location term id.
  *
- * @return int[] Empty when the slug is not a country.
+ * @return int[] Empty when the term does not exist.
  */
-function core_country_location_tt_ids( string $slug ): array {
+function core_location_subtree_tt_ids( int $term_id ): array {
 	global $wpdb;
 
-	static $cache = array();
+	static $cache      = array();
+	static $generation = -1;
 
-	if ( isset( $cache[ $slug ] ) ) {
-		return $cache[ $slug ];
+	if ( core_location_cache_generation() !== $generation ) {
+		$cache      = array();
+		$generation = core_location_cache_generation();
 	}
 
-	$country        = '' === $slug ? false : get_term_by( 'slug', $slug, 'location' );
-	$cache[ $slug ] = array();
-
-	if ( ! $country instanceof WP_Term || ! core_location_is_country( (int) $country->term_id ) ) {
-		return $cache[ $slug ];
+	if ( isset( $cache[ $term_id ] ) ) {
+		return $cache[ $term_id ];
 	}
 
-	$children = get_term_children( (int) $country->term_id, 'location' );
+	$cache[ $term_id ] = array();
+
+	if ( $term_id < 1 || ! term_exists( $term_id, 'location' ) ) {
+		return $cache[ $term_id ];
+	}
+
+	$children = get_term_children( $term_id, 'location' );
 	$terms    = array_merge(
-		array( (int) $country->term_id ),
+		array( $term_id ),
 		is_wp_error( $children ) ? array() : array_map( 'intval', $children )
 	);
 
 	$in = implode( ',', array_map( 'intval', $terms ) );
 
-	$cache[ $slug ] = array_map(
+	$cache[ $term_id ] = array_map(
 		'intval',
 		(array) $wpdb->get_col(
 			"SELECT term_taxonomy_id FROM {$wpdb->term_taxonomy}
@@ -259,7 +353,24 @@ function core_country_location_tt_ids( string $slug ): array {
 		)
 	);
 
-	return $cache[ $slug ];
+	return $cache[ $term_id ];
+}
+
+/**
+ * term_taxonomy ids of a country and everything under it.
+ *
+ * @param string $slug Country slug.
+ *
+ * @return int[] Empty when the slug is not a country.
+ */
+function core_country_location_tt_ids( string $slug ): array {
+	$country = '' === $slug ? false : get_term_by( 'slug', $slug, 'location' );
+
+	if ( ! $country instanceof WP_Term || ! core_location_is_country( (int) $country->term_id ) ) {
+		return array();
+	}
+
+	return core_location_subtree_tt_ids( (int) $country->term_id );
 }
 
 /**
@@ -334,8 +445,11 @@ function core_countries_with_properties(): array {
 		return $slugs;
 	}
 
+	// Термины с проектами берутся как есть, а страна у каждого ищется по
+	// предкам: прежний IF( tt.parent = 0 ... ) знал только два уровня и для
+	// района внутри города возвращал город.
 	$rows = (array) $wpdb->get_col(
-		"SELECT DISTINCT IF( tt.parent = 0, tt.term_id, tt.parent )
+		"SELECT DISTINCT tt.term_id
 		 FROM {$wpdb->term_relationships} AS tr
 		 INNER JOIN {$wpdb->term_taxonomy} AS tt
 		         ON tt.term_taxonomy_id = tr.term_taxonomy_id AND tt.taxonomy = 'location'
@@ -343,20 +457,23 @@ function core_countries_with_properties(): array {
 		         ON p.ID = tr.object_id AND p.post_type = 'property' AND p.post_status = 'publish'"
 	);
 
-	$countries = core_country_term_ids();
-	$slugs     = array();
+	$slugs = array();
 
 	foreach ( array_map( 'intval', $rows ) as $term_id ) {
-		if ( ! in_array( $term_id, $countries, true ) ) {
+		$country = core_location_country( $term_id );
+
+		if ( 0 === $country ) {
 			continue;
 		}
 
-		$term = get_term( $term_id, 'location' );
+		$term = get_term( $country, 'location' );
 
 		if ( $term instanceof WP_Term ) {
-			$slugs[] = (string) $term->slug;
+			$slugs[ (string) $term->slug ] = true;
 		}
 	}
+
+	$slugs = array_keys( $slugs );
 
 	sort( $slugs );
 
@@ -502,4 +619,195 @@ function core_sanitize_country( string $slug ): string {
 	}
 
 	return in_array( $slug, core_country_slugs(), true ) ? $slug : '';
+}
+
+/**
+ * Whether a kind may sit under this parent.
+ *
+ * @param string $type   Kind being saved.
+ * @param int    $parent Parent term id, 0 for a root term.
+ *
+ * @return string Empty when allowed, otherwise the reason.
+ */
+function core_location_type_conflict( string $type, int $parent ): string {
+	if ( 'country' === $type && $parent > 0 ) {
+		return __( 'A country has to be a root location.', 'east-property' );
+	}
+
+	if ( 'country' !== $type && $parent > 0 && 'country' === core_location_type( $parent ) ) {
+		return '';
+	}
+
+	if ( 'city' === $type && $parent > 0 && ! in_array( core_location_type( $parent ), array( 'country', '' ), true ) ) {
+		return __( 'A city belongs under a country.', 'east-property' );
+	}
+
+	return '';
+}
+
+/**
+ * Kind selector on the location add and edit screens.
+ *
+ * @param WP_Term|string $term Term being edited, or the taxonomy on the add screen.
+ *
+ * @return void
+ */
+function core_location_type_field( $term ): void {
+	$is_edit = $term instanceof WP_Term;
+	$current = $is_edit ? core_location_type( (int) $term->term_id ) : '';
+
+	wp_nonce_field( 'core_location_type', 'core_location_type_nonce' );
+
+	$label = esc_html__( 'Location type', 'east-property' );
+	$hint  = esc_html__( 'A country has to be a root location and is the only kind that opens a country address.', 'east-property' );
+
+	$select = '<select name="' . esc_attr( CORE_LOCATION_TYPE_META ) . '" id="' . esc_attr( CORE_LOCATION_TYPE_META ) . '">';
+	$select .= '<option value=""' . selected( $current, '', false ) . '>'
+	           . esc_html__( '— not classified —', 'east-property' ) . '</option>';
+
+	foreach ( core_location_types() as $value => $title ) {
+		$select .= '<option value="' . esc_attr( $value ) . '"' . selected( $current, $value, false ) . '>'
+		           . esc_html( $title ) . '</option>';
+	}
+
+	$select .= '</select>';
+
+	if ( $is_edit ) {
+		echo '<tr class="form-field"><th scope="row"><label for="' . esc_attr( CORE_LOCATION_TYPE_META ) . '">'
+		     . $label . '</label></th><td>' . $select . '<p class="description">' . $hint . '</p></td></tr>';
+
+		return;
+	}
+
+	echo '<div class="form-field"><label for="' . esc_attr( CORE_LOCATION_TYPE_META ) . '">' . $label . '</label>'
+	     . $select . '<p class="description">' . $hint . '</p></div>';
+}
+
+add_action( 'location_add_form_fields', 'core_location_type_field' );
+add_action( 'location_edit_form_fields', 'core_location_type_field' );
+
+/**
+ * Store the kind of a location.
+ *
+ * @param int $term_id Term being saved.
+ *
+ * @return void
+ */
+function core_location_save_type( int $term_id ): void {
+	$nonce = isset( $_POST['core_location_type_nonce'] )
+		? sanitize_key( wp_unslash( $_POST['core_location_type_nonce'] ) )
+		: '';
+
+	if ( '' === $nonce || ! wp_verify_nonce( $nonce, 'core_location_type' ) ) {
+		return;
+	}
+
+	if ( ! current_user_can( 'edit_term', $term_id ) || ! isset( $_POST[ CORE_LOCATION_TYPE_META ] ) ) {
+		return;
+	}
+
+	$type = sanitize_key( wp_unslash( $_POST[ CORE_LOCATION_TYPE_META ] ) );
+
+	if ( '' === $type || ! isset( core_location_types()[ $type ] ) ) {
+		delete_term_meta( $term_id, CORE_LOCATION_TYPE_META );
+		core_location_flush_type_caches();
+
+		return;
+	}
+
+	$term     = get_term( $term_id, 'location' );
+	$parent   = $term instanceof WP_Term ? (int) $term->parent : 0;
+	$conflict = core_location_type_conflict( $type, $parent );
+
+	if ( '' !== $conflict ) {
+		set_transient( 'core_location_type_error_' . $term_id, $conflict, MINUTE_IN_SECONDS );
+
+		return;
+	}
+
+	update_term_meta( $term_id, CORE_LOCATION_TYPE_META, $type );
+	core_location_flush_type_caches();
+}
+
+add_action( 'created_location', 'core_location_save_type' );
+add_action( 'edited_location', 'core_location_save_type' );
+
+/**
+ * Show why a location type was refused.
+ *
+ * @return void
+ */
+function core_location_type_notice(): void {
+	$term_id = isset( $_GET['tag_ID'] ) ? (int) $_GET['tag_ID'] : 0;
+	$error   = $term_id > 0 ? get_transient( 'core_location_type_error_' . $term_id ) : false;
+
+	if ( ! is_string( $error ) || '' === $error ) {
+		return;
+	}
+
+	delete_transient( 'core_location_type_error_' . $term_id );
+
+	echo '<div class="notice notice-error"><p>' . esc_html( $error ) . '</p></div>';
+}
+
+add_action( 'admin_notices', 'core_location_type_notice' );
+
+/**
+ * Drop what the country list and the tree are remembered in.
+ *
+ * @return void
+ */
+function core_location_flush_type_caches(): void {
+	core_location_cache_generation( true );
+	delete_option( CORE_COUNTRY_SLUGS_OPTION );
+	wp_cache_delete( 'countries_filled', 'properties' );
+	clean_term_cache( array(), 'location' );
+}
+
+/**
+ * SQL join narrowing a listing to a location and everything under it.
+ *
+ * Matches through a deduplicated set, so a record that ever carries two terms
+ * of the same branch is still counted once.
+ *
+ * @param string $column  Primary key column of the outer table.
+ * @param int    $term_id Location term id.
+ *
+ * @return string Empty string when the term holds nothing.
+ */
+function core_location_scope_join( string $column, int $term_id ): string {
+	global $wpdb;
+
+	$tt_ids = core_location_subtree_tt_ids( $term_id );
+
+	if ( empty( $tt_ids ) ) {
+		return '';
+	}
+
+	$in = implode( ',', $tt_ids );
+
+	return "INNER JOIN (
+				SELECT DISTINCT object_id
+				FROM {$wpdb->term_relationships}
+				WHERE term_taxonomy_id IN ({$in})
+			) AS tr_location_scope ON tr_location_scope.object_id = {$column}";
+}
+
+/**
+ * Location term a listing is narrowed to, by slug.
+ *
+ * @param string $slug Term slug from a filter or an archive.
+ *
+ * @return int Term id, 0 when the slug names nothing.
+ */
+function core_location_scope_term( string $slug ): int {
+	$slug = sanitize_title( $slug );
+
+	if ( '' === $slug || 'all' === $slug ) {
+		return 0;
+	}
+
+	$term = get_term_by( 'slug', $slug, 'location' );
+
+	return $term instanceof WP_Term ? (int) $term->term_id : 0;
 }

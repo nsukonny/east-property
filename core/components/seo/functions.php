@@ -493,23 +493,17 @@ function core_location_has_projects( int $term_id ): bool {
 	$key = $term_id . '|' . core_get_current_language();
 
 	if ( ! isset( $known[ $key ] ) ) {
-		$tt_ids = core_location_is_country( $term_id )
-			? core_country_location_tt_ids( (string) get_term_field( 'slug', $term_id, 'location' ) )
-			: array();
-
-		// У страны объекты висят на районах, поэтому считается всё поддерево.
+		// Объекты висят на конечных районах, поэтому у страны и у города
+		// считается всё поддерево, а у района — он сам.
+		$tt_ids = core_location_subtree_tt_ids( $term_id );
 		$known[ $key ] = empty( $tt_ids )
-			? core_listing_has_projects(
-				"INNER JOIN {$wpdb->term_relationships} ptr ON ptr.object_id = p.ID
-				 INNER JOIN {$wpdb->term_taxonomy} ptt
-				         ON ptt.term_taxonomy_id = ptr.term_taxonomy_id
-				        AND ptt.taxonomy = 'location' AND ptt.term_id = %d",
-				array( $term_id )
-			)
+			? false
 			: core_listing_has_projects(
-				"INNER JOIN {$wpdb->term_relationships} ptr
-				         ON ptr.object_id = p.ID
-				        AND ptr.term_taxonomy_id IN ( " . implode( ',', $tt_ids ) . " )",
+				"INNER JOIN (
+				     SELECT DISTINCT object_id
+				     FROM {$wpdb->term_relationships}
+				     WHERE term_taxonomy_id IN ( " . implode( ',', $tt_ids ) . " )
+				 ) ptr ON ptr.object_id = p.ID",
 				array()
 			);
 	}

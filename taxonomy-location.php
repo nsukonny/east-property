@@ -21,11 +21,10 @@ if ( ! $location instanceof WP_Term ) {
 }
 
 // The listing reads the scope from the request, the same way /projects/?location= does.
-// A country holds its projects on the districts below it, so it filters by country.
-$scope = core_location_is_country( (int) $location->term_id ) ? 'country' : 'location';
-
-$_REQUEST[ $scope ] = $location->slug;
-$_GET[ $scope ]     = $location->slug;
+// One filter serves every kind: it matches the term and everything under it, so a
+// country finds the projects of its cities and a city those of its areas.
+$_REQUEST['location'] = $location->slug;
+$_GET['location']     = $location->slug;
 
 get_header( null, array( 'color' => 'sand' ) );
 
@@ -40,7 +39,7 @@ get_template_part(
 			$location->name
 		),
 		'default_filters' => array(
-			$scope => $location->slug,
+			'location' => $location->slug,
 		),
 	)
 );
