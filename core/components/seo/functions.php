@@ -528,8 +528,14 @@ function core_locations_with_projects(): array {
 
 	$language = core_get_current_language();
 
-	if ( isset( $known[ $language ] ) ) {
-		return $known[ $language ];
+	// Ключ включает метки изменений WP: иначе ответ, снятый один раз за запрос,
+	// переживает сохранение проекта или перестройку дерева и остаётся старым.
+	$cache_key = $language . '|'
+	             . wp_cache_get_last_changed( 'posts' ) . '|'
+	             . wp_cache_get_last_changed( 'terms' );
+
+	if ( isset( $known[ $cache_key ] ) ) {
+		return $known[ $cache_key ];
 	}
 
 	$params        = array();
@@ -562,9 +568,9 @@ function core_locations_with_projects(): array {
 		? $wpdb->get_col( $sql )
 		: $wpdb->get_col( $wpdb->prepare( $sql, $params ) );
 
-	$known[ $language ] = array_map( 'intval', (array) $rows );
+	$known[ $cache_key ] = array_map( 'intval', (array) $rows );
 
-	return $known[ $language ];
+	return $known[ $cache_key ];
 }
 
 /**
