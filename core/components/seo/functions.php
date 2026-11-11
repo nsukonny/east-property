@@ -871,9 +871,9 @@ function core_queried_location_scope(): array {
 		return array();
 	}
 
-	$scope = core_location_is_country( (int) $term->term_id ) ? 'country' : 'location';
-
-	return array( $scope => (string) $term->slug );
+	// Один фильтр на все виды, как и в шаблоне архива: он сам матчит термин
+	// вместе с потомками, поэтому страна, город и район считаются одинаково.
+	return array( 'location' => (string) $term->slug );
 }
 
 /**
