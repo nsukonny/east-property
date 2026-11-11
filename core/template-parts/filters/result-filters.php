@@ -46,6 +46,31 @@ $is_filtered   = 'true' === ( $_GET['filtered'] ?? '' ) || core_has_active_resul
 			<?php
 		}
 
+		$country_options = $search_tabs_data['filters']['country']['options'] ?? array();
+
+		// Страна показывается всюду, где есть фильтры, и сама исчезает, пока
+		// наполнена одна страна: core_country_filter_options() отдаёт пустой список.
+		if ( ( $search_by['country'] ?? true ) && ! empty( $country_options ) ) {
+			$selected_country = ! empty( $_GET['country'] ) ? sanitize_text_field( wp_unslash( $_GET['country'] ) ) : 'all';
+			?>
+			<button class="result-filter" type="button" data-filter="country"
+					data-selected-value="<?php echo esc_attr( $selected_country ); ?>">
+				<span class="result-filter-top">
+					<span class="result-title">
+						<?php esc_html_e( 'Country', 'east-property' ); ?>
+					</span>
+				</span>
+				<span class="result-filter-bottom">
+					<span class="result-value">
+						<img src="<?php echo THEME_URL; ?>/assets/img/arrow-down.svg" width="16" height="16"
+							 alt="Dropdown arrow">
+					</span>
+				</span>
+				<span class="result-dropdown"></span>
+			</button>
+		<?php } ?>
+
+		<?php
 		if ( $search_by['location'] ?? false ) {
 			$selected_location = ! empty( $_GET['location'] ) ? sanitize_text_field( $_GET['location'] ) : 'all';
 			?>

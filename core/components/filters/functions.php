@@ -348,7 +348,7 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 	$search_tabs_data['filters'] = array(
 		'location'      => array(
 			'label'   => __( 'Location', 'east-property' ),
-			'options' => get_locations( $listing_type ),
+			'options' => get_locations( $listing_type, core_requested_country() ),
 		),
 		'available'     => array(
 			'label'   => 'off-plan' === $listing_type ? __( 'Handover Year Before',
@@ -421,7 +421,7 @@ function core_build_search_tabs_data( string $post_type, string $language, strin
 				),
 				'location' => array(
 					'label'   => __( 'District', 'east-property' ),
-					'options' => get_locations( $listing_type ),
+					'options' => get_locations( $listing_type, core_requested_country() ),
 				),
 			),
 		),
@@ -574,6 +574,13 @@ function core_has_active_result_filters( array $search_by, array $search_tabs_da
 		'beds'          => 'beds',
 		'baths'         => 'baths',
 	);
+
+	// Страна не числится в search_by: фильтр показывается сам, когда стран больше одной.
+	$country = $_GET['country'] ?? '';
+
+	if ( is_scalar( $country ) && ! in_array( sanitize_text_field( wp_unslash( (string) $country ) ), array( '', 'all' ), true ) ) {
+		return true;
+	}
 
 	foreach ( $params as $flag => $param ) {
 		$value = $_GET[ $param ] ?? '';
@@ -913,7 +920,7 @@ function get_properties_search_tabs_data(): array {
 	$search_tabs_data['filters'] = array(
 		'location'      => array(
 			'label'   => __( 'Location', 'east-property' ),
-			'options' => get_locations(),
+			'options' => get_locations( '', core_requested_country() ),
 		),
 		'available'     => array(
 			'label'   => __( 'Available', 'east-property' ),
@@ -1131,11 +1138,12 @@ function get_developers_list(): array {
  *
  * @return array
  */
-function get_locations( string $listing_type = '' ): array {
+function get_locations( string $listing_type = '', string $country = '' ): array {
 	$listing_type = '' !== $listing_type && 'all' !== $listing_type
 		? core_sanitize_listing_type( $listing_type )
 		: '';
 
+	$country   = core_sanitize_country( $country );
 	$language  = core_get_current_language();
 	$cache_key = core_generate_cache_key(
 		'locations',
@@ -1144,6 +1152,7 @@ function get_locations( string $listing_type = '' ): array {
 		array(
 			'listing_type' => $listing_type,
 			'language'     => $language,
+			'country'      => $country,
 		),
 	);
 
@@ -1152,7 +1161,7 @@ function get_locations( string $listing_type = '' ): array {
 		$locations = wp_cache_get( $cache_key, 'locations' );
 
 		if ( false === $locations ) {
-			$locations = core_query_locations( $listing_type, $language );
+			$locations = core_query_locations( $listing_type, $language, $country );
 
 			wp_cache_set( $cache_key, $locations, 'locations', DAY_IN_SECONDS );
 		}
@@ -1184,11 +1193,19 @@ function get_locations( string $listing_type = '' ): array {
  *
  * @param string $listing_type Listing slug, already sanitized; empty counts every unit.
  * @param string $language Polylang slug; empty counts every language.
+ * @param string $country Country slug; empty counts every country.
  *
  * @return array
  */
-function core_query_locations( string $listing_type = '', string $language = '' ): array {
+function core_query_locations( string $listing_type = '', string $language = '', string $country = '' ): array {
 	global $wpdb;
+
+	$country_where = '';
+	$tt_ids        = '' === $country ? array() : core_country_location_tt_ids( $country );
+
+	if ( ! empty( $tt_ids ) ) {
+		$country_where = 'AND tt.term_taxonomy_id IN ( ' . implode( ',', $tt_ids ) . ' )';
+	}
 
 	$listing_join  = '';
 	$listing_where = '';
@@ -1231,6 +1248,7 @@ function core_query_locations( string $listing_type = '', string $language = '' 
 			INNER JOIN wp_term_taxonomy AS tt
 				ON tt.term_taxonomy_id = tr.term_taxonomy_id
 				AND tt.taxonomy = 'location'
+				{$country_where}
 			INNER JOIN wp_terms AS t
 				ON t.term_id = tt.term_id
 			{$language_join}
@@ -1252,6 +1270,36 @@ function core_query_locations( string $listing_type = '', string $language = '' 
 
 	return $results;
 }
+
+/**
+ * Districts of one country, for the location filter.
+ *
+ * The list depends on the country, so the dropdown is refilled instead of
+ * offering districts the chosen country does not hold.
+ *
+ * @return void
+ */
+function ajax_get_filter_locations(): void {
+	check_ajax_referer( 'get_filtered_properties' );
+
+	$country      = core_sanitize_country( (string) ( $_REQUEST['country'] ?? '' ) );
+	$listing_type = isset( $_REQUEST['listing_type'] )
+		? sanitize_text_field( wp_unslash( (string) $_REQUEST['listing_type'] ) )
+		: '';
+
+	// Прежний район к новой стране не относится, поэтому отметка выбора снимается.
+	unset( $_REQUEST['location'] );
+
+	wp_send_json_success(
+		array(
+			'country' => $country,
+			'options' => get_locations( $listing_type, $country ),
+		)
+	);
+}
+
+add_action( 'wp_ajax_nopriv_get_filter_locations', 'ajax_get_filter_locations' );
+add_action( 'wp_ajax_get_filter_locations', 'ajax_get_filter_locations' );
 
 /**
  * Current generation of the listing caches.

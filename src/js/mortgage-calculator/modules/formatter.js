@@ -1,4 +1,4 @@
-import { FORMATTING } from '../config/index.js';
+import {FORMATTING} from '../config/index.js';
 
 const numberFormatter = new Intl.NumberFormat(FORMATTING.locale, {
 	maximumFractionDigits: 0,
@@ -54,6 +54,39 @@ export function parseControlValue(rawValue) {
 }
 
 /**
+ * Где в тексте десятичный разделитель.
+ *
+ * Отделять его от группировки надо до удаления символов: удаление всех точек
+ * по признаку «в немецком точка группирует» превращало ставку 4.5 в 45, а
+ * обработчик дальше обрезал её до максимума в 8%.
+ *
+ * @param {string} text
+ *
+ * @return {number} -1, если в тексте только группировка.
+ */
+const decimalSeparatorPosition = (text) => {
+	const dot = text.lastIndexOf('.');
+	const comma = text.lastIndexOf(',');
+
+	// Есть оба: десятичный тот, что правее, второй группирует.
+	if (dot !== -1 && comma !== -1) {
+		return Math.max(dot, comma);
+	}
+
+	const sole = dot !== -1 ? '.' : (comma !== -1 ? ',' : '');
+
+	if (sole === '') return -1;
+
+	// Повторяется — значит группировка: 1.200.000.
+	if (text.split(sole).length > 2) return -1;
+
+	// Ровно три цифры следом и это разделитель групп языка — тоже группировка.
+	const at = text.lastIndexOf(sole);
+
+	return text.slice(at + 1).length === 3 && sole === SEPARATORS.group ? -1 : at;
+};
+
+/**
  * Разбор того, что человек видит в поле.
  *
  * Принимается и разделитель этого языка, и точка с запятой: поле заполняют
@@ -70,26 +103,12 @@ export function parseNumericInput(rawValue) {
 	}
 	if (!rawValue) return 0;
 
-	let text = String(rawValue).replace(/[\s   ]/g, '');
+	const text = String(rawValue).replace(/[\s   ]/g, '');
+	const at = decimalSeparatorPosition(text);
+	const whole = (at === -1 ? text : text.slice(0, at)).replace(/[^0-9\-]/g, '');
+	const fraction = at === -1 ? '' : text.slice(at + 1).replace(/[^0-9]/g, '');
 
-	if (SEPARATORS.group !== '') {
-		text = text.split(SEPARATORS.group).join('');
-	}
-
-	if (SEPARATORS.decimal !== '.') {
-		text = text.split(SEPARATORS.decimal).join('.');
-	}
-
-	const dot = text.lastIndexOf('.');
-	const comma = text.lastIndexOf(',');
-
-	if (comma > dot) {
-		text = text.split('.').join('').replace(',', '.');
-	} else {
-		text = text.split(',').join('');
-	}
-
-	const parsed = parseFloat(text.replace(/[^0-9.\-]/g, ''));
+	const parsed = parseFloat(fraction === '' ? whole : `${whole}.${fraction}`);
 
 	return Number.isFinite(parsed) ? parsed : 0;
 }

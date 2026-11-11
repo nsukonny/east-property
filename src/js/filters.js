@@ -126,6 +126,55 @@ const initSearchResultsFilters = async () => {
 		btn.classList.add('is-open')
 	}
 
+	const locationButton = buttons.find((btn) => btn.dataset.filter === 'location')
+
+	/**
+	 * Снять выбранный район: другой стране он не принадлежит.
+	 */
+	const resetLocationSelection = () => {
+		if (!locationButton) return
+
+		locationButton.dataset.selectedValue = 'all'
+
+		const textSpan = locationButton.querySelector('[data-value-text]')
+		if (textSpan) textSpan.textContent = getLabelByValue('location', 'all')
+	}
+
+	/**
+	 * Перечитать районы выбранной страны.
+	 *
+	 * Список приходит с сервера, а не фильтруется на месте: районы считаются по
+	 * живым юнитам, и на клиенте этого не узнать.
+	 */
+	const reloadLocationOptions = async (country) => {
+		if (!locationButton || !filters.location) return
+
+		const body = new FormData()
+		body.append('action', 'get_filter_locations')
+		body.append('_ajax_nonce', ajax_object._ajax_nonce)
+		body.append('country', country)
+
+		const listingType = document.querySelector('.results-filters-items input[name="listing_type"]')
+		if (listingType) body.append('listing_type', listingType.value)
+
+		locationButton.setAttribute('aria-busy', 'true')
+
+		try {
+			const response = await fetch(ajax_object.ajax_url, {method: 'POST', body})
+			const payload = await response.json()
+
+			if (payload?.success && Array.isArray(payload.data?.options)) {
+				filters.location.options = payload.data.options
+				resetLocationSelection()
+				renderDropdown(locationButton)
+			}
+		} catch (error) {
+			// Оставляем прежний список: устаревший лучше пустого.
+		} finally {
+			locationButton.removeAttribute('aria-busy')
+		}
+	}
+
 	buttons.forEach((button) => {
 		button.addEventListener('click', (e) => {
 			if (e.target.classList.contains('dropdown-search-input')) return
@@ -140,8 +189,14 @@ const initSearchResultsFilters = async () => {
 
 			const selectedValue = option.getAttribute('data-value')
 			if (filterKey && selectedValue) {
+				// Район сбрасывается до того, как смена страны перезапросит
+				// выдачу: иначе она уйдёт с парой «новая страна, чужой район».
+				if ('country' === filterKey) resetLocationSelection()
+
 				applySelection(button, filterKey, selectedValue)
 				renderDropdown(button)
+
+				if ('country' === filterKey) reloadLocationOptions(selectedValue)
 			}
 			closeDropdown(button)
 			openButton = null

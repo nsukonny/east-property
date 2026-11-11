@@ -486,3 +486,20 @@ function core_country_map_view( string $country ): array {
 		'zoom' => (int) $view[2],
 	);
 }
+
+/**
+ * Country slug from untrusted input.
+ *
+ * @param string $slug Requested slug.
+ *
+ * @return string Empty when unknown or "all".
+ */
+function core_sanitize_country( string $slug ): string {
+	$slug = sanitize_title( $slug );
+
+	if ( '' === $slug || 'all' === $slug ) {
+		return '';
+	}
+
+	return in_array( $slug, core_country_slugs(), true ) ? $slug : '';
+}
