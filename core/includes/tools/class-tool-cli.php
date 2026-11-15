@@ -36,6 +36,7 @@ final class CLI {
 		WP_CLI::add_command( 'tools flag-untranslated', array( __CLASS__, 'flag_untranslated' ) );
 		WP_CLI::add_command( 'tools relink-units', array( __CLASS__, 'relink_units' ) );
 		WP_CLI::add_command( 'tools recount-units', array( __CLASS__, 'recount_units' ) );
+		WP_CLI::add_command( 'tools restore-titles', array( __CLASS__, 'restore_titles' ) );
 		WP_CLI::add_command( 'tools warm-cache', array( __CLASS__, 'warm_cache' ) );
 		WP_CLI::add_command( 'tools strip-unit-floors', array( __CLASS__, 'strip_unit_floors' ) );
 		WP_CLI::add_command( 'tools translate-units', array( __CLASS__, 'translate_units' ) );
@@ -3079,5 +3080,276 @@ final class CLI {
 		if ( count( $errors ) > count( $shown ) ) {
 			WP_CLI::log( sprintf( '... and %d more', count( $errors ) - count( $shown ) ) );
 		}
+	}
+
+	/**
+	 * Put the original name back on translated projects and developers.
+	 *
+	 * The title of these types is a brand and is not translated — the
+	 * translator stopped touching it on 20.10.2026, but the records it had
+	 * already rewritten keep their translated names. The default language
+	 * holds the original, so every other language is overwritten with it:
+	 * a copy, not a re-translation.
+	 *
+	 * ## OPTIONS
+	 *
+	 * [--post-type=<types>]
+	 * : Comma-separated post types.
+	 * ---
+	 * default: property,developers
+	 * ---
+	 *
+	 * [--language=<slugs>]
+	 * : Comma-separated languages; all but the default one when left out.
+	 *
+	 * [--limit=<number>]
+	 * : Stop after this many records.
+	 *
+	 * [--report=<path>]
+	 * : Write a CSV of every record the run would touch.
+	 *
+	 * [--dry-run]
+	 * : Report the plan and write nothing.
+	 *
+	 * [--yes]
+	 * : Skip the confirmation.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp tools restore-titles --dry-run --report=/tmp/titles.csv --allow-root
+	 *     wp tools restore-titles --language=ru --allow-root
+	 *
+	 * @param array $args
+	 * @param array $assoc_args
+	 *
+	 * @return void
+	 */
+	public static function restore_titles( array $args, array $assoc_args ): void {
+		if ( ! function_exists( 'pll_get_post_translations' ) || ! function_exists( 'pll_default_language' ) ) {
+			WP_CLI::error( 'Polylang недоступен' );
+		}
+
+		$dry_run = (bool) Utils\get_flag_value( $assoc_args, 'dry-run', false );
+		$report  = (string) Utils\get_flag_value( $assoc_args, 'report', '' );
+		$limit   = max( 0, (int) Utils\get_flag_value( $assoc_args, 'limit', 0 ) );
+		$default = (string) pll_default_language( 'slug' );
+
+		$types = array_values(
+			array_filter(
+				array_map( 'trim', explode( ',', (string) Utils\get_flag_value( $assoc_args, 'post-type', 'property,developers' ) ) )
+			)
+		);
+
+		foreach ( $types as $type ) {
+			if ( ! in_array( $type, Unit_Translator::TITLE_PROTECTED_TYPES, true ) ) {
+				WP_CLI::error( sprintf( 'У типа %s заголовок переводится намеренно, восстанавливать нечего', $type ) );
+			}
+		}
+
+		$languages = array_values(
+			array_filter(
+				array_map( 'trim', explode( ',', (string) Utils\get_flag_value( $assoc_args, 'language', '' ) ) )
+			)
+		);
+
+		if ( empty( $languages ) ) {
+			$languages = array_values(
+				array_filter(
+					array_map( 'strval', (array) pll_languages_list() ),
+					static function ( string $slug ) use ( $default ): bool {
+						return '' !== $slug && $slug !== $default;
+					}
+				)
+			);
+		}
+
+		$plan    = array();
+		$quotes  = 0;
+		$orphans = 0;
+
+		foreach ( $languages as $language ) {
+			foreach ( $types as $type ) {
+				foreach ( self::translated_posts( $type, $language ) as $post ) {
+					$translations = pll_get_post_translations( (int) $post->ID );
+					$source       = (int) ( $translations[ $default ] ?? 0 );
+
+					if ( $source < 1 || $source === (int) $post->ID ) {
+						++$orphans;
+
+						continue;
+					}
+
+					$original = (string) get_post_field( 'post_title', $source );
+
+					if ( '' === $original || $original === $post->post_title ) {
+						continue;
+					}
+
+					// Отличие только в начертании кавычек — это след импорта, а
+					// не перевод. Копируем всё равно, но считаем отдельно: по
+					// этому числу видно настоящий масштаб перевода названий.
+					if ( self::comparable_title( $original ) === self::comparable_title( $post->post_title ) ) {
+						++$quotes;
+					}
+
+					$plan[] = array(
+						'id'        => (int) $post->ID,
+						'language'  => $language,
+						'post_type' => $type,
+						'source'    => $source,
+						'before'    => $post->post_title,
+						'after'     => $original,
+					);
+
+					if ( 0 < $limit && count( $plan ) >= $limit ) {
+						break 3;
+					}
+				}
+			}
+		}
+
+		WP_CLI::log(
+			sprintf(
+				'К восстановлению: %d, из них переведённых названий %d, расхождений в кавычках %d. Без записи на языке по умолчанию: %d',
+				count( $plan ),
+				count( $plan ) - $quotes,
+				$quotes,
+				$orphans
+			)
+		);
+
+		foreach ( array_slice( $plan, 0, 5 ) as $item ) {
+			WP_CLI::log( sprintf( '  #%d %s: %s -> %s', $item['id'], $item['language'], $item['before'], $item['after'] ) );
+		}
+
+		if ( '' !== $report ) {
+			self::write_titles_report( $report, $plan );
+		}
+
+		if ( empty( $plan ) ) {
+			WP_CLI::success( 'Восстанавливать нечего' );
+
+			return;
+		}
+
+		if ( $dry_run ) {
+			WP_CLI::success( sprintf( 'Сухой прогон: восстановить %d заголовков', count( $plan ) ) );
+
+			return;
+		}
+
+		WP_CLI::confirm( sprintf( 'Восстановить %d заголовков?', count( $plan ) ), $assoc_args );
+
+		$progress = Utils\make_progress_bar( 'Восстановление заголовков', count( $plan ) );
+		$done     = 0;
+		$failed   = array();
+
+		foreach ( $plan as $item ) {
+			// Через wp_update_post, чтобы слаг и кэши остались согласованными;
+			// post_name не передаётся и потому не меняется.
+			$result = wp_update_post(
+				array(
+					'ID'         => $item['id'],
+					'post_title' => $item['after'],
+				),
+				true
+			);
+
+			if ( is_wp_error( $result ) ) {
+				$failed[] = sprintf( '#%d: %s', $item['id'], $result->get_error_message() );
+			} else {
+				++$done;
+			}
+
+			$progress->tick();
+		}
+
+		$progress->finish();
+
+		foreach ( array_slice( $failed, 0, 20 ) as $line ) {
+			WP_CLI::warning( $line );
+		}
+
+		WP_CLI::success( sprintf( 'Восстановлено %d, ошибок %d', $done, count( $failed ) ) );
+	}
+
+	/**
+	 * Published posts of one type in one language.
+	 *
+	 * @param string $post_type
+	 * @param string $language
+	 *
+	 * @return object[] Rows of ID and post_title.
+	 */
+	private static function translated_posts( string $post_type, string $language ): array {
+		global $wpdb;
+
+		return (array) $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT p.ID, p.post_title
+				 FROM {$wpdb->posts} p
+				 INNER JOIN {$wpdb->term_relationships} tr ON tr.object_id = p.ID
+				 INNER JOIN {$wpdb->term_taxonomy} tt
+				         ON tt.term_taxonomy_id = tr.term_taxonomy_id AND tt.taxonomy = 'language'
+				 INNER JOIN {$wpdb->terms} t ON t.term_id = tt.term_id AND t.slug = %s
+				 WHERE p.post_type = %s AND p.post_status = 'publish'
+				 ORDER BY p.ID",
+				$language,
+				$post_type
+			)
+		);
+	}
+
+	/**
+	 * Title reduced to what a translation would actually change.
+	 *
+	 * @param string $title
+	 *
+	 * @return string
+	 */
+	private static function comparable_title( string $title ): string {
+		$text = html_entity_decode( $title, ENT_QUOTES, 'UTF-8' );
+		// Кавычки всех начертаний, включая немецкие „ и французские « ».
+		$text = preg_replace(
+			'~[\x{00AB}\x{00BB}\x{2018}\x{2019}\x{201A}\x{201B}\x{201C}\x{201D}\x{201E}\x{201F}\x{2032}\x{2033}"\']~u',
+			'',
+			$text
+		);
+
+		return mb_strtolower( trim( preg_replace( '~\s+~u', ' ', (string) $text ) ) );
+	}
+
+	/**
+	 * Write the plan as CSV.
+	 *
+	 * @param string $path
+	 * @param array  $items
+	 *
+	 * @return void
+	 */
+	private static function write_titles_report( string $path, array $items ): void {
+		$handle = fopen( $path, 'w' );
+
+		if ( false === $handle ) {
+			WP_CLI::warning( sprintf( 'не удалось записать отчёт %s', $path ) );
+
+			return;
+		}
+
+		fputcsv( $handle, array( 'id', 'language', 'post_type', 'source_id', 'before', 'after' ), ',', '"', '' );
+
+		foreach ( $items as $item ) {
+			fputcsv(
+				$handle,
+				array( $item['id'], $item['language'], $item['post_type'], $item['source'], $item['before'], $item['after'] ),
+				',',
+				'"',
+				''
+			);
+		}
+
+		fclose( $handle );
+
+		WP_CLI::log( sprintf( 'Отчёт: %s', $path ) );
 	}
 }
