@@ -121,6 +121,55 @@ function core_env( string $key, string $fallback = '' ): string {
 }
 
 /**
+ * Preload fonts
+ *
+ * @return void
+ */
+function core_preload_fonts(): void {
+	$faces = array(
+		'/assets/fonts/Inter/Inter-400.woff2',
+		'/assets/fonts/Inter/Inter-600.woff2',
+		'/assets/fonts/Inter/Inter-700.woff2',
+		'/assets/fonts/Exo-2/Exo-2-800.woff2',
+		'/assets/fonts/Exo-2/Exo-2-900.woff2',
+	);
+
+	foreach ( $faces as $face ) {
+		printf(
+			'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
+			esc_url( THEME_URL . $face )
+		);
+	}
+}
+
+add_action( 'wp_head', 'core_preload_fonts', 2 );
+
+/**
+ * Mark the document as scripted before the first paint
+ *
+ * @return void
+ */
+function core_mark_scripted(): void {
+	echo '<script>document.documentElement.className+=" js";</script>' . "\n";
+}
+
+add_action( 'wp_head', 'core_mark_scripted', 1 );
+
+/**
+ * Turn off the core emoji replacement
+ *
+ * @return void
+ */
+function core_disable_emoji(): void {
+	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+	remove_action( 'embed_head', 'print_emoji_detection_script' );
+	remove_action( 'wp_enqueue_scripts', 'wp_enqueue_emoji_styles' );
+	remove_action( 'wp_print_styles', 'print_emoji_styles' );
+}
+
+add_action( 'init', 'core_disable_emoji' );
+
+/**
  * Add custom JS configs to global scripts
  *
  * @return void

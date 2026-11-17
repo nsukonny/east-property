@@ -5,9 +5,7 @@
 .lang-switch {
 	position: relative;
 
-	// Пока скрипт не отметил переключатель готовым, показываем ряд ссылок:
-	// панель, которую нечем открыть, оставила бы посетителя без языков.
-	&:not(.is-ready) {
+	html:not(.js) & {
 		.lang-switch-toggle {
 			display: none;
 		}

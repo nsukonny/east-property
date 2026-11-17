@@ -41,7 +41,7 @@ $button_class = $args['button_class'] ?? 'orange sm';
 				if ( ! empty( $phone ) ) {
 					?>
 					<a href="tel:<?php echo esc_attr( $phone_clean ); ?>" class="contact-panel-phone">
-						<span class="flag-icon">🇦🇪</span>
+						<span class="flag-icon"><svg width="18" height="9" viewBox="0 0 24 12" aria-hidden="true" focusable="false"><rect width="24" height="12" fill="#00732F"/><rect y="4" width="24" height="8" fill="#fff"/><rect y="8" width="24" height="4" fill="#000"/><rect width="6" height="12" fill="#FF0000"/></svg></span>
 						<span><?php echo esc_html( $phone ); ?></span>
 					</a>
 					<?php
