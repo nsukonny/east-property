@@ -4,5 +4,11 @@
     "Townhouse": "Reihenhaus",
     "Freehold": "Volleigentum",
     "Leasehold": "Pachtvertrag",
-    "Commonhold": "Gemeinschaftseigentum"
+    "Commonhold": "Gemeinschaftseigentum",
+
+    "_lang_switcher": "— переключатель языков в формах брокера, правка 17.11.2026 —",
+    "+ Add language": "+ Sprache hinzufügen",
+    "Remove language": "Sprache entfernen",
+    "This listing will be translated into the other languages automatically. You can also add a translation yourself by picking a language.": "Diese Immobilie wird vom System automatisch in die anderen Sprachen übersetzt. Sie können eine Übersetzung auch selbst hinzufügen, indem Sie eine Sprache auswählen.",
+    "This project will be translated into the other languages automatically. You can also add a translation yourself by picking a language.": "Dieses Immobilienprojekt wird vom System automatisch in die anderen Sprachen übersetzt. Sie können eine Übersetzung auch selbst hinzufügen, indem Sie eine Sprache auswählen."
 }

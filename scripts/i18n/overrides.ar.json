@@ -22,5 +22,11 @@
     "handover quarter\u0004Q1": "الربع الأول",
     "handover quarter\u0004Q2": "الربع الثاني",
     "handover quarter\u0004Q3": "الربع الثالث",
-    "handover quarter\u0004Q4": "الربع الرابع"
+    "handover quarter\u0004Q4": "الربع الرابع",
+
+    "_lang_switcher": "— переключатель языков в формах брокера, правка 17.11.2026 —",
+    "+ Add language": "+ إضافة لغة",
+    "Remove language": "إزالة اللغة",
+    "This listing will be translated into the other languages automatically. You can also add a translation yourself by picking a language.": "ستتم ترجمة هذا العقار إلى اللغات الأخرى تلقائيًا. ويمكنك أيضًا إضافة الترجمة بنفسك باختيار اللغة المطلوبة.",
+    "This project will be translated into the other languages automatically. You can also add a translation yourself by picking a language.": "ستتم ترجمة هذا المشروع العقاري إلى اللغات الأخرى تلقائيًا. ويمكنك أيضًا إضافة الترجمة بنفسك باختيار اللغة المطلوبة."
 }
