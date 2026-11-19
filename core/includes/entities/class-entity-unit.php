@@ -204,7 +204,7 @@ final class Unit {
 			$beds = __( 'Studio', 'east-property' );
 		} else {
 			$beds = core_open_ended_label( $beds, get_filter_beds_options()['options'] )
-					. ' ' . __( 'Beds', 'east-property' );
+			        . ' ' . __( 'Beds', 'east-property' );
 		}
 		$amenities[] = array(
 			'icon'  => THEME_URL . '/assets/img/bed.svg',
@@ -767,9 +767,11 @@ final class Unit {
 			}
 
 			unset( $translations[ $key ] );
+			$unit_property_id = $unit->get_property()->get_id();
 			if ( ! wp_delete_post( $unit->get_id(), true ) ) {
 				return false;
 			}
+			core_refresh_units_count( $unit_property_id );
 		}
 
 		if ( empty( $translations ) ) {
@@ -792,6 +794,9 @@ final class Unit {
 			if ( is_wp_error( $result ) ) {
 				return false;
 			}
+
+			$unit_property_id = $unit->get_property()->get_id();
+			core_refresh_units_count( $unit_property_id );
 		}
 
 		$this->post = get_post( $this->id );

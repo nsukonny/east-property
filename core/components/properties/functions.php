@@ -994,3 +994,40 @@ function core_property_enquiry_text( Entities\Property $property ): string {
 		$url
 	);
 }
+
+/**
+ * Count the units bound to a project
+ *
+ * @param int $property_id
+ *
+ * @return int
+ */
+function core_count_property_units( int $property_id ): int {
+	global $wpdb;
+
+	return (int) $wpdb->get_var(
+		$wpdb->prepare(
+			"SELECT COUNT(pm.post_id)
+			 FROM {$wpdb->postmeta} pm
+			 WHERE pm.meta_key = %s AND pm.meta_value = %s",
+			'property',
+			$property_id
+		)
+	);
+}
+
+/**
+ * Store a fresh unit counter for a project
+ *
+ * @param int $property_id
+ *
+ * @return int
+ */
+function core_refresh_units_count( int $property_id ): int {
+	$count = core_count_property_units( $property_id );
+
+	update_post_meta( $property_id, 'units_count', $count );
+	update_post_meta( $property_id, 'units_count_expired', time() + DAY_IN_SECONDS );
+
+	return $count;
+}

@@ -680,7 +680,6 @@ final class Property {
 	public function update_data() {
 		global $wpdb;
 
-		$time      = microtime();
 		$units_ids = $this->get_units_ids();
 
 		$lower_unit_price_sql = $wpdb->prepare(
