@@ -853,6 +853,17 @@ function account_create_unit(): void {
 }
 
 /**
+ * Room counter as the broker left it, empty when nothing was picked
+ *
+ * @param mixed $value
+ *
+ * @return string|int
+ */
+function core_optional_room_count( mixed $value ): string|int {
+	return '' === trim( (string) $value ) ? '' : max( 0, (int) $value );
+}
+
+/**
  * Insert or update unit translation for the given language.
  *
  * @param mixed $language
@@ -888,8 +899,8 @@ function update_unit_translation( mixed $language, array $unit_data ): int|WP_Er
 	}
 
 	$price_per_sqft = absint( $unit_data['price_per_square'] ?? 0 );
-	$bedrooms       = max( 0, (int) ( $unit_data['bedrooms'] ?? 0 ) );
-	$bathrooms      = max( 0, (int) ( $unit_data['bathrooms'] ?? 0 ) );
+	$bedrooms       = 'office' === $unit_type ? '' : core_optional_room_count( $unit_data['bedrooms'] ?? '' );
+	$bathrooms      = core_optional_room_count( $unit_data['bathrooms'] ?? '' );
 
 	if ( ! empty( $unit_data['unit_id'] ) ) {
 		$unit_id = absint( $unit_data['unit_id'] );

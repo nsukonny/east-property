@@ -24,8 +24,8 @@ $h1       = $unit ? __( 'Edit property:', 'east-property' ) . ' ' . $unit->get_t
 $tab_text = $unit ? __( 'Edit property', 'east-property' ) : __( 'Add property', 'east-property' );
 
 $unit_property_id = $unit ? $unit->get_property()?->get_id() : '';
-$beds             = $unit ? $unit->get_beds() : '';
-$baths            = $unit ? $unit->get_baths() : '';
+$beds             = $unit ? (string) $unit->get_field( 'bedrooms' ) : '';
+$baths            = $unit ? (string) $unit->get_field( 'bathrooms' ) : '';
 $area             = $unit ? $unit->get_area() : '';
 $price            = $unit ? $unit->get_price() : '';
 $type_of_sale     = $unit ? $unit->get_field( 'type_of_sale' ) : '';
@@ -33,6 +33,7 @@ $unit_type        = $unit ? $unit->get_unit_type() : '';
 if ( empty( $unit_type ) ) {
 	$unit_type = $unit_type_choices ? array_key_first( $unit_type_choices ) : '';
 }
+$is_office = 'office' === $unit_type;
 $listing_type   = core_sanitize_listing_type( $unit ? $unit->get_listing_type() : 'off-plan' );
 $is_distress    = 'distress' === $listing_type;
 $original_price = $unit && $is_distress ? $unit->get_original_price() : '';
@@ -262,15 +263,18 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 									<?php } ?>
 								</div>
 								<div class="inputs-group">
-									<div class="submit-buttons-wrapper">
+									<div class="submit-buttons-wrapper<?php echo $is_office ? ' hidden' : ''; ?>"
+										 data-beds-fields>
 										<span class="dropdown-label">
-											<span class="required">*</span>
+											<?php if ( ! $is_office ) { ?>
+												<span class="required">*</span>
+											<?php } ?>
 											<?php esc_html_e( 'Bedrooms', 'east-property' ); ?>
 										</span>
 										<div class="submit-buttons" data-beds-group>
 											<?php
 											foreach ( $beds_options['options'] as $option ) {
-												$active_class = (int) $option['value'] === $beds ? 'active' : '';
+												$active_class = '' !== $beds && (int) $option['value'] === (int) $beds ? 'active' : '';
 												?>
 												<button type="button"
 														class="beds-baths-btn <?php echo esc_attr( $active_class ); ?>"
@@ -283,17 +287,16 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 											   name="<?php echo esc_attr( $language['slug'] . '[bedrooms]' ); ?>"
 											   value="<?php echo esc_attr( $beds ); ?>"
 											   data-lang-sync="beds"
-											   data-required>
+											<?php echo $is_office ? '' : ' data-required'; ?>>
 									</div>
 									<div class="submit-buttons-wrapper">
 									<span class="dropdown-label">
-										<span class="required">*</span>
 										<?php esc_html_e( 'Bathrooms', 'east-property' ); ?>
 									</span>
 										<div class="submit-buttons" data-baths-group>
 											<?php
 											foreach ( $baths_options['options'] as $option ) {
-												$active_class = (int) $option['value'] === $baths ? 'active' : '';
+												$active_class = '' !== $baths && (int) $option['value'] === (int) $baths ? 'active' : '';
 												?>
 												<button type="button"
 														class="beds-baths-btn <?php echo esc_attr( $active_class ); ?>"
@@ -305,8 +308,7 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 										<input type="hidden"
 											   name="<?php echo esc_attr( $language['slug'] . '[bathrooms]' ); ?>"
 											   value="<?php echo esc_attr( $baths ); ?>"
-											   data-lang-sync="baths"
-											   data-required>
+											   data-lang-sync="baths">
 									</div>
 								</div>
 								<div class="input-group">
