@@ -837,6 +837,8 @@ function account_create_unit(): void {
 		delete_post_meta( $unit_id, 'auto_approve_errors' );
 		delete_post_meta( $unit_id, 'is_wait_user_actions' );
 
+		core_refresh_units_count( $property_id );
+
 		$unit_translations[ $language['slug'] ] = $unit_id;
 	}
 
@@ -888,32 +890,6 @@ function update_unit_translation( mixed $language, array $unit_data ): int|WP_Er
 	$price_per_sqft = absint( $unit_data['price_per_square'] ?? 0 );
 	$bedrooms       = max( 0, (int) ( $unit_data['bedrooms'] ?? 0 ) );
 	$bathrooms      = max( 0, (int) ( $unit_data['bathrooms'] ?? 0 ) );
-//	$allowed_unit_types = core_get_unit_type_choices();
-
-//	$errors = array();
-//	if ( empty( $title ) ) {
-//		$errors[] = __( 'Unit title is required.', 'east-property' );
-//	}
-//
-//	if ( empty( $property_post ) || 'property' !== $property_post->post_type ) {
-//		$errors[] = __( 'Please select a valid property.', 'east-property' );
-//	}
-//
-//	if ( $price <= 0 ) {
-//		$errors[] = __( 'Price must be greater than zero.', 'east-property' );
-//	}
-//
-//	if ( $area_size <= 0 ) {
-//		$errors[] = __( 'Area size must be greater than zero.', 'east-property' );
-//	}
-//
-//	if ( ! empty( $unit_type ) && ! isset( $allowed_unit_types[ $unit_type ] ) ) {
-//		$errors[] = __( 'Selected unit type is invalid.', 'east-property' );
-//	}
-//
-//	if ( ! empty( $errors ) ) {
-//		return $errors;
-//	}
 
 	if ( ! empty( $unit_data['unit_id'] ) ) {
 		$unit_id = absint( $unit_data['unit_id'] );

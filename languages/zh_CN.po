@@ -49,12 +49,12 @@ msgid "Go to properties"
 msgstr "前往房产列表"
 
 #: core/components/account/functions.php:125
-#: core/components/filters/functions.php:931
+#: core/components/filters/functions.php:954
 msgid "Apartments"
 msgstr "公寓"
 
 #: core/components/account/functions.php:126
-#: core/components/filters/functions.php:947
+#: core/components/filters/functions.php:970
 msgid "Villas"
 msgstr "别墅"
 
@@ -67,36 +67,36 @@ msgid "Penthouses"
 msgstr "顶层公寓"
 
 #: core/components/account/functions.php:129
-#: core/components/filters/functions.php:939
+#: core/components/filters/functions.php:962
 msgid "Houses"
 msgstr "住宅"
 
 #: core/components/account/functions.php:130
-#: core/components/filters/functions.php:955
+#: core/components/filters/functions.php:978
 msgid "Offices"
 msgstr "办公室"
 
 #: core/components/account/functions.php:141
-#: core/includes/entities/class-entity-unit.php:419
-#: core/includes/entities/class-entity-unit.php:484
+#: core/includes/entities/class-entity-unit.php:420
+#: core/includes/entities/class-entity-unit.php:485
 msgid "Contains an error"
 msgstr "包含错误"
 
 #: core/components/account/functions.php:142
-#: core/includes/entities/class-entity-unit.php:403
-#: core/includes/entities/class-entity-unit.php:469
-#: core/template-parts/account/profile.php:145
+#: core/includes/entities/class-entity-unit.php:404
+#: core/includes/entities/class-entity-unit.php:470
+#: core/template-parts/account/profile.php:148
 msgid "Promoted"
 msgstr "已推广"
 
 #: core/components/account/functions.php:143
-#: core/includes/entities/class-entity-unit.php:412
-#: core/includes/entities/class-entity-unit.php:477
+#: core/includes/entities/class-entity-unit.php:413
+#: core/includes/entities/class-entity-unit.php:478
 msgid "Waiting for approval"
 msgstr "等待审批"
 
 #: core/components/account/functions.php:319
-#: core/components/filters/functions.php:1120
+#: core/components/filters/functions.php:1143
 #: core/template-parts/filters/search-tabs.php:144
 msgid "Any Locations"
 msgstr "任何地点"
@@ -109,7 +109,7 @@ msgstr "全部"
 
 #: core/components/account/functions.php:326
 #: core/components/filters/functions.php:312
-#: core/components/filters/functions.php:1064
+#: core/components/filters/functions.php:1087
 #: core/template-parts/filters/search-tabs.php:165
 msgid "Any Developers"
 msgstr "任意开发商"
@@ -206,7 +206,7 @@ msgid "Property ID is required."
 msgstr "必须提供房产ID。"
 
 #: core/components/account/functions.php:1324
-#: core/template-parts/account/edit-unit.php:463
+#: core/template-parts/account/edit-unit.php:460
 msgid "Property image"
 msgstr "房产图片"
 
@@ -331,7 +331,7 @@ msgid "Logout"
 msgstr "退出登录"
 
 #: core/components/common/nav.php:68
-#: core/components/modals/create-modal.php:172
+#: core/components/modals/create-modal.php:155
 #: core/components/modals/forgot-modal.php:23
 #: core/components/modals/signin-modal.php:10
 #: core/components/modals/signin-modal.php:43
@@ -486,13 +486,13 @@ msgstr "邮件发送器"
 
 #. translators: option of the delivery date filter, projects already handed over.
 #: core/components/filters/functions.php:323
-#: core/components/filters/functions.php:867
+#: core/components/filters/functions.php:890
 msgctxt "delivery filter"
 msgid "Ready"
 msgstr "现房"
 
 #: core/components/filters/functions.php:330
-#: core/components/filters/functions.php:871
+#: core/components/filters/functions.php:894
 msgid "In Construction"
 msgstr "在建"
 
@@ -501,15 +501,15 @@ msgid "All Years"
 msgstr "所有年份"
 
 #: core/components/filters/functions.php:350
-#: core/components/filters/functions.php:880
+#: core/components/filters/functions.php:903
 #: core/includes/registers/post-types/locations.php:10
-#: core/template-parts/account/edit-property.php:191
+#: core/template-parts/account/edit-property.php:189
 #: core/template-parts/filters/result-filters.php:61
 #: core/template-parts/properties/property-single.php:111
 #: core/template-parts/properties/property-single.php:220
 #: core/template-parts/properties/property-units-list.php:28
-#: single-unit.php:291
-#: single-unit.php:380
+#: single-unit.php:315
+#: single-unit.php:404
 #: src/js/map/map.js:276
 msgid "Location"
 msgstr "位置"
@@ -523,27 +523,28 @@ msgid "Completion Year After"
 msgstr "竣工年份之后"
 
 #: core/components/filters/functions.php:359
-#: core/components/filters/functions.php:888
+#: core/components/filters/functions.php:911
 msgid "Price (AED)"
 msgstr "价格 (AED)"
 
 #: core/components/filters/functions.php:366
-#: core/components/filters/functions.php:895
-#: core/includes/entities/class-entity-property.php:650
+#: core/components/filters/functions.php:918
+#: core/includes/entities/class-entity-property.php:651
+#: single-unit.php:58
 msgid "Property Type"
 msgstr "房产类型"
 
 #: core/components/filters/functions.php:370
-#: core/components/filters/functions.php:899
-#: core/components/filters/functions.php:923
+#: core/components/filters/functions.php:922
+#: core/components/filters/functions.php:946
 msgid "Any"
 msgstr "任意"
 
 #: core/components/filters/functions.php:375
-#: core/components/filters/functions.php:904
+#: core/components/filters/functions.php:927
 #: core/includes/registers/post-types/developers.php:11
 #: core/includes/registers/post-types/developers.php:37
-#: core/template-parts/account/edit-property.php:128
+#: core/template-parts/account/edit-property.php:126
 #: core/template-parts/filters/result-filters.php:268
 #: core/template-parts/filters/search-tabs.php:163
 #: src/js/map/html.js:58
@@ -562,7 +563,7 @@ msgid "Available"
 msgstr "可用"
 
 #: core/components/filters/functions.php:407
-#: core/template-parts/account/edit-unit.php:271
+#: core/template-parts/account/edit-unit.php:268
 #: core/template-parts/filters/search-tabs.php:78
 msgid "Bedrooms"
 msgstr "卧室"
@@ -581,8 +582,8 @@ msgstr "在建"
 #: core/components/units/units-by-beds.php:78
 #: core/includes/entities/class-entity-property.php:127
 #: core/includes/entities/class-entity-property.php:133
-#: core/includes/entities/class-entity-unit.php:206
-#: core/includes/entities/class-entity-unit.php:506
+#: core/includes/entities/class-entity-unit.php:207
+#: core/includes/entities/class-entity-unit.php:508
 #: core/template-parts/cards/map-sidebar.php:77
 #: core/template-parts/cards/map-sidebar.php:78
 #: core/template-parts/cards/unit-card.php:32
@@ -598,7 +599,7 @@ msgstr "卧室"
 #: core/includes/entities/class-entity-property.php:131
 #: core/includes/entities/class-entity-property.php:138
 #: core/includes/entities/class-entity-unit.php:204
-#: core/includes/entities/class-entity-unit.php:505
+#: core/includes/entities/class-entity-unit.php:506
 #: core/template-parts/cards/unit-card.php:33
 #: core/template-parts/cards/unit-square-card.php:32
 #: src/js/common/beds-baths.js:16
@@ -608,63 +609,63 @@ msgstr "单间公寓"
 #: core/components/filters/functions.php:500
 #: core/includes/entities/class-entity-property.php:145
 #: core/includes/entities/class-entity-property.php:149
-#: core/includes/entities/class-entity-unit.php:217
-#: core/includes/entities/class-entity-unit.php:516
+#: core/includes/entities/class-entity-unit.php:221
+#: core/includes/entities/class-entity-unit.php:519
 #: template-parts/sections/single/dropdowns.php:68
 msgid "Baths"
 msgstr "浴室"
 
-#: core/components/filters/functions.php:598
+#: core/components/filters/functions.php:621
 msgid "No properties found"
 msgstr "未找到房产"
 
 #. translators: %s is the number of properties found.
-#: core/components/filters/functions.php:602
+#: core/components/filters/functions.php:625
 msgid "%s property found"
 msgid_plural "%s properties found"
 msgstr[0] "找到 %s 套房产"
 
-#: core/components/filters/functions.php:615
+#: core/components/filters/functions.php:638
 msgid "Price: high to low"
 msgstr "价格：从高到低"
 
-#: core/components/filters/functions.php:619
+#: core/components/filters/functions.php:642
 msgid "Price: low to high"
 msgstr "价格：从低到高"
 
-#: core/components/filters/functions.php:623
+#: core/components/filters/functions.php:646
 msgid "Newest first"
 msgstr "最新发布优先"
 
-#: core/components/filters/functions.php:627
+#: core/components/filters/functions.php:650
 msgid "Oldest first"
 msgstr "最早发布优先"
 
-#: core/components/filters/functions.php:631
+#: core/components/filters/functions.php:654
 msgid "Handover: soonest first"
 msgstr "交房时间：由近及远"
 
-#: core/components/filters/functions.php:643
+#: core/components/filters/functions.php:666
 msgctxt "listing sort"
 msgid "Recommended"
 msgstr "推荐"
 
-#: core/components/filters/functions.php:863
+#: core/components/filters/functions.php:886
 msgid "Any year"
 msgstr "任何年份"
 
-#: core/components/filters/functions.php:884
+#: core/components/filters/functions.php:907
 msgid "Available"
 msgstr "可用"
 
-#: core/components/filters/functions.php:1255
+#: core/components/filters/functions.php:1278
 #: core/template-parts/search-results/properties-list.php:63
 #: core/template-parts/search-results/tabs.php:63
 #: core/template-parts/search-results/units-list.php:62
 msgid "Items not found"
 msgstr "未找到项目"
 
-#: core/components/filters/functions.php:1355
+#: core/components/filters/functions.php:1378
 msgid "Properties not found"
 msgstr "未找到房产"
 
@@ -733,13 +734,14 @@ msgid " your listing will receive higher priority and appear more often to poten
 msgstr "您的房源将获得更高的优先级，并更频繁地向潜在买家展示。"
 
 #: core/components/modals/boost-modal.php:41
-#: core/components/modals/create-modal.php:127
-#: core/template-parts/account/edit-property.php:130
-#: core/template-parts/account/edit-property.php:192
-#: core/template-parts/account/edit-property.php:211
-#: core/template-parts/account/edit-unit.php:238
-#: core/template-parts/account/edit-unit.php:256
-#: core/template-parts/account/login-form.php:202
+#: core/components/modals/create-modal.php:125
+#: core/template-parts/account/edit-property.php:128
+#: core/template-parts/account/edit-property.php:190
+#: core/template-parts/account/edit-property.php:209
+#: core/template-parts/account/edit-unit.php:235
+#: core/template-parts/account/edit-unit.php:253
+#: core/template-parts/account/login-form.php:196
+#: core/template-parts/account/profile.php:393
 #: core/template-parts/filters/result-filters.php:169
 #: core/template-parts/ui/dropdown.php:12
 #: src/js/common/beds-baths.js:19
@@ -758,7 +760,7 @@ msgstr "您好，我对该房源感兴趣"
 #: core/components/modals/broker-modal.php:34
 #: core/template-parts/cards/unit-card.php:187
 #: core/template-parts/common/contact-panel.php:66
-#: single-unit.php:173
+#: single-unit.php:197
 msgid "Contact broker"
 msgstr "联系经纪人"
 
@@ -792,10 +794,10 @@ msgid "WhatsApp"
 msgstr "WhatsApp"
 
 #: core/components/modals/create-modal.php:21
-#: core/components/modals/create-modal.php:167
+#: core/components/modals/create-modal.php:150
 #: core/components/modals/signin-modal.php:27
 #: core/template-parts/account/login-form.php:26
-#: core/template-parts/account/login-form.php:244
+#: core/template-parts/account/login-form.php:222
 msgid "Create account"
 msgstr "创建账户"
 
@@ -843,54 +845,50 @@ msgstr "选择您的角色"
 #: core/components/modals/create-modal.php:109
 #: core/template-parts/account/login-form.php:177
 #: core/template-parts/account/profile-client.php:151
-#: core/template-parts/account/profile.php:421
+#: core/template-parts/account/profile.php:405
 msgid "Phone number"
 msgstr "电话号码"
 
-#: core/components/modals/create-modal.php:116
+#: core/components/modals/create-modal.php:119
 #: core/includes/registers/post-types/agencies.php:10
 #: core/includes/registers/post-types/agencies.php:36
-#: core/template-parts/account/profile.php:378
+#: core/template-parts/account/profile.php:387
 msgid "Agency"
 msgstr "房产中介"
 
-#: core/components/modals/create-modal.php:119
+#: core/components/modals/create-modal.php:120
 #: core/template-parts/account/login-form.php:191
-#: core/template-parts/account/profile.php:381
+#: core/template-parts/account/profile.php:388
 msgid "If you can’t find your agency in the list, please contact us at "
 msgstr "如果您在列表中找不到您的中介机构，请通过以下方式联系我们："
 
-#: core/components/modals/create-modal.php:121
+#: core/components/modals/create-modal.php:123
 #: core/template-parts/account/login-form.php:194
-#: core/template-parts/account/profile.php:384
+#: core/template-parts/account/profile.php:391
 msgid "Your request will be reviewed within 24 hours."
 msgstr "您的请求将在24小时内审核。"
 
-#: core/components/modals/create-modal.php:132
-msgid "vector arrow"
-msgstr "矢量箭头"
-
-#: core/components/modals/create-modal.php:154
-#: core/template-parts/account/login-form.php:231
+#: core/components/modals/create-modal.php:137
+#: core/template-parts/account/login-form.php:209
 msgid "I have read and agree to the"
 msgstr "我已阅读并同意"
 
-#: core/components/modals/create-modal.php:156
-#: core/template-parts/account/login-form.php:233
+#: core/components/modals/create-modal.php:139
+#: core/template-parts/account/login-form.php:211
 msgid "Terms of Use"
 msgstr "使用条款"
 
-#: core/components/modals/create-modal.php:158
-#: core/template-parts/account/login-form.php:235
+#: core/components/modals/create-modal.php:141
+#: core/template-parts/account/login-form.php:213
 msgid "and"
 msgstr "和"
 
-#: core/components/modals/create-modal.php:160
-#: core/template-parts/account/login-form.php:237
+#: core/components/modals/create-modal.php:143
+#: core/template-parts/account/login-form.php:215
 msgid "Privacy Policy"
 msgstr "隐私政策"
 
-#: core/components/modals/create-modal.php:170
+#: core/components/modals/create-modal.php:153
 msgid "Have an account?"
 msgstr "已有账户？"
 
@@ -1041,28 +1039,28 @@ msgstr "共同所有权"
 msgid "Fractional Ownership"
 msgstr "部分所有权"
 
-#: core/components/properties/functions.php:726
+#: core/components/properties/functions.php:723
 #: core/includes/entities/class-entity-property.php:556
 #: core/includes/entities/class-entity-property.php:623
-#: core/includes/entities/class-entity-unit.php:373
-#: core/includes/entities/class-entity-unit.php:441
+#: core/includes/entities/class-entity-unit.php:374
+#: core/includes/entities/class-entity-unit.php:442
 msgid "Ready"
 msgstr "现房"
 
-#: core/components/properties/functions.php:731
+#: core/components/properties/functions.php:728
 #: core/includes/entities/class-entity-property.php:562
-#: core/includes/entities/class-entity-unit.php:379
-#: core/includes/entities/class-entity-unit.php:447
+#: core/includes/entities/class-entity-unit.php:380
+#: core/includes/entities/class-entity-unit.php:448
 msgid "Handover:"
 msgstr "交付："
 
 #. translators: 1: project name, 2: developer name, 3: project URL.
-#: core/components/properties/functions.php:985
+#: core/components/properties/functions.php:982
 msgid "Hello! I am interested in the %1$s project by %2$s. Could you tell me more about it? %3$s"
 msgstr "您好！我对 %2$s 开发的 %1$s 项目很感兴趣。能告诉我更多相关信息吗？%3$s"
 
 #. translators: 1: project name, 2: project URL.
-#: core/components/properties/functions.php:995
+#: core/components/properties/functions.php:992
 msgid "Hello! I am interested in the %1$s project. Could you tell me more about it? %2$s"
 msgstr "您好！我对 %1$s 项目很感兴趣。能告诉我更多相关信息吗？%2$s"
 
@@ -1115,7 +1113,7 @@ msgid "Projects"
 msgstr "项目"
 
 #: core/components/sections/explore-by-districts.php:31
-#: core/template-parts/account/edit-unit.php:235
+#: core/template-parts/account/edit-unit.php:232
 msgid "Project"
 msgstr "项目"
 
@@ -1132,7 +1130,7 @@ msgid "Sorry, you are not allowed to access this resource."
 msgstr "抱歉，您无权访问此资源。"
 
 #. translators: 1: current page number, 2: total number of pages.
-#: core/components/seo/functions.php:626
+#: core/components/seo/functions.php:971
 msgid "Page %1$d of %2$d"
 msgstr "第 %1$d 页，共 %2$d 页"
 
@@ -1203,8 +1201,8 @@ msgstr "卧室"
 #: core/components/units/units-by-beds.php:82
 #: core/includes/entities/class-entity-property.php:157
 #: core/includes/entities/class-entity-property.php:161
-#: core/includes/entities/class-entity-unit.php:228
-#: core/includes/entities/class-entity-unit.php:524
+#: core/includes/entities/class-entity-unit.php:229
+#: core/includes/entities/class-entity-unit.php:527
 #: core/template-parts/cards/map-sidebar.php:86
 #: template-parts/sections/single/dropdowns.php:40
 #: template-parts/sections/single/dropdowns.php:75
@@ -1236,19 +1234,19 @@ msgid "Email Verified"
 msgstr "邮箱已验证"
 
 #: core/includes/entities/class-entity-property.php:571
-#: core/includes/entities/class-entity-unit.php:388
-#: core/includes/entities/class-entity-unit.php:455
+#: core/includes/entities/class-entity-unit.php:389
+#: core/includes/entities/class-entity-unit.php:456
 msgid "Popular"
 msgstr "热门"
 
 #: core/includes/entities/class-entity-property.php:579
-#: core/includes/entities/class-entity-unit.php:396
-#: core/includes/entities/class-entity-unit.php:462
+#: core/includes/entities/class-entity-unit.php:397
+#: core/includes/entities/class-entity-unit.php:463
 msgid "Premium Developer"
 msgstr "优质开发商"
 
 #: core/includes/entities/class-entity-property.php:626
-#: core/template-parts/account/edit-property.php:227
+#: core/template-parts/account/edit-property.php:225
 msgid "Handover Date"
 msgstr "交房日期"
 
@@ -1260,36 +1258,36 @@ msgstr "已开工"
 msgid "Number of Buildings"
 msgstr "建筑数量"
 
-#: core/includes/entities/class-entity-property.php:658
+#: core/includes/entities/class-entity-property.php:659
 msgid "Government Fee"
 msgstr "政府费用"
 
-#: core/includes/entities/class-entity-property.php:666
+#: core/includes/entities/class-entity-property.php:667
 msgid "Ownership Type"
 msgstr "所有权类型"
 
-#: core/includes/entities/class-entity-unit.php:217
-#: core/includes/entities/class-entity-unit.php:515
+#: core/includes/entities/class-entity-unit.php:219
+#: core/includes/entities/class-entity-unit.php:517
 msgid "1 Bath"
 msgstr "1 间浴室"
 
-#: core/includes/entities/class-entity-unit.php:696
+#: core/includes/entities/class-entity-unit.php:699
 msgid "Gallery should not be empty"
 msgstr "图库不能为空"
 
-#: core/includes/entities/class-entity-unit.php:701
+#: core/includes/entities/class-entity-unit.php:704
 msgid "Area should not be empty and must bigger than 50 sqft"
 msgstr "面积不能为空且必须大于 50 sqft"
 
-#: core/includes/entities/class-entity-unit.php:709
+#: core/includes/entities/class-entity-unit.php:712
 msgid "Price should not be empty and must bigger than 200 000 AED"
 msgstr "价格不能为空且必须大于 200 000 AED"
 
-#: core/includes/entities/class-entity-unit.php:719
+#: core/includes/entities/class-entity-unit.php:722
 msgid "Your unit has been submitted and is waiting for approval. Please fix the following issues:"
 msgstr "您的单元已提交，正在等待审核。请修复以下问题："
 
-#: core/includes/entities/class-entity-unit.php:732
+#: core/includes/entities/class-entity-unit.php:735
 msgid "Need to fix errors in your submitted property"
 msgstr "需要修复您已提交房源中的错误"
 
@@ -1729,7 +1727,7 @@ msgid "Edit Unit"
 msgstr "编辑房源"
 
 #: core/includes/registers/post-types/units.php:22
-#: core/template-parts/account/edit-unit.php:373
+#: core/template-parts/account/edit-unit.php:370
 msgid "Update Unit"
 msgstr "更新房源"
 
@@ -1750,7 +1748,7 @@ msgid "Units insighted by this author"
 msgstr "该作者发布的房源洞察"
 
 #: core/includes/registers/post-types/units.php:79
-#: single-unit.php:78
+#: single-unit.php:102
 msgid "Archived"
 msgstr "已归档"
 
@@ -1780,62 +1778,62 @@ msgstr "添加房产项目"
 msgid "My account"
 msgstr "我的账户"
 
-#: core/template-parts/account/edit-property.php:107
-#: core/template-parts/account/edit-unit.php:130
+#: core/template-parts/account/edit-property.php:104
+#: core/template-parts/account/edit-unit.php:127
 msgid "Title"
 msgstr "标题"
 
-#: core/template-parts/account/edit-property.php:112
+#: core/template-parts/account/edit-property.php:109
 msgid "azizi “beach oasis”"
 msgstr "azizi “beach oasis”"
 
-#: core/template-parts/account/edit-property.php:145
+#: core/template-parts/account/edit-property.php:143
 msgid "Pick on map"
 msgstr "在地图上选择"
 
-#: core/template-parts/account/edit-property.php:151
+#: core/template-parts/account/edit-property.php:149
 msgid "Latitude"
 msgstr "纬度"
 
-#: core/template-parts/account/edit-property.php:164
+#: core/template-parts/account/edit-property.php:162
 msgid "Longitude"
 msgstr "经度"
 
-#: core/template-parts/account/edit-property.php:208
+#: core/template-parts/account/edit-property.php:206
 msgid "Ownership type"
 msgstr "所有权类型"
 
-#: core/template-parts/account/edit-property.php:246
+#: core/template-parts/account/edit-property.php:244
 msgid "Project is already completed / Ready"
 msgstr "项目已竣工 / 现房"
 
-#: core/template-parts/account/edit-property.php:259
+#: core/template-parts/account/edit-property.php:257
 msgid "Contain Property Types "
 msgstr "包含房产类型 "
 
-#: core/template-parts/account/edit-property.php:285
-#: core/template-parts/account/edit-unit.php:319
+#: core/template-parts/account/edit-property.php:284
+#: core/template-parts/account/edit-unit.php:316
 #: core/template-parts/properties/property-single.php:211
 msgid "Description"
 msgstr "描述"
 
-#: core/template-parts/account/edit-property.php:314
+#: core/template-parts/account/edit-property.php:313
 msgid "Update project"
 msgstr "更新项目"
 
-#: core/template-parts/account/edit-property.php:315
-#: single-unit.php:106
-#: single-unit.php:112
+#: core/template-parts/account/edit-property.php:314
+#: single-unit.php:130
+#: single-unit.php:136
 msgid "Save"
 msgstr "保存"
 
-#: core/template-parts/account/edit-property.php:362
-#: core/template-parts/account/edit-unit.php:418
+#: core/template-parts/account/edit-property.php:361
+#: core/template-parts/account/edit-unit.php:415
 msgid "Pictures"
 msgstr "图片"
 
-#: core/template-parts/account/edit-property.php:364
-#: core/template-parts/account/edit-unit.php:420
+#: core/template-parts/account/edit-property.php:363
+#: core/template-parts/account/edit-unit.php:417
 msgid "Browse files"
 msgstr "浏览文件"
 
@@ -1857,78 +1855,78 @@ msgstr "编辑房产"
 msgid "Add property"
 msgstr "添加房产"
 
-#: core/template-parts/account/edit-unit.php:134
+#: core/template-parts/account/edit-unit.php:131
 msgid "City Walk 4BR Apartment on 2 floor"
 msgstr "City Walk 4居室公寓，位于2楼"
 
-#: core/template-parts/account/edit-unit.php:146
+#: core/template-parts/account/edit-unit.php:143
 msgid "Listing Type"
 msgstr "房源类型"
 
-#: core/template-parts/account/edit-unit.php:163
+#: core/template-parts/account/edit-unit.php:160
 msgid "Price, AED"
 msgstr "价格，AED"
 
-#: core/template-parts/account/edit-unit.php:177
+#: core/template-parts/account/edit-unit.php:174
 msgid "Area (sqft)"
 msgstr "面积（sqft）"
 
-#: core/template-parts/account/edit-unit.php:191
+#: core/template-parts/account/edit-unit.php:188
 msgid "Price per square foot:"
 msgstr "每平方英尺价格："
 
-#: core/template-parts/account/edit-unit.php:204
+#: core/template-parts/account/edit-unit.php:201
 msgid "Original price, AED"
 msgstr "原价，AED"
 
-#: core/template-parts/account/edit-unit.php:217
-#: single-unit.php:88
+#: core/template-parts/account/edit-unit.php:214
+#: single-unit.php:112
 msgid "Discount:"
 msgstr "折扣："
 
-#: core/template-parts/account/edit-unit.php:236
-#: core/template-parts/account/profile.php:214
+#: core/template-parts/account/edit-unit.php:233
+#: core/template-parts/account/profile.php:217
 msgid "+ Add new project"
 msgstr "+ 添加新项目"
 
-#: core/template-parts/account/edit-unit.php:255
+#: core/template-parts/account/edit-unit.php:252
 #: core/template-parts/filters/result-filters.php:241
 msgid "Property type"
 msgstr "房产类型"
 
-#: core/template-parts/account/edit-unit.php:294
+#: core/template-parts/account/edit-unit.php:291
 msgid "Bathrooms"
 msgstr "浴室"
 
-#: core/template-parts/account/edit-unit.php:348
+#: core/template-parts/account/edit-unit.php:345
 msgid "Delete Property"
 msgstr "删除房产"
 
-#: core/template-parts/account/edit-unit.php:351
+#: core/template-parts/account/edit-unit.php:348
 msgid "Are you sure to delete this property?"
 msgstr "确定要删除此房产吗？"
 
-#: core/template-parts/account/edit-unit.php:354
+#: core/template-parts/account/edit-unit.php:351
 msgid "No"
 msgstr "否"
 
-#: core/template-parts/account/edit-unit.php:358
+#: core/template-parts/account/edit-unit.php:355
 msgid "Yes, Delete"
 msgstr "是的，删除"
 
-#: core/template-parts/account/edit-unit.php:364
+#: core/template-parts/account/edit-unit.php:361
 msgid "New units are saved as drafts for moderation"
 msgstr "新房源将保存为草稿以待审核"
 
-#: core/template-parts/account/edit-unit.php:375
+#: core/template-parts/account/edit-unit.php:372
 msgid "Submit Unit"
 msgstr "提交房源"
 
-#: core/template-parts/account/edit-unit.php:436
+#: core/template-parts/account/edit-unit.php:433
 msgid "Select property pictures to include in unit page"
 msgstr "选择要包含在房源页面中的房源图片"
 
-#: core/template-parts/account/edit-unit.php:440
+#: core/template-parts/account/edit-unit.php:437
 msgid "Select all"
 msgstr "全选"
 
@@ -1967,7 +1965,7 @@ msgstr "创建新账户"
 
 #: core/template-parts/account/login-form.php:116
 #: core/template-parts/account/profile-client.php:140
-#: core/template-parts/account/profile.php:368
+#: core/template-parts/account/profile.php:374
 msgid "Email address"
 msgstr "电子邮箱地址"
 
@@ -1975,14 +1973,14 @@ msgstr "电子邮箱地址"
 msgid "admin@example.com"
 msgstr "admin@example.com"
 
-#: core/template-parts/account/login-form.php:187
+#: core/template-parts/account/login-form.php:190
 msgid "Choose your agency"
 msgstr "选择您的中介机构"
 
 #: core/template-parts/account/profile-client.php:33
 #: core/template-parts/account/profile-client.php:52
 #: core/template-parts/account/profile.php:63
-#: core/template-parts/account/profile.php:280
+#: core/template-parts/account/profile.php:286
 msgid "Saved properties"
 msgstr "已收藏的房产"
 
@@ -1991,33 +1989,33 @@ msgid "My Account"
 msgstr "我的账户"
 
 #: core/template-parts/account/profile-client.php:106
-#: core/template-parts/account/profile.php:334
+#: core/template-parts/account/profile.php:340
 msgid "You have not added any favorite units."
 msgstr "您尚未添加任何收藏房源。"
 
 #: core/template-parts/account/profile-client.php:116
 #: core/template-parts/account/profile.php:69
-#: core/template-parts/account/profile.php:344
+#: core/template-parts/account/profile.php:350
 msgid "Account details"
 msgstr "账户详情"
 
 #: core/template-parts/account/profile-client.php:131
-#: core/template-parts/account/profile.php:359
+#: core/template-parts/account/profile.php:365
 msgid "Display name"
 msgstr "显示名称"
 
 #: core/template-parts/account/profile-client.php:164
-#: core/template-parts/account/profile.php:434
+#: core/template-parts/account/profile.php:418
 msgid "WhatsApp number"
 msgstr "WhatsApp号码"
 
 #: core/template-parts/account/profile-client.php:180
-#: core/template-parts/account/profile.php:450
+#: core/template-parts/account/profile.php:434
 msgid "Save changes"
 msgstr "保存更改"
 
 #: core/template-parts/account/profile-client.php:188
-#: core/template-parts/account/profile.php:458
+#: core/template-parts/account/profile.php:442
 msgid "Avatar"
 msgstr "头像"
 
@@ -2049,48 +2047,44 @@ msgstr "我的急售房源 (%d)"
 msgid "My properties (%d)"
 msgstr "我的房产 (%d)"
 
-#: core/template-parts/account/profile.php:129
+#: core/template-parts/account/profile.php:132
 msgid "Gold Star"
 msgstr "金星"
 
-#: core/template-parts/account/profile.php:132
+#: core/template-parts/account/profile.php:135
 msgid "Boost your property to get it sold faster"
 msgstr "推广您的房源以更快售出"
 
-#: core/template-parts/account/profile.php:134
+#: core/template-parts/account/profile.php:137
 msgid "Get More Eyes, Get More Offers. Fast-Track Your Sale. Priority Listing: Sell 2x Faster."
 msgstr "获得更多关注，获取更多报价。加速您的销售。优先房源：销售速度提升2倍。"
 
-#: core/template-parts/account/profile.php:137
+#: core/template-parts/account/profile.php:140
 msgid "How it works"
 msgstr "运作方式"
 
-#: core/template-parts/account/profile.php:144
+#: core/template-parts/account/profile.php:147
 #: core/template-parts/cards/unit-card.php:106
 #: core/template-parts/cards/unit-card.php:163
 msgid "Star"
 msgstr "星标"
 
-#: core/template-parts/account/profile.php:175
+#: core/template-parts/account/profile.php:178
 msgid "No units match the filters."
 msgstr "没有符合筛选条件的房源。"
 
-#: core/template-parts/account/profile.php:177
-#: core/template-parts/account/profile.php:269
+#: core/template-parts/account/profile.php:180
+#: core/template-parts/account/profile.php:275
 msgid "You have not added any units yet."
 msgstr "您尚未添加任何房源。"
 
-#: core/template-parts/account/profile.php:191
+#: core/template-parts/account/profile.php:194
 msgid "My projects (%d)"
 msgstr "我的项目 (%d)"
 
-#: core/template-parts/account/profile.php:267
+#: core/template-parts/account/profile.php:273
 msgid "No projects match the filters."
 msgstr "没有符合筛选条件的项目。"
-
-#: core/template-parts/account/profile.php:392
-msgid "select"
-msgstr "选择"
 
 #: core/template-parts/account/reset-password.php:20
 msgid "Enter new password"
@@ -2283,7 +2277,7 @@ msgstr "如果这不是您本人操作，请忽略此消息或联系我们。"
 #: core/template-parts/filters/result-filters.php:264
 #: core/template-parts/filters/search-tabs.php:140
 #: core/template-parts/filters/search-tabs.php:161
-#: core/template-parts/ui/dropdown.php:50
+#: core/template-parts/ui/dropdown.php:58
 msgid "Search..."
 msgstr "搜索..."
 
@@ -2381,20 +2375,20 @@ msgid "Explore Project"
 msgstr "探索项目"
 
 #: core/template-parts/properties/property-single.php:56
-#: single-unit.php:99
-#: single-unit.php:100
+#: single-unit.php:123
+#: single-unit.php:124
 #: single.php:81
 msgid "Share"
 msgstr "分享"
 
 #: core/template-parts/properties/property-single.php:86
 #: core/template-parts/properties/property-units-list.php:67
-#: single-unit.php:266
+#: single-unit.php:290
 msgid "Property information"
 msgstr "房产信息"
 
 #: core/template-parts/properties/property-single.php:143
-#: single-unit.php:370
+#: single-unit.php:394
 msgid "View developer"
 msgstr "查看开发商"
 
@@ -2403,12 +2397,12 @@ msgid "properties available in this project"
 msgstr "该项目可售房产"
 
 #: core/template-parts/properties/property-single.php:186
-#: single-unit.php:206
+#: single-unit.php:230
 msgid "Payment plan"
 msgstr "付款计划"
 
 #: core/template-parts/properties/property-single.php:200
-#: single-unit.php:330
+#: single-unit.php:354
 msgid "Amenities"
 msgstr "配套设施"
 
@@ -2447,7 +2441,7 @@ msgstr "Aliquam lacinia diam quis lacus euismod"
 msgid "Browse a wide selection of apartments in Dubai. From smart studios to spacious family residences and premium off-plan units in top locations. Compare prices, layouts, and communities in one place and find the apartment that fits your lifestyle, goals, and budget."
 msgstr "浏览迪拜海量公寓房源。从精致单间公寓到宽敞的家庭住宅，以及位于黄金地段的优质期房单位，应有尽有。您可以在此一站式比较价格、户型和社区，找到符合您生活方式、目标与预算的公寓。"
 
-#: core/template-parts/ui/dropdown.php:41
+#: core/template-parts/ui/dropdown.php:49
 msgid "Arrow down"
 msgstr "向下箭头"
 
@@ -2557,66 +2551,66 @@ msgstr "获取报价"
 msgid "amenities"
 msgstr "配套设施"
 
-#: single-unit.php:70
+#: single-unit.php:94
 msgctxt "followed by project"
 msgid "Property by"
 msgstr "房产由...提供"
 
-#: single-unit.php:90
+#: single-unit.php:114
 msgid "of original price"
 msgstr "原价的..."
 
-#: single-unit.php:110
+#: single-unit.php:134
 msgid "Saved"
 msgstr "已保存"
 
-#: single-unit.php:151
+#: single-unit.php:175
 msgid "Property broker"
 msgstr "房产经纪人"
 
-#: single-unit.php:176
+#: single-unit.php:200
 msgid ""
 "Get in touch with broker using email, phone or WhatsApp. It’s free and does not\n"
 "                                                                        require any commitment from your side"
 msgstr "通过电子邮件、电话或WhatsApp与经纪人联系。此服务免费，且无需您承担任何义务"
 
-#: single-unit.php:222
+#: single-unit.php:246
 #: template-parts/sections/mortgage-calculator/calculator.php:85
 #: template-parts/sections/mortgage-calculator/calculator.php:213
 #: template-parts/sections/mortgage-calculator/entry-costs.php:15
 msgid "Down payment"
 msgstr "首付"
 
-#: single-unit.php:224
+#: single-unit.php:248
 msgid "Sales launch"
 msgstr "开盘销售"
 
-#: single-unit.php:232
+#: single-unit.php:256
 msgid "During construction"
 msgstr "施工期间"
 
-#: single-unit.php:234
+#: single-unit.php:258
 msgid "installments"
 msgstr "分期付款"
 
-#: single-unit.php:243
+#: single-unit.php:267
 msgid "On handover"
 msgstr "交房时"
 
-#: single-unit.php:256
-#: single-unit.php:259
+#: single-unit.php:280
+#: single-unit.php:283
 msgid "Floor plan"
 msgstr "户型图"
 
-#: single-unit.php:309
+#: single-unit.php:333
 msgid "Building Information"
 msgstr "建筑信息"
 
-#: single-unit.php:314
+#: single-unit.php:338
 msgid "Building name"
 msgstr "建筑名称"
 
-#: single-unit.php:319
+#: single-unit.php:343
 msgid "Floors"
 msgstr "楼层"
 
@@ -3267,3 +3261,20 @@ msgstr "免责声明："
 #: src/js/mortgage-calculator/modules/pdf/template.js:204
 msgid "East Property Brokerage LLC"
 msgstr "East Property Brokerage LLC"
+
+#: core/template-parts/account/lang-switcher.php:43
+#: core/template-parts/account/lang-switcher.php:44
+msgid "Remove language"
+msgstr "移除语言"
+
+#: core/template-parts/account/lang-switcher.php:50
+msgid "+ Add language"
+msgstr "+ 添加语言"
+
+#: core/template-parts/account/lang-switcher.php:73
+msgid "This project will be translated into the other languages automatically. You can also add a translation yourself by picking a language."
+msgstr "本房产项目将由系统自动翻译成其他语言。您也可以选择所需语言，手动添加译文。"
+
+#: core/template-parts/account/lang-switcher.php:77
+msgid "This listing will be translated into the other languages automatically. You can also add a translation yourself by picking a language."
+msgstr "本房产将由系统自动翻译成其他语言。您也可以选择所需语言，手动添加译文。"

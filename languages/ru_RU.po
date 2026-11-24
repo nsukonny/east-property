@@ -49,12 +49,12 @@ msgid "Go to properties"
 msgstr "Перейти к объектам"
 
 #: core/components/account/functions.php:125
-#: core/components/filters/functions.php:931
+#: core/components/filters/functions.php:954
 msgid "Apartments"
 msgstr "Квартиры"
 
 #: core/components/account/functions.php:126
-#: core/components/filters/functions.php:947
+#: core/components/filters/functions.php:970
 msgid "Villas"
 msgstr "Виллы"
 
@@ -67,12 +67,12 @@ msgid "Penthouses"
 msgstr "Пентхаусы"
 
 #: core/components/account/functions.php:129
-#: core/components/filters/functions.php:939
+#: core/components/filters/functions.php:962
 msgid "Houses"
 msgstr "Дома"
 
 #: core/components/account/functions.php:130
-#: core/components/filters/functions.php:955
+#: core/components/filters/functions.php:978
 msgid "Offices"
 msgstr "Офисы"
 
@@ -138,7 +138,7 @@ msgid "Property ID is required."
 msgstr "ID объекта обязателен."
 
 #: core/components/account/functions.php:1324
-#: core/template-parts/account/edit-unit.php:463
+#: core/template-parts/account/edit-unit.php:460
 msgid "Property image"
 msgstr "Изображение объекта"
 
@@ -266,7 +266,7 @@ msgid "Logout"
 msgstr "Выйти"
 
 #: core/components/common/nav.php:68
-#: core/components/modals/create-modal.php:172
+#: core/components/modals/create-modal.php:155
 #: core/components/modals/forgot-modal.php:23
 #: core/components/modals/signin-modal.php:10
 #: core/components/modals/signin-modal.php:43
@@ -395,20 +395,20 @@ msgstr "Почтовая рассылка"
 
 #: core/components/account/functions.php:326
 #: core/components/filters/functions.php:312
-#: core/components/filters/functions.php:1064
+#: core/components/filters/functions.php:1087
 #: core/template-parts/filters/search-tabs.php:165
 msgid "Any Developers"
 msgstr "Любые застройщики"
 
 #. translators: option of the delivery date filter, projects already handed over.
 #: core/components/filters/functions.php:323
-#: core/components/filters/functions.php:867
+#: core/components/filters/functions.php:890
 msgctxt "delivery filter"
 msgid "Ready"
 msgstr "Готовые"
 
 #: core/components/filters/functions.php:330
-#: core/components/filters/functions.php:871
+#: core/components/filters/functions.php:894
 msgid "In Construction"
 msgstr "Строится"
 
@@ -417,15 +417,15 @@ msgid "All Years"
 msgstr "Все годы"
 
 #: core/components/filters/functions.php:350
-#: core/components/filters/functions.php:880
+#: core/components/filters/functions.php:903
 #: core/includes/registers/post-types/locations.php:10
-#: core/template-parts/account/edit-property.php:191
+#: core/template-parts/account/edit-property.php:189
 #: core/template-parts/filters/result-filters.php:61
 #: core/template-parts/properties/property-single.php:111
 #: core/template-parts/properties/property-single.php:220
 #: core/template-parts/properties/property-units-list.php:28
-#: single-unit.php:291
-#: single-unit.php:380
+#: single-unit.php:315
+#: single-unit.php:404
 #: src/js/map/map.js:276
 msgid "Location"
 msgstr "Локация"
@@ -439,27 +439,28 @@ msgid "Completion Year After"
 msgstr "Год сдачи ЖК после"
 
 #: core/components/filters/functions.php:359
-#: core/components/filters/functions.php:888
+#: core/components/filters/functions.php:911
 msgid "Price (AED)"
 msgstr "Цена (AED)"
 
 #: core/components/filters/functions.php:366
-#: core/components/filters/functions.php:895
-#: core/includes/entities/class-entity-property.php:650
+#: core/components/filters/functions.php:918
+#: core/includes/entities/class-entity-property.php:651
+#: single-unit.php:58
 msgid "Property Type"
 msgstr "Тип объекта"
 
 #: core/components/filters/functions.php:370
-#: core/components/filters/functions.php:899
-#: core/components/filters/functions.php:923
+#: core/components/filters/functions.php:922
+#: core/components/filters/functions.php:946
 msgid "Any"
 msgstr "Любой"
 
 #: core/components/filters/functions.php:375
-#: core/components/filters/functions.php:904
+#: core/components/filters/functions.php:927
 #: core/includes/registers/post-types/developers.php:11
 #: core/includes/registers/post-types/developers.php:37
-#: core/template-parts/account/edit-property.php:128
+#: core/template-parts/account/edit-property.php:126
 #: core/template-parts/filters/result-filters.php:268
 #: core/template-parts/filters/search-tabs.php:163
 #: src/js/map/html.js:58
@@ -478,7 +479,7 @@ msgid "Available"
 msgstr "Готовые"
 
 #: core/components/filters/functions.php:407
-#: core/template-parts/account/edit-unit.php:271
+#: core/template-parts/account/edit-unit.php:268
 #: core/template-parts/filters/search-tabs.php:78
 msgid "Bedrooms"
 msgstr "Количество спален"
@@ -497,8 +498,8 @@ msgstr "Строится"
 #: core/components/units/units-by-beds.php:78
 #: core/includes/entities/class-entity-property.php:127
 #: core/includes/entities/class-entity-property.php:133
-#: core/includes/entities/class-entity-unit.php:206
-#: core/includes/entities/class-entity-unit.php:506
+#: core/includes/entities/class-entity-unit.php:207
+#: core/includes/entities/class-entity-unit.php:508
 #: core/template-parts/cards/map-sidebar.php:77
 #: core/template-parts/cards/map-sidebar.php:78
 #: core/template-parts/cards/unit-card.php:32
@@ -514,7 +515,7 @@ msgstr "Спальни"
 #: core/includes/entities/class-entity-property.php:131
 #: core/includes/entities/class-entity-property.php:138
 #: core/includes/entities/class-entity-unit.php:204
-#: core/includes/entities/class-entity-unit.php:505
+#: core/includes/entities/class-entity-unit.php:506
 #: core/template-parts/cards/unit-card.php:33
 #: core/template-parts/cards/unit-square-card.php:32
 #: src/js/common/beds-baths.js:16
@@ -524,27 +525,27 @@ msgstr "Студия"
 #: core/components/filters/functions.php:500
 #: core/includes/entities/class-entity-property.php:145
 #: core/includes/entities/class-entity-property.php:149
-#: core/includes/entities/class-entity-unit.php:217
-#: core/includes/entities/class-entity-unit.php:516
+#: core/includes/entities/class-entity-unit.php:221
+#: core/includes/entities/class-entity-unit.php:519
 #: template-parts/sections/single/dropdowns.php:68
 msgid "Baths"
 msgstr "Ванных"
 
-#: core/components/filters/functions.php:863
+#: core/components/filters/functions.php:886
 msgid "Any year"
 msgstr "Любой год"
 
-#: core/components/filters/functions.php:884
+#: core/components/filters/functions.php:907
 msgid "Available"
 msgstr "Доступно"
 
 #: core/components/account/functions.php:319
-#: core/components/filters/functions.php:1120
+#: core/components/filters/functions.php:1143
 #: core/template-parts/filters/search-tabs.php:144
 msgid "Any Locations"
 msgstr "Любые локации"
 
-#: core/components/filters/functions.php:1255
+#: core/components/filters/functions.php:1278
 #: core/template-parts/search-results/properties-list.php:63
 #: core/template-parts/search-results/tabs.php:63
 #: core/template-parts/search-results/units-list.php:62
@@ -552,14 +553,14 @@ msgid "Items not found"
 msgstr "Элементы не найдены"
 
 #. translators: %s is the number of properties found.
-#: core/components/filters/functions.php:602
+#: core/components/filters/functions.php:625
 msgid "%s property found"
 msgid_plural "%s properties found"
 msgstr[0] "%s объект найден"
 msgstr[1] "%s объекта найдено"
 msgstr[2] "%s объектов найдено"
 
-#: core/components/filters/functions.php:1355
+#: core/components/filters/functions.php:1378
 msgid "Properties not found"
 msgstr "Объекты не найдены"
 
@@ -625,13 +626,14 @@ msgid " your listing will receive higher priority and appear more often to poten
 msgstr " ваше объявление получит более высокий приоритет и будет чаще отображаться потенциальным покупателям."
 
 #: core/components/modals/boost-modal.php:41
-#: core/components/modals/create-modal.php:127
-#: core/template-parts/account/edit-property.php:130
-#: core/template-parts/account/edit-property.php:192
-#: core/template-parts/account/edit-property.php:211
-#: core/template-parts/account/edit-unit.php:238
-#: core/template-parts/account/edit-unit.php:256
-#: core/template-parts/account/login-form.php:202
+#: core/components/modals/create-modal.php:125
+#: core/template-parts/account/edit-property.php:128
+#: core/template-parts/account/edit-property.php:190
+#: core/template-parts/account/edit-property.php:209
+#: core/template-parts/account/edit-unit.php:235
+#: core/template-parts/account/edit-unit.php:253
+#: core/template-parts/account/login-form.php:196
+#: core/template-parts/account/profile.php:393
 #: core/template-parts/filters/result-filters.php:169
 #: core/template-parts/ui/dropdown.php:12
 #: src/js/common/beds-baths.js:19
@@ -650,7 +652,7 @@ msgstr "Здравствуйте, меня интересует объект"
 #: core/components/modals/broker-modal.php:34
 #: core/template-parts/cards/unit-card.php:187
 #: core/template-parts/common/contact-panel.php:66
-#: single-unit.php:173
+#: single-unit.php:197
 msgid "Contact broker"
 msgstr "Связаться с брокером"
 
@@ -684,10 +686,10 @@ msgid "WhatsApp"
 msgstr "WhatsApp"
 
 #: core/components/modals/create-modal.php:21
-#: core/components/modals/create-modal.php:167
+#: core/components/modals/create-modal.php:150
 #: core/components/modals/signin-modal.php:27
 #: core/template-parts/account/login-form.php:26
-#: core/template-parts/account/login-form.php:244
+#: core/template-parts/account/login-form.php:222
 msgid "Create account"
 msgstr "Создать аккаунт"
 
@@ -735,54 +737,50 @@ msgstr "Выберите вашу роль"
 #: core/components/modals/create-modal.php:109
 #: core/template-parts/account/login-form.php:177
 #: core/template-parts/account/profile-client.php:151
-#: core/template-parts/account/profile.php:421
+#: core/template-parts/account/profile.php:405
 msgid "Phone number"
 msgstr "Номер телефона"
 
-#: core/components/modals/create-modal.php:116
+#: core/components/modals/create-modal.php:119
 #: core/includes/registers/post-types/agencies.php:10
 #: core/includes/registers/post-types/agencies.php:36
-#: core/template-parts/account/profile.php:378
+#: core/template-parts/account/profile.php:387
 msgid "Agency"
 msgstr "Агентство"
 
-#: core/components/modals/create-modal.php:119
+#: core/components/modals/create-modal.php:120
 #: core/template-parts/account/login-form.php:191
-#: core/template-parts/account/profile.php:381
+#: core/template-parts/account/profile.php:388
 msgid "If you can’t find your agency in the list, please contact us at "
 msgstr "Если вы не можете найти свое агентство в списке, свяжитесь с нами по адресу "
 
-#: core/components/modals/create-modal.php:121
+#: core/components/modals/create-modal.php:123
 #: core/template-parts/account/login-form.php:194
-#: core/template-parts/account/profile.php:384
+#: core/template-parts/account/profile.php:391
 msgid "Your request will be reviewed within 24 hours."
 msgstr "Ваша заявка будет рассмотрена в течение 24 часов."
 
-#: core/components/modals/create-modal.php:132
-msgid "vector arrow"
-msgstr "векторная стрелка"
-
-#: core/components/modals/create-modal.php:154
-#: core/template-parts/account/login-form.php:231
+#: core/components/modals/create-modal.php:137
+#: core/template-parts/account/login-form.php:209
 msgid "I have read and agree to the"
 msgstr "Я прочитал(а) и согласен(на) с"
 
-#: core/components/modals/create-modal.php:156
-#: core/template-parts/account/login-form.php:233
+#: core/components/modals/create-modal.php:139
+#: core/template-parts/account/login-form.php:211
 msgid "Terms of Use"
 msgstr "Условиями использования"
 
-#: core/components/modals/create-modal.php:158
-#: core/template-parts/account/login-form.php:235
+#: core/components/modals/create-modal.php:141
+#: core/template-parts/account/login-form.php:213
 msgid "and"
 msgstr "и"
 
-#: core/components/modals/create-modal.php:160
-#: core/template-parts/account/login-form.php:237
+#: core/components/modals/create-modal.php:143
+#: core/template-parts/account/login-form.php:215
 msgid "Privacy Policy"
 msgstr "Политикой конфиденциальности"
 
-#: core/components/modals/create-modal.php:170
+#: core/components/modals/create-modal.php:153
 msgid "Have an account?"
 msgstr "Уже есть аккаунт?"
 
@@ -934,18 +932,18 @@ msgstr "Совместная собственность"
 msgid "Fractional Ownership"
 msgstr "Долевая собственность"
 
-#: core/components/properties/functions.php:726
+#: core/components/properties/functions.php:723
 #: core/includes/entities/class-entity-property.php:556
 #: core/includes/entities/class-entity-property.php:623
-#: core/includes/entities/class-entity-unit.php:373
-#: core/includes/entities/class-entity-unit.php:441
+#: core/includes/entities/class-entity-unit.php:374
+#: core/includes/entities/class-entity-unit.php:442
 msgid "Ready"
 msgstr "Сдан"
 
-#: core/components/properties/functions.php:731
+#: core/components/properties/functions.php:728
 #: core/includes/entities/class-entity-property.php:562
-#: core/includes/entities/class-entity-unit.php:379
-#: core/includes/entities/class-entity-unit.php:447
+#: core/includes/entities/class-entity-unit.php:380
+#: core/includes/entities/class-entity-unit.php:448
 msgid "Handover:"
 msgstr "Сдача:"
 
@@ -997,7 +995,7 @@ msgid "Sorry, you are not allowed to access this resource."
 msgstr "Извините, у вас нет доступа к этому ресурсу."
 
 #. translators: 1: current page number, 2: total number of pages.
-#: core/components/seo/functions.php:626
+#: core/components/seo/functions.php:971
 msgid "Page %1$d of %2$d"
 msgstr "Страница %1$d из %2$d"
 
@@ -1053,8 +1051,8 @@ msgstr "Спальня"
 #: core/components/units/units-by-beds.php:82
 #: core/includes/entities/class-entity-property.php:157
 #: core/includes/entities/class-entity-property.php:161
-#: core/includes/entities/class-entity-unit.php:228
-#: core/includes/entities/class-entity-unit.php:524
+#: core/includes/entities/class-entity-unit.php:229
+#: core/includes/entities/class-entity-unit.php:527
 #: core/template-parts/cards/map-sidebar.php:86
 #: template-parts/sections/single/dropdowns.php:40
 #: template-parts/sections/single/dropdowns.php:75
@@ -1086,7 +1084,7 @@ msgid "Email Verified"
 msgstr "Email подтвержден"
 
 #: core/includes/entities/class-entity-property.php:626
-#: core/template-parts/account/edit-property.php:227
+#: core/template-parts/account/edit-property.php:225
 msgid "Handover Date"
 msgstr "Дата сдачи"
 
@@ -1098,63 +1096,63 @@ msgstr "Строительство начато"
 msgid "Number of Buildings"
 msgstr "Количество зданий"
 
-#: core/includes/entities/class-entity-property.php:658
+#: core/includes/entities/class-entity-property.php:659
 msgid "Government Fee"
 msgstr "Государственный сбор"
 
-#: core/includes/entities/class-entity-property.php:666
+#: core/includes/entities/class-entity-property.php:667
 msgid "Ownership Type"
 msgstr "Тип владения"
 
-#: core/includes/entities/class-entity-unit.php:217
-#: core/includes/entities/class-entity-unit.php:515
+#: core/includes/entities/class-entity-unit.php:219
+#: core/includes/entities/class-entity-unit.php:517
 msgid "1 Bath"
 msgstr "1 ванная"
 
 #: core/includes/entities/class-entity-property.php:571
-#: core/includes/entities/class-entity-unit.php:388
-#: core/includes/entities/class-entity-unit.php:455
+#: core/includes/entities/class-entity-unit.php:389
+#: core/includes/entities/class-entity-unit.php:456
 msgid "Popular"
 msgstr "Популярное"
 
 #: core/includes/entities/class-entity-property.php:579
-#: core/includes/entities/class-entity-unit.php:396
-#: core/includes/entities/class-entity-unit.php:462
+#: core/includes/entities/class-entity-unit.php:397
+#: core/includes/entities/class-entity-unit.php:463
 msgid "Premium Developer"
 msgstr "Премиальный застройщик"
 
 #: core/components/account/functions.php:142
-#: core/includes/entities/class-entity-unit.php:403
-#: core/includes/entities/class-entity-unit.php:469
-#: core/template-parts/account/profile.php:145
+#: core/includes/entities/class-entity-unit.php:404
+#: core/includes/entities/class-entity-unit.php:470
+#: core/template-parts/account/profile.php:148
 msgid "Promoted"
 msgstr "Продвигается"
 
 #: core/components/account/functions.php:143
-#: core/includes/entities/class-entity-unit.php:412
-#: core/includes/entities/class-entity-unit.php:477
+#: core/includes/entities/class-entity-unit.php:413
+#: core/includes/entities/class-entity-unit.php:478
 msgid "Waiting for approval"
 msgstr "Ожидает одобрения"
 
 #: core/components/account/functions.php:141
-#: core/includes/entities/class-entity-unit.php:419
-#: core/includes/entities/class-entity-unit.php:484
+#: core/includes/entities/class-entity-unit.php:420
+#: core/includes/entities/class-entity-unit.php:485
 msgid "Contains an error"
 msgstr "Есть ошибки"
 
-#: core/includes/entities/class-entity-unit.php:696
+#: core/includes/entities/class-entity-unit.php:699
 msgid "Gallery should not be empty"
 msgstr "Галерея не должна быть пустой"
 
-#: core/includes/entities/class-entity-unit.php:709
+#: core/includes/entities/class-entity-unit.php:712
 msgid "Price should not be empty and must bigger than 200 000 AED"
 msgstr "Цена не должна быть пустой и должна быть больше 200 000 AED"
 
-#: core/includes/entities/class-entity-unit.php:719
+#: core/includes/entities/class-entity-unit.php:722
 msgid "Your unit has been submitted and is waiting for approval. Please fix the following issues:"
 msgstr "Ваша заявка отправлена и находится на рассмотрении. Пожалуйста, устраните следующие недочеты:"
 
-#: core/includes/entities/class-entity-unit.php:732
+#: core/includes/entities/class-entity-unit.php:735
 msgid "Need to fix errors in your submitted property"
 msgstr "Необходимо исправить ошибки в отправленном объекте"
 
@@ -1603,7 +1601,7 @@ msgid "Edit Unit"
 msgstr "Редактировать лот"
 
 #: core/includes/registers/post-types/units.php:22
-#: core/template-parts/account/edit-unit.php:373
+#: core/template-parts/account/edit-unit.php:370
 msgid "Update Unit"
 msgstr "Обновить лот"
 
@@ -1644,63 +1642,63 @@ msgstr "Добавить проект объекта"
 msgid "My account"
 msgstr "Мой аккаунт"
 
-#: core/template-parts/account/edit-property.php:107
-#: core/template-parts/account/edit-unit.php:130
+#: core/template-parts/account/edit-property.php:104
+#: core/template-parts/account/edit-unit.php:127
 msgid "Title"
 msgstr "Название"
 
-#: core/template-parts/account/edit-property.php:112
+#: core/template-parts/account/edit-property.php:109
 msgid "azizi “beach oasis”"
 msgstr "azizi “beach oasis”"
 
-#: core/template-parts/account/edit-property.php:145
+#: core/template-parts/account/edit-property.php:143
 msgid "Pick on map"
 msgstr ""
 
-#: core/template-parts/account/edit-property.php:151
+#: core/template-parts/account/edit-property.php:149
 msgid "Latitude"
 msgstr "Широта"
 
-#: core/template-parts/account/edit-property.php:164
+#: core/template-parts/account/edit-property.php:162
 msgid "Longitude"
 msgstr "Долгота"
 
-#: core/template-parts/account/edit-property.php:208
+#: core/template-parts/account/edit-property.php:206
 msgid "Ownership type"
 msgstr "Тип владения"
 
-#: core/template-parts/account/edit-property.php:246
+#: core/template-parts/account/edit-property.php:244
 msgid "Project is already completed / Ready"
 msgstr "Проект уже завершен / готов"
 
-#: core/template-parts/account/edit-property.php:259
+#: core/template-parts/account/edit-property.php:257
 msgid "Contain Property Types "
 msgstr "Содержит типы объектов "
 
-#: core/template-parts/account/edit-property.php:285
-#: core/template-parts/account/edit-unit.php:319
+#: core/template-parts/account/edit-property.php:284
+#: core/template-parts/account/edit-unit.php:316
 #: core/template-parts/properties/property-single.php:211
 msgid "Description"
 msgstr "Описание"
 
-#: core/template-parts/account/edit-property.php:314
+#: core/template-parts/account/edit-property.php:313
 #, fuzzy
 msgid "Update project"
 msgstr "Обновить объект"
 
-#: core/template-parts/account/edit-property.php:315
-#: single-unit.php:106
-#: single-unit.php:112
+#: core/template-parts/account/edit-property.php:314
+#: single-unit.php:130
+#: single-unit.php:136
 msgid "Save"
 msgstr "Сохранить"
 
-#: core/template-parts/account/edit-property.php:362
-#: core/template-parts/account/edit-unit.php:418
+#: core/template-parts/account/edit-property.php:361
+#: core/template-parts/account/edit-unit.php:415
 msgid "Pictures"
 msgstr "Изображения"
 
-#: core/template-parts/account/edit-property.php:364
-#: core/template-parts/account/edit-unit.php:420
+#: core/template-parts/account/edit-property.php:363
+#: core/template-parts/account/edit-unit.php:417
 msgid "Browse files"
 msgstr "Выбрать файлы"
 
@@ -1722,83 +1720,83 @@ msgstr "Редактировать объект"
 msgid "Add property"
 msgstr "Добавить объект"
 
-#: core/template-parts/account/edit-unit.php:134
+#: core/template-parts/account/edit-unit.php:131
 msgid "City Walk 4BR Apartment on 2 floor"
 msgstr "Апартаменты City Walk 4BR на 2 этаже"
 
-#: core/template-parts/account/edit-unit.php:146
+#: core/template-parts/account/edit-unit.php:143
 msgid "Listing Type"
 msgstr "Тип объявления"
 
-#: core/template-parts/account/edit-unit.php:163
+#: core/template-parts/account/edit-unit.php:160
 msgid "Price, AED"
 msgstr "Цена, AED"
 
-#: core/template-parts/account/edit-unit.php:177
+#: core/template-parts/account/edit-unit.php:174
 msgid "Area (sqft)"
 msgstr "Площадь (кв. фут)"
 
-#: core/template-parts/account/edit-unit.php:191
+#: core/template-parts/account/edit-unit.php:188
 msgid "Price per square foot:"
 msgstr "Цена за квадратный фут:"
 
-#: core/template-parts/account/edit-unit.php:204
+#: core/template-parts/account/edit-unit.php:201
 msgid "Original price, AED"
 msgstr "Оригинальная цена, AED"
 
-#: core/template-parts/account/edit-unit.php:217
-#: single-unit.php:88
+#: core/template-parts/account/edit-unit.php:214
+#: single-unit.php:112
 msgid "Discount:"
 msgstr "Скидка:"
 
 #: core/components/sections/explore-by-districts.php:31
-#: core/template-parts/account/edit-unit.php:235
+#: core/template-parts/account/edit-unit.php:232
 msgid "Project"
 msgstr "Проект"
 
-#: core/template-parts/account/edit-unit.php:236
-#: core/template-parts/account/profile.php:214
+#: core/template-parts/account/edit-unit.php:233
+#: core/template-parts/account/profile.php:217
 msgid "+ Add new project"
 msgstr "+ Добавить новый проект"
 
-#: core/template-parts/account/edit-unit.php:255
+#: core/template-parts/account/edit-unit.php:252
 #: core/template-parts/filters/result-filters.php:241
 msgid "Property type"
 msgstr "Тип объекта"
 
-#: core/template-parts/account/edit-unit.php:294
+#: core/template-parts/account/edit-unit.php:291
 msgid "Bathrooms"
 msgstr "Ванные комнаты"
 
-#: core/template-parts/account/edit-unit.php:348
+#: core/template-parts/account/edit-unit.php:345
 msgid "Delete Property"
 msgstr "Удалить объект"
 
-#: core/template-parts/account/edit-unit.php:351
+#: core/template-parts/account/edit-unit.php:348
 msgid "Are you sure to delete this property?"
 msgstr "Вы уверены, что хотите удалить этот объект?"
 
-#: core/template-parts/account/edit-unit.php:354
+#: core/template-parts/account/edit-unit.php:351
 msgid "No"
 msgstr "Нет"
 
-#: core/template-parts/account/edit-unit.php:358
+#: core/template-parts/account/edit-unit.php:355
 msgid "Yes, Delete"
 msgstr "Да, удалить"
 
-#: core/template-parts/account/edit-unit.php:364
+#: core/template-parts/account/edit-unit.php:361
 msgid "New units are saved as drafts for moderation"
 msgstr "Новые лоты сохраняются как черновики для модерации"
 
-#: core/template-parts/account/edit-unit.php:375
+#: core/template-parts/account/edit-unit.php:372
 msgid "Submit Unit"
 msgstr "Опубликовать"
 
-#: core/template-parts/account/edit-unit.php:436
+#: core/template-parts/account/edit-unit.php:433
 msgid "Select property pictures to include in unit page"
 msgstr "Выберите изображения объекта для страницы лота"
 
-#: core/template-parts/account/edit-unit.php:440
+#: core/template-parts/account/edit-unit.php:437
 msgid "Select all"
 msgstr "Выбрать все"
 
@@ -1832,7 +1830,7 @@ msgstr "Создать новый аккаунт"
 
 #: core/template-parts/account/login-form.php:116
 #: core/template-parts/account/profile-client.php:140
-#: core/template-parts/account/profile.php:368
+#: core/template-parts/account/profile.php:374
 msgid "Email address"
 msgstr "Email адрес"
 
@@ -1840,14 +1838,14 @@ msgstr "Email адрес"
 msgid "admin@example.com"
 msgstr "admin@example.com"
 
-#: core/template-parts/account/login-form.php:187
+#: core/template-parts/account/login-form.php:190
 msgid "Choose your agency"
 msgstr "Выберите ваше агентство"
 
 #: core/template-parts/account/profile-client.php:33
 #: core/template-parts/account/profile-client.php:52
 #: core/template-parts/account/profile.php:63
-#: core/template-parts/account/profile.php:280
+#: core/template-parts/account/profile.php:286
 msgid "Saved properties"
 msgstr "Сохраненные объекты"
 
@@ -1856,33 +1854,33 @@ msgid "My Account"
 msgstr "Мой аккаунт"
 
 #: core/template-parts/account/profile-client.php:106
-#: core/template-parts/account/profile.php:334
+#: core/template-parts/account/profile.php:340
 msgid "You have not added any favorite units."
 msgstr "Вы еще не добавили избранные лоты."
 
 #: core/template-parts/account/profile-client.php:116
 #: core/template-parts/account/profile.php:69
-#: core/template-parts/account/profile.php:344
+#: core/template-parts/account/profile.php:350
 msgid "Account details"
 msgstr "Детали аккаунта"
 
 #: core/template-parts/account/profile-client.php:131
-#: core/template-parts/account/profile.php:359
+#: core/template-parts/account/profile.php:365
 msgid "Display name"
 msgstr "Отображаемое имя"
 
 #: core/template-parts/account/profile-client.php:164
-#: core/template-parts/account/profile.php:434
+#: core/template-parts/account/profile.php:418
 msgid "WhatsApp number"
 msgstr "Номер WhatsApp"
 
 #: core/template-parts/account/profile-client.php:180
-#: core/template-parts/account/profile.php:450
+#: core/template-parts/account/profile.php:434
 msgid "Save changes"
 msgstr "Сохранить изменения"
 
 #: core/template-parts/account/profile-client.php:188
-#: core/template-parts/account/profile.php:458
+#: core/template-parts/account/profile.php:442
 msgid "Avatar"
 msgstr "Аватар"
 
@@ -1914,40 +1912,36 @@ msgstr "Мои срочные продажи (%d)"
 msgid "My properties (%d)"
 msgstr "Мои объекты (%d)"
 
-#: core/template-parts/account/profile.php:129
+#: core/template-parts/account/profile.php:132
 msgid "Gold Star"
 msgstr "Золотая звезда"
 
-#: core/template-parts/account/profile.php:132
+#: core/template-parts/account/profile.php:135
 msgid "Boost your property to get it sold faster"
 msgstr "Продвиньте свой объект, чтобы продать его быстрее"
 
-#: core/template-parts/account/profile.php:134
+#: core/template-parts/account/profile.php:137
 msgid "Get More Eyes, Get More Offers. Fast-Track Your Sale. Priority Listing: Sell 2x Faster."
 msgstr "Привлеките больше внимания — получите больше предложений. Ускорьте процесс продажи. Приоритетное размещение объявления: продайте в 2 раза быстрее."
 
-#: core/template-parts/account/profile.php:137
+#: core/template-parts/account/profile.php:140
 msgid "How it works"
 msgstr "Как это работает"
 
-#: core/template-parts/account/profile.php:144
+#: core/template-parts/account/profile.php:147
 #: core/template-parts/cards/unit-card.php:106
 #: core/template-parts/cards/unit-card.php:163
 msgid "Star"
 msgstr "Звезда"
 
-#: core/template-parts/account/profile.php:177
-#: core/template-parts/account/profile.php:269
+#: core/template-parts/account/profile.php:180
+#: core/template-parts/account/profile.php:275
 msgid "You have not added any units yet."
 msgstr "Вы еще не добавили ни одного лота."
 
-#: core/template-parts/account/profile.php:191
+#: core/template-parts/account/profile.php:194
 msgid "My projects (%d)"
 msgstr "Мои проекты (%d)"
-
-#: core/template-parts/account/profile.php:392
-msgid "select"
-msgstr "выбрать"
 
 #: core/template-parts/account/reset-password.php:20
 msgid "Enter new password"
@@ -2133,7 +2127,7 @@ msgstr "Если это были не вы, проигнорируйте это 
 #: core/template-parts/filters/result-filters.php:264
 #: core/template-parts/filters/search-tabs.php:140
 #: core/template-parts/filters/search-tabs.php:161
-#: core/template-parts/ui/dropdown.php:50
+#: core/template-parts/ui/dropdown.php:58
 msgid "Search..."
 msgstr "Поиск..."
 
@@ -2233,20 +2227,20 @@ msgid "Explore Project"
 msgstr "Смотреть проект"
 
 #: core/template-parts/properties/property-single.php:56
-#: single-unit.php:99
-#: single-unit.php:100
+#: single-unit.php:123
+#: single-unit.php:124
 #: single.php:81
 msgid "Share"
 msgstr "Поделиться"
 
 #: core/template-parts/properties/property-single.php:86
 #: core/template-parts/properties/property-units-list.php:67
-#: single-unit.php:266
+#: single-unit.php:290
 msgid "Property information"
 msgstr "Информация об объекте"
 
 #: core/template-parts/properties/property-single.php:143
-#: single-unit.php:370
+#: single-unit.php:394
 msgid "View developer"
 msgstr "Открыть застройщика"
 
@@ -2261,12 +2255,12 @@ msgid "All properties"
 msgstr "Все объекты"
 
 #: core/template-parts/properties/property-single.php:186
-#: single-unit.php:206
+#: single-unit.php:230
 msgid "Payment plan"
 msgstr "План оплаты"
 
 #: core/template-parts/properties/property-single.php:200
-#: single-unit.php:330
+#: single-unit.php:354
 msgid "Amenities"
 msgstr "Удобства"
 
@@ -2301,7 +2295,7 @@ msgstr "Ознакомьтесь с широким выбором квартир
 msgid "Projects"
 msgstr "Проектов"
 
-#: core/template-parts/ui/dropdown.php:41
+#: core/template-parts/ui/dropdown.php:49
 msgid "Arrow down"
 msgstr "Стрелка вниз"
 
@@ -2405,24 +2399,24 @@ msgstr "Купить недвижимость от застройщика"
 msgid "Request quote"
 msgstr "Запросить предложение"
 
-#: single-unit.php:70
+#: single-unit.php:94
 msgctxt "followed by project"
 msgid "Property by"
 msgstr "Объект в"
 
-#: single-unit.php:90
+#: single-unit.php:114
 msgid "of original price"
 msgstr "от оригинальной цены"
 
-#: single-unit.php:110
+#: single-unit.php:134
 msgid "Saved"
 msgstr "Сохранено"
 
-#: single-unit.php:151
+#: single-unit.php:175
 msgid "Property broker"
 msgstr "Брокер объекта"
 
-#: single-unit.php:176
+#: single-unit.php:200
 msgid ""
 "Get in touch with broker using email, phone or WhatsApp. It’s free and does not\n"
 "                                                                        require any commitment from your side"
@@ -2430,43 +2424,43 @@ msgstr ""
 "Свяжитесь с брокером по электронной почте, телефону или через WhatsApp. Это бесплатно и не\n"
 "                                                                        требует от вас никаких обязательств"
 
-#: single-unit.php:222
+#: single-unit.php:246
 #: template-parts/sections/mortgage-calculator/calculator.php:85
 #: template-parts/sections/mortgage-calculator/calculator.php:213
 #: template-parts/sections/mortgage-calculator/entry-costs.php:15
 msgid "Down payment"
 msgstr "Первоначальный взнос"
 
-#: single-unit.php:224
+#: single-unit.php:248
 msgid "Sales launch"
 msgstr "Старт продаж"
 
-#: single-unit.php:232
+#: single-unit.php:256
 msgid "During construction"
 msgstr "Во время строительства"
 
-#: single-unit.php:234
+#: single-unit.php:258
 msgid "installments"
 msgstr "рассрочка"
 
-#: single-unit.php:243
+#: single-unit.php:267
 msgid "On handover"
 msgstr "При сдаче"
 
-#: single-unit.php:256
-#: single-unit.php:259
+#: single-unit.php:280
+#: single-unit.php:283
 msgid "Floor plan"
 msgstr "Планировка"
 
-#: single-unit.php:309
+#: single-unit.php:333
 msgid "Building Information"
 msgstr "Информация о здании"
 
-#: single-unit.php:314
+#: single-unit.php:338
 msgid "Building name"
 msgstr "Название здания"
 
-#: single-unit.php:319
+#: single-unit.php:343
 msgid "Floors"
 msgstr "Этажи"
 
@@ -3008,31 +3002,31 @@ msgstr "Название, проект или ID"
 msgid "Reset filters"
 msgstr "Сбросить фильтры"
 
-#: core/template-parts/account/profile.php:175
+#: core/template-parts/account/profile.php:178
 msgid "No units match the filters."
 msgstr "По выбранным фильтрам лотов нет."
 
-#: core/template-parts/account/profile.php:267
+#: core/template-parts/account/profile.php:273
 msgid "No projects match the filters."
 msgstr "По выбранным фильтрам проектов нет."
 
-#: core/components/filters/functions.php:615
+#: core/components/filters/functions.php:638
 msgid "Price: high to low"
 msgstr "Цена: по убыванию"
 
-#: core/components/filters/functions.php:619
+#: core/components/filters/functions.php:642
 msgid "Price: low to high"
 msgstr "Цена: по возрастанию"
 
-#: core/components/filters/functions.php:623
+#: core/components/filters/functions.php:646
 msgid "Newest first"
 msgstr "Сначала новые"
 
-#: core/components/filters/functions.php:631
+#: core/components/filters/functions.php:654
 msgid "Handover: soonest first"
 msgstr "Сначала ближайшая сдача"
 
-#: core/components/filters/functions.php:643
+#: core/components/filters/functions.php:666
 msgctxt "listing sort"
 msgid "Recommended"
 msgstr "Рекомендуемые"
@@ -3041,12 +3035,12 @@ msgstr "Рекомендуемые"
 msgid "amenities"
 msgstr ""
 
-#: core/components/filters/functions.php:627
+#: core/components/filters/functions.php:650
 msgid "Oldest first"
 msgstr "Сначала старые"
 
 #: core/includes/registers/post-types/units.php:79
-#: single-unit.php:78
+#: single-unit.php:102
 msgid "Archived"
 msgstr "В архиве"
 
@@ -3066,7 +3060,7 @@ msgstr "Описание (%s)"
 msgid "Shown on pages in this language. Left empty, the language shows no description."
 msgstr "Показывается на страницах этого языка. Если оставить пустым, описание не выводится."
 
-#: core/includes/entities/class-entity-unit.php:701
+#: core/includes/entities/class-entity-unit.php:704
 msgid "Area should not be empty and must bigger than 50 sqft"
 msgstr "Площадь не должна быть пустой и должна быть больше 50 кв. футов"
 
@@ -3075,12 +3069,12 @@ msgid "Change language"
 msgstr "Сменить язык"
 
 #. translators: 1: project name, 2: developer name, 3: project URL.
-#: core/components/properties/functions.php:985
+#: core/components/properties/functions.php:982
 msgid "Hello! I am interested in the %1$s project by %2$s. Could you tell me more about it? %3$s"
 msgstr "Здравствуйте! Меня интересует проект %1$s от %2$s. Расскажите, пожалуйста, о нём подробнее. %3$s"
 
 #. translators: 1: project name, 2: project URL.
-#: core/components/properties/functions.php:995
+#: core/components/properties/functions.php:992
 msgid "Hello! I am interested in the %1$s project. Could you tell me more about it? %2$s"
 msgstr "Здравствуйте! Меня интересует проект %1$s. Расскажите, пожалуйста, о нём подробнее. %2$s"
 
@@ -3287,6 +3281,23 @@ msgstr "Здравствуйте! Меня интересуют off-market пр�
 msgid "Unlock more off-market deals"
 msgstr "Off-market предложения"
 
-#: core/components/filters/functions.php:598
+#: core/components/filters/functions.php:621
 msgid "No properties found"
 msgstr "Объекты не найдены"
+
+#: core/template-parts/account/lang-switcher.php:43
+#: core/template-parts/account/lang-switcher.php:44
+msgid "Remove language"
+msgstr "Убрать язык"
+
+#: core/template-parts/account/lang-switcher.php:50
+msgid "+ Add language"
+msgstr "+ Добавить язык"
+
+#: core/template-parts/account/lang-switcher.php:73
+msgid "This project will be translated into the other languages automatically. You can also add a translation yourself by picking a language."
+msgstr "Проект будет переведён на другие языки системой по мере обхода. Также вы можете добавить перевод вручную, выбрав нужный язык."
+
+#: core/template-parts/account/lang-switcher.php:77
+msgid "This listing will be translated into the other languages automatically. You can also add a translation yourself by picking a language."
+msgstr "Объект будет переведён на другие языки системой по мере обхода. Также вы можете добавить перевод вручную, выбрав нужный язык."

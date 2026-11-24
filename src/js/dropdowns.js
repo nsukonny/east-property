@@ -6,12 +6,42 @@ document.addEventListener('DOMContentLoaded', () => {
 	toggleDropdown()
 })
 
+const closeDropdown = dropdown => {
+	dropdown.classList.remove('opened')
+
+	const dropdownOpen = dropdown.querySelector('.dropdown-content')
+	if (dropdownOpen) dropdownOpen.style.height = '0'
+}
+
+const closeOpenedDropdowns = except => {
+	document.querySelectorAll('.dropdown.opened').forEach(dropdown => {
+		if (dropdown !== except) closeDropdown(dropdown)
+	})
+}
+
+const closeOnOutsideClick = event => {
+	if (event.target.closest('.dropdown')) return
+
+	closeOpenedDropdowns()
+	watchOutsideClick()
+}
+
+const watchOutsideClick = () => {
+	if (document.querySelector('.dropdown.opened')) {
+		document.addEventListener('click', closeOnOutsideClick)
+	} else {
+		document.removeEventListener('click', closeOnOutsideClick)
+	}
+}
+
 const toggleDropdown = () => {
 	const dropdownButtons = document.querySelectorAll('.dropdown-button')
 	const openedDropdowns = document.querySelectorAll('.dropdown.opened')
 
 	if (openedDropdowns.length) {
 		openedDropdowns.forEach(dropdown => reCalculateDropdownHeight(dropdown))
+
+		watchOutsideClick()
 	}
 
 	if (!dropdownButtons.length) return
@@ -24,13 +54,16 @@ const toggleDropdown = () => {
 			if (!dropdownOpen) return
 
 			if (!dropdown.classList.contains('opened')) {
+				closeOpenedDropdowns(dropdown)
+
 				dropdown.classList.add('opened')
 
 				reCalculateDropdownHeight(dropdown)
 			} else {
-				dropdown.classList.remove('opened')
-				dropdownOpen.style.height = '0'
+				closeDropdown(dropdown)
 			}
+
+			watchOutsideClick()
 		})
 
 		initSearch(button);
@@ -43,7 +76,6 @@ const toggleDropdown = () => {
 		const dropdown = option.closest('.dropdown')
 		const button = dropdown.querySelector('.dropdown-button')
 		const title = button.querySelector('.dropdown-title')
-		const dropdownOpen = dropdown.querySelector('.dropdown-content')
 		const hiddenInput = dropdown.closest('.input-wrapper')?.querySelector('input[type="hidden"]')
 
 		if (title) title.textContent = option.textContent
@@ -54,8 +86,8 @@ const toggleDropdown = () => {
 			hiddenInput.dispatchEvent(new Event('change', {bubbles: true}))
 		}
 
-		dropdown.classList.remove('opened')
-		if (dropdownOpen) dropdownOpen.style.height = '0'
+		closeDropdown(dropdown)
+		watchOutsideClick()
 
 		dropdown.dispatchEvent(new CustomEvent('change', {detail: {value: option.textContent}}))
 	})

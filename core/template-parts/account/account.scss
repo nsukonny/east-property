@@ -312,6 +312,7 @@
 .lang-switcher {
 	display: flex;
 	flex-direction: row;
+	align-items: center;
 	gap: 16px;
 	margin-bottom: 12px;
 	flex-wrap: wrap;
@@ -336,4 +337,121 @@
 		border: 1px solid #FF3636;
 		color: #FF1200;
 	}
+}
+
+.lang-tab {
+	display: inline-flex;
+	align-items: center;
+	gap: 2px;
+
+	&.hidden {
+		display: none;
+	}
+}
+
+.lang-tab-remove {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: transparent;
+	color: v.$c-text-grey;
+	font-size: 16px;
+	line-height: 1;
+	cursor: pointer;
+	transition: background-color 0.2s ease, color 0.2s ease;
+
+	&[hidden] {
+		display: none;
+	}
+
+	&:hover,
+	&:focus-visible {
+		background-color: v.$c-grey-90;
+		color: v.$c-grey;
+	}
+}
+
+.lang-add {
+	position: relative;
+}
+
+.lang-add-toggle {
+	padding: 9.5px 12px;
+	border: 1px dashed v.$c-grey-90;
+	border-radius: v.$br8;
+	background: transparent;
+	color: v.$c-grey;
+	font-family: "Inter", sans-serif;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 18px;
+	white-space: nowrap;
+	cursor: pointer;
+	transition: border-color 0.2s ease, background-color 0.2s ease;
+
+	&:hover,
+	&[aria-expanded='true'] {
+		border-color: v.$c-text-grey;
+		background-color: v.$c-grey-97;
+	}
+}
+
+.lang-add-list {
+	position: absolute;
+	top: calc(100% + 6px);
+	left: 0;
+	z-index: 20;
+	min-width: 180px;
+	margin: 0;
+	padding: 6px;
+	border-radius: v.$br12;
+	background-color: v.$c-white;
+	box-shadow: v.$shadow-1;
+	border: 1px solid v.$c-grey-90;
+	list-style: none;
+
+	&[hidden] {
+		display: none;
+	}
+}
+
+.lang-add-item + .lang-add-item {
+	margin-top: 2px;
+}
+
+.lang-add-option {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	width: 100%;
+	padding: 8px 10px;
+	border: 0;
+	border-radius: v.$br8;
+	background: transparent;
+	color: v.$c-grey;
+	font-family: "Inter", sans-serif;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 18px;
+	text-align: start;
+	white-space: nowrap;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+
+	&:hover,
+	&:focus-visible {
+		background-color: v.$c-grey-97;
+	}
+}
+
+.submit-unit-left .lang-switcher-hint {
+	margin: -4px 0 20px;
+	color: v.$c-text-grey;
+	font-size: 13px;
+	line-height: 18px;
 }

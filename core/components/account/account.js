@@ -383,7 +383,119 @@ const initLangSwitcher = () => {
 		currentLangBtn.click();
 	}
 
+	initLangAdd(langSwitcher);
 	syncLangValues();
+}
+
+/**
+ * Dropdown that brings a not yet added language onto the form.
+ *
+ * @param {HTMLElement} langSwitcher Tabs container.
+ */
+const initLangAdd = (langSwitcher) => {
+	const box = langSwitcher.querySelector('[data-lang-add]');
+	if (!box) return;
+
+	const toggle = box.querySelector('.lang-add-toggle');
+	const list = box.querySelector('.lang-add-list');
+	if (!toggle || !list) return;
+
+	const close = () => {
+		list.hidden = true;
+		toggle.setAttribute('aria-expanded', 'false');
+		document.removeEventListener('click', onOutside);
+	};
+
+	const onOutside = (e) => {
+		if (!box.contains(e.target)) close();
+	};
+
+	toggle.addEventListener('click', () => {
+		if (list.hidden) {
+			list.hidden = false;
+			toggle.setAttribute('aria-expanded', 'true');
+			document.addEventListener('click', onOutside);
+		} else {
+			close();
+		}
+	});
+
+	box.addEventListener('keydown', (e) => {
+		if ('Escape' === e.key && !list.hidden) {
+			close();
+			toggle.focus();
+		}
+	});
+
+	const refreshAddButton = () => {
+		box.classList.toggle('hidden', !list.querySelector('[data-lang-item]:not(.hidden)'));
+	};
+
+	list.addEventListener('click', (e) => {
+		const option = e.target.closest('[data-add-lang]');
+		if (!option) return;
+
+		const slug = option.dataset.addLang;
+		const tab = langSwitcher.querySelector(`[data-lang-tab="${slug}"]`);
+		const link = tab?.querySelector('[data-switch-to-lang]');
+		if (!link) return;
+
+		box.before(tab);
+		tab.classList.remove('hidden');
+		tab.querySelector('[data-remove-lang]').hidden = false;
+		option.closest('[data-lang-item]')?.classList.add('hidden');
+		refreshAddButton();
+
+		close();
+		link.click();
+	});
+
+	langSwitcher.addEventListener('click', (e) => {
+		const remove = e.target.closest('[data-remove-lang]');
+		if (!remove) return;
+
+		const slug = remove.dataset.removeLang;
+		const tab = remove.closest('[data-lang-tab]');
+		const link = tab?.querySelector('[data-switch-to-lang]');
+		if (!link) return;
+
+		clearLangFields(slug);
+
+		tab.classList.add('hidden');
+		remove.hidden = true;
+		list.querySelector(`[data-lang-item="${slug}"]`)?.classList.remove('hidden');
+		refreshAddButton();
+
+		if (link.classList.contains('current')) {
+			langSwitcher.querySelector('[data-lang-tab]:not(.hidden) [data-switch-to-lang]')?.click();
+		}
+	});
+}
+
+/**
+ * Empty the own fields of a language so a removed tab is not submitted.
+ *
+ * @param {string} slug Language slug.
+ */
+const clearLangFields = (slug) => {
+	const fieldset = document.querySelector(`fieldset[data-show-on-lang="${slug}"]`);
+	if (!fieldset) return;
+
+	fieldset.querySelectorAll('input[name$="[unit_title]"], input[name$="[title]"]')
+		.forEach(input => {
+			input.value = '';
+			input.dispatchEvent(new Event('input', {bubbles: true}));
+		});
+
+	const editor = window.tinymce?.get(`s-desc_${slug}`);
+	if (editor) {
+		editor.setContent('');
+	}
+
+	const textarea = document.getElementById(`s-desc_${slug}`);
+	if (textarea) {
+		textarea.value = '';
+	}
 }
 
 /**

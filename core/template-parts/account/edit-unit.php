@@ -91,25 +91,22 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 
 				<div class="submit-unit-inner">
 					<div class="submit-unit-left">
-						<?php if ( 1 < count( $languages ) ) { ?>
-							<div class="lang-switcher">
-								<?php foreach ( $languages as $slug => $language ) {
-									$current_class = ( $current_language === $slug ) ? 'current' : '';
-									?>
-									<a data-switch-to-lang="<?php echo esc_attr( $language['slug'] ); ?>" href="#"
-									   class="button sm <?php echo esc_attr( $current_class ); ?>"
-									>
-										<img src="<?php echo esc_url( THEME_URL . '/assets/img/lang/' . $language['slug'] . '.png' ) ?>"
-											 alt="<?php echo esc_html( $language['name'] ); ?>"/>
-										<span><?php echo esc_html( $language['name'] ); ?></span>
-									</a>
-								<?php } ?>
-							</div>
-						<?php } ?>
+						<?php
+						get_template_part(
+							'core/template-parts/account/lang-switcher',
+							null,
+							array(
+								'languages' => $languages,
+								'current'   => $current_language,
+								'active'    => array_keys( $translations ),
+								'type'      => 'unit',
+							)
+						);
+						?>
 
 						<?php
 						foreach ( $languages as $slug => $language ) {
-							switch_to_lang( $language['locale'] );
+							$switched = switch_to_lang( $language['locale'] );
 
 							// Resolved inside the loop so each locale gets its own labels.
 							$listing_type_choices = core_get_listing_type_choices();
@@ -377,7 +374,9 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 								</button>
 							</div>
 							<?php
-							restore_previous_locale();
+							if ( $switched ) {
+								restore_previous_locale();
+							}
 						}
 						?>
 					</div>

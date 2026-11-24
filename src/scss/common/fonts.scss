@@ -3,7 +3,7 @@
   src: url('../fonts/Inter/Inter-400.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: optional;
 }
 
 @font-face {
@@ -11,7 +11,7 @@
   src: url('../fonts/Inter/Inter-600.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
-  font-display: swap;
+  font-display: optional;
 }
 
 @font-face {
@@ -19,7 +19,7 @@
   src: url('../fonts/Inter/Inter-700.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
-  font-display: swap;
+  font-display: optional;
 }
 
 @font-face {
@@ -27,7 +27,7 @@
   src: url('../fonts/Exo-2/Exo-2-800.woff2') format('woff2');
   font-weight: 800;
   font-style: normal;
-  font-display: swap;
+  font-display: optional;
 }
 
 @font-face {
@@ -35,7 +35,7 @@
   src: url('../fonts/Exo-2/Exo-2-900.woff2') format('woff2');
   font-weight: 900;
   font-style: normal;
-  font-display: swap;
+  font-display: optional;
 }
 
 @font-face {
@@ -43,5 +43,69 @@
 	src: url('../fonts/Exo-2/Exo2-Regular.woff2') format('woff2');
 	font-weight: 400;
 	font-style: normal;
-	font-display: swap;
+	font-display: optional;
+}
+
+/*
+ * Fix jumping on loading the page
+ */
+
+@font-face {
+	font-family: 'Inter Fallback';
+	src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+	font-weight: 400;
+	size-adjust: 105.68%;
+	ascent-override: 90.91%;
+	descent-override: 22.64%;
+	line-gap-override: 0%;
+}
+
+@font-face {
+	font-family: 'Inter Fallback';
+	src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+	font-weight: 600;
+	size-adjust: 107.90%;
+	ascent-override: 88.94%;
+	descent-override: 22.14%;
+	line-gap-override: 0%;
+}
+
+@font-face {
+	font-family: 'Inter Fallback';
+	src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+	font-weight: 700;
+	size-adjust: 109.00%;
+	ascent-override: 87.98%;
+	descent-override: 21.91%;
+	line-gap-override: 0%;
+}
+
+@font-face {
+	font-family: 'Exo 2 Fallback';
+	src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+	font-weight: 400;
+	size-adjust: 101.21%;
+	ascent-override: 98.71%;
+	descent-override: 19.86%;
+	line-gap-override: 0%;
+}
+
+@font-face {
+	font-family: 'Exo 2 Fallback';
+	src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+	font-weight: 800;
+	size-adjust: 107.42%;
+	ascent-override: 93.00%;
+	descent-override: 18.71%;
+	line-gap-override: 0%;
+}
+
+@font-face {
+	font-family: 'Exo 2 Fallback';
+	src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+	font-weight: 900;
+	size-adjust: 109.23%;
+	ascent-override: 91.46%;
+	descent-override: 18.40%;
+	line-gap-override: 0%;
 }
