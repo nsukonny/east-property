@@ -1,10 +1,23 @@
-import {reCalculateDropdownHeight} from "./common/common.js";
+gitimport {reCalculateDropdownHeight} from "./common/common.js";
 
 document.addEventListener('DOMContentLoaded', () => {
 	'use strict'
 
 	toggleDropdown()
 })
+
+const closeDropdown = dropdown => {
+	dropdown.classList.remove('opened')
+
+	const dropdownOpen = dropdown.querySelector('.dropdown-content')
+	if (dropdownOpen) dropdownOpen.style.height = '0'
+}
+
+const closeOpenedDropdowns = except => {
+	document.querySelectorAll('.dropdown.opened').forEach(dropdown => {
+		if (dropdown !== except) closeDropdown(dropdown)
+	})
+}
 
 const toggleDropdown = () => {
 	const dropdownButtons = document.querySelectorAll('.dropdown-button')
@@ -24,12 +37,13 @@ const toggleDropdown = () => {
 			if (!dropdownOpen) return
 
 			if (!dropdown.classList.contains('opened')) {
+				closeOpenedDropdowns(dropdown)
+
 				dropdown.classList.add('opened')
 
 				reCalculateDropdownHeight(dropdown)
 			} else {
-				dropdown.classList.remove('opened')
-				dropdownOpen.style.height = '0'
+				closeDropdown(dropdown)
 			}
 		})
 
@@ -43,7 +57,6 @@ const toggleDropdown = () => {
 		const dropdown = option.closest('.dropdown')
 		const button = dropdown.querySelector('.dropdown-button')
 		const title = button.querySelector('.dropdown-title')
-		const dropdownOpen = dropdown.querySelector('.dropdown-content')
 		const hiddenInput = dropdown.closest('.input-wrapper')?.querySelector('input[type="hidden"]')
 
 		if (title) title.textContent = option.textContent
@@ -54,8 +67,7 @@ const toggleDropdown = () => {
 			hiddenInput.dispatchEvent(new Event('change', {bubbles: true}))
 		}
 
-		dropdown.classList.remove('opened')
-		if (dropdownOpen) dropdownOpen.style.height = '0'
+		closeDropdown(dropdown)
 
 		dropdown.dispatchEvent(new CustomEvent('change', {detail: {value: option.textContent}}))
 	})
