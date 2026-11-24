@@ -767,11 +767,14 @@ final class Unit {
 			}
 
 			unset( $translations[ $key ] );
-			$unit_property_id = $unit->get_property()->get_id();
+			$unit_property_id = (int) $unit->get_property()?->get_id();
 			if ( ! wp_delete_post( $unit->get_id(), true ) ) {
 				return false;
 			}
-			core_refresh_units_count( $unit_property_id );
+
+			if ( 0 < $unit_property_id ) {
+				core_refresh_units_count( $unit_property_id );
+			}
 		}
 
 		if ( empty( $translations ) ) {
@@ -795,8 +798,11 @@ final class Unit {
 				return false;
 			}
 
-			$unit_property_id = $unit->get_property()->get_id();
-			core_refresh_units_count( $unit_property_id );
+			$unit_property_id = (int) $unit->get_property()?->get_id();
+
+			if ( 0 < $unit_property_id ) {
+				core_refresh_units_count( $unit_property_id );
+			}
 		}
 
 		$this->post = get_post( $this->id );

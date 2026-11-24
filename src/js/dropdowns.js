@@ -1,4 +1,4 @@
-gitimport {reCalculateDropdownHeight} from "./common/common.js";
+import {reCalculateDropdownHeight} from "./common/common.js";
 
 document.addEventListener('DOMContentLoaded', () => {
 	'use strict'
@@ -19,12 +19,29 @@ const closeOpenedDropdowns = except => {
 	})
 }
 
+const closeOnOutsideClick = event => {
+	if (event.target.closest('.dropdown')) return
+
+	closeOpenedDropdowns()
+	watchOutsideClick()
+}
+
+const watchOutsideClick = () => {
+	if (document.querySelector('.dropdown.opened')) {
+		document.addEventListener('click', closeOnOutsideClick)
+	} else {
+		document.removeEventListener('click', closeOnOutsideClick)
+	}
+}
+
 const toggleDropdown = () => {
 	const dropdownButtons = document.querySelectorAll('.dropdown-button')
 	const openedDropdowns = document.querySelectorAll('.dropdown.opened')
 
 	if (openedDropdowns.length) {
 		openedDropdowns.forEach(dropdown => reCalculateDropdownHeight(dropdown))
+
+		watchOutsideClick()
 	}
 
 	if (!dropdownButtons.length) return
@@ -45,6 +62,8 @@ const toggleDropdown = () => {
 			} else {
 				closeDropdown(dropdown)
 			}
+
+			watchOutsideClick()
 		})
 
 		initSearch(button);
@@ -68,6 +87,7 @@ const toggleDropdown = () => {
 		}
 
 		closeDropdown(dropdown)
+		watchOutsideClick()
 
 		dropdown.dispatchEvent(new CustomEvent('change', {detail: {value: option.textContent}}))
 	})
