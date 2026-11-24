@@ -65,7 +65,7 @@ $rest   = array_diff( $slugs, $active );
 
 <?php
 foreach ( $languages as $slug => $language ) {
-	switch_to_lang( $language['locale'] );
+	$switched = switch_to_lang( $language['locale'] );
 
 	$hint = 'property' === $type
 		? __(
@@ -80,6 +80,7 @@ foreach ( $languages as $slug => $language ) {
 	<p class="lang-switcher-hint<?php echo $current === $slug ? '' : ' hidden'; ?>"
 	   data-show-on-lang="<?php echo esc_attr( $slug ); ?>"><?php echo esc_html( $hint ); ?></p>
 	<?php
+	if ( $switched ) {
+		restore_previous_locale();
+	}
 }
-
-switch_to_lang( $languages[ $current ]['locale'] ?? get_locale() );

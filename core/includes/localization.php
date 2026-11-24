@@ -6,16 +6,16 @@
  *
  * @param string $locale
  *
- * @return void
+ * @return bool Whether the locale was switched and has to be restored
  */
-function switch_to_lang( string $locale ): void {
+function switch_to_lang( string $locale ): bool {
 	$parts = preg_split( '/[-_]/', $locale );
 
 	if ( count( $parts ) >= 2 ) {
 		$locale = strtolower( $parts[0] ) . '_' . strtoupper( $parts[1] );
 	}
 
-	switch_to_locale( $locale );
+	return switch_to_locale( $locale );
 }
 
 /**

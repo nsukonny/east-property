@@ -106,7 +106,7 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 
 						<?php
 						foreach ( $languages as $slug => $language ) {
-							switch_to_lang( $language['locale'] );
+							$switched = switch_to_lang( $language['locale'] );
 
 							// Resolved inside the loop so each locale gets its own labels.
 							$listing_type_choices = core_get_listing_type_choices();
@@ -374,7 +374,9 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 								</button>
 							</div>
 							<?php
-							restore_previous_locale();
+							if ( $switched ) {
+								restore_previous_locale();
+							}
 						}
 						?>
 					</div>

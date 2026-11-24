@@ -92,7 +92,7 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 
 						<?php
 						foreach ( $languages as $slug => $language ) {
-							switch_to_lang( $language['locale'] );
+							$switched = switch_to_lang( $language['locale'] );
 
 							$property_title = isset( $translations[ $slug ] ) ? $translations[ $slug ]->get_title() : '';
 							$description    = isset( $translations[ $slug ] ) ? $translations[ $slug ]->get_description_full() : '';
@@ -319,7 +319,9 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 								?>
 							</div>
 							<?php
-							restore_previous_locale();
+							if ( $switched ) {
+								restore_previous_locale();
+							}
 						}
 						?>
 					</div>
