@@ -199,17 +199,16 @@ final class Unit {
 	public function get_amenities(): array {
 		$amenities = array();
 
-		$beds = $this->get_beds();
-		if ( 0 === $beds ) {
-			$beds = __( 'Studio', 'east-property' );
-		} else {
-			$beds = core_open_ended_label( $beds, get_filter_beds_options()['options'] )
-			        . ' ' . __( 'Beds', 'east-property' );
+		$beds = (string) $this->get_field( 'bedrooms' );
+		if ( '' !== $beds ) {
+			$amenities[] = array(
+				'icon'  => THEME_URL . '/assets/img/bed.svg',
+				'value' => 0 === (int) $beds
+					? __( 'Studio', 'east-property' )
+					: core_open_ended_label( (int) $beds, get_filter_beds_options()['options'] )
+					  . ' ' . __( 'Beds', 'east-property' ),
+			);
 		}
-		$amenities[] = array(
-			'icon'  => THEME_URL . '/assets/img/bed.svg',
-			'value' => $beds,
-		);
 
 		$baths = $this->get_baths();
 		if ( 0 < $baths ) {
@@ -498,16 +497,18 @@ final class Unit {
 	 * @return array
 	 */
 	public static function build_amenities( array $unit = array() ): array {
-		$beds      = (int) ( $unit['bedrooms'] ?? 0 );
-		$amenities = array(
-			array(
+		$beds      = (string) ( $unit['bedrooms'] ?? '' );
+		$amenities = array();
+
+		if ( '' !== $beds ) {
+			$amenities[] = array(
 				'icon'  => THEME_URL . '/assets/img/bed.svg',
-				'value' => 0 === $beds
+				'value' => 0 === (int) $beds
 					? __( 'Studio', 'east-property' )
-					: core_open_ended_label( $beds, get_filter_beds_options()['options'] )
+					: core_open_ended_label( (int) $beds, get_filter_beds_options()['options'] )
 					  . ' ' . __( 'Beds', 'east-property' ),
-			),
-		);
+			);
+		}
 
 		$baths = (int) ( $unit['bathrooms'] ?? 0 );
 		if ( 0 < $baths ) {

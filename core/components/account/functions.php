@@ -853,6 +853,17 @@ function account_create_unit(): void {
 }
 
 /**
+ * Room counter as the broker left it, empty when nothing was picked
+ *
+ * @param mixed $value
+ *
+ * @return string|int
+ */
+function core_optional_room_count( mixed $value ): string|int {
+	return '' === trim( (string) $value ) ? '' : max( 0, (int) $value );
+}
+
+/**
  * Insert or update unit translation for the given language.
  *
  * @param mixed $language
@@ -888,8 +899,8 @@ function update_unit_translation( mixed $language, array $unit_data ): int|WP_Er
 	}
 
 	$price_per_sqft = absint( $unit_data['price_per_square'] ?? 0 );
-	$bedrooms       = max( 0, (int) ( $unit_data['bedrooms'] ?? 0 ) );
-	$bathrooms      = max( 0, (int) ( $unit_data['bathrooms'] ?? 0 ) );
+	$bedrooms       = 'office' === $unit_type ? '' : core_optional_room_count( $unit_data['bedrooms'] ?? '' );
+	$bathrooms      = core_optional_room_count( $unit_data['bathrooms'] ?? '' );
 
 	if ( ! empty( $unit_data['unit_id'] ) ) {
 		$unit_id = absint( $unit_data['unit_id'] );
@@ -1204,8 +1215,11 @@ function account_update_profile(): void {
 
 	$user_display_name = sanitize_text_field( wp_unslash( $_POST['display_name'] ?? '' ) );
 	$agency_id         = absint( $_POST['agency_id'] ?? 0 );
+	$keep_number       = static fn( string $number ): bool => '' !== $number;
 	$phones            = array_map( 'sanitize_text_field', wp_unslash( $_POST['phone'] ?? array() ) );
+	$phones            = array_filter( array_map( 'core_format_phone', $phones ), $keep_number );
 	$whatsapps         = array_map( 'sanitize_text_field', wp_unslash( $_POST['whatsapp'] ?? array() ) );
+	$whatsapps         = array_filter( array_map( 'core_format_phone', $whatsapps ), $keep_number );
 
 	$current_user_id = get_current_user_id();
 	$updated         = wp_update_user(
@@ -1908,3 +1922,154 @@ function change_logout_url( string $logout_url ): string {
 }
 
 add_filter( 'logout_url', 'change_logout_url' );
+
+/**
+ * Statuses whose listing page is open to everyone.
+ *
+ * @return string[]
+ */
+function core_public_listing_statuses(): array {
+	return array( 'publish', 'archived' );
+}
+
+/**
+ * Whether the current user may open a listing that is not published yet.
+ *
+ * @param int $post_id Unit or property.
+ *
+ * @return bool
+ */
+function core_can_preview_listing( int $post_id ): bool {
+	$post = get_post( $post_id );
+
+	if ( null === $post ) {
+		return false;
+	}
+
+	if ( in_array( $post->post_status, core_public_listing_statuses(), true ) ) {
+		return true;
+	}
+
+	return is_user_logged_in()
+		   && ( (int) $post->post_author === get_current_user_id() || current_user_can( 'manage_options' ) );
+}
+
+/**
+ * Pull a listing waiting for approval into the single query, so its author can open it.
+ */
+add_action( 'pre_get_posts', static function ( WP_Query $query ): void {
+	if ( is_admin() || ! $query->is_main_query() || ! is_user_logged_in() ) {
+		return;
+	}
+
+	if ( '' === (string) $query->get( 'name' ) ) {
+		return;
+	}
+
+	if ( ! array_intersect( (array) $query->get( 'post_type' ), array( 'unit', 'property' ) ) ) {
+		return;
+	}
+
+	$query->set(
+		'post_status',
+		array_merge( core_public_listing_statuses(), array( 'draft', 'pending' ) )
+	);
+} );
+
+/**
+ * Keep an unpublished listing hidden from everyone but its author and an administrator.
+ *
+ * The broker role is cloned from editor and so carries edit_others_posts, which
+ * makes the stock `perm` check useless here.
+ */
+add_action( 'template_redirect', static function (): void {
+	if ( ! is_singular( array( 'unit', 'property' ) ) ) {
+		return;
+	}
+
+	if ( core_can_preview_listing( get_queried_object_id() ) ) {
+		return;
+	}
+
+	global $wp_query;
+
+	$wp_query->set_404();
+	status_header( 404 );
+	nocache_headers();
+} );
+
+/**
+ * Keep a listing that is not published out of search results.
+ */
+add_filter( 'wpseo_robots_array', static function ( $robots ) {
+	if ( ! is_singular( array( 'unit', 'property' ) ) ) {
+		return $robots;
+	}
+
+	$post = get_post( get_queried_object_id() );
+
+	if ( null === $post || in_array( $post->post_status, core_public_listing_statuses(), true ) ) {
+		return $robots;
+	}
+
+	$robots          = (array) $robots;
+	$robots['index'] = 'noindex';
+
+	return $robots;
+}, 20 );
+
+/**
+ * Group a phone number as 971 58 523 5351.
+ *
+ * @param string $number Any shape, non digits are dropped.
+ *
+ * @return string Empty string when the number holds no digits.
+ */
+function core_format_phone( string $number ): string {
+	$digits = (string) preg_replace( '/\D+/', '', $number );
+
+	if ( '' === $digits ) {
+		return '';
+	}
+
+	$parts  = array();
+	$offset = 0;
+
+	foreach ( array( 3, 2, 3, 4 ) as $size ) {
+		if ( $offset >= strlen( $digits ) ) {
+			break;
+		}
+
+		$parts[] = substr( $digits, $offset, $size );
+		$offset  += $size;
+	}
+
+	if ( $offset < strlen( $digits ) ) {
+		$parts[] = substr( $digits, $offset );
+	}
+
+	return implode( ' ', $parts );
+}
+
+/**
+ * Saved numbers of one field by language.
+ *
+ * @param Estate_User $user  User to read.
+ * @param string      $field phone or whatsapp.
+ *
+ * @return array<string, string>
+ */
+function core_user_number_map( Estate_User $user, string $field ): array {
+	$numbers = array();
+	$rows    = (array) $user->get_field( 'phone' === $field ? 'phones' : 'whatsapps' );
+
+	foreach ( $rows as $row ) {
+		if ( empty( $row['language'] ) || empty( $row[ $field ] ) ) {
+			continue;
+		}
+
+		$numbers[ $row['language'] ] = core_format_phone( (string) $row[ $field ] );
+	}
+
+	return $numbers;
+}

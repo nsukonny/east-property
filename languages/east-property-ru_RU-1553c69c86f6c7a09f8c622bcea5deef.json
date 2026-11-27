@@ -1,7 +1,7 @@
 {
     "translation-revision-date": "2026-09-23 16:13+0300",
-    "generator": "WP-CLI\/2.11.0",
-    "source": "assets\/js\/main.js",
+    "generator": "WP-CLI/2.11.0",
+    "source": "assets/js/main.js",
     "domain": "messages",
     "locale_data": {
         "messages": {
@@ -11,58 +11,58 @@
                 "plural-forms": "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);"
             },
             "Location": [
-                "\u041b\u043e\u043a\u0430\u0446\u0438\u044f"
+                "Локация"
             ],
             "Developer": [
-                "\u0417\u0430\u0441\u0442\u0440\u043e\u0439\u0449\u0438\u043a"
+                "Застройщик"
             ],
             "Area": [
-                "\u041f\u043b\u043e\u0449\u0430\u0434\u044c"
+                "Площадь"
             ],
             "Beds": [
-                "\u0421\u043f\u0430\u043b\u044c\u043d\u0438"
+                "Спальни"
             ],
             "Studio": [
-                "\u0421\u0442\u0443\u0434\u0438\u044f"
+                "Студия"
             ],
             "Select": [
-                "\u0412\u044b\u0431\u0440\u0430\u0442\u044c"
+                "Выбрать"
             ],
             "Bed": [
-                "\u0421\u043f\u0430\u043b\u044c\u043d\u044f"
+                "Спальня"
             ],
             "sqft": [
-                "\u043a\u0432. \u0444\u0443\u0442"
+                "кв. фут"
             ],
             "Unit": [
                 "Unit"
             ],
             "Pre-approval": [
-                "\u041f\u0440\u0435\u0434\u0432\u0430\u0440\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0435 \u043e\u0434\u043e\u0431\u0440\u0435\u043d\u0438\u0435"
+                "Предварительное одобрение"
             ],
             "MOU (Form F)": [
                 "MOU (Form F)"
             ],
             "Final approval": [
-                "\u0424\u0438\u043d\u0430\u043b\u044c\u043d\u043e\u0435 \u043e\u0434\u043e\u0431\u0440\u0435\u043d\u0438\u0435"
+                "Финальное одобрение"
             ],
             "beds": [
-                "\u0441\u043f\u0430\u043b\u0435\u043d"
+                "спален"
             ],
             "bed": [
-                "\u0441\u043f\u0430\u043b\u044c\u043d\u044f"
+                "спальня"
             ],
             "baths": [
-                "\u0432\u0430\u043d\u043d"
+                "ванн"
             ],
             "bath": [
-                "\u0432\u0430\u043d\u043d\u0430"
+                "ванна"
             ],
             "Selected location": [
-                "\u0412\u044b\u0431\u0440\u0430\u043d\u043d\u0430\u044f \u0442\u043e\u0447\u043a\u0430"
+                "Выбранная точка"
             ],
-            "%1$d projects \u00b7 %2$d units": [
-                "%1$d \u043f\u0440\u043e\u0435\u043a\u0442\u043e\u0432 \u00b7 %2$d \u044e\u043d\u0438\u0442\u043e\u0432"
+            "%1$d projects · %2$d units": [
+                "%1$d проектов · %2$d юнитов"
             ],
             "UAE Resident": [
                 ""
@@ -70,7 +70,7 @@
             "Non-Resident": [
                 ""
             ],
-            "Mortgage Calculation \u2014 East Property": [
+            "Mortgage Calculation — East Property": [
                 ""
             ],
             "East Property Advisory": [
@@ -88,13 +88,13 @@
             "UAE Mortgage Calculation Report": [
                 ""
             ],
-            "Property financing estimate and upfront acquisition breakdown \u00b7 East Property Advisory": [
+            "Property financing estimate and upfront acquisition breakdown · East Property Advisory": [
                 ""
             ],
             "Estimated Monthly Payment": [
                 ""
             ],
-            "\/ month": [
+            "/ month": [
                 ""
             ],
             "Profile": [
@@ -163,7 +163,7 @@
             "Total Required at Entry": [
                 ""
             ],
-            "The Deal in 6 Steps (Timeline: 4\u20138 Weeks from MOU to Keys)": [
+            "The Deal in 6 Steps (Timeline: 4–8 Weeks from MOU to Keys)": [
                 ""
             ],
             "Bank eligibility": [
@@ -198,6 +198,12 @@
             ],
             "East Property Brokerage LLC": [
                 ""
+            ],
+            "Cover": [
+                "Обложка"
+            ],
+            "Make cover": [
+                "Сделать обложкой"
             ]
         }
     }

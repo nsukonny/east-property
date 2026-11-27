@@ -144,36 +144,29 @@ $languages      = get_all_languages();
 										</label>
 									</div>
 
-									<br>
-									<?php foreach ( $languages as $language_slug => $language ) { ?>
-										<div class="input-group">
-											<label for="phone_<?php echo esc_attr( $language_slug ); ?>">
-												<?php esc_html_e( 'Phone number', 'east-property' ); ?>
-												(<?php echo esc_attr( $language['name'] ); ?>)
-												<input type="text" id="phone_<?php echo esc_attr( $language_slug ); ?>"
-													   name="phone[<?php echo esc_attr( $language_slug ); ?>]"
-													   value="<?php echo esc_attr( $client->get_phone( $language_slug ) ); ?>"
-													   placeholder="971509670043">
-											</label>
-										</div>
-									<?php } ?>
-									<br>
-									<?php foreach ( $languages as $language_slug => $language ) { ?>
-										<div class="input-group">
-											<label for="whatsapp_<?php echo esc_attr( $language_slug ); ?>">
-												<?php esc_html_e( 'WhatsApp number', 'east-property' ); ?>
-												(<?php echo esc_attr( $language['name'] ); ?>)
-												<input type="text"
-													   id="whatsapp_<?php echo esc_attr( $language_slug ); ?>"
-													   name="whatsapp[<?php echo esc_attr( $language_slug ); ?>]"
-													   value="<?php echo esc_attr( $client->get_whatsapp(
-														   '',
-														   $language_slug,
-														   false ) ); ?>"
-													   placeholder="971509670043">
-											</label>
-										</div>
-									<?php } ?>
+									<?php
+									get_component_template(
+										'account/number-fields',
+										array(
+											'languages' => $languages,
+											'numbers'   => core_user_number_map( $client, 'phone' ),
+											'field'     => 'phone',
+											'title'     => __( 'Phone number', 'east-property' ),
+											'add_label' => __( '+ Add phone for language', 'east-property' ),
+										)
+									);
+
+									get_component_template(
+										'account/number-fields',
+										array(
+											'languages' => $languages,
+											'numbers'   => core_user_number_map( $client, 'whatsapp' ),
+											'field'     => 'whatsapp',
+											'title'     => __( 'WhatsApp number', 'east-property' ),
+											'add_label' => __( '+ Add WhatsApp for language', 'east-property' ),
+										)
+									);
+									?>
 								</fieldset>
 								<div class="submit-unit-bottom">
 									<button class="button green orange xl" type="submit">

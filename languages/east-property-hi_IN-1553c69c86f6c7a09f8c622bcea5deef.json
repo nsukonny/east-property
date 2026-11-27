@@ -1,7 +1,7 @@
 {
     "translation-revision-date": "2026-10-27 11:46+0000",
-    "generator": "WP-CLI\/2.11.0",
-    "source": "assets\/js\/main.js",
+    "generator": "WP-CLI/2.11.0",
+    "source": "assets/js/main.js",
     "domain": "messages",
     "locale_data": {
         "messages": {
@@ -11,193 +11,199 @@
                 "plural-forms": "nplurals=2; plural=(n != 1);"
             },
             "Location": [
-                "\u0938\u094d\u0925\u093e\u0928"
+                "स्थान"
             ],
             "Developer": [
-                "\u0921\u0947\u0935\u0932\u092a\u0930"
+                "डेवलपर"
             ],
             "Area": [
-                "\u0915\u094d\u0937\u0947\u0924\u094d\u0930"
+                "क्षेत्र"
             ],
             "Beds": [
-                "\u092c\u0947\u0921"
+                "बेड"
             ],
             "Studio": [
-                "\u0938\u094d\u091f\u0942\u0921\u093f\u092f\u094b"
+                "स्टूडियो"
             ],
             "Select": [
-                "\u091a\u0941\u0928\u0947\u0902"
+                "चुनें"
             ],
             "Bed": [
-                "\u092c\u0947\u0921"
+                "बेड"
             ],
             "sqft": [
                 "sqft"
             ],
             "Unit": [
-                "\u092f\u0942\u0928\u093f\u091f"
+                "यूनिट"
             ],
             "Pre-approval": [
-                "\u092a\u094d\u0930\u0940-\u0905\u092a\u094d\u0930\u0942\u0935\u0932"
+                "प्री-अप्रूवल"
             ],
             "MOU (Form F)": [
-                "MOU (\u092b\u0949\u0930\u094d\u092e F)"
+                "MOU (फॉर्म F)"
             ],
             "Final approval": [
-                "\u0905\u0902\u0924\u093f\u092e \u0938\u094d\u0935\u0940\u0915\u0943\u0924\u093f"
+                "अंतिम स्वीकृति"
             ],
             "beds": [
-                "\u092c\u0947\u0921\u0930\u0942\u092e"
+                "बेडरूम"
             ],
             "bed": [
-                "\u092c\u0947\u0921\u0930\u0942\u092e"
+                "बेडरूम"
             ],
             "baths": [
-                "\u092c\u093e\u0925\u0930\u0942\u092e"
+                "बाथरूम"
             ],
             "bath": [
-                "\u092c\u093e\u0925\u0930\u0942\u092e"
+                "बाथरूम"
             ],
             "Selected location": [
-                "\u091a\u0941\u0928\u093e \u0939\u0941\u0906 \u0938\u094d\u0925\u093e\u0928"
+                "चुना हुआ स्थान"
             ],
-            "%1$d projects \u00b7 %2$d units": [
-                "%1$d \u092a\u094d\u0930\u094b\u091c\u0947\u0915\u094d\u091f\u094d\u0938 \u00b7 %2$d \u092f\u0942\u0928\u093f\u091f\u094d\u0938"
+            "%1$d projects · %2$d units": [
+                "%1$d प्रोजेक्ट्स · %2$d यूनिट्स"
             ],
             "UAE Resident": [
-                "UAE \u0928\u093f\u0935\u093e\u0938\u0940"
+                "UAE निवासी"
             ],
             "Non-Resident": [
-                "\u0905\u0928\u093f\u0935\u093e\u0938\u0940"
+                "अनिवासी"
             ],
-            "Mortgage Calculation \u2014 East Property": [
-                "\u092e\u0949\u0930\u094d\u0917\u0947\u091c \u0915\u0948\u0932\u0915\u0941\u0932\u0947\u0936\u0928 \u2014 East Property"
+            "Mortgage Calculation — East Property": [
+                "मॉर्गेज कैलकुलेशन — East Property"
             ],
             "East Property Advisory": [
                 "East Property Advisory"
             ],
             "Ref:": [
-                "\u0938\u0902\u0926\u0930\u094d\u092d:"
+                "संदर्भ:"
             ],
             "Date:": [
-                "\u0926\u093f\u0928\u093e\u0902\u0915:"
+                "दिनांक:"
             ],
             "Dubai, United Arab Emirates": [
-                "\u0926\u0941\u092c\u0908, \u0938\u0902\u092f\u0941\u0915\u094d\u0924 \u0905\u0930\u092c \u0905\u092e\u0940\u0930\u093e\u0924"
+                "दुबई, संयुक्त अरब अमीरात"
             ],
             "UAE Mortgage Calculation Report": [
-                "UAE \u092e\u0949\u0930\u094d\u0917\u0947\u091c \u0917\u0923\u0928\u093e \u0930\u093f\u092a\u094b\u0930\u094d\u091f"
+                "UAE मॉर्गेज गणना रिपोर्ट"
             ],
-            "Property financing estimate and upfront acquisition breakdown \u00b7 East Property Advisory": [
-                "\u0938\u0902\u092a\u0924\u094d\u0924\u093f \u0935\u093f\u0924\u094d\u0924\u092a\u094b\u0937\u0923 \u0905\u0928\u0941\u092e\u093e\u0928 \u0914\u0930 \u0905\u0917\u094d\u0930\u093f\u092e \u0905\u0927\u093f\u0917\u094d\u0930\u0939\u0923 \u0935\u093f\u0935\u0930\u0923 \u00b7 East Property Advisory"
+            "Property financing estimate and upfront acquisition breakdown · East Property Advisory": [
+                "संपत्ति वित्तपोषण अनुमान और अग्रिम अधिग्रहण विवरण · East Property Advisory"
             ],
             "Estimated Monthly Payment": [
-                "\u0905\u0928\u0941\u092e\u093e\u0928\u093f\u0924 \u092e\u093e\u0938\u093f\u0915 \u092d\u0941\u0917\u0924\u093e\u0928"
+                "अनुमानित मासिक भुगतान"
             ],
-            "\/ month": [
-                "\u092a\u094d\u0930\u0924\u093f \u092e\u093e\u0939"
+            "/ month": [
+                "प्रति माह"
             ],
             "Profile": [
-                "\u092a\u094d\u0930\u094b\u092b\u093c\u093e\u0907\u0932"
+                "प्रोफ़ाइल"
             ],
             "Tenure": [
-                "\u0915\u093e\u0930\u094d\u092f\u0915\u093e\u0932"
+                "कार्यकाल"
             ],
             "%s Years": [
-                "%s \u0935\u0930\u094d\u0937"
+                "%s वर्ष"
             ],
             "Interest Rate": [
-                "\u092c\u094d\u092f\u093e\u091c \u0926\u0930"
+                "ब्याज दर"
             ],
             "Principal Loan:": [
-                "\u092e\u0942\u0932 \u090b\u0923:"
+                "मूल ऋण:"
             ],
             "Total Interest:": [
-                "\u0915\u0941\u0932 \u092c\u094d\u092f\u093e\u091c:"
+                "कुल ब्याज:"
             ],
             "Loan Parameters": [
-                "\u090b\u0923 \u092a\u0948\u0930\u093e\u092e\u0940\u091f\u0930"
+                "ऋण पैरामीटर"
             ],
             "Property Price": [
-                "\u0938\u0902\u092a\u0924\u094d\u0924\u093f \u0915\u0940 \u0915\u0940\u092e\u0924"
+                "संपत्ति की कीमत"
             ],
             "Down Payment (%s%%)": [
-                "\u0921\u093e\u0909\u0928 \u092a\u0947\u092e\u0947\u0902\u091f (%s%%)"
+                "डाउन पेमेंट (%s%%)"
             ],
             "Bank Loan Amount": [
-                "\u092c\u0948\u0902\u0915 \u090b\u0923 \u0930\u093e\u0936\u093f"
+                "बैंक ऋण राशि"
             ],
             "Loan Tenure": [
-                "\u090b\u0923 \u0915\u093e\u0930\u094d\u092f\u0915\u093e\u0932"
+                "ऋण कार्यकाल"
             ],
             "%1$s years (%2$s mos)": [
-                "%1$s \u0935\u0930\u094d\u0937 (%2$s \u092e\u0939\u0940\u0928\u0947)"
+                "%1$s वर्ष (%2$s महीने)"
             ],
             "%s%% p.a.": [
-                "%s%% \u092a\u094d\u0930\u0924\u093f \u0935\u0930\u094d\u0937"
+                "%s%% प्रति वर्ष"
             ],
             "Total Interest (Overpayment)": [
-                "\u0915\u0941\u0932 \u092c\u094d\u092f\u093e\u091c (\u0905\u0924\u093f\u0930\u093f\u0915\u094d\u0924 \u092d\u0941\u0917\u0924\u093e\u0928)"
+                "कुल ब्याज (अतिरिक्त भुगतान)"
             ],
             "Total Payable over Term": [
-                "\u0905\u0935\u0927\u093f \u0915\u0947 \u0926\u094c\u0930\u093e\u0928 \u0915\u0941\u0932 \u0926\u0947\u092f \u0930\u093e\u0936\u093f"
+                "अवधि के दौरान कुल देय राशि"
             ],
             "Full Cost of Entry": [
-                "\u092a\u094d\u0930\u0935\u0947\u0936 \u0915\u0940 \u092a\u0942\u0930\u094d\u0923 \u0932\u093e\u0917\u0924"
+                "प्रवेश की पूर्ण लागत"
             ],
             "DLD Fee (4% + 580)": [
-                "DLD \u0936\u0941\u0932\u094d\u0915 (4% + 580)"
+                "DLD शुल्क (4% + 580)"
             ],
             "Agency Commission (2%)": [
-                "\u090f\u091c\u0947\u0902\u0938\u0940 \u0915\u092e\u0940\u0936\u0928 (2%)"
+                "एजेंसी कमीशन (2%)"
             ],
             "Bank Fee (1% of loan)": [
-                "\u092c\u0948\u0902\u0915 \u0936\u0941\u0932\u094d\u0915 (\u090b\u0923 \u0915\u093e 1%)"
+                "बैंक शुल्क (ऋण का 1%)"
             ],
             "Property Valuation": [
-                "\u0938\u0902\u092a\u0924\u094d\u0924\u093f \u0915\u093e \u092e\u0942\u0932\u094d\u092f\u093e\u0902\u0915\u0928"
+                "संपत्ति का मूल्यांकन"
             ],
             "Mortgage Registration": [
-                "\u092e\u0949\u0930\u094d\u0917\u0947\u091c \u092a\u0902\u091c\u0940\u0915\u0930\u0923"
+                "मॉर्गेज पंजीकरण"
             ],
             "Total Required at Entry": [
-                "\u092a\u094d\u0930\u0935\u0947\u0936 \u0915\u0947 \u0938\u092e\u092f \u0915\u0941\u0932 \u0906\u0935\u0936\u094d\u092f\u0915 \u0930\u093e\u0936\u093f"
+                "प्रवेश के समय कुल आवश्यक राशि"
             ],
-            "The Deal in 6 Steps (Timeline: 4\u20138 Weeks from MOU to Keys)": [
-                "6 \u091a\u0930\u0923\u094b\u0902 \u092e\u0947\u0902 \u0938\u094c\u0926\u093e (\u0938\u092e\u092f\u0930\u0947\u0916\u093e: MOU \u0938\u0947 \u091a\u093e\u092c\u093f\u092f\u094b\u0902 \u0924\u0915 4\u20138 \u0938\u092a\u094d\u0924\u093e\u0939)"
+            "The Deal in 6 Steps (Timeline: 4–8 Weeks from MOU to Keys)": [
+                "6 चरणों में सौदा (समयरेखा: MOU से चाबियों तक 4–8 सप्ताह)"
             ],
             "Bank eligibility": [
-                "\u092c\u0948\u0902\u0915 \u092a\u093e\u0924\u094d\u0930\u0924\u093e"
+                "बैंक पात्रता"
             ],
             "~10% deposit": [
-                "~10% \u091c\u092e\u093e \u0930\u093e\u0936\u093f"
+                "~10% जमा राशि"
             ],
             "Valuation": [
-                "\u092e\u0942\u0932\u094d\u092f\u093e\u0902\u0915\u0928"
+                "मूल्यांकन"
             ],
             "Property appraisal": [
-                "\u0938\u0902\u092a\u0924\u094d\u0924\u093f \u0915\u093e \u092e\u0942\u0932\u094d\u092f\u093e\u0902\u0915\u0928"
+                "संपत्ति का मूल्यांकन"
             ],
             "Loan offer letter": [
-                "\u090b\u0923 \u092a\u094d\u0930\u0938\u094d\u0924\u093e\u0935 \u092a\u0924\u094d\u0930"
+                "ऋण प्रस्ताव पत्र"
             ],
             "DLD Transfer": [
-                "DLD \u0939\u0938\u094d\u0924\u093e\u0902\u0924\u0930\u0923"
+                "DLD हस्तांतरण"
             ],
             "Title deed": [
-                "\u091f\u093e\u0907\u091f\u0932 \u0921\u0940\u0921"
+                "टाइटल डीड"
             ],
             "Handover": [
-                "\u0939\u0948\u0902\u0921\u0913\u0935\u0930"
+                "हैंडओवर"
             ],
             "Funds & keys": [
-                "\u092b\u0902\u0921 \u0914\u0930 \u091a\u093e\u092c\u093f\u092f\u093e\u0901"
+                "फंड और चाबियाँ"
             ],
             "Disclaimer:": [
-                "\u0905\u0938\u094d\u0935\u0940\u0915\u0930\u0923:"
+                "अस्वीकरण:"
             ],
             "East Property Brokerage LLC": [
                 "East Property Brokerage LLC"
+            ],
+            "Cover": [
+                "कवर"
+            ],
+            "Make cover": [
+                "कवर बनाएं"
             ]
         }
     }

@@ -2,6 +2,8 @@ import * as FilePond from 'filepond';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import Sortable from 'sortablejs';
 
+const {__} = window.wp.i18n;
+
 document.addEventListener('DOMContentLoaded', () => {
 	'use strict';
 
@@ -41,6 +43,31 @@ const initUploader = () => {
 		canDelete: false
 	}));
 
+	let coverId = typeof defaultCoverId !== 'undefined' && defaultCoverId ? String(defaultCoverId) : null;
+
+	/**
+	 * Ids that may serve as a cover: uploaded pictures and selected presets.
+	 */
+	const coverPool = () => [
+		...userFiles.map(f => f.id),
+		...presets.filter(f => f.isSelected).map(f => f.id)
+	];
+
+	/**
+	 * Keep the cover on a picture that is still in the gallery.
+	 */
+	const ensureCover = () => {
+		const pool = coverPool();
+
+		if (!pool.length) {
+			coverId = null;
+
+			return;
+		}
+
+		if (!pool.some(id => sameId(id, coverId))) coverId = pool[0];
+	};
+
 	const syncPresetsFromDom = () => {
 		presets = Array.from(getPresetsGrid().querySelectorAll('.uploader-item'))
 			.map((el) => {
@@ -68,13 +95,21 @@ const initUploader = () => {
 			form.appendChild(hidden);
 		}
 
+		ensureCover();
+
+		const coverFile = userFiles.find(f => sameId(f.id, coverId));
+		const coverOut = coverFile ? (coverFile.attachmentId ?? coverFile.id) : coverId;
+		const order = [
+			...userFiles.map(f => f.attachmentId ?? f.id),
+			...presets.filter(f => f.isSelected).map(f => f.id)
+		];
+
 		const payload = {
 			user: userFiles.map(f => f.attachmentId ?? f.id),
 			presets: presets.filter(f => f.isSelected).map(f => f.id),
-			fullOrder: [
-				...userFiles.map(f => f.attachmentId ?? f.id),
-				...presets.filter(f => f.isSelected).map(f => f.id)
-			]
+			fullOrder: order.some(id => sameId(id, coverOut))
+				? [coverOut, ...order.filter(id => !sameId(id, coverOut))]
+				: order
 		};
 
 		hidden.value = JSON.stringify(payload);
@@ -82,8 +117,9 @@ const initUploader = () => {
 	};
 
 	const createItemEl = (file) => {
+		const isCover = sameId(file.id, coverId);
 		const el = document.createElement('div');
-		el.className = `uploader-item ${file.canDelete ? 'is-uploaded' : (file.isSelected ? 'is-selected' : '')}`;
+		el.className = `uploader-item ${file.canDelete ? 'is-uploaded' : (file.isSelected ? 'is-selected' : '')}${isCover ? ' is-cover' : ''}`;
 		el.dataset.id = file.id;
 		el.dataset.url = file.url;
 
@@ -91,6 +127,28 @@ const initUploader = () => {
 		img.src = file.url;
 		img.alt = 'Unit image';
 		el.append(img);
+
+		if (file.canDelete || file.isSelected) {
+			const coverBtn = document.createElement('button');
+			coverBtn.className = 'uploader-item-cover';
+			coverBtn.type = 'button';
+			coverBtn.title = isCover ? __('Cover', 'east-property') : __('Make cover', 'east-property');
+			coverBtn.setAttribute('aria-label', coverBtn.title);
+			coverBtn.setAttribute('aria-pressed', isCover ? 'true' : 'false');
+			coverBtn.addEventListener('click', (e) => {
+				e.stopPropagation();
+				coverId = String(file.id);
+				render();
+			});
+			el.append(coverBtn);
+
+			if (isCover) {
+				const coverLabel = document.createElement('span');
+				coverLabel.className = 'uploader-item-cover-label';
+				coverLabel.textContent = __('Cover', 'east-property');
+				el.append(coverLabel);
+			}
+		}
 
 		if (file.canDelete) {
 			const delBtn = document.createElement('button');
@@ -115,6 +173,8 @@ const initUploader = () => {
 	};
 
 	const render = () => {
+		ensureCover();
+
 		uGrid.innerHTML = '';
 		userFiles.forEach(f => uGrid.append(createItemEl(f)));
 
@@ -180,6 +240,8 @@ const initUploader = () => {
 
 		pond.on('processfile', (error, file) => {
 			uGrid.classList.remove('preloader');
+
+			if (!error) render();
 		});
 
 		pond.on('processfileabort', () => {
@@ -278,8 +340,7 @@ const initUploader = () => {
 		if (!preset) return;
 
 		preset.isSelected = !preset.isSelected;
-		item.classList.toggle('is-selected', preset.isSelected);
-		syncToHidden();
+		render();
 	});
 
 	[uGrid, pGrid].forEach(grid => {
@@ -296,6 +357,11 @@ const initUploader = () => {
 				syncToHidden();
 			}
 		});
+	});
+
+	document.addEventListener('ajaxComplete', () => {
+		syncPresetsFromDom();
+		render();
 	});
 
 	render();

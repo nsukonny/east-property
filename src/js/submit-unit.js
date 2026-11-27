@@ -16,6 +16,8 @@ const initFormInteractions = () => {
 	const discountSpans = form.querySelectorAll('[data-discount-value] span');
 	const distressBlocks = form.querySelectorAll('[data-distress-fields]');
 	const listingTypeInputs = form.querySelectorAll('input[name$="[listing_type]"]');
+	const unitTypeInputs = form.querySelectorAll('input[name$="[unit_type]"]');
+	const bedsBlocks = form.querySelectorAll('[data-beds-fields]');
 	const submitBtn = form.querySelector('button[type="submit"]');
 
 	if (!priceInputs.length || !areaInputs.length || !resultSpans.length || !submitBtn) return;
@@ -89,6 +91,31 @@ const initFormInteractions = () => {
 		updateCalculations();
 	};
 
+	/**
+	 * Hide and clear the bedrooms of an office.
+	 *
+	 * @param {string} unitType Selected unit type slug.
+	 */
+	const applyUnitType = (unitType) => {
+		const isOffice = 'office' === unitType;
+
+		bedsBlocks.forEach(block => {
+			block.classList.toggle('hidden', isOffice);
+
+			const input = block.querySelector('input[data-lang-sync="beds"]');
+			if (!input) return;
+
+			input.toggleAttribute('data-required', !isOffice);
+
+			if (!isOffice) return;
+
+			delete input.dataset.langRequired;
+			input.value = '';
+			block.classList.remove('error-field');
+			block.querySelectorAll('.beds-baths-btn').forEach(btn => btn.classList.remove('active'));
+		});
+	};
+
 	const checkValidity = () => {
 		const requiredElements = form.querySelectorAll('[required], [data-required]');
 		const isFormValid = Array.from(requiredElements).every(el =>
@@ -147,6 +174,10 @@ const initFormInteractions = () => {
 
 		listingTypeInputs.forEach(inp => {
 			inp.addEventListener('change', () => applyListingType(inp.value));
+		});
+
+		unitTypeInputs.forEach(inp => {
+			inp.addEventListener('change', () => applyUnitType(inp.value));
 		});
 
 		initButtonGroupToggles();

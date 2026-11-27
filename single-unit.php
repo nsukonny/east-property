@@ -15,11 +15,12 @@ while ( have_posts() ) {
 		continue;
 	}
 
-	if ( ! in_array( $unit->get_status(), array( 'publish', 'archived' ), true ) ) {
+	if ( ! core_can_preview_listing( $unit->get_id() ) ) {
 		wp_safe_redirect( core_home_url( '/404' ) );
 	}
 
 	$is_archived = $unit->is_archived();
+	$is_waiting  = ! in_array( $unit->get_status(), core_public_listing_statuses(), true );
 
 	$property = $unit->get_property();
 	if ( null !== $property && ! $property->exists() ) {
@@ -94,6 +95,14 @@ while ( have_posts() ) {
 									_x( 'Property by', 'followed by project', 'east-property' )
 									. ' ' . $property->get_title() );
 								?>
+							</div>
+						<?php } ?>
+						<?php if ( $is_waiting ) { ?>
+							<div class="single-items-top-labels">
+								<div class="label black">
+									<span><?php echo esc_html( mb_strtoupper( __( 'Waiting for approval',
+											'east-property' ) ) ); ?></span>
+								</div>
 							</div>
 						<?php } ?>
 						<?php if ( $is_archived ) { ?>
@@ -191,7 +200,7 @@ while ( have_posts() ) {
 											data-modal-open="broker-modal"
 											data-property-id="<?php echo esc_attr( $unit->get_id() ); ?>"
 											data-property-title="<?php echo esc_attr( $unit->get_title() ); ?>"
-											data-broker-phone="tel:<?php echo esc_attr( $broker_phone ); ?>"
+											data-broker-phone="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $broker_phone ) ); ?>"
 											data-broker-whatsapp="<?php echo esc_url( $whats_app_link ); ?>"
 									>
 										<?php _e( 'Contact broker', 'east-property' ); ?>

@@ -1,7 +1,7 @@
 {
     "translation-revision-date": "2026-10-27 11:46+0000",
-    "generator": "WP-CLI\/2.11.0",
-    "source": "assets\/js\/main.js",
+    "generator": "WP-CLI/2.11.0",
+    "source": "assets/js/main.js",
     "domain": "messages",
     "locale_data": {
         "messages": {
@@ -11,193 +11,199 @@
                 "plural-forms": "nplurals=1; plural=0;"
             },
             "Location": [
-                "\u4f4d\u7f6e"
+                "位置"
             ],
             "Developer": [
-                "\u5f00\u53d1\u5546"
+                "开发商"
             ],
             "Area": [
-                "\u9762\u79ef"
+                "面积"
             ],
             "Beds": [
-                "\u5367\u5ba4"
+                "卧室"
             ],
             "Studio": [
-                "\u5355\u95f4\u516c\u5bd3"
+                "单间公寓"
             ],
             "Select": [
-                "\u9009\u62e9"
+                "选择"
             ],
             "Bed": [
-                "\u5367\u5ba4"
+                "卧室"
             ],
             "sqft": [
                 "sqft"
             ],
             "Unit": [
-                "\u623f\u6e90"
+                "房源"
             ],
             "Pre-approval": [
-                "\u9884\u5148\u6279\u51c6"
+                "预先批准"
             ],
             "MOU (Form F)": [
-                "\u8c05\u89e3\u5907\u5fd8\u5f55 (F\u8868\u683c)"
+                "谅解备忘录 (F表格)"
             ],
             "Final approval": [
-                "\u6700\u7ec8\u6279\u51c6"
+                "最终批准"
             ],
             "beds": [
-                "\u5367\u5ba4"
+                "卧室"
             ],
             "bed": [
-                "\u5367\u5ba4"
+                "卧室"
             ],
             "baths": [
-                "\u536b\u6d74"
+                "卫浴"
             ],
             "bath": [
-                "\u536b\u6d74"
+                "卫浴"
             ],
             "Selected location": [
-                "\u5df2\u9009\u4f4d\u7f6e"
+                "已选位置"
             ],
-            "%1$d projects \u00b7 %2$d units": [
-                "%1$d \u4e2a\u9879\u76ee \u00b7 %2$d \u5957\u623f\u6e90"
+            "%1$d projects · %2$d units": [
+                "%1$d 个项目 · %2$d 套房源"
             ],
             "UAE Resident": [
-                "\u963f\u8054\u914b\u5c45\u6c11"
+                "阿联酋居民"
             ],
             "Non-Resident": [
-                "\u975e\u5c45\u6c11"
+                "非居民"
             ],
-            "Mortgage Calculation \u2014 East Property": [
-                "\u62b5\u62bc\u8d37\u6b3e\u8ba1\u7b97 \u2014 East Property"
+            "Mortgage Calculation — East Property": [
+                "抵押贷款计算 — East Property"
             ],
             "East Property Advisory": [
                 "East Property Advisory"
             ],
             "Ref:": [
-                "\u7f16\u53f7\uff1a"
+                "编号："
             ],
             "Date:": [
-                "\u65e5\u671f\uff1a"
+                "日期："
             ],
             "Dubai, United Arab Emirates": [
-                "\u963f\u62c9\u4f2f\u8054\u5408\u914b\u957f\u56fd\uff0c\u8fea\u62dc"
+                "阿拉伯联合酋长国，迪拜"
             ],
             "UAE Mortgage Calculation Report": [
-                "\u963f\u8054\u914b\u62b5\u62bc\u8d37\u6b3e\u8ba1\u7b97\u62a5\u544a"
+                "阿联酋抵押贷款计算报告"
             ],
-            "Property financing estimate and upfront acquisition breakdown \u00b7 East Property Advisory": [
-                "\u623f\u4ea7\u878d\u8d44\u4f30\u7b97\u53ca\u524d\u671f\u8d2d\u623f\u6210\u672c\u660e\u7ec6 \u00b7 East Property Advisory"
+            "Property financing estimate and upfront acquisition breakdown · East Property Advisory": [
+                "房产融资估算及前期购房成本明细 · East Property Advisory"
             ],
             "Estimated Monthly Payment": [
-                "\u9884\u8ba1\u6708\u4f9b"
+                "预计月供"
             ],
-            "\/ month": [
-                "\u6bcf\u671f"
+            "/ month": [
+                "每期"
             ],
             "Profile": [
-                "\u4e2a\u4eba\u8d44\u6599"
+                "个人资料"
             ],
             "Tenure": [
-                "\u8d37\u6b3e\u671f\u9650"
+                "贷款期限"
             ],
             "%s Years": [
-                "%s \u5e74"
+                "%s 年"
             ],
             "Interest Rate": [
-                "\u5229\u7387"
+                "利率"
             ],
             "Principal Loan:": [
-                "\u8d37\u6b3e\u672c\u91d1\uff1a"
+                "贷款本金："
             ],
             "Total Interest:": [
-                "\u5229\u606f\u603b\u989d\uff1a"
+                "利息总额："
             ],
             "Loan Parameters": [
-                "\u8d37\u6b3e\u53c2\u6570"
+                "贷款参数"
             ],
             "Property Price": [
-                "\u623f\u4ea7\u4ef7\u683c"
+                "房产价格"
             ],
             "Down Payment (%s%%)": [
-                "\u9996\u4ed8 (%s%%)"
+                "首付 (%s%%)"
             ],
             "Bank Loan Amount": [
-                "\u94f6\u884c\u8d37\u6b3e\u91d1\u989d"
+                "银行贷款金额"
             ],
             "Loan Tenure": [
-                "\u8d37\u6b3e\u671f\u9650"
+                "贷款期限"
             ],
             "%1$s years (%2$s mos)": [
-                "%1$s \u5e74 (%2$s \u4e2a\u6708)"
+                "%1$s 年 (%2$s 个月)"
             ],
             "%s%% p.a.": [
-                "%s%% \u5e74\u5229\u7387"
+                "%s%% 年利率"
             ],
             "Total Interest (Overpayment)": [
-                "\u5229\u606f\u603b\u989d\uff08\u8d85\u989d\u652f\u4ed8\uff09"
+                "利息总额（超额支付）"
             ],
             "Total Payable over Term": [
-                "\u8d37\u6b3e\u671f\u5185\u5e94\u4ed8\u603b\u989d"
+                "贷款期内应付总额"
             ],
             "Full Cost of Entry": [
-                "\u8d2d\u623f\u521d\u671f\u603b\u6210\u672c"
+                "购房初期总成本"
             ],
             "DLD Fee (4% + 580)": [
-                "DLD\u8d39\u7528 (4% + 580)"
+                "DLD费用 (4% + 580)"
             ],
             "Agency Commission (2%)": [
-                "\u4e2d\u4ecb\u4f63\u91d1\uff082%\uff09"
+                "中介佣金（2%）"
             ],
             "Bank Fee (1% of loan)": [
-                "\u94f6\u884c\u8d39\u7528 (\u8d37\u6b3e\u989d\u76841%)"
+                "银行费用 (贷款额的1%)"
             ],
             "Property Valuation": [
-                "\u623f\u4ea7\u4f30\u503c"
+                "房产估值"
             ],
             "Mortgage Registration": [
-                "\u62b5\u62bc\u767b\u8bb0"
+                "抵押登记"
             ],
             "Total Required at Entry": [
-                "\u8d2d\u623f\u521d\u671f\u6240\u9700\u603b\u989d"
+                "购房初期所需总额"
             ],
-            "The Deal in 6 Steps (Timeline: 4\u20138 Weeks from MOU to Keys)": [
-                "\u4ea4\u66136\u6b65\u8d70\uff08\u65f6\u95f4\u8868\uff1a\u4eceMOU\u5230\u4ea4\u623f\u97004\u20138\u5468\uff09"
+            "The Deal in 6 Steps (Timeline: 4–8 Weeks from MOU to Keys)": [
+                "交易6步走（时间表：从MOU到交房需4–8周）"
             ],
             "Bank eligibility": [
-                "\u94f6\u884c\u8d44\u683c\u5ba1\u6838"
+                "银行资格审核"
             ],
             "~10% deposit": [
-                "~10%\u5b9a\u91d1"
+                "~10%定金"
             ],
             "Valuation": [
-                "\u623f\u4ea7\u4f30\u503c"
+                "房产估值"
             ],
             "Property appraisal": [
-                "\u623f\u4ea7\u8bc4\u4f30"
+                "房产评估"
             ],
             "Loan offer letter": [
-                "\u8d37\u6b3e\u6279\u51c6\u51fd"
+                "贷款批准函"
             ],
             "DLD Transfer": [
-                "DLD \u8fc7\u6237"
+                "DLD 过户"
             ],
             "Title deed": [
-                "\u623f\u4ea7\u8bc1"
+                "房产证"
             ],
             "Handover": [
-                "\u4ea4\u623f"
+                "交房"
             ],
             "Funds & keys": [
-                "\u4ed8\u6b3e\u4e0e\u4ea4\u94a5\u5319"
+                "付款与交钥匙"
             ],
             "Disclaimer:": [
-                "\u514d\u8d23\u58f0\u660e\uff1a"
+                "免责声明："
             ],
             "East Property Brokerage LLC": [
                 "East Property Brokerage LLC"
+            ],
+            "Cover": [
+                "封面"
+            ],
+            "Make cover": [
+                "设为封面"
             ]
         }
     }

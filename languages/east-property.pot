@@ -3275,3 +3275,23 @@ msgstr ""
 #: src/js/mortgage-calculator/modules/pdf/template.js:204
 msgid "East Property Brokerage LLC"
 msgstr ""
+
+#: src/js/uploader.js
+msgid "Cover"
+msgstr ""
+
+#: src/js/uploader.js
+msgid "Make cover"
+msgstr ""
+
+#: core/template-parts/account/profile.php
+msgid "+ Add phone"
+msgstr ""
+
+#: core/template-parts/account/profile.php
+msgid "+ Add WhatsApp"
+msgstr ""
+
+#: core/template-parts/account/profile.php
+msgid "Remove number"
+msgstr ""

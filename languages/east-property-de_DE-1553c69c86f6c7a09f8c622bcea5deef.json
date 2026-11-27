@@ -1,7 +1,7 @@
 {
     "translation-revision-date": "2026-10-27 11:46+0000",
-    "generator": "WP-CLI\/2.11.0",
-    "source": "assets\/js\/main.js",
+    "generator": "WP-CLI/2.11.0",
+    "source": "assets/js/main.js",
     "domain": "messages",
     "locale_data": {
         "messages": {
@@ -14,10 +14,10 @@
                 "Standort"
             ],
             "Developer": [
-                "Bautr\u00e4ger"
+                "Bauträger"
             ],
             "Area": [
-                "Fl\u00e4che"
+                "Fläche"
             ],
             "Beds": [
                 "Schlafzimmer"
@@ -26,7 +26,7 @@
                 "Studio"
             ],
             "Select": [
-                "Ausw\u00e4hlen"
+                "Auswählen"
             ],
             "Bed": [
                 "Schlafzimmer"
@@ -44,7 +44,7 @@
                 "MOU (Form F)"
             ],
             "Final approval": [
-                "Endg\u00fcltige Genehmigung"
+                "Endgültige Genehmigung"
             ],
             "beds": [
                 "Schlafzimmer"
@@ -59,19 +59,19 @@
                 "Badezimmer"
             ],
             "Selected location": [
-                "Ausgew\u00e4hlter Standort"
+                "Ausgewählter Standort"
             ],
-            "%1$d projects \u00b7 %2$d units": [
-                "%1$d Projekte \u00b7 %2$d Einheiten"
+            "%1$d projects · %2$d units": [
+                "%1$d Projekte · %2$d Einheiten"
             ],
             "UAE Resident": [
-                "Ans\u00e4ssig in den VAE"
+                "Ansässig in den VAE"
             ],
             "Non-Resident": [
-                "Nichtans\u00e4ssig"
+                "Nichtansässig"
             ],
-            "Mortgage Calculation \u2014 East Property": [
-                "Hypothekenberechnung \u2014 East Property"
+            "Mortgage Calculation — East Property": [
+                "Hypothekenberechnung — East Property"
             ],
             "East Property Advisory": [
                 "East Property Advisory"
@@ -88,14 +88,14 @@
             "UAE Mortgage Calculation Report": [
                 "Bericht zur Immobilienfinanzierung in den VAE"
             ],
-            "Property financing estimate and upfront acquisition breakdown \u00b7 East Property Advisory": [
-                "Sch\u00e4tzung der Immobilienfinanzierung und Aufschl\u00fcsselung der Anschaffungskosten \u00b7 East Property Advisory"
+            "Property financing estimate and upfront acquisition breakdown · East Property Advisory": [
+                "Schätzung der Immobilienfinanzierung und Aufschlüsselung der Anschaffungskosten · East Property Advisory"
             ],
             "Estimated Monthly Payment": [
-                "Gesch\u00e4tzte monatliche Rate"
+                "Geschätzte monatliche Rate"
             ],
-            "\/ month": [
-                "\/ Monat"
+            "/ month": [
+                "/ Monat"
             ],
             "Profile": [
                 "Profil"
@@ -140,19 +140,19 @@
                 "Gesamtzinsen (Mehrzahlung)"
             ],
             "Total Payable over Term": [
-                "Gesamtbetrag \u00fcber die Laufzeit"
+                "Gesamtbetrag über die Laufzeit"
             ],
             "Full Cost of Entry": [
                 "Gesamteinstiegskosten"
             ],
             "DLD Fee (4% + 580)": [
-                "DLD-Geb\u00fchr (4% + 580)"
+                "DLD-Gebühr (4% + 580)"
             ],
             "Agency Commission (2%)": [
                 "Maklerprovision (2%)"
             ],
             "Bank Fee (1% of loan)": [
-                "Bankgeb\u00fchr (1% des Darlehens)"
+                "Bankgebühr (1% des Darlehens)"
             ],
             "Property Valuation": [
                 "Immobilienbewertung"
@@ -163,11 +163,11 @@
             "Total Required at Entry": [
                 "Gesamtbetrag bei Einstieg"
             ],
-            "The Deal in 6 Steps (Timeline: 4\u20138 Weeks from MOU to Keys)": [
-                "Der Deal in 6 Schritten (Zeitplan: 4\u20138 Wochen von MOU bis zur Schl\u00fcssel\u00fcbergabe)"
+            "The Deal in 6 Steps (Timeline: 4–8 Weeks from MOU to Keys)": [
+                "Der Deal in 6 Schritten (Zeitplan: 4–8 Wochen von MOU bis zur Schlüsselübergabe)"
             ],
             "Bank eligibility": [
-                "Bankpr\u00fcfung der Kreditw\u00fcrdigkeit"
+                "Bankprüfung der Kreditwürdigkeit"
             ],
             "~10% deposit": [
                 "~10% Anzahlung"
@@ -176,28 +176,34 @@
                 "Bewertung"
             ],
             "Property appraisal": [
-                "Immobiliensch\u00e4tzung"
+                "Immobilienschätzung"
             ],
             "Loan offer letter": [
                 "Kreditangebot"
             ],
             "DLD Transfer": [
-                "DLD-\u00dcbertragung"
+                "DLD-Übertragung"
             ],
             "Title deed": [
                 "Eigentumsurkunde"
             ],
             "Handover": [
-                "\u00dcbergabe"
+                "Übergabe"
             ],
             "Funds & keys": [
-                "Zahlung & Schl\u00fcssel\u00fcbergabe"
+                "Zahlung & Schlüsselübergabe"
             ],
             "Disclaimer:": [
                 "Haftungsausschluss:"
             ],
             "East Property Brokerage LLC": [
                 "East Property Brokerage LLC"
+            ],
+            "Cover": [
+                "Titelbild"
+            ],
+            "Make cover": [
+                "Als Titelbild festlegen"
             ]
         }
     }

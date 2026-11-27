@@ -181,7 +181,7 @@ if ( ! empty( $amenities ) ) {
 										data-modal-open="broker-modal"
 										data-property-id="<?php echo esc_attr( $unit_id ); ?>"
 										data-property-title="<?php echo esc_attr( $title ); ?>"
-										data-broker-phone="tel:<?php echo esc_attr( $broker_phone ); ?>"
+										data-broker-phone="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $broker_phone ) ); ?>"
 										data-broker-whatsapp="<?php echo esc_url( $whats_app_link ) ?>"
 								>
 									<?php _e( 'Contact broker', 'east-property' ); ?>

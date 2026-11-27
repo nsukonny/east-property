@@ -3303,3 +3303,23 @@ msgstr "ستتم ترجمة هذا المشروع العقاري إلى اللغ
 #: core/template-parts/account/lang-switcher.php:77
 msgid "This listing will be translated into the other languages automatically. You can also add a translation yourself by picking a language."
 msgstr "ستتم ترجمة هذا العقار إلى اللغات الأخرى تلقائيًا. ويمكنك أيضًا إضافة الترجمة بنفسك باختيار اللغة المطلوبة."
+
+#: src/js/uploader.js
+msgid "Cover"
+msgstr "الغلاف"
+
+#: src/js/uploader.js
+msgid "Make cover"
+msgstr "تعيين كغلاف"
+
+#: core/template-parts/account/profile.php
+msgid "+ Add phone"
+msgstr "+ إضافة هاتف"
+
+#: core/template-parts/account/profile.php
+msgid "+ Add WhatsApp"
+msgstr "+ إضافة WhatsApp"
+
+#: core/template-parts/account/profile.php
+msgid "Remove number"
+msgstr "حذف الرقم"

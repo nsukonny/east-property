@@ -176,7 +176,7 @@ $redirect_to = core_home_url( '/account?tab=account' );
 										<label for="phone_number_inp">
 											<?php esc_html_e( 'Phone number', 'east-property' ); ?>
 											<input type="text" id="phone_number_inp" name="phone_number"
-												   placeholder="971509670043"
+												   placeholder="971585235351"
 											>
 										</label>
 									</div>

@@ -3301,3 +3301,23 @@ msgstr "Проект будет переведён на другие языки 
 #: core/template-parts/account/lang-switcher.php:77
 msgid "This listing will be translated into the other languages automatically. You can also add a translation yourself by picking a language."
 msgstr "Объект будет переведён на другие языки системой по мере обхода. Также вы можете добавить перевод вручную, выбрав нужный язык."
+
+#: src/js/uploader.js
+msgid "Cover"
+msgstr "Обложка"
+
+#: src/js/uploader.js
+msgid "Make cover"
+msgstr "Сделать обложкой"
+
+#: core/template-parts/account/profile.php
+msgid "+ Add phone"
+msgstr "+ Добавить телефон"
+
+#: core/template-parts/account/profile.php
+msgid "+ Add WhatsApp"
+msgstr "+ Добавить WhatsApp"
+
+#: core/template-parts/account/profile.php
+msgid "Remove number"
+msgstr "Удалить номер"

@@ -25,6 +25,7 @@ if ( '' === $whatsapp_text ) {
 }
 $whats_app_link = WHATS_APP_LINK . '?text=' . rawurlencode( $whatsapp_text );
 $phone          = $broker?->get_phone( '', true ) ?: PROJECT_PHONE;
+$phone_clean    = preg_replace( '/[^0-9+]/', '', $phone );
 ?>
 <div class="modal-wrapper broker-modal" data-modal-id="broker-modal">
 	<div class="modal">
@@ -61,7 +62,7 @@ $phone          = $broker?->get_phone( '', true ) ?: PROJECT_PHONE;
 			</div>
 			<div class="modal-links">
 				<?php if ( ! empty( $phone ) ) { ?>
-					<a href="tel:<?php echo esc_attr( $phone ); ?>" id="bm_phone" target="_blank"
+					<a href="tel:<?php echo esc_attr( $phone_clean ); ?>" id="bm_phone" target="_blank"
 					   rel="noopener noreferrer"
 					   class="button sm orange">
 						<img src="<?php echo THEME_URL; ?>/assets/img/phone.svg" width="16" height="16"
