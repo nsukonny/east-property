@@ -455,3 +455,72 @@
 	font-size: 13px;
 	line-height: 18px;
 }
+
+.number-fields {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 12px;
+	width: 100%;
+
+	& + & {
+		margin-top: 24px;
+	}
+}
+
+.number-fields-title {
+	color: v.$c-black;
+	font-family: "Inter", sans-serif;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 20px;
+}
+
+.number-field {
+	align-items: flex-end;
+	gap: 8px;
+
+	&.hidden {
+		display: none;
+	}
+
+	label {
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+}
+
+.number-field-lang {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+
+	img {
+		border-radius: 2px;
+	}
+}
+
+.number-field-remove {
+	flex: 0 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	margin-bottom: 6px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: transparent;
+	color: v.$c-text-grey;
+	font-size: 20px;
+	line-height: 1;
+	cursor: pointer;
+	transition: background-color 0.2s ease, color 0.2s ease;
+
+	&:hover,
+	&:focus-visible {
+		background-color: v.$c-grey-90;
+		color: v.$c-grey;
+	}
+}

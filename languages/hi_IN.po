@@ -3285,3 +3285,15 @@ msgstr "कवर"
 #: src/js/uploader.js
 msgid "Make cover"
 msgstr "कवर बनाएं"
+
+#: core/template-parts/account/profile.php
+msgid "+ Add phone"
+msgstr "+ फ़ोन जोड़ें"
+
+#: core/template-parts/account/profile.php
+msgid "+ Add WhatsApp"
+msgstr "+ WhatsApp जोड़ें"
+
+#: core/template-parts/account/profile.php
+msgid "Remove number"
+msgstr "नंबर हटाएं"

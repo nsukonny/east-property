@@ -10,7 +10,153 @@ document.addEventListener('DOMContentLoaded', () => {
 	initResendVerification();
 	initIsCompleted();
 	initLangSwitcher();
+	initNumberFields();
 });
+
+/**
+ * Group the digits of a number as 971 58 523 5351.
+ *
+ * @param {string} value Raw field value.
+ *
+ * @return {string} Grouped number, empty when there are no digits.
+ */
+const formatPhone = (value) => {
+	const digits = String(value).replace(/\D+/g, '');
+	if (!digits) return '';
+
+	const parts = [];
+	let offset = 0;
+
+	[3, 2, 3, 4].forEach(size => {
+		if (offset >= digits.length) return;
+
+		parts.push(digits.slice(offset, offset + size));
+		offset += size;
+	});
+
+	if (offset < digits.length) parts.push(digits.slice(offset));
+
+	return parts.join(' ');
+};
+
+/**
+ * Reformat a number field, keeping the caret on the same digit.
+ *
+ * @param {HTMLInputElement} input Field being typed into.
+ */
+const reformatPhoneInput = (input) => {
+	const caret = input.selectionStart ?? input.value.length;
+	const digitsBefore = input.value.slice(0, caret).replace(/\D+/g, '').length;
+	const formatted = formatPhone(input.value);
+
+	if (formatted === input.value) return;
+
+	input.value = formatted;
+
+	if (!digitsBefore) {
+		input.setSelectionRange(0, 0);
+
+		return;
+	}
+
+	let seen = 0;
+	let position = formatted.length;
+
+	for (let i = 0; i < formatted.length; i++) {
+		if (/\d/.test(formatted[i])) seen++;
+
+		if (seen >= digitsBefore) {
+			position = i + 1;
+			break;
+		}
+	}
+
+	input.setSelectionRange(position, position);
+};
+
+/**
+ * Phone and WhatsApp blocks, each with its own language dropdown.
+ */
+const initNumberFields = () => {
+	document.querySelectorAll('[data-number-fields]').forEach(initNumberField);
+};
+
+/**
+ * One number per language: the dropdown brings a language in, the cross takes it out.
+ *
+ * @param {HTMLElement} box Block of one field.
+ */
+const initNumberField = (box) => {
+	box.querySelectorAll('[data-number-input]').forEach(input => {
+		input.addEventListener('input', () => reformatPhoneInput(input));
+	});
+
+	const add = box.querySelector('[data-number-add]');
+	const toggle = add?.querySelector('.lang-add-toggle');
+	const list = add?.querySelector('.lang-add-list');
+	if (!add || !toggle || !list) return;
+
+	const onOutside = (e) => {
+		if (!add.contains(e.target)) close();
+	};
+
+	const close = () => {
+		list.hidden = true;
+		toggle.setAttribute('aria-expanded', 'false');
+		document.removeEventListener('click', onOutside);
+	};
+
+	const refreshAddButton = () => {
+		add.classList.toggle('hidden', !list.querySelector('[data-number-item]:not(.hidden)'));
+	};
+
+	toggle.addEventListener('click', () => {
+		if (list.hidden) {
+			list.hidden = false;
+			toggle.setAttribute('aria-expanded', 'true');
+			document.addEventListener('click', onOutside);
+		} else {
+			close();
+		}
+	});
+
+	add.addEventListener('keydown', (e) => {
+		if ('Escape' === e.key && !list.hidden) {
+			close();
+			toggle.focus();
+		}
+	});
+
+	list.addEventListener('click', (e) => {
+		const option = e.target.closest('[data-add-number]');
+		if (!option) return;
+
+		const row = box.querySelector(`[data-number-row="${option.dataset.addNumber}"]`);
+		if (!row) return;
+
+		row.classList.remove('hidden');
+		option.closest('[data-number-item]')?.classList.add('hidden');
+		close();
+		refreshAddButton();
+		row.querySelector('[data-number-input]')?.focus();
+	});
+
+	box.addEventListener('click', (e) => {
+		const remove = e.target.closest('[data-remove-number]');
+		if (!remove) return;
+
+		const slug = remove.dataset.removeNumber;
+		const row = box.querySelector(`[data-number-row="${slug}"]`);
+		if (!row) return;
+
+		const input = row.querySelector('[data-number-input]');
+		if (input) input.value = '';
+
+		row.classList.add('hidden');
+		list.querySelector(`[data-number-item="${slug}"]`)?.classList.remove('hidden');
+		refreshAddButton();
+	});
+};
 
 const initChangeProjectImages = () => {
 	let propertyIdInputs = document.querySelectorAll('[data-project-images-switcher] input[type="hidden"]');

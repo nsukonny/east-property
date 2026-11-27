@@ -3309,3 +3309,15 @@ msgstr "Обложка"
 #: src/js/uploader.js
 msgid "Make cover"
 msgstr "Сделать обложкой"
+
+#: core/template-parts/account/profile.php
+msgid "+ Add phone"
+msgstr "+ Добавить телефон"
+
+#: core/template-parts/account/profile.php
+msgid "+ Add WhatsApp"
+msgstr "+ Добавить WhatsApp"
+
+#: core/template-parts/account/profile.php
+msgid "Remove number"
+msgstr "Удалить номер"

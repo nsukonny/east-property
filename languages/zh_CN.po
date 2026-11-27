@@ -3286,3 +3286,15 @@ msgstr "封面"
 #: src/js/uploader.js
 msgid "Make cover"
 msgstr "设为封面"
+
+#: core/template-parts/account/profile.php
+msgid "+ Add phone"
+msgstr "+ 添加电话"
+
+#: core/template-parts/account/profile.php
+msgid "+ Add WhatsApp"
+msgstr "+ 添加 WhatsApp"
+
+#: core/template-parts/account/profile.php
+msgid "Remove number"
+msgstr "删除号码"

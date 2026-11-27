@@ -3283,3 +3283,15 @@ msgstr ""
 #: src/js/uploader.js
 msgid "Make cover"
 msgstr ""
+
+#: core/template-parts/account/profile.php
+msgid "+ Add phone"
+msgstr ""
+
+#: core/template-parts/account/profile.php
+msgid "+ Add WhatsApp"
+msgstr ""
+
+#: core/template-parts/account/profile.php
+msgid "Remove number"
+msgstr ""

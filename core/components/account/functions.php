@@ -1215,8 +1215,11 @@ function account_update_profile(): void {
 
 	$user_display_name = sanitize_text_field( wp_unslash( $_POST['display_name'] ?? '' ) );
 	$agency_id         = absint( $_POST['agency_id'] ?? 0 );
+	$keep_number       = static fn( string $number ): bool => '' !== $number;
 	$phones            = array_map( 'sanitize_text_field', wp_unslash( $_POST['phone'] ?? array() ) );
+	$phones            = array_filter( array_map( 'core_format_phone', $phones ), $keep_number );
 	$whatsapps         = array_map( 'sanitize_text_field', wp_unslash( $_POST['whatsapp'] ?? array() ) );
+	$whatsapps         = array_filter( array_map( 'core_format_phone', $whatsapps ), $keep_number );
 
 	$current_user_id = get_current_user_id();
 	$updated         = wp_update_user(
@@ -2014,3 +2017,59 @@ add_filter( 'wpseo_robots_array', static function ( $robots ) {
 
 	return $robots;
 }, 20 );
+
+/**
+ * Group a phone number as 971 58 523 5351.
+ *
+ * @param string $number Any shape, non digits are dropped.
+ *
+ * @return string Empty string when the number holds no digits.
+ */
+function core_format_phone( string $number ): string {
+	$digits = (string) preg_replace( '/\D+/', '', $number );
+
+	if ( '' === $digits ) {
+		return '';
+	}
+
+	$parts  = array();
+	$offset = 0;
+
+	foreach ( array( 3, 2, 3, 4 ) as $size ) {
+		if ( $offset >= strlen( $digits ) ) {
+			break;
+		}
+
+		$parts[] = substr( $digits, $offset, $size );
+		$offset  += $size;
+	}
+
+	if ( $offset < strlen( $digits ) ) {
+		$parts[] = substr( $digits, $offset );
+	}
+
+	return implode( ' ', $parts );
+}
+
+/**
+ * Saved numbers of one field by language.
+ *
+ * @param Estate_User $user  User to read.
+ * @param string      $field phone or whatsapp.
+ *
+ * @return array<string, string>
+ */
+function core_user_number_map( Estate_User $user, string $field ): array {
+	$numbers = array();
+	$rows    = (array) $user->get_field( 'phone' === $field ? 'phones' : 'whatsapps' );
+
+	foreach ( $rows as $row ) {
+		if ( empty( $row['language'] ) || empty( $row[ $field ] ) ) {
+			continue;
+		}
+
+		$numbers[ $row['language'] ] = core_format_phone( (string) $row[ $field ] );
+	}
+
+	return $numbers;
+}

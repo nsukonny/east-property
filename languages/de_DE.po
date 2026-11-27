@@ -3285,3 +3285,15 @@ msgstr "Titelbild"
 #: src/js/uploader.js
 msgid "Make cover"
 msgstr "Als Titelbild festlegen"
+
+#: core/template-parts/account/profile.php
+msgid "+ Add phone"
+msgstr "+ Telefon hinzufügen"
+
+#: core/template-parts/account/profile.php
+msgid "+ Add WhatsApp"
+msgstr "+ WhatsApp hinzufügen"
+
+#: core/template-parts/account/profile.php
+msgid "Remove number"
+msgstr "Nummer entfernen"

@@ -3311,3 +3311,15 @@ msgstr "الغلاف"
 #: src/js/uploader.js
 msgid "Make cover"
 msgstr "تعيين كغلاف"
+
+#: core/template-parts/account/profile.php
+msgid "+ Add phone"
+msgstr "+ إضافة هاتف"
+
+#: core/template-parts/account/profile.php
+msgid "+ Add WhatsApp"
+msgstr "+ إضافة WhatsApp"
+
+#: core/template-parts/account/profile.php
+msgid "Remove number"
+msgstr "حذف الرقم"
