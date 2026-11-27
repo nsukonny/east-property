@@ -219,6 +219,56 @@
 			}
 		}
 
+		&-cover {
+			position: absolute;
+			top: 4px;
+			left: 4px;
+			width: 24px;
+			height: 24px;
+			padding: 0;
+			background-color: v.$c-white;
+			border-radius: 50%;
+			border: none;
+			cursor: pointer;
+			transition: scale ease-in-out v.$tr;
+			z-index: 10;
+			background-image: url('../img/cover.svg');
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: 14px;
+
+			@include mix.hover {
+				scale: 1.1;
+			}
+		}
+
+		&-cover-label {
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			padding: 2px;
+			background-color: v.$c-orange;
+			color: v.$c-white;
+			font-size: 10px;
+			line-height: 1.4;
+			text-align: center;
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+			pointer-events: none;
+			z-index: 3;
+		}
+
+		&.is-cover {
+			outline: 2px solid v.$c-orange;
+			outline-offset: -2px;
+
+			.uploader-item-cover {
+				background-color: v.$c-orange;
+				background-image: url('../img/cover_white.svg');
+			}
+		}
+
 		&.sortable-ghost {
 			opacity: 0.4;
 		}

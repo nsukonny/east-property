@@ -1919,3 +1919,98 @@ function change_logout_url( string $logout_url ): string {
 }
 
 add_filter( 'logout_url', 'change_logout_url' );
+
+/**
+ * Statuses whose listing page is open to everyone.
+ *
+ * @return string[]
+ */
+function core_public_listing_statuses(): array {
+	return array( 'publish', 'archived' );
+}
+
+/**
+ * Whether the current user may open a listing that is not published yet.
+ *
+ * @param int $post_id Unit or property.
+ *
+ * @return bool
+ */
+function core_can_preview_listing( int $post_id ): bool {
+	$post = get_post( $post_id );
+
+	if ( null === $post ) {
+		return false;
+	}
+
+	if ( in_array( $post->post_status, core_public_listing_statuses(), true ) ) {
+		return true;
+	}
+
+	return is_user_logged_in()
+		   && ( (int) $post->post_author === get_current_user_id() || current_user_can( 'manage_options' ) );
+}
+
+/**
+ * Pull a listing waiting for approval into the single query, so its author can open it.
+ */
+add_action( 'pre_get_posts', static function ( WP_Query $query ): void {
+	if ( is_admin() || ! $query->is_main_query() || ! is_user_logged_in() ) {
+		return;
+	}
+
+	if ( '' === (string) $query->get( 'name' ) ) {
+		return;
+	}
+
+	if ( ! array_intersect( (array) $query->get( 'post_type' ), array( 'unit', 'property' ) ) ) {
+		return;
+	}
+
+	$query->set(
+		'post_status',
+		array_merge( core_public_listing_statuses(), array( 'draft', 'pending' ) )
+	);
+} );
+
+/**
+ * Keep an unpublished listing hidden from everyone but its author and an administrator.
+ *
+ * The broker role is cloned from editor and so carries edit_others_posts, which
+ * makes the stock `perm` check useless here.
+ */
+add_action( 'template_redirect', static function (): void {
+	if ( ! is_singular( array( 'unit', 'property' ) ) ) {
+		return;
+	}
+
+	if ( core_can_preview_listing( get_queried_object_id() ) ) {
+		return;
+	}
+
+	global $wp_query;
+
+	$wp_query->set_404();
+	status_header( 404 );
+	nocache_headers();
+} );
+
+/**
+ * Keep a listing that is not published out of search results.
+ */
+add_filter( 'wpseo_robots_array', static function ( $robots ) {
+	if ( ! is_singular( array( 'unit', 'property' ) ) ) {
+		return $robots;
+	}
+
+	$post = get_post( get_queried_object_id() );
+
+	if ( null === $post || in_array( $post->post_status, core_public_listing_statuses(), true ) ) {
+		return $robots;
+	}
+
+	$robots          = (array) $robots;
+	$robots['index'] = 'noindex';
+
+	return $robots;
+}, 20 );

@@ -3277,3 +3277,11 @@ msgstr "यह प्रॉपर्टी प्रोजेक्ट अन्
 #: core/template-parts/account/lang-switcher.php:77
 msgid "This listing will be translated into the other languages automatically. You can also add a translation yourself by picking a language."
 msgstr "यह प्रॉपर्टी अन्य भाषाओं में सिस्टम द्वारा अपने आप अनुवादित हो जाएगी। आप भाषा चुनकर स्वयं भी अनुवाद जोड़ सकते हैं।"
+
+#: src/js/uploader.js
+msgid "Cover"
+msgstr "कवर"
+
+#: src/js/uploader.js
+msgid "Make cover"
+msgstr "कवर बनाएं"

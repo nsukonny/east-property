@@ -328,6 +328,7 @@ if ( ! empty( $translations ) && ! isset( $translations[ $current_language ] ) )
 
 					<script>
 						let defaultUserFiles = [];
+						let defaultCoverId = <?php echo (int) ( $property ? ( $property->get_gallery_ids()[0] ?? 0 ) : 0 ); ?>;
 						<?php
 						$gallery_images = $property ? $property->get_gallery() : array();
 						$user_thumbnail_ids = '';

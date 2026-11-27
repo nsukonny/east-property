@@ -3278,3 +3278,11 @@ msgstr "本房产项目将由系统自动翻译成其他语言。您也可以选
 #: core/template-parts/account/lang-switcher.php:77
 msgid "This listing will be translated into the other languages automatically. You can also add a translation yourself by picking a language."
 msgstr "本房产将由系统自动翻译成其他语言。您也可以选择所需语言，手动添加译文。"
+
+#: src/js/uploader.js
+msgid "Cover"
+msgstr "封面"
+
+#: src/js/uploader.js
+msgid "Make cover"
+msgstr "设为封面"

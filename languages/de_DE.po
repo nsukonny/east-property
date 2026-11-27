@@ -3277,3 +3277,11 @@ msgstr "Dieses Immobilienprojekt wird vom System automatisch in die anderen Spra
 #: core/template-parts/account/lang-switcher.php:77
 msgid "This listing will be translated into the other languages automatically. You can also add a translation yourself by picking a language."
 msgstr "Diese Immobilie wird vom System automatisch in die anderen Sprachen übersetzt. Sie können eine Übersetzung auch selbst hinzufügen, indem Sie eine Sprache auswählen."
+
+#: src/js/uploader.js
+msgid "Cover"
+msgstr "Titelbild"
+
+#: src/js/uploader.js
+msgid "Make cover"
+msgstr "Als Titelbild festlegen"
